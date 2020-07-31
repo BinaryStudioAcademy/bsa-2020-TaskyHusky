@@ -5,7 +5,7 @@ import * as actions from './actions';
 
 export function* fetchExampleText(action: ReturnType<typeof actions.getExampleText>) {
 	const { exampleName } = action;
-	const { text }: ExampleResponse = yield call(fetchExample, exampleName);
+	const { text }: WebApi.Entities.Example = yield call(fetchExample, exampleName);
 	yield put(actions.updateExample({ partialState: { text } }));
 }
 
