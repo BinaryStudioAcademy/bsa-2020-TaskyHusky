@@ -8,7 +8,7 @@ import { appPort } from './config/app.config';
 import routes from './src/routes';
 import passport from './config/passport.config';
 import { routesWhiteList } from './config/jwt.config';
-import { authenticateJwt } from './src/middleware/jwt.middleware';
+import { authenticateJwt } from './src/middleware/auth.middleware';
 
 createConnection().then(async (connection) => {
 	await connection.runMigrations();
