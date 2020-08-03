@@ -7,6 +7,8 @@ import 'reflect-metadata';
 import { appPort } from './config/app.config';
 import routes from './src/routes';
 import passport from './config/passport.config';
+import { routesWhiteList } from './config/jwt.config';
+import { authenticateJwt } from './src/middleware/jwt.middleware';
 
 createConnection().then(async (connection) => {
 	await connection.runMigrations();
@@ -15,7 +17,7 @@ createConnection().then(async (connection) => {
 	app.use(bodyParser.json());
 	app.use(passport.initialize());
 
-	app.use('/api', routes);
+	app.use('/api', authenticateJwt(routesWhiteList), routes);
 
 	app.listen(appPort, () => {
 		// eslint-disable-next-line no-console

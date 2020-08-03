@@ -1,9 +1,12 @@
 import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
+import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
 import { hashSync, compareSync } from 'bcryptjs';
 import { v4 as uuidv4 } from 'uuid';
+import { jwtSecret } from './jwt.config';
 
 const INCORRECT_CREDENTIALS_MESSAGE = 'incorrect email or password';
+const NO_USER_MESSAGE = 'no such user';
 const TAKEN_EMAIL_MESSAGE = 'this email is already taken';
 const EMAIL_FIELD = 'email';
 
@@ -65,7 +68,27 @@ passport.use(
             };
 
             mockUsers.push(newUserObject);
-            next(null, newUserObject);
+            return next(null, newUserObject);
+        }
+    )
+);
+
+passport.use(
+    'jwt',
+    new JwtStrategy(
+        {
+            jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+            secretOrKey: jwtSecret
+        },
+        ({ id }: { id: string }, next) => {
+            const user: MockUser | undefined = mockUsers.find((value: MockUser): boolean =>
+                value.id === id);
+
+            if (!user) {
+                return next(new Error(NO_USER_MESSAGE), null);
+            }
+
+            return next(null, user);
         }
     )
 )
