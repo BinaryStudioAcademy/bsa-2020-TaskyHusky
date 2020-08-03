@@ -9,7 +9,7 @@ interface Props {}
 const Routing: React.FC<Props> = () => (
 	<Switch>
 		<PublicRoute exact restricted={false} path="/" component={Example} />
-		<PublicRoute exact restricted={false} path="/login" component={Login} />
+		<PublicRoute exact restricted={true} path="/login" component={Login} />
 	</Switch>
 );
 
