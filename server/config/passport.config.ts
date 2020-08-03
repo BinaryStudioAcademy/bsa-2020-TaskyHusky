@@ -5,10 +5,12 @@ import { hashSync, compareSync } from 'bcryptjs';
 import { v4 as uuidv4 } from 'uuid';
 import { jwtSecret } from './jwt.config';
 
-const INCORRECT_CREDENTIALS_MESSAGE = 'incorrect email or password';
-const NO_USER_MESSAGE = 'no such user';
-const TAKEN_EMAIL_MESSAGE = 'this email is already taken';
-const EMAIL_FIELD = 'email';
+import {
+    INCORRECT_CREDENTIALS_MESSAGE,
+    NO_USER_MESSAGE,
+    TAKEN_EMAIL_MESSAGE,
+    EMAIL_FIELD
+} from '../src/constants/auth.constants';
 
 export interface MockUser {
     id: string;
