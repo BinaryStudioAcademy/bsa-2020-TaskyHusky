@@ -5,3 +5,11 @@ namespace WebApi.Entities {
 		text?: string;
 	}
 }
+
+namespace WebApi.Results {
+	interface UserAuthResult {
+		id: string;
+		token: string;
+		email: string;
+	}
+}
