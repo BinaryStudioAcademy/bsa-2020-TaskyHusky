@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch } from 'react-router-dom';
 import Example from 'containers/Example';
-import Login from '../../pages/Login';
+import Login from 'pages/Login';
 import PublicRoute from 'components/PublicRoute';
 
 interface Props {}

@@ -2,7 +2,7 @@ import React, { useState, SyntheticEvent } from 'react';
 import styles from './styles.module.scss';
 
 import { Header, Form, Divider, Segment, Button, Grid, List } from 'semantic-ui-react';
-import { validateEmail } from '../../helpers/validateEmail.helper';
+import { validateEmail } from 'helpers/validateEmail.helper';
 
 export const LoginPage: React.FC = ({ history }: any) => {
 	const [email, setEmail] = useState('');
