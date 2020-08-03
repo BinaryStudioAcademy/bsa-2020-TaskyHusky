@@ -8,9 +8,11 @@ export const LoginPage: React.FC = ({ history }: any) => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [emailIsValid, setEmailIsValid] = useState(false);
+	const [emailTouched, setEmailTouched] = useState(false);
 
 	const handleContinueSubmit = (event: SyntheticEvent) => {
 		event.preventDefault();
+		setEmailTouched(true);
 		setEmailIsValid(validateEmail(email)); // TODO: replace with request to server side via redux-saga when server side is ready
 	};
 
@@ -31,20 +33,32 @@ export const LoginPage: React.FC = ({ history }: any) => {
 	return (
 		<Grid verticalAlign="middle" className={styles.grid}>
 			<Grid.Column className={styles.column}>
-				<Header as="h1">Tasky-Husky</Header>
+				<Header as="h1" className={styles.mainHeader}>
+					Tasky-Husky
+				</Header>
 				<Segment>
-					<Header as="h4">Log in to your account</Header>
+					<Header as="h4" className={styles.subHeader}>
+						Log in to your account
+					</Header>
 					<Form onSubmit={handleContinueSubmit}>
 						<Form.Input
+							error={
+								emailIsValid || !emailTouched
+									? null
+									: { content: 'Please enter valid email', pointing: 'below' }
+							}
 							placeholder="Email"
 							type="text"
-							onChange={(event) => setEmail(event.target.value)}
+							onChange={(event) => {
+								setEmail(event.target.value);
+								setEmailTouched(false);
+							}}
 						/>
 						{passwordInput}
 						<Button className={styles.continueButton}>Continue</Button>
 					</Form>
 					<Divider />
-					<List bulleted horizontal link>
+					<List bulleted horizontal link className={styles.list}>
 						<List.Item as="a" className={styles.listItem} onClick={toggleForgetPasswordHandler}>
 							Can&apos;t login
 						</List.Item>
