@@ -1,20 +1,23 @@
 import React, { useState, ChangeEvent, useEffect } from 'react';
 import { Button, Input, Table } from 'semantic-ui-react';
-
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'typings/rootState';
 import * as actions from './logic/actions';
 
+import CreateProjectModal from './../../components/CreateProjectModal';
 import styles from './styles.module.scss';
 
 const Projects: React.FC = () => {
 	const [searchName, setSearchName] = useState('');
+	const [isModalShown, setIsModalShown] = useState(false);
 	const dispatch = useDispatch();
 	const projects = useSelector((rootState: RootState) => rootState.projects.projects);
 
 	useEffect(() => {
 		dispatch(actions.startLoading());
 	});
+
+	const onCreateProject = () => {};
 
 	const onSearch = (event: ChangeEvent<HTMLInputElement>) => {
 		const searchValue = event.target.value;
@@ -26,9 +29,16 @@ const Projects: React.FC = () => {
 
 	return (
 		<div className={styles.wrapper}>
+			{isModalShown ? (
+				<CreateProjectModal setIsModalShown={setIsModalShown} onCreateProject={onCreateProject} />
+			) : (
+				''
+			)}
 			<div className={styles.wrapper__title}>
 				<h1 className={styles.title}>Projects</h1>
-				<Button primary>Create project</Button>
+				<Button primary onClick={() => setIsModalShown(true)}>
+					Create project
+				</Button>
 			</div>
 			<div className={[styles.wrapper__filters, styles.filters].join(' ')}>
 				<Input icon="search" placeholder="Search..." onChange={onSearch} value={searchName} />
