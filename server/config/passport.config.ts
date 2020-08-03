@@ -4,13 +4,7 @@ import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
 import { hashSync, compareSync } from 'bcryptjs';
 import { v4 as uuidv4 } from 'uuid';
 import { jwtSecret } from './jwt.config';
-
-import {
-    INCORRECT_CREDENTIALS_MESSAGE,
-    NO_USER_MESSAGE,
-    TAKEN_EMAIL_MESSAGE,
-    EMAIL_FIELD
-} from '../src/constants/auth.constants';
+import { authErrorMessages, EMAIL_FIELD } from '../src/constants/auth.constants';
 
 export interface MockUser {
     id: string;
@@ -35,11 +29,11 @@ passport.use(
                 value.email === email);
 
             if (!user) {
-                return next(new Error(INCORRECT_CREDENTIALS_MESSAGE), null);
+                return next(new Error(authErrorMessages.INCORRECT_CREDENTIALS), null);
             }
 
             if (!compareSync(password, user.password)) {
-                return next(new Error(INCORRECT_CREDENTIALS_MESSAGE), null);
+                return next(new Error(authErrorMessages.INCORRECT_CREDENTIALS), null);
             }
 
             return next(null, user);
@@ -58,7 +52,7 @@ passport.use(
                 value.email === email);
 
             if (checkingUser) {
-                return next(new Error(TAKEN_EMAIL_MESSAGE), null);
+                return next(new Error(authErrorMessages.TAKEN_EMAIL), null);
             }
 
             const encodedPassword = hashSync(password, 8);
@@ -87,7 +81,7 @@ passport.use(
                 value.id === id);
 
             if (!user) {
-                return next(new Error(NO_USER_MESSAGE), null);
+                return next(new Error(authErrorMessages.NO_USER), null);
             }
 
             return next(null, user);
