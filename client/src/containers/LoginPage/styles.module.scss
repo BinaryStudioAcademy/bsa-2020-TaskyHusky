@@ -1,11 +1,20 @@
 .grid {
-	text-align: center;
 	height: 100vh;
 	justify-content: center;
 }
 
+.mainHeader,
+.subHeader {
+	text-align: center;
+}
+
 .column {
 	max-width: 450px;
+}
+
+.list {
+	display: flex !important;
+	justify-content: center;
 }
 
 .listItem {
