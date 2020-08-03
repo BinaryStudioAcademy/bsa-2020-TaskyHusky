@@ -15,14 +15,19 @@
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
+		"@types/bcryptjs": "^2.4.2",
+		"@types/passport-local": "^1.0.33",
+		"bcryptjs": "^2.4.3",
 		"body-parser": "^1.19.0",
 		"cors": "^2.8.5",
 		"dotenv": "^8.2.0",
 		"express": "^4.17.1",
+		"glob": "^7.1.6",
+		"passport": "^0.4.1",
+		"passport-local": "^1.0.0",
 		"pg": "^8.3.0",
 		"reflect-metadata": "^0.1.13",
-		"typeorm": "^0.2.25",
-		"glob": "^7.1.6"
+		"typeorm": "^0.2.25"
 	},
 	"devDependencies": {
 		"@types/cors": "^2.8.6",
