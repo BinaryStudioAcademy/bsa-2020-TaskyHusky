@@ -1,14 +1,14 @@
 import { Request, Response } from 'express';
-import { getRepository } from 'typeorm';
-import { Example } from '../entity/Example';
+import { getCustomRepository } from 'typeorm';
+import { ExampleRepository } from '../repositories/example.repository';
 
 class ExampleController {
 	getExample = async (req: Request, res: Response): Promise<void> => {
-		const exampleRepository = getRepository(Example);
+		const exampleRepository = getCustomRepository(ExampleRepository);
 		const { name } = req.params;
 
 		try {
-			const example: Example = await exampleRepository.findOneOrFail({ where: { name } });
+			const example = await exampleRepository.findByName(name);
 			res.send(example);
 		} catch (error) {
 			res.status(401).send();
