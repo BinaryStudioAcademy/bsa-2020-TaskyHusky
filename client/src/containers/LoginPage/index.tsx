@@ -7,13 +7,14 @@ import { validateEmail } from '../../helpers/validateEmail.helper';
 export const LoginPage: React.FC = ({ history }: any) => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
-	const [emailIsValid, setEmailIsValid] = useState(false);
-	const [emailTouched, setEmailTouched] = useState(false);
+	const [isEmailValid, setIsEmailValid] = useState(false);
+	const [isEmailSubmitted, setIsEmailSubmitted] = useState(false);
 
 	const handleContinueSubmit = (event: SyntheticEvent) => {
 		event.preventDefault();
-		setEmailTouched(true);
-		setEmailIsValid(validateEmail(email)); // TODO: replace with request to server side via redux-saga when server side is ready
+
+		setIsEmailSubmitted(true);
+		setIsEmailValid(validateEmail(email)); // TODO: replace with request to server side via redux-saga when server side is ready
 	};
 
 	const toggleForgetPasswordHandler: () => void = () => {
@@ -24,7 +25,7 @@ export const LoginPage: React.FC = ({ history }: any) => {
 		history.push('/signup');
 	};
 
-	const passwordInput = emailIsValid ? (
+	const passwordInput = isEmailValid ? (
 		<Form.Input placeholder="Password" type="password" onChange={(event) => setPassword(event.target.value)} />
 	) : null;
 
@@ -41,7 +42,7 @@ export const LoginPage: React.FC = ({ history }: any) => {
 					<Form onSubmit={handleContinueSubmit}>
 						<Form.Input
 							error={
-								emailIsValid || !emailTouched
+								isEmailValid || !isEmailSubmitted
 									? null
 									: { content: 'Please enter valid email', pointing: 'below' }
 							}
@@ -49,7 +50,7 @@ export const LoginPage: React.FC = ({ history }: any) => {
 							type="text"
 							onChange={(event) => {
 								setEmail(event.target.value);
-								setEmailTouched(false);
+								setIsEmailSubmitted(false);
 							}}
 						/>
 						{passwordInput}
