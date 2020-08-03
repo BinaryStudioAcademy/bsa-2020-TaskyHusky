@@ -1,8 +1,8 @@
 import React from 'react';
 import { LoginPage } from '../containers/LoginPage';
 
-const loginPage: React.FC = (props) => {
-	return <LoginPage {...props} />;
+const loginPage: React.FC = () => {
+	return <LoginPage />;
 };
 
 export default loginPage;

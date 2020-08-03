@@ -6,7 +6,7 @@ import PublicRoute from 'components/PublicRoute';
 
 interface Props {}
 
-const Routing: React.FC<Props> = (props) => (
+const Routing: React.FC<Props> = () => (
 	<Switch>
 		<PublicRoute exact restricted={false} path="/" component={Example} />
 		<PublicRoute exact restricted={false} path="/login" component={Login} />
