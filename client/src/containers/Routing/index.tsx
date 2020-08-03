@@ -1,6 +1,8 @@
 import React from 'react';
 import { Switch } from 'react-router-dom';
 import Example from 'containers/Example';
+import Projects from 'containers/Projects';
+import PrivateRoute from 'components/PrivateRoute';
 import PublicRoute from 'components/PublicRoute';
 
 interface Props {}
@@ -8,6 +10,7 @@ interface Props {}
 const Routing: React.FC<Props> = () => (
 	<Switch>
 		<PublicRoute exact restricted={false} path="/" component={Example} />
+		<PrivateRoute exact path="/projects" component={Projects} />
 	</Switch>
 );
 
