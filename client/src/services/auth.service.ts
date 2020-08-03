@@ -1,6 +1,6 @@
 import callWebApi from 'helpers/callApi.helper';
 
-export const registerUser = async (email: string, password: string): Promise<WebApi.Results.UserAuthResult | null> => {
+export const registerUser = async (email: string, password: string): Promise<WebApi.Result.UserAuthResult | null> => {
 	const res = await callWebApi({
 		endpoint: 'auth/register',
 		method: 'POST',
@@ -15,5 +15,5 @@ export const registerUser = async (email: string, password: string): Promise<Web
 		return null;
 	}
 
-	return (await res.json()) as WebApi.Results.UserAuthResult;
+	return (await res.json()) as WebApi.Result.UserAuthResult;
 };

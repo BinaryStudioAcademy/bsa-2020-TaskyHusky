@@ -20,7 +20,7 @@ const SignUpForm: React.FC = () => {
 		}
 
 		setLoading(true);
-		const result: WebApi.Results.UserAuthResult | null = await registerUser(email, password);
+		const result: WebApi.Result.UserAuthResult | null = await registerUser(email, password);
 		setLoading(false);
 
 		if (result) {
