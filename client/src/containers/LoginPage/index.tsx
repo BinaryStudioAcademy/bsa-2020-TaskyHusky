@@ -16,12 +16,10 @@ export const LoginPage: React.FC = ({ history }: any) => {
 		setEmailIsValid(validateEmail(email)); // TODO: replace with request to server side via redux-saga when server side is ready
 	};
 
-	// PUSH USER TO RESET PASSWORD PAGE
 	const toggleForgetPasswordHandler: () => void = () => {
 		history.push('/login/resetpassword');
 	};
 
-	// PUSH USER TO SIGN UP PAGE
 	const toggleSignUpHandler: () => void = () => {
 		history.push('/signup');
 	};
