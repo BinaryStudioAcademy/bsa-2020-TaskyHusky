@@ -9,7 +9,7 @@ namespace WebApi.Entities {
 namespace WebApi.Results {
 	interface UserAuthResult {
 		id: string;
-		token: string;
+		jwtToken: string;
 		email: string;
 	}
 }

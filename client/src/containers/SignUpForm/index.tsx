@@ -2,17 +2,35 @@ import React, { useState } from 'react';
 import { Form, Button, Divider, Icon } from 'semantic-ui-react';
 import PasswordInput from 'components/PasswordInput';
 import validator from 'validator';
+import { registerUser } from 'services/auth.service';
+import { setToken } from 'helpers/setToken.helper';
 
 const SignUpForm: React.FC = () => {
 	const [email, setEmail] = useState<string>('');
 	const [emailValid, setEmailValid] = useState<boolean>(true);
 	const [password, setPassword] = useState<string>('');
 	const [passwordValid, setPasswordValid] = useState<boolean>(true);
+	const [loading, setLoading] = useState<boolean>(false);
 
 	const buttonDisabled = !(password && email && passwordValid && emailValid);
 
+	const submit = async () => {
+		if (buttonDisabled) {
+			return;
+		}
+
+		setLoading(true);
+		const result: WebApi.Results.UserAuthResult | null = await registerUser(email, password);
+		setLoading(false);
+
+		if (result) {
+			setToken(result.jwtToken);
+			window.location.replace('/');
+		}
+	};
+
 	return (
-		<Form>
+		<Form onSubmit={submit} loading={loading}>
 			<Form.Input
 				type="email"
 				iconPosition="left"
