@@ -1,17 +1,17 @@
 import { Router } from 'express';
-import FilterController from '../controllers/filter.controllers';
+import FilterPartController from '../controllers/filterPart.controllers';
 
 const router = Router();
-const filterController = new FilterController();
+const filterPartController = new FilterPartController();
 
-router.get('/', filterController.getFilters);
+router.get('/', filterPartController.getFilterParts);
 
-router.get('/:id', filterController.getById);
+router.get('/:id', filterPartController.getById);
 
-router.post('/', filterController.create);
+router.post('/', filterPartController.create);
 
-router.put('/:id', filterController.updateById);
+router.put('/:id', filterPartController.updateById);
 
-router.delete('/:id', filterController.deleteById);
+router.delete('/:id', filterPartController.deleteById);
 
 export default router;
