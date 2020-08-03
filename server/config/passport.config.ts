@@ -25,8 +25,7 @@ passport.use(
             usernameField: EMAIL_FIELD
         },
         (email: string, password: string, next): void => {
-            const user: MockUser | undefined = mockUsers.find((value: MockUser): boolean =>
-                value.email === email);
+            const user = mockUsers.find(value => value.email === email);
 
             if (!user) {
                 return next(new Error(authErrorMessages.INCORRECT_CREDENTIALS), null);
@@ -48,8 +47,7 @@ passport.use(
             usernameField: EMAIL_FIELD
         },
         (email: string, password: string, next): void => {
-            const checkingUser: MockUser | undefined = mockUsers.find((value: MockUser): boolean =>
-                value.email === email);
+            const checkingUser = mockUsers.find(value => value.email === email);
 
             if (checkingUser) {
                 return next(new Error(authErrorMessages.TAKEN_EMAIL), null);
@@ -77,8 +75,7 @@ passport.use(
             secretOrKey: jwtSecret
         },
         ({ id }: { id: string }, next) => {
-            const user: MockUser | undefined = mockUsers.find((value: MockUser): boolean =>
-                value.id === id);
+            const user = mockUsers.find(value => value.id === id);
 
             if (!user) {
                 return next(new Error(authErrorMessages.NO_USER), null);
@@ -94,9 +91,7 @@ passport.serializeUser((user: MockUser, next) => {
 });
 
 passport.deserializeUser((id: string, next) => {
-    const user: MockUser | undefined = mockUsers.find((value: MockUser): boolean =>
-        value.id === id);
-
+    const user = mockUsers.find(value => value.id === id);
     next(null, user);
 });
 
