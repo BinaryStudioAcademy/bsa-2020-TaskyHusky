@@ -6,6 +6,3 @@ export const authenticateJwt = (routesWhiteList: string[]) =>
         routesWhiteList.includes(req.originalUrl)
             ? next()
             : passport.authenticate('jwt', { session: false })(req, res, next);
-
-export const logIn = passport.authenticate('local', { session: false });
-export const register = passport.authenticate('register', { session: false });
