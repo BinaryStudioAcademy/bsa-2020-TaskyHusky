@@ -4,4 +4,7 @@ namespace WebApi.Entities {
 		name?: string;
 		text?: string;
 	}
+	interface Projects {
+		projects: Project[];
+	}
 }
