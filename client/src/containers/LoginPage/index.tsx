@@ -1,7 +1,7 @@
 import React, { useState, SyntheticEvent } from 'react';
 import styles from './styles.module.scss';
 
-import { Header, Form, Divider, Segment, Button, Grid, List } from 'semantic-ui-react';
+import { Header, Form, Divider, Segment, Button, Grid, List, Popup } from 'semantic-ui-react';
 import { validateEmail } from 'helpers/validateEmail.helper';
 import { useHistory } from 'react-router-dom';
 
@@ -42,21 +42,26 @@ export const LoginPage: React.FC = () => {
 						Log in to your account
 					</Header>
 					<Form onSubmit={handleContinueSubmit}>
-						<Form.Input
-							error={
-								isEmailValid || !isEmailSubmitted
-									? null
-									: { content: 'Please enter valid email', pointing: 'below' }
+						<Popup
+							className={styles.errorPopup}
+							open={!(isEmailValid || !isEmailSubmitted)}
+							content="Please enter a valid email"
+							on={[]}
+							trigger={
+								<Form.Input
+									error={!(isEmailValid || !isEmailSubmitted)}
+									placeholder="Email"
+									type="text"
+									onChange={(event) => {
+										setEmail(event.target.value);
+										setIsEmailSubmitted(false);
+									}}
+								/>
 							}
-							placeholder="Email"
-							type="text"
-							onChange={(event) => {
-								setEmail(event.target.value);
-								setIsEmailSubmitted(false);
-							}}
 						/>
+
 						{passwordInput}
-						<Button className={styles.continueButton}>Continue</Button>
+						<Button className={styles.continueButton}>{isEmailValid ? 'Log in' : 'Continue'}</Button>
 					</Form>
 					<Divider />
 					<List bulleted horizontal link className={styles.list}>
