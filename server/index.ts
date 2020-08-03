@@ -9,6 +9,7 @@ import routes from './src/routes';
 import passport from './config/passport.config';
 import { routesWhiteList } from './config/jwt.config';
 import { authenticateJwt } from './src/middleware/jwt.middleware';
+import errorHandlerMiddleware from './src/middleware/errorHandler.middleware';
 
 createConnection().then(async (connection) => {
 	await connection.runMigrations();
@@ -18,6 +19,7 @@ createConnection().then(async (connection) => {
 	app.use(passport.initialize());
 
 	app.use('/api', authenticateJwt(routesWhiteList), routes);
+	app.use(errorHandlerMiddleware)
 
 	app.listen(appPort, () => {
 		// eslint-disable-next-line no-console
