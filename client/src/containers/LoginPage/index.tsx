@@ -3,12 +3,14 @@ import styles from './styles.module.scss';
 
 import { Header, Form, Divider, Segment, Button, Grid, List } from 'semantic-ui-react';
 import { validateEmail } from 'helpers/validateEmail.helper';
+import { useHistory } from 'react-router-dom';
 
-export const LoginPage: React.FC = ({ history }: any) => {
+export const LoginPage: React.FC = () => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [isEmailValid, setIsEmailValid] = useState(false);
 	const [isEmailSubmitted, setIsEmailSubmitted] = useState(false);
+	const history = useHistory();
 
 	const handleContinueSubmit = (event: SyntheticEvent) => {
 		event.preventDefault();
