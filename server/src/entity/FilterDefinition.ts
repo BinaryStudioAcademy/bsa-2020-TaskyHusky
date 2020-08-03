@@ -1,7 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-export class Filter {
+export class FilterDefinition {
 	@PrimaryGeneratedColumn('uuid')
 	id!: string;
 
