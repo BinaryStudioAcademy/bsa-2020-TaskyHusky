@@ -6,10 +6,10 @@ import { validateEmail } from 'helpers/validateEmail.helper';
 import { useHistory } from 'react-router-dom';
 
 export const LoginPage: React.FC = () => {
-	const [email, setEmail] = useState('');
-	const [password, setPassword] = useState('');
-	const [isEmailValid, setIsEmailValid] = useState(false);
-	const [isEmailSubmitted, setIsEmailSubmitted] = useState(false);
+	const [email, setEmail] = useState<string>('');
+	const [password, setPassword] = useState<string>('');
+	const [isEmailValid, setIsEmailValid] = useState<boolean>(false);
+	const [isEmailSubmitted, setIsEmailSubmitted] = useState<boolean>(false);
 	const history = useHistory();
 
 	const handleContinueSubmit = (event: SyntheticEvent) => {
