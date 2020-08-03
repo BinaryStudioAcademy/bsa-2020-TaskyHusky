@@ -30,7 +30,7 @@ const SignUpForm: React.FC = () => {
 	};
 
 	return (
-		<Form onSubmit={submit} loading={loading}>
+		<Form onSubmit={submit}>
 			<Form.Input
 				type="email"
 				iconPosition="left"
@@ -44,11 +44,11 @@ const SignUpForm: React.FC = () => {
 				error={!emailValid}
 			/>
 			<PasswordInput onChange={setPassword} onChangeValid={setPasswordValid} />
-			<Button disabled={buttonDisabled} fluid positive>
+			<Button disabled={buttonDisabled} fluid positive loading={loading} type="submit">
 				Sign up
 			</Button>
 			<Divider horizontal>Or</Divider>
-			<Button>
+			<Button type="button">
 				<Icon name="google" />
 				Sign up with Google
 			</Button>
