@@ -6,5 +6,11 @@ export class FilterDefinition {
 	id!: string;
 
 	@Column()
-	name?: string;
+	filterType?: string;
+
+	@Column()
+	itemType?: string;
+
+	@Column()
+	title?: string;
 }
