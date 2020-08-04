@@ -5,7 +5,7 @@ import { FilterDefinitionRepository } from '../repositories/filterDefinition.rep
 const mockedFilterDefs = [{
 	id: '1',
 	filterType: 'CheckBox',
-	itemType: 'string',
+	dataType: 'string',
 	title: 'Status'
 }];
 

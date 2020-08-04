@@ -9,7 +9,7 @@ export class FilterDefinition {
 	filterType?: string;
 
 	@Column()
-	itemType?: string;
+	dataType?: string;
 
 	@Column()
 	title?: string;
