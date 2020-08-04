@@ -21,7 +21,9 @@ export class BoardColumn {
 	@IsBoolean()
 	isResolutionSet?: boolean;
 
-	@ManyToOne(type => Board, board => board.columns)
+	@ManyToOne(type => Board, board => board.columns,{
+		onDelete: 'CASCADE'
+	})
 	@IsDefined()
 	board!: Board;
 
