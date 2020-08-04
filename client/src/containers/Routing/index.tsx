@@ -17,10 +17,12 @@ const Routing: React.FC = () => (
 			path="/addIssue"
 			component={() => {
 				let openModal: () => void, closeModal: () => void;
+
 				const getSetters: ControlsGetter = (open, close) => {
 					openModal = open;
 					closeModal = close;
 				};
+
 				return (
 					<>
 						<Button fluid positive onClick={() => openModal()}>
