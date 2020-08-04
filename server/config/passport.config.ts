@@ -6,7 +6,7 @@ import { jwtSecret } from './jwt.config';
 import { authErrorMessages, EMAIL_FIELD } from '../src/constants/auth.constants';
 import { hashPassword, passwordValid } from '../src/helpers/password.helper';
 import { UserRepository } from '../src/repositories/user.repository';
-import { IUser } from '../interfaces/User';
+import { UserModel } from '../src/models/User';
 
 passport.use(
 	'local',
@@ -22,7 +22,7 @@ passport.use(
 				return next(new Error(authErrorMessages.INCORRECT_CREDENTIALS), null);
 			}
 
-			if (!passwordValid(password, user.password)) {
+			if (user.password && !passwordValid(password, user.password)) {
 				return next(new Error(authErrorMessages.INCORRECT_CREDENTIALS), null);
 			}
 
@@ -73,7 +73,7 @@ passport.use(
 	),
 );
 
-passport.serializeUser((user: IUser, next) => {
+passport.serializeUser((user: UserModel, next) => {
 	next(null, { id: user.id });
 });
 
