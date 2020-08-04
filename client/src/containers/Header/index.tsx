@@ -84,16 +84,50 @@ export const HeaderMenu = () => {
 					People
 				</Menu.Item>
 
-				<Menu.Item name="create" active={activeItem === 'create'} onClick={() => {}}>
+				<Menu.Item name="create" active={activeItem === 'create'} className={styles.createItem}>
 					<Button primary>Create</Button>
 				</Menu.Item>
 
 				<Menu.Item position="right">
 					<Input className="icon" icon="search" placeholder="Search..." />
-					<Button circular icon="bell" className={styles.circularIcon} />
-					<Button circular icon="question circle" className={styles.circularIcon} />
-					<Button circular icon="setting" className={styles.circularIcon} />
-					<Button circular icon="user" className={styles.circularIcon} />
+
+					<Dropdown icon="bell" className={styles.circularIcon} direction="left">
+						<Dropdown.Menu className={styles.circularDropdownMenu}>
+							<Dropdown.Header>Notifications</Dropdown.Header>
+							<Dropdown.Item>Notification item #1</Dropdown.Item>
+							<Dropdown.Item>Notification item #2</Dropdown.Item>
+							<Dropdown.Item>Notification item #3</Dropdown.Item>
+							<Dropdown.Item>Notification item #4</Dropdown.Item>
+						</Dropdown.Menu>
+					</Dropdown>
+					<Dropdown icon="question circle" className={styles.circularIcon} direction="left">
+						<Dropdown.Menu className={styles.circularDropdownMenu}>
+							<Dropdown.Header>Help</Dropdown.Header>
+							<Dropdown.Item>Documentation</Dropdown.Item>
+							<Dropdown.Item>Community</Dropdown.Item>
+							<Dropdown.Item>Get Tasky-Husky mobile</Dropdown.Item>
+							<Dropdown.Item>About Tasky-Husky</Dropdown.Item>
+							<Dropdown.Header>Legal</Dropdown.Header>
+							<Dropdown.Item>Term of use</Dropdown.Item>
+							<Dropdown.Item>Privacy policy</Dropdown.Item>
+						</Dropdown.Menu>
+					</Dropdown>
+					<Dropdown icon="setting" className={styles.circularIcon} direction="left">
+						<Dropdown.Menu className={styles.circularDropdownMenu}>
+							<Dropdown.Header>Header</Dropdown.Header>
+							<Dropdown.Item>Settings item #1</Dropdown.Item>
+							<Dropdown.Item>Settings item #1</Dropdown.Item>
+						</Dropdown.Menu>
+					</Dropdown>
+					<Dropdown icon="user" className={styles.circularIcon} direction="left">
+						<Dropdown.Menu className={styles.circularDropdownMenu}>
+							<Dropdown.Header>User Name</Dropdown.Header>
+							<Dropdown.Item>Profile</Dropdown.Item>
+							<Dropdown.Item>Account settings</Dropdown.Item>
+							<Dropdown.Divider />
+							<Dropdown.Item>Log out</Dropdown.Item>
+						</Dropdown.Menu>
+					</Dropdown>
 				</Menu.Item>
 			</Menu>
 
