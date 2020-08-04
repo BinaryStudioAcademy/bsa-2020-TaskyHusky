@@ -7,10 +7,6 @@ const CreateIssueModalContext = React.createContext(initialState as Issue);
 const CHANGE = 'CHANGE';
 
 const reducer = (state: Issue, action: any) => {
-	console.log({
-		...state,
-		[action.key]: action.value,
-	});
 	switch (action.type) {
 		case CHANGE: {
 			return {
