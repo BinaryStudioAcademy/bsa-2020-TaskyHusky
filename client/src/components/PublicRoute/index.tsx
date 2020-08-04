@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Route, Redirect, RouteProps, RouteComponentProps } from 'react-router-dom';
+import { LocalStorageKeys } from 'constants/LocalStorageKeys';
 
 interface Props extends RouteProps {
 	restricted: boolean;
@@ -8,7 +9,7 @@ interface Props extends RouteProps {
 
 const PublicRoute = (props: Props) => {
 	const { restricted, component: Component, ...rest } = props;
-	const isAuthorized = false;
+	const isAuthorized = Boolean(localStorage.getItem(LocalStorageKeys.SESSION_TOKEN));
 
 	return (
 		<Route

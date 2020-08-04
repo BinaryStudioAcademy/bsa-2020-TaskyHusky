@@ -54,12 +54,12 @@ function getEntitiesTypes(fileNames: string[]): string {
 // this script goes through all models and generates webapi.d.ts file for the client
 glob('src/{entity,models}/**/*.ts', (err: Error | null, matches: string[]) => {
 	const entities = matches.filter((file) => file.includes('src/entity/'));
-	const models = matches.filter((file) => file.includes('src/model/'));
+	const models = matches.filter((file) => file.includes('src/models/'));
 
 	const modelsTypes = getModelsTypes(models);
 	const entitiesTypes = getEntitiesTypes(entities);
 
-	const webApiTypes = `${modelsTypes}\n\n${entitiesTypes}`.trim();
+	const webApiTypes = `${modelsTypes}\n\n${entitiesTypes}`.trim() + '\n';
 
 	fs.writeFileSync('../client/src/typings/webapi.d.ts', webApiTypes, 'utf8');
 	console.log('...Written to webapi.d.ts');
