@@ -19,15 +19,16 @@ export class UserRepository extends Repository<User> {
 		return user;
 	}
 
-	async updateById(id: string, data: IUser): Promise<IUser> {
-		const { email } = data;
-		const user = await this.getByEmail(email);
-		if (user && user.id !== id) {
+	async updateById(id: string, user: IUser): Promise<IUser> {
+		const { email } = user;
+		// eslint-disable-next-line
+		const userToChange = await this.getByEmail(email);
+		if (userToChange && userToChange.id !== id) {
 			throw new Error(apiErrorMessages.NOT_UNIQUE_EMAIL);
 		}
 
-		await this.update(id, data);
-		return data;
+		await this.update(id, user);
+		return user;
 	}
 
 	deleteById(id: string) {
