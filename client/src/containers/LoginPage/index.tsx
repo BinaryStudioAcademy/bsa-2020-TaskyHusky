@@ -10,11 +10,10 @@ export const LoginPage: React.FC = () => {
 	const [password, setPassword] = useState<string>('');
 	const [isEmailValid, setIsEmailValid] = useState<boolean>(false);
 	const [isEmailSubmitted, setIsEmailSubmitted] = useState<boolean>(false);
-
 	const [redirectToForgetPassword, setRedirectToForgetPassword] = useState<boolean>(false);
 	const [redirectToSignUp, setRedirectToSignUp] = useState<boolean>(false);
 
-	const handleContinueSubmit = (event: SyntheticEvent) => {
+	const handleContinueSubmit: (event: SyntheticEvent) => void = (event) => {
 		event.preventDefault();
 
 		setIsEmailSubmitted(true);
