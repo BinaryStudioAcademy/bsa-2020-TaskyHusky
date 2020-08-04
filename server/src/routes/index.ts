@@ -6,9 +6,10 @@ import priority from './priority.routes';
 
 const routes = Router();
 
-routes.use('/example', example);
-routes.use('/auth', auth);
-routes.use('/issueType', issueType);
-routes.use('/priority', priority);
+routes
+    .use('/example', example)
+    .use('/auth', auth)
+    .use('/issueType', issueType)
+    .use('/priority', priority);
 
 export default routes;
