@@ -12,33 +12,33 @@ export class BoardRepository extends Repository<Board> {
 	}
 
 	async getOne(id: string) {
-		const board= await this
+		const board = await this
 			.createQueryBuilder('board')
 			.where('board.id = :id', { id })
 			.getOne();
 
-		if(!board){
+		if (!board) {
 			throw new Error('Board with this ID does not exist');
 		}
 
 		return board;
 	}
 
-	async put(id: string, data: any){
+	async put(id: string, data: any) {
 		let board = await this.getOne(id);
-		board={...board,...data};
+		board = { ...board, ...data };
 
 		return this.save([board]);
 	}
 
-	post(data: any){
+	post(data: any) {
 		let board = new Board();
-		board={...board,...data};
+		board = { ...board, ...data };
 
 		return this.save([board]);
 	}
 
-	async deleteBoard(id:string){
+	async deleteBoard(id: string) {
 		const board = await this.getOne(id);
 
 		return this.remove([board]);

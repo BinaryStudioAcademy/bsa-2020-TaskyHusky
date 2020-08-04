@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { getCustomRepository } from 'typeorm';
-import {BoardColumnRepository} from '../repositories/boardColumn.repository';
-import {getWebError} from '../helpers/error.helper';
+import { BoardColumnRepository } from '../repositories/boardColumn.repository';
+import { getWebError } from '../helpers/error.helper';
 
 class BoardColumnController {
 	getAll = async (req: Request, res: Response): Promise<void> => {
@@ -19,7 +19,7 @@ class BoardColumnController {
 			const board = await boardColumnRepository.getOne(id);
 			res.status(200).send(board);
 		} catch (e) {
-			res.status(404).send(getWebError(e,404));
+			res.status(404).send(getWebError(e, 404));
 		}
 	};
 
@@ -33,19 +33,19 @@ class BoardColumnController {
 
 			res.status(200).send(boardColumns);
 		} catch (e) {
-			res.status(404).send(getWebError(e,404));
+			res.status(404).send(getWebError(e, 404));
 		}
 	};
 
 	post = async (req: Request, res: Response): Promise<void> => {
 		const boardColumnRepository = getCustomRepository(BoardColumnRepository);
 		const { body } = req;
-		try{
+		try {
 			const board = await boardColumnRepository.post(body);
 
 			res.status(200).send(board);
-		}catch (e) {
-			res.status(404).send(getWebError(e,404));
+		} catch (e) {
+			res.status(404).send(getWebError(e, 404));
 		}
 	};
 
@@ -58,7 +58,7 @@ class BoardColumnController {
 
 			res.status(200).send(board);
 		} catch (e) {
-			res.status(404).send(getWebError(e,404));
+			res.status(404).send(getWebError(e, 404));
 		}
 	};
 }
