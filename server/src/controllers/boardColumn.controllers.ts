@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { getCustomRepository } from 'typeorm';
 import {BoardColumnRepository} from '../repositories/boardColumn.repository';
+import {getWebError} from '../helpers/error.helper';
 
 class BoardColumnController {
 	getAll = async (req: Request, res: Response): Promise<void> => {

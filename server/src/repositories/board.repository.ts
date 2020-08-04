@@ -11,7 +11,7 @@ export class BoardRepository extends Repository<Board> {
 		return this.find();
 	}
 
-	getOne(id: string) {
+	async getOne(id: string) {
 		return this.
 			findOneOrFail({ where: { boardID:id } })
 	}

@@ -8,7 +8,7 @@ const boardController = new BoardController();
 router.use('/column', boardColumn)
 router.get('/', boardController.getAll);
 router.get('/:id', boardController.getOne);
-router.get('/columns/:id', boardController.getBoardColumns);
+router.get('/:id/columns', boardController.getBoardColumns);
 router.put('/:id', boardController.put);
 router.delete('/:id', boardController.delete);
 router.post('/', boardController.post);

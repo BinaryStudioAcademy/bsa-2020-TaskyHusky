@@ -19,7 +19,7 @@ class BoardController {
 			const board = await boardRepository.getOne(id);
 			res.status(200).send(board);
 		} catch (e) {
-			res.status(404).send('Not Found');
+			res.status(404).send(e.message);
 		}
 	};
 

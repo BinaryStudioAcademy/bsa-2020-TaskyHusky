@@ -24,13 +24,13 @@ export class BoardColumnRepository extends Repository<BoardColumn> {
 	async getOne(id: string) {
 		const column = await this
 			.createQueryBuilder('boardColumn')
-			.where('boardColumn.columnID = :columnID', { columnID: id })
+			.where('boardColumn.id = :id', { id })
 			.innerJoin('boardColumn.board', 'board')
 			.addSelect('board.boardID')
 			.getOne();
 
 		if (!column) {
-			throw new Error('This id does not exist');
+			throw new Error('Column with this ID does not exist');
 		}
 
 		return column;
