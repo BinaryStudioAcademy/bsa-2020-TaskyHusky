@@ -12,8 +12,16 @@ export class BoardRepository extends Repository<Board> {
 	}
 
 	async getOne(id: string) {
-		return this.
-			findOneOrFail({ where: { id } })
+		const board= await this
+			.createQueryBuilder('board')
+			.where('board.id = :id', { id })
+			.getOne();
+
+		if(!board){
+			throw new Error('Board with this ID does not exist');
+		}
+
+		return board;
 	}
 
 	async put(id: string, data: any){

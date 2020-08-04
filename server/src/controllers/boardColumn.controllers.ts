@@ -19,7 +19,7 @@ class BoardColumnController {
 			const board = await boardColumnRepository.getOne(id);
 			res.status(200).send(board);
 		} catch (e) {
-			res.status(404).send('Not Found');
+			res.status(404).send(getWebError(e,404));
 		}
 	};
 
@@ -33,7 +33,7 @@ class BoardColumnController {
 
 			res.status(200).send(boardColumns);
 		} catch (e) {
-			res.status(404).send('Not Found');
+			res.status(404).send(getWebError(e,404));
 		}
 	};
 
@@ -45,7 +45,7 @@ class BoardColumnController {
 
 			res.status(200).send(board);
 		}catch (e) {
-			res.status(404).send('Wrong board ID');
+			res.status(404).send(getWebError(e,404));
 		}
 	};
 
@@ -58,7 +58,7 @@ class BoardColumnController {
 
 			res.status(200).send(board);
 		} catch (e) {
-			res.status(404).send('Not Found');
+			res.status(404).send(getWebError(e,404));
 		}
 	};
 }

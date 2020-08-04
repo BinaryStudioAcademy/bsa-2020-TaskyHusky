@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { getCustomRepository } from 'typeorm';
 import { BoardRepository } from '../repositories/board.repository';
 import {BoardColumnRepository} from '../repositories/boardColumn.repository';
+import { getWebError } from '../helpers/error.helper';
 
 class BoardController {
 	getAll = async (req: Request, res: Response): Promise<void> => {
@@ -19,7 +20,7 @@ class BoardController {
 			const board = await boardRepository.getOne(id);
 			res.status(200).send(board);
 		} catch (e) {
-			res.status(404).send(e.message);
+			res.status(404).send(getWebError(e,404));
 		}
 	};
 
@@ -33,7 +34,7 @@ class BoardController {
 
 			res.status(200).send(columns);
 		} catch (e) {
-			res.status(404).send('Board not Found');
+			res.status(404).send(getWebError(e,404));
 		}
 	};
 
@@ -47,7 +48,7 @@ class BoardController {
 
 			res.status(200).send(board);
 		} catch (e) {
-			res.status(404).send('Not Found');
+			res.status(404).send(getWebError(e,404));
 		}
 	};
 
@@ -55,9 +56,14 @@ class BoardController {
 		const boardRepository = getCustomRepository(BoardRepository);
 		const { body } = req;
 
-		const board = await boardRepository.post(body);
+		try{
+			const board = await boardRepository.post(body);
 
-		res.status(200).send(board);
+			res.status(200).send(board);
+		}catch (e) {
+			res.status(422).send(getWebError(e,422));
+		}
+
 
 	};
 
@@ -70,7 +76,7 @@ class BoardController {
 
 			res.status(200).send(board);
 		} catch (e) {
-			res.status(404).send('Not Found');
+			res.status(404).send(getWebError(e,404));
 		}
 	};
 }
