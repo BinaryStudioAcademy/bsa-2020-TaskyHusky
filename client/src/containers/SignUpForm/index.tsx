@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Form, Button, Divider, Icon } from 'semantic-ui-react';
-import PasswordInput from 'components/PasswordInput';
+import PasswordInput from 'components/common/PasswordInput';
 import validator from 'validator';
 import { registerUser } from 'services/auth.service';
 import { setToken } from 'helpers/setToken.helper';
