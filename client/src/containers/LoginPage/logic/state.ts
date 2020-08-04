@@ -12,10 +12,10 @@ export interface User {
 	password?: string;
 }
 
-export interface UserState {
+export interface AuthState {
 	user: User;
 }
 
-export const initialState: UserState = {
+export const initialState: AuthState = {
 	user: {},
 };
