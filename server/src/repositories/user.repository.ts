@@ -6,7 +6,7 @@ import { apiErrorMessages } from '../constants/api.constants';
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
 	getById(id: string) {
-		return this.findOneOrFail({ where: { id } });
+		return this.findOne({ where: { id } });
 	}
 
 	getByEmail(email: string) {
@@ -15,8 +15,7 @@ export class UserRepository extends Repository<User> {
 
 	createNew(data: UserModel) {
 		const user = this.create(data);
-		this.save(user);
-		return user;
+		return this.save(user);
 	}
 
 	async updateById(id: string, user: UserModel): Promise<any> {
