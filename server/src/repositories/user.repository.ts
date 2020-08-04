@@ -1,6 +1,6 @@
 import { EntityRepository, Repository } from 'typeorm';
 import { User } from '../entity/User';
-import { IUser } from '../../interfaces/User';
+import { UserModel } from '../models/User';
 import { apiErrorMessages } from '../constants/api.constants';
 
 @EntityRepository(User)
@@ -13,13 +13,13 @@ export class UserRepository extends Repository<User> {
 		return this.findOne({ where: { email } });
 	}
 
-	createNew(data: IUser) {
+	createNew(data: UserModel) {
 		const user = this.create(data);
 		this.save(user);
 		return user;
 	}
 
-	async updateById(id: string, user: IUser): Promise<any> {
+	async updateById(id: string, user: UserModel): Promise<any> {
 		const { email } = user;
 		const userToChange = await this.getByEmail(email);
 
