@@ -13,9 +13,11 @@ export interface User {
 }
 
 export interface AuthState {
+	jwtToken: string;
 	user: User;
 }
 
 export const initialState: AuthState = {
+	jwtToken: '',
 	user: {},
 };
