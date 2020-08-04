@@ -1,0 +1,38 @@
+.grid {
+	height: 100vh;
+	justify-content: center;
+}
+
+.mainHeader,
+.subHeader {
+	text-align: center;
+}
+
+.column {
+	max-width: 450px;
+}
+
+.list {
+	display: flex !important;
+	justify-content: center;
+}
+
+.listItem {
+	font-size: 13px !important;
+}
+
+.continueButton {
+	width: 100%;
+}
+
+.errorPopup {
+	background: #fff !important;
+	border: 1px solid #e0b4b4 !important;
+	color: #9f3a38 !important;
+}
+
+.errorInput {
+	background: #fff6f6 !important;
+	border-color: #e0b4b4 !important;
+	color: #9f3a38 !important;
+}
