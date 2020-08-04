@@ -13,11 +13,29 @@ namespace WebApi.Entities {
 		text?: string;
 	}
 
+	interface Issue {
+		id: string;
+		type?: IssueType;
+		summary?: string;
+		boardColumnID?: string;
+		labels?: string;
+		attachments?: string;
+		links?: string;
+		priority?: Priority;
+		description?: string;
+		sprintID?: string;
+		projectID?: string;
+		issueKey?: string;
+		assignedID?: string;
+		creatorID?: string;
+	}
+
 	interface IssueType {
 		id: string;
 		icon?: string;
 		color?: string;
 		title?: string;
+		issues?: Issue[];
 	}
 
 	interface Priority {
@@ -25,5 +43,6 @@ namespace WebApi.Entities {
 		icon?: string;
 		color?: string;
 		title?: string;
+		issues?: Issue[];
 	}
 }
