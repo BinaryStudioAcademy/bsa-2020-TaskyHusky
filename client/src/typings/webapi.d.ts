@@ -4,6 +4,24 @@ namespace WebApi.Result {
 		jwtToken: string;
 		email: string;
 	}
+
+	interface User {
+		id: string;
+		firstName?: string;
+		lastName?: string;
+		avatar?: string;
+		department?: string;
+		timezone?: string;
+		organization?: string;
+		email?: string;
+		jobTitle?: string;
+		userSettingsId?: string;
+		password?: string;
+	}
+	interface UserLoginResult {
+		jwtToken: string;
+		user: User;
+	}
 }
 
 namespace WebApi.Entities {
