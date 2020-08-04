@@ -1,6 +1,5 @@
 import { EntityRepository, Repository } from 'typeorm';
 import { IssueType } from '../entity/IssueType';
-import { timingSafeEqual } from 'crypto';
 
 @EntityRepository(IssueType)
 export class IssueTypeRepository extends Repository<IssueType> {
