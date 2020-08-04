@@ -10,13 +10,11 @@ export class FilterPart {
 
 	@OneToOne(type => Filter, filter => filter.id)
 	@JoinColumn()
-	@Column()
     filter?: Filter;
 	
 	@OneToOne(type => FilterDefinition, filterDef => filterDef.id)
 	@JoinColumn()
-	@Column()
-	filterDef?: string;
+	filterDef?: FilterDefinition;
 
 	// @ManyToMany(type => User)
 	// @Column()

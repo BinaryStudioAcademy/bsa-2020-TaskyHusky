@@ -2,13 +2,21 @@ import { Request, Response } from 'express';
 import { getCustomRepository } from 'typeorm';
 import { FilterDefinitionRepository } from '../repositories/filterDefinition.repository';
 
+const mockedFilterDefs = [{
+	id: '1',
+	filterType: 'CheckBox',
+	itemType: 'string',
+	title: 'Status'
+}];
+
 class FilterDefinitionController {
 	getFilterDefinitions = async (req: Request, res: Response): Promise<void> => {
 		const filterDefinitionRepository = getCustomRepository(FilterDefinitionRepository);
 
 		try {
 			const filterDefinitions = await filterDefinitionRepository.getAll();
-			res.send(filterDefinitions);
+			// res.send(filterDefinitions);
+			res.send(mockedFilterDefs);
 		} catch (error) {
 			res.status(401).send();
 		}

@@ -2,13 +2,20 @@ import { Request, Response } from 'express';
 import { getCustomRepository } from 'typeorm';
 import { FilterRepository } from '../repositories/filter.repository';
 
+const mockedFilters = [{
+	id: '1',
+	ownerId: '1',
+	name: 'Done tasks'
+}];
+
 class FilterController {
 	getFilters = async (req: Request, res: Response): Promise<void> => {
 		const filterRepository = getCustomRepository(FilterRepository);
 
 		try {
 			const filters = await filterRepository.getAll();
-			res.send(filters);
+			// res.send(filters);
+			res.send(mockedFilters);
 		} catch (error) {
 			res.status(401).send();
 		}
