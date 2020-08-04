@@ -15,9 +15,14 @@ export const LoginPage: React.FC = () => {
 
 	const handleContinueSubmit: (event: SyntheticEvent) => void = (event) => {
 		event.preventDefault();
-
 		setIsEmailSubmitted(true);
 		setIsEmailValid(validateEmail(email)); // TODO: replace with request to server side via redux-saga when server side is ready
+	};
+
+	const handleLogInSubmit: (event: SyntheticEvent) => void = (event) => {
+		event.preventDefault();
+		setIsEmailValid(validateEmail(email));
+		setIsEmailSubmitted(true);
 	};
 
 	const toggleForgetPasswordHandler: () => void = () => {
@@ -49,10 +54,10 @@ export const LoginPage: React.FC = () => {
 						<Header as="h4" className={styles.subHeader}>
 							Log in to your account
 						</Header>
-						<Form onSubmit={handleContinueSubmit}>
+						<Form onSubmit={isEmailValid ? handleLogInSubmit : handleContinueSubmit}>
 							<Popup
 								className={styles.errorPopup}
-								open={!(isEmailValid || !isEmailSubmitted)}
+								open={!isEmailValid && isEmailSubmitted}
 								content="Please enter a valid email"
 								on={[]}
 								trigger={
