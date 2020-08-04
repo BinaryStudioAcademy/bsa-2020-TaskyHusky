@@ -31,7 +31,7 @@
 		"build": "react-scripts build",
 		"test": "react-scripts test",
 		"eject": "react-scripts eject",
-		"update-webapi": "ts-node ../server/scripts/update_webapi.ts",
+		"update-webapi": "cd ../server && npm run update-webapi",
 		"lint": "eslint src/ --ext .tsx,.ts",
 		"lint-fix": "eslint src/ --ext .tsx,.ts --fix"
 	},
