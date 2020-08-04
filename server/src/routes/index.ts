@@ -8,7 +8,7 @@ const routes = Router();
 
 routes.use('/example', example);
 routes.use('/auth', auth);
-routes.use('/issue_type', issueType);
+routes.use('/issueType', issueType);
 routes.use('/priority', priority);
 
 export default routes;

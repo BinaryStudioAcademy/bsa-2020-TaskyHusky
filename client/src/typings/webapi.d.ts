@@ -12,4 +12,18 @@ namespace WebApi.Entities {
 		name?: string;
 		text?: string;
 	}
+
+	interface IssueType {
+		id: string;
+		icon?: string;
+		color?: string;
+		title?: string;
+	}
+
+	interface Priority {
+		id: string;
+		icon?: string;
+		color?: string;
+		title?: string;
+	}
 }
