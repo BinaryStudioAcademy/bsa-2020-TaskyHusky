@@ -4,7 +4,15 @@ namespace WebApi.Entities {
 		name?: string;
 		text?: string;
 	}
+
 	interface Projects {
-		projects: Project[];
+		projectID: string;
+		name: string;
+		key: string;
+		projectType: string;
+		category: string;
+		defaultAssigneeID: string;
+		leadID: string;
+		creatorID: string;
 	}
 }
