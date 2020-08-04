@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { getCustomRepository } from 'typeorm';
 import { BoardRepository } from '../repositories/board.repository';
+import {BoardColumnRepository} from '../repositories/boardColumn.repository';
 
 class BoardController {
 	getAll = async (req: Request, res: Response): Promise<void> => {
@@ -22,21 +23,17 @@ class BoardController {
 		}
 	};
 
-	getOneWithColumn = async (req: Request, res: Response): Promise<void> => {
+	getBoardColumns = async (req: Request, res: Response): Promise<void> => {
 		const boardRepository = getCustomRepository(BoardRepository);
+		const columnsRepository = getCustomRepository(BoardColumnRepository);
 		const { id } = req.params;
 		try {
 			await boardRepository.getOne(id);
-			const board = await boardRepository.getOneWithColumn(id);
+			const columns = await columnsRepository.getBoardColumns(id);
 
-			if (!board) {
-				res.status(400).send('Please add columns');
-				return;
-			}
-
-			res.status(200).send(board);
+			res.status(200).send(columns);
 		} catch (e) {
-			res.status(404).send('Not Found');
+			res.status(404).send('Board not Found');
 		}
 	};
 

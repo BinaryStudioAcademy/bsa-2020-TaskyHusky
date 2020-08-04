@@ -11,14 +11,6 @@ export class BoardRepository extends Repository<Board> {
 		return this.find();
 	}
 
-	getOneWithColumn(id: string) {
-		return this
-			.createQueryBuilder('board')
-			.where('board.boardID = :boardID', { boardID: id })
-			.innerJoinAndSelect('board.columns', 'columns')
-			.getOne();
-	}
-
 	getOne(id: string) {
 		return this.
 			findOneOrFail({ where: { boardID:id } })

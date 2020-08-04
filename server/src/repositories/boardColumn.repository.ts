@@ -12,6 +12,15 @@ export class BoardColumnRepository extends Repository<BoardColumn> {
 			.getMany();
 	};
 
+	getBoardColumns(id: string) {
+		return this
+			.createQueryBuilder('boardColumn')
+			.innerJoin('boardColumn.board', 'board')
+			.addSelect('board.boardID')
+			.where('board.boardID = :boardID', { boardID: id })
+			.getMany();
+	}
+
 	async getOne(id: string) {
 		const column = await this
 			.createQueryBuilder('boardColumn')
@@ -33,11 +42,11 @@ export class BoardColumnRepository extends Repository<BoardColumn> {
 		let boardColumn = await this.getOne(id);
 		const { board, ...dataToCreate } = data;
 
-		if(board){
+		if (board) {
 			const boardToAdd = await boardRepository.getOne(board.boardID);
 
-			boardColumn = { ...boardColumn, ...dataToCreate, board:boardToAdd };
-		}else {
+			boardColumn = { ...boardColumn, ...dataToCreate, board: boardToAdd };
+		} else {
 			boardColumn = { ...boardColumn, ...dataToCreate };
 		}
 
@@ -50,7 +59,7 @@ export class BoardColumnRepository extends Repository<BoardColumn> {
 		const boardToAdd = await boardRepository.getOne(board.boardID);
 
 		let boardColumn = new BoardColumn();
-		boardColumn = { ...boardColumn, ...dataToCreate, board:boardToAdd };
+		boardColumn = { ...boardColumn, ...dataToCreate, board: boardToAdd };
 
 		return this.save([boardColumn]);
 	}
