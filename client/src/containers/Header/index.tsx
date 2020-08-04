@@ -5,6 +5,7 @@ import styles from './styles.module.scss';
 import { Redirect } from 'react-router-dom';
 
 export const HeaderMenu = () => {
+	const [searchValue, setSearchValue] = useState<string>('');
 	const [activeItem, setActiveItem] = useState<string>('');
 	const [redirectToDashboards, setRedirectToDashboards] = useState<boolean>(false);
 
@@ -89,7 +90,13 @@ export const HeaderMenu = () => {
 				</Menu.Item>
 
 				<Menu.Item position="right">
-					<Input className="icon" icon="search" placeholder="Search..." />
+					<Input
+						className="icon"
+						icon="search"
+						placeholder="Search..."
+						value={searchValue}
+						onChange={(event) => setSearchValue(event.target.value)}
+					/>
 
 					<Dropdown icon="bell" className={styles.circularIcon} direction="left">
 						<Dropdown.Menu className={styles.circularDropdownMenu}>
