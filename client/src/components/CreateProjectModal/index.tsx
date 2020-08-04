@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, Button, Header, Form, Checkbox, Image } from 'semantic-ui-react';
+import { Modal, Button, Form, Checkbox, Image } from 'semantic-ui-react';
 
 import scrumImg from './../../assets/images/scrum.svg';
 import styles from './styles.module.scss';
@@ -12,7 +12,13 @@ interface Props {
 const CreateProjectModal = (props: Props) => {
 	const { setIsModalShown, onCreateProject } = props;
 	return (
-		<Modal onClose={() => setIsModalShown(false)} onOpen={() => setIsModalShown(true)} open={true} size={'tiny'}>
+		<Modal
+			closeIcon
+			onClose={() => setIsModalShown(false)}
+			onOpen={() => setIsModalShown(true)}
+			open={true}
+			size={'tiny'}
+		>
 			<Modal.Header>Create project</Modal.Header>
 			<Modal.Content>
 				<Form className={styles.form_container}>
