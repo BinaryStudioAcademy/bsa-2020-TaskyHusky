@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { Card, Image } from 'semantic-ui-react';
 import { Person } from '../../../MockData/people';
 
@@ -7,13 +7,13 @@ interface PeopleListItem {
 	handlerClick?: () => void;
 }
 
-const PeopleListItem: React.FC<PeopleListItem> = ({ person, handlerClick }) => {
+const PeopleListItem: React.FC<PeopleListItem> = ({ person, handlerClick }): ReactElement => {
 	const { firstName, lastName, avatar, role } = person;
 
 	return (
 		<Card onClick={() => handlerClick && handlerClick()}>
 			<Card.Content>
-				<Image floated="right" size="mini" src={avatar} />
+				<Image floated="right" size="tiny" src={avatar} />
 				<Card.Header>
 					{firstName} {lastName}
 				</Card.Header>

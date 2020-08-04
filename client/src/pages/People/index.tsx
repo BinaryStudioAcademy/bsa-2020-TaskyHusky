@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Header } from 'semantic-ui-react';
 import { people } from '../../MockData/people';
 import PeopleList from '../../components/PeopleList';
 
-const People = () => {
+const People: React.FC = (): ReactElement => {
 	const history = useHistory();
 
 	const redirectToPersonProfile = (id: number | string) => {
