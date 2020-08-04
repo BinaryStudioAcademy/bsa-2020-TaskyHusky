@@ -1,17 +1,36 @@
-import React, { useState, SyntheticEvent } from 'react';
+import React, { useState, SyntheticEvent, useEffect } from 'react';
 import styles from './styles.module.scss';
 
 import { Header, Form, Divider, Segment, Button, Grid, List, Popup } from 'semantic-ui-react';
 import { validateEmail } from 'helpers/validateEmail.helper';
 import { Redirect } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from 'typings/rootState';
+import * as actions from './logic/actions';
+import { setToken } from 'helpers/setToken.helper';
 
 export const LoginPage: React.FC = () => {
+	const dispatch = useDispatch();
+	const userToken = useSelector((rootState: RootState) => rootState.auth.jwtToken);
+	const userData = useSelector((rootState: RootState) => rootState.auth.user);
+	const getUser = (email: string, password: string) => {
+		dispatch(actions.triggerLoginUser({ email, password }));
+	};
 	const [email, setEmail] = useState<string>('');
 	const [password, setPassword] = useState<string>('');
 	const [isEmailValid, setIsEmailValid] = useState<boolean>(false);
 	const [isEmailSubmitted, setIsEmailSubmitted] = useState<boolean>(false);
 	const [redirectToForgetPassword, setRedirectToForgetPassword] = useState<boolean>(false);
 	const [redirectToSignUp, setRedirectToSignUp] = useState<boolean>(false);
+	const [redirectToRootPage, setRedirectToRootPage] = useState<boolean>(false);
+
+	useEffect(() => {
+		getUser(email, password);
+		if (!!userToken && !!userData) {
+			setToken(userToken);
+			setRedirectToRootPage(!redirectToRootPage);
+		}
+	}, [userToken]);
 
 	const handleContinueSubmit: (event: SyntheticEvent) => void = (event) => {
 		event.preventDefault();
@@ -23,6 +42,7 @@ export const LoginPage: React.FC = () => {
 		event.preventDefault();
 		setIsEmailValid(validateEmail(email));
 		setIsEmailSubmitted(true);
+		getUser(email, password);
 	};
 
 	const toggleForgetPasswordHandler: () => void = () => {
@@ -38,6 +58,8 @@ export const LoginPage: React.FC = () => {
 	) : null;
 
 	const renderSignUp: JSX.Element | null = redirectToSignUp ? <Redirect to="/signup" /> : null;
+
+	const renderRootPage: JSX.Element | null = redirectToRootPage ? <Redirect to="/" /> : null;
 
 	const passwordInput = isEmailValid ? (
 		<Form.Input placeholder="Password" type="password" onChange={(event) => setPassword(event.target.value)} />
@@ -90,6 +112,7 @@ export const LoginPage: React.FC = () => {
 			</Grid>
 			{renderForgetPassword}
 			{renderSignUp}
+			{renderRootPage}
 		</>
 	);
 };
