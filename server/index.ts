@@ -17,7 +17,8 @@ createConnection().then(async (connection) => {
 	app.use(bodyParser.json());
 	app.use(passport.initialize());
 
-	app.use('/api', authenticateJwt(routesWhiteList), routes);
+	// app.use('/api', authenticateJwt(routesWhiteList), routes);
+	app.use('/api', routes);
 
 	app.listen(appPort, () => {
 		// eslint-disable-next-line no-console
