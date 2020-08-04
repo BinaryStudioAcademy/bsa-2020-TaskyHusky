@@ -13,7 +13,7 @@ export class BoardRepository extends Repository<Board> {
 
 	async getOne(id: string) {
 		return this.
-			findOneOrFail({ where: { boardID:id } })
+			findOneOrFail({ where: { id } })
 	}
 
 	async put(id: string, data: any){

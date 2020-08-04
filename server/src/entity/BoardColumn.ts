@@ -5,7 +5,7 @@ import { Board } from './Board';
 @Entity()
 export class BoardColumn {
 	@PrimaryGeneratedColumn('uuid')
-	columnID!: string;
+	id!: string;
 
 	@Column()
 	@IsString()

@@ -8,7 +8,7 @@ export class BoardColumnRepository extends Repository<BoardColumn> {
 		return this
 			.createQueryBuilder('boardColumn')
 			.innerJoin('boardColumn.board', 'board')
-			.addSelect('board.boardID')
+			.addSelect('board.id')
 			.getMany();
 	};
 
@@ -16,8 +16,8 @@ export class BoardColumnRepository extends Repository<BoardColumn> {
 		return this
 			.createQueryBuilder('boardColumn')
 			.innerJoin('boardColumn.board', 'board')
-			.addSelect('board.boardID')
-			.where('board.boardID = :boardID', { boardID: id })
+			.addSelect('board.id')
+			.where('board.id = :id', { id })
 			.getMany();
 	}
 
@@ -26,7 +26,7 @@ export class BoardColumnRepository extends Repository<BoardColumn> {
 			.createQueryBuilder('boardColumn')
 			.where('boardColumn.id = :id', { id })
 			.innerJoin('boardColumn.board', 'board')
-			.addSelect('board.boardID')
+			.addSelect('board.id')
 			.getOne();
 
 		if (!column) {
@@ -43,7 +43,7 @@ export class BoardColumnRepository extends Repository<BoardColumn> {
 		const { board, ...dataToCreate } = data;
 
 		if (board) {
-			const boardToAdd = await boardRepository.getOne(board.boardID);
+			const boardToAdd = await boardRepository.getOne(board.id);
 
 			boardColumn = { ...boardColumn, ...dataToCreate, board: boardToAdd };
 		} else {
@@ -56,7 +56,7 @@ export class BoardColumnRepository extends Repository<BoardColumn> {
 	async post(data: any) {
 		const boardRepository = getCustomRepository(BoardRepository);
 		const { board, ...dataToCreate } = data;
-		const boardToAdd = await boardRepository.getOne(board.boardID);
+		const boardToAdd = await boardRepository.getOne(board.id);
 
 		let boardColumn = new BoardColumn();
 		boardColumn = { ...boardColumn, ...dataToCreate, board: boardToAdd };
