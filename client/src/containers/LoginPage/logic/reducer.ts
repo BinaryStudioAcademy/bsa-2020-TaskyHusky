@@ -6,7 +6,8 @@ export const authReducer = createReducer<AuthState>(initialState, {
 	[actionTypes.UPDATE_LOGIN_USER](state, action: actionTypes.UpdateLoginUser) {
 		return {
 			...state,
-			...action.user,
+			jwtToken: action.jwtToken,
+			user: action.user,
 		};
 	},
 });
