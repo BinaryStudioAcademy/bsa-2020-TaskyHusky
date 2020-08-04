@@ -46,7 +46,7 @@ passport.use(
 			}
 
 			const encodedPassword = hashPassword(password);
-			const newUserObject = userRepository.createNew({ email, password: encodedPassword });
+			const newUserObject = await userRepository.createNew({ email, password: encodedPassword });
 
 			return next(null, newUserObject);
 		},
