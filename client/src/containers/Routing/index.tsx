@@ -11,7 +11,7 @@ const Routing: React.FC = () => (
 		<PublicRoute exact restricted={false} path="/" component={Example} />
 		<PublicRoute exact restricted={true} path="/login" component={Login} />
 		<PublicRoute exact restricted={true} path="/signup" component={SignUp} />
-		<PublicRoute exact restricted={true} path="/players" component={People} />
+		<PublicRoute exact restricted={true} path="/people" component={People} />
 	</Switch>
 );
 

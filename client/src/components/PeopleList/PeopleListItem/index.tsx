@@ -4,21 +4,20 @@ import { Person } from '../../../MockData/people';
 
 interface PeopleListItem {
 	person: Person;
+	handlerClick?: () => void;
 }
 
-const PeopleListItem = ({ person }: PeopleListItem) => {
-	const { id, firstName, lastName, avatar, role } = person;
+const PeopleListItem: React.FC<PeopleListItem> = ({ person, handlerClick }) => {
+	const { firstName, lastName, avatar, role } = person;
 
 	return (
-		<Card href={`/user/${id}`}>
-			<Image src={avatar} wrapped ui={false} />
+		<Card onClick={() => handlerClick && handlerClick()}>
 			<Card.Content>
+				<Image floated="right" size="mini" src={avatar} />
 				<Card.Header>
 					{firstName} {lastName}
 				</Card.Header>
-				<Card.Meta>
-					<span>{role}</span>
-				</Card.Meta>
+				<Card.Meta>{role}</Card.Meta>
 			</Card.Content>
 		</Card>
 	);
