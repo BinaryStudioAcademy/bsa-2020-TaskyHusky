@@ -1,7 +1,7 @@
 import express from 'express';
-import HttpStatusCode from './httpStattusCode.helper';
+import HttpStatusCode from '../constants/httpStattusCode.constants';
 
-export class ErrorHandler extends Error {
+export class ErrorResponse extends Error {
 	public statusCode: HttpStatusCode | number;
 
 	public message: string;
@@ -13,7 +13,7 @@ export class ErrorHandler extends Error {
 	}
 }
 
-export const handleError = (err: ErrorHandler, res: express.Response) => {
+export const handleError = (err: ErrorResponse, res: express.Response) => {
 	const { statusCode, message } = err;
 
 	res.status(statusCode).json({
