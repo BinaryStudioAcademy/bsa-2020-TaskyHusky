@@ -19,16 +19,17 @@ export class UserRepository extends Repository<User> {
 		return user;
 	}
 
-	async updateById(id: string, user: IUser): Promise<IUser> {
+	async updateById(id: string, user: IUser): Promise<any> {
 		const { email } = user;
-		// eslint-disable-next-line
 		const userToChange = await this.getByEmail(email);
+
 		if (userToChange && userToChange.id !== id) {
 			throw new Error(apiErrorMessages.NOT_UNIQUE_EMAIL);
 		}
 
-		await this.update(id, user);
-		return user;
+		this.update(id, user);
+
+		return this.findOne(id);
 	}
 
 	deleteById(id: string) {

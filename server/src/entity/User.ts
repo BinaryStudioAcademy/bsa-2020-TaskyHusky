@@ -1,4 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { MinLength, IsEmail } from 'class-validator';
 
 @Entity()
 export class User {
@@ -27,11 +28,13 @@ export class User {
 	email?: string;
 
 	@Column({ nullable: true })
+	@IsEmail()
 	jobTitle?: string;
 
 	@Column({ nullable: true })
 	userSettingsId?: string;
 
 	@Column()
-	password!: string;
+	@MinLength(6)
+	password?: string;
 }
