@@ -9,7 +9,6 @@ import styles from './styles.module.scss';
 
 const Projects: React.FC = () => {
 	const [searchName, setSearchName] = useState('');
-	const [isModalShown, setIsModalShown] = useState(false);
 	const dispatch = useDispatch();
 	const projects = useSelector((rootState: RootState) => rootState.projects.projects);
 
@@ -29,16 +28,9 @@ const Projects: React.FC = () => {
 
 	return (
 		<div className={styles.wrapper}>
-			{isModalShown ? (
-				<CreateProjectModal setIsModalShown={setIsModalShown} onCreateProject={onCreateProject} />
-			) : (
-				''
-			)}
 			<div className={styles.wrapper__title}>
 				<h1 className={styles.title}>Projects</h1>
-				<Button primary onClick={() => setIsModalShown(true)}>
-					Create project
-				</Button>
+				<CreateProjectModal onCreateProject={onCreateProject} />
 			</div>
 			<div className={[styles.wrapper__filters, styles.filters].join(' ')}>
 				<Input icon="search" placeholder="Search..." onChange={onSearch} value={searchName} />

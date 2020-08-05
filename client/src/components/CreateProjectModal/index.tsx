@@ -1,24 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Modal, Button, Form, Checkbox, Image } from 'semantic-ui-react';
 
 import scrumImg from './../../assets/images/scrum.svg';
 import styles from './styles.module.scss';
 
 interface Props {
-	setIsModalShown(params: boolean): void;
 	onCreateProject(): void;
 }
 
 const CreateProjectModal = (props: Props) => {
-	const { setIsModalShown, onCreateProject } = props;
+	const [isModalShown, setIsModalShown] = useState(false);
+	const { onCreateProject } = props;
+
 	return (
 		<Modal
 			closeIcon
 			onClose={() => setIsModalShown(false)}
 			onOpen={() => setIsModalShown(true)}
-			open={true}
+			open={isModalShown}
 			size={'tiny'}
 			dimmer="inverted"
+			trigger={<Button primary>Create project</Button>}
 		>
 			<Modal.Header>Create project</Modal.Header>
 			<Modal.Content>
