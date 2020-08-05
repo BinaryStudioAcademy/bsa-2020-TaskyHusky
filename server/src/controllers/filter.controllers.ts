@@ -40,13 +40,13 @@ class FilterController {
 		}
 	};
 
-	updateById = async (req: Request, res: Response): Promise<void> => {
+	updateFilter = async (req: Request, res: Response): Promise<void> => {
 		const filterRepository = getCustomRepository(FilterRepository);
 		const { id } = req.params;
 		const { body } = req;
 
 		try {
-			const filter = await filterRepository.updateById(id, body);
+			const filter = await filterRepository.updateItem(body);
 			res.send(filter);
 		} catch (error) {
 			res.status(404).send();

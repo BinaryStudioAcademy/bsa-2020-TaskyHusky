@@ -1,7 +1,7 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, JoinTable } from 'typeorm';
 import { FilterDefinition } from './FilterDefinition';
 import { Filter } from './Filter';
-// import User from './User';
+import { User } from './User';
 
 @Entity()
 export class FilterPart {
@@ -14,9 +14,9 @@ export class FilterPart {
 	@Column()
 	filterDefId?: string;
 
-	// @ManyToMany(type => User)
-	// @Column()
-	// members?: User[];
+	@ManyToMany((type) => User)
+	@JoinTable()
+	members?: User[];
 
 	@Column()
 	searchText?: string;

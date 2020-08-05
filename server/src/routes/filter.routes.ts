@@ -12,7 +12,7 @@ router
 	.get('/', filterController.getFilters)
 	.get('/:id', filterController.getById)
 	.post('/', filterController.create)
-	.put('/:id', filterController.updateById)
+	.put('/', filterController.updateFilter)
 	.delete('/:id', filterController.deleteById);
 
 export default router;
