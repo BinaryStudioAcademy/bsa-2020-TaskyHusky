@@ -19,8 +19,7 @@ createConnection()
 		app.use(bodyParser.json());
 		app.use(passport.initialize());
 
-		app.use('/api', routes);
-		// app.use('/api', authenticateJwt(routesWhiteList), routes);
+		app.use('/api', authenticateJwt(routesWhiteList), routes);
 		app.use(errorHandlerMiddleware);
 
 		app.listen(appPort, () => {
