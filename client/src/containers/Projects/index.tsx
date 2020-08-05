@@ -25,7 +25,7 @@ const Projects: React.FC = () => {
 	};
 
 	const searchString = new RegExp(searchName, 'i');
-	const filteredData = projects.filter(({ name }) => searchString.test(name));
+	const filteredData = (projects || []).filter(({ name }) => searchString.test(name));
 
 	return (
 		<div className={styles.wrapper}>

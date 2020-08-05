@@ -1,7 +1,8 @@
 import { all, call, put, takeEvery } from 'redux-saga/effects';
-import { getTypes, getPriorities } from 'services/issue.service';
+import { getTypes, getPriorities, createIssue } from 'services/issue.service';
 import { setTypes, setPriorities } from './actions';
 import * as actionTypes from './actionTypes';
+import { AnyAction } from 'redux';
 
 function* fetchIssueTypes() {
 	const types = yield call(getTypes);
@@ -21,6 +22,14 @@ function* watchLoadPriorities() {
 	yield takeEvery(actionTypes.LOAD_PRIORITIES, fetchPriorities);
 }
 
+function* fetchCreateIssue(action: AnyAction) {
+	yield call(createIssue, action.data);
+}
+
+function* watchCreateIssue() {
+	yield takeEvery(actionTypes.CREATE_ISSUE, fetchCreateIssue);
+}
+
 export default function* issueSaga() {
-	yield all([watchLoadIssueTypes(), watchLoadPriorities()]);
+	yield all([watchLoadIssueTypes(), watchLoadPriorities(), watchCreateIssue()]);
 }
