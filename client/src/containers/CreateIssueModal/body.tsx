@@ -17,7 +17,7 @@ interface SelectOption {
 }
 
 const CreateIssueModalBody: React.FC<Props> = ({ children }) => {
-	const [open, setOpen] = useState<boolean>(false);
+	const [isOpened, setIsOpened] = useState<boolean>(false);
 	const [loading, setLoading] = useState<boolean>(false);
 
 	const typeOpts: SelectOption[] = issueTypes.map((type) => ({
@@ -47,7 +47,7 @@ const CreateIssueModalBody: React.FC<Props> = ({ children }) => {
 	const context = useCreateIssueModalContext();
 	const searchFunc = (opts: any[], value: string) => opts.filter((o) => o.text.toString().includes(value));
 
-	const getSetOpenFunc = (value: boolean) => () => setOpen(value);
+	const getSetOpenFunc = (value: boolean) => () => setIsOpened(value);
 	children(getSetOpenFunc(true), getSetOpenFunc(false));
 
 	const submit = async () => {
@@ -71,11 +71,11 @@ const CreateIssueModalBody: React.FC<Props> = ({ children }) => {
 		});
 
 		setLoading(false);
-		setOpen(false);
+		setIsOpened(false);
 	};
 
 	return (
-		<Modal open={open} closeIcon closeOnEscape closeOnDimmerClick onClose={getSetOpenFunc(false)}>
+		<Modal open={isOpened} closeIcon closeOnEscape closeOnDimmerClick onClose={getSetOpenFunc(false)}>
 			<Grid className="fill" textAlign="center" verticalAlign="middle">
 				<Grid.Column style={{ marginTop: 20, marginBottom: 20, maxWidth: 300 }}>
 					<Header color="blue">Add issue</Header>
@@ -113,9 +113,14 @@ const CreateIssueModalBody: React.FC<Props> = ({ children }) => {
 							search={searchFunc}
 							onChange={(event, data) => context.set('labels', data.value)}
 						/>
-						<TagsInput placeholder="Add link" onChange={(tags) => context.set('links', [...tags])} />
+						<TagsInput
+							placeholder="Add link"
+							tags={context.data.links as string[]}
+							onChange={(tags) => context.set('links', [...tags])}
+						/>
 						<TagsInput
 							placeholder="Add attachment"
+							tags={context.data.attachments as string[]}
 							onChange={(tags) => context.set('attachments', [...tags])}
 						/>
 						<Form.TextArea

@@ -5,23 +5,21 @@ import styles from './styles.module.scss';
 interface Props {
 	onChange: (tags: string[]) => void;
 	placeholder?: string;
+	tags: string[];
 }
 
-const TagsInput: React.FC<Props> = ({ onChange, placeholder }) => {
-	const [tags, setTags] = useState<string[]>([]);
+const TagsInput: React.FC<Props> = ({ onChange, placeholder, tags }) => {
 	const [value, setValue] = useState<string>('');
 
 	const addTag = (text: string) => {
 		const newTags = [...tags, text];
 		setValue('');
-		setTags(newTags);
 		onChange(newTags);
 	};
 
 	const removeTag = (index: number) => {
 		const newTags = [...tags];
 		newTags.splice(index, 1);
-		setTags(newTags);
 		onChange(newTags);
 	};
 
