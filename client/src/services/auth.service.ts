@@ -1,24 +1,18 @@
 import callWebApi from 'helpers/callApi.helper';
 
-export const registerUser = async (email: string, password: string): Promise<WebApi.Result.UserAuthResult | null> => {
+export const registerUser = async (settings: Partial<WebApi.Entities.User>) => {
 	const res = await callWebApi({
 		endpoint: 'auth/register',
 		method: 'POST',
 		body: {
-			email,
-			password,
+			...settings,
 		},
 	});
-
-	if (res.status > 399) {
-		// Replace this with error handling (when there will be a handler on server)
-		return null;
-	}
 
 	return (await res.json()) as WebApi.Result.UserAuthResult;
 };
 
-export const loginUser = async (email: string, password: string): Promise<WebApi.Result.UserLoginResult | null> => {
+export const loginUser = async (email: string, password: string): Promise<WebApi.Result.UserAuthResult | null> => {
 	const res = await callWebApi({
 		endpoint: 'auth/login',
 		method: 'POST',
@@ -28,10 +22,5 @@ export const loginUser = async (email: string, password: string): Promise<WebApi
 		},
 	});
 
-	if (res.status > 399) {
-		// Replace this with error handling (when there will be a handler on server)
-		return null;
-	}
-
-	return (await res.json()) as WebApi.Result.UserLoginResult;
+	return (await res.json()) as WebApi.Result.UserAuthResult;
 };

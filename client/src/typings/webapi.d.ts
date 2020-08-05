@@ -19,27 +19,11 @@ namespace WebApi.Issue {
 
 namespace WebApi.Result {
 	interface UserAuthResult {
-		id: string;
+		user: {
+			id: string;
+			email: string;
+		};
 		jwtToken: string;
-		email: string;
-	}
-
-	interface User {
-		id: string;
-		firstName?: string;
-		lastName?: string;
-		avatar?: string;
-		department?: string;
-		timezone?: string;
-		organization?: string;
-		email?: string;
-		jobTitle?: string;
-		userSettingsId?: string;
-		password?: string;
-	}
-	interface UserLoginResult {
-		jwtToken: string;
-		user: User;
 	}
 }
 
@@ -60,10 +44,18 @@ namespace WebApi.User {
 }
 
 namespace WebApi.Entities {
-	interface Example {
+	interface Board {
 		id: string;
-		name?: string;
-		text?: string;
+		boardType?: string;
+		columns?: BoardColumn[];
+	}
+
+	interface BoardColumn {
+		id: string;
+		columnName?: string;
+		status?: string;
+		isResolutionSet?: boolean;
+		board: Board;
 	}
 
 	interface Filter {
@@ -118,6 +110,17 @@ namespace WebApi.Entities {
 		color?: string;
 		title?: string;
 		issues?: Issue[];
+	}
+
+	interface Projects {
+		projectID: string;
+		name: string;
+		key: string;
+		projectType: string;
+		category: string;
+		defaultAssigneeID?: string;
+		leadID?: string;
+		creatorID?: string;
 	}
 
 	interface User {

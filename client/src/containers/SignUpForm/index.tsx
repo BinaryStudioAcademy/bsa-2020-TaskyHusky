@@ -4,15 +4,20 @@ import PasswordInput from 'components/common/PasswordInput';
 import validator from 'validator';
 import { registerUser } from 'services/auth.service';
 import { setToken } from 'helpers/setToken.helper';
+import { Redirect } from 'react-router-dom';
 
 const SignUpForm: React.FC = () => {
 	const [email, setEmail] = useState<string>('');
 	const [emailValid, setEmailValid] = useState<boolean>(true);
 	const [password, setPassword] = useState<string>('');
 	const [passwordValid, setPasswordValid] = useState<boolean>(true);
+	const [firstName, setFirstName] = useState<string>('');
+	const [firstNameValid, setFirstNameValid] = useState<boolean>(true);
+	const [lastName, setLastName] = useState<string>('');
 	const [loading, setLoading] = useState<boolean>(false);
+	const [redirecting, setRedirecting] = useState<boolean>(false);
 
-	const buttonDisabled = !(password && email && passwordValid && emailValid);
+	const buttonDisabled = !(password && passwordValid && email && emailValid && firstName && firstNameValid);
 
 	const submit = async () => {
 		if (buttonDisabled) {
@@ -20,17 +25,35 @@ const SignUpForm: React.FC = () => {
 		}
 
 		setLoading(true);
-		const result: WebApi.Result.UserAuthResult | null = await registerUser(email, password);
+
+		const result: WebApi.Result.UserAuthResult | null = await registerUser({
+			email,
+			password,
+			firstName,
+			lastName,
+		});
+
 		setLoading(false);
 
 		if (result) {
 			setToken(result.jwtToken);
-			window.location.replace('/');
+			setRedirecting(true);
 		}
 	};
 
 	return (
 		<Form onSubmit={submit}>
+			{redirecting ? <Redirect to="/" /> : ''}
+			<Form.Input
+				placeholder="First name"
+				onChange={(event, data) => {
+					setFirstName(data.value);
+					setFirstNameValid(true);
+				}}
+				onBlur={() => setFirstNameValid(Boolean(firstName))}
+				error={!firstNameValid}
+			/>
+			<Form.Input placeholder="Last name" onChange={(event, data) => setLastName(data.value)} />
 			<Form.Input
 				type="email"
 				iconPosition="left"
