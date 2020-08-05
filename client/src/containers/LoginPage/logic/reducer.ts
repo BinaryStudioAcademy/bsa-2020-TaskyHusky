@@ -7,7 +7,7 @@ export const authReducer = createReducer<AuthState>(initialState, {
 		return {
 			...state,
 			user: action.user,
-			isAuthorized: !state.isAuthorized,
+			isAuthorized: !!action.user,
 			jwtToken: action.jwtToken,
 		};
 	},
