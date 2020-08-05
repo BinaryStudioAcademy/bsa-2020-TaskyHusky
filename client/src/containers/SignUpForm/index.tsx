@@ -36,6 +36,7 @@ const SignUpForm: React.FC = () => {
 				<Popup
 					on={[]}
 					open={!emailValid}
+					content="Please enter a valid email"
 					trigger={
 						<Form.Input
 							type="email"
