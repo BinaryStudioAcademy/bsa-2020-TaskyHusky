@@ -1,10 +1,15 @@
-import { getRepository, MigrationInterface, QueryRunner, getCustomRepository } from 'typeorm';
-import { BoardColumn } from '../entity/BoardColumn';
+import { getCustomRepository, getRepository } from 'typeorm';
 import { BoardRepository } from '../repositories/board.repository';
+import { BoardColumn } from '../entity/BoardColumn';
 
-export class BoardColumns1596468583404 implements MigrationInterface {
+export class BoardSeeder {
+	public static async execute() {
 
-	public async up(queryRunner: QueryRunner): Promise<void> {
+		await getRepository('Board').save([
+			{ boardType: 'first' },
+			{ boardType: 'second' },
+		]);
+
 		const boardRepository = getCustomRepository(BoardRepository);
 		const columnRepository = getRepository('BoardColumn');
 
@@ -26,8 +31,4 @@ export class BoardColumns1596468583404 implements MigrationInterface {
 		await columnRepository.save(column2);
 		await getRepository('board').save(board);
 	}
-
-	public async down(queryRunner: QueryRunner): Promise<void> {
-	}
-
 }
