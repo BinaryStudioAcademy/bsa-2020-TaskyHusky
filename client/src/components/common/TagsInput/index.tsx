@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Input, Segment } from 'semantic-ui-react';
+import { Input, Segment, Icon } from 'semantic-ui-react';
 import styles from './styles.module.scss';
 
 interface Props {
@@ -18,12 +18,20 @@ const TagsInput: React.FC<Props> = ({ onChange, placeholder }) => {
 		onChange(newTags);
 	};
 
+	const removeTag = (index: number) => {
+		const newTags = [...tags];
+		newTags.splice(index, 1);
+		setTags(newTags);
+		onChange(newTags);
+	};
+
 	return (
 		<Segment>
 			<div className={styles.tagContainer}>
 				{tags.map((tag, i) => (
 					<div key={i} className={styles.tag}>
 						{tag}
+						<Icon name="close" link onClick={() => removeTag(i)} />
 					</div>
 				))}
 			</div>
@@ -34,7 +42,7 @@ const TagsInput: React.FC<Props> = ({ onChange, placeholder }) => {
 				onChange={(event, data) => setValue(data.value)}
 				transparent
 				onKeyPress={(event: React.KeyboardEvent & { target: { value: string } }) => {
-					if (event.key === 'Enter') {
+					if (event.key === 'Enter' && value !== '') {
 						addTag(event.target.value);
 					}
 				}}
