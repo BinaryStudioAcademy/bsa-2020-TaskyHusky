@@ -1,12 +1,11 @@
 import callWebApi from 'helpers/callApi.helper';
 
-export const registerUser = async (email: string, password: string): Promise<WebApi.Result.UserAuthResult | null> => {
+export const registerUser = async (settings: Partial<WebApi.Entities.User>) => {
 	const res = await callWebApi({
 		endpoint: 'auth/register',
 		method: 'POST',
 		body: {
-			email,
-			password,
+			...settings,
 		},
 	});
 
