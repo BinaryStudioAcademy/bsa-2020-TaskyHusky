@@ -3,6 +3,9 @@ import { Menu, Image, Input, Segment, Dropdown, Icon } from 'semantic-ui-react';
 import logo from 'assets/logo192.png'; // TODO: replace with logo once it is ready
 import styles from './styles.module.scss';
 import { Redirect } from 'react-router-dom';
+import ProjectsMenu from 'components/ProjectsMenu';
+import FiltersMenu from 'components/FiltersMenu';
+import DashboardsMenu from 'components/DashboardsMenu';
 
 export const HeaderMenu = () => {
 	const [searchValue, setSearchValue] = useState<string>('');
@@ -21,8 +24,8 @@ export const HeaderMenu = () => {
 
 	return (
 		<>
-			<Segment inverted className={styles.segmentWrapper}>
-				<Menu inverted secondary className={styles.menuWrapper}>
+			<Segment className={styles.segmentWrapper}>
+				<Menu secondary className={styles.menuWrapper}>
 					<Menu.Item onClick={logoClickHandler} className={styles.logoItem}>
 						<Image src={logo} size="mini" alt="Tusky-Husky Logo" />
 					</Menu.Item>
@@ -35,61 +38,11 @@ export const HeaderMenu = () => {
 						Your work
 					</Menu.Item>
 
-					<Dropdown text="Projects" className="link item dropDownItem" id="dropDownProject">
-						<Dropdown.Menu className={styles.dropDownMenu}>
-							<Dropdown.Header>Recent</Dropdown.Header>
-							<Dropdown.Item>
-								<Icon name="folder open" />
-								Project #1
-							</Dropdown.Item>
-							<Dropdown.Item>
-								<Icon name="folder open" />
-								Project #1
-							</Dropdown.Item>
-							<Dropdown.Divider />
-							<Dropdown.Item>View all projects</Dropdown.Item>
-							<Dropdown.Item>Create project</Dropdown.Item>
-						</Dropdown.Menu>
-					</Dropdown>
+					<ProjectsMenu />
 
-					<Dropdown text="Filters" className="link item">
-						<Dropdown.Menu className={styles.dropDownMenu}>
-							<Dropdown.Header>Recent</Dropdown.Header>
-							<Dropdown.Item>
-								<Icon name="filter" />
-								Filter #1
-							</Dropdown.Item>
-							<Dropdown.Item>
-								<Icon name="filter" />
-								Filter #2
-							</Dropdown.Item>
-							<Dropdown.Header>Favorite</Dropdown.Header>
-							<Dropdown.Item>
-								<Icon name="filter" />
-								FavFilter #1
-							</Dropdown.Item>
-							<Dropdown.Item>
-								<Icon name="filter" />
-								FavFilter #2
-							</Dropdown.Item>
-							<Dropdown.Divider />
-							<Dropdown.Item>View all filters</Dropdown.Item>
-							<Dropdown.Item>Advanced issue search</Dropdown.Item>
-						</Dropdown.Menu>
-					</Dropdown>
+					<FiltersMenu />
 
-					<Dropdown text="Dashboards" className="link item">
-						<Dropdown.Menu className={styles.dropDownMenu}>
-							<Dropdown.Header>Recent</Dropdown.Header>
-							<Dropdown.Item>
-								<Icon name="flipboard" />
-								Dashboard
-							</Dropdown.Item>
-							<Dropdown.Divider />
-							<Dropdown.Item>View all dashboards</Dropdown.Item>
-							<Dropdown.Item>Create dashboard</Dropdown.Item>
-						</Dropdown.Menu>
-					</Dropdown>
+					<DashboardsMenu />
 
 					<Menu.Item
 						name="people"
@@ -145,7 +98,7 @@ export const HeaderMenu = () => {
 								<Dropdown.Item>Settings item #1</Dropdown.Item>
 							</Dropdown.Menu>
 						</Dropdown>
-						<Dropdown icon="user" className={styles.circularIcon} direction="left">
+						<Dropdown icon="user" className={styles.circularIcon} direction="left" id="userProfileMenuItem">
 							<Dropdown.Menu className={styles.circularDropdownMenu}>
 								<Dropdown.Header>User Name</Dropdown.Header>
 								<Dropdown.Item>Profile</Dropdown.Item>
