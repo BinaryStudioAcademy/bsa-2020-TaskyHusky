@@ -13,6 +13,17 @@ code {
 	font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
+* {
+	box-sizing: border-box;
+}
+
+.modals  {
+	background-color: rgb(255, 255, 255) !important;
+}
+
+.close.icon {
+	color: rgb(38,38,38) !important
+}
 #root,
 .fill {
 	width: 100%;

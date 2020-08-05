@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react';
 import styles from './styles.module.scss';
-import { FilterState } from './logic/state';
 import { useSelector, useDispatch } from 'react-redux';
 import * as actions from './logic/actions';
 import { RootState } from 'typings/rootState';
 import { Button, Table, Input, Dropdown, Form } from 'semantic-ui-react';
+import { ReactComponent as HeaderStar } from './headerStart.svg';
 
 const Filters: React.FC = () => {
 	const dispatch = useDispatch();
-	const { filters } = useSelector((rootState: RootState) => rootState.filters);
+	const { filters, filterParts } = useSelector((rootState: RootState) => rootState.filters);
 
 	useEffect(() => {
 		dispatch(actions.fetchFilterParts());
@@ -16,14 +16,25 @@ const Filters: React.FC = () => {
 		dispatch(actions.fetchFilterDefs());
 	}, []);
 
-	const renderFilterItem = (filter: WebApi.Entities.Filter) => {
-		const { name, stared, ownerId } = filter;
+	const renderFilterItem = (filterPart: WebApi.Entities.FilterPart) => {
+		const { id, filterId } = filterPart;
+		const filter = filters.find(({ id }) => filterId === id);
+		// const staredBy = filter.staredBy.length; // TODO: Implement when User entity will be ready
 		return (
-			<Table.Row>
-				<Table.HeaderCell> {stared} </Table.HeaderCell>
-				<Table.HeaderCell>{name}</Table.HeaderCell>
-				<Table.HeaderCell>{ownerId}</Table.HeaderCell>
-				<Table.HeaderCell> </Table.HeaderCell>
+			<Table.Row key={id}>
+				<Table.HeaderCell> ⭐ </Table.HeaderCell>
+				<Table.HeaderCell>{filter?.name}</Table.HeaderCell>
+				<Table.HeaderCell>{filter?.ownerId}</Table.HeaderCell>
+				{/* <Table.HeaderCell>{staredBy} person</Table.HeaderCell> */}
+				<Table.HeaderCell>
+					<Dropdown text="...">
+						<Dropdown.Menu>
+							<Dropdown.Item text="Edit" />
+							<Dropdown.Divider />
+							<Dropdown.Item text="Share..." />
+						</Dropdown.Menu>
+					</Dropdown>
+				</Table.HeaderCell>
 			</Table.Row>
 		);
 	};
@@ -43,36 +54,9 @@ const Filters: React.FC = () => {
 					<Form>
 						<Form.Group>
 							<Form.Field control={Input} icon="search" placeholder="Search..." />
-							<Form.Field
-								control={Dropdown}
-								placeholder="Owner"
-								search
-								selection
-								options={[
-									{ key: '1', value: 'User1' },
-									{ key: '2', value: 'User2' },
-								]}
-							/>
-							<Form.Field
-								control={Dropdown}
-								placeholder="Project"
-								search
-								selection
-								options={[
-									{ key: '1', value: 'Project1' },
-									{ key: '2', value: 'Project2' },
-								]}
-							/>
-							<Form.Field
-								control={Dropdown}
-								placeholder="Group"
-								search
-								selection
-								options={[
-									{ key: '1', value: 'Group1' },
-									{ key: '2', value: 'Group2' },
-								]}
-							/>
+							<Form.Field control={Dropdown} placeholder="Owner" search selection options={[]} />
+							<Form.Field control={Dropdown} placeholder="Project" search selection options={[]} />
+							<Form.Field control={Dropdown} placeholder="Group" search selection options={[]} />
 						</Form.Group>
 					</Form>
 				</div>
@@ -81,24 +65,22 @@ const Filters: React.FC = () => {
 				<Table fixed>
 					<Table.Header>
 						<Table.Row>
-							<Table.HeaderCell> * </Table.HeaderCell>
+							<Table.HeaderCell>
+								{' '}
+								<HeaderStar />{' '}
+							</Table.HeaderCell>
 							<Table.HeaderCell>Name</Table.HeaderCell>
 							<Table.HeaderCell>Owner</Table.HeaderCell>
+							<Table.HeaderCell>Stared by</Table.HeaderCell>
 							<Table.HeaderCell> </Table.HeaderCell>
 						</Table.Row>
 					</Table.Header>
 
-					<Table.Body>{filters.map(renderFilterItem)}</Table.Body>
+					<Table.Body>{filterParts.map(renderFilterItem)}</Table.Body>
 				</Table>
 			</div>
 		</div>
 	);
-};
-
-const mapStateToProps = (state: RootState) => {
-	return {
-		filters: state.filters.filters,
-	};
 };
 
 export default Filters;

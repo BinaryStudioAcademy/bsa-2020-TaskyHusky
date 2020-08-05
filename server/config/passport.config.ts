@@ -1,98 +1,87 @@
 import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
-import { v4 as uuidv4 } from 'uuid';
+import { getCustomRepository } from 'typeorm';
 import { jwtSecret } from './jwt.config';
 import { authErrorMessages, EMAIL_FIELD } from '../src/constants/auth.constants';
 import { hashPassword, passwordValid } from '../src/helpers/password.helper';
-
-export interface MockUser {
-    id: string;
-    email: string;
-    password: string;
-}
-
-const mockUsers: MockUser[] = [{
-    id: uuidv4(),
-    email: 'test@test.com',
-    password: hashPassword('123456')
-}];
+import { UserRepository } from '../src/repositories/user.repository';
+import { UserModel } from '../src/models/User';
 
 passport.use(
-    'local',
-    new LocalStrategy(
-        {
-            usernameField: EMAIL_FIELD
-        },
-        (email: string, password: string, next): void => {
-            const user = mockUsers.find(value => value.email === email);
+	'local',
+	new LocalStrategy(
+		{
+			usernameField: EMAIL_FIELD,
+		},
+		async (email: string, password: string, next): Promise<void> => {
+			const userRepository = getCustomRepository(UserRepository);
+			const user = await userRepository.getByEmail(email);
 
-            if (!user) {
-                return next(new Error(authErrorMessages.INCORRECT_CREDENTIALS), null);
-            }
+			if (!user) {
+				return next(new Error(authErrorMessages.INCORRECT_CREDENTIALS), null);
+			}
 
-            if (!passwordValid(password, user.password)) {
-                return next(new Error(authErrorMessages.INCORRECT_CREDENTIALS), null);
-            }
+			if (user.password && !passwordValid(password, user.password)) {
+				return next(new Error(authErrorMessages.INCORRECT_CREDENTIALS), null);
+			}
 
-            return next(null, user);
-        }
-    )
+			return next(null, user);
+		},
+	),
 );
 
 passport.use(
-    'register',
-    new LocalStrategy(
-        {
-            usernameField: EMAIL_FIELD
-        },
-        (email: string, password: string, next): void => {
-            const checkingUser = mockUsers.find(value => value.email === email);
+	'register',
+	new LocalStrategy(
+		{
+			usernameField: EMAIL_FIELD,
+			passReqToCallback: true,
+		},
+		async (req, email: string, password: string, next): Promise<void> => {
+			const userRepository = getCustomRepository(UserRepository);
+			const checkingUser = await userRepository.getByEmail(email);
 
-            if (checkingUser) {
-                return next(new Error(authErrorMessages.TAKEN_EMAIL), null);
-            }
+			if (checkingUser) {
+				return next(new Error(authErrorMessages.TAKEN_EMAIL), null);
+			}
 
-            const encodedPassword = hashPassword(password);
+			const encodedPassword = hashPassword(password);
+			const newUserObject = await userRepository.createNew({ ...req.body, email, password: encodedPassword });
 
-            const newUserObject: MockUser = {
-                id: uuidv4(),
-                email,
-                password: encodedPassword
-            };
-
-            mockUsers.push(newUserObject);
-            return next(null, newUserObject);
-        }
-    )
+			return next(null, newUserObject);
+		},
+	),
 );
 
 passport.use(
-    'jwt',
-    new JwtStrategy(
-        {
-            jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-            secretOrKey: jwtSecret
-        },
-        ({ id }: { id: string }, next) => {
-            const user = mockUsers.find(value => value.id === id);
+	'jwt',
+	new JwtStrategy(
+		{
+			jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+			secretOrKey: jwtSecret,
+		},
+		async ({ id }: { id: string }, next): Promise<void> => {
+			const userRepository = getCustomRepository(UserRepository);
+			const user = await userRepository.getById(id);
 
-            if (!user) {
-                return next(new Error(authErrorMessages.NO_USER), null);
-            }
+			if (!user) {
+				return next(new Error(authErrorMessages.NO_USER), null);
+			}
 
-            return next(null, user);
-        }
-    )
-)
+			return next(null, user);
+		},
+	),
+);
 
-passport.serializeUser((user: MockUser, next) => {
-    next(null, { id: user.id });
+passport.serializeUser((user: UserModel, next) => {
+	next(null, { id: user.id });
 });
 
-passport.deserializeUser((id: string, next) => {
-    const user = mockUsers.find(value => value.id === id);
-    next(null, user);
+passport.deserializeUser(async (id: string, next) => {
+	const userRepository = getCustomRepository(UserRepository);
+	const user = await userRepository.getById(id);
+	next(null, user);
 });
 
 export default passport;
