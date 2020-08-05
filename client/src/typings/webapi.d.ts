@@ -1,13 +1,13 @@
 namespace WebApi.Issue {
 	interface PartialIssue {
 		id?: string;
-		typeID?: string;
+		type?: string;
 		summary?: string;
 		boardColumnID?: string;
 		labels?: string[];
 		attachments?: string[];
 		links?: string[];
-		priorityID?: string;
+		priority?: string;
 		description?: string;
 		sprintID?: string;
 		projectID?: string;
@@ -19,9 +19,11 @@ namespace WebApi.Issue {
 
 namespace WebApi.Result {
 	interface UserAuthResult {
-		id: string;
+		user: {
+			id: string;
+			email: string;
+		};
 		jwtToken: string;
-		email: string;
 	}
 }
 
