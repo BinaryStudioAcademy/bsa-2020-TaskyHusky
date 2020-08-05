@@ -29,7 +29,7 @@ export const LoginPage: React.FC = () => {
 			setToken(userData.jwtToken);
 			setRedirectToRootPage(!redirectToRootPage);
 		}
-	}, [userData.jwtToken]);
+	}, [userData.jwtToken, redirectToRootPage]);
 
 	const handleContinueSubmit: (event: SyntheticEvent) => void = (event) => {
 		event.preventDefault();
