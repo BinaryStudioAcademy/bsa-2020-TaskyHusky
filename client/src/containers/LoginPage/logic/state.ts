@@ -10,14 +10,13 @@ export interface User {
 	jobTitle?: string;
 	userSettingsId?: string;
 	password?: string;
+	jwtToken?: string;
 }
 
 export interface AuthState {
-	jwtToken: string;
 	user: User;
 }
 
 export const initialState: AuthState = {
-	jwtToken: '',
 	user: {},
 };

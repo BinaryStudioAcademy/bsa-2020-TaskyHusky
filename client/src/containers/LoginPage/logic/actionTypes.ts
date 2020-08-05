@@ -9,6 +9,5 @@ export type TriggerLoginUser = {
 };
 
 export interface UpdateLoginUser {
-	jwtToken: string;
 	user: User;
 }
