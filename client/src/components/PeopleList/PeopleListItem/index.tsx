@@ -1,6 +1,7 @@
 import React, { ReactElement } from 'react';
 import { Card, Image } from 'semantic-ui-react';
-import { Person } from '../../../MockData/people';
+import { Person } from '../../../mockData/people';
+import style from './style.module.scss';
 
 interface PeopleListItem {
 	person: Person;
@@ -11,9 +12,9 @@ const PeopleListItem: React.FC<PeopleListItem> = ({ person, handlerClick }): Rea
 	const { firstName, lastName, avatar, role } = person;
 
 	return (
-		<Card onClick={() => handlerClick && handlerClick()}>
+		<Card onClick={() => handlerClick && handlerClick()} className={style.card}>
 			<Card.Content>
-				<Image floated="right" size="tiny" src={avatar} />
+				<Image size="tiny" src={avatar} circular centered className={style.avatar} />
 				<Card.Header>
 					{firstName} {lastName}
 				</Card.Header>
