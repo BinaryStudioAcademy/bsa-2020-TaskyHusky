@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import styles from './styles.module.scss';
 import { FilterState } from './logic/state';
-import { connect, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import * as actions from './logic/actions';
 import { RootState } from 'typings/rootState';
 import { Button, Table, Input, Dropdown, Form } from 'semantic-ui-react';
 
-const Filters: React.FC<FilterState> = ({ filters }: FilterState) => {
-	// const [filters, setFilters] = useState<WebApi.Entities.Filter[]>([]);
+const Filters: React.FC = () => {
 	const dispatch = useDispatch();
+	const { filters } = useSelector((rootState: RootState) => rootState.filters);
 
 	useEffect(() => {
 		dispatch(actions.fetchFilterParts());
@@ -17,7 +17,7 @@ const Filters: React.FC<FilterState> = ({ filters }: FilterState) => {
 	}, []);
 
 	const renderFilterItem = (filter: WebApi.Entities.Filter) => {
-		const { id, name, stared, ownerId } = filter;
+		const { name, stared, ownerId } = filter;
 		return (
 			<Table.Row>
 				<Table.HeaderCell> {stared} </Table.HeaderCell>
@@ -96,10 +96,9 @@ const Filters: React.FC<FilterState> = ({ filters }: FilterState) => {
 };
 
 const mapStateToProps = (state: RootState) => {
-	console.log(state);
 	return {
 		filters: state.filters.filters,
 	};
 };
 
-export default connect(mapStateToProps)(Filters);
+export default Filters;

@@ -2,23 +2,16 @@ import { Request, Response } from 'express';
 import { getCustomRepository } from 'typeorm';
 import { FilterPartRepository } from '../repositories/filterPart.repository';
 
-const mockedFilterParts = [{
-	id: '1',
-	filterId: '1',
-	filterDefId: '1',
-	searchText: 'Filter Description'
-}];
-
 class FilterPartController {
 	getFilterParts = async (req: Request, res: Response): Promise<void> => {
 		const filterPartRepository = getCustomRepository(FilterPartRepository);
 
 		try {
 			const filterParts = await filterPartRepository.getAll();
-			// res.send(filterParts);
-			res.send(mockedFilterParts);
+			res.send(filterParts);
 		} catch (error) {
-			res.status(401).send();
+			const { status }: { status: number } = error;
+			res.status(status);
 		}
 	};
 
@@ -30,7 +23,7 @@ class FilterPartController {
 			const filterPart = await filterPartRepository.getById(id);
 			res.send(filterPart);
 		} catch (error) {
-			res.status(401).send();
+			res.status(404).send();
 		}
 	};
 
@@ -40,9 +33,9 @@ class FilterPartController {
 
 		try {
 			const filterPart = await filterPartRepository.createItem(body);
-			res.send(filterPart);
+			res.status(404).send();
 		} catch (error) {
-			res.status(401).send();
+			res.status(404).send();
 		}
 	};
 
@@ -55,7 +48,7 @@ class FilterPartController {
 			const filterPart = await filterPartRepository.updateById(id, body);
 			res.send(filterPart);
 		} catch (error) {
-			res.status(401).send();
+			res.status(404).send();
 		}
 	};
 
@@ -67,7 +60,7 @@ class FilterPartController {
 			const filterPart = await filterPartRepository.deleteById(id);
 			res.send(filterPart);
 		} catch (error) {
-			res.status(401).send();
+			res.status(404).send();
 		}
 	};
 }

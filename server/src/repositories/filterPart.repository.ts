@@ -7,7 +7,7 @@ export class FilterPartRepository extends Repository<FilterPart> {
 		return this.findOneOrFail({ where: { name } });
 	}
 
-	getAll(): Promise<FilterPart[]> {
+	getAll(): Promise<FilterPart[]> {		
 		return this.find();
 	  }
 	

@@ -2,22 +2,16 @@ import { Request, Response } from 'express';
 import { getCustomRepository } from 'typeorm';
 import { FilterRepository } from '../repositories/filter.repository';
 
-const mockedFilters = [{
-	id: '1',
-	ownerId: '1',
-	name: 'Done tasks'
-}];
-
 class FilterController {
 	getFilters = async (req: Request, res: Response): Promise<void> => {
 		const filterRepository = getCustomRepository(FilterRepository);
 
 		try {
 			const filters = await filterRepository.getAll();
-			// res.send(filters);
-			res.send(mockedFilters);
+			res.send(filters);
 		} catch (error) {
-			res.status(401).send();
+			const { status }: { status: number } = error;
+			res.status(status);
 		}
 	};
 
@@ -29,7 +23,7 @@ class FilterController {
 			const filter = await filterRepository.getById(id);
 			res.send(filter);
 		} catch (error) {
-			res.status(401).send();
+			res.status(404).send();
 		}
 	};
 
@@ -41,7 +35,8 @@ class FilterController {
 			const filter = await filterRepository.createItem(body);
 			res.send(filter);
 		} catch (error) {
-			res.status(401).send();
+			const { status }: { status: number } = error;
+			res.status(status);
 		}
 	};
 
@@ -54,7 +49,7 @@ class FilterController {
 			const filter = await filterRepository.updateById(id, body);
 			res.send(filter);
 		} catch (error) {
-			res.status(401).send();
+			res.status(404).send();
 		}
 	};
 
@@ -66,7 +61,7 @@ class FilterController {
 			const filter = await filterRepository.deleteById(id);
 			res.send(filter);
 		} catch (error) {
-			res.status(401).send();
+			res.status(404).send();
 		}
 	};
 }
