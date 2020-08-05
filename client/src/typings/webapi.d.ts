@@ -1,13 +1,13 @@
 namespace WebApi.Issue {
 	interface PartialIssue {
 		id?: string;
-		typeID?: string;
+		type?: string;
 		summary?: string;
 		boardColumnID?: string;
 		labels?: string[];
 		attachments?: string[];
 		links?: string[];
-		priorityID?: string;
+		priority?: string;
 		description?: string;
 		sprintID?: string;
 		projectID?: string;
@@ -19,27 +19,11 @@ namespace WebApi.Issue {
 
 namespace WebApi.Result {
 	interface UserAuthResult {
-		id: string;
+		user: {
+			id: string;
+			email: string;
+		};
 		jwtToken: string;
-		email: string;
-	}
-
-	interface User {
-		id: string;
-		firstName?: string;
-		lastName?: string;
-		avatar?: string;
-		department?: string;
-		timezone?: string;
-		organization?: string;
-		email?: string;
-		jobTitle?: string;
-		userSettingsId?: string;
-		password?: string;
-	}
-	interface UserLoginResult {
-		jwtToken: string;
-		user: User;
 	}
 }
 
@@ -74,17 +58,11 @@ namespace WebApi.Entities {
 		board: Board;
 	}
 
-	interface Example {
-		id: string;
-		name?: string;
-		text?: string;
-	}
-
 	interface Filter {
 		id: string;
-		ownerId?: string;
+		owner?: User;
 		name?: string;
-		// staredBy?: User[]
+		staredBy?: User[];
 	}
 
 	interface FilterDefinition {
@@ -98,7 +76,7 @@ namespace WebApi.Entities {
 		id: string;
 		filterId?: string;
 		filterDefId?: string;
-		// members?: User[];
+		members?: User[];
 		searchText?: string;
 	}
 
@@ -158,5 +136,6 @@ namespace WebApi.Entities {
 		jobTitle?: string;
 		userSettingsId?: string;
 		password?: string;
+		filters?: Filter[];
 	}
 }

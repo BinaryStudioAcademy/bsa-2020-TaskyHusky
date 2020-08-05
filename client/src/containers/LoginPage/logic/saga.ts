@@ -5,8 +5,9 @@ import * as actions from './actions';
 
 export function* logInRequest(action: ReturnType<typeof actions.triggerLoginUser>) {
 	const { email, password } = action;
+
 	try {
-		const response: WebApi.Result.UserLoginResult = yield call(loginUser, email, password);
+		const response: WebApi.Result.UserAuthResult = yield call(loginUser, email, password);
 		const { user, jwtToken } = response;
 		yield put(actions.updateLoginUser({ user, jwtToken }));
 	} catch (e) {

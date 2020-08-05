@@ -5,39 +5,25 @@ import * as actions from './logic/actions';
 import { RootState } from 'typings/rootState';
 import { Button, Table, Input, Dropdown, Form } from 'semantic-ui-react';
 import { ReactComponent as HeaderStar } from './headerStart.svg';
+import FilterItem from 'components/FilterItem';
 
 const Filters: React.FC = () => {
 	const dispatch = useDispatch();
-	const { filters, filterParts } = useSelector((rootState: RootState) => rootState.filters);
+	const { filters } = useSelector((rootState: RootState) => rootState.filters);
+
+	const updateFilter = (data: WebApi.Entities.Filter) => {
+		dispatch(
+			actions.updateFilter({
+				data,
+			}),
+		);
+	};
 
 	useEffect(() => {
 		dispatch(actions.fetchFilterParts());
 		dispatch(actions.fetchFilters());
 		dispatch(actions.fetchFilterDefs());
-	}, []);
-
-	const renderFilterItem = (filterPart: WebApi.Entities.FilterPart) => {
-		const { id, filterId } = filterPart;
-		const filter = filters.find(({ id }) => filterId === id);
-		// const staredBy = filter.staredBy.length; // TODO: Implement when User entity will be ready
-		return (
-			<Table.Row key={id}>
-				<Table.HeaderCell> ⭐ </Table.HeaderCell>
-				<Table.HeaderCell>{filter?.name}</Table.HeaderCell>
-				<Table.HeaderCell>{filter?.ownerId}</Table.HeaderCell>
-				{/* <Table.HeaderCell>{staredBy} person</Table.HeaderCell> */}
-				<Table.HeaderCell>
-					<Dropdown text="...">
-						<Dropdown.Menu>
-							<Dropdown.Item text="Edit" />
-							<Dropdown.Divider />
-							<Dropdown.Item text="Share..." />
-						</Dropdown.Menu>
-					</Dropdown>
-				</Table.HeaderCell>
-			</Table.Row>
-		);
-	};
+	}, [dispatch]);
 
 	return (
 		<div className={styles.filtersContainer}>
@@ -62,7 +48,7 @@ const Filters: React.FC = () => {
 				</div>
 			</div>
 			<div>
-				<Table fixed>
+				<Table selectable padded={'very'} compact>
 					<Table.Header>
 						<Table.Row>
 							<Table.HeaderCell>
@@ -76,7 +62,11 @@ const Filters: React.FC = () => {
 						</Table.Row>
 					</Table.Header>
 
-					<Table.Body>{filterParts.map(renderFilterItem)}</Table.Body>
+					<Table.Body>
+						{filters.map((filter) => (
+							<FilterItem updateFilter={updateFilter} key={filter.id} filter={filter} />
+						))}
+					</Table.Body>
 				</Table>
 			</div>
 		</div>

@@ -12,7 +12,7 @@ export const registerUser = async (settings: Partial<WebApi.Entities.User>) => {
 	return (await res.json()) as WebApi.Result.UserAuthResult;
 };
 
-export const loginUser = async (email: string, password: string): Promise<WebApi.Result.UserLoginResult | null> => {
+export const loginUser = async (email: string, password: string): Promise<WebApi.Result.UserAuthResult | null> => {
 	const res = await callWebApi({
 		endpoint: 'auth/login',
 		method: 'POST',
@@ -22,5 +22,5 @@ export const loginUser = async (email: string, password: string): Promise<WebApi
 		},
 	});
 
-	return (await res.json()) as WebApi.Result.UserLoginResult;
+	return (await res.json()) as WebApi.Result.UserAuthResult;
 };

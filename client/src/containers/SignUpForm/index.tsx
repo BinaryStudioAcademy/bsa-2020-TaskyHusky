@@ -4,6 +4,7 @@ import PasswordInput from 'components/common/PasswordInput';
 import validator from 'validator';
 import { registerUser } from 'services/auth.service';
 import { setToken } from 'helpers/setToken.helper';
+import { Redirect } from 'react-router-dom';
 
 const SignUpForm: React.FC = () => {
 	const [email, setEmail] = useState<string>('');
@@ -14,6 +15,7 @@ const SignUpForm: React.FC = () => {
 	const [firstNameValid, setFirstNameValid] = useState<boolean>(true);
 	const [lastName, setLastName] = useState<string>('');
 	const [loading, setLoading] = useState<boolean>(false);
+	const [redirecting, setRedirecting] = useState<boolean>(false);
 
 	const buttonDisabled = !(password && passwordValid && email && emailValid && firstName && firstNameValid);
 
@@ -35,12 +37,13 @@ const SignUpForm: React.FC = () => {
 
 		if (result) {
 			setToken(result.jwtToken);
-			window.location.replace('/');
+			setRedirecting(true);
 		}
 	};
 
 	return (
 		<Form onSubmit={submit}>
+			{redirecting ? <Redirect to="/" /> : ''}
 			<Form.Input
 				placeholder="First name"
 				onChange={(event, data) => {
