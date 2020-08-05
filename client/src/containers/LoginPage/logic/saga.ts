@@ -3,7 +3,7 @@ import { all, put, takeEvery, call } from 'redux-saga/effects';
 import * as actionTypes from './actionTypes';
 import * as actions from './actions';
 
-export function* fetchUserLogin(action: ReturnType<typeof actions.triggerLoginUser>) {
+export function* logInRequest(action: ReturnType<typeof actions.triggerLoginUser>) {
 	const { email, password } = action;
 	const result: WebApi.Result.UserLoginResult = yield call(loginUser, email, password);
 
@@ -16,7 +16,7 @@ export function* fetchUserLogin(action: ReturnType<typeof actions.triggerLoginUs
 }
 
 export function* watchUserLogin() {
-	yield takeEvery(actionTypes.TRIGGER_LOGIN_USER, fetchUserLogin);
+	yield takeEvery(actionTypes.TRIGGER_LOGIN_USER, logInRequest);
 }
 export default function* authSaga() {
 	yield all([watchUserLogin()]);
