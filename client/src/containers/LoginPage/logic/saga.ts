@@ -5,13 +5,13 @@ import * as actions from './actions';
 
 export function* logInRequest(action: ReturnType<typeof actions.triggerLoginUser>) {
 	const { email, password } = action;
-	const result: WebApi.Result.UserLoginResult = yield call(loginUser, email, password);
+	const response: WebApi.Result.UserLoginResult = yield call(loginUser, email, password);
+	const { user, jwtToken } = response;
 
 	// If there is no user in DB - do not nothing, should be fixed (I guess we need error handler on client side)
 	// Now if there is no user in DB -> server throws an error RangeError [ERR_HTTP_INVALID_STATUS_CODE]: Invalid status code: undefined
-	if (result) {
-		const userObject: actionTypes.UpdateLoginUser = { user: { ...result.user, jwtToken: result.jwtToken } };
-		yield put(actions.updateLoginUser(userObject));
+	if (response) {
+		yield put(actions.updateLoginUser({ user, jwtToken }));
 	}
 }
 

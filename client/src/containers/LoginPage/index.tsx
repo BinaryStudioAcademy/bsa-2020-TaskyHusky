@@ -11,7 +11,7 @@ import { setToken } from 'helpers/setToken.helper';
 
 export const LoginPage: React.FC = () => {
 	const dispatch = useDispatch();
-	const userData = useSelector((rootState: RootState) => rootState.auth.user);
+	const authData = useSelector((rootState: RootState) => rootState.auth);
 	const getUser = (email: string, password: string) => {
 		dispatch(actions.triggerLoginUser({ email, password }));
 	};
@@ -25,11 +25,11 @@ export const LoginPage: React.FC = () => {
 	const [redirectToRootPage, setRedirectToRootPage] = useState<boolean>(false);
 
 	useEffect(() => {
-		if (!!userData.jwtToken) {
-			setToken(userData.jwtToken);
+		if (!!authData.jwtToken) {
+			setToken(authData.jwtToken);
 			setRedirectToRootPage(!redirectToRootPage);
 		}
-	}, [userData.jwtToken, redirectToRootPage]);
+	}, [authData.jwtToken, redirectToRootPage]);
 
 	const handleContinueSubmit: (event: SyntheticEvent) => void = (event) => {
 		event.preventDefault();
