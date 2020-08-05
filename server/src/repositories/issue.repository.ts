@@ -13,6 +13,10 @@ export class IssueRepository extends Repository<Issue> {
 		return this.findOneOrFail({ where: { id }, relations: RELS });
 	}
 
+	findOneByKey(key: string) {
+		return this.findOneOrFail({ where: { issueKey: key }, relations: RELS });
+	}
+
 	createOne(data: Issue) {
 		const entity = this.create(data);
 		return this.save(entity);
