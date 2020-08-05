@@ -1,7 +1,7 @@
-import { MigrationInterface, QueryRunner, getRepository } from 'typeorm';
+import { getRepository } from 'typeorm';
 
-export class User1596468052663 implements MigrationInterface {
-	public async up(queryRunner: QueryRunner): Promise<void> {
+export class UserSeeder {
+	public static async execute() {
 		const exampleData = [
 			{
 				firstName: 'Ivan',
@@ -18,6 +18,4 @@ export class User1596468052663 implements MigrationInterface {
 		];
 		await getRepository('User').save(exampleData);
 	}
-
-	public async down(queryRunner: QueryRunner): Promise<void> {}
 }
