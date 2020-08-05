@@ -13,13 +13,13 @@ export interface User {
 }
 
 export interface AuthState {
-	user: User;
+	user: User | null;
 	isAuthorized: boolean;
 	jwtToken: string;
 }
 
 export const initialState: AuthState = {
-	user: {},
+	user: null,
 	isAuthorized: false,
 	jwtToken: '',
 };
