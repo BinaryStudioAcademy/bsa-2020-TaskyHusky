@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Form, Button, Divider, Icon } from 'semantic-ui-react';
+import { Form, Button, Divider, Icon, Message, Popup } from 'semantic-ui-react';
 import PasswordInput from 'components/common/PasswordInput';
 import validator from 'validator';
 import { registerUser } from 'services/auth.service';
 import { setToken } from 'helpers/setToken.helper';
+import { NavLink } from 'react-router-dom';
 
 const SignUpForm: React.FC = () => {
 	const [email, setEmail] = useState<string>('');
@@ -30,29 +31,39 @@ const SignUpForm: React.FC = () => {
 	};
 
 	return (
-		<Form onSubmit={submit}>
-			<Form.Input
-				type="email"
-				iconPosition="left"
-				icon="at"
-				placeholder="Email"
-				onChange={(event, data: { value: string }) => {
-					setEmail(data.value);
-					setEmailValid(true);
-				}}
-				onBlur={() => setEmailValid(validator.isEmail(email))}
-				error={!emailValid}
-			/>
-			<PasswordInput onChange={setPassword} onChangeValid={setPasswordValid} />
-			<Button disabled={buttonDisabled} fluid positive loading={loading} type="submit">
-				Sign up
-			</Button>
-			<Divider horizontal>Or</Divider>
-			<Button type="button">
-				<Icon name="google" />
-				Sign up with Google
-			</Button>
-		</Form>
+		<>
+			<Form onSubmit={submit}>
+				<Popup
+					on={[]}
+					open={!emailValid}
+					trigger={
+						<Form.Input
+							type="email"
+							icon="at"
+							placeholder="Email"
+							onChange={(event, data: { value: string }) => {
+								setEmail(data.value);
+								setEmailValid(true);
+							}}
+							onBlur={() => setEmailValid(validator.isEmail(email))}
+							error={!emailValid}
+						/>
+					}
+				/>
+				<PasswordInput onChange={setPassword} onChangeValid={setPasswordValid} />
+				<Button disabled={buttonDisabled} fluid positive loading={loading} type="submit">
+					Sign up
+				</Button>
+				<Divider horizontal>Or</Divider>
+				<Button type="button">
+					<Icon name="google" />
+					Sign up with Google
+				</Button>
+			</Form>
+			<Message>
+				Already with us? <NavLink to="/login">Log in</NavLink>
+			</Message>
+		</>
 	);
 };
 

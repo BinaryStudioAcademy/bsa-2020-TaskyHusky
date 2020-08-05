@@ -73,19 +73,24 @@ export const LoginPage: React.FC = () => {
 								on={[]}
 								trigger={
 									<Form.Input
+										icon="at"
 										error={!(isEmailValid || !isEmailSubmitted)}
 										placeholder="Email"
 										type="text"
-										onChange={(event) => {
-											setEmail(event.target.value);
+										onChange={(event, data) => {
+											setEmail(data.value);
 											setIsEmailSubmitted(false);
 										}}
 									/>
 								}
 							/>
-
 							{passwordInput}
-							<Button positive className={styles.continueButton} loading={isLoading}>
+							<Button
+								positive
+								className={styles.continueButton}
+								loading={isLoading}
+								disabled={!isEmailSubmitted ? !email : !email || !password}
+							>
 								{isEmailValid ? 'Log in' : 'Continue'}
 							</Button>
 						</Form>
