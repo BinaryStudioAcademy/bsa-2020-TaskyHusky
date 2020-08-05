@@ -18,6 +18,7 @@ const CreateProjectModal = (props: Props) => {
 			onOpen={() => setIsModalShown(true)}
 			open={true}
 			size={'tiny'}
+			dimmer="inverted"
 		>
 			<Modal.Header>Create project</Modal.Header>
 			<Modal.Content>

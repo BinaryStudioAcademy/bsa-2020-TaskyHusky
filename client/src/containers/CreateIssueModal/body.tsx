@@ -72,13 +72,23 @@ const CreateIssueModalBody: React.FC<Props> = ({ children }) => {
 
 		setLoading(false);
 		setIsOpened(false);
+		window.location.replace('/');
 	};
 
 	return (
-		<Modal open={isOpened} closeIcon closeOnEscape closeOnDimmerClick onClose={getSetOpenFunc(false)}>
+		<Modal
+			open={isOpened}
+			closeIcon
+			closeOnEscape
+			closeOnDimmerClick
+			onClose={getSetOpenFunc(false)}
+			dimmer="inverted"
+		>
+			<Modal.Header>
+				<Header color="blue">Add issue</Header>
+			</Modal.Header>
 			<Grid className="fill" textAlign="center" verticalAlign="middle">
 				<Grid.Column style={{ marginTop: 20, marginBottom: 20, maxWidth: 300 }}>
-					<Header color="blue">Add issue</Header>
 					<Form onSubmit={submit}>
 						<Form.Dropdown
 							clearable
