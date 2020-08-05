@@ -15,6 +15,18 @@ class UserController {
 		}
 	};
 
+	getUserByEmail = async (req: Request, res: Response): Promise<void> => {
+		const userRepository = getCustomRepository(UserRepository);
+		const { email } = req.params;
+
+		try {
+			const user = await userRepository.getByEmail(email);
+			res.send(user);
+		} catch (error) {
+			res.status(404).send();
+		}
+	};
+
 	updateUser = async (req: Request, res: Response): Promise<void> => {
 		const userRepository = getCustomRepository(UserRepository);
 		const { id } = req.user;

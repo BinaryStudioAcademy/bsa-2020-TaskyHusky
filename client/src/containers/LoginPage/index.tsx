@@ -6,6 +6,7 @@ import PasswordInput from '../../components/common/PasswordInput';
 import { loginUser } from 'services/auth.service';
 import { setToken } from 'helpers/setToken.helper';
 import validator from 'validator';
+import { getUserByEmail } from 'services/user.service';
 
 export const LoginPage: React.FC = () => {
 	const [email, setEmail] = useState<string>('');
@@ -20,7 +21,14 @@ export const LoginPage: React.FC = () => {
 	const handleContinueSubmit = async () => {
 		if (!isEmailSubmitted) {
 			setIsEmailSubmitted(true);
-			setIsEmailValid(validator.isEmail(email)); // TODO: replace with request to server side via redux-saga when server side is ready
+			const emailSpellValid = validator.isEmail(email);
+
+			if (!emailSpellValid) {
+				return setIsEmailValid(false);
+			}
+
+			const checkingUser = await getUserByEmail(email);
+			setIsEmailValid(Boolean(checkingUser));
 		} else {
 			if (!email || !password || !isEmailValid || !isPasswordValid) {
 				return;
@@ -69,7 +77,7 @@ export const LoginPage: React.FC = () => {
 							<Popup
 								className={styles.errorPopup}
 								open={!(isEmailValid || !isEmailSubmitted)}
-								content="Please enter a valid email"
+								content="Please enter a valid and existing email"
 								on={[]}
 								trigger={
 									<Form.Input
