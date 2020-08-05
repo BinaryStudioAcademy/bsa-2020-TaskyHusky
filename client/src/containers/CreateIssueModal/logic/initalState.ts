@@ -1,4 +1,4 @@
-export default {
+export const initialState: WebApi.Issue.PartialIssue = {
 	summary: '',
 	links: [],
 	attachments: [],

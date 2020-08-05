@@ -115,12 +115,12 @@ const CreateIssueModalBody: React.FC<Props> = ({ children }) => {
 						/>
 						<TagsInput
 							placeholder="Add link"
-							tags={context.data.links as string[]}
+							tags={context.data.links ?? []}
 							onChange={(tags) => context.set('links', [...tags])}
 						/>
 						<TagsInput
 							placeholder="Add attachment"
-							tags={context.data.attachments as string[]}
+							tags={context.data.attachments ?? []}
 							onChange={(tags) => context.set('attachments', [...tags])}
 						/>
 						<Form.TextArea

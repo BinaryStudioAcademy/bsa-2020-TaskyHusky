@@ -1,10 +1,10 @@
 import React from 'react';
-import initialState from './initalState';
+import { initialState } from './initalState';
 
-type Issue = WebApi.Issue.PartialIssue;
-
-const CreateIssueModalContext = React.createContext(initialState as Issue);
+const CreateIssueModalContext = React.createContext(initialState);
 const CHANGE = 'CHANGE';
+
+type Issue = WebApi.Entities.Issue;
 
 const reducer = (state: Issue, action: any) => {
 	switch (action.type) {
@@ -33,7 +33,10 @@ export const useCreateIssueModalContext = () => {
 		throw new Error('useCreateIssueModalContext must be used inside a ContextProvider');
 	}
 
-	const { state: data, dispatch } = context as Issue & { state: Issue; dispatch: (action: any) => void };
+	const { state: data, dispatch } = context as WebApi.Issue.PartialIssue & {
+		state: WebApi.Issue.PartialIssue;
+		dispatch: (action: any) => void;
+	};
 
 	if (!dispatch) {
 		throw new Error('useCreateIssueModalContext must be used inside a ContextProvider');
