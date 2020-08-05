@@ -8,8 +8,8 @@ export class UserRepository extends Repository<User> {
 	async getById(id: string) {
 		const user = await this.findOne({ where: { id } });
 
-		if(!user){
-			throw new Error('User with current ID not found')
+		if (!user) {
+			throw new Error('User with current ID not found');
 		}
 
 		return user;
