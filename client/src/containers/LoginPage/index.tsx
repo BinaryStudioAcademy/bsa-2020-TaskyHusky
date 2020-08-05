@@ -16,6 +16,7 @@ export const LoginPage: React.FC = () => {
 	const getUser = (email: string, password: string) => {
 		dispatch(actions.triggerLoginUser({ email, password }));
 	};
+
 	const [email, setEmail] = useState<string>('');
 	const [password, setPassword] = useState<string>('');
 	const [isEmailValid, setIsEmailValid] = useState<boolean>(false);
@@ -25,7 +26,6 @@ export const LoginPage: React.FC = () => {
 	const [redirectToRootPage, setRedirectToRootPage] = useState<boolean>(false);
 
 	useEffect(() => {
-		getUser(email, password);
 		if (!!userToken && !!userData) {
 			setToken(userToken);
 			setRedirectToRootPage(!redirectToRootPage);
