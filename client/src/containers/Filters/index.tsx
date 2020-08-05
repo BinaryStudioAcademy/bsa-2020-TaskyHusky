@@ -1,25 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './styles.module.scss';
 import { FilterState } from './logic/state';
-import { useDispatch, useSelector, connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import * as actions from './logic/actions';
 import { RootState } from 'typings/rootState';
 import { Button, Table, Input, Dropdown, Form } from 'semantic-ui-react';
 
-// interface FiltersPropsI {
-// 	filters: WebApi.Entities.Filter[]
-// }
-
 const Filters: React.FC<FilterState> = ({ filters }: FilterState) => {
 	// const [filters, setFilters] = useState<WebApi.Entities.Filter[]>([]);
+	const dispatch = useDispatch();
 
-	// const dispatch = useDispatch();
-	// const filters = useSelector((rootState: RootState) => rootState.filters);
-	// const users = useSelector((rootState: RootState) => rootState.users);
-	// const projects = useSelector((rootState: RootState) => rootState.projects);
-	// const getExampleText = (exampleName: string) => {
-	// 	dispatch(actions.getExampleText({ exampleName }));
-	// };
+	useEffect(() => {
+		dispatch(actions.fetchFilterParts());
+		dispatch(actions.fetchFilters());
+		dispatch(actions.fetchFilterDefs());
+	}, []);
 
 	const renderFilterItem = (filter: WebApi.Entities.Filter) => {
 		const { id, name, stared, ownerId } = filter;
@@ -28,8 +23,6 @@ const Filters: React.FC<FilterState> = ({ filters }: FilterState) => {
 				<Table.HeaderCell> {stared} </Table.HeaderCell>
 				<Table.HeaderCell>{name}</Table.HeaderCell>
 				<Table.HeaderCell>{ownerId}</Table.HeaderCell>
-				{/* <Table.HeaderCell>Access</Table.HeaderCell>
-				<Table.HeaderCell>Starred by</Table.HeaderCell> */}
 				<Table.HeaderCell> </Table.HeaderCell>
 			</Table.Row>
 		);
@@ -91,8 +84,6 @@ const Filters: React.FC<FilterState> = ({ filters }: FilterState) => {
 							<Table.HeaderCell> * </Table.HeaderCell>
 							<Table.HeaderCell>Name</Table.HeaderCell>
 							<Table.HeaderCell>Owner</Table.HeaderCell>
-							{/* <Table.HeaderCell>Access</Table.HeaderCell>
-							<Table.HeaderCell>Starred by</Table.HeaderCell> */}
 							<Table.HeaderCell> </Table.HeaderCell>
 						</Table.Row>
 					</Table.Header>
@@ -110,7 +101,5 @@ const mapStateToProps = (state: RootState) => {
 		filters: state.filters.filters,
 	};
 };
-
-const mapDispatchToProps = {};
 
 export default connect(mapStateToProps)(Filters);

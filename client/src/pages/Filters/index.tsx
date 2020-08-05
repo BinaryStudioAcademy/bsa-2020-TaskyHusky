@@ -1,8 +1,8 @@
 import React from 'react';
 import Filters from '../../containers/Filters';
 
-const loginPage: React.FC = () => {
+const FiltersPage: React.FC = () => {
 	return <Filters />;
 };
 
-export default loginPage;
+export default FiltersPage;
