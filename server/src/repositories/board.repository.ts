@@ -15,6 +15,7 @@ export class BoardRepository extends Repository<Board> {
 		const board = await this
 			.createQueryBuilder('board')
 			.where('board.id = :id', { id })
+			.innerJoinAndSelect('board.createdBy', 'user')
 			.getOne();
 
 		if (!board) {
