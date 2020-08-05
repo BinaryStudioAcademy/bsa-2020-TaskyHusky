@@ -10,4 +10,6 @@ export type TriggerLoginUser = {
 
 export interface UpdateLoginUser {
 	user: User;
+	isAuthorized?: boolean;
+	jwtToken: string;
 }

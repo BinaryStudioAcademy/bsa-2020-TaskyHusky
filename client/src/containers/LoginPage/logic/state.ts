@@ -10,13 +10,16 @@ export interface User {
 	jobTitle?: string;
 	userSettingsId?: string;
 	password?: string;
-	jwtToken?: string;
 }
 
 export interface AuthState {
 	user: User;
+	isAuthorized: boolean;
+	jwtToken: string;
 }
 
 export const initialState: AuthState = {
 	user: {},
+	isAuthorized: false,
+	jwtToken: '',
 };
