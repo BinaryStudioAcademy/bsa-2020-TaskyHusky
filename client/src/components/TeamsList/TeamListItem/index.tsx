@@ -1,6 +1,5 @@
 import React, { ReactElement } from 'react';
 import { Card, Image } from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
 import { Team } from '../../../mockData/teams';
 import style from './style.module.scss';
 
@@ -13,7 +12,7 @@ const TeamListItem: React.FC<TeamListItem> = ({ team, handlerClick }): ReactElem
 	const {
 		color,
 		name,
-		creator: { avatar, id },
+		creator: { avatar },
 	} = team;
 
 	return (
