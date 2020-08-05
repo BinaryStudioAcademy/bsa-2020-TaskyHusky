@@ -80,6 +80,7 @@
         "@typescript-eslint/semi": "off",
         "prettier/prettier": "off",
         "no-unused-expressions": "off", //disabled in favour of @typescript-eslint/no-unused-expressions
-        "comma-dangle": "off" // handled by prettier
+        "comma-dangle": "off", // handled by prettier
+        "quotes": [2, "single"]
     }
 }
