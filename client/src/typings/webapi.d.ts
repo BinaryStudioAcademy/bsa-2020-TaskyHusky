@@ -8,6 +8,7 @@ namespace WebApi.Issue {
 		attachments?: string[];
 		links?: string[];
 		priority?: string;
+
 		description?: string;
 		sprintID?: string;
 		projectID?: string;
@@ -59,7 +60,37 @@ namespace WebApi.User {
 	}
 }
 
+namespace WebApi.User {
+	export interface UserModel {
+		id?: string;
+		email: string;
+		password?: string;
+		firstName?: string;
+		lastName?: string;
+		avatar?: string;
+		department?: string;
+		timezone?: string;
+		organization?: string;
+		jobTitle?: string;
+		userSettingsId?: string;
+	}
+}
+
 namespace WebApi.Entities {
+	interface Board {
+		id: string;
+		boardType?: string;
+		columns?: BoardColumn[];
+	}
+
+	interface BoardColumn {
+		id: string;
+		columnName?: string;
+		status?: string;
+		isResolutionSet?: boolean;
+		board: Board;
+	}
+
 	interface Example {
 		id: string;
 		name?: string;
@@ -118,6 +149,17 @@ namespace WebApi.Entities {
 		color?: string;
 		title?: string;
 		issues?: Issue[];
+	}
+
+	interface Projects {
+		projectID: string;
+		name: string;
+		key: string;
+		projectType: string;
+		category: string;
+		defaultAssigneeID?: string;
+		leadID?: string;
+		creatorID?: string;
 	}
 
 	interface User {
