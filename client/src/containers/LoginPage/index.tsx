@@ -1,23 +1,42 @@
-import React, { useState, SyntheticEvent } from 'react';
+import React, { useState } from 'react';
 import styles from './styles.module.scss';
-
 import { Header, Form, Divider, Segment, Button, Grid, List, Popup } from 'semantic-ui-react';
-import { validateEmail } from 'helpers/validateEmail.helper';
 import { Redirect } from 'react-router-dom';
+import PasswordInput from '../../components/common/PasswordInput';
+import { loginUser } from 'services/auth.service';
+import { setToken } from 'helpers/setToken.helper';
+import validator from 'validator';
 
 export const LoginPage: React.FC = () => {
 	const [email, setEmail] = useState<string>('');
 	const [password, setPassword] = useState<string>('');
 	const [isEmailValid, setIsEmailValid] = useState<boolean>(false);
+	const [isPasswordValid, setIsPasswordValid] = useState<boolean>(false);
 	const [isEmailSubmitted, setIsEmailSubmitted] = useState<boolean>(false);
 	const [redirectToForgetPassword, setRedirectToForgetPassword] = useState<boolean>(false);
 	const [redirectToSignUp, setRedirectToSignUp] = useState<boolean>(false);
+	const [isLoading, setIsLoading] = useState<boolean>(false);
 
-	const handleContinueSubmit: (event: SyntheticEvent) => void = (event) => {
-		event.preventDefault();
+	const handleContinueSubmit = async () => {
+		if (!isEmailSubmitted) {
+			setIsEmailSubmitted(true);
+			setIsEmailValid(validator.isEmail(email)); // TODO: replace with request to server side via redux-saga when server side is ready
+		} else {
+			if (!email || !password || !isEmailValid || !isPasswordValid) {
+				return;
+			}
 
-		setIsEmailSubmitted(true);
-		setIsEmailValid(validateEmail(email)); // TODO: replace with request to server side via redux-saga when server side is ready
+			setIsLoading(true);
+			const res = await loginUser(email, password);
+
+			if (res && res.jwtToken) {
+				setToken(res.jwtToken);
+			}
+
+			setIsLoading(false);
+
+			window.location.replace('/');
+		}
 	};
 
 	const toggleForgetPasswordHandler: () => void = () => {
@@ -35,20 +54,17 @@ export const LoginPage: React.FC = () => {
 	const renderSignUp: JSX.Element | null = redirectToSignUp ? <Redirect to="/signup" /> : null;
 
 	const passwordInput = isEmailValid ? (
-		<Form.Input placeholder="Password" type="password" onChange={(event) => setPassword(event.target.value)} />
+		<PasswordInput onChangeValid={(valid) => setIsPasswordValid(valid)} onChange={(text) => setPassword(text)} />
 	) : null;
 
 	return (
 		<>
 			<Grid verticalAlign="middle" className={styles.grid}>
 				<Grid.Column className={styles.column}>
-					<Header as="h1" className={styles.mainHeader}>
-						Tasky-Husky
+					<Header as="h1" className={styles.mainHeader} color="blue">
+						Log in to TaskyHusky
 					</Header>
 					<Segment>
-						<Header as="h4" className={styles.subHeader}>
-							Log in to your account
-						</Header>
 						<Form onSubmit={handleContinueSubmit}>
 							<Popup
 								className={styles.errorPopup}
@@ -69,7 +85,9 @@ export const LoginPage: React.FC = () => {
 							/>
 
 							{passwordInput}
-							<Button className={styles.continueButton}>{isEmailValid ? 'Log in' : 'Continue'}</Button>
+							<Button positive className={styles.continueButton} loading={isLoading}>
+								{isEmailValid ? 'Log in' : 'Continue'}
+							</Button>
 						</Form>
 						<Divider />
 						<List bulleted horizontal link className={styles.list}>
