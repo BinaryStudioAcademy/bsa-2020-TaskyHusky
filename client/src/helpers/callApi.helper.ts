@@ -1,5 +1,6 @@
 import qs from 'qs';
 import { LocalStorageKeys } from 'constants/LocalStorageKeys';
+import { WebApiException } from 'typings/webApiException';
 
 interface RequestArgs {
 	endpoint: string;
@@ -23,9 +24,27 @@ type Body =
 export default async function callWebApi(args: RequestArgs): Promise<Response> {
 	try {
 		const res: Response = await fetch(getUrl(args), getArgs(args));
+		await throwIfResponseFailed(res);
+
 		return res;
 	} catch (err) {
 		throw err;
+	}
+}
+
+export async function throwIfResponseFailed(res: Response) {
+	if (!res.ok) {
+		const exception: WebApiException = {
+			status: res.status,
+			statusText: res.statusText,
+			url: res.url,
+			clientException: null,
+		};
+
+		try {
+			exception.clientException = await res.json();
+		} catch {}
+		throw exception;
 	}
 }
 

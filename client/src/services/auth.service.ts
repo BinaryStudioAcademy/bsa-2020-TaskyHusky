@@ -9,11 +9,6 @@ export const registerUser = async (settings: Partial<WebApi.Entities.User>) => {
 		},
 	});
 
-	if (res.status > 399) {
-		// Replace this with error handling (when there will be a handler on server)
-		return null;
-	}
-
 	return (await res.json()) as WebApi.Result.UserAuthResult;
 };
 
@@ -26,11 +21,6 @@ export const loginUser = async (email: string, password: string): Promise<WebApi
 			password,
 		},
 	});
-
-	if (res.status > 399) {
-		// Replace this with error handling (when there will be a handler on server)
-		return null;
-	}
 
 	return (await res.json()) as WebApi.Result.UserLoginResult;
 };
