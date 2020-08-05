@@ -36,7 +36,7 @@ const getUrl = (args: RequestArgs): RequestInfo =>
 
 const getArgs = (args: RequestArgs): RequestInit => {
 	const headers: Headers | string[][] | Record<string, string> | undefined = {};
-	const token = sessionStorage.getItem(LocalStorageKeys.SESSION_TOKEN);
+	const token = localStorage.getItem(LocalStorageKeys.SESSION_TOKEN);
 	let body: Body;
 
 	if (token && !args.skipAuthorization) {
