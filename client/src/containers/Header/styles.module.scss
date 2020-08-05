@@ -1,25 +1,61 @@
-.circularIcon {
-	margin-left: 10px !important;
-	border-radius: 50%;
-	padding: 0.78571429em 0.78571429em 0.78571429em;
-	background: #e0e1e2 none;
-	height: 38px !important;
-	width: 38px !important;
-
-	i {
-		margin: 0 !important;
+:global(#app) {
+	.menuWrapper > * {
+		color: white !important;
+		padding: 7px 13px;
+		font-weight: bold !important;
 	}
-}
 
-.circularDropdownMenu {
-	position: absolute !important;
-	top: 51px !important;
-	border-top-left-radius: 0 !important;
-	border-top-right-radius: 0 !important;
-}
+	.segmentWrapper {
+		border-radius: 0;
+		padding: 0;
+	}
 
-.createItem {
-	&:hover {
-		background-color: rgba(0, 0, 0, 0.05) !important;
+	.rightMenu {
+		padding: 0;
+		margin-bottom: 0px;
+	}
+
+	.logoItem {
+		padding: 5px 7px;
+
+		&:hover {
+			background: none;
+		}
+	}
+
+	.createMenuItem {
+		background: rgb(222, 235, 255);
+		color: black !important;
+
+		&:hover {
+			background: rgba(222, 235, 255, 0.8);
+		}
+	}
+
+	.circularIcon {
+		margin-left: 10px;
+		border-radius: 50%;
+		padding: 7px;
+		height: 30px;
+		width: 30px;
+
+		&:hover {
+			background: #444444 none;
+			padding: 7px;
+		}
+		i {
+			margin: 0;
+		}
+	}
+
+	.circularDropdownMenu {
+		position: absolute;
+		top: 38px;
+		right: 4px !important;
+	}
+
+	.dropDownMenu {
+		position: absolute;
+		top: 32px;
 	}
 }
