@@ -14,7 +14,7 @@ const Projects: React.FC = () => {
 
 	useEffect(() => {
 		dispatch(actions.startLoading());
-	});
+	}, []);
 
 	const onCreateProject = () => {};
 

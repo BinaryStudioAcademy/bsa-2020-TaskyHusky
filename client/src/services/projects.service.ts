@@ -1,26 +1,10 @@
-const projects = [
-	{
-		projectID: '1',
-		name: 'first',
-		key: 'someKey',
-		projectType: 'Type',
-		category: 'category',
-		defaultAssigneeID: 'string',
-		leadID: 'string',
-		creatorID: 'string',
-	},
-	{
-		projectID: '2',
-		name: 'second',
-		key: 'someKey',
-		projectType: 'Type',
-		category: 'category',
-		defaultAssigneeID: 'string',
-		leadID: 'string',
-		creatorID: 'string',
-	},
-];
+import callWebApi from './../helpers/callApi.helper';
 
 export const getProjects = async (): Promise<WebApi.Entities.Projects[]> => {
-	return projects;
+	const res: Response = await callWebApi({
+		method: 'GET',
+		endpoint: 'projects',
+	});
+
+	return (await res.json()) as WebApi.Entities.Projects[];
 };
