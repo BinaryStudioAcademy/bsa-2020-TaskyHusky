@@ -10,9 +10,7 @@
 		"typeorm:dropDB": "npm run typeorm schema:drop",
 		"lint": "eslint . --ext .ts",
 		"update-webapi": "ts-node scripts/update_webapi.ts",
-		"migrate": "ts-node node_modules/typeorm/cli.js migration:run",
-		"generate-seed": "ts-node node_modules/typeorm/cli.js migration:create -d src/seeders -n",
-		"seed": "ts-node src/seeders"
+		"generate-seed": "ts-node node_modules/typeorm/cli.js migration:create -d src/seeders -n"
 	},
 	"keywords": [],
 	"author": "",
