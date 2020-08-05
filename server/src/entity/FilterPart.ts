@@ -8,18 +8,16 @@ export class FilterPart {
 	@PrimaryGeneratedColumn('uuid')
 	id!: string;
 
-	@OneToOne(type => Filter, filter => filter.id)
-	@JoinColumn()
-    filter?: Filter;
-	
-	@OneToOne(type => FilterDefinition, filterDef => filterDef.id)
-	@JoinColumn()
-	filterDef?: FilterDefinition;
+	@Column()
+	filterId?: string;
+
+	@Column()
+	filterDefId?: string;
 
 	// @ManyToMany(type => User)
 	// @Column()
 	// members?: User[];
-	
+
 	@Column()
 	searchText?: string;
 }

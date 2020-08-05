@@ -11,4 +11,7 @@ export class Filter {
 
 	@Column()
 	name?: string;
+
+	// @Column
+	// staredBy?: User[]
 }

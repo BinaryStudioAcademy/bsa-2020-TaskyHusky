@@ -33,7 +33,7 @@ class FilterPartController {
 
 		try {
 			const filterPart = await filterPartRepository.createItem(body);
-			res.status(404).send();
+			res.send(filterPart);
 		} catch (error) {
 			res.status(404).send();
 		}
