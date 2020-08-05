@@ -4,9 +4,13 @@ import { useCreateIssueModalContext } from './logic/context';
 import TagsInput from 'components/common/TagsInput';
 import { ControlsGetter } from './logic/types';
 import { createIssue } from 'services/issue.service';
+import { connect } from 'react-redux';
+import { RootState } from 'typings/rootState';
 
 interface Props {
 	children: ControlsGetter;
+	issueTypes: WebApi.Entities.IssueType[];
+	priorities: WebApi.Entities.Priority[];
 }
 
 interface SelectOption {
@@ -16,7 +20,7 @@ interface SelectOption {
 	style?: any;
 }
 
-const CreateIssueModalBody: React.FC<Props> = ({ children }) => {
+const CreateIssueModalBody: React.FC<Props> = ({ children, issueTypes, priorities }) => {
 	const [isOpened, setIsOpened] = useState<boolean>(false);
 	const [loading, setLoading] = useState<boolean>(false);
 
@@ -149,36 +153,11 @@ const CreateIssueModalBody: React.FC<Props> = ({ children }) => {
 	);
 };
 
-const issueTypes: WebApi.Entities.IssueType[] = [
-	{
-		id: '45cb32e5-7ac4-4945-a80f-fe333f3dbf77',
-		color: 'red',
-		title: 'Not OK',
-		icon: 'cross',
-	},
-	{
-		id: '45cb32e5-7ac4-4945-a80f-fe333f3dbf77',
-		color: 'green',
-		title: 'OK',
-		icon: 'check',
-	},
-];
-
-const priorities: WebApi.Entities.Priority[] = [
-	{
-		id: '391def5c-df7e-423b-ad8d-517f6e8ac5b1',
-		color: 'red',
-		title: 'Not OK',
-		icon: 'cross',
-	},
-	{
-		id: '391def5c-df7e-423b-ad8d-517f6e8ac5b1',
-		color: 'green',
-		title: 'OK',
-		icon: 'check',
-	},
-];
+const mapStateToProps = (state: RootState) => ({
+	issueTypes: state.issues.types,
+	priorities: state.issues.priorities,
+});
 
 const labels: string[] = ['label1', 'label2'];
 
-export default CreateIssueModalBody;
+export default connect(mapStateToProps)(CreateIssueModalBody);
