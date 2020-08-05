@@ -21,6 +21,6 @@ const projects = [
 	},
 ];
 
-export const getProjects = async (): Promise<WebApi.Entities.Projects> => {
-	return { projects };
+export const getProjects = async (): Promise<WebApi.Entities.Projects[]> => {
+	return projects;
 };
