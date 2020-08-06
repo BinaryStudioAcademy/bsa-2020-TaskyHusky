@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Modal, Form, Button, Grid, Header } from 'semantic-ui-react';
+import { Modal, Form, Button, Grid, Header, Icon } from 'semantic-ui-react';
 import { useCreateIssueModalContext } from './logic/context';
 import TagsInput from 'components/common/TagsInput';
 import { ControlsGetter } from './logic/types';
@@ -19,7 +19,7 @@ interface Props {
 interface SelectOption {
 	key: string | number;
 	value: any;
-	text: string;
+	text: string | JSX.Element;
 	style?: any;
 }
 
@@ -32,7 +32,12 @@ const CreateIssueModalBody: React.FC<Props> = ({ children, issueTypes, prioritie
 	const typeOpts: SelectOption[] = issueTypes.map((type) => ({
 		key: type.id,
 		value: type.id,
-		text: type.title ?? 'untitled',
+		text: (
+			<>
+				{type.icon ? <Icon name={type.icon as any} /> : ''}
+				{type.title ?? 'untitled'}
+			</>
+		),
 		style: {
 			color: type.color ?? 'white',
 		},
@@ -41,7 +46,12 @@ const CreateIssueModalBody: React.FC<Props> = ({ children, issueTypes, prioritie
 	const priorityOpts: SelectOption[] = priorities.map((priority) => ({
 		key: priority.id,
 		value: priority.id,
-		text: priority.title ?? 'untitled',
+		text: (
+			<>
+				{priority.icon ? <Icon name={priority.icon as any} /> : ''}
+				{priority.title ?? 'untitled'}
+			</>
+		),
 		style: {
 			color: priority.color ?? 'white',
 		},
@@ -54,15 +64,12 @@ const CreateIssueModalBody: React.FC<Props> = ({ children, issueTypes, prioritie
 	}));
 
 	const context = useCreateIssueModalContext();
-	const searchFunc = (opts: any[], value: string) => opts.filter((o) => o.text.toString().includes(value));
 
 	const getSetOpenFunc = (value: boolean) => () => setIsOpened(value);
 	children(getSetOpenFunc(true), getSetOpenFunc(false));
 
 	const submit = async () => {
-		const allFields = Object.values(context.data)
-			.map((v) => v)
-			.reduce((a: boolean, b: boolean) => a && b, true);
+		const allFields = context.data.type && context.data.priority && context.data.summary;
 
 		if (!allFields) {
 			return;
@@ -113,7 +120,6 @@ const CreateIssueModalBody: React.FC<Props> = ({ children, issueTypes, prioritie
 								options={typeOpts}
 								placeholder="Type"
 								onChange={(event, data) => context.set('type', data.value)}
-								search={searchFunc}
 							/>
 							<Form.Dropdown
 								clearable
@@ -122,7 +128,6 @@ const CreateIssueModalBody: React.FC<Props> = ({ children, issueTypes, prioritie
 								options={priorityOpts}
 								placeholder="Priority"
 								onChange={(event, data) => context.set('priority', data.value)}
-								search={searchFunc}
 							/>
 							<Form.Input
 								placeholder="Summary"
@@ -136,7 +141,6 @@ const CreateIssueModalBody: React.FC<Props> = ({ children, issueTypes, prioritie
 								multiple
 								placeholder="Labels"
 								options={labelOpts}
-								search={searchFunc}
 								onChange={(event, data) => context.set('labels', data.value)}
 							/>
 							<TagsInput

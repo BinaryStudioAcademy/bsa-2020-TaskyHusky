@@ -62,12 +62,8 @@ const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, p
 		text: label,
 	}));
 
-	const searchFunc = (opts: any[], value: string) => opts.filter((o) => o.text.toString().includes(value));
-
 	const submit = async () => {
-		const allFields = Object.values(context.data)
-			.map((v) => v)
-			.reduce((a: boolean, b: boolean) => a && b, true);
+		const allFields = context.data.type && context.data.priority && context.data.summary;
 
 		if (!allFields) {
 			return;
@@ -108,7 +104,6 @@ const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, p
 							defaultValue={(current.type as { id: string }).id}
 							placeholder="Type"
 							onChange={(event, data) => context.set('type', data.value)}
-							search={searchFunc}
 						/>
 						<Form.Dropdown
 							clearable
@@ -118,7 +113,6 @@ const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, p
 							defaultValue={(current.priority as { id: string }).id}
 							placeholder="Priority"
 							onChange={(event, data) => context.set('priority', data.value)}
-							search={searchFunc}
 						/>
 						<Form.Input
 							placeholder="Summary"
@@ -134,18 +128,17 @@ const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, p
 							placeholder="Labels"
 							options={labelOpts}
 							defaultValue={current.labels as any}
-							search={searchFunc}
 							onChange={(event, data) => context.set('labels', data.value)}
 						/>
 						<TagsInput
 							placeholder="Add link"
-							default={current.links ?? []}
+							//default={current.links ?? []}
 							tags={context.data.links ?? []}
 							onChange={(tags) => context.set('links', [...tags])}
 						/>
 						<TagsInput
 							placeholder="Add attachment"
-							default={current.attachments ?? []}
+							//default={current.attachments ?? []}
 							tags={context.data.attachments ?? []}
 							onChange={(tags) => context.set('attachments', [...tags])}
 						/>

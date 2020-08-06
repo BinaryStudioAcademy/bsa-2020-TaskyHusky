@@ -48,5 +48,5 @@ export class Board1596645901833 implements MigrationInterface {
 		await getRepository('board').save(board);
 	}
 
-	public async down(queryRunner: QueryRunner): Promise<void> {}
+	public async down(queryRunner: QueryRunner): Promise<void> { }
 }

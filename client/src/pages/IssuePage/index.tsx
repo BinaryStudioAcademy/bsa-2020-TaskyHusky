@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Header, Button, Grid, Table, Label, Icon } from 'semantic-ui-react';
-import { Redirect, Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import style from './styles.module.scss';
 import { getByKey } from 'services/issue.service';
 import UpdateIssueModal from 'containers/UpdateIssueModal';
@@ -80,9 +80,9 @@ const IssuePage: React.FC<Props> = ({ match }) => {
 								<Table.Cell>Links</Table.Cell>
 								<Table.Cell>
 									{(issue.links ?? []).map((l, i) => (
-										<Link to={l} key={i} style={{ marginRight: 10 }}>
+										<a href={l} key={i} style={{ marginRight: 10 }}>
 											{l}
-										</Link>
+										</a>
 									))}
 								</Table.Cell>
 							</Table.Row>
@@ -90,9 +90,9 @@ const IssuePage: React.FC<Props> = ({ match }) => {
 								<Table.Cell>Attachments</Table.Cell>
 								<Table.Cell>
 									{(issue.attachments ?? []).map((a, i) => (
-										<Link to={a} key={i} style={{ marginRight: 10 }}>
+										<a href={a} key={i} style={{ marginRight: 10 }}>
 											{a}
-										</Link>
+										</a>
 									))}
 								</Table.Cell>
 							</Table.Row>
@@ -114,7 +114,7 @@ const IssuePage: React.FC<Props> = ({ match }) => {
 								</Table.Cell>
 							</Table.Row>
 							<Table.Row>
-								<Table.Cell>Pririoty</Table.Cell>
+								<Table.Cell>Priority</Table.Cell>
 								<Table.Cell>
 									<Label color={(issue.priority as { color: string }).color as any}>
 										<Icon name={(issue.priority as { icon: string }).icon as any} />
