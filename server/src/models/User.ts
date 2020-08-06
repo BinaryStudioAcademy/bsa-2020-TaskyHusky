@@ -3,7 +3,7 @@ export interface UserModel {
 	email: string;
 	password?: string;
 	fullName?: string;
-	userame?: string;
+	username?: string;
 	avatar?: string;
 	location?: string;
 	department?: string;

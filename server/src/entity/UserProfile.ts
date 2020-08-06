@@ -11,7 +11,7 @@ export class UserProfile {
 	fullName?: string;
 
 	@Column({ nullable: true })
-	userame?: string;
+	username?: string;
 
 	@Column({ nullable: true })
 	avatar?: string;
