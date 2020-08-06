@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Modal, Button, Header, Grid } from 'semantic-ui-react';
+import { Form, Modal, Button, Header, Grid, Icon } from 'semantic-ui-react';
 import { connect, useDispatch } from 'react-redux';
 import { RootState } from 'typings/rootState';
 import TagsInput from 'components/common/TagsInput';
@@ -14,7 +14,12 @@ interface Props {
 	onSubmit: () => void;
 }
 
-interface SelectOption {}
+interface SelectOption {
+	key: string | number;
+	text: string | JSX.Element;
+	value: string;
+	style?: any;
+}
 
 const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, priorities, onSubmit }) => {
 	const context = useCreateIssueModalContext();
@@ -26,7 +31,12 @@ const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, p
 	const typeOpts: SelectOption[] = issueTypes.map((type) => ({
 		key: type.id,
 		value: type.id,
-		text: type.title ?? 'untitled',
+		text: (
+			<>
+				{type.icon ? <Icon name={type.icon as any} /> : ''}
+				{type.title ?? 'untitled'}
+			</>
+		),
 		style: {
 			color: type.color ?? 'white',
 		},
@@ -35,7 +45,12 @@ const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, p
 	const priorityOpts: SelectOption[] = priorities.map((priority) => ({
 		key: priority.id,
 		value: priority.id,
-		text: priority.title ?? 'untitled',
+		text: (
+			<>
+				{priority.icon ? <Icon name={priority.icon as any} /> : ''}
+				{priority.title ?? 'untitled'}
+			</>
+		),
 		style: {
 			color: priority.color ?? 'white',
 		},
