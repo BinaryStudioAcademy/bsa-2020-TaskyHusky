@@ -1,3 +1,10 @@
+namespace WebApi.Board {
+	export enum BoardType {
+		Scrum = 'Scrum',
+		Kanban = 'Kanban',
+	}
+}
+
 namespace WebApi.Issue {
 	interface PartialIssue {
 		id?: string;
@@ -46,8 +53,11 @@ namespace WebApi.User {
 namespace WebApi.Entities {
 	interface Board {
 		id: string;
-		boardType?: string;
+		boardType: BoardType;
+		name: string;
+		location: string;
 		columns?: BoardColumn[];
+		createdBy: User;
 	}
 
 	interface BoardColumn {
@@ -60,8 +70,10 @@ namespace WebApi.Entities {
 
 	interface Filter {
 		id: string;
+		owner?: User;
 		ownerId?: string;
 		name?: string;
+		staredBy?: User[];
 	}
 
 	interface FilterDefinition {
@@ -73,9 +85,9 @@ namespace WebApi.Entities {
 
 	interface FilterPart {
 		id: string;
-		filter?: Filter;
-		filterDef?: FilterDefinition;
-		// members?: User[];
+		filterId?: string;
+		filterDefId?: string;
+		members?: User[];
 		searchText?: string;
 	}
 
@@ -134,5 +146,7 @@ namespace WebApi.Entities {
 		jobTitle?: string;
 		userSettingsId?: string;
 		password?: string;
+		boards?: Board[];
+		filters?: Filter[];
 	}
 }
