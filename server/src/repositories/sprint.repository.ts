@@ -21,9 +21,8 @@ export class SprintRepository extends Repository<Sprint> {
 		return this.findOneOrFail(id);
 	}
 
-	async deleteOneById(id: string): Promise<Sprint | undefined> {
+	async deleteOneById(id: string): Promise<DeleteResult> {
 		await this.findOneOrFail(id);
-		this.delete(id);
-		return this.findOneOrFail(id);
+		return this.delete(id);
 	}
 }
