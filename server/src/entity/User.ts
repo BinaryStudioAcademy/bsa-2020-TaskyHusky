@@ -1,5 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { MinLength, IsEmail } from 'class-validator';
+import {TeamsPeople} from './TeamsPeople';
 import { Board } from './Board';
 import { Filter } from './Filter';
 
@@ -40,6 +41,9 @@ export class User {
 	@MinLength(6)
 	password?: string;
 
+	@OneToMany(type => TeamsPeople, teams => teams.userId)
+  teams?: TeamsPeople[];
+  
 	@OneToMany(type => Board, board => board.createdBy)
 	boards?: Board[];
 
