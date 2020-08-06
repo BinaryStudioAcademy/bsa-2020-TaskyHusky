@@ -1,6 +1,6 @@
 import { EntityRepository, getCustomRepository, Repository } from 'typeorm';
 import { Board } from '../entity/Board';
-import {UserRepository} from './user.repository';
+import { UserRepository } from './user.repository';
 
 @EntityRepository(Board)
 export class BoardRepository extends Repository<Board> {
@@ -8,9 +8,13 @@ export class BoardRepository extends Repository<Board> {
 		return this.findOneOrFail({ where: { boardType } });
 	}
 
-	getAll() {
-		return this.find();
-	}
+	getAll = async () => {
+		const extendedBoards = await this.find().then(boards =>
+			boards.map(async (board) => this.getOne(board.id)),
+		);
+
+		return Promise.all(extendedBoards);
+	};
 
 	async getOne(id: string) {
 		const board = await this
@@ -34,11 +38,11 @@ export class BoardRepository extends Repository<Board> {
 		const userRepository = getCustomRepository(UserRepository);
 
 		let board = await this.getOne(id);
-		const { createdBy:user, ...dataToCreate } = data;
+		const { createdBy: user, ...dataToCreate } = data;
 
 		if (user) {
 			const userToAdd = await userRepository.getById(user.id);
-			if(!userToAdd) throw new Error('User with current ID not found');
+			if (!userToAdd) throw new Error('User with current ID not found');
 
 			board = { ...board, ...dataToCreate, createdBy: userToAdd };
 		} else {
@@ -50,10 +54,10 @@ export class BoardRepository extends Repository<Board> {
 
 	async post(data: any) {
 		const userRepository = getCustomRepository(UserRepository);
-		const { createdBy:user, ...dataToCreate } = data;
+		const { createdBy: user, ...dataToCreate } = data;
 
 		const userToAdd = await userRepository.getById(user.id);
-		if(!userToAdd) throw new Error('User with current ID not found');
+		if (!userToAdd) throw new Error('User with current ID not found');
 
 		let board = new Board();
 		board = { ...board, ...dataToCreate, createdBy: userToAdd };
