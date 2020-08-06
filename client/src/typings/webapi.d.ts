@@ -93,7 +93,7 @@ namespace WebApi.Entities {
 		priority?: Priority;
 		description?: string;
 		sprint?: Sprint;
-		projectID?: string;
+		project?: Projects;
 		issueKey?: string;
 		assignedID?: string;
 		creatorID?: string;
