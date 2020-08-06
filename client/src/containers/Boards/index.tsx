@@ -4,14 +4,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'typings/rootState';
 import * as actions from './logic/actions';
 
-import CreateBoardModal from './../../components/CreateBoardModal';
+import CreateBoardModal from '../../components/CreateBoardModal';
 import styles from './styles.module.scss';
 
-const boardTypes = ['Scrum', 'Next-gen', 'Kanban']; //TODO:replace it with import
-
 const Boards: React.FC = () => {
+	const boardTypes = [WebApi.Board.BoardType.Kanban, WebApi.Board.BoardType.Scrum];
 	const [searchName, setSearchName] = useState('');
-	const [selectedTypes, setSelectedType] = useState<string[]>([]);
+	const [selectedTypes, setSelectedType] = useState<WebApi.Board.BoardType[]>([]);
 	const [isModalShown, setIsModalShown] = useState(false);
 	const dispatch = useDispatch();
 	const boards = useSelector((rootState: RootState) => rootState.boards.boards);
@@ -43,7 +42,7 @@ const Boards: React.FC = () => {
 	}));
 
 	const handleSelectChange = (event: SyntheticEvent<HTMLElement, Event>, data: DropdownProps) => {
-		setSelectedType([...(data.value as string[])]);
+		setSelectedType([...(data.value as WebApi.Board.BoardType[])]);
 	};
 
 	return (
