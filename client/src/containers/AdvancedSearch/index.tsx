@@ -3,7 +3,7 @@ import styles from './styles.module.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import * as actions from './logic/actions';
 import { RootState } from 'typings/rootState';
-import { Button, Table, Input, Dropdown, Form, List, Icon } from 'semantic-ui-react';
+import { Button, Table, Input, Form, List, Icon, Dropdown } from 'semantic-ui-react';
 import IssueItem from 'components/IssueItem';
 import FilterDef from 'components/FilterDef';
 
@@ -33,6 +33,30 @@ const AdvancedSearch: React.FC = () => {
 		},
 	];
 	useEffect(() => {}, [dispatch]);
+
+	const AddMoreFilterDefsDropdown = () => (
+		<Dropdown
+			className={styles.moreFilterDropdown}
+			trigger={
+				<span className={styles.moreText}>
+					<Icon color="blue" name="plus" /> More
+				</span>
+			}
+			icon={null}
+		>
+			<Dropdown.Menu onClick={(e: Event) => e.stopPropagation()}>
+				<Input placeholder={'Search criteria'} icon="search" iconPosition="left" className={styles.search} />
+				<Dropdown.Divider />
+				<Dropdown.Header icon="folder open" content={'Criteria'} />
+				<Dropdown.Menu scrolling>
+					{/* Here will be additional filter defs that user can choose to render */}
+					{/* {tagOptions.map((option) => (
+						<Dropdown.Item key={option.key1} {...option} />
+					))} */}
+				</Dropdown.Menu>
+			</Dropdown.Menu>
+		</Dropdown>
+	);
 
 	return (
 		<div className={styles.filtersContainer}>
@@ -72,16 +96,11 @@ const AdvancedSearch: React.FC = () => {
 							{filterDefs.map((def) => (
 								<FilterDef key={def.id} filterDef={def} />
 							))}
-							<div className={styles.moreField}>
-								<Icon name="plus" color="blue" size="large" />
-								More
-							</div>
+							<AddMoreFilterDefsDropdown />
 							<Form.Field control={Input} placeholder="Contains text" />
 							<Button primary content="Search" />
-							{/* <Form.Field control={Dropdown} placeholder="Owner" search selection options={[]} />
-							<Form.Field control={Dropdown} placeholder="Project" search selection options={[]} />
-							<Form.Field control={Dropdown} placeholder="Group" search selection options={[]} /> */}
 						</Form.Group>
+						<Form.Group>{/* Render here additional filter defs */}</Form.Group>
 					</Form>
 				</div>
 			</div>

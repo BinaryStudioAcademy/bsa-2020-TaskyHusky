@@ -22,12 +22,13 @@
 				border: none;
 				box-shadow: none;
 				height: 40px;
-				&:hover, &:focus {
+				&:hover,
+				&:focus {
 					border: none !important;
 					box-shadow: none !important;
 					background: rgba(230, 230, 230, 0.6) !important;
 				}
-			}	
+			}
 		}
 		.actionWrapper {
 			margin-left: 10px;
@@ -39,9 +40,12 @@
 		}
 	}
 	.bottomBarWrapper {
-		.moreField {
+		.moreFilterDropdown {
 			display: flex;
 			align-items: center;
+			.moreText {
+				color: #3275a8
+			}
 		}
 	}
 }

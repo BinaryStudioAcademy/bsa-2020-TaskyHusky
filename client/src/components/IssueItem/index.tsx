@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
-import { Table, Rating, Dropdown, Icon } from 'semantic-ui-react';
+import React from 'react';
+import { Table, Dropdown, Icon } from 'semantic-ui-react';
 import styles from './styles.module.scss';
-import Avatar from 'components/Avatar';
 
 interface Props {
 	issue: WebApi.Entities.Issue;

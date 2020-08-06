@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Input, Form, Dropdown, Checkbox } from 'semantic-ui-react';
+import { Input, Form, Dropdown } from 'semantic-ui-react';
 import styles from './styles.module.scss';
 
 interface Props {
