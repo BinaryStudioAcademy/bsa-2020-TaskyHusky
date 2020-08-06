@@ -29,8 +29,6 @@ const ProfilePage = ({ match: { params } }: { match: any }) => {
 		location: '',
 	});
 
-	// const token = localStorage.getItem(LocalStorageKeys.SESSION_TOKEN);
-	// const decodedJwt = token && jwt.decode(token);
 	const isCurrentUser = user.id === userData.id;
 	const mockData = {
 		teams: [
@@ -52,6 +50,7 @@ const ProfilePage = ({ match: { params } }: { match: any }) => {
 	useEffect(() => {
 		dispatch(actions.requestGetUser({ id: params.id }));
 	}, []);
+
 	useEffect(() => {
 		setUser({ ...user, ...userData });
 	}, [userData]);
