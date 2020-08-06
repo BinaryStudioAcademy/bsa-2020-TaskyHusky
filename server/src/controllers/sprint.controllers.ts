@@ -57,7 +57,8 @@ class SprintController {
 
 		try {
 			const { id } = req.params;
-			const result = await repository.deleteOneById(id);
+			await repository.deleteOneById(id);
+			const result = { id };
 			res.send(result);
 		} catch (error) {
 			res.status(404).send(getWebError(error, 404));
