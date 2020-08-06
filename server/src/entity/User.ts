@@ -1,5 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { MinLength, IsEmail } from 'class-validator';
+import { Board } from './Board';
 import { Filter } from './Filter';
 
 @Entity()
@@ -26,10 +27,10 @@ export class User {
 	organization?: string;
 
 	@Column({ unique: true })
+	@IsEmail()
 	email?: string;
 
 	@Column({ nullable: true })
-	@IsEmail()
 	jobTitle?: string;
 
 	@Column({ nullable: true })
@@ -38,6 +39,9 @@ export class User {
 	@Column()
 	@MinLength(6)
 	password?: string;
+
+	@OneToMany(type => Board, board => board.createdBy)
+	boards?: Board[];
 
 	@OneToMany((type) => Filter, (filter) => filter.owner)
 	filters?: Filter[];
