@@ -1,12 +1,15 @@
 import React, { useState, ChangeEvent } from 'react';
 import { Modal, Button, Form, Checkbox, Image, Card } from 'semantic-ui-react';
-
-import kanbanImg from './../../assets/images/kanban.svg';
-import scrumImg from './../../assets/images/scrum.svg';
-import bugTrackingImg from './../../assets/images/bug_tracking.svg';
-import styles from './styles.module.scss';
-import { projectTypes } from './../../containers/Projects';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+
+import kanbanImg from '../../assets/images/kanban.svg';
+import scrumImg from '../../assets/images/scrum.svg';
+import bugTrackingImg from '../../assets/images/bug_tracking.svg';
+import styles from './styles.module.scss';
+import * as actions from './logic/actions';
+import { RootState } from 'typings/rootState';
+import Spinner from 'components/Spinner';
 
 type projectTemplate = 'Scrum' | 'Kanban' | 'Bug tracking';
 
@@ -26,20 +29,32 @@ const templatesInformation = {
 		image: bugTrackingImg,
 	},
 };
-interface Props {
-	onCreateProject(): void;
-	onSetProject(project: projectTypes): any;
-	project: projectTypes;
-}
 
-const CreateProjectModal = ({ onCreateProject, onSetProject, project: { name, key, template } }: Props) => {
-	const [isModalShown, setIsModalShown] = useState(false);
+const CreateProjectModal = () => {
+	const dispatch = useDispatch();
+	const { isLoading, isModalOpened } = useSelector((rootState: RootState) => rootState.createProject);
+
 	const [isKeyTouched, setIsKeyTouched] = useState(false);
 	const [isTemplatesView, setIsTemplatesView] = useState(false);
+
+	const [name, setName] = useState<string>('');
+	const [key, setKey] = useState<string>('');
+	const [template, setTemplate] = useState<string>('Scrum');
+
 	const { description, image } = templatesInformation[template as projectTemplate];
 
+	const onCreateProject = (): void => {
+		dispatch(
+			actions.startCreatingProject({
+				name,
+				key,
+				template,
+			}),
+		);
+	};
+
 	const generateKey = (name: string): string => {
-		let result = key as string;
+		let result = key;
 		if (!isKeyTouched) {
 			result = name
 				.split(' ')
@@ -51,14 +66,19 @@ const CreateProjectModal = ({ onCreateProject, onSetProject, project: { name, ke
 	};
 
 	const onModalClose = () => {
-		setIsModalShown(false);
+		dispatch(actions.closeModal());
 		setIsTemplatesView(false);
+	};
+
+	const onModalOpen = () => {
+		dispatch(actions.openModal());
 	};
 
 	const onNameChanged = (event: ChangeEvent<HTMLInputElement>): void => {
 		const name = event.target.value;
 		const key = generateKey(name);
-		onSetProject({ name, key } as projectTypes);
+		setName(name);
+		setKey(key);
 	};
 
 	const onKeyChanged = (event: ChangeEvent<HTMLInputElement>): void => {
@@ -66,27 +86,29 @@ const CreateProjectModal = ({ onCreateProject, onSetProject, project: { name, ke
 		if (!isKeyTouched) {
 			setIsKeyTouched(true);
 		}
-		onSetProject({ key } as projectTypes);
+		setKey(key);
 	};
 
 	const selectTemplate = (template: string) => {
 		setIsTemplatesView(false);
-		onSetProject({ template });
+		setTemplate(template);
 	};
 
 	return (
-		<>
+		<Modal
+			closeIcon
+			onClose={onModalClose}
+			onOpen={onModalOpen}
+			open={isModalOpened}
+			size={!isTemplatesView ? 'tiny' : undefined}
+			dimmer="inverted"
+			trigger={<Button primary>Create project</Button>}
+		>
 			{!isTemplatesView ? (
-				<Modal
-					closeIcon
-					onClose={onModalClose}
-					onOpen={() => setIsModalShown(true)}
-					open={isModalShown}
-					size={'tiny'}
-					dimmer="inverted"
-					trigger={<Button primary>Create project</Button>}
-				>
+				<>
+					{'isLoading' ? <Spinner /> : ''}
 					<Modal.Header>Create project</Modal.Header>
+
 					<Modal.Content>
 						<Form className={styles.form_container}>
 							<Form.Field>
@@ -107,7 +129,7 @@ const CreateProjectModal = ({ onCreateProject, onSetProject, project: { name, ke
 							<div>
 								<h2>{template}</h2>
 								<p>{description}</p>
-								<Button color="grey" onClick={() => setIsTemplatesView(true)}>
+								<Button color="grey" onClick={() => setIsTemplatesView(true)} disabled={isLoading}>
 									Change template
 								</Button>
 							</div>
@@ -121,19 +143,13 @@ const CreateProjectModal = ({ onCreateProject, onSetProject, project: { name, ke
 							content="Create"
 							labelPosition="right"
 							icon="checkmark"
-							onClick={() => onCreateProject()}
+							onClick={onCreateProject}
 							primary
 						/>
 					</Modal.Actions>
-				</Modal>
+				</>
 			) : (
-				<Modal
-					closeIcon
-					onClose={onModalClose}
-					onOpen={() => setIsModalShown(true)}
-					open={true}
-					dimmer="inverted"
-				>
+				<>
 					<Modal.Header>
 						<h2 className={styles.modal__title}>Choose a classic template</h2>
 						<p className={styles.modal__description}>{description}</p>
@@ -143,7 +159,7 @@ const CreateProjectModal = ({ onCreateProject, onSetProject, project: { name, ke
 							<Card
 								key={name}
 								className={styles.card__container}
-								image={<img src={image} className={styles.card__image} alt={name + ' image'} />}
+								image={<Image src={image} className={styles.card__image} alt={name + ' image'} />}
 								header={name}
 								description={description}
 								extra={
@@ -162,9 +178,9 @@ const CreateProjectModal = ({ onCreateProject, onSetProject, project: { name, ke
 							/>
 						))}
 					</Modal.Content>
-				</Modal>
+				</>
 			)}
-		</>
+		</Modal>
 	);
 };
 
