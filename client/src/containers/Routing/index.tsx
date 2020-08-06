@@ -8,6 +8,7 @@ import SignUp from 'pages/SignUp';
 import CreateIssue from 'pages/CreateIssue';
 import { loadTypes, loadPriorities } from 'pages/CreateIssue/logic/actions';
 import { useDispatch } from 'react-redux';
+import Boards from '../Boards';
 
 const Routing: React.FC = () => {
 	const dispatch = useDispatch();
@@ -23,6 +24,7 @@ const Routing: React.FC = () => {
 			<PublicRoute exact restricted={true} path="/login" component={Login} />
 			<PublicRoute exact restricted={true} path="/signup" component={SignUp} />
 			<PrivateRoute exact path="/projects" component={Projects} />
+			<PrivateRoute exact path="/boards" component={Boards} />
 		</Switch>
 	);
 };

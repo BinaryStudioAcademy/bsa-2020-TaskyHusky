@@ -1,6 +1,7 @@
 import { EntityRepository, getCustomRepository, Repository } from 'typeorm';
 import { Board } from '../entity/Board';
 import { UserRepository } from './user.repository';
+import {IBoardModel} from '../models/Board';
 
 @EntityRepository(Board)
 export class BoardRepository extends Repository<Board> {
@@ -8,7 +9,7 @@ export class BoardRepository extends Repository<Board> {
 		return this.findOneOrFail({ where: { boardType } });
 	}
 
-	getAll = async () => {
+	getAll = async ():Promise<IBoardModel[]> => {
 		const extendedBoards = await this.find().then(boards =>
 			boards.map(async (board) => this.getOne(board.id)),
 		);
@@ -17,7 +18,7 @@ export class BoardRepository extends Repository<Board> {
 	};
 
 	async getOne(id: string) {
-		const board = await this
+		const board = <IBoardModel>await this
 			.createQueryBuilder('board')
 			.where('board.id = :id', { id })
 			.innerJoin('board.createdBy', 'user')

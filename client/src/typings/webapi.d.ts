@@ -1,3 +1,24 @@
+namespace WebApi.Board {
+	export enum BoardType {
+		Scrum = 'Scrum',
+		NextGen = 'Next-gen',
+		Kanban = 'Kanban',
+	}
+
+	export interface IBoardModel {
+		id: string;
+		boardType: BoardType;
+		name: string;
+		location: string;
+		createdBy: {
+			id: string;
+			firstName: string;
+			lastName: string;
+			avatar: string;
+		};
+	}
+}
+
 namespace WebApi.Issue {
 	interface PartialIssue {
 		id?: string;
@@ -46,8 +67,9 @@ namespace WebApi.User {
 namespace WebApi.Entities {
 	interface Board {
 		id: string;
-		boardType?: string;
+		boardType: BoardType;
 		columns?: BoardColumn[];
+		createdBy: User;
 	}
 
 	interface BoardColumn {
@@ -135,5 +157,6 @@ namespace WebApi.Entities {
 		jobTitle?: string;
 		userSettingsId?: string;
 		password?: string;
+		boards?: Board[];
 	}
 }
