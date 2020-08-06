@@ -13,10 +13,6 @@ export type UpdateFilterArgs = {
 	data: Partial<WebApi.Entities.Filter>;
 };
 
-export type UpdateFilterSuccessArgs = {
-	filter: Partial<WebApi.Entities.Filter>;
-};
-
 export type FetchFiltersSuccessArgs = {
 	partialState: Partial<FilterState>;
 };

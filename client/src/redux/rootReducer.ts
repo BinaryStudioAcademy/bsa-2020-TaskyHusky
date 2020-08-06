@@ -4,14 +4,14 @@ import { authReducer } from 'containers/LoginPage/logic/reducer';
 import { combineReducers, Reducer } from 'redux';
 import { RootState } from 'typings/rootState';
 import { issueReducer } from 'pages/CreateIssue/logic/reducer';
-import { commonReducer } from 'commonLogic/filterDefs/reducer';
+import { filterDefsReducer } from 'commonLogic/filterDefs/reducer';
 
 const rootReducer: Reducer<RootState> = combineReducers({
 	projects: projectsReducer,
 	auth: authReducer,
 	issues: issueReducer,
 	filters: filtersReducer,
-	common: commonReducer,
+	filterDefs: filterDefsReducer,
 });
 
 export default rootReducer;

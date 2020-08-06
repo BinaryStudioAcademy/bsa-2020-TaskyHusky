@@ -6,7 +6,7 @@ import { RootState } from 'typings/rootState';
 import { Button, Table, Input, Dropdown, Form } from 'semantic-ui-react';
 import { ReactComponent as HeaderStar } from './headerStart.svg';
 import FilterItem from 'components/FilterItem';
-import { getFullUserName } from './helpers';
+import { getFullUserName } from './logic/helpers';
 
 const Filters: React.FC = () => {
 	const dispatch = useDispatch();

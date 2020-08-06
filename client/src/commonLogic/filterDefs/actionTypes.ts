@@ -1,8 +1,8 @@
-import { CommonState } from './state';
+import { FilterDefsState } from './state';
 
 export const FETCH_FILTER_DEFS = 'FILTER:FETCH_FILTER_DEFS';
-export const UPDATE_COMMON_STATE_SUCCESS = 'FILTER:UPDATE_COMMON_STATE_SUCCESS';
+export const UPDATE_FILTER_DEFS_SUCCESS = 'FILTER:UPDATE_FILTER_DEFS_SUCCESS';
 
-export type UpdateStateSuccessArgs = {
-	partialState: Partial<CommonState>;
+export type UpdateFilterDefsSuccessArgs = {
+	partialState: Partial<FilterDefsState>;
 };

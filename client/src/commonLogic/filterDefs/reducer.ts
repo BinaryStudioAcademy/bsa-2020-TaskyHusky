@@ -1,9 +1,9 @@
 import * as actionTypes from './actionTypes';
-import { CommonState, initialState } from './state';
+import { FilterDefsState, initialState } from './state';
 import { createReducer } from 'helpers/createReducer.helper';
 
-export const commonReducer = createReducer<CommonState>(initialState, {
-	[actionTypes.UPDATE_COMMON_STATE_SUCCESS](state, action: actionTypes.UpdateStateSuccessArgs) {
+export const filterDefsReducer = createReducer<FilterDefsState>(initialState, {
+	[actionTypes.UPDATE_FILTER_DEFS_SUCCESS](state, action: actionTypes.UpdateFilterDefsSuccessArgs) {
 		return {
 			...state,
 			...action.partialState,

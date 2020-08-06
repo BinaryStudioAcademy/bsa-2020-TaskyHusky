@@ -13,16 +13,6 @@ export function* fetchAllFilters(action: ReturnType<typeof actions.fetchFilters>
 	}
 }
 
-export function* fetchAllFilterDefs(action: ReturnType<typeof actions.fetchFilterDefs>) {
-	try {
-		const filterDefs: WebApi.Entities.FilterDefinition[] = yield call(fetchFilters);
-		yield put(actions.fetchFiltersSuccess({ partialState: { filterDefs } }));
-	} catch (e) {
-		console.error(e.message);
-		yield put(actions.fetchFiltersSuccess({ partialState: { filterDefs: [] } }));
-	}
-}
-
 export function* fetchAllFilterParts(action: ReturnType<typeof actions.fetchFilterParts>) {
 	try {
 		const filterParts: WebApi.Entities.FilterPart[] = yield call(fetchFilterParts);
@@ -37,7 +27,7 @@ export function* updateFilterByData(action: ReturnType<typeof actions.updateFilt
 	try {
 		const { data } = action;
 		const filter: WebApi.Entities.Filter = yield call((data) => updateFilter(data), data);
-		yield put(actions.updateFilterSuccess({ filter }));
+		yield put(actions.updateFilterSuccess({ data: filter }));
 	} catch (e) {
 		console.error(e.message);
 		yield put(actions.fetchFiltersSuccess({ partialState: { filterParts: [] } }));
@@ -56,10 +46,6 @@ export function* watchFetchFilterParts() {
 	yield takeEvery(actionTypes.FETCH_FILTER_PARTS, fetchAllFilterParts);
 }
 
-export function* watchFetchFilterDefs() {
-	yield takeEvery(actionTypes.FETCH_FILTER_DEFS, fetchAllFilterDefs);
-}
-
 export default function* filterSaga() {
-	yield all([watchFetchFilters(), watchFetchFilterParts(), watchFetchFilterDefs(), watchUpdateFilter()]);
+	yield all([watchFetchFilters(), watchFetchFilterParts(), watchUpdateFilter()]);
 }

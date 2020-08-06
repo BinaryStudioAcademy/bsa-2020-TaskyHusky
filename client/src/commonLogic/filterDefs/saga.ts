@@ -6,10 +6,10 @@ import * as actions from './actions';
 export function* fetchAllFilterDefs(action: ReturnType<typeof actions.fetchFilterDefs>) {
 	try {
 		const filterDefs: WebApi.Entities.FilterDefinition[] = yield call(fetchFilterDefs);
-		yield put(actions.updateStateSuccess({ partialState: { filterDefs } }));
+		yield put(actions.updateFilterDefsSuccess({ partialState: { filterDefs } }));
 	} catch (e) {
 		console.error(e.message);
-		yield put(actions.updateStateSuccess({ partialState: { filterDefs: [] } }));
+		yield put(actions.updateFilterDefsSuccess({ partialState: { filterDefs: [] } }));
 	}
 }
 
@@ -17,6 +17,6 @@ export function* watchFetchFilterDefs() {
 	yield takeEvery(actionTypes.FETCH_FILTER_DEFS, fetchAllFilterDefs);
 }
 
-export default function* commonSaga() {
+export default function* filterDefsSaga() {
 	yield all([watchFetchFilterDefs()]);
 }

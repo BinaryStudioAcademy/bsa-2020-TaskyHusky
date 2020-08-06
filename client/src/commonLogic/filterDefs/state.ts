@@ -1,7 +1,7 @@
-export interface CommonState {
+export interface FilterDefsState {
 	filterDefs: WebApi.Entities.FilterDefinition[];
 }
 
-export const initialState: CommonState = {
+export const initialState: FilterDefsState = {
 	filterDefs: [],
 };
