@@ -6,18 +6,12 @@ import Avatar from 'components/Avatar';
 interface Props {
 	filter: WebApi.Entities.Filter;
 	updateFilter: (data: WebApi.Entities.Filter) => void;
+	fullName: string;
 }
 
-const FilterItem = ({ updateFilter, filter }: Props) => {
+const FilterItem = ({ updateFilter, filter, fullName }: Props) => {
 	const { id, name, owner, staredBy } = filter;
 	const [isStared, setIsStared] = useState(Boolean(staredBy?.find(({ id }) => owner?.id === id)));
-	const getFullUserName = (user: WebApi.Entities.User | undefined): string => {
-		if (!user) {
-			return '';
-		}
-		const { firstName = '', lastName = '' } = user;
-		return `${firstName} ${lastName}`;
-	};
 	const onSetFavorite = () => {
 		const updated = isStared
 			? staredBy?.filter(({ id }) => id !== owner?.id)
@@ -40,9 +34,9 @@ const FilterItem = ({ updateFilter, filter }: Props) => {
 			</Table.HeaderCell>
 			<Table.HeaderCell>
 				<div className={styles.userCell}>
-					<Avatar imgSrc={owner?.avatar || ''} fullName={`${getFullUserName(owner)}`} />
+					<Avatar imgSrc={owner?.avatar || ''} fullName={fullName} />
 					<a href={`/profile/${owner?.id}`} className={styles.underlinedLink}>
-						{getFullUserName(owner)}
+						{fullName}
 					</a>
 				</div>
 			</Table.HeaderCell>

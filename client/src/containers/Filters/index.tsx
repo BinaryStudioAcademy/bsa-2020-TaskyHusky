@@ -11,6 +11,14 @@ const Filters: React.FC = () => {
 	const dispatch = useDispatch();
 	const { filters } = useSelector((rootState: RootState) => rootState.filters);
 
+	const getFullUserName = (user: WebApi.Entities.User | undefined): string => {
+		if (!user) {
+			return '';
+		}
+		const { firstName = '', lastName = '' } = user;
+		return `${firstName} ${lastName}`;
+	};
+
 	const updateFilter = (data: WebApi.Entities.Filter) => {
 		dispatch(
 			actions.updateFilter({
@@ -64,7 +72,12 @@ const Filters: React.FC = () => {
 
 					<Table.Body>
 						{filters.map((filter) => (
-							<FilterItem updateFilter={updateFilter} key={filter.id} filter={filter} />
+							<FilterItem
+								fullName={getFullUserName(filter.owner)}
+								updateFilter={updateFilter}
+								key={filter.id}
+								filter={filter}
+							/>
 						))}
 					</Table.Body>
 				</Table>
