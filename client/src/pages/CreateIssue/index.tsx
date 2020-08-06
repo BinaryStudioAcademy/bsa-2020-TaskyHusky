@@ -1,22 +1,25 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ControlsGetter } from 'containers/CreateIssueModal/logic/types';
 import CreateIssueModal from 'containers/CreateIssueModal';
-import { Button, Grid } from 'semantic-ui-react';
+import { Grid } from 'semantic-ui-react';
 
 const CreateIssueExamplePage: React.FC = () => {
-	let openModal: () => void;
+	let openModal: (() => void) | undefined;
 
-	const getSetters: ControlsGetter = (open) => {
+	const getControls: ControlsGetter = (open) => {
 		openModal = open;
 	};
+
+	useEffect(() => {
+		if (openModal) {
+			openModal();
+		}
+	}, [openModal]);
 
 	return (
 		<Grid textAlign="center" verticalAlign="middle" className="fill" columns="1">
 			<Grid.Column style={{ maxWidth: 500 }}>
-				<Button fluid size="massive" positive onClick={() => openModal()}>
-					Create Issue
-				</Button>
-				<CreateIssueModal>{getSetters}</CreateIssueModal>
+				<CreateIssueModal>{getControls}</CreateIssueModal>
 			</Grid.Column>
 		</Grid>
 	);

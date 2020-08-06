@@ -21,7 +21,7 @@ const reducer = (state: Issue, action: any) => {
 };
 
 export const ContextProvider = (props: any) => {
-	const [state, dispatch] = React.useReducer(reducer, initialState as Issue);
+	const [state, dispatch] = React.useReducer(reducer, props.customInitalState ?? (initialState as Issue));
 	const value = React.useMemo(() => ({ state, dispatch }), [state]);
 	return <CreateIssueModalContext.Provider value={value} {...props} />;
 };
