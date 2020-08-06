@@ -28,7 +28,7 @@ const ProfileTeamBlock = ({ data: { user, isCurrentUser, mockData } }: propsUser
 					<div className={styles.groupIcon__secondary}>
 						<Icon disabled name="group" size="small" />
 					</div>
-					<p className={styles.infoBlock__content}>Start a team...</p>
+					<p className={styles.content}>Start a team...</p>
 				</div>
 			)}
 		</div>

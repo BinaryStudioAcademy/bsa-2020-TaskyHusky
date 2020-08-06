@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import styles from './styles.module.scss';
 import * as actions from 'containers/ProfilePage/logiс/actions';

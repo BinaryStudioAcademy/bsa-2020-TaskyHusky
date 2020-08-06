@@ -33,7 +33,7 @@ const ProfilePage = ({ match: { params } }: { match: any }) => {
 		location: '',
 	});
 
-	const token = sessionStorage.getItem(LocalStorageKeys.SESSION_TOKEN);
+	const token = localStorage.getItem(LocalStorageKeys.SESSION_TOKEN);
 	const decodedJwt = token && jwt.decode(token);
 	const isCurrentUser = user.id === (decodedJwt as any).id;
 	const mockData = {

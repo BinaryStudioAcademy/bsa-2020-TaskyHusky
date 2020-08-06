@@ -25,7 +25,6 @@ export default async function callWebApi(args: RequestArgs): Promise<Response> {
 	try {
 		const res: Response = await fetch(getUrl(args), getArgs(args));
 		await throwIfResponseFailed(res);
-
 		return res;
 	} catch (err) {
 		throw err;
@@ -57,7 +56,6 @@ const getArgs = (args: RequestArgs): RequestInit => {
 	const headers: Headers | string[][] | Record<string, string> | undefined = {};
 	const token = localStorage.getItem(LocalStorageKeys.SESSION_TOKEN);
 	let body: Body;
-
 	if (token && !args.skipAuthorization) {
 		headers.Authorization = `Bearer ${token}`;
 	}

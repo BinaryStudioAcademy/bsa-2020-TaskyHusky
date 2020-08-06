@@ -32,8 +32,8 @@ namespace WebApi.User {
 		id?: string;
 		email: string;
 		password?: string;
-		firstName?: string;
 		lastName?: string;
+		firstName?: string;
 		username?: string;
 		avatar?: string;
 		location?: string;

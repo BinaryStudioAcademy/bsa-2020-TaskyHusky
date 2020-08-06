@@ -5,6 +5,7 @@ export const requestGetUser = async (id: string): Promise<WebApi.Entities.UserPr
 	const res = await callWebApi({
 		method: 'GET',
 		endpoint: `user/${id}`,
+		skipAuthorization: false,
 	});
 
 	return (await res.json()) as WebApi.Entities.UserProfile;
