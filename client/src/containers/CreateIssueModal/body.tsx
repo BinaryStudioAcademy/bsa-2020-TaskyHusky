@@ -68,9 +68,7 @@ const CreateIssueModalBody: React.FC<Props> = ({ children, issueTypes, prioritie
 	children(getSetOpenFunc(true), getSetOpenFunc(false));
 
 	const submit = async () => {
-		const allFields = Object.values(context.data)
-			.map((v) => v)
-			.reduce((a: boolean, b: boolean) => a && b, true);
+		const allFields = context.data.type && context.data.summary && context.data.priority;
 
 		if (!allFields) {
 			return;
@@ -110,63 +108,86 @@ const CreateIssueModalBody: React.FC<Props> = ({ children, issueTypes, prioritie
 			>
 				<Grid className="fill" verticalAlign="middle">
 					<Grid.Column style={{ marginTop: 20, marginBottom: 20, marginLeft: 20 }}>
-						<Header floated="left" as="h1">
+						<Header floated="left" as="h1" style={{ marginBottom: 20 }}>
 							Add issue
 						</Header>
 						<Form onSubmit={submit}>
-							<Form.Dropdown
-								clearable
-								selection
-								style={{ maxWidth: 200 }}
-								options={typeOpts}
-								placeholder="Type"
-								onChange={(event, data) => context.set('type', data.value)}
-								search={searchFunc}
-							/>
-							<Form.Dropdown
-								clearable
-								selection
-								style={{ maxWidth: 200 }}
-								options={priorityOpts}
-								placeholder="Priority"
-								onChange={(event, data) => context.set('priority', data.value)}
-								search={searchFunc}
-							/>
-							<Form.Input
-								placeholder="Summary"
-								fluid
-								onChange={(event, data) => context.set('summary', data.value)}
-							/>
-							<Form.Dropdown
-								clearable
-								selection
-								multiple
-								style={{ maxWidth: 200 }}
-								placeholder="Labels"
-								options={labelOpts}
-								search={searchFunc}
-								onChange={(event, data) => context.set('labels', data.value)}
-							/>
-							<Divider horizontal>Additions</Divider>
-							<TagsInput
-								placeholder="Add link"
-								tags={context.data.links ?? []}
-								onChange={(tags) => context.set('links', [...tags])}
-							/>
-							<TagsInput
-								placeholder="Add attachment"
-								tags={context.data.attachments ?? []}
-								onChange={(tags) => context.set('attachments', [...tags])}
-							/>
-							<Form.TextArea
-								placeholder="Description"
-								onChange={(event, data) =>
-									data
-										? context.set('description', data.value as string)
-										: context.set('description', '')
-								}
-								rows={10}
-							/>
+							<Form.Field>
+								<label className="red-asterisk">Type</label>
+								<Form.Dropdown
+									clearable
+									selection
+									style={{ maxWidth: 200 }}
+									options={typeOpts}
+									placeholder="Type"
+									onChange={(event, data) => context.set('type', data.value)}
+									search={searchFunc}
+								/>
+							</Form.Field>
+							<Form.Field>
+								<Form.Field>
+									<label className="red-asterisk">Priority</label>
+								</Form.Field>
+								<Form.Dropdown
+									clearable
+									selection
+									style={{ maxWidth: 200 }}
+									options={priorityOpts}
+									placeholder="Priority"
+									onChange={(event, data) => context.set('priority', data.value)}
+									search={searchFunc}
+								/>
+							</Form.Field>
+							<Form.Field>
+								<label className="red-asterisk">Summary</label>
+								<Form.Input
+									placeholder="Summary"
+									fluid
+									onChange={(event, data) => context.set('summary', data.value)}
+								/>
+							</Form.Field>
+							<Form.Field>
+								<label>Labels</label>
+								<Form.Dropdown
+									clearable
+									selection
+									multiple
+									style={{ maxWidth: 200 }}
+									placeholder="Labels"
+									options={labelOpts}
+									search={searchFunc}
+									onChange={(event, data) => context.set('labels', data.value)}
+								/>
+							</Form.Field>
+							<Divider horizontal />
+							<Form.Field>
+								<label>Links</label>
+								<TagsInput
+									placeholder="Add link"
+									tags={context.data.links ?? []}
+									onChange={(tags) => context.set('links', [...tags])}
+								/>
+							</Form.Field>
+							<Form.Field>
+								<label>Attachments</label>
+								<TagsInput
+									placeholder="Add attachment"
+									tags={context.data.attachments ?? []}
+									onChange={(tags) => context.set('attachments', [...tags])}
+								/>
+							</Form.Field>
+							<Form.Field>
+								<label>Description</label>
+								<Form.TextArea
+									placeholder="Description"
+									onChange={(event, data) =>
+										data
+											? context.set('description', data.value as string)
+											: context.set('description', '')
+									}
+									rows={10}
+								/>
+							</Form.Field>
 							<Button.Group floated="right">
 								<Button primary type="submit" loading={loading}>
 									Submit

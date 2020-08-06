@@ -13,6 +13,19 @@ code {
 	font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
+label {
+	position: relative !important;
+	top: 0;
+	left: 5px;
+}
+
+.required {
+	:after {
+		color: red;
+		content: '*';
+	}
+}
+
 * {
 	box-sizing: border-box;
 }
