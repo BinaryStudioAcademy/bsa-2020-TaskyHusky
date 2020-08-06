@@ -1,6 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { MinLength, IsEmail } from 'class-validator';
 import {Board} from './Board';
+import { Filter } from './Filter';
 
 @Entity()
 export class User {
@@ -41,4 +42,7 @@ export class User {
 
 	@OneToMany(type => Board, board => board.createdBy)
 	boards?: Board[];
+
+  @OneToMany((type) => Filter, (filter) => filter.owner)
+	filters?: Filter[];
 }

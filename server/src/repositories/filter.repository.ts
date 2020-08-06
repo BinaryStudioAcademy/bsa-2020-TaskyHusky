@@ -1,33 +1,33 @@
-import { EntityRepository, Repository, UpdateResult, DeleteResult, InsertResult  } from 'typeorm';
+import { EntityRepository, Repository, DeleteResult } from 'typeorm';
 import { Filter } from '../entity/Filter';
 
 @EntityRepository(Filter)
-export class FilterRepository extends Repository<Filter>  {
+export class FilterRepository extends Repository<Filter> {
 	findByName(name: string) {
 		return this.findOneOrFail({ where: { name } });
 	}
 
 	getAll(): Promise<Filter[]> {
-		return this.find();
-	  }
-	
-	  getById(id: string) {
+		return this.find({ relations: ['staredBy', 'owner'] });
+	}
+
+	getById(id: string) {
 		return this.findOne({
-		  where: {
-			id
-		  }
+			where: {
+				id,
+			},
 		});
-	  }
-	
-	  createItem(data: Filter): Promise<InsertResult> {
-		return this.insert(data);
-	  }
-	
-	  updateById(id: string, data: Filter): Promise<UpdateResult> {
-		return this.update(id, data);
-	  }
-	
-	  deleteById(id: string): Promise<DeleteResult> {
+	}
+
+	createItem(data: Filter): Promise<Filter> {
+		return this.save(data);
+	}
+
+	updateItem(data: Filter): Promise<Filter> {
+		return this.save(data);
+	}
+
+	deleteById(id: string): Promise<DeleteResult> {
 		return this.delete(id);
-	  }
+	}
 }
