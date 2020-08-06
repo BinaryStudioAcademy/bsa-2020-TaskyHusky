@@ -106,7 +106,6 @@ const CreateProjectModal = () => {
 		>
 			{!isTemplatesView ? (
 				<>
-					{'isLoading' ? <Spinner /> : ''}
 					<Modal.Header>Create project</Modal.Header>
 
 					<Modal.Content>
@@ -145,6 +144,8 @@ const CreateProjectModal = () => {
 							icon="checkmark"
 							onClick={onCreateProject}
 							primary
+							loading={isLoading}
+							disabled={isLoading}
 						/>
 					</Modal.Actions>
 				</>
