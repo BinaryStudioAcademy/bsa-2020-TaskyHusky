@@ -1,5 +1,12 @@
 .wrapper {
   padding: 30px 40px;
+  :global(.ui.celled.fixed.table){
+    td:last-child{
+      overflow: visible;
+      padding: 2px 11px;
+    }
+  }
+
 }
 
 .wrapper__title {

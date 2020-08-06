@@ -1,5 +1,5 @@
 import React, { useState, ChangeEvent, useEffect, SyntheticEvent } from 'react';
-import { Button, Input, Table, Dropdown, DropdownProps } from 'semantic-ui-react';
+import { Button, Input, Table, Dropdown, DropdownProps, Menu } from 'semantic-ui-react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'typings/rootState';
 import * as actions from './logic/actions';
@@ -70,10 +70,11 @@ const Boards: React.FC = () => {
 				<Table celled fixed>
 					<Table.Header>
 						<Table.Row>
-							<Table.HeaderCell>Name</Table.HeaderCell>
-							<Table.HeaderCell>Type</Table.HeaderCell>
-							<Table.HeaderCell>Admin</Table.HeaderCell>
-							<Table.HeaderCell>Location</Table.HeaderCell>
+							<Table.HeaderCell width={5}>Name</Table.HeaderCell>
+							<Table.HeaderCell width={5}>Type</Table.HeaderCell>
+							<Table.HeaderCell width={5}>Admin</Table.HeaderCell>
+							<Table.HeaderCell width={5}>Location</Table.HeaderCell>
+							<Table.HeaderCell width={2} />
 						</Table.Row>
 					</Table.Header>
 
@@ -85,6 +86,36 @@ const Boards: React.FC = () => {
 									<Table.Cell>{boardType}</Table.Cell>
 									<Table.Cell>{`${user.firstName} ${user.lastName}`}</Table.Cell>
 									<Table.Cell>{location}</Table.Cell>
+									<Table.Cell>
+										<Menu borderless compact secondary>
+											<Dropdown
+												item
+												icon={
+													<svg
+														width="24"
+														height="24"
+														viewBox="0 0 24 24"
+														focusable="false"
+														role="presentation"
+													>
+														<g fill="currentColor" fillRule="evenodd">
+															<circle cx="5" cy="12" r="2" />
+															<circle cx="12" cy="12" r="2" />
+															<circle cx="19" cy="12" r="2" />
+														</g>
+													</svg>
+												}
+												direction="left"
+											>
+												<Dropdown.Menu>
+													<Dropdown.Item>Edit settings</Dropdown.Item>
+													<Dropdown.Item>Copy</Dropdown.Item>
+													<Dropdown.Item>Move</Dropdown.Item>
+													<Dropdown.Item>Delete</Dropdown.Item>
+												</Dropdown.Menu>
+											</Dropdown>
+										</Menu>
+									</Table.Cell>
 								</Table.Row>
 							);
 						})}
