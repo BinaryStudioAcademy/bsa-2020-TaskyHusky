@@ -1,8 +1,7 @@
 import { Request, Response } from 'express';
 import { getCustomRepository } from 'typeorm';
-import { User } from '../entity/User';
+import { UserProfile } from '../entity/UserProfile';
 import { Projects } from '../entity/Projects';
-
 import { ProjectsRepository } from '../repositories/projects.repository';
 import { getWebError } from '../helpers/error.helper';
 
@@ -33,7 +32,7 @@ class ProjectsController {
 
 	createProject = async (req: Request, res: Response): Promise<void> => {
 		const projectsRepository = getCustomRepository(ProjectsRepository);
-		const { id: userId } = req.user as User;
+		const { id: userId } = req.user as UserProfile;
 		const projectData = req.body as Projects;
 		const { projectID } = projectData;
 

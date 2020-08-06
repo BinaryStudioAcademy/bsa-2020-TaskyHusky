@@ -1,20 +1,20 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, ManyToMany, JoinTable } from 'typeorm';
-import { User } from './User';
+import { UserProfile } from './UserProfile';
 @Entity()
 export class Filter {
 	@PrimaryGeneratedColumn('uuid')
 	id!: string;
 
-	@ManyToOne((type) => User, (user) => user.filters)
-	owner?: User;
+	@ManyToOne((type) => UserProfile, (user) => user.filters)
+	owner?: UserProfile;
 
 	@Column({ nullable: false })
-	ownerId?: string;
+	ownerId?: UserProfile;
 
 	@Column()
 	name?: string;
 
-	@ManyToMany((type) => User)
+	@ManyToMany((type) => UserProfile)
 	@JoinTable()
-	staredBy?: User[];
+	staredBy?: UserProfile[];
 }

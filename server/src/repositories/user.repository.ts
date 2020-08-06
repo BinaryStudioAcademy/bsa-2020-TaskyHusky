@@ -1,10 +1,10 @@
 import { EntityRepository, Repository } from 'typeorm';
-import { User } from '../entity/User';
+import { UserProfile } from '../entity/UserProfile';
 import { UserModel } from '../models/User';
 import { apiErrorMessages } from '../constants/api.constants';
 
-@EntityRepository(User)
-export class UserRepository extends Repository<User> {
+@EntityRepository(UserProfile)
+export class UserRepository extends Repository<UserProfile> {
 	getById(id: string) {
 		return this.findOne({ where: { id } });
 	}

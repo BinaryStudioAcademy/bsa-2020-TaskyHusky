@@ -3,15 +3,15 @@ import { MinLength, IsEmail } from 'class-validator';
 import { Filter } from './Filter';
 
 @Entity()
-export class User {
+export class UserProfile {
 	@PrimaryGeneratedColumn('uuid')
 	id!: string;
 
 	@Column({ nullable: true })
-	firstName?: string;
+	fullName?: string;
 
 	@Column({ nullable: true })
-	lastName?: string;
+	userame?: string;
 
 	@Column({ nullable: true })
 	avatar?: string;
@@ -20,16 +20,16 @@ export class User {
 	department?: string;
 
 	@Column({ nullable: true })
-	timezone?: string;
+	location?: string;
 
 	@Column({ nullable: true })
 	organization?: string;
 
 	@Column({ unique: true })
+	@IsEmail()
 	email?: string;
 
 	@Column({ nullable: true })
-	@IsEmail()
 	jobTitle?: string;
 
 	@Column({ nullable: true })
