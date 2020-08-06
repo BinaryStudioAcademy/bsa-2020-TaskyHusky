@@ -16,13 +16,11 @@ export class SprintRepository extends Repository<Sprint> {
 		return this.save(entity);
 	}
 
-	async updateOneById(id: string, data: Sprint): Promise<Sprint | undefined> {
-		await this.update(id, data);
-		return this.findOneOrFail(id);
+	async updateOneById(id: string, data: Sprint): Promise<UpdateResult> {
+		return this.update(id, data);
 	}
 
 	async deleteOneById(id: string): Promise<DeleteResult> {
-		await this.findOneOrFail(id);
 		return this.delete(id);
 	}
 }
