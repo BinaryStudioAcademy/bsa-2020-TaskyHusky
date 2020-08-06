@@ -33,7 +33,7 @@ class TeamsController {
 			const team = await teamRepository.createOne(req.body);
 			res.send(team);
 		} catch (error) {
-			res.status(HttpStatusCode.UNPROCESSABLE_ENTITY).send(getWebError(error, 400));
+			res.status(HttpStatusCode.UNPROCESSABLE_ENTITY).send(getWebError(error, HttpStatusCode.UNPROCESSABLE_ENTITY));
 		}
 	}
 
@@ -44,7 +44,7 @@ class TeamsController {
 			const updatedTeam = await teamRepository.updateOneById(id, req.body);
 			res.status(200).send(updatedTeam);
 		} catch (error) {
-			res.status(HttpStatusCode.NOT_FOUND).send(getWebError(error, 400));
+			res.status(HttpStatusCode.NOT_FOUND).send(getWebError(error, HttpStatusCode.NOT_FOUND));
 		}
 	};
 
@@ -56,7 +56,7 @@ class TeamsController {
 			const result = await teamRepository.deleteOneById(id);
 			res.send(result);
 		} catch (error) {
-			res.status(HttpStatusCode.NOT_FOUND).send(getWebError(error, 400));
+			res.status(HttpStatusCode.NOT_FOUND).send(getWebError(error, HttpStatusCode.NOT_FOUND));
 		}
 	};
 }
