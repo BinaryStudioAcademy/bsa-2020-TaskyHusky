@@ -1,4 +1,8 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToOne } from 'typeorm';
+import { IsBoolean } from 'class-validator';
+import { Issue } from './Issue';
+import { Projects } from './Projects';
+import { Board } from './Board';
 
 @Entity()
 export class Sprint {
@@ -8,15 +12,20 @@ export class Sprint {
 	@Column()
 	sprintName?: string;
 
-	@Column()
-	projectID?: string;
+	@ManyToOne((type) => Projects)
+	project?: Projects;
+
+	@ManyToOne((type) => Board)
+	board?: Board;
 
 	@Column()
-	boardID?: string;
+	@IsBoolean()
+	isActive?: boolean;
 
 	@Column()
-	isActive?: string;
+	@IsBoolean()
+	isCompleted?: boolean;
 
-	@Column()
-	isCompleted?: string;
+	@OneToMany((type) => Issue, (issue) => issue.id)
+	issues?: [];
 }
