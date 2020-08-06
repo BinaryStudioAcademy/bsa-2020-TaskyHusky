@@ -116,11 +116,10 @@ namespace WebApi.Entities {
 		projectID: string;
 		name: string;
 		key: string;
-		projectType: string;
-		category: string;
+		category?: string;
 		defaultAssigneeID?: string;
 		leadID?: string;
-		creatorID?: string;
+		creatorID: string;
 	}
 
 	interface User {
