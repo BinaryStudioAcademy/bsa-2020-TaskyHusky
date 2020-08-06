@@ -1,10 +1,10 @@
 import React from 'react';
 import { Dropdown, Icon } from 'semantic-ui-react';
-import styles from './styles.module.scss';
+import styles from 'styles/headerDropDown.module.scss';
 
 export const ProjectsMenu = () => {
 	return (
-		<Dropdown text="Projects" className="link item dropDownItem" id="dropDownProject">
+		<Dropdown text="Projects" className="link item">
 			<Dropdown.Menu className={styles.dropDownMenu}>
 				<Dropdown.Header>Recent</Dropdown.Header>
 				<Dropdown.Item>

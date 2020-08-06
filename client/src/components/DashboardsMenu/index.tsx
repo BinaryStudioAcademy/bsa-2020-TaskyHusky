@@ -1,6 +1,6 @@
 import React from 'react';
 import { Dropdown, Icon } from 'semantic-ui-react';
-import styles from './styles.module.scss';
+import styles from 'styles/headerDropDown.module.scss';
 
 export const FiltersMenu = () => {
 	return (
