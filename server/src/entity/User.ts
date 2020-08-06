@@ -1,6 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { MinLength, IsEmail } from 'class-validator';
-
+import {TeamsPeople} from './TeamsPeople';
 @Entity()
 export class User {
 	@PrimaryGeneratedColumn('uuid')
@@ -37,4 +37,8 @@ export class User {
 	@Column()
 	@MinLength(6)
 	password?: string;
+
+	@OneToMany(type => TeamsPeople, teams => teams.userId)
+  teams?: TeamsPeople[];
+
 }
