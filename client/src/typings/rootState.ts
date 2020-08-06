@@ -3,7 +3,7 @@ import { ProjectsState } from '../containers/Projects/logic/state';
 import { AuthState } from './../containers/LoginPage/logic/state';
 import { FilterState } from 'containers/Filters/logic/state';
 import { IssueState } from 'pages/CreateIssue/logic/types';
-import { UserState } from 'containers/ProfilePage/logiс/state';
+import { UserProfileState } from 'containers/ProfilePage/logiс/state';
 
 export interface RootState {
 	projects: ProjectsState;
@@ -11,5 +11,5 @@ export interface RootState {
 	issues: IssueState;
 	filters: FilterState;
 	filterDefs: FilterDefsState;
-	user: UserState;
+	user: UserProfileState;
 }

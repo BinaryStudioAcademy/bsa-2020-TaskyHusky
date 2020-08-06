@@ -2,8 +2,9 @@ import React from 'react';
 import styles from './styles.module.scss';
 import { Header, Segment, Button } from 'semantic-ui-react';
 import UserActivityItem from 'components/UserActivityItem';
+import { propsUserData } from 'containers/ProfilePage';
 
-const ProfileSection = ({ isCurrentUser, mockData }: { isCurrentUser: boolean; mockData: any }) => {
+const ProfileSection = ({ data: { isCurrentUser, mockData } }: propsUserData) => {
 	return (
 		<section className={styles.mainInfo}>
 			<Header as="h3">Worked on</Header>
