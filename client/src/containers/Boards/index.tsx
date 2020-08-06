@@ -1,14 +1,17 @@
-import React, { useState, ChangeEvent, useEffect } from 'react';
-import { Button, Input, Table } from 'semantic-ui-react';
+import React, { useState, ChangeEvent, useEffect, SyntheticEvent } from 'react';
+import { Button, Input, Table, Dropdown, DropdownProps } from 'semantic-ui-react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'typings/rootState';
 import * as actions from './logic/actions';
 
-import CreateProjectModal from './../../components/CreateProjectModal';
+import CreateBoardModal from './../../components/CreateBoardModal';
 import styles from './styles.module.scss';
+
+const boardTypes = ['Scrum', 'Next-gen', 'Kanban']; //TODO:replace it with import
 
 const Boards: React.FC = () => {
 	const [searchName, setSearchName] = useState('');
+	const [selectedTypes, setSelectedType] = useState<string[]>([]);
 	const [isModalShown, setIsModalShown] = useState(false);
 	const dispatch = useDispatch();
 	const boards = useSelector((rootState: RootState) => rootState.boards.boards);
@@ -25,15 +28,27 @@ const Boards: React.FC = () => {
 	};
 
 	const searchString = new RegExp(searchName, 'i');
-	const filteredData = (boards || []).filter(({ name }) => searchString.test(name));
+	const filteredData = (boards || [])
+		.filter(({ name }) => searchString.test(name))
+		.filter((board) => {
+			if (!selectedTypes.length) {
+				return true;
+			}
+			return selectedTypes.indexOf(board.boardType) !== -1;
+		});
+	const selectOptions = boardTypes.map((type, index) => ({
+		key: index,
+		value: type,
+		text: type,
+	}));
+
+	const handleSelectChange = (event: SyntheticEvent<HTMLElement, Event>, data: DropdownProps) => {
+		setSelectedType([...(data.value as string[])]);
+	};
 
 	return (
 		<div className={styles.wrapper}>
-			{isModalShown ? (
-				<CreateProjectModal setIsModalShown={setIsModalShown} onCreateProject={onCreateBoard} />
-			) : (
-				''
-			)}
+			{isModalShown ? <CreateBoardModal setIsModalShown={setIsModalShown} onCreateProject={onCreateBoard} /> : ''}
 			<div className={styles.wrapper__title}>
 				<h1 className={styles.title}>Boards</h1>
 				<Button primary onClick={() => setIsModalShown(true)}>
@@ -42,6 +57,14 @@ const Boards: React.FC = () => {
 			</div>
 			<div className={[styles.wrapper__filters, styles.filters].join(' ')}>
 				<Input icon="search" placeholder="Search..." onChange={onSearch} value={searchName} />
+				<Dropdown
+					placeholder="All boards"
+					options={selectOptions}
+					multiple
+					selection
+					value={selectedTypes}
+					onChange={handleSelectChange}
+				/>
 			</div>
 			<div className={styles.wrapper__table}>
 				<Table celled fixed>
