@@ -8,7 +8,7 @@ import SignUp from 'pages/SignUp';
 import CreateIssue from 'pages/CreateIssue';
 import Header from 'containers/Header';
 import { loadTypes, loadPriorities } from 'pages/CreateIssue/logic/actions';
-import { fetchFilterDefs } from './commonLogic/actions';
+import { fetchFilterDefs } from '../../commonLogic/actions';
 import { useDispatch } from 'react-redux';
 import Filters from 'pages/Filters';
 

@@ -1,4 +1,4 @@
-import { CommonState } from './../containers/Routing/commonLogic/state';
+import { CommonState } from '../commonLogic/state';
 import { ProjectsState } from '../containers/Projects/logic/state';
 import { AuthState } from './../containers/LoginPage/logic/state';
 import { FilterState } from 'containers/Filters/logic/state';
