@@ -8,7 +8,7 @@ import CreateBoardModal from '../../components/CreateBoardModal';
 import styles from './styles.module.scss';
 
 const Boards: React.FC = () => {
-	const boardTypes = [WebApi.Board.BoardType.Kanban, WebApi.Board.BoardType.Scrum];
+	const boardTypes = ['Kanban', 'Scrum'];
 	const [searchName, setSearchName] = useState('');
 	const [selectedTypes, setSelectedType] = useState<WebApi.Board.BoardType[]>([]);
 	const [isModalShown, setIsModalShown] = useState(false);
@@ -45,6 +45,9 @@ const Boards: React.FC = () => {
 		setSelectedType([...(data.value as WebApi.Board.BoardType[])]);
 	};
 
+	const handleDelete = (id: string) => {
+		dispatch(actions.deleteBoard({ id }));
+	};
 	return (
 		<div className={styles.wrapper}>
 			{isModalShown ? <CreateBoardModal setIsModalShown={setIsModalShown} onCreateProject={onCreateBoard} /> : ''}
@@ -110,7 +113,9 @@ const Boards: React.FC = () => {
 													<Dropdown.Item>Edit settings</Dropdown.Item>
 													<Dropdown.Item>Copy</Dropdown.Item>
 													<Dropdown.Item>Move</Dropdown.Item>
-													<Dropdown.Item>Delete</Dropdown.Item>
+													<Dropdown.Item onClick={() => handleDelete(id)}>
+														Delete
+													</Dropdown.Item>
 												</Dropdown.Menu>
 											</Dropdown>
 										</Menu>
