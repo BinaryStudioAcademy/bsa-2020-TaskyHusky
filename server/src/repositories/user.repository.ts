@@ -5,14 +5,8 @@ import { apiErrorMessages } from '../constants/api.constants';
 
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
-	async getById(id: string) {
-		const user = await this.findOne({ where: { id } });
-
-		if (!user) {
-			throw new Error('User with current ID not found');
-		}
-
-		return user;
+	getById(id: string) {
+		return this.findOne({ where: { id } });
 	}
 
 	getByEmail(email: string) {

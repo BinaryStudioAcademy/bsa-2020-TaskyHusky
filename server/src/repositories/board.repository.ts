@@ -38,6 +38,7 @@ export class BoardRepository extends Repository<Board> {
 
 		if (user) {
 			const userToAdd = await userRepository.getById(user.id);
+			if(!userToAdd) throw new Error('User with current ID not found');
 
 			board = { ...board, ...dataToCreate, createdBy: userToAdd };
 		} else {
@@ -50,7 +51,9 @@ export class BoardRepository extends Repository<Board> {
 	async post(data: any) {
 		const userRepository = getCustomRepository(UserRepository);
 		const { createdBy:user, ...dataToCreate } = data;
+
 		const userToAdd = await userRepository.getById(user.id);
+		if(!userToAdd) throw new Error('User with current ID not found');
 
 		let board = new Board();
 		board = { ...board, ...dataToCreate, createdBy: userToAdd };
