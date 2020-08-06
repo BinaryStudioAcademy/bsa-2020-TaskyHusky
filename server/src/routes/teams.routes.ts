@@ -7,8 +7,8 @@ const teamsController = new TeamsController();
 
 router.get('/', teamsController.getTeams);
 router.get('/:id', teamsController.getTeam);
-// router.post('/', teamsController.createProject);
-router.put('/', teamsController.updateTeam);
+router.post('/', teamsController.createTeam);
+router.put('/:id', teamsController.updateTeam);
 router.delete('/:id', teamsController.deleteTeam);
 
 export default router;

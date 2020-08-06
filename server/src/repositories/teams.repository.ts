@@ -1,5 +1,4 @@
 import { EntityRepository, Repository } from 'typeorm';
-
 import { Teams } from '../entity/Teams';
 
 @EntityRepository(Teams)
@@ -17,8 +16,9 @@ export class TeamsRepository extends Repository<Teams> {
 		return this.save(entity);
 	}
 
-	updateOne(data: Teams) {
-		return this.save(data);
+	updateOneById(id: string, data: Teams) {
+		this.update(id, data);
+		return this.findOne(id);
 	}
 
 	deleteOneById(id: string) {

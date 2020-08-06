@@ -13,6 +13,6 @@ export class Teams {
   description?: string;
 
   @Column('text', { array: true })
-  links?: string[];
+  links?: string;
 
 }
