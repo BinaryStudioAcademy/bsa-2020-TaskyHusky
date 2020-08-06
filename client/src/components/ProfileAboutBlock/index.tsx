@@ -1,10 +1,11 @@
 import React from 'react';
 import { Container, Header } from 'semantic-ui-react';
 import styles from 'components/ProfileAside/styles.module.scss';
-import { propsUserData } from 'containers/ProfilePage';
+import { PropsUserData } from 'containers/ProfilePage';
 import ProfileAboutItem from 'components/ProfileAboutItem';
 
-const ProfileAboutBlock = ({ data: { user, isCurrentUser } }: propsUserData) => {
+const ProfileAboutBlock: React.FC<PropsUserData> = (props: PropsUserData) => {
+	const { user, isCurrentUser } = props;
 	return (
 		<Container className={styles.infoBlock}>
 			<Header as="h3" className={styles.infoBlock__header}>

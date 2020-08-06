@@ -9,7 +9,8 @@ interface Props {
 	fullName: string;
 }
 
-const FilterItem = ({ updateFilter, filter, fullName }: Props) => {
+const FilterItem: React.FC<Props> = (props: Props) => {
+	const { updateFilter, filter, fullName } = props;
 	const { id, name, owner, staredBy } = filter;
 	const [isStared, setIsStared] = useState(Boolean(staredBy?.find(({ id }) => owner?.id === id)));
 	const onSetFavorite = () => {

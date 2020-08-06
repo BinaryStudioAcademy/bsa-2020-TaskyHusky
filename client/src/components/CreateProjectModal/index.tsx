@@ -9,7 +9,7 @@ interface Props {
 	onCreateProject(): void;
 }
 
-const CreateProjectModal = (props: Props) => {
+const CreateProjectModal: React.FC<Props> = (props: Props) => {
 	const { setIsModalShown, onCreateProject } = props;
 	return (
 		<Modal

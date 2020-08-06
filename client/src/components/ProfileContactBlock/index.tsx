@@ -1,9 +1,10 @@
 import React from 'react';
 import { Header, Icon } from 'semantic-ui-react';
 import styles from './styles.module.scss';
-import { propsUserData } from 'containers/ProfilePage';
+import { PropsUserData } from 'containers/ProfilePage';
 
-const ProfileContacntBlock = ({ data: { user, isCurrentUser } }: propsUserData) => {
+const ProfileContacntBlock: React.FC<PropsUserData> = (props: PropsUserData) => {
+	const { user, isCurrentUser } = props;
 	return (
 		<>
 			{user.email && (

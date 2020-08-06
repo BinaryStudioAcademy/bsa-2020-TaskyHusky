@@ -1,9 +1,10 @@
 import React from 'react';
 import { Header, Icon } from 'semantic-ui-react';
 import styles from './styles.module.scss';
-import { propsUserData } from 'containers/ProfilePage';
+import { PropsUserData } from 'containers/ProfilePage';
 
-const ProfileTeamBlock = ({ data: { user, isCurrentUser, mockData } }: propsUserData) => {
+const ProfileTeamBlock: React.FC<PropsUserData> = (props: PropsUserData) => {
+	const { user, isCurrentUser, mockData } = props;
 	return (
 		<div>
 			<Header as="h3" className={styles.header}>

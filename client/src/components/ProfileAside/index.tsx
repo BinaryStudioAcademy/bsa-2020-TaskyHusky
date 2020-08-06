@@ -3,12 +3,13 @@ import styles from './styles.module.scss';
 import ProfilePicture from 'components/ProfilePicture';
 import { Segment } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
-import { propsUserData } from 'containers/ProfilePage';
+import { PropsUserData } from 'containers/ProfilePage';
 import ProfileAboutBlock from 'components/ProfileAboutBlock';
 import ProfileContacntBlock from 'components/ProfileContactBlock';
 import ProfileTeamBlock from 'components/ProfileTeamBlock';
 
-const ProfileAside = ({ data: { user, isCurrentUser, mockData } }: propsUserData) => {
+const ProfileAside: React.FC<PropsUserData> = (props: PropsUserData) => {
+	const { user, isCurrentUser, mockData } = props;
 	return (
 		<aside className={styles.userInfo}>
 			<ProfilePicture
@@ -21,9 +22,9 @@ const ProfileAside = ({ data: { user, isCurrentUser, mockData } }: propsUserData
 				isCurrentUser={isCurrentUser}
 			/>
 			<Segment>
-				<ProfileAboutBlock data={{ user, isCurrentUser }} />
-				<ProfileContacntBlock data={{ user, isCurrentUser }} />
-				<ProfileTeamBlock data={{ user, isCurrentUser, mockData }} />
+				<ProfileAboutBlock user={user} isCurrentUser={isCurrentUser} />
+				<ProfileContacntBlock user={user} isCurrentUser={isCurrentUser} />
+				<ProfileTeamBlock user={user} isCurrentUser={isCurrentUser} mockData={mockData} />
 				<Link to="#" className={styles.policyLink}>
 					View privacy policy
 				</Link>

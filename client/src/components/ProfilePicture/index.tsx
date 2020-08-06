@@ -3,14 +3,17 @@ import { Header, Button } from 'semantic-ui-react';
 import styles from './styles.module.scss';
 import { UserProfileState } from 'containers/ProfilePage/logiс/state';
 
-interface propsMainUserProperty {
+interface Props {
 	user: Partial<UserProfileState>;
 	isCurrentUser: boolean;
 }
 
-const ProfilePicture = ({ user: { avatar, username, firstName, lastName }, isCurrentUser }: propsMainUserProperty) => {
+const ProfilePicture: React.FC<Props> = (props: Props) => {
+	const {
+		user: { avatar, username, firstName, lastName },
+		isCurrentUser,
+	} = props;
 	const getInitials = () => (firstName && lastName ? firstName[0] + lastName[0] : '');
-
 	return (
 		<div className={styles.container}>
 			<div className={styles.mainInfo}>

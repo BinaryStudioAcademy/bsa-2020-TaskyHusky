@@ -3,11 +3,17 @@ import styles from './styles.module.scss';
 import { Icon } from 'semantic-ui-react';
 import ContentInput from 'components/ContentInput';
 
-const ProfileAboutItem = ({
-	data: { text, isCurrentUser, name },
-}: {
-	data: { text: string; name: string; isCurrentUser: boolean };
-}) => {
+interface Props {
+	data: {
+		text: string;
+		name: string;
+		isCurrentUser: boolean;
+	};
+}
+const ProfileAboutItem: React.FC<Props> = (props: Props) => {
+	const {
+		data: { text, isCurrentUser, name },
+	} = props;
 	return (
 		<div className={styles.container}>
 			<Icon disabled name="briefcase" size="large" />

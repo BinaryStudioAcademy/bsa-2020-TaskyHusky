@@ -4,12 +4,16 @@ import styles from './styles.module.scss';
 import * as actions from 'containers/ProfilePage/logiс/actions';
 import { UserProfileState } from 'containers/ProfilePage/logiс/state';
 
-interface propsContentInput {
+interface Props {
 	contentData: { text: string; defaultContent: boolean; name: string };
 	isCurrentUser: boolean;
 }
 
-const ContentInput = ({ contentData: { text, defaultContent, name }, isCurrentUser }: propsContentInput) => {
+const ContentInput: React.FC<Props> = (props: Props) => {
+	const {
+		contentData: { text, defaultContent, name },
+		isCurrentUser,
+	} = props;
 	const initialText = defaultContent ? '' : text;
 	const [textData, setTextData] = useState(initialText);
 	const dispatch = useDispatch();

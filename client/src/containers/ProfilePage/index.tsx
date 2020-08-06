@@ -1,20 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import jwt from 'jsonwebtoken';
 import styles from './styles.module.scss';
 import * as actions from './logiс/actions';
 import ProfileHeader from 'components/ProfileHeader';
 import { RootState } from 'typings/rootState';
-import { LocalStorageKeys } from 'constants/LocalStorageKeys';
 import ProfileAside from 'components/ProfileAside';
 import ProfileSection from 'components/ProfileSection';
 
-export interface propsUserData {
-	data: {
-		isCurrentUser: boolean;
-		mockData?: any;
-		user: WebApi.User.UserModel;
-	};
+export interface PropsUserData {
+	isCurrentUser: boolean;
+	mockData?: any;
+	user: WebApi.User.UserModel;
 }
 
 const ProfilePage = ({ match: { params } }: { match: any }) => {
@@ -33,9 +29,9 @@ const ProfilePage = ({ match: { params } }: { match: any }) => {
 		location: '',
 	});
 
-	const token = localStorage.getItem(LocalStorageKeys.SESSION_TOKEN);
-	const decodedJwt = token && jwt.decode(token);
-	const isCurrentUser = user.id === (decodedJwt as any).id;
+	// const token = localStorage.getItem(LocalStorageKeys.SESSION_TOKEN);
+	// const decodedJwt = token && jwt.decode(token);
+	const isCurrentUser = user.id === userData.id;
 	const mockData = {
 		teams: [
 			{ name: 'Example name1', members: 1, id: 1 },
@@ -64,8 +60,8 @@ const ProfilePage = ({ match: { params } }: { match: any }) => {
 		<div className={styles.wrapper}>
 			<ProfileHeader />
 			<div className={styles.container}>
-				<ProfileAside data={{ user, isCurrentUser, mockData }} />
-				<ProfileSection data={{ user, isCurrentUser, mockData }} />
+				<ProfileAside user={user} isCurrentUser={isCurrentUser} mockData={mockData} />
+				<ProfileSection user={user} isCurrentUser={isCurrentUser} mockData={mockData} />
 			</div>
 		</div>
 	);
