@@ -1,0 +1,47 @@
+.filtersContainer {
+	display: flex;
+	flex-direction: column;
+	margin: 50px 50px 0 50px;
+}
+.outer {
+	margin-bottom: 10px;
+	.titleWrapper {
+		display: flex;
+		flex-direction: row;
+		margin-bottom: 5px;
+		.titleContainer {
+			margin-bottom: 10px;
+			display: flex;
+			flex-direction: row;
+			flex: 1 1 auto;
+			.title {
+				margin: 0;
+			}
+			.saveBtn {
+				margin: 5px 0 0 10px;
+				border: none;
+				box-shadow: none;
+				height: 40px;
+				&:hover, &:focus {
+					border: none !important;
+					box-shadow: none !important;
+					background: rgba(230, 230, 230, 0.6) !important;
+				}
+			}	
+		}
+		.actionWrapper {
+			margin-left: 10px;
+			flex: 0 0 auto;
+			.actionItem {
+				display: flex !important;
+				flex-direction: row;
+			}
+		}
+	}
+	.bottomBarWrapper {
+		.moreField {
+			display: flex;
+			align-items: center;
+		}
+	}
+}

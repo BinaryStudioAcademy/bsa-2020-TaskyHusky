@@ -11,6 +11,7 @@ import { loadTypes, loadPriorities } from 'pages/CreateIssue/logic/actions';
 import { fetchFilterDefs } from '../../commonLogic/filterDefs/actions';
 import { useDispatch } from 'react-redux';
 import Filters from 'pages/Filters';
+import Search from 'pages/AdvancedSearch';
 
 const Routing: React.FC = () => {
 	const dispatch = useDispatch();
@@ -30,6 +31,7 @@ const Routing: React.FC = () => {
 				<PublicRoute exact restricted={true} path="/signup" component={SignUp} />
 				<PrivateRoute exact path="/projects" component={Projects} />
 				<PrivateRoute exact path="/filters" component={Filters} />
+				<PrivateRoute exact path="/advancedSearch" component={Search} />
 			</div>
 		</Switch>
 	);
