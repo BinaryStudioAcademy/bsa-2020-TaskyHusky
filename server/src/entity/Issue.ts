@@ -2,6 +2,7 @@ import { Entity, Column, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { IssueType } from './IssueType';
 import { Priority } from './Priority';
 import { Sprint } from './Sprint';
+import { Projects } from './Projects';
 
 @Entity()
 export class Issue {
@@ -35,8 +36,8 @@ export class Issue {
 	@ManyToOne((type) => Sprint)
 	sprint?: Sprint;
 
-	@Column() // Replace with rel.
-	projectID?: string;
+	@ManyToOne((type) => Projects)
+	project?: Projects;
 
 	@Column()
 	issueKey?: string;
