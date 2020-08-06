@@ -20,11 +20,3 @@ export type UpdateFilterSuccessArgs = {
 export type FetchFiltersSuccessArgs = {
 	partialState: Partial<FilterState>;
 };
-
-export type FetchFilterPartsSuccessArgs = {
-	partialState: Partial<FilterState>;
-};
-
-export type FetchFilterDefsSuccessArgs = {
-	partialState: Partial<FilterState>;
-};

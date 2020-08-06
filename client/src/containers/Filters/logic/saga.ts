@@ -16,7 +16,7 @@ export function* fetchAllFilters(action: ReturnType<typeof actions.fetchFilters>
 export function* fetchAllFilterDefs(action: ReturnType<typeof actions.fetchFilterDefs>) {
 	try {
 		const filterDefs: WebApi.Entities.FilterDefinition[] = yield call(fetchFilters);
-		yield put(actions.fetchFilterDefsSuccess({ partialState: { filterDefs } }));
+		yield put(actions.fetchFiltersSuccess({ partialState: { filterDefs } }));
 	} catch (e) {
 		console.error(e.message);
 		yield put(actions.fetchFiltersSuccess({ partialState: { filterDefs: [] } }));
@@ -26,7 +26,7 @@ export function* fetchAllFilterDefs(action: ReturnType<typeof actions.fetchFilte
 export function* fetchAllFilterParts(action: ReturnType<typeof actions.fetchFilterParts>) {
 	try {
 		const filterParts: WebApi.Entities.FilterPart[] = yield call(fetchFilterParts);
-		yield put(actions.fetchFilterPartsSuccess({ partialState: { filterParts } }));
+		yield put(actions.fetchFiltersSuccess({ partialState: { filterParts } }));
 	} catch (e) {
 		console.error(e.message);
 		yield put(actions.fetchFiltersSuccess({ partialState: { filterParts: [] } }));

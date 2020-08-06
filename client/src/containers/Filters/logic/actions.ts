@@ -8,9 +8,3 @@ export const fetchFilterDefs = createAction(actionTypes.FETCH_FILTER_DEFS);
 
 export const updateFilterSuccess = createAction<actionTypes.UpdateFilterSuccessArgs>(actionTypes.UPDATE_FILTER_SUCCESS);
 export const fetchFiltersSuccess = createAction<actionTypes.FetchFiltersSuccessArgs>(actionTypes.FETCH_FILTERS_SUCCESS);
-export const fetchFilterPartsSuccess = createAction<actionTypes.FetchFilterPartsSuccessArgs>(
-	actionTypes.FETCH_FILTER_PARTS_SUCCESS,
-);
-export const fetchFilterDefsSuccess = createAction<actionTypes.FetchFilterDefsSuccessArgs>(
-	actionTypes.FETCH_FILTER_DEFS_SUCCESS,
-);
