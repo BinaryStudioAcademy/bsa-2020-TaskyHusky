@@ -4,39 +4,20 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'typings/rootState';
 import * as actions from './logic/actions';
 
-import CreateProjectModal from './../../components/CreateProjectModal';
+import CreateProjectModal from '../CreateProjectModal';
 import styles from './styles.module.scss';
-
-export type projectTypes = {
-	name?: string;
-	key?: string;
-	template?: string;
-};
+import Spinner from 'components/Spinner';
 
 const Projects: React.FC = () => {
 	const dispatch = useDispatch();
 
 	const [searchName, setSearchName] = useState('');
-	const [project, setProject] = useState({
-		name: '',
-		key: '',
-		template: 'Scrum',
-	});
 
-	const onSetProject = (data: any): void => {
-		setProject({
-			...project,
-			...data,
-		});
-	};
-
-	const projects = useSelector((rootState: RootState) => rootState.projects.projects);
+	const { projects, isLoading } = useSelector((rootState: RootState) => rootState.projects);
 
 	useEffect(() => {
 		dispatch(actions.startLoading());
 	}, [dispatch]);
-
-	const onCreateProject = () => {};
 
 	const onSearch = (event: ChangeEvent<HTMLInputElement>) => {
 		const searchValue = event.target.value;
@@ -50,7 +31,7 @@ const Projects: React.FC = () => {
 		<div className={styles.wrapper}>
 			<div className={styles.wrapper__title}>
 				<h1 className={styles.title}>Projects</h1>
-				<CreateProjectModal project={project} onSetProject={onSetProject} onCreateProject={onCreateProject} />
+				<CreateProjectModal />
 			</div>
 			<div className={[styles.wrapper__filters, styles.filters].join(' ')}>
 				<Input icon="search" placeholder="Search..." onChange={onSearch} value={searchName} />
@@ -65,17 +46,20 @@ const Projects: React.FC = () => {
 							<Table.HeaderCell>Settings</Table.HeaderCell>
 						</Table.Row>
 					</Table.Header>
-
-					<Table.Body>
-						{filteredData.map(({ projectID, name }) => (
-							<Table.Row key={projectID}>
-								<Table.Cell>{name}</Table.Cell>
-								<Table.Cell>Cell</Table.Cell>
-								<Table.Cell>Cell</Table.Cell>
-								<Table.Cell>Cell</Table.Cell>
-							</Table.Row>
-						))}
-					</Table.Body>
+					{isLoading ? (
+						<Spinner />
+					) : (
+						<Table.Body>
+							{filteredData.map(({ projectID, name, key }) => (
+								<Table.Row key={projectID}>
+									<Table.Cell>{name}</Table.Cell>
+									<Table.Cell>{key}</Table.Cell>
+									<Table.Cell>Cell</Table.Cell>
+									<Table.Cell>Cell</Table.Cell>
+								</Table.Row>
+							))}
+						</Table.Body>
+					)}
 				</Table>
 			</div>
 		</div>
