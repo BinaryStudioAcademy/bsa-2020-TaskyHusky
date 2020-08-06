@@ -32,7 +32,7 @@ class SprintController {
 
 		try {
 			const { body: data } = req;
-			const result = repository.createOne(data);
+			const result = await repository.createOne(data);
 			res.status(201).send(result);
 		} catch (error) {
 			res.status(422).send(getWebError(error, 422));
