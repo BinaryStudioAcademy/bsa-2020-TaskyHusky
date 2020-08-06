@@ -26,10 +26,10 @@ export class User {
 	organization?: string;
 
 	@Column({ unique: true })
+	@IsEmail()
 	email?: string;
 
 	@Column({ nullable: true })
-	@IsEmail()
 	jobTitle?: string;
 
 	@Column({ nullable: true })
