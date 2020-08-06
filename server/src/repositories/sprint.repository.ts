@@ -1,4 +1,4 @@
-import { EntityRepository, Repository, DeleteResult } from 'typeorm';
+import { EntityRepository, Repository, DeleteResult, UpdateResult } from 'typeorm';
 import { Sprint } from '../entity/Sprint';
 
 @EntityRepository(Sprint)
@@ -16,8 +16,8 @@ export class SprintRepository extends Repository<Sprint> {
 		return this.save(entity);
 	}
 
-	updateOne(data: Sprint): Promise<Sprint> {
-		return this.save(data);
+	updateOneById(id: string, data: Sprint): Promise<UpdateResult> {
+		return this.update(id, data);
 	}
 
 	deleteOneById(id: string): Promise<DeleteResult> {
