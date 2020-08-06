@@ -1,13 +1,13 @@
 namespace WebApi.Issue {
 	interface PartialIssue {
 		id?: string;
-		typeID?: string;
+		type?: string;
 		summary?: string;
 		boardColumnID?: string;
 		labels?: string[];
 		attachments?: string[];
 		links?: string[];
-		priorityID?: string;
+		priority?: string;
 		description?: string;
 		sprintID?: string;
 		projectID?: string;
@@ -19,9 +19,11 @@ namespace WebApi.Issue {
 
 namespace WebApi.Result {
 	interface UserAuthResult {
-		id: string;
+		user: {
+			id: string;
+			email: string;
+		};
 		jwtToken: string;
-		email: string;
 	}
 }
 
@@ -30,11 +32,11 @@ namespace WebApi.User {
 		id?: string;
 		email: string;
 		password?: string;
-		fullName?: string;
-		username?: string;
+		firstName?: string;
+		lastName?: string;
 		avatar?: string;
 		department?: string;
-		location?: string;
+		timezone?: string;
 		organization?: string;
 		jobTitle?: string;
 		userSettingsId?: string;
@@ -42,16 +44,26 @@ namespace WebApi.User {
 }
 
 namespace WebApi.Entities {
-	interface Example {
+	interface Board {
 		id: string;
-		name?: string;
-		text?: string;
+		boardType?: string;
+		columns?: BoardColumn[];
+	}
+
+	interface BoardColumn {
+		id: string;
+		columnName?: string;
+		status?: string;
+		isResolutionSet?: boolean;
+		board: Board;
 	}
 
 	interface Filter {
 		id: string;
+		owner?: User;
 		ownerId?: string;
 		name?: string;
+		staredBy?: User[];
 	}
 
 	interface FilterDefinition {
@@ -63,9 +75,9 @@ namespace WebApi.Entities {
 
 	interface FilterPart {
 		id: string;
-		filter?: Filter;
-		filterDef?: FilterDefinition;
-		// members?: User[];
+		filterId?: string;
+		filterDefId?: string;
+		members?: User[];
 		searchText?: string;
 	}
 
@@ -102,17 +114,29 @@ namespace WebApi.Entities {
 		issues?: Issue[];
 	}
 
+	interface Projects {
+		projectID: string;
+		name: string;
+		key: string;
+		projectType: string;
+		category: string;
+		defaultAssigneeID?: string;
+		leadID?: string;
+		creatorID?: string;
+	}
+
 	interface User {
 		id: string;
-		fullName?: string;
-		username?: string;
+		firstName?: string;
+		lastName?: string;
 		avatar?: string;
 		department?: string;
+		timezone?: string;
 		organization?: string;
-		email: string;
+		email?: string;
 		jobTitle?: string;
 		userSettingsId?: string;
-		password: string;
-		location?: string;
+		password?: string;
+		filters?: Filter[];
 	}
 }

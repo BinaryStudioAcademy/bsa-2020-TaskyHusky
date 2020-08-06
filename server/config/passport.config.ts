@@ -36,8 +36,9 @@ passport.use(
 	new LocalStrategy(
 		{
 			usernameField: EMAIL_FIELD,
+			passReqToCallback: true,
 		},
-		async (email: string, password: string, next): Promise<void> => {
+		async (req, email: string, password: string, next): Promise<void> => {
 			const userRepository = getCustomRepository(UserRepository);
 			const checkingUser = await userRepository.getByEmail(email);
 
@@ -46,7 +47,7 @@ passport.use(
 			}
 
 			const encodedPassword = hashPassword(password);
-			const newUserObject = await userRepository.createNew({ email, password: encodedPassword });
+			const newUserObject = await userRepository.createNew({ ...req.body, email, password: encodedPassword });
 
 			return next(null, newUserObject);
 		},
