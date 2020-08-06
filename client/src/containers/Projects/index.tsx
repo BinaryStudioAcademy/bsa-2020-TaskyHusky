@@ -1,5 +1,5 @@
 import React, { useState, ChangeEvent, useEffect } from 'react';
-import { Button, Input, Table } from 'semantic-ui-react';
+import { Input, Table } from 'semantic-ui-react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'typings/rootState';
 import * as actions from './logic/actions';
@@ -7,14 +7,34 @@ import * as actions from './logic/actions';
 import CreateProjectModal from './../../components/CreateProjectModal';
 import styles from './styles.module.scss';
 
+export type projectTypes = {
+	name?: string;
+	key?: string;
+	template?: string;
+};
+
 const Projects: React.FC = () => {
-	const [searchName, setSearchName] = useState('');
 	const dispatch = useDispatch();
+
+	const [searchName, setSearchName] = useState('');
+	const [project, setProject] = useState({
+		name: '',
+		key: '',
+		template: 'Scrum',
+	});
+
+	const onSetProject = (data: any): void => {
+		setProject({
+			...project,
+			...data,
+		});
+	};
+
 	const projects = useSelector((rootState: RootState) => rootState.projects.projects);
 
 	useEffect(() => {
 		dispatch(actions.startLoading());
-	}, []);
+	}, [dispatch]);
 
 	const onCreateProject = () => {};
 
@@ -30,7 +50,7 @@ const Projects: React.FC = () => {
 		<div className={styles.wrapper}>
 			<div className={styles.wrapper__title}>
 				<h1 className={styles.title}>Projects</h1>
-				<CreateProjectModal onCreateProject={onCreateProject} />
+				<CreateProjectModal project={project} onSetProject={onSetProject} onCreateProject={onCreateProject} />
 			</div>
 			<div className={[styles.wrapper__filters, styles.filters].join(' ')}>
 				<Input icon="search" placeholder="Search..." onChange={onSearch} value={searchName} />
