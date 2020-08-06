@@ -34,28 +34,25 @@ class ProjectsController {
 	createProject = async (req: Request, res: Response): Promise<void> => {
 		const projectsRepository = getCustomRepository(ProjectsRepository);
 		const { id: userId } = req.user as User;
-		const projectData = req.body as Projects;
-		const { projectID } = projectData;
-
-		projectData.creatorID = userId;
+		const { project } = req.body;
+		project.creatorID = userId;
 
 		try {
-			await this.checkForNoExisting(projectID);
-			const createdProject = await projectsRepository.createOne(projectData);
+			const createdProject = await projectsRepository.createOne(project);
 			res.status(201).send(createdProject);
 		} catch (err) {
-			res.status(409).send(getWebError(err, 409));
+			res.status(500).send(getWebError(err, 500));
 		}
 	};
 
 	updateProject = async (req: Request, res: Response): Promise<void> => {
 		const projectsRepository = getCustomRepository(ProjectsRepository);
-		const projectData = req.body;
-		const { projectID } = projectData;
+		const project = req.body;
+		const { projectID } = project;
 
 		try {
 			await this.checkForExisting(projectID);
-			const updatedProject = await projectsRepository.updateOne(projectData);
+			const updatedProject = await projectsRepository.updateOne(project);
 			res.send(updatedProject);
 		} catch (err) {
 			res.status(404).send(getWebError(err, 404));
