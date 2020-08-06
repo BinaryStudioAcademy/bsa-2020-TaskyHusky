@@ -6,17 +6,10 @@ interface Props {
 	onChange: (tags: string[]) => void;
 	placeholder?: string;
 	tags: string[];
-	default?: string[];
 }
 
-const TagsInput: React.FC<Props> = ({ onChange, placeholder, tags, default: defaultValue }) => {
+const TagsInput: React.FC<Props> = ({ onChange, placeholder, tags }) => {
 	const [value, setValue] = useState<string>('');
-	const [defaultApplied, setDefaultApplied] = useState<boolean>(false);
-
-	if (defaultValue && !defaultApplied) {
-		tags = [...defaultValue];
-		setDefaultApplied(true);
-	}
 
 	const addTag = (text: string) => {
 		const newTags = [...tags, text];
