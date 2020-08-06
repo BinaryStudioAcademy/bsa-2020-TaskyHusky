@@ -8,13 +8,13 @@ namespace WebApi.Board {
 namespace WebApi.Issue {
 	interface PartialIssue {
 		id?: string;
-		type?: string;
+		type: string;
 		summary?: string;
 		boardColumnID?: string;
 		labels?: string[];
 		attachments?: string[];
 		links?: string[];
-		priority?: string;
+		priority: string;
 		description?: string;
 		sprintID?: string;
 		projectID?: string;
@@ -35,7 +35,7 @@ namespace WebApi.Result {
 
 	interface IssueResult {
 		id: string;
-		type?: {
+		type: {
 			id: string;
 			color: string;
 			title: string;
@@ -46,7 +46,7 @@ namespace WebApi.Result {
 		labels?: string[];
 		attachments?: string[];
 		links?: string[];
-		priority?: {
+		priority: {
 			id: string;
 			color: string;
 			title: string;

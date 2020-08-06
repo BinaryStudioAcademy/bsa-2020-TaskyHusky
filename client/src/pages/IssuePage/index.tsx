@@ -29,8 +29,8 @@ const IssuePage: React.FC<Props> = ({ match }) => {
 
 	const initalIssue = {
 		...issue,
-		type: (issue.type as { id: string }).id,
-		priority: (issue.priority as { id: string }).id,
+		type: issue.type.id,
+		priority: issue.priority.id,
 	};
 
 	return (
@@ -107,18 +107,18 @@ const IssuePage: React.FC<Props> = ({ match }) => {
 							<Table.Row>
 								<Table.Cell>Type</Table.Cell>
 								<Table.Cell>
-									<Label color={(issue.type as { color: string }).color as any}>
-										<Icon name={(issue.type as { icon: string }).icon as any} />
-										{(issue.type as { title: string }).title}
+									<Label color={issue.type.color as any}>
+										<Icon name={issue.type.icon as any} />
+										{issue.type.title}
 									</Label>
 								</Table.Cell>
 							</Table.Row>
 							<Table.Row>
 								<Table.Cell>Priority</Table.Cell>
 								<Table.Cell>
-									<Label color={(issue.priority as { color: string }).color as any}>
-										<Icon name={(issue.priority as { icon: string }).icon as any} />
-										{(issue.priority as { title: string }).title}
+									<Label color={issue.priority.color as any}>
+										<Icon name={issue.priority.icon as any} />
+										{issue.priority.title}
 									</Label>
 								</Table.Cell>
 							</Table.Row>

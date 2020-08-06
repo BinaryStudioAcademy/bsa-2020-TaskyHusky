@@ -4,7 +4,7 @@ import { initialState } from './initalState';
 const CreateIssueModalContext = React.createContext(initialState);
 const CHANGE = 'CHANGE';
 
-type Issue = WebApi.Entities.Issue;
+type Issue = WebApi.Issue.PartialIssue;
 
 const reducer = (state: Issue, action: any) => {
 	switch (action.type) {

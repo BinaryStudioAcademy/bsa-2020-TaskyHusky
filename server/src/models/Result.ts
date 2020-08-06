@@ -8,7 +8,7 @@ interface UserAuthResult {
 
 interface IssueResult {
 	id: string;
-	type?: {
+	type: {
 		id: string;
 		color: string;
 		title: string;
@@ -19,7 +19,7 @@ interface IssueResult {
 	labels?: string[];
 	attachments?: string[];
 	links?: string[];
-	priority?: {
+	priority: {
 		id: string;
 		color: string;
 		title: string;

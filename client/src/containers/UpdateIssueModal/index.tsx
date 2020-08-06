@@ -74,7 +74,7 @@ const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, p
 		dispatch(
 			updateIssue({
 				id: current.id,
-				data: { ...(context.data as WebApi.Entities.Issue) },
+				data: { ...context.data },
 			}),
 		);
 
@@ -101,7 +101,7 @@ const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, p
 							selection
 							fluid
 							options={typeOpts}
-							defaultValue={(current.type as { id: string }).id}
+							defaultValue={current.type.id}
 							placeholder="Type"
 							onChange={(event, data) => context.set('type', data.value)}
 						/>
@@ -110,7 +110,7 @@ const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, p
 							selection
 							fluid
 							options={priorityOpts}
-							defaultValue={(current.priority as { id: string }).id}
+							defaultValue={current.priority.id}
 							placeholder="Priority"
 							onChange={(event, data) => context.set('priority', data.value)}
 						/>
@@ -132,13 +132,11 @@ const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, p
 						/>
 						<TagsInput
 							placeholder="Add link"
-							//default={current.links ?? []}
 							tags={context.data.links ?? []}
 							onChange={(tags) => context.set('links', [...tags])}
 						/>
 						<TagsInput
 							placeholder="Add attachment"
-							//default={current.attachments ?? []}
 							tags={context.data.attachments ?? []}
 							onChange={(tags) => context.set('attachments', [...tags])}
 						/>

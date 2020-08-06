@@ -80,7 +80,7 @@ const CreateIssueModalBody: React.FC<Props> = ({ children, issueTypes, prioritie
 		dispatch(
 			createIssue({
 				data: {
-					...(context.data as WebApi.Entities.Issue),
+					...context.data,
 					boardColumnID: '6be0859b-05f6-447d-beb8-d5c324cc5043',
 					sprintID: '4ae23ba4-9b4b-49c6-9892-991884505ff9',
 					projectID: 'a7c26428-2978-4748-8d29-975ad423d8ef',

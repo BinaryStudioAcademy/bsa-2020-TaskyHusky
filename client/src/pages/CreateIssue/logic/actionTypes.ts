@@ -14,10 +14,10 @@ export type SetPriorities = {
 };
 
 export type CreateIssue = {
-	data: WebApi.Entities.Issue;
+	data: WebApi.Issue.PartialIssue;
 };
 
 export type UpdateIssue = {
 	id: string;
-	data: WebApi.Entities.Issue;
+	data: WebApi.Issue.PartialIssue;
 };
