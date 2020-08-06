@@ -15,7 +15,7 @@ const FilterItem = ({ updateFilter, filter, fullName }: Props) => {
 	const onSetFavorite = () => {
 		const updated = isStared
 			? staredBy?.filter(({ id }) => id !== owner?.id)
-			: ([...(staredBy || []), owner] as WebApi.Entities.User[]);
+			: ([...(staredBy || []), owner] as WebApi.Entities.UserProfile[]);
 		setIsStared(!isStared);
 		updateFilter({
 			...filter,

@@ -1,8 +1,8 @@
 import * as actionTypes from './actionTypes';
-import { UserState, initialState } from './state';
+import { UserProfileState, initialState } from './state';
 import { createReducer } from 'helpers/createReducer.helper';
 
-export const userReducer = createReducer<UserState>(initialState, {
+export const userProfileReducer = createReducer<UserProfileState>(initialState, {
 	[actionTypes.UPDATE_USER](state, action: actionTypes.UpdateUser) {
 		return {
 			...state,

@@ -1,21 +1,15 @@
 import React from 'react';
 import { Header, Button } from 'semantic-ui-react';
 import styles from './styles.module.scss';
+import { UserProfileState } from 'containers/ProfilePage/logiс/state';
 
-const ProfilePicture = ({
-	user: { avatar, username, fullName },
-	isCurrentUser,
-}: {
-	user: { avatar?: string; username?: string; fullName?: string };
+interface propsMainUserProperty {
+	user: Partial<UserProfileState>;
 	isCurrentUser: boolean;
-}) => {
-	const getInitials = () =>
-		fullName
-			? fullName
-					.split(' ')
-					.map((item) => item[0])
-					.join('')
-			: '';
+}
+
+const ProfilePicture = ({ user: { avatar, username, firstName, lastName }, isCurrentUser }: propsMainUserProperty) => {
+	const getInitials = () => (firstName && lastName ? firstName[0] + lastName[0] : '');
 
 	return (
 		<div className={styles.container}>
@@ -30,7 +24,7 @@ const ProfilePicture = ({
 					</div>
 				</div>
 				<Header as="h2" className={styles.mainInfo__fullName}>
-					{fullName}
+					{firstName} {lastName}
 				</Header>
 				{username && <p className={styles.mainInfo__username}>{username}</p>}
 			</div>

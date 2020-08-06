@@ -1,26 +1,27 @@
-export interface UserState {
+export interface UserProfileState {
 	id?: string;
 	email: string;
 	password?: string;
 	firstName?: string;
 	lastName?: string;
+	username?: string;
 	avatar?: string;
 	department?: string;
-	timezone?: string;
+	location?: string;
 	organization?: string;
 	jobTitle?: string;
 	userSettingsId?: string;
 }
 
-export const initialState: UserState = {
+export const initialState: UserProfileState = {
 	id: '',
 	email: '',
-	password: '',
 	firstName: '',
 	lastName: '',
+	username: '',
 	avatar: '',
 	department: '',
-	timezone: '',
+	location: '',
 	organization: '',
 	jobTitle: '',
 	userSettingsId: '',

@@ -9,6 +9,14 @@ import { LocalStorageKeys } from 'constants/LocalStorageKeys';
 import ProfileAside from 'components/ProfileAside';
 import ProfileSection from 'components/ProfileSection';
 
+export interface propsUserData {
+	data: {
+		isCurrentUser: boolean;
+		mockData?: any;
+		user: WebApi.User.UserModel;
+	};
+}
+
 const ProfilePage = ({ match: { params } }: { match: any }) => {
 	const dispatch = useDispatch();
 	const userData = useSelector((state: RootState) => state.user);
@@ -16,7 +24,8 @@ const ProfilePage = ({ match: { params } }: { match: any }) => {
 		avatar: '',
 		id: '',
 		username: '',
-		fullName: '',
+		firstName: '',
+		lastName: '',
 		department: '',
 		organization: '',
 		email: '',
@@ -56,7 +65,7 @@ const ProfilePage = ({ match: { params } }: { match: any }) => {
 			<ProfileHeader />
 			<div className={styles.container}>
 				<ProfileAside data={{ user, isCurrentUser, mockData }} />
-				<ProfileSection mockData={mockData} isCurrentUser={isCurrentUser} />
+				<ProfileSection data={{ user, isCurrentUser, mockData }} />
 			</div>
 		</div>
 	);

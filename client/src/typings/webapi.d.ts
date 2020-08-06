@@ -34,12 +34,14 @@ namespace WebApi.User {
 		password?: string;
 		firstName?: string;
 		lastName?: string;
+		username?: string;
 		avatar?: string;
+		location?: string;
 		department?: string;
-		timezone?: string;
 		organization?: string;
 		jobTitle?: string;
 		userSettingsId?: string;
+		filtres?: string[];
 	}
 }
 
@@ -60,10 +62,10 @@ namespace WebApi.Entities {
 
 	interface Filter {
 		id: string;
-		owner?: User;
-		ownerId?: string;
+		owner?: UserProfile;
+		ownerId?: UserProfile;
 		name?: string;
-		staredBy?: User[];
+		staredBy?: UserProfile[];
 	}
 
 	interface FilterDefinition {
@@ -77,7 +79,7 @@ namespace WebApi.Entities {
 		id: string;
 		filterId?: string;
 		filterDefId?: string;
-		members?: User[];
+		members?: UserProfile[];
 		searchText?: string;
 	}
 
@@ -125,13 +127,14 @@ namespace WebApi.Entities {
 		creatorID?: string;
 	}
 
-	interface User {
+	interface UserProfile {
 		id: string;
 		firstName?: string;
 		lastName?: string;
+		username?: string;
 		avatar?: string;
 		department?: string;
-		timezone?: string;
+		location?: string;
 		organization?: string;
 		email?: string;
 		jobTitle?: string;

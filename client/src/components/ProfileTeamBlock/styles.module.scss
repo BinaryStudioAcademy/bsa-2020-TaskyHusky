@@ -1,0 +1,31 @@
+@import 'styles/mixins.scss';
+
+.item {
+  @include info-block-item;
+  @include point
+}
+
+.header {
+  @include info-block-header;
+}
+
+.content {
+  @include info-block-content;
+
+  &__secondary {
+    @include info-block-content-secondary;
+  }
+}
+
+.groupIcon {
+  @include info-block-group-icon;
+
+  & i {
+    @include info-block-group-icon-item;
+  }
+
+  &__secondary {
+    @include info-block-group-icon;
+    background-color: #955a5a;
+  }
+}
