@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Modal, Form, Button, Grid, Header, Icon } from 'semantic-ui-react';
+import { Modal, Form, Button, Grid, Header, Icon, Divider } from 'semantic-ui-react';
 import { useCreateIssueModalContext } from './logic/context';
 import TagsInput from 'components/common/TagsInput';
 import { ControlsGetter } from './logic/types';
@@ -106,19 +106,18 @@ const CreateIssueModalBody: React.FC<Props> = ({ children, issueTypes, prioritie
 				closeOnEscape
 				closeOnDimmerClick
 				onClose={getSetOpenFunc(false)}
-				dimmer="inverted"
-				size="tiny"
+				style={{ maxWidth: 700 }}
 			>
-				<Modal.Header>
-					<Header color="blue">Add issue</Header>
-				</Modal.Header>
-				<Grid className="fill" textAlign="center" verticalAlign="middle">
-					<Grid.Column style={{ marginTop: 20, marginBottom: 20, maxWidth: 400 }}>
+				<Grid className="fill" verticalAlign="middle">
+					<Grid.Column style={{ marginTop: 20, marginBottom: 20, marginLeft: 20 }}>
+						<Header floated="left" as="h1">
+							Add issue
+						</Header>
 						<Form onSubmit={submit}>
 							<Form.Dropdown
 								clearable
 								selection
-								fluid
+								style={{ maxWidth: 200 }}
 								options={typeOpts}
 								placeholder="Type"
 								onChange={(event, data) => context.set('type', data.value)}
@@ -127,7 +126,7 @@ const CreateIssueModalBody: React.FC<Props> = ({ children, issueTypes, prioritie
 							<Form.Dropdown
 								clearable
 								selection
-								fluid
+								style={{ maxWidth: 200 }}
 								options={priorityOpts}
 								placeholder="Priority"
 								onChange={(event, data) => context.set('priority', data.value)}
@@ -141,13 +140,14 @@ const CreateIssueModalBody: React.FC<Props> = ({ children, issueTypes, prioritie
 							<Form.Dropdown
 								clearable
 								selection
-								fluid
 								multiple
+								style={{ maxWidth: 200 }}
 								placeholder="Labels"
 								options={labelOpts}
 								search={searchFunc}
 								onChange={(event, data) => context.set('labels', data.value)}
 							/>
+							<Divider horizontal>Additions</Divider>
 							<TagsInput
 								placeholder="Add link"
 								tags={context.data.links ?? []}
@@ -165,13 +165,16 @@ const CreateIssueModalBody: React.FC<Props> = ({ children, issueTypes, prioritie
 										? context.set('description', data.value as string)
 										: context.set('description', '')
 								}
+								rows={10}
 							/>
-							<Button floated="left" positive type="submit" loading={loading}>
-								Submit
-							</Button>
-							<Button floated="right" onClick={getSetOpenFunc(false)}>
-								Cancel
-							</Button>
+							<Button.Group floated="right">
+								<Button primary type="submit" loading={loading}>
+									Submit
+								</Button>
+								<Button onClick={getSetOpenFunc(false)} inverted secondary>
+									Cancel
+								</Button>
+							</Button.Group>
 						</Form>
 					</Grid.Column>
 				</Grid>
