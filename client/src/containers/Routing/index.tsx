@@ -6,9 +6,12 @@ import Login from 'pages/LogIn';
 import PublicRoute from 'components/PublicRoute';
 import SignUp from 'pages/SignUp';
 import CreateIssue from 'pages/CreateIssue';
+import Header from 'containers/Header';
 import { loadTypes, loadPriorities } from 'pages/CreateIssue/logic/actions';
+import { fetchFilterDefs } from '../../commonLogic/filterDefs/actions';
 import { useDispatch } from 'react-redux';
 import IssuePage from 'pages/IssuePage';
+import Filters from 'pages/Filters';
 
 const Routing: React.FC = () => {
 	const dispatch = useDispatch();
@@ -16,15 +19,20 @@ const Routing: React.FC = () => {
 	useEffect(() => {
 		dispatch(loadTypes());
 		dispatch(loadPriorities());
+		dispatch(fetchFilterDefs());
 	}, [dispatch]);
 
 	return (
 		<Switch>
-			<PrivateRoute exact path="/createIssue" component={CreateIssue} />
-			<PrivateRoute path="/issue/:key" component={IssuePage} />
-			<PublicRoute exact restricted={true} path="/login" component={Login} />
-			<PublicRoute exact restricted={true} path="/signup" component={SignUp} />
-			<PrivateRoute exact path="/projects" component={Projects} />
+			<div id="app">
+				<PrivateRoute exact path="/createIssue" component={CreateIssue} />
+				<PrivateRoute path="/issue/:key" component={IssuePage} />
+				<PublicRoute exact restricted={true} path="/login" component={Login} />
+				<PublicRoute exact restricted={true} path="/header" component={Header} />;
+				<PublicRoute exact restricted={true} path="/signup" component={SignUp} />
+				<PrivateRoute exact path="/projects" component={Projects} />
+				<PrivateRoute exact path="/filters" component={Filters} />
+			</div>
 		</Switch>
 	);
 };

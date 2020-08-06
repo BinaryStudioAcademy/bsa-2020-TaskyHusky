@@ -2,23 +2,15 @@ import { Request, Response } from 'express';
 import { getCustomRepository } from 'typeorm';
 import { FilterDefinitionRepository } from '../repositories/filterDefinition.repository';
 
-const mockedFilterDefs = [{
-	id: '1',
-	filterType: 'CheckBox',
-	dataType: 'string',
-	title: 'Status'
-}];
-
 class FilterDefinitionController {
 	getFilterDefinitions = async (req: Request, res: Response): Promise<void> => {
 		const filterDefinitionRepository = getCustomRepository(FilterDefinitionRepository);
 
 		try {
 			const filterDefinitions = await filterDefinitionRepository.getAll();
-			// res.send(filterDefinitions);
-			res.send(mockedFilterDefs);
+			res.send(filterDefinitions);
 		} catch (error) {
-			res.status(401).send();
+			res.status(404).send();
 		}
 	};
 
@@ -30,7 +22,7 @@ class FilterDefinitionController {
 			const filterDefinition = await filterDefinitionRepository.getById(id);
 			res.send(filterDefinition);
 		} catch (error) {
-			res.status(401).send();
+			res.status(404).send();
 		}
 	};
 
@@ -42,7 +34,7 @@ class FilterDefinitionController {
 			const filterDefinition = await filterDefinitionRepository.createItem(body);
 			res.send(filterDefinition);
 		} catch (error) {
-			res.status(401).send();
+			res.status(404).send();
 		}
 	};
 
@@ -55,7 +47,7 @@ class FilterDefinitionController {
 			const filterDefinition = await filterDefinitionRepository.updateById(id, body);
 			res.send(filterDefinition);
 		} catch (error) {
-			res.status(401).send();
+			res.status(404).send();
 		}
 	};
 
@@ -67,7 +59,7 @@ class FilterDefinitionController {
 			const filterDefinition = await filterDefinitionRepository.deleteById(id);
 			res.send(filterDefinition);
 		} catch (error) {
-			res.status(401).send();
+			res.status(404).send();
 		}
 	};
 }
