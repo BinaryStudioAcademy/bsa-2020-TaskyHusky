@@ -6,18 +6,11 @@ import { RootState } from 'typings/rootState';
 import { Button, Table, Input, Dropdown, Form } from 'semantic-ui-react';
 import { ReactComponent as HeaderStar } from './headerStart.svg';
 import FilterItem from 'components/FilterItem';
+import { getFullUserName } from './helpers';
 
 const Filters: React.FC = () => {
 	const dispatch = useDispatch();
 	const { filters } = useSelector((rootState: RootState) => rootState.filters);
-
-	const getFullUserName = (user: WebApi.Entities.User | undefined): string => {
-		if (!user) {
-			return '';
-		}
-		const { firstName = '', lastName = '' } = user;
-		return `${firstName} ${lastName}`;
-	};
 
 	const updateFilter = (data: WebApi.Entities.Filter) => {
 		dispatch(
