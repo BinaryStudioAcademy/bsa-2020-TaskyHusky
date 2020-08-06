@@ -48,6 +48,7 @@ namespace WebApi.Entities {
 		id: string;
 		boardType?: string;
 		columns?: BoardColumn[];
+		sprints?: Sprint[];
 	}
 
 	interface BoardColumn {
@@ -61,6 +62,7 @@ namespace WebApi.Entities {
 	interface Filter {
 		id: string;
 		owner?: User;
+		ownerId?: string;
 		name?: string;
 		staredBy?: User[];
 	}
@@ -90,7 +92,7 @@ namespace WebApi.Entities {
 		links?: string;
 		priority?: Priority;
 		description?: string;
-		sprintID?: string;
+		sprint?: Sprint;
 		projectID?: string;
 		issueKey?: string;
 		assignedID?: string;
@@ -114,7 +116,7 @@ namespace WebApi.Entities {
 	}
 
 	interface Projects {
-		projectID: string;
+		id: string;
 		name: string;
 		key: string;
 		projectType: string;
@@ -122,6 +124,17 @@ namespace WebApi.Entities {
 		defaultAssigneeID?: string;
 		leadID?: string;
 		creatorID?: string;
+		sprints?: Sprint[];
+	}
+
+	interface Sprint {
+		id: string;
+		sprintName?: string;
+		project?: Projects;
+		board?: Board;
+		isActive?: boolean;
+		isCompleted?: boolean;
+		issues?: [];
 	}
 
 	interface User {
