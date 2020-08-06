@@ -1,7 +1,8 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { getCustomRepository } from 'typeorm';
 import { BoardColumnRepository } from '../repositories/boardColumn.repository';
-import { getWebError } from '../helpers/error.helper';
+import { ErrorResponse } from '../helpers/errorHandler.helper';
+import HttpStatusCode from '../constants/httpStattusCode.constants';
 
 class BoardColumnController {
 	getAll = async (req: Request, res: Response): Promise<void> => {
@@ -11,7 +12,7 @@ class BoardColumnController {
 		res.status(200).send(boards);
 	};
 
-	getOne = async (req: Request, res: Response): Promise<void> => {
+	getOne = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
 		const boardColumnRepository = getCustomRepository(BoardColumnRepository);
 		const { id } = req.params;
 
@@ -19,11 +20,11 @@ class BoardColumnController {
 			const board = await boardColumnRepository.getOne(id);
 			res.status(200).send(board);
 		} catch (e) {
-			res.status(404).send(getWebError(e, 404));
+			next(new ErrorResponse(HttpStatusCode.NOT_FOUND, e.message));
 		}
 	};
 
-	put = async (req: Request, res: Response): Promise<void> => {
+	put = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
 		const boardColumnRepository = getCustomRepository(BoardColumnRepository);
 		const { id } = req.params;
 		const { body } = req;
@@ -33,11 +34,11 @@ class BoardColumnController {
 
 			res.status(200).send(boardColumns);
 		} catch (e) {
-			res.status(404).send(getWebError(e, 404));
+			next(new ErrorResponse(HttpStatusCode.NOT_FOUND, e.message));
 		}
 	};
 
-	post = async (req: Request, res: Response): Promise<void> => {
+	post = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
 		const boardColumnRepository = getCustomRepository(BoardColumnRepository);
 		const { body } = req;
 		try {
@@ -45,11 +46,11 @@ class BoardColumnController {
 
 			res.status(200).send(board);
 		} catch (e) {
-			res.status(404).send(getWebError(e, 404));
+			next(new ErrorResponse(HttpStatusCode.NOT_FOUND, e.message));
 		}
 	};
 
-	delete = async (req: Request, res: Response): Promise<void> => {
+	delete = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
 		const boardColumnRepository = getCustomRepository(BoardColumnRepository);
 		const { id } = req.params;
 
@@ -58,7 +59,7 @@ class BoardColumnController {
 
 			res.status(200).send(board);
 		} catch (e) {
-			res.status(404).send(getWebError(e, 404));
+			next(new ErrorResponse(HttpStatusCode.NOT_FOUND, e.message));
 		}
 	};
 }

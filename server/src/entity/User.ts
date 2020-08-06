@@ -1,6 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { MinLength, IsEmail } from 'class-validator';
 import {TeamsPeople} from './TeamsPeople';
+import { Board } from './Board';
 import { Filter } from './Filter';
 
 @Entity()
@@ -27,10 +28,10 @@ export class User {
 	organization?: string;
 
 	@Column({ unique: true })
+	@IsEmail()
 	email?: string;
 
 	@Column({ nullable: true })
-	@IsEmail()
 	jobTitle?: string;
 
 	@Column({ nullable: true })
@@ -42,6 +43,9 @@ export class User {
 
 	@OneToMany(type => TeamsPeople, teams => teams.userId)
   teams?: TeamsPeople[];
+  
+	@OneToMany(type => Board, board => board.createdBy)
+	boards?: Board[];
 
 	@OneToMany((type) => Filter, (filter) => filter.owner)
 	filters?: Filter[];
