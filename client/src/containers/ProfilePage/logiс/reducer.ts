@@ -9,10 +9,4 @@ export const userProfileReducer = createReducer<UserProfileState>(initialState, 
 			...action.partialState,
 		};
 	},
-	[actionTypes.GET_USER](state, action: actionTypes.GetUser) {
-		return {
-			...state,
-			...action.partialState,
-		};
-	},
 });
