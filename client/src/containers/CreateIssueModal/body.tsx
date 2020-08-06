@@ -109,11 +109,11 @@ const CreateIssueModalBody: React.FC<Props> = ({ children, issueTypes, prioritie
 				<Grid className="fill" verticalAlign="middle">
 					<Grid.Column style={{ marginTop: 20, marginBottom: 20, marginLeft: 20 }}>
 						<Header floated="left" as="h1" style={{ marginBottom: 20 }}>
-							Add issue
+							Create issue
 						</Header>
 						<Form onSubmit={submit}>
 							<Form.Field>
-								<label className="red-asterisk">Type</label>
+								<label className="required">Type</label>
 								<Form.Dropdown
 									clearable
 									selection
@@ -126,7 +126,7 @@ const CreateIssueModalBody: React.FC<Props> = ({ children, issueTypes, prioritie
 							</Form.Field>
 							<Form.Field>
 								<Form.Field>
-									<label className="red-asterisk">Priority</label>
+									<label className="required">Priority</label>
 								</Form.Field>
 								<Form.Dropdown
 									clearable
@@ -139,7 +139,7 @@ const CreateIssueModalBody: React.FC<Props> = ({ children, issueTypes, prioritie
 								/>
 							</Form.Field>
 							<Form.Field>
-								<label className="red-asterisk">Summary</label>
+								<label className="required">Summary</label>
 								<Form.Input
 									placeholder="Summary"
 									fluid
@@ -159,7 +159,7 @@ const CreateIssueModalBody: React.FC<Props> = ({ children, issueTypes, prioritie
 									onChange={(event, data) => context.set('labels', data.value)}
 								/>
 							</Form.Field>
-							<Divider horizontal />
+							<Divider />
 							<Form.Field>
 								<label>Links</label>
 								<TagsInput
@@ -192,8 +192,8 @@ const CreateIssueModalBody: React.FC<Props> = ({ children, issueTypes, prioritie
 								<Button primary type="submit" loading={loading}>
 									Submit
 								</Button>
-								<Button onClick={getSetOpenFunc(false)} inverted secondary>
-									Cancel
+								<Button onClick={getSetOpenFunc(false)} basic>
+									<a href="?">Cancel</a>
 								</Button>
 							</Button.Group>
 						</Form>

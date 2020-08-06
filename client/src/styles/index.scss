@@ -19,11 +19,9 @@ label {
 	left: 5px;
 }
 
-.required {
-	:after {
-		color: red;
-		content: '*';
-	}
+.required:after {
+	color: red;
+	content: '*';
 }
 
 * {
