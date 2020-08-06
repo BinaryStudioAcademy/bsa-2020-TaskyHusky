@@ -9,7 +9,9 @@ import SignUp from 'pages/SignUp';
 import CreateIssue from 'pages/CreateIssue';
 import Header from 'containers/Header';
 import { loadTypes, loadPriorities } from 'pages/CreateIssue/logic/actions';
+import { fetchFilterDefs } from '../../commonLogic/filterDefs/actions';
 import { useDispatch } from 'react-redux';
+import Filters from 'pages/Filters';
 
 const Routing: React.FC = () => {
 	const dispatch = useDispatch();
@@ -17,6 +19,7 @@ const Routing: React.FC = () => {
 	useEffect(() => {
 		dispatch(loadTypes());
 		dispatch(loadPriorities());
+		dispatch(fetchFilterDefs());
 	}, [dispatch]);
 
 	return (
@@ -28,6 +31,7 @@ const Routing: React.FC = () => {
 				<PublicRoute exact restricted={true} path="/signup" component={SignUp} />
 				<PrivateRoute exact path="/projects" component={Projects} />
 				<PrivateRoute exact path="/team/:id" component={Team} />
+				<PrivateRoute exact path="/filters" component={Filters} />
 			</div>
 		</Switch>
 	);
