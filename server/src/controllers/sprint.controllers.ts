@@ -4,15 +4,11 @@ import { getWebError } from '../helpers/error.helper';
 import { SprintRepository } from '../repositories/sprint.repository';
 
 class SprintController {
-	repository: SprintRepository;
-
-	constructor() {
-		this.repository = getCustomRepository(SprintRepository);
-	}
-
 	async getAll(req: Request, res: Response) {
+		const repository = getCustomRepository(SprintRepository);
+
 		try {
-			const result = await this.repository.findAll();
+			const result = await repository.findAll();
 			res.send(result);
 		} catch (error) {
 			res.status(500).send(getWebError(error, 500));
@@ -20,9 +16,11 @@ class SprintController {
 	}
 
 	async getById(req: Request, res: Response) {
+		const repository = getCustomRepository(SprintRepository);
+
 		try {
 			const { id } = req.params;
-			const result = await this.repository.findOneById(id);
+			const result = await repository.findOneById(id);
 			res.send(result);
 		} catch (error) {
 			res.status(404).send(getWebError(error, 404));
@@ -30,9 +28,11 @@ class SprintController {
 	}
 
 	async create(req: Request, res: Response) {
+		const repository = getCustomRepository(SprintRepository);
+
 		try {
 			const { body: data } = req;
-			const result = this.repository.createOne(data);
+			const result = repository.createOne(data);
 			res.status(201).send(result);
 		} catch (error) {
 			res.status(422).send(getWebError(error, 422));
@@ -40,10 +40,12 @@ class SprintController {
 	}
 
 	async update(req: Request, res: Response) {
+		const repository = getCustomRepository(SprintRepository);
+
 		try {
 			const { id } = req.params;
 			const { body: data } = req;
-			const result = await this.repository.updateOneById(id, data);
+			const result = await repository.updateOneById(id, data);
 			res.send(result);
 		} catch (error) {
 			res.send(404).send(getWebError(error, 404));
@@ -51,9 +53,11 @@ class SprintController {
 	}
 
 	async delete(req: Request, res: Response) {
+		const repository = getCustomRepository(SprintRepository);
+
 		try {
 			const { id } = req.params;
-			const result = await this.repository.deleteOneById(id);
+			const result = await repository.deleteOneById(id);
 			res.send(result);
 		} catch (error) {
 			res.status(404).send(getWebError(error, 404));
