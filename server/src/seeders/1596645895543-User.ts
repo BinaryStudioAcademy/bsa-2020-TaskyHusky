@@ -32,7 +32,6 @@ export class User1596645895543 implements MigrationInterface {
 		];
 
 		await getRepository('UserProfile').save(exampleData);
-		console.log('this is happening');
 	}
 
 	public async down(queryRunner: QueryRunner): Promise<void> {}
