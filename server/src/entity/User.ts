@@ -1,6 +1,8 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { MinLength, IsEmail } from 'class-validator';
 import {TeamsPeople} from './TeamsPeople';
+import { Filter } from './Filter';
+
 @Entity()
 export class User {
 	@PrimaryGeneratedColumn('uuid')
@@ -41,4 +43,6 @@ export class User {
 	@OneToMany(type => TeamsPeople, teams => teams.userId)
   teams?: TeamsPeople[];
 
+	@OneToMany((type) => Filter, (filter) => filter.owner)
+	filters?: Filter[];
 }

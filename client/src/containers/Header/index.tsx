@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Menu, Image, Input, Segment, Dropdown, Icon } from 'semantic-ui-react';
+import { Menu, Image, Input, Segment, Dropdown } from 'semantic-ui-react';
 import logo from 'assets/logo192.png'; // TODO: replace with logo once it is ready
 import styles from './styles.module.scss';
 import { Redirect } from 'react-router-dom';

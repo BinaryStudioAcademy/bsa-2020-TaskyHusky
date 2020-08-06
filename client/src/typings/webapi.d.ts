@@ -60,8 +60,9 @@ namespace WebApi.Entities {
 
 	interface Filter {
 		id: string;
-		ownerId?: string;
+		owner?: User;
 		name?: string;
+		staredBy?: User[];
 	}
 
 	interface FilterDefinition {
@@ -73,9 +74,9 @@ namespace WebApi.Entities {
 
 	interface FilterPart {
 		id: string;
-		filter?: Filter;
-		filterDef?: FilterDefinition;
-		// members?: User[];
+		filterId?: string;
+		filterDefId?: string;
+		members?: User[];
 		searchText?: string;
 	}
 
@@ -135,5 +136,6 @@ namespace WebApi.Entities {
 		jobTitle?: string;
 		userSettingsId?: string;
 		password?: string;
+		filters?: Filter[];
 	}
 }
