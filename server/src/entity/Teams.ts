@@ -10,9 +10,11 @@ export class Teams {
   teamId?: TeamsPeople[];
 
   @Column()
+  name?: string;
+
+  @Column()
   description?: string;
 
   @Column('text', { array: true })
   links?: string;
-
 }

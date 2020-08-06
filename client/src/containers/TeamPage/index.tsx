@@ -1,16 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { Grid } from 'semantic-ui-react';
+import { useDispatch, useSelector } from 'react-redux';
 import styles from './styles.module.scss';
 import TeamDevsCard from 'components/TeamDevsCard';
 import TeamsMembersCard from 'components/TeamsMembersCard';
 import TeamNotification from 'components/TeamNotification';
 import TeamWorkedProjects from 'components/TeamWorkedProjects';
 import TeamLinks from 'components/TeamLinks';
+import * as actions from './logic/actions';
+import { RootState } from 'typings/rootState';
 
 export const TeamPage: React.FC = () => {
 	const [notification, setNotification] = useState<boolean>(true);
+	const dispatch = useDispatch();
+	const team = useSelector((rootState: RootState) => rootState.team);
 	useEffect(() => {
-		console.log('dispatch');
+		dispatch(actions.startLoading());
 	}, []);
 	const toggleNotification = (): void => setNotification(false);
 	const mockData: string =

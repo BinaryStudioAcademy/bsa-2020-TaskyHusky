@@ -4,6 +4,7 @@ import { authReducer } from 'containers/LoginPage/logic/reducer';
 import { combineReducers, Reducer } from 'redux';
 import { RootState } from 'typings/rootState';
 import { issueReducer } from 'pages/CreateIssue/logic/reducer';
+import { teamReducer } from 'containers/TeamPage/logic/reducer';
 import { filterDefsReducer } from 'commonLogic/filterDefs/reducer';
 
 const rootReducer: Reducer<RootState> = combineReducers({
@@ -12,6 +13,7 @@ const rootReducer: Reducer<RootState> = combineReducers({
 	issues: issueReducer,
 	filters: filtersReducer,
 	filterDefs: filterDefsReducer,
+	team: teamReducer,
 });
 
 export default rootReducer;

@@ -27,6 +27,15 @@ namespace WebApi.Result {
 	}
 }
 
+namespace WebApi.Team {
+	export interface TeamModel {
+		id?: string;
+		name?: string;
+		description?: string;
+		links?: string[];
+	}
+}
+
 namespace WebApi.User {
 	export interface UserModel {
 		id?: string;
@@ -61,6 +70,7 @@ namespace WebApi.Entities {
 	interface Filter {
 		id: string;
 		owner?: User;
+		ownerId?: string;
 		name?: string;
 		staredBy?: User[];
 	}
@@ -124,6 +134,20 @@ namespace WebApi.Entities {
 		creatorID?: string;
 	}
 
+	interface Teams {
+		id: string;
+		teamId?: TeamsPeople[];
+		name?: string;
+		description?: string;
+		links?: string;
+	}
+
+	interface TeamsPeople {
+		id: string;
+		userId?: User;
+		teamId?: Teams;
+	}
+
 	interface User {
 		id: string;
 		firstName?: string;
@@ -136,6 +160,7 @@ namespace WebApi.Entities {
 		jobTitle?: string;
 		userSettingsId?: string;
 		password?: string;
+		teams?: TeamsPeople[];
 		filters?: Filter[];
 	}
 }

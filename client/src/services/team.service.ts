@@ -1,19 +1,10 @@
-const members = [
-	{
-		id: 101,
-		avatar:
-			'https://i7.pngflow.com/pngimage/779/60/png-computer-icons-login-avatar-avatar-heroes-silhouette-user-symbol-clipart.png',
-		name: 'Vladimir Barkalov',
-		position: 'Java developer',
-	},
-	{
-		id: 102,
-		avatar: 'https://images.clipartlogo.com/files/istock/previews/9859/98596917-worker-avatar-icon.jpg',
-		name: 'Yaroslav Pryhoda',
-		position: 'Web developer',
-	},
-];
+import callWebApi from 'helpers/callApi.helper';
 
-export const teamMembers = () => {
-	return members;
+export const getTeam = async (id: string): Promise<WebApi.Entities.Teams[]> => {
+	const res: Response = await callWebApi({
+		method: 'GET',
+		endpoint: `/team/${id}`,
+	});
+	console.log(res.json());
+	return (await res.json()) as WebApi.Entities.Teams[];
 };

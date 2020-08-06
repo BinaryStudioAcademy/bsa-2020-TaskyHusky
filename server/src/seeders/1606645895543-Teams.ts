@@ -5,6 +5,7 @@ export class Team1606645895543 implements MigrationInterface {
     public async up(queryRunner: QueryRunner): Promise<void> {
         const exampleData = [
             {
+                name: 'Avengers',
                 description: 'New team for cool projects',
                 links: [
                     {
