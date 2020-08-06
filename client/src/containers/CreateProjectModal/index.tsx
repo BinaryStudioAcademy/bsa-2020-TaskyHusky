@@ -9,7 +9,6 @@ import bugTrackingImg from '../../assets/images/bug_tracking.svg';
 import styles from './styles.module.scss';
 import * as actions from './logic/actions';
 import { RootState } from 'typings/rootState';
-import Spinner from 'components/Spinner';
 
 type projectTemplate = 'Scrum' | 'Kanban' | 'Bug tracking';
 
