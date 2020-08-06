@@ -4,7 +4,8 @@ export class User1596645895543 implements MigrationInterface {
 	public async up(queryRunner: QueryRunner): Promise<void> {
 		const exampleData = [
 			{
-				fullName: 'Ivan Ivanov',
+				firstName: 'Ivan',
+				lastName: 'Ivanov',
 				email: 'test1@test.com',
 				jobTitle: 'simple user',
 				userSettingsId: '123',
@@ -17,7 +18,8 @@ export class User1596645895543 implements MigrationInterface {
 				filtres: [],
 			},
 			{
-				fullName: 'Alesya Afanaseva',
+				firstName: 'Alesya',
+				lastName: 'Afanaseva',
 				email: 'test@test.com',
 				jobTitle: 'simple user',
 				userSettingsId: '123',

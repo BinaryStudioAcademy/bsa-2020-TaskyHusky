@@ -2,7 +2,8 @@ export interface UserModel {
 	id?: string;
 	email: string;
 	password?: string;
-	fullName?: string;
+	lastName?: string;
+	firstName?: string;
 	username?: string;
 	avatar?: string;
 	location?: string;

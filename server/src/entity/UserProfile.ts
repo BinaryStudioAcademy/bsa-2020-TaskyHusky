@@ -8,7 +8,10 @@ export class UserProfile {
 	id!: string;
 
 	@Column({ nullable: true })
-	fullName?: string;
+	firstName?: string;
+
+	@Column({ nullable: true })
+	lastName?: string;
 
 	@Column({ nullable: true })
 	username?: string;
