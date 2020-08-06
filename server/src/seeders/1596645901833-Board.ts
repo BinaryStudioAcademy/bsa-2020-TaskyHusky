@@ -6,8 +6,6 @@ import { BoardType } from '../models/Board';
 import { UserRepository } from '../repositories/user.repository';
 
 export class Board1596645901833 implements MigrationInterface {
-	public async up(queryRunner: QueryRunner): Promise<void> {
-		await getRepository('Board').save([{ boardType: 'first' }, { boardType: 'second' }]);
 
 	public async up(queryRunner: QueryRunner): Promise<void> {
 		const userRepository = getCustomRepository(UserRepository);
@@ -49,5 +47,6 @@ export class Board1596645901833 implements MigrationInterface {
 		await columnRepository.save(column2);
 		await getRepository('board').save(board);
 	}
+
 	public async down(queryRunner: QueryRunner): Promise<void> {}
 }
