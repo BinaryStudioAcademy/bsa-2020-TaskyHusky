@@ -3,24 +3,27 @@ import { Sprint } from '../entity/Sprint';
 
 @EntityRepository(Sprint)
 export class SprintRepository extends Repository<Sprint> {
-	findAll(): Promise<Sprint[]> {
+	async findAll(): Promise<Sprint[]> {
 		return this.find();
 	}
 
-	findOneById(sprintID: string): Promise<Sprint | undefined> {
-		return this.findOne(sprintID);
+	async findOneById(id: string): Promise<Sprint | undefined> {
+		return this.findOneOrFail(id);
 	}
 
-	createOne(data: Sprint): Promise<Sprint> {
+	async createOne(data: Sprint): Promise<Sprint> {
 		const entity: Sprint = this.create(data);
 		return this.save(entity);
 	}
 
-	updateOneById(id: string, data: Sprint): Promise<UpdateResult> {
-		return this.update(id, data);
+	async updateOneById(id: string, data: Sprint): Promise<Sprint | undefined> {
+		await this.update(id, data);
+		return this.findOneOrFail(id);
 	}
 
-	deleteOneById(id: string): Promise<DeleteResult> {
-		return this.delete(id);
+	async deleteOneById(id: string): Promise<Sprint | undefined> {
+		await this.findOneOrFail(id);
+		this.delete(id);
+		return this.findOneOrFail(id);
 	}
 }
