@@ -27,7 +27,7 @@ const Routing: React.FC = () => {
 				<PublicRoute exact restricted={true} path="/header" component={Header} />;
 				<PublicRoute exact restricted={true} path="/signup" component={SignUp} />
 				<PrivateRoute exact path="/projects" component={Projects} />
-        <PrivateRoute exact path="/team" component={Team} />
+				<PrivateRoute exact path="/team/:id" component={Team} />
 			</div>
 		</Switch>
 	);
