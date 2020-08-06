@@ -8,8 +8,8 @@ export class ProjectsRepository extends Repository<Projects> {
 		return this.find();
 	}
 
-	findOneById(projectID: string) {
-		return this.findOne(projectID);
+	findOneById(id: string) {
+		return this.findOne(id);
 	}
 
 	createOne(data: Projects) {

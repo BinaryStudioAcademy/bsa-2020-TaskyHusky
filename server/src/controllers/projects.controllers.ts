@@ -20,11 +20,11 @@ class ProjectsController {
 
 	getProject = async (req: Request, res: Response): Promise<void> => {
 		const projectsRepository = getCustomRepository(ProjectsRepository);
-		const { id: projectID } = req.params;
+		const { id } = req.params;
 
 		try {
-			await this.checkForExisting(projectID);
-			const project = await projectsRepository.findOneById(projectID);
+			await this.checkForExisting(id);
+			const project = await projectsRepository.findOneById(id);
 			res.send(project);
 		} catch (err) {
 			res.status(404).send(getWebError(err, 404));
@@ -35,12 +35,12 @@ class ProjectsController {
 		const projectsRepository = getCustomRepository(ProjectsRepository);
 		const { id: userId } = req.user as User;
 		const projectData = req.body as Projects;
-		const { projectID } = projectData;
+		const { id } = projectData;
 
 		projectData.creatorID = userId;
 
 		try {
-			await this.checkForNoExisting(projectID);
+			await this.checkForNoExisting(id);
 			const createdProject = await projectsRepository.createOne(projectData);
 			res.status(201).send(createdProject);
 		} catch (err) {
@@ -51,10 +51,10 @@ class ProjectsController {
 	updateProject = async (req: Request, res: Response): Promise<void> => {
 		const projectsRepository = getCustomRepository(ProjectsRepository);
 		const projectData = req.body;
-		const { projectID } = projectData;
+		const { id } = projectData;
 
 		try {
-			await this.checkForExisting(projectID);
+			await this.checkForExisting(id);
 			const updatedProject = await projectsRepository.updateOne(projectData);
 			res.send(updatedProject);
 		} catch (err) {
@@ -64,33 +64,33 @@ class ProjectsController {
 
 	deleteProject = async (req: Request, res: Response): Promise<void> => {
 		const projectsRepository = getCustomRepository(ProjectsRepository);
-		const { projectID } = req.body;
+		const { id } = req.body;
 
 		try {
-			await this.checkForExisting(projectID);
-			const deletedProject = await projectsRepository.deleteOneById(projectID);
+			await this.checkForExisting(id);
+			const deletedProject = await projectsRepository.deleteOneById(id);
 			res.send(deletedProject);
 		} catch (err) {
 			res.status(404).send(getWebError(err, 404));
 		}
 	};
 
-	protected getOneProjectById = async (projectID: string) => {
+	protected getOneProjectById = async (id: string) => {
 		const projectsRepository = getCustomRepository(ProjectsRepository);
-		const project = await projectsRepository.findOneById(projectID);
+		const project = await projectsRepository.findOneById(id);
 		return project;
 	};
 
-	protected checkForExisting = async (projectID: string) => {
-		const project = await this.getOneProjectById(projectID);
+	protected checkForExisting = async (id: string) => {
+		const project = await this.getOneProjectById(id);
 
 		if (!project) {
 			throw new Error('Not found');
 		}
 	};
 
-	protected checkForNoExisting = async (projectID: string) => {
-		const project = await this.getOneProjectById(projectID);
+	protected checkForNoExisting = async (id: string) => {
+		const project = await this.getOneProjectById(id);
 
 		if (project) {
 			throw new Error('Project exists');

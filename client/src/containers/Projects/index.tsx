@@ -55,8 +55,8 @@ const Projects: React.FC = () => {
 					</Table.Header>
 
 					<Table.Body>
-						{filteredData.map(({ projectID, name }) => (
-							<Table.Row key={projectID}>
+						{filteredData.map(({ id, name }) => (
+							<Table.Row key={id}>
 								<Table.Cell>{name}</Table.Cell>
 								<Table.Cell>Cell</Table.Cell>
 								<Table.Cell>Cell</Table.Cell>

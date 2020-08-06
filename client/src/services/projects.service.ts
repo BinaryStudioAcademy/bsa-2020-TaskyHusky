@@ -1,6 +1,6 @@
 const projects = [
 	{
-		projectID: '1',
+		id: '1',
 		name: 'first',
 		key: 'someKey',
 		projectType: 'Type',
@@ -10,7 +10,7 @@ const projects = [
 		creatorID: 'string',
 	},
 	{
-		projectID: '2',
+		id: '2',
 		name: 'second',
 		key: 'someKey',
 		projectType: 'Type',
