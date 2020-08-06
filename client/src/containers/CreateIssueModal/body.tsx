@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Modal, Form, Button, Grid, Header } from 'semantic-ui-react';
+import { Modal, Form, Button, Grid, Header, Icon } from 'semantic-ui-react';
 import { useCreateIssueModalContext } from './logic/context';
 import TagsInput from 'components/common/TagsInput';
 import { ControlsGetter } from './logic/types';
@@ -17,7 +17,7 @@ interface Props {
 interface SelectOption {
 	key: string | number;
 	value: any;
-	text: string;
+	text: string | JSX.Element;
 	style?: any;
 }
 
@@ -30,7 +30,12 @@ const CreateIssueModalBody: React.FC<Props> = ({ children, issueTypes, prioritie
 	const typeOpts: SelectOption[] = issueTypes.map((type) => ({
 		key: type.id,
 		value: type.id,
-		text: type.title ?? 'untitled',
+		text: (
+			<>
+				{type.icon ? <Icon name={type.icon as any} /> : ''}
+				{type.title ?? 'untitled'}
+			</>
+		),
 		style: {
 			color: type.color ?? 'white',
 		},
@@ -39,7 +44,12 @@ const CreateIssueModalBody: React.FC<Props> = ({ children, issueTypes, prioritie
 	const priorityOpts: SelectOption[] = priorities.map((priority) => ({
 		key: priority.id,
 		value: priority.id,
-		text: priority.title ?? 'untitled',
+		text: (
+			<>
+				{priority.icon ? <Icon name={priority.icon as any} /> : ''}
+				{priority.title ?? 'untitled'}
+			</>
+		),
 		style: {
 			color: priority.color ?? 'white',
 		},
