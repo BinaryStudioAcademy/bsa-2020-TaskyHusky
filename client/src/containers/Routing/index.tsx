@@ -10,6 +10,7 @@ import CreateIssue from 'pages/CreateIssue';
 import Header from 'containers/Header';
 import { loadTypes, loadPriorities } from 'pages/CreateIssue/logic/actions';
 import { useDispatch } from 'react-redux';
+import IssuePage from 'pages/IssuePage';
 import Filters from 'pages/Filters';
 
 const Routing: React.FC = () => {
@@ -23,6 +24,7 @@ const Routing: React.FC = () => {
 	return (
 		<Switch>
 			<PrivateRoute exact path="/createIssue" component={CreateIssue} />
+			<PrivateRoute path="/issue/:key" component={IssuePage} />
 			<PublicRoute exact restricted={true} path="/login" component={Login} />
 			<PrivateRoute exact path="/header" component={Header} />;
 			<PublicRoute exact restricted={true} path="/signup" component={SignUp} />

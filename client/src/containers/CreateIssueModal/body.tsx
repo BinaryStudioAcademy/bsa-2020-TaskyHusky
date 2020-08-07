@@ -7,6 +7,8 @@ import { connect, useDispatch } from 'react-redux';
 import { RootState } from 'typings/rootState';
 import { Redirect } from 'react-router-dom';
 import { createIssue } from 'pages/CreateIssue/logic/actions';
+import { generateRandomString } from 'helpers/randomString.helper';
+import { KeyGenerate } from 'constants/KeyGenerate';
 
 interface Props {
 	children: ControlsGetter;
@@ -62,7 +64,6 @@ const CreateIssueModalBody: React.FC<Props> = ({ children, issueTypes, prioritie
 	}));
 
 	const context = useCreateIssueModalContext();
-	const searchFunc = (opts: any[], value: string) => opts.filter((o) => o.text.toString().includes(value));
 
 	const getSetOpenFunc = (value: boolean) => () => setIsOpened(value);
 	children(getSetOpenFunc(true), getSetOpenFunc(false));
@@ -79,11 +80,11 @@ const CreateIssueModalBody: React.FC<Props> = ({ children, issueTypes, prioritie
 		dispatch(
 			createIssue({
 				data: {
-					...(context.data as WebApi.Entities.Issue),
+					...context.data,
 					boardColumnID: '6be0859b-05f6-447d-beb8-d5c324cc5043',
 					sprintID: '4ae23ba4-9b4b-49c6-9892-991884505ff9',
 					projectID: 'a7c26428-2978-4748-8d29-975ad423d8ef',
-					issueKey: 'aaaaaa',
+					issueKey: generateRandomString(KeyGenerate.LENGTH),
 					assignedID: '98601c2c-a103-489b-b89f-ea5ae568b582',
 					creatorID: 'f2235a1c-dfbc-47b7-bdb2-726d159c19a0',
 				},
@@ -112,90 +113,60 @@ const CreateIssueModalBody: React.FC<Props> = ({ children, issueTypes, prioritie
 							Create issue
 						</Header>
 						<Form onSubmit={submit}>
-							<Form.Field>
-								<label className="required">Type</label>
-								<Form.Dropdown
-									clearable
-									selection
-									style={{ maxWidth: 200 }}
-									options={typeOpts}
-									placeholder="Type"
-									onChange={(event, data) => context.set('type', data.value)}
-									search={searchFunc}
-								/>
-							</Form.Field>
-							<Form.Field>
-								<Form.Field>
-									<label className="required">Priority</label>
-								</Form.Field>
-								<Form.Dropdown
-									clearable
-									selection
-									style={{ maxWidth: 200 }}
-									options={priorityOpts}
-									placeholder="Priority"
-									onChange={(event, data) => context.set('priority', data.value)}
-									search={searchFunc}
-								/>
-							</Form.Field>
-							<Form.Field>
-								<label className="required">Summary</label>
-								<Form.Input
-									placeholder="Summary"
-									fluid
-									onChange={(event, data) => context.set('summary', data.value)}
-								/>
-							</Form.Field>
-							<Form.Field>
-								<label>Labels</label>
-								<Form.Dropdown
-									clearable
-									selection
-									multiple
-									style={{ maxWidth: 200 }}
-									placeholder="Labels"
-									options={labelOpts}
-									search={searchFunc}
-									onChange={(event, data) => context.set('labels', data.value)}
-								/>
-							</Form.Field>
-							<Divider />
-							<Form.Field>
-								<label>Links</label>
-								<TagsInput
-									placeholder="Add link"
-									tags={context.data.links ?? []}
-									onChange={(tags) => context.set('links', [...tags])}
-								/>
-							</Form.Field>
-							<Form.Field>
-								<label>Attachments</label>
-								<TagsInput
-									placeholder="Add attachment"
-									tags={context.data.attachments ?? []}
-									onChange={(tags) => context.set('attachments', [...tags])}
-								/>
-							</Form.Field>
-							<Form.Field>
-								<label>Description</label>
-								<Form.TextArea
-									placeholder="Description"
-									onChange={(event, data) =>
-										data
-											? context.set('description', data.value as string)
-											: context.set('description', '')
-									}
-									rows={10}
-								/>
-							</Form.Field>
-							<Button.Group floated="right">
-								<Button primary type="submit" loading={loading}>
-									Submit
-								</Button>
-								<Button onClick={getSetOpenFunc(false)} basic>
-									<a href="?">Cancel</a>
-								</Button>
-							</Button.Group>
+							<Form.Dropdown
+								clearable
+								selection
+								fluid
+								options={typeOpts}
+								placeholder="Type"
+								onChange={(event, data) => context.set('type', data.value)}
+							/>
+							<Form.Dropdown
+								clearable
+								selection
+								fluid
+								options={priorityOpts}
+								placeholder="Priority"
+								onChange={(event, data) => context.set('priority', data.value)}
+							/>
+							<Form.Input
+								placeholder="Summary"
+								fluid
+								onChange={(event, data) => context.set('summary', data.value)}
+							/>
+							<Form.Dropdown
+								clearable
+								selection
+								fluid
+								multiple
+								placeholder="Labels"
+								options={labelOpts}
+								onChange={(event, data) => context.set('labels', data.value)}
+							/>
+							<TagsInput
+								placeholder="Add link"
+								tags={context.data.links ?? []}
+								onChange={(tags) => context.set('links', [...tags])}
+							/>
+							<TagsInput
+								placeholder="Add attachment"
+								tags={context.data.attachments ?? []}
+								onChange={(tags) => context.set('attachments', [...tags])}
+							/>
+							<Form.TextArea
+								placeholder="Description"
+								onChange={(event, data) =>
+									data
+										? context.set('description', data.value as string)
+										: context.set('description', '')
+								}
+							/>
+							<Button floated="left" positive type="submit" loading={loading}>
+								Submit
+							</Button>
+							<Button floated="right" onClick={getSetOpenFunc(false)}>
+								Cancel
+							</Button>
 						</Form>
 					</Grid.Column>
 				</Grid>
