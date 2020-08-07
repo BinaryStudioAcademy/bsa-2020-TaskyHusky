@@ -11,6 +11,7 @@ jobs:
     - name: Generate deployment package
       run: |
         cd server
+        npm install
         zip -r ../deploy.zip .
     - name: Deploy to EB
       uses: einaregilsson/beanstalk-deploy@v7
