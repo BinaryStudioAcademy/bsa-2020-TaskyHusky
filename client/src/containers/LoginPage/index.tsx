@@ -12,6 +12,7 @@ import { setToken } from 'helpers/setToken.helper';
 export const LoginPage: React.FC = () => {
 	const dispatch = useDispatch();
 	const authData = useSelector((rootState: RootState) => rootState.auth);
+
 	const getUser = (email: string, password: string) => {
 		dispatch(actions.triggerLoginUser({ email, password }));
 	};
@@ -40,7 +41,6 @@ export const LoginPage: React.FC = () => {
 	const handleLogInSubmit: (event: SyntheticEvent) => void = (event) => {
 		event.preventDefault();
 		setIsEmailValid(validateEmail(email));
-		setIsEmailSubmitted(true);
 		getUser(email, password);
 	};
 
@@ -75,7 +75,7 @@ export const LoginPage: React.FC = () => {
 						<Header as="h4" className={styles.subHeader}>
 							Log in to your account
 						</Header>
-						<Form onSubmit={isEmailValid ? handleLogInSubmit : handleContinueSubmit}>
+						<Form onSubmit={isEmailSubmitted ? handleLogInSubmit : handleContinueSubmit}>
 							<Popup
 								className={styles.errorPopup}
 								open={!isEmailValid && isEmailSubmitted}
