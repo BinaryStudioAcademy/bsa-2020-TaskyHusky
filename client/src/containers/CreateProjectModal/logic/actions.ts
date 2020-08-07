@@ -10,3 +10,5 @@ export const startCreatingProject = createAction<actionTypes.InitialProject>(act
 export const successCreatingProject = createAction(actionTypes.SUCCESS_CREATING_PROJECT);
 
 export const failCreatingProject = createAction(actionTypes.FAIL_CREATING_PROJECT);
+
+export const resetState = createAction(actionTypes.RESET_STATE);
