@@ -13,7 +13,7 @@ export const LoginPage: React.FC = () => {
 	const dispatch = useDispatch();
 	const authData = useSelector((rootState: RootState) => rootState.auth);
 	const getUser = (email: string, password: string) => {
-		dispatch(actions.triggerLoginUser({ email, password }));
+		dispatch(actions.logInUserTrigger({ email, password }));
 	};
 
 	const [email, setEmail] = useState<string>('');
