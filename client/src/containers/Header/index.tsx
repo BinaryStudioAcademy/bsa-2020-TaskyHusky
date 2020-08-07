@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Menu, Image, Input, Segment, Dropdown } from 'semantic-ui-react';
 import logo from 'assets/logo192.png'; // TODO: replace with logo once it is ready
 import styles from './styles.module.scss';
@@ -6,22 +6,25 @@ import { Redirect } from 'react-router-dom';
 import ProjectsMenu from 'components/ProjectsMenu';
 import FiltersMenu from 'components/FiltersMenu';
 import DashboardsMenu from 'components/DashboardsMenu';
-import { useSelector, useDispatch, shallowEqual } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'typings/rootState';
 import { removeToken } from 'helpers/setToken.helper';
 import * as actions from 'containers/LoginPage/logic/actions';
+import { User } from 'containers/LoginPage/logic/state';
 
 export const HeaderMenu = () => {
-	const authStore = useSelector((rootStore: RootState) => rootStore.auth, shallowEqual);
+	const authStore = useSelector((rootStore: RootState) => rootStore.auth);
 	const dispatch = useDispatch();
+
+	const user: User | null = authStore.user;
 
 	const [searchValue, setSearchValue] = useState<string>('');
 	const [activeItem, setActiveItem] = useState<string>('');
 	const [redirectToDashboards, setRedirectToDashboards] = useState<boolean>(false);
 
 	const logOutHandler = () => {
-		removeToken();
 		dispatch(actions.logOutUserTrigger());
+		removeToken();
 	};
 
 	const toggleActiveItem: (name: string) => void = (name) => {
@@ -112,7 +115,7 @@ export const HeaderMenu = () => {
 						</Dropdown>
 						<Dropdown icon="user" className={styles.circularIcon} direction="left" id="userProfileMenuItem">
 							<Dropdown.Menu className={styles.circularDropdownMenu}>
-								<Dropdown.Header>{`${authStore.user?.firstName} ${authStore.user?.lastName}`}</Dropdown.Header>
+								<Dropdown.Header>{`${user?.firstName} ${user?.lastName}`}</Dropdown.Header>
 								<Dropdown.Item>Profile</Dropdown.Item>
 								<Dropdown.Item>Account settings</Dropdown.Item>
 								<Dropdown.Divider />
