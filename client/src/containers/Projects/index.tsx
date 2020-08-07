@@ -6,7 +6,7 @@ import * as actions from './logic/actions';
 
 import CreateProjectModal from '../CreateProjectModal';
 import styles from './styles.module.scss';
-import Spinner from 'components/Spinner';
+import Spinner from 'components/common/Spinner';
 
 const Projects: React.FC = () => {
 	const dispatch = useDispatch();
