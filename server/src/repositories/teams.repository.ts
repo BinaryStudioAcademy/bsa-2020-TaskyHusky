@@ -1,4 +1,4 @@
-import { EntityRepository, Repository } from 'typeorm';
+import { EntityRepository, Repository, createQueryBuilder } from 'typeorm';
 import { Teams } from '../entity/Teams';
 
 @EntityRepository(Teams)
@@ -7,8 +7,10 @@ export class TeamsRepository extends Repository<Teams> {
 		return this.find();
 	}
 
-	findOneById(projectID: string) {
-		return this.findOne(projectID);
+	findOneById(id: string) {
+		return this.findOne({
+			where: { id }
+		});
 	}
 
 	createOne(data: Teams) {

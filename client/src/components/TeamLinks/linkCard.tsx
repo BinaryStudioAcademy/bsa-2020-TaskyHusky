@@ -1,7 +1,10 @@
-import React from 'react';
-import { Card, Icon } from 'semantic-ui-react';
+import React, { useState } from 'react';
+import { Icon, Button } from 'semantic-ui-react';
+import styles from './styles.module.scss';
 
-type Props = {
+export type Props = {
+	edit: any;
+	deleteLink: any;
 	link: {
 		http: string;
 		name: string;
@@ -9,14 +12,25 @@ type Props = {
 	};
 };
 
-const LinkCard = ({ link }: Props) => {
-	console.log(link);
+const LinkCard = ({ link, edit, deleteLink }: Props) => {
+	const [showButtons, setShowButtons] = useState<boolean>(false);
+	const showBtns = () => setShowButtons(true);
+	const hideBtns = () => setShowButtons(false);
 	return (
-		<Card fluid>
-			<Card.Content header={link.name} />
-			<Card.Content description={link.description} />
-			<Card.Content description={link.http} />
-		</Card>
+		<div className={styles.link_card_wrapper} onMouseEnter={showBtns} onMouseLeave={hideBtns}>
+			<h3 className={styles.link_header}>{link.name}</h3>
+			<p className={styles.link_description}>{link.description}</p>
+			<a className={styles.link_href} href={link.http} target="_blank" rel="noopener noreferrer">
+				<Icon name="linkify" size="large" />
+				{link.http}
+			</a>
+			{showButtons && (
+				<div className={styles.btns_block}>
+					<Button size="large" content="Edit" onClick={() => edit(link)} />
+					<Button size="large" content="Delete" onClick={() => deleteLink(link)} />
+				</div>
+			)}
+		</div>
 	);
 };
 

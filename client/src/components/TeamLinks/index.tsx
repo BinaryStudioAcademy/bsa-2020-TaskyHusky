@@ -6,16 +6,12 @@ import LinkCard from './linkCard';
 
 type Props = {
 	addLinks: any;
-	currentLinks: [
-		{
-			http: string;
-			name: string;
-			description: string;
-		},
-	];
+	currentLinks: string[];
+	edit: any;
+	deleteLink: any;
 };
 
-const TeamLinks = ({ addLinks, currentLinks }: Props) => {
+const TeamLinks = ({ addLinks, currentLinks, edit, deleteLink }: Props) => {
 	return (
 		<>
 			<div className={styles.link_header}>
@@ -23,8 +19,11 @@ const TeamLinks = ({ addLinks, currentLinks }: Props) => {
 				<Button compact basic className={styles.btn_borderless} icon="plus" onClick={addLinks} />
 			</div>
 			<div className={[styles.worked_block_wrapper, styles.shadow_top, styles.align_center].join(' ')}>
-				{currentLinks ? (
-					currentLinks.map((el) => <LinkCard key={el.name} link={el} />)
+				{currentLinks.length ? (
+					currentLinks.map((el: string) => {
+						const obj = JSON.parse(el);
+						return <LinkCard key={obj} link={obj} edit={edit} deleteLink={deleteLink} />;
+					})
 				) : (
 					<Image src={linksImg} size="large" />
 				)}
