@@ -1,0 +1,33 @@
+name: Stage - Client Build
+on:
+  pull_request:
+    types: [closed]
+    branches: [dev]
+    paths: 'client/**/*.*'
+
+jobs:
+  build:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install dependencies
+      run: |
+        cd client
+        npm install
+    - name: Build
+      env:
+        REACT_APP_SERVER: http://localhost:5000/
+      run: |
+        cd frontend
+        npm run build
+    - name: Deploy to S3
+      uses: jakejarvis/s3-sync-action@master
+      with:
+        args: --acl public-read --delete
+      env:
+        AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET_NAME_STAGE }}
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_REGION: ${{ secrets.AWS_REGION }}
+        SOURCE_DIR: 'client/build'
