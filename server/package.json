@@ -4,7 +4,9 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"start": "ts-node-dev --respawn --transpile-only index.ts",
+		"dev": "ts-node-dev --respawn --transpile-only index.ts",
+		"prod": "ts-node --respawn --transpile-only index.ts",
+		"start": "npm i && docker-compose up && npm run prod",
 		"start:debug": "ts-node-dev --inspect=4321 --respawn --transpile-only index.ts",
 		"typeorm": "node --require ts-node/register ./node_modules/typeorm/cli.js",
 		"typeorm:dropDB": "npm run typeorm schema:drop",
