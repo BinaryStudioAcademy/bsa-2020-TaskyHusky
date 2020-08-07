@@ -45,7 +45,7 @@ class ProjectsController {
 
 	updateProject = async (req: Request, res: Response): Promise<void> => {
 		const projectsRepository = getCustomRepository(ProjectsRepository);
-		const project = req.body;
+		const { project } = req.body;
 		const { id } = project;
 
 		try {
