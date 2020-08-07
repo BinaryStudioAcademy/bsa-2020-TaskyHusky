@@ -9,9 +9,11 @@ import { RootState } from 'typings/rootState';
 import * as actions from './logic/actions';
 import { setToken } from 'helpers/setToken.helper';
 import PasswordInput from 'components/common/PasswordInput';
+import { useTranslation } from 'react-i18next';
 
 export const LoginPage: React.FC = () => {
 	const dispatch = useDispatch();
+	const { t } = useTranslation();
 	const authData = useSelector((rootState: RootState) => rootState.auth);
 
 	const getUser = (email: string, password: string) => {
@@ -70,7 +72,7 @@ export const LoginPage: React.FC = () => {
 			<Grid verticalAlign="middle" className={styles.grid}>
 				<Grid.Column className={styles.column}>
 					<Header as="h1" color="blue" className={styles.mainHeader}>
-						Sign in to TaskyHusky
+						{t('loginHeader')}
 					</Header>
 					<Segment>
 						<Form onSubmit={isEmailSubmitted ? handleLogInSubmit : handleContinueSubmit}>
