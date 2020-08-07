@@ -1,14 +1,13 @@
 import React, { useState, SyntheticEvent, useEffect } from 'react';
 import styles from './styles.module.scss';
-
 import { Header, Form, Divider, Segment, Button, Grid, List, Popup } from 'semantic-ui-react';
-import { validateEmail } from 'helpers/validateEmail.helper';
 import { Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'typings/rootState';
 import * as actions from './logic/actions';
 import { setToken } from 'helpers/setToken.helper';
 import PasswordInput from 'components/common/PasswordInput';
+import validator from 'validator';
 
 export const LoginPage: React.FC = () => {
 	const dispatch = useDispatch();
@@ -36,13 +35,16 @@ export const LoginPage: React.FC = () => {
 	const handleContinueSubmit: (event: SyntheticEvent) => void = (event) => {
 		event.preventDefault();
 		setIsEmailSubmitted(true);
-		setIsEmailValid(validateEmail(email)); // TODO: replace with request to server side via redux-saga when server side is ready
+		setIsEmailValid(validator.isEmail(email)); // TODO: replace with request to server side via redux-saga when server side is ready
 	};
 
 	const handleLogInSubmit: (event: SyntheticEvent) => void = (event) => {
 		event.preventDefault();
-		setIsEmailValid(validateEmail(email));
-		getUser(email, password);
+		setIsEmailValid(validator.isEmail(email));
+
+		if (isEmailValid) {
+			getUser(email, password);
+		}
 	};
 
 	const toggleForgetPasswordHandler: () => void = () => {
@@ -61,9 +63,7 @@ export const LoginPage: React.FC = () => {
 
 	const renderRootPage: JSX.Element | null = redirectToRootPage ? <Redirect to="/header" /> : null;
 
-	const passwordInput = isEmailValid ? (
-		<PasswordInput onChange={(text) => setPassword(text)} onChangeValid={() => {}} />
-	) : null;
+	const passwordInput = isEmailValid ? <PasswordInput onChange={(text) => setPassword(text)} /> : null;
 
 	return (
 		<>
