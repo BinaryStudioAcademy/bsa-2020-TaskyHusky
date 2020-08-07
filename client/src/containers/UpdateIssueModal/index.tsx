@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Modal, Button, Header, Grid, Icon } from 'semantic-ui-react';
+import { Form, Modal, Button, Header, Grid, Icon, Divider } from 'semantic-ui-react';
 import { connect, useDispatch } from 'react-redux';
 import { RootState } from 'typings/rootState';
 import TagsInput from 'components/common/TagsInput';
@@ -96,63 +96,89 @@ const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, p
 						onSubmit={submit}
 						onKeyDown={(event: React.KeyboardEvent) => event.key === 'Enter' && event.preventDefault()}
 					>
-						<Form.Dropdown
-							clearable
-							selection
-							fluid
-							options={typeOpts}
-							defaultValue={current.type.id}
-							placeholder="Type"
-							onChange={(event, data) => context.set('type', data.value)}
-						/>
-						<Form.Dropdown
-							clearable
-							selection
-							fluid
-							options={priorityOpts}
-							defaultValue={current.priority.id}
-							placeholder="Priority"
-							onChange={(event, data) => context.set('priority', data.value)}
-						/>
-						<Form.Input
-							placeholder="Summary"
-							fluid
-							defaultValue={current.summary}
-							onChange={(event, data) => context.set('summary', data.value)}
-						/>
-						<Form.Dropdown
-							clearable
-							selection
-							fluid
-							multiple
-							placeholder="Labels"
-							options={labelOpts}
-							defaultValue={current.labels as any}
-							onChange={(event, data) => context.set('labels', data.value)}
-						/>
-						<TagsInput
-							placeholder="Add link"
-							tags={context.data.links ?? []}
-							onChange={(tags) => context.set('links', [...tags])}
-						/>
-						<TagsInput
-							placeholder="Add attachment"
-							tags={context.data.attachments ?? []}
-							onChange={(tags) => context.set('attachments', [...tags])}
-						/>
-						<Form.TextArea
-							placeholder="Description"
-							defaultValue={current.description}
-							onChange={(event, data) =>
-								data ? context.set('description', data.value as string) : context.set('description', '')
-							}
-						/>
-						<Button floated="left" positive type="submit" loading={loading}>
-							Submit
-						</Button>
-						<Button floated="right" onClick={() => setOpened(false)}>
-							Cancel
-						</Button>
+						<Form.Field>
+							<label className="required">Type</label>
+							<Form.Dropdown
+								clearable
+								selection
+								fluid
+								options={typeOpts}
+								defaultValue={current.type.id}
+								placeholder="Type"
+								onChange={(event, data) => context.set('type', data.value)}
+							/>
+						</Form.Field>
+						<Form.Field>
+							<label className="required">Priority</label>
+							<Form.Dropdown
+								clearable
+								selection
+								fluid
+								options={priorityOpts}
+								defaultValue={current.priority.id}
+								placeholder="Priority"
+								onChange={(event, data) => context.set('priority', data.value)}
+							/>
+						</Form.Field>
+						<Form.Field>
+							<label className="required">Summary</label>
+							<Form.Input
+								placeholder="Summary"
+								fluid
+								defaultValue={current.summary}
+								onChange={(event, data) => context.set('summary', data.value)}
+							/>
+						</Form.Field>
+						<Form.Field>
+							<label>Labels</label>
+							<Form.Dropdown
+								clearable
+								selection
+								fluid
+								multiple
+								placeholder="Labels"
+								options={labelOpts}
+								defaultValue={current.labels as any}
+								onChange={(event, data) => context.set('labels', data.value)}
+							/>
+						</Form.Field>
+						<Divider />
+						<Form.Field>
+							<label>Links</label>
+							<TagsInput
+								placeholder="Add link"
+								tags={context.data.links ?? []}
+								onChange={(tags) => context.set('links', [...tags])}
+							/>
+						</Form.Field>
+						<Form.Field>
+							<label>Attachments</label>
+							<TagsInput
+								placeholder="Add attachment"
+								tags={context.data.attachments ?? []}
+								onChange={(tags) => context.set('attachments', [...tags])}
+							/>
+						</Form.Field>
+						<Form.Field>
+							<label>Description</label>
+							<Form.TextArea
+								placeholder="Description"
+								defaultValue={current.description}
+								onChange={(event, data) =>
+									data
+										? context.set('description', data.value as string)
+										: context.set('description', '')
+								}
+							/>
+						</Form.Field>
+						<Button.Group floated="right">
+							<Button positive type="submit" loading={loading}>
+								Submit
+							</Button>
+							<Button onClick={() => setOpened(false)} basic>
+								<a href="?">Cancel</a>
+							</Button>
+						</Button.Group>
 					</Form>
 				</Grid.Column>
 			</Grid>

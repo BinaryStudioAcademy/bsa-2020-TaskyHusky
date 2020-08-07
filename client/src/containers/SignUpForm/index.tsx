@@ -56,7 +56,6 @@ const SignUpForm: React.FC = () => {
 			<Form.Input placeholder="Last name" onChange={(event, data) => setLastName(data.value)} />
 			<Form.Input
 				type="email"
-				iconPosition="left"
 				icon="at"
 				placeholder="Email"
 				onChange={(event, data: { value: string }) => {
@@ -71,9 +70,9 @@ const SignUpForm: React.FC = () => {
 				Sign up
 			</Button>
 			<Divider horizontal>Or</Divider>
-			<Button type="button">
+			<Button type="button" fluid>
 				<Icon name="google" />
-				Sign up with Google
+				Log in with Google
 			</Button>
 		</Form>
 	);
