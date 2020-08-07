@@ -2,7 +2,7 @@ import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
 export default async function configureLanguages() {
-	const countryCodeRes = await fetch('http://api.hostip.info', { method: 'POST' });
+	const countryCodeRes = await fetch('http://api.hostip.info');
 	const text = await countryCodeRes.text();
 	const parser = new DOMParser();
 	const xml = parser.parseFromString(text, 'text/xml');
