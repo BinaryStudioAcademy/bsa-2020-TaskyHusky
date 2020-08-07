@@ -15,22 +15,6 @@
 .margin_1 {
 	margin-right: 5px !important;
 }
-.card_body {
-	display: flex;
-	.icon {
-		flex-basis: 30%;
-		img {
-			height: 100%;
-			max-height: 45px;
-		}
-	}
-	.user_info {
-		justify-content: flex-start;
-		.metainfo {
-			color: #cccccc;
-		}
-	}
-}
 .worked_block_wrapper {
 	display: flex;
 	padding: 20px 10px;
