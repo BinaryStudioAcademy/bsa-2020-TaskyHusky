@@ -19,6 +19,20 @@ export function* logInRequest(action: ReturnType<typeof actions.triggerLoginUser
 export function* watchUserLogin() {
 	yield takeEvery(actionTypes.TRIGGER_LOGIN_USER, logInRequest);
 }
+
+export function* logOutRequest() {
+	try {
+		// TODO: handle token inactivation on server side
+		yield put(actions.logOutUserSuccess());
+	} catch (error) {
+		console.log(error);
+	}
+}
+
+export function* watchUserLogOut() {
+	yield takeEvery(actionTypes.LOGOUT_USER_TRIGGER, logOutRequest);
+}
+
 export default function* authSaga() {
-	yield all([watchUserLogin()]);
+	yield all([watchUserLogin(), watchUserLogOut()]);
 }
