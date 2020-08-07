@@ -30,7 +30,6 @@ export const LoginPage: React.FC = () => {
 		if (!!authData.jwtToken) {
 			setToken(authData.jwtToken);
 			setRedirectToRootPage(!redirectToRootPage);
-			window.location.reload();
 		}
 	}, [authData.jwtToken, redirectToRootPage]);
 
