@@ -5,7 +5,7 @@ import * as actions from './actions';
 
 export function* fetchProjects() {
 	const projects = yield call(getProjects);
-	yield put(actions.successLoading(projects));
+	yield put(actions.SuccessLoading({ projects }));
 }
 
 export function* watchStartLoading() {

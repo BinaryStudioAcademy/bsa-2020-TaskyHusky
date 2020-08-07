@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Switch } from 'react-router-dom';
-import Projects from 'containers/Projects';
+import Projects from 'pages/Projects';
 import PrivateRoute from 'components/PrivateRoute';
 import Login from 'pages/LogIn';
 import Team from 'pages/Team';
