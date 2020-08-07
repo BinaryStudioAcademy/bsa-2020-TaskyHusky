@@ -58,7 +58,7 @@ export const LoginPage: React.FC = () => {
 
 	const renderSignUp: JSX.Element | null = redirectToSignUp ? <Redirect to="/signup" /> : null;
 
-	const renderRootPage: JSX.Element | null = redirectToRootPage ? <Redirect to="/" /> : null;
+	const renderRootPage: JSX.Element | null = redirectToRootPage ? <Redirect to="/header" /> : null;
 
 	const passwordInput = isEmailValid ? (
 		<Form.Input placeholder="Password" type="password" onChange={(event) => setPassword(event.target.value)} />

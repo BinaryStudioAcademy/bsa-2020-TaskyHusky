@@ -24,10 +24,10 @@ const Routing: React.FC = () => {
 		<Switch>
 			<PrivateRoute exact path="/createIssue" component={CreateIssue} />
 			<PublicRoute exact restricted={true} path="/login" component={Login} />
-			<PublicRoute exact restricted={true} path="/header" component={Header} />;
+			<PrivateRoute exact path="/header" component={Header} />;
 			<PublicRoute exact restricted={true} path="/signup" component={SignUp} />
 			<PrivateRoute exact path="/projects" component={Projects} />
-      <PrivateRoute exact path="/team/:id" component={Team} />
+			<PrivateRoute exact path="/team/:id" component={Team} />
 			<PrivateRoute exact path="/filters" component={Filters} />
 		</Switch>
 	);
