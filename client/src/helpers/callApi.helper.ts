@@ -2,8 +2,8 @@ import qs from 'qs';
 import { LocalStorageKeys } from 'constants/LocalStorageKeys';
 import { WebApiException } from 'typings/webApiException';
 
-const BASE_URL = process.env.REACT_APP_API_BASE_URL ?? '';
-const API = '/api/';
+const BASE_URL = process.env.REACT_APP_API_BASE_URL ?? '/';
+const API = 'api/';
 
 interface RequestArgs {
 	endpoint: string;
