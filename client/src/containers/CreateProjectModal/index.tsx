@@ -10,7 +10,7 @@ import styles from './styles.module.scss';
 import * as actions from './logic/actions';
 import { RootState } from 'typings/rootState';
 
-type projectTemplate = 'Scrum' | 'Kanban' | 'Bug tracking';
+type ProjectTemplate = 'Scrum' | 'Kanban' | 'Bug tracking';
 
 const templatesInformation = {
 	Kanban: {
@@ -40,7 +40,7 @@ const CreateProjectModal = () => {
 	const [key, setKey] = useState<string>('');
 	const [template, setTemplate] = useState<string>('Scrum');
 
-	const { description, image } = templatesInformation[template as projectTemplate];
+	const { description, image } = templatesInformation[template as ProjectTemplate];
 
 	const onCreateProject = (): void => {
 		dispatch(
