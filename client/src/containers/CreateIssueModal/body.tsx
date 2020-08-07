@@ -191,7 +191,7 @@ const CreateIssueModalBody: React.FC<Props> = ({ children, issueTypes, prioritie
 									Submit
 								</Button>
 								<Button onClick={getSetOpenFunc(false)} basic>
-									<a onClick={() => window.history.back()}>Cancel</a>
+									<span>Cancel</span>
 								</Button>
 							</Button.Group>
 						</Form>
