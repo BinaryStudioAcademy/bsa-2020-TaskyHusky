@@ -1,5 +1,8 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
+import { en } from 'translations/en';
+import { ru } from 'translations/ru';
+import { ua } from 'translations/ua';
 
 export default async function configureLanguages() {
 	const countryCodeRes = await fetch('http://api.hostip.info');
@@ -12,19 +15,13 @@ export default async function configureLanguages() {
 	i18n.use(initReactI18next).init({
 		resources: {
 			en: {
-				translation: {
-					loginHeader: 'Sign in to TaskyHusky',
-				},
+				translation: en,
 			},
 			ru: {
-				translation: {
-					loginHeader: 'Вход в аккаунт TaskyHusky',
-				},
+				translation: ru,
 			},
 			ua: {
-				translation: {
-					loginHeader: 'Вхід до аккаунту TaskyHusky',
-				},
+				translation: ua,
 			},
 		},
 		lng: countryCode,
