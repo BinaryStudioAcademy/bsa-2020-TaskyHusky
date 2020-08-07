@@ -1,17 +1,17 @@
 import React, { useEffect } from 'react';
 import { Switch } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import Projects from 'containers/Projects';
-import PrivateRoute from 'components/PrivateRoute';
-import Login from 'pages/LogIn';
-import PublicRoute from 'components/PublicRoute';
-import SignUp from 'pages/SignUp';
-import ProfilePage from 'containers/ProfilePage';
-import CreateIssue from 'pages/CreateIssue';
 import Header from 'containers/Header';
+import ProfilePage from 'containers/ProfilePage';
+import PrivateRoute from 'components/PrivateRoute';
+import PublicRoute from 'components/PublicRoute';
+import Login from 'pages/LogIn';
+import SignUp from 'pages/SignUp';
+import Filters from 'pages/Filters';
+import CreateIssue from 'pages/CreateIssue';
 import { loadTypes, loadPriorities } from 'pages/CreateIssue/logic/actions';
 import { fetchFilterDefs } from '../../commonLogic/filterDefs/actions';
-import { useDispatch } from 'react-redux';
-import Filters from 'pages/Filters';
 
 const Routing: React.FC = () => {
 	const dispatch = useDispatch();

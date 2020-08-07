@@ -4,7 +4,7 @@ import styles from './styles.module.scss';
 import { PropsUserData } from 'containers/ProfilePage';
 
 const ProfileTeamBlock: React.FC<PropsUserData> = (props: PropsUserData) => {
-	const { user, isCurrentUser, mockData } = props;
+	const { isCurrentUser, mockData } = props;
 	return (
 		<div>
 			<Header as="h3" className={styles.header}>

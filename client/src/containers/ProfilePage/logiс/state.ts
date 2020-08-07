@@ -1,16 +1,16 @@
 export interface UserProfileState {
-	id?: string;
+	id: string;
 	email: string;
-	password?: string;
-	firstName?: string;
-	lastName?: string;
-	username?: string;
-	avatar?: string;
-	department?: string;
-	location?: string;
-	organization?: string;
-	jobTitle?: string;
+	firstName: string;
+	lastName: string;
+	username: string;
+	avatar: string;
+	department: string;
+	location: string;
+	organization: string;
+	jobTitle: string;
 	userSettingsId?: string;
+	editMode: string;
 }
 
 export const initialState: UserProfileState = {
@@ -25,4 +25,5 @@ export const initialState: UserProfileState = {
 	organization: '',
 	jobTitle: '',
 	userSettingsId: '',
+	editMode: '',
 };
