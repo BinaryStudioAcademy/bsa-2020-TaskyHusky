@@ -50,8 +50,8 @@ const Projects: React.FC = () => {
 						<Spinner />
 					) : (
 						<Table.Body>
-							{filteredData.map(({ projectID, name, key }) => (
-								<Table.Row key={projectID}>
+							{filteredData.map(({ id, name, key }) => (
+								<Table.Row key={id}>
 									<Table.Cell>{name}</Table.Cell>
 									<Table.Cell>{key}</Table.Cell>
 									<Table.Cell>Cell</Table.Cell>
