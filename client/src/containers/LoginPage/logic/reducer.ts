@@ -11,4 +11,14 @@ export const authReducer = createReducer<AuthState>(initialState, {
 			jwtToken: action.jwtToken,
 		};
 	},
+	[actionTypes.REGISTER_USER_SUCCESS](state, action: WebApi.Result.UserAuthResult) {
+		const { user, jwtToken } = action;
+
+		return {
+			...state,
+			user,
+			jwtToken,
+			isAuthorized: !!user,
+		};
+	},
 });
