@@ -19,7 +19,7 @@ jobs:
       env:
         REACT_APP_SERVER: http://localhost:5000/
       run: |
-        cd frontend
+        cd client
         npm run build
     - name: Deploy to S3
       uses: jakejarvis/s3-sync-action@master
@@ -29,5 +29,5 @@ jobs:
         AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET_NAME_STAGE }}
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        AWS_REGION: ${{ secrets.AWS_REGION }}
+        AWS_REGION: ${{ secrets.AWS_CLIENT_REGION }}
         SOURCE_DIR: 'client/build'
