@@ -2,6 +2,9 @@ import qs from 'qs';
 import { LocalStorageKeys } from 'constants/LocalStorageKeys';
 import { WebApiException } from 'typings/webApiException';
 
+const BASE_URL = process.env.REACT_APP_API_BASE_URL ?? '/';
+const API = 'api/';
+
 interface RequestArgs {
 	endpoint: string;
 	method: 'GET' | 'POST' | 'PUT' | 'DELETE';
@@ -48,10 +51,8 @@ export async function throwIfResponseFailed(res: Response) {
 	}
 }
 
-const API = '/api/';
-
 const getUrl = (args: RequestArgs): RequestInfo =>
-	API + args.endpoint + (args.query ? `?${qs.stringify(args.query)}` : '');
+	BASE_URL + API + args.endpoint + (args.query ? `?${qs.stringify(args.query)}` : '');
 
 const getArgs = (args: RequestArgs): RequestInit => {
 	const headers: Headers | string[][] | Record<string, string> | undefined = {};

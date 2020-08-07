@@ -1,8 +1,13 @@
 import React from 'react';
 import Filters from '../../containers/Filters';
+import DefaultPageWrapper from 'containers/DefaultPageWrapper';
 
 const FiltersPage: React.FC = () => {
-	return <Filters />;
+	return (
+		<DefaultPageWrapper>
+			<Filters />
+		</DefaultPageWrapper>
+	);
 };
 
 export default FiltersPage;

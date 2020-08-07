@@ -11,6 +11,7 @@ import * as actions from './logic/actions';
 import TeamAddPeopleModal from 'components/TeamAddPeopleModal';
 import CreateLink from 'components/TeamLinks/createLink';
 import DeleteLink from 'components/TeamLinks/deleteLink';
+import Spinner from 'components/common/Spinner';
 export interface Link {
 	http: string;
 	name: string;
@@ -45,7 +46,7 @@ const TeamPage = ({ match: { params }, team: { team } }: { match: any; team: any
 	};
 	return team.id ? (
 		<Grid columns="equal" centered>
-			<Grid.Row>
+			<Grid.Row className={styles.header_z}>
 				<div className={[styles.header, styles.team_header].join(' ')}></div>
 			</Grid.Row>
 			<Grid.Row>
@@ -74,7 +75,7 @@ const TeamPage = ({ match: { params }, team: { team } }: { match: any; team: any
 			{deleteLink && <DeleteLink onClose={toggleDeleteLinkModal} linkName={linkToDelete?.name} />}
 		</Grid>
 	) : (
-		<span>Loading ...</span>
+		<Spinner />
 	);
 };
 const mapStateToProps = (state: any) => ({
