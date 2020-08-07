@@ -2,6 +2,7 @@ import { loginUser } from 'services/auth.service';
 import { all, put, takeEvery, call } from 'redux-saga/effects';
 import * as actionTypes from './actionTypes';
 import * as actions from './actions';
+import { NotificationManager } from 'react-notifications';
 
 export function* logInRequest({ email, password }: ReturnType<typeof actions.triggerLoginUser>) {
 	try {
@@ -10,7 +11,7 @@ export function* logInRequest({ email, password }: ReturnType<typeof actions.tri
 		yield put(actions.updateLoginUser({ user, jwtToken }));
 	} catch (err) {
 		if (err.status === 401) {
-			alert('Invalid email or password');
+			NotificationManager.error('Invalid email or password', 'Error', 4000);
 		} else {
 			throw err;
 		}
