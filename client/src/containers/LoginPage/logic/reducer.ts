@@ -11,4 +11,12 @@ export const authReducer = createReducer<AuthState>(initialState, {
 			jwtToken: action.jwtToken,
 		};
 	},
+	[actionTypes.LOGOUT_USER_SUCCESS](state, action) {
+		return {
+			...state,
+			user: null,
+			isAuthorized: false,
+			jwtToken: '',
+		};
+	},
 });

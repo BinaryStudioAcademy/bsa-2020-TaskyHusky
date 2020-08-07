@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Menu, Image, Input, Segment, Dropdown } from 'semantic-ui-react';
 import logo from 'assets/logo192.png'; // TODO: replace with logo once it is ready
 import styles from './styles.module.scss';
@@ -6,11 +6,25 @@ import { Redirect } from 'react-router-dom';
 import ProjectsMenu from 'components/ProjectsMenu';
 import FiltersMenu from 'components/FiltersMenu';
 import DashboardsMenu from 'components/DashboardsMenu';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
+import { RootState } from 'typings/rootState';
+import { removeToken } from 'helpers/setToken.helper';
+import * as actions from 'containers/LoginPage/logic/actions';
 
 export const HeaderMenu = () => {
+	console.count('count'); // counts re-renders
+
+	const authStore = useSelector((rootStore: RootState) => rootStore.auth, shallowEqual);
+	const dispatch = useDispatch();
+
 	const [searchValue, setSearchValue] = useState<string>('');
 	const [activeItem, setActiveItem] = useState<string>('');
 	const [redirectToDashboards, setRedirectToDashboards] = useState<boolean>(false);
+
+	const logOutHandler = () => {
+		removeToken();
+		dispatch(actions.logOutUserTrigger());
+	};
 
 	const toggleActiveItem: (name: string) => void = (name) => {
 		setActiveItem(name);
@@ -100,11 +114,11 @@ export const HeaderMenu = () => {
 						</Dropdown>
 						<Dropdown icon="user" className={styles.circularIcon} direction="left" id="userProfileMenuItem">
 							<Dropdown.Menu className={styles.circularDropdownMenu}>
-								<Dropdown.Header>User Name</Dropdown.Header>
+								<Dropdown.Header>{`${authStore.user?.firstName} ${authStore.user?.lastName}`}</Dropdown.Header>
 								<Dropdown.Item>Profile</Dropdown.Item>
 								<Dropdown.Item>Account settings</Dropdown.Item>
 								<Dropdown.Divider />
-								<Dropdown.Item>Log out</Dropdown.Item>
+								<Dropdown.Item onClick={logOutHandler}>Log out</Dropdown.Item>
 							</Dropdown.Menu>
 						</Dropdown>
 					</Menu.Item>
