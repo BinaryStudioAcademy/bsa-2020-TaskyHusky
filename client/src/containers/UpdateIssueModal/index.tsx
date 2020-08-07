@@ -84,14 +84,14 @@ const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, p
 	};
 
 	return (
-		<Modal open={opened} closeIcon closeOnDimmerClick closeOnEscape size="tiny">
+		<Modal open={opened} closeIcon closeOnDimmerClick closeOnEscape style={{ maxWidth: 700 }}>
 			<Modal.Header>
 				<Header color="blue" as="h1">
 					Edit issue
 				</Header>
 			</Modal.Header>
-			<Grid className="fill" textAlign="center" verticalAlign="middle">
-				<Grid.Column style={{ marginTop: 20, marginBottom: 20, maxWidth: 400 }}>
+			<Grid className="fill" verticalAlign="middle">
+				<Grid.Column style={{ marginTop: 20, marginBottom: 20, marginLeft: 20 }}>
 					<Form
 						onSubmit={submit}
 						onKeyDown={(event: React.KeyboardEvent) => event.key === 'Enter' && event.preventDefault()}
@@ -172,7 +172,7 @@ const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, p
 							/>
 						</Form.Field>
 						<Button.Group floated="right">
-							<Button positive type="submit" loading={loading}>
+							<Button primary type="submit" loading={loading}>
 								Submit
 							</Button>
 							<Button onClick={() => setOpened(false)} basic>

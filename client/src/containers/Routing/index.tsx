@@ -14,11 +14,11 @@ import ProjectsPage from 'pages/ProjectsPage';
 const Routing: React.FC = () => {
 	return (
 		<Switch>
+			<PublicRoute exact restricted path="/login" component={Login} />
+			<PublicRoute exact restricted path="/signup" component={SignUp} />
 			<PrivateRoute exact path="/createIssue" component={CreateIssue} />
 			<PrivateRoute path="/issue/:key" component={IssuePage} />
-			<PublicRoute exact restricted={true} path="/login" component={Login} />
-			<PrivateRoute exact path="/header" component={Header} />;
-			<PublicRoute exact restricted={true} path="/signup" component={SignUp} />
+			<PrivateRoute exact path="/header" component={Header} />
 			<PrivateRoute exact path="/projects" component={ProjectsPage} />
 			<PrivateRoute exact path="/team/:id" component={Team} />
 			<PrivateRoute exact path="/filters" component={Filters} />
