@@ -9,8 +9,11 @@ export function* logInRequest({ email, password }: ReturnType<typeof actions.tri
 		const { user, jwtToken } = response;
 		yield put(actions.updateLoginUser({ user, jwtToken }));
 	} catch (err) {
-		alert(err.message);
-		// parse error here
+		if (err.status === 401) {
+			alert('Invalid email or password');
+		} else {
+			throw err;
+		}
 	}
 }
 

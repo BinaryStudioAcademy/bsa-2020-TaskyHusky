@@ -1,6 +1,7 @@
 import React from 'react';
 import SignUpForm from 'containers/SignUpForm';
-import { Grid, Header, Segment } from 'semantic-ui-react';
+import { Grid, Header, Segment, Message } from 'semantic-ui-react';
+import { NavLink } from 'react-router-dom';
 
 const SignUp: React.FC = () => {
 	return (
@@ -12,6 +13,9 @@ const SignUp: React.FC = () => {
 				<Segment>
 					<SignUpForm />
 				</Segment>
+				<Message>
+					Already with us? <NavLink to="/login">Log in</NavLink>
+				</Message>
 			</Grid.Column>
 		</Grid>
 	);
