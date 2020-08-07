@@ -8,7 +8,6 @@ import SignUp from 'pages/SignUp';
 import CreateIssue from 'pages/CreateIssue';
 import Header from 'containers/Header';
 import { loadTypes, loadPriorities } from 'pages/CreateIssue/logic/actions';
-import { fetchFilterDefs } from '../../commonLogic/filterDefs/actions';
 import { useDispatch } from 'react-redux';
 import Filters from 'pages/Filters';
 
@@ -18,7 +17,6 @@ const Routing: React.FC = () => {
 	useEffect(() => {
 		dispatch(loadTypes());
 		dispatch(loadPriorities());
-		dispatch(fetchFilterDefs());
 	}, [dispatch]);
 
 	return (
