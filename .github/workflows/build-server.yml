@@ -1,7 +1,7 @@
 name: Stage - Server Build
 on:
   push:
-    branches: [dev]
+    branches: [build-setup]
 
 jobs:
   build:
