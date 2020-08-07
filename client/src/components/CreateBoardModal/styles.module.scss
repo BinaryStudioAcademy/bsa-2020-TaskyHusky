@@ -1,12 +1,18 @@
-.form_container {
-  margin-bottom: 20px;
+.buttonContainer{
+  :global(.ui.button){
+    margin-bottom: 10px;
+  }
 }
 
-.flex_container {
-  display: flex;
+.buttonContainer{
+    :global(.ui.button){
+      background: #f4f5f7;
+      color: #505f79;
+      font-size: 14px;
+    }
 }
 
-.template_image {
-  width: 220px;
-  margin-right: 15px;
+.formField p{
+  color: #6c798f;
+  font-size: 12px;
 }
