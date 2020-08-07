@@ -6,11 +6,26 @@ import { Redirect } from 'react-router-dom';
 import ProjectsMenu from 'components/ProjectsMenu';
 import FiltersMenu from 'components/FiltersMenu';
 import DashboardsMenu from 'components/DashboardsMenu';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from 'typings/rootState';
+import { removeToken } from 'helpers/setToken.helper';
+import * as actions from 'containers/LoginPage/logic/actions';
+import { User } from 'containers/LoginPage/logic/state';
 
 export const HeaderMenu = () => {
+	const authStore = useSelector((rootStore: RootState) => rootStore.auth);
+	const dispatch = useDispatch();
+
+	const user: User | null = authStore.user;
+
 	const [searchValue, setSearchValue] = useState<string>('');
 	const [activeItem, setActiveItem] = useState<string>('');
 	const [redirectToDashboards, setRedirectToDashboards] = useState<boolean>(false);
+
+	const logOutHandler = () => {
+		dispatch(actions.logOutUserTrigger());
+		removeToken();
+	};
 
 	const toggleActiveItem: (name: string) => void = (name) => {
 		setActiveItem(name);
@@ -100,11 +115,11 @@ export const HeaderMenu = () => {
 						</Dropdown>
 						<Dropdown icon="user" className={styles.circularIcon} direction="left" id="userProfileMenuItem">
 							<Dropdown.Menu className={styles.circularDropdownMenu}>
-								<Dropdown.Header>User Name</Dropdown.Header>
+								<Dropdown.Header>{`${user?.firstName} ${user?.lastName}`}</Dropdown.Header>
 								<Dropdown.Item>Profile</Dropdown.Item>
 								<Dropdown.Item>Account settings</Dropdown.Item>
 								<Dropdown.Divider />
-								<Dropdown.Item>Log out</Dropdown.Item>
+								<Dropdown.Item onClick={logOutHandler}>Log out</Dropdown.Item>
 							</Dropdown.Menu>
 						</Dropdown>
 					</Menu.Item>

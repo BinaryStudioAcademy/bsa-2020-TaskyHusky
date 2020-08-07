@@ -13,7 +13,7 @@ export const LoginPage: React.FC = () => {
 	const dispatch = useDispatch();
 	const authData = useSelector((rootState: RootState) => rootState.auth);
 	const getUser = (email: string, password: string) => {
-		dispatch(actions.triggerLoginUser({ email, password }));
+		dispatch(actions.logInUserTrigger({ email, password }));
 	};
 
 	const [email, setEmail] = useState<string>('');
@@ -58,7 +58,7 @@ export const LoginPage: React.FC = () => {
 
 	const renderSignUp: JSX.Element | null = redirectToSignUp ? <Redirect to="/signup" /> : null;
 
-	const renderRootPage: JSX.Element | null = redirectToRootPage ? <Redirect to="/" /> : null;
+	const renderRootPage: JSX.Element | null = redirectToRootPage ? <Redirect to="/header" /> : null;
 
 	const passwordInput = isEmailValid ? (
 		<Form.Input placeholder="Password" type="password" onChange={(event) => setPassword(event.target.value)} />
