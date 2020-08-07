@@ -21,13 +21,14 @@ jobs:
       run: |
         cd client
         npm run build
+    - name: Enable Amazon
+      uses: chrislennon/action-aws-cli@v1.1
     - name: Deploy to S3
-      uses: jakejarvis/s3-sync-action@master
-      with:
-        args: --acl public-read --delete
+      run: |
+          aws s3 rm --recursive s3://${{ secrets.AWS_S3_BUCKET_NAME_STAGE }}
+          aws s3 sync build/ s3://${{ secrets.AWS_S3_BUCKET_NAME_STAGE }}
       env:
-        AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET_NAME_STAGE }}
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        AWS_REGION: ${{ secrets.AWS_CLIENT_REGION }}
-        SOURCE_DIR: 'client/build'
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: ${{ secrets.AWS_CLIENT_REGION }}
+          SOURCE_DIR: 'client/build'
