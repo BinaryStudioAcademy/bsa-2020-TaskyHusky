@@ -1,8 +1,8 @@
 import React from 'react';
-import { TeamPage } from 'containers/TeamPage';
+import TeamPage from 'containers/TeamPage';
 
-const teamPage: React.FC = () => {
-	return <TeamPage />;
+const teamPage = ({ match }: { match: any }) => {
+	return <TeamPage match={match} />;
 };
 
 export default teamPage;

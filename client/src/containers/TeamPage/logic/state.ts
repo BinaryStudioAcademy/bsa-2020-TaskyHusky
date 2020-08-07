@@ -1,5 +1,5 @@
 export type Team = {
-	teamID: string;
+	id: string;
 	name: string;
 	description: string;
 	links: string[];
