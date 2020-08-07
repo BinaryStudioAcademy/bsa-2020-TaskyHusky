@@ -1,13 +1,13 @@
 import React from 'react';
-import Filters from '../../containers/Filters';
 import DefaultPageWrapper from 'containers/DefaultPageWrapper';
+import Projects from 'containers/Projects';
 
-const FiltersPage: React.FC = () => {
+const ProjectsPage: React.FC = () => {
 	return (
 		<DefaultPageWrapper>
-			<Filters />
+			<Projects />
 		</DefaultPageWrapper>
 	);
 };
 
-export default FiltersPage;
+export default ProjectsPage;

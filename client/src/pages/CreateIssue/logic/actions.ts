@@ -6,3 +6,4 @@ export const setPriorities = createAction<actionTypes.SetPriorities>(actionTypes
 export const loadTypes = createAction(actionTypes.LOAD_TYPES);
 export const loadPriorities = createAction(actionTypes.LOAD_PRIORITIES);
 export const createIssue = createAction<actionTypes.CreateIssue>(actionTypes.CREATE_ISSUE);
+export const updateIssue = createAction<actionTypes.UpdateIssue>(actionTypes.UPDATE_ISSUE);
