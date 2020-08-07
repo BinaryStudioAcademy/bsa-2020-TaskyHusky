@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Route, Redirect, RouteProps, RouteComponentProps } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { RootState } from 'typings/rootState';
+import { LocalStorageKeys } from 'constants/LocalStorageKeys';
 
 interface Props extends RouteProps {
 	component: React.ComponentType<RouteComponentProps<any>> | React.ComponentType<any>;
@@ -9,7 +8,7 @@ interface Props extends RouteProps {
 
 const PrivateRoute = (props: Props) => {
 	const { component: Component, ...rest } = props;
-	const isAuthorized = useSelector((rootStore: RootState) => rootStore.auth.isAuthorized);
+	const isAuthorized = localStorage.getItem(LocalStorageKeys.SESSION_TOKEN);
 
 	return <Route {...rest} render={(props) => (isAuthorized ? <Component {...props} /> : <Redirect to="/login" />)} />;
 };
