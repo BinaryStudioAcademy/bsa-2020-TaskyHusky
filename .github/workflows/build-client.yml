@@ -1,7 +1,6 @@
 name: Stage - Client Build
 on:
-  pull_request:
-    types: [closed]
+  push:
     branches: [dev]
     paths: 'client/**/*.*'
 
