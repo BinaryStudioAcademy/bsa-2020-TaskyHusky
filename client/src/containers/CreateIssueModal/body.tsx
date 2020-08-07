@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Modal, Form, Button, Grid, Header, Icon } from 'semantic-ui-react';
+import { Modal, Form, Button, Grid, Header, Icon, Divider } from 'semantic-ui-react';
 import { useCreateIssueModalContext } from './logic/context';
 import TagsInput from 'components/common/TagsInput';
 import { ControlsGetter } from './logic/types';
@@ -69,7 +69,7 @@ const CreateIssueModalBody: React.FC<Props> = ({ children, issueTypes, prioritie
 	children(getSetOpenFunc(true), getSetOpenFunc(false));
 
 	const submit = async () => {
-		const allFields = context.data.type && context.data.priority && context.data.summary;
+		const allFields = context.data.type && context.data.summary && context.data.priority;
 
 		if (!allFields) {
 			return;
@@ -105,13 +105,13 @@ const CreateIssueModalBody: React.FC<Props> = ({ children, issueTypes, prioritie
 				closeOnEscape
 				closeOnDimmerClick
 				onClose={getSetOpenFunc(false)}
-				size="tiny"
+				style={{ maxWidth: 700 }}
 			>
-				<Modal.Header>
-					<Header color="blue">Add issue</Header>
-				</Modal.Header>
-				<Grid className="fill" textAlign="center" verticalAlign="middle">
-					<Grid.Column style={{ marginTop: 20, marginBottom: 20, maxWidth: 400 }}>
+				<Grid className="fill" verticalAlign="middle">
+					<Grid.Column style={{ marginTop: 20, marginBottom: 20, marginLeft: 20 }}>
+						<Header floated="left" as="h1" style={{ marginBottom: 20 }}>
+							Create issue
+						</Header>
 						<Form onSubmit={submit}>
 							<Form.Dropdown
 								clearable
