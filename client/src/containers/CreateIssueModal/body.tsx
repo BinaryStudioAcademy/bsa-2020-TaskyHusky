@@ -113,60 +113,87 @@ const CreateIssueModalBody: React.FC<Props> = ({ children, issueTypes, prioritie
 							Create issue
 						</Header>
 						<Form onSubmit={submit}>
-							<Form.Dropdown
-								clearable
-								selection
-								fluid
-								options={typeOpts}
-								placeholder="Type"
-								onChange={(event, data) => context.set('type', data.value)}
-							/>
-							<Form.Dropdown
-								clearable
-								selection
-								fluid
-								options={priorityOpts}
-								placeholder="Priority"
-								onChange={(event, data) => context.set('priority', data.value)}
-							/>
-							<Form.Input
-								placeholder="Summary"
-								fluid
-								onChange={(event, data) => context.set('summary', data.value)}
-							/>
-							<Form.Dropdown
-								clearable
-								selection
-								fluid
-								multiple
-								placeholder="Labels"
-								options={labelOpts}
-								onChange={(event, data) => context.set('labels', data.value)}
-							/>
-							<TagsInput
-								placeholder="Add link"
-								tags={context.data.links ?? []}
-								onChange={(tags) => context.set('links', [...tags])}
-							/>
-							<TagsInput
-								placeholder="Add attachment"
-								tags={context.data.attachments ?? []}
-								onChange={(tags) => context.set('attachments', [...tags])}
-							/>
-							<Form.TextArea
-								placeholder="Description"
-								onChange={(event, data) =>
-									data
-										? context.set('description', data.value as string)
-										: context.set('description', '')
-								}
-							/>
-							<Button floated="left" positive type="submit" loading={loading}>
-								Submit
-							</Button>
-							<Button floated="right" onClick={getSetOpenFunc(false)}>
-								Cancel
-							</Button>
+							<Form.Field>
+								<label className="required">Type</label>
+								<Form.Dropdown
+									clearable
+									selection
+									style={{ maxWidth: 200 }}
+									options={typeOpts}
+									placeholder="Type"
+									onChange={(event, data) => context.set('type', data.value)}
+								/>
+							</Form.Field>
+							<Form.Field>
+								<Form.Field>
+									<label className="required">Priority</label>
+								</Form.Field>
+								<Form.Dropdown
+									clearable
+									selection
+									style={{ maxWidth: 200 }}
+									options={priorityOpts}
+									placeholder="Priority"
+									onChange={(event, data) => context.set('priority', data.value)}
+								/>
+							</Form.Field>
+							<Form.Field>
+								<label className="required">Summary</label>
+								<Form.Input
+									placeholder="Summary"
+									fluid
+									onChange={(event, data) => context.set('summary', data.value)}
+								/>
+							</Form.Field>
+							<Form.Field>
+								<label>Labels</label>
+								<Form.Dropdown
+									clearable
+									selection
+									multiple
+									style={{ maxWidth: 200 }}
+									placeholder="Labels"
+									options={labelOpts}
+									onChange={(event, data) => context.set('labels', data.value)}
+								/>
+							</Form.Field>
+							<Divider />
+							<Form.Field>
+								<label>Links</label>
+								<TagsInput
+									placeholder="Add link"
+									tags={context.data.links ?? []}
+									onChange={(tags) => context.set('links', [...tags])}
+								/>
+							</Form.Field>
+							<Form.Field>
+								<label>Attachments</label>
+								<TagsInput
+									placeholder="Add attachment"
+									tags={context.data.attachments ?? []}
+									onChange={(tags) => context.set('attachments', [...tags])}
+								/>
+							</Form.Field>
+							<Form.Field>
+								<label>Description</label>
+								<Form.TextArea
+									placeholder="Description"
+									onChange={(event, data) =>
+										data
+											? context.set('description', data.value as string)
+											: context.set('description', '')
+									}
+									rows={10}
+								/>
+							</Form.Field>
+							<Button.Group floated="right">
+								<Button primary type="submit" loading={loading}>
+									Submit
+								</Button>
+								<Button onClick={getSetOpenFunc(false)} basic>
+									<a onClick={() => window.history.back()}>Cancel</a>
+								</Button>
+							</Button.Group>
 						</Form>
 					</Grid.Column>
 				</Grid>

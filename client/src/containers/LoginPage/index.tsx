@@ -8,10 +8,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'typings/rootState';
 import * as actions from './logic/actions';
 import { setToken } from 'helpers/setToken.helper';
+import PasswordInput from 'components/common/PasswordInput';
 
 export const LoginPage: React.FC = () => {
 	const dispatch = useDispatch();
 	const authData = useSelector((rootState: RootState) => rootState.auth);
+
 	const getUser = (email: string, password: string) => {
 		dispatch(actions.logInUserTrigger({ email, password }));
 	};
@@ -40,7 +42,6 @@ export const LoginPage: React.FC = () => {
 	const handleLogInSubmit: (event: SyntheticEvent) => void = (event) => {
 		event.preventDefault();
 		setIsEmailValid(validateEmail(email));
-		setIsEmailSubmitted(true);
 		getUser(email, password);
 	};
 
@@ -61,21 +62,18 @@ export const LoginPage: React.FC = () => {
 	const renderRootPage: JSX.Element | null = redirectToRootPage ? <Redirect to="/header" /> : null;
 
 	const passwordInput = isEmailValid ? (
-		<Form.Input placeholder="Password" type="password" onChange={(event) => setPassword(event.target.value)} />
+		<PasswordInput onChange={(text) => setPassword(text)} onChangeValid={() => {}} />
 	) : null;
 
 	return (
 		<>
 			<Grid verticalAlign="middle" className={styles.grid}>
 				<Grid.Column className={styles.column}>
-					<Header as="h1" className={styles.mainHeader}>
-						Tasky-Husky
+					<Header as="h1" color="blue" className={styles.mainHeader}>
+						Sign in to TaskyHusky
 					</Header>
 					<Segment>
-						<Header as="h4" className={styles.subHeader}>
-							Log in to your account
-						</Header>
-						<Form onSubmit={isEmailValid ? handleLogInSubmit : handleContinueSubmit}>
+						<Form onSubmit={isEmailSubmitted ? handleLogInSubmit : handleContinueSubmit}>
 							<Popup
 								className={styles.errorPopup}
 								open={!isEmailValid && isEmailSubmitted}
@@ -86,6 +84,7 @@ export const LoginPage: React.FC = () => {
 										error={!(isEmailValid || !isEmailSubmitted)}
 										placeholder="Email"
 										type="text"
+										icon="at"
 										onChange={(event) => {
 											setEmail(event.target.value);
 											setIsEmailSubmitted(false);
@@ -95,7 +94,9 @@ export const LoginPage: React.FC = () => {
 							/>
 
 							{passwordInput}
-							<Button className={styles.continueButton}>{isEmailValid ? 'Log in' : 'Continue'}</Button>
+							<Button positive className={styles.continueButton}>
+								{isEmailValid ? 'Log in' : 'Continue'}
+							</Button>
 						</Form>
 						<Divider />
 						<List bulleted horizontal link className={styles.list}>
