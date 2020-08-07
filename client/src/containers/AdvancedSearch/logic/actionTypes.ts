@@ -7,6 +7,6 @@ export type UpdateSearchArgs = {
 	partialState: Partial<AdvancedSearch>;
 };
 
-export type FetchFilterParts = {
-	filterDefs: Partial<WebApi.Entities.FilterDefinition[]>;
-};
+// export type FetchFilterParts = {
+// 	QUICK_FILTER_IDS: Partial<WebApi.Entities.FilterDefinition[]>;
+// };

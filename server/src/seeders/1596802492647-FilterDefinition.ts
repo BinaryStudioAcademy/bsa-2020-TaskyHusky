@@ -10,13 +10,23 @@ export class FilterDefinition1596802492647 implements MigrationInterface {
 			},
 			{
 				dataType: 'dropdown',
+				filterType: 'issueStatus',
+				title: 'Status',
+			},
+			{
+				dataType: 'dropdown',
 				filterType: 'issueTypes',
 				title: 'Type',
 			},
 			{
 				dataType: 'dropdown',
-				filterType: 'issueStatus',
-				title: 'Status',
+				filterType: 'creator',
+				title: 'Creator',
+			},
+			{
+				dataType: 'dropdown',
+				filterType: 'priority',
+				title: 'Priority',
 			},
 		];
 		await getRepository('FilterDefinition').save(filterDefs);

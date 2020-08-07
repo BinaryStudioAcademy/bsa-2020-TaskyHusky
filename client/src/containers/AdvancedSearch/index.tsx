@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './styles.module.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import * as actions from './logic/actions';
@@ -7,17 +7,22 @@ import { Button, Table, Input, Form, List, Icon, Dropdown } from 'semantic-ui-re
 import IssueItem from 'components/IssueItem';
 import FilterPart from 'components/FilterPart';
 import MoreFilterDefsDropdown from 'components/MoreFilters';
-import { fetchFilterDefs } from '../../commonLogic/filterDefs/actions';
 import { fetchFilterParts } from './logic/actions';
+import { FilterPartState } from './logic/state';
+
+const QUICK_FILTER_IDS = [
+	'336ae979-a47e-4aa6-bca3-e05da59432df',
+	'45405c8b-b75d-4bed-afa6-943830a30ca2',
+	'ea4649e1-80ee-4b54-bce3-b901239dd2d0',
+];
 
 const AdvancedSearch: React.FC = () => {
 	const dispatch = useDispatch();
-	const { filterDefs } = useSelector((rootState: RootState) => rootState.filterDefs);
 	const { filterParts } = useSelector((rootState: RootState) => rootState.advancedSearch);
+	const [addedFilterParts, setAddedFilterParts] = useState([] as FilterPartState[]);
 
 	useEffect(() => {
-		dispatch(fetchFilterDefs()); // TODO: this should be on upper lvl
-		dispatch(fetchFilterParts({ filterDefs }));
+		dispatch(fetchFilterParts());
 	}, [dispatch]);
 
 	const issues = [
@@ -78,14 +83,30 @@ const AdvancedSearch: React.FC = () => {
 				<div className={styles.bottomBarWrapper}>
 					<Form>
 						<Form.Group>
-							{filterParts.map((part) => (
-								<FilterPart key={part.id} filterPart={part} />
-							))}
-							<MoreFilterDefsDropdown />
+							{filterParts
+								.filter(({ filterDef }) =>
+									QUICK_FILTER_IDS.find((quickFilterID) => filterDef.id === quickFilterID),
+								)
+								.map((part) => (
+									<FilterPart key={part.id} filterPart={part} />
+								))}
+							<MoreFilterDefsDropdown
+								additionalFilterParts={filterParts.filter(
+									({ filterDef }) =>
+										!QUICK_FILTER_IDS.find((quickFilterID) => filterDef.id === quickFilterID),
+								)}
+								addedFilterParts={addedFilterParts}
+								setAddedFilterParts={(data) => setAddedFilterParts(data)}
+							/>
 							<Form.Field control={Input} placeholder="Contains text" />
 							<Button primary content="Search" />
 						</Form.Group>
-						<Form.Group>{/* Render here additional filter defs */}</Form.Group>
+						<Form.Group>
+							{console.log('addedFilterParts', addedFilterParts)}
+							{addedFilterParts.map((part) => (
+								<FilterPart key={part.id} filterPart={part} />
+							))}
+						</Form.Group>
 					</Form>
 				</div>
 			</div>

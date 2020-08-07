@@ -25,8 +25,6 @@ const FilterPart = ({ filterPart }: Props) => {
 	const { id, filterDef, searchText, members } = filterPart;
 	const { title, filterType } = filterDef;
 
-	const SearchInput = () => <Input icon="search" placeholder={`Search by ${title}`} />;
-
 	const getByFilterType = (filterType: string) => {
 		switch (filterType) {
 			case 'comment':
@@ -39,6 +37,8 @@ const FilterPart = ({ filterPart }: Props) => {
 				return IssueStatusFilter;
 			case 'assignee':
 				return AssigneeFilter;
+			case 'creator':
+				return CreatorFilter;
 			default:
 				return null;
 		}
@@ -133,5 +133,11 @@ const IssueStatusFilter = ({ filterPart }: ProjectsFilterProps) => {
 const AssigneeFilter = ({ filterPart }: ProjectsFilterProps) => {
 	return <DropdownSearchMenu data={[]} members={filterPart.members} title={filterPart.filterDef.title} />;
 };
+
+const CreatorFilter = ({ filterPart }: ProjectsFilterProps) => {
+	return <DropdownSearchMenu data={[]} members={filterPart.members} title={filterPart.filterDef.title} />;
+};
+
+const SearchInput = () => <Input icon="search" placeholder={'Search by ..'} />;
 
 export default FilterPart;
