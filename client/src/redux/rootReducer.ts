@@ -1,3 +1,4 @@
+import { advancedSearchReducer } from 'containers/AdvancedSearch/logic/reducer';
 import { projectsReducer } from '../containers/Projects/logic/reducer';
 import { filtersReducer } from 'containers/Filters/logic/reducer';
 import { authReducer } from 'containers/LoginPage/logic/reducer';
@@ -12,6 +13,7 @@ const rootReducer: Reducer<RootState> = combineReducers({
 	issues: issueReducer,
 	filters: filtersReducer,
 	filterDefs: filterDefsReducer,
+	advancedSearch: advancedSearchReducer,
 });
 
 export default rootReducer;

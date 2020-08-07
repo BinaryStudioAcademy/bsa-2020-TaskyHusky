@@ -5,11 +5,21 @@ import * as actions from './logic/actions';
 import { RootState } from 'typings/rootState';
 import { Button, Table, Input, Form, List, Icon, Dropdown } from 'semantic-ui-react';
 import IssueItem from 'components/IssueItem';
-import FilterDef from 'components/FilterDef';
+import FilterPart from 'components/FilterPart';
+import MoreFilterDefsDropdown from 'components/MoreFilters';
+import { fetchFilterDefs } from '../../commonLogic/filterDefs/actions';
+import { fetchFilterParts } from './logic/actions';
 
 const AdvancedSearch: React.FC = () => {
 	const dispatch = useDispatch();
 	const { filterDefs } = useSelector((rootState: RootState) => rootState.filterDefs);
+	const { filterParts } = useSelector((rootState: RootState) => rootState.advancedSearch);
+
+	useEffect(() => {
+		dispatch(fetchFilterDefs()); // TODO: this should be on upper lvl
+		dispatch(fetchFilterParts({ filterDefs }));
+	}, [dispatch]);
+
 	const issues = [
 		{
 			summary: 'Very summary',
@@ -32,31 +42,6 @@ const AdvancedSearch: React.FC = () => {
 			id: 'a269d9f4-1c10-40ad-81e0-7ac333804d91',
 		},
 	];
-	useEffect(() => {}, [dispatch]);
-
-	const AddMoreFilterDefsDropdown = () => (
-		<Dropdown
-			className={styles.moreFilterDropdown}
-			trigger={
-				<span className={styles.moreText}>
-					<Icon color="blue" name="plus" /> More
-				</span>
-			}
-			icon={null}
-		>
-			<Dropdown.Menu onClick={(e: Event) => e.stopPropagation()}>
-				<Input placeholder={'Search criteria'} icon="search" iconPosition="left" className={styles.search} />
-				<Dropdown.Divider />
-				<Dropdown.Header icon="folder open" content={'Criteria'} />
-				<Dropdown.Menu scrolling>
-					{/* Here will be additional filter defs that user can choose to render */}
-					{/* {tagOptions.map((option) => (
-						<Dropdown.Item key={option.key1} {...option} />
-					))} */}
-				</Dropdown.Menu>
-			</Dropdown.Menu>
-		</Dropdown>
-	);
 
 	return (
 		<div className={styles.filtersContainer}>
@@ -93,10 +78,10 @@ const AdvancedSearch: React.FC = () => {
 				<div className={styles.bottomBarWrapper}>
 					<Form>
 						<Form.Group>
-							{filterDefs.map((def) => (
-								<FilterDef key={def.id} filterDef={def} />
+							{filterParts.map((part) => (
+								<FilterPart key={part.id} filterPart={part} />
 							))}
-							<AddMoreFilterDefsDropdown />
+							<MoreFilterDefsDropdown />
 							<Form.Field control={Input} placeholder="Contains text" />
 							<Button primary content="Search" />
 						</Form.Group>

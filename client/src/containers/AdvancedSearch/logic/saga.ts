@@ -1,51 +1,42 @@
-import { fetchFilters, fetchFilterParts, updateFilter } from 'services/filter.service';
+import { fetchFilterParts, fetchFilterDefs } from 'services/filter.service';
 import { all, put, takeEvery, call } from 'redux-saga/effects';
+import { v4 as uuidv4 } from 'uuid';
 import * as actionTypes from './actionTypes';
 import * as actions from './actions';
-
-export function* fetchAllFilters(action: ReturnType<typeof actions.fetchFilters>) {
-	try {
-		const filters: WebApi.Entities.Filter[] = yield call(fetchFilters);
-		yield put(actions.fetchFiltersSuccess({ partialState: { filters } }));
-	} catch (e) {
-		console.error(e.message);
-		yield put(actions.fetchFiltersSuccess({ partialState: { filters: [] } }));
-	}
-}
+import { FilterPartState } from './state';
+const QUICK_FILTER_IDS = [
+	'0ade4ebd-49f7-4c24-a7a8-3eb155733382',
+	'4cc8d6d1-1566-4d2e-9b39-1f61d3912369',
+	'666aab27-489e-4729-9ac7-95576323c42e',
+];
 
 export function* fetchAllFilterParts(action: ReturnType<typeof actions.fetchFilterParts>) {
-	try {
-		const filterParts: WebApi.Entities.FilterPart[] = yield call(fetchFilterParts);
-		yield put(actions.fetchFiltersSuccess({ partialState: { filterParts } }));
-	} catch (e) {
-		console.error(e.message);
-		yield put(actions.fetchFiltersSuccess({ partialState: { filterParts: [] } }));
-	}
-}
+	// const { filterDefs } = action; // TODO: uncomment when filterDefs will be in rootState with the start of application
+	const filterDefs: WebApi.Entities.FilterDefinition[] = yield call(fetchFilterDefs);
 
-export function* updateFilterByData(action: ReturnType<typeof actions.updateFilter>) {
-	try {
-		const { data } = action;
-		const filter: WebApi.Entities.Filter = yield call((data) => updateFilter(data), data);
-		yield put(actions.updateFilterSuccess({ data: filter }));
-	} catch (e) {
-		console.error(e.message);
-		yield put(actions.fetchFiltersSuccess({ partialState: { filterParts: [] } }));
-	}
-}
+	const getInitialFilterPart = (filterDef: WebApi.Entities.FilterDefinition): FilterPartState => {
+		return { id: `${uuidv4()}`, filterDef, searchText: '', members: [] };
+	};
 
-export function* watchUpdateFilter() {
-	yield takeEvery(actionTypes.UPDATE_FILTER, updateFilterByData);
-}
+	const getDefaultFilterDefsFromState = (): WebApi.Entities.FilterDefinition[] => {
+		const defaultFilters = filterDefs.filter(({ id }) =>
+			QUICK_FILTER_IDS.find((quickFilterId) => quickFilterId === id),
+		);
+		return defaultFilters;
+	};
 
-export function* watchFetchFilters() {
-	yield takeEvery(actionTypes.FETCH_FILTERS, fetchAllFilters);
+	const defaultFilterDefs = getDefaultFilterDefsFromState();
+
+	const filterParts = defaultFilterDefs.map(getInitialFilterPart);
+
+	// const filterParts: WebApi.Entities.FilterPart[] = yield call(fetchFilterParts);
+	yield put(actions.updateSearchSuccess({ partialState: { filterParts } }));
 }
 
 export function* watchFetchFilterParts() {
 	yield takeEvery(actionTypes.FETCH_FILTER_PARTS, fetchAllFilterParts);
 }
 
-export default function* filterSaga() {
-	yield all([watchFetchFilters(), watchFetchFilterParts(), watchUpdateFilter()]);
+export default function* advancedSearchSaga() {
+	yield all([watchFetchFilterParts()]);
 }

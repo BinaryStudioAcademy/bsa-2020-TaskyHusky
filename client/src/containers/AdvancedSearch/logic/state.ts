@@ -1,11 +1,14 @@
-export interface FilterState {
-	filters: WebApi.Entities.Filter[];
-	filterParts: WebApi.Entities.FilterPart[];
-	filterDefs: WebApi.Entities.FilterDefinition[];
+export interface FilterPartState {
+	id: string;
+	filterDef: WebApi.Entities.FilterDefinition;
+	searchText: string;
+	members: string[];
 }
 
-export const initialState: FilterState = {
-	filters: [],
+export interface AdvancedSearch {
+	filterParts: FilterPartState[];
+}
+
+export const initialState: AdvancedSearch = {
 	filterParts: [],
-	filterDefs: [],
 };

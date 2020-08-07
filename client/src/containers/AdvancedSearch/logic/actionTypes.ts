@@ -1,18 +1,12 @@
-import { FilterState } from './state';
+import { AdvancedSearch } from './state';
 
-export const UPDATE_FILTER = 'FILTER:UPDATE_FILTER';
-export const FETCH_FILTERS = 'FILTER:FETCH_FILTERS';
-export const FETCH_FILTER_PARTS = 'FILTER:FETCH_FILTER_PARTS';
-export const FETCH_FILTER_DEFS = 'FILTER:FETCH_FILTER_DEFS';
-export const UPDATE_FILTER_SUCCESS = 'FILTER:UPDATE_FILTER_SUCCESS';
-export const FETCH_FILTERS_SUCCESS = 'FILTER:FETCH_FILTERS_SUCCESS';
-export const FETCH_FILTER_DEFS_SUCCESS = 'FILTER:FETCH_FILTER_DEFS_SUCCESS';
-export const FETCH_FILTER_PARTS_SUCCESS = 'FILTER:FETCH_FILTER_PARTS_SUCCESS';
+export const FETCH_FILTER_PARTS = 'SEARCH:FETCH_FILTER_PARTS';
+export const UPDATE_SEARCH_SUCCESS = 'SEARCH:UPDATE_SEARCH_SUCCESS';
 
-export type UpdateFilterArgs = {
-	data: Partial<WebApi.Entities.Filter>;
+export type UpdateSearchArgs = {
+	partialState: Partial<AdvancedSearch>;
 };
 
-export type FetchFiltersSuccessArgs = {
-	partialState: Partial<FilterState>;
+export type FetchFilterParts = {
+	filterDefs: Partial<WebApi.Entities.FilterDefinition[]>;
 };

@@ -1,18 +1,9 @@
 import * as actionTypes from './actionTypes';
-import { FilterState, initialState } from './state';
+import { AdvancedSearch, initialState } from './state';
 import { createReducer } from 'helpers/createReducer.helper';
 
-export const filtersReducer = createReducer<FilterState>(initialState, {
-	[actionTypes.UPDATE_FILTER_SUCCESS](state, action) {
-		const updatedFilters = state.filters.map((filter) =>
-			filter.id === action.filter.id ? { ...action.filter } : filter,
-		);
-		return {
-			...state,
-			filters: updatedFilters,
-		};
-	},
-	[actionTypes.FETCH_FILTERS_SUCCESS](state, action: actionTypes.FetchFiltersSuccessArgs) {
+export const advancedSearchReducer = createReducer<AdvancedSearch>(initialState, {
+	[actionTypes.UPDATE_SEARCH_SUCCESS](state, action: actionTypes.UpdateSearchArgs) {
 		return {
 			...state,
 			...action.partialState,
