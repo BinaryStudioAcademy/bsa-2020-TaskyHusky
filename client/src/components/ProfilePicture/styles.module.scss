@@ -1,0 +1,48 @@
+@import 'styles/variables.scss';
+
+.mainInfo {
+  margin-bottom: 35px;
+
+  &__avatarContainer {
+    background-color: $body-bg;
+    width: 150px;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+  }
+
+  &__username {
+    font-size: 16px;
+  }
+
+  &__borderHelper {
+    width: 144px;
+    height: 144px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: rgba(9, 30, 66, 0.36);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__initials {
+    color: white;
+    font-size: 4rem;
+  }
+
+  &__avatar {
+    object-fit: cover;
+    width: 100%;
+
+    &:hover {
+      opacity: 0.6;
+    }
+  }
+}
+
+.managerButton {
+  width: 100%;
+}

@@ -10,14 +10,15 @@ interface Props {
 	fullName: string;
 }
 
-const FilterItem = ({ updateFilter, filter, fullName }: Props) => {
+const FilterItem: React.FC<Props> = (props: Props) => {
 	const { t } = useTranslation();
+	const { updateFilter, filter, fullName } = props;
 	const { id, name, owner, staredBy } = filter;
 	const [isStared, setIsStared] = useState(Boolean(staredBy?.find(({ id }) => owner?.id === id)));
 	const onSetFavorite = () => {
 		const updated = isStared
 			? staredBy?.filter(({ id }) => id !== owner?.id)
-			: ([...(staredBy || []), owner] as WebApi.Entities.User[]);
+			: ([...(staredBy || []), owner] as WebApi.Entities.UserProfile[]);
 		setIsStared(!isStared);
 		updateFilter({
 			...filter,
