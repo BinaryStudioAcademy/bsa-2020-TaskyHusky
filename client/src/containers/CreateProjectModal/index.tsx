@@ -120,7 +120,7 @@ const CreateProjectModal = () => {
 					<Modal.Content>
 						<Form className={styles.form_container}>
 							<Form.Field>
-								<label>{t('summary')}</label>
+								<label>{t('name')}</label>
 								<input onChange={onNameChanged} value={name} placeholder={t('enter_proj_name')} />
 							</Form.Field>
 							<Form.Field>

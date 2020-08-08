@@ -84,6 +84,7 @@ export const ru = {
 		'Управляйте списком задач и ошибок разработки ◦ Отлично подходит для команд, которым не нужна доска',
 	enter_proj_name: 'Введите имя проекта',
 	enter_a_key: 'Введите ключ',
+	name: 'Название',
 	share_settings_with_existing_project: 'Поделиться настройками с существующим проектом',
 	template: 'Шаблон',
 	change_template: 'Поменять шаблон',
@@ -96,4 +97,6 @@ export const ru = {
 	stared_by: 'Пометили',
 	project: 'Проект',
 	group: 'Группа',
+	lead: 'Лидер',
+	settings: 'Настройки',
 };

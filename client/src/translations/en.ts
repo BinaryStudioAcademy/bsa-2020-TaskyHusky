@@ -97,4 +97,6 @@ export const en = {
 	stared_by: 'Stared by',
 	project: 'Project',
 	group: 'Group',
+	lead: 'Lead',
+	settings: 'Settings',
 };

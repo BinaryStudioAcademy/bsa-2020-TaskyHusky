@@ -58,7 +58,7 @@ const Filters: React.FC = () => {
 								{' '}
 								<HeaderStar />{' '}
 							</Table.HeaderCell>
-							<Table.HeaderCell>{t('summary')}</Table.HeaderCell>
+							<Table.HeaderCell>{t('name')}</Table.HeaderCell>
 							<Table.HeaderCell>{t('owner')}</Table.HeaderCell>
 							<Table.HeaderCell>{t('stared_by')}</Table.HeaderCell>
 							<Table.HeaderCell> </Table.HeaderCell>

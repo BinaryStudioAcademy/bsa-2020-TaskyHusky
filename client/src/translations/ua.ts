@@ -84,6 +84,7 @@ export const ua = {
 		'Керуйте списком завдань і помилок розробки ◦ Дуже добре підходить для команд, яким не потрібна дошка',
 	enter_proj_name: "Введіть им'я проекта",
 	enter_a_key: 'Введіть ключ',
+	name: 'Назва',
 	share_settings_with_existing_project: 'Поділитися налаштуваннями з існуючім проектом',
 	template: 'Шаблон',
 	change_template: 'Змінити шаблон',
@@ -96,4 +97,6 @@ export const ua = {
 	stared_by: 'Позначили',
 	project: 'Проект',
 	group: 'Група',
+	lead: 'Лідер',
+	settings: 'Налаштування',
 };
