@@ -1,7 +1,7 @@
 import callWebApi from 'helpers/callApi.helper';
 import { User } from 'containers/LoginPage/logic/state';
 
-export const registerUser = async (settings: Partial<WebApi.Entities.User>) => {
+export const registerUser = async (settings: Partial<WebApi.Entities.UserProfile>) => {
 	const res = await callWebApi({
 		endpoint: 'auth/register',
 		method: 'POST',

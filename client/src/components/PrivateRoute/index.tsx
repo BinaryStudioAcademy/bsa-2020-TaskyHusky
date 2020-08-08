@@ -7,7 +7,7 @@ interface Props extends RouteProps {
 	component: React.ComponentType<RouteComponentProps<any>> | React.ComponentType<any>;
 }
 
-const PrivateRoute = (props: Props) => {
+const PrivateRoute: React.FC<Props> = (props: Props) => {
 	const { component: Component, ...rest } = props;
 	const isAuthorized = useSelector((rootStore: RootState) => rootStore.auth.isAuthorized);
 

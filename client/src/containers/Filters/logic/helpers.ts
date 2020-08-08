@@ -1,4 +1,4 @@
-export const getFullUserName = (user: WebApi.Entities.User | undefined): string => {
+export const getFullUserName = (user: WebApi.Entities.UserProfile | undefined): string => {
 	if (!user) {
 		return '';
 	}
