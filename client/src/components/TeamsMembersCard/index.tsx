@@ -2,13 +2,19 @@ import React from 'react';
 import { Card, Image } from 'semantic-ui-react';
 import { teamMembers } from 'services/team.service';
 import styles from 'containers/TeamPage/styles.module.scss';
+import { useTranslation } from 'react-i18next';
 
 const TeamsMembersCard = () => {
+	const { t } = useTranslation();
+
 	return (
 		<Card>
-			<Card.Content header="Members" />
+			<Card.Content header={t('members')} />
 			<Card.Meta>
-				<span className={styles.meta_header}> {teamMembers().length} members</span>
+				<span className={styles.meta_header}>
+					{' '}
+					{teamMembers().length} {t('members_lower')}
+				</span>
 			</Card.Meta>
 			{teamMembers().map((el) => {
 				return (

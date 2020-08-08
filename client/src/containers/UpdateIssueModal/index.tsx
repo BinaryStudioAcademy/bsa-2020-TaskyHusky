@@ -5,6 +5,7 @@ import { RootState } from 'typings/rootState';
 import TagsInput from 'components/common/TagsInput';
 import { useCreateIssueModalContext } from 'containers/CreateIssueModal/logic/context';
 import { updateIssue } from 'pages/CreateIssue/logic/actions';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
 	current: WebApi.Result.IssueResult;
@@ -26,6 +27,7 @@ const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, p
 	const [opened, setOpened] = useState<boolean>(false);
 	const [loading, setLoading] = useState<boolean>(false);
 	const dispatch = useDispatch();
+	const { t } = useTranslation();
 	getOpenFunc(() => setOpened(true));
 
 	const typeOpts: SelectOption[] = issueTypes.map((type) => ({
@@ -84,10 +86,17 @@ const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, p
 	};
 
 	return (
-		<Modal open={opened} closeIcon closeOnDimmerClick closeOnEscape style={{ maxWidth: 700 }}>
+		<Modal
+			open={opened}
+			closeIcon
+			closeOnDimmerClick
+			closeOnEscape
+			onClose={() => setOpened(false)}
+			style={{ maxWidth: 700 }}
+		>
 			<Modal.Header>
 				<Header color="blue" as="h1">
-					Edit issue
+					{t('edit_issue')}
 				</Header>
 			</Modal.Header>
 			<Grid className="fill" verticalAlign="middle">
@@ -97,46 +106,46 @@ const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, p
 						onKeyDown={(event: React.KeyboardEvent) => event.key === 'Enter' && event.preventDefault()}
 					>
 						<Form.Field>
-							<label className="required">Type</label>
+							<label className="required">{t('type')}</label>
 							<Form.Dropdown
 								clearable
 								selection
-								fluid
+								style={{ maxWidth: 200 }}
 								options={typeOpts}
 								defaultValue={current.type.id}
-								placeholder="Type"
+								placeholder={t('type')}
 								onChange={(event, data) => context.set('type', data.value)}
 							/>
 						</Form.Field>
 						<Form.Field>
-							<label className="required">Priority</label>
+							<label className="required">{t('priority')}</label>
 							<Form.Dropdown
 								clearable
 								selection
-								fluid
+								style={{ maxWidth: 200 }}
 								options={priorityOpts}
 								defaultValue={current.priority.id}
-								placeholder="Priority"
+								placeholder={t('priority')}
 								onChange={(event, data) => context.set('priority', data.value)}
 							/>
 						</Form.Field>
 						<Form.Field>
-							<label className="required">Summary</label>
+							<label className="required">{t('summary')}</label>
 							<Form.Input
-								placeholder="Summary"
+								placeholder={t('summary')}
 								fluid
 								defaultValue={current.summary}
 								onChange={(event, data) => context.set('summary', data.value)}
 							/>
 						</Form.Field>
 						<Form.Field>
-							<label>Labels</label>
+							<label>{t('labels')}</label>
 							<Form.Dropdown
 								clearable
 								selection
-								fluid
+								style={{ maxWidth: 200 }}
 								multiple
-								placeholder="Labels"
+								placeholder={t('labels')}
 								options={labelOpts}
 								defaultValue={current.labels as any}
 								onChange={(event, data) => context.set('labels', data.value)}
@@ -144,25 +153,25 @@ const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, p
 						</Form.Field>
 						<Divider />
 						<Form.Field>
-							<label>Links</label>
+							<label>{t('links')}</label>
 							<TagsInput
-								placeholder="Add link"
+								placeholder={t('add_link')}
 								tags={context.data.links ?? []}
 								onChange={(tags) => context.set('links', [...tags])}
 							/>
 						</Form.Field>
 						<Form.Field>
-							<label>Attachments</label>
+							<label>{t('attachments')}</label>
 							<TagsInput
-								placeholder="Add attachment"
+								placeholder={t('add_attachment')}
 								tags={context.data.attachments ?? []}
 								onChange={(tags) => context.set('attachments', [...tags])}
 							/>
 						</Form.Field>
 						<Form.Field>
-							<label>Description</label>
+							<label>{t('description')}</label>
 							<Form.TextArea
-								placeholder="Description"
+								placeholder={t('description')}
 								defaultValue={current.description}
 								onChange={(event, data) =>
 									data
@@ -173,10 +182,10 @@ const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, p
 						</Form.Field>
 						<Button.Group floated="right">
 							<Button primary type="submit" loading={loading}>
-								Submit
+								{t('submit')}
 							</Button>
 							<Button onClick={() => setOpened(false)} basic>
-								<a href="?">Cancel</a>
+								<span>{t('cancel')}</span>
 							</Button>
 						</Button.Group>
 					</Form>
