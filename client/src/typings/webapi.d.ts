@@ -66,14 +66,6 @@ namespace WebApi.Team {
 	}
 }
 
-namespace WebApi.Team {
-	export interface TeamModel {
-		id?: string;
-		description?: string;
-		links?: string[];
-	}
-}
-
 namespace WebApi.User {
 	export interface UserModel {
 		id?: string;
@@ -172,7 +164,7 @@ namespace WebApi.Entities {
 		category?: string;
 		defaultAssigneeID?: string;
 		leadID?: string;
-		creatorID?: string;
+		creatorID: string;
 		sprints?: Sprint[];
 	}
 
