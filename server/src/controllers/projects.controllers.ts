@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
 import { getCustomRepository } from 'typeorm';
-import { User } from '../entity/User';
-
+import { UserProfile } from '../entity/UserProfile';
 import { ProjectsRepository } from '../repositories/projects.repository';
 import { getWebError } from '../helpers/error.helper';
 
@@ -33,7 +32,7 @@ class ProjectsController {
 		const projectsRepository = getCustomRepository(ProjectsRepository);
 
 		try {
-			const { id: userId } = req.user as User;
+			const { id: userId } = req.user as UserProfile;
 			const { project } = req.body;
 			project.creatorID = userId;
 			const createdProject = await projectsRepository.createOne(project);

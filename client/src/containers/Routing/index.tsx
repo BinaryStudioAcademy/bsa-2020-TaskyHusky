@@ -5,6 +5,7 @@ import Login from 'pages/LogIn';
 import Team from 'pages/Team';
 import PublicRoute from 'components/PublicRoute';
 import SignUp from 'pages/SignUp';
+import ProfilePage from 'containers/ProfilePage';
 import CreateIssue from 'pages/CreateIssue';
 import Header from 'containers/Header';
 import IssuePage from 'pages/IssuePage';
@@ -38,6 +39,7 @@ const Routing: React.FC = () => {
 			<PrivateRoute exact path="/header" component={Header} />
 			<PrivateRoute exact path="/projects" component={ProjectsPage} />
 			<PrivateRoute exact path="/team/:id" component={Team} />
+			<PublicRoute exact restricted={false} path="/profile/:id" component={ProfilePage} />
 			<PrivateRoute exact path="/filters" component={Filters} />
 		</Switch>
 	);

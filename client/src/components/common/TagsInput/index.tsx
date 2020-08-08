@@ -8,7 +8,8 @@ interface Props {
 	tags: string[];
 }
 
-const TagsInput: React.FC<Props> = ({ onChange, placeholder, tags }) => {
+const TagsInput: React.FC<Props> = (props: Props) => {
+	const { onChange, placeholder, tags } = props;
 	const [value, setValue] = useState<string>('');
 
 	const addTag = (text: string) => {

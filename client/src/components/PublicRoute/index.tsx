@@ -8,7 +8,7 @@ interface Props extends RouteProps {
 	component: React.ComponentType<RouteComponentProps<any>> | React.ComponentType<any>;
 }
 
-const PublicRoute = (props: Props) => {
+const PublicRoute: React.FC<Props> = (props: Props) => {
 	const { restricted, component: Component, ...rest } = props;
 	const isAuthorized = useSelector((state: RootState) => state.auth.isAuthorized);
 
