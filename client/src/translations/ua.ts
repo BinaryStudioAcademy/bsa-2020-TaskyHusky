@@ -37,7 +37,7 @@ export const ua = {
 	create_dashboard: 'Створиті дошку',
 	favorite: 'Часті',
 	view_all_filters: 'Усі фільтри',
-	advanced_issue_search: 'Розширений пошук проблем',
+	advanced_issue_search: 'Розширений пошук задач',
 	view_all_projects: 'Усі проекти',
 	create_project: 'Створити проект',
 	search: 'Пошук...',

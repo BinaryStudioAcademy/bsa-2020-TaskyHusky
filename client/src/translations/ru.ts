@@ -37,7 +37,7 @@ export const ru = {
 	create_dashboard: 'Создать доску',
 	favorite: 'Частые',
 	view_all_filters: 'Все фильтры',
-	advanced_issue_search: 'Расширенный поиск проблем',
+	advanced_issue_search: 'Расширенный поиск задач',
 	view_all_projects: 'Все проекты',
 	create_project: 'Создать проект',
 	search: 'Поиск...',
