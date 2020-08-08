@@ -1,10 +1,10 @@
 export const en = {
-	loginHeader: 'Sign in to TaskyHusky',
-	invalidEmail: 'Please, enter a valid email',
-	logIn: 'Log in',
+	login_header: 'Sign in to TaskyHusky',
+	invalid_email: 'Please, enter a valid email',
+	log_in: 'Log in',
 	email: 'Email',
 	password: 'Password',
 	continue: 'Continue',
-	cantLogin: "Can't login?",
-	signUpForAnAccount: 'Sign up for an account',
+	cant_login: "Can't login?",
+	sign_up_for_an_account: 'Sign up for an account',
 };

@@ -53,14 +53,14 @@ export const LoginPage: React.FC = () => {
 			<Grid verticalAlign="middle" className={styles.grid}>
 				<Grid.Column className={styles.column}>
 					<Header as="h1" color="blue" className={styles.mainHeader}>
-						{t('loginHeader')}
+						{t('login_header')}
 					</Header>
 					<Segment>
 						<Form onSubmit={isEmailSubmitted ? handleLogInSubmit : handleContinueSubmit}>
 							<Popup
 								className={styles.errorPopup}
 								open={!isEmailValid && isEmailSubmitted}
-								content={t('invalidEmail')}
+								content={t('invalid_email')}
 								on={[]}
 								trigger={
 									<Form.Input
@@ -78,16 +78,16 @@ export const LoginPage: React.FC = () => {
 
 							{passwordInput}
 							<Button positive className={styles.continueButton}>
-								{isEmailValid ? t('logIn') : t('continue')}
+								{isEmailValid ? t('log_in') : t('continue')}
 							</Button>
 						</Form>
 						<Divider />
 						<List bulleted horizontal link className={styles.list}>
 							<List.Item className={styles.listItem}>
-								<Link to="/reset/password" children={t('cantLogin')} />
+								<Link to="/reset/password" children={t('cant_login')} />
 							</List.Item>
 							<List.Item className={styles.listItem}>
-								<Link to="/signup" children={t('signUpForAnAccount')} />
+								<Link to="/signup" children={t('sign_up_for_an_account')} />
 							</List.Item>
 						</List>
 					</Segment>

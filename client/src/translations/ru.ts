@@ -1,10 +1,10 @@
 export const ru = {
-	loginHeader: 'Вход в аккаунт TaskyHusky',
-	invalidEmail: 'Введите валидный e-mail',
-	logIn: 'Войти',
+	login_header: 'Вход в аккаунт TaskyHusky',
+	invalid_email: 'Введите валидный e-mail',
+	log_in: 'Войти',
 	email: 'E-mail',
 	password: 'Пароль',
 	continue: 'Далее',
-	cantLogin: 'Не удаётся войти?',
-	signUpForAnAccount: 'Регистрация',
+	cant_login: 'Не удаётся войти?',
+	sign_up_for_an_account: 'Регистрация',
 };
