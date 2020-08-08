@@ -43,10 +43,10 @@ export function* registerUserRequest(action: ReturnType<typeof actions.registerU
 	try {
 		const { type, ...userData } = action;
 		const response: WebApi.Result.UserAuthResult = yield call(registerUser, userData);
+		setToken(response.jwtToken);
 		yield put(actions.registerUserSuccess(response));
 	} catch (error) {
-		console.log(error);
-		// parse error here
+		NotificationManager.error(error.clientException.message, 'Error');
 	}
 }
 

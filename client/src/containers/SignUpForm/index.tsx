@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Form, Button, Divider, Icon, Popup } from 'semantic-ui-react';
 import PasswordInput from 'components/common/PasswordInput';
 import validator from 'validator';
-import { setToken } from 'helpers/setToken.helper';
 import { Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import * as actions from 'containers/LoginPage/logic/actions';
@@ -20,25 +19,21 @@ const SignUpForm: React.FC = () => {
 	const [firstName, setFirstName] = useState<string>('');
 	const [firstNameValid, setFirstNameValid] = useState<boolean>(true);
 	const [lastName, setLastName] = useState<string>('');
-	const [loading, setLoading] = useState<boolean>(false);
 	const [redirecting, setRedirecting] = useState<boolean>(false);
 
 	const buttonDisabled = !(password && passwordValid && email && emailValid && firstName && firstNameValid);
 
 	useEffect(() => {
-		if (!!authState.jwtToken) {
-			setToken(authState.jwtToken);
-			setLoading(false);
+		if (authState.isAuthorized) {
 			setRedirecting(true);
 		}
-	}, [authState.jwtToken, authState.isAuthorized, redirecting]);
+	}, [authState.isAuthorized, redirecting]);
 
 	const submit = async () => {
 		if (buttonDisabled) {
 			return;
 		}
 
-		setLoading(true);
 		dispatch(actions.registerUserTrigger({ email, password, firstName, lastName }));
 	};
 
@@ -92,7 +87,7 @@ const SignUpForm: React.FC = () => {
 				content="Password must be at least 6 characters long"
 				trigger={<PasswordInput onChange={setPassword} onChangeValid={setPasswordValid} />}
 			/>
-			<Button disabled={buttonDisabled} fluid positive loading={loading} type="submit">
+			<Button disabled={buttonDisabled} fluid positive type="submit">
 				Sign up
 			</Button>
 			<Divider horizontal>Or</Divider>
