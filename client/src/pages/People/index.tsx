@@ -37,18 +37,24 @@ const People: React.FC = (): ReactElement => {
 
 	return (
 		<DefaultPageWrapper>
-			<div className={style.btnContainer}>
-				<Button onClick={() => setIsOpenAddNewTeamPopup(true)}>Create new Team</Button>
-				<Button primary disabled>
-					Add new people
-				</Button>
-			</div>
-			<SearchField />
-			<Header as="h2">People</Header>
-			<PeopleList people={people} handlerClickItem={redirectToPersonProfile} className={style.listContainer} />
-			<Header as="h2">Your teams</Header>
-			<TeamsList teams={teams} handlerClickItem={redirectToTeamPage} className={style.listContainer} />
-			<AddTeamPopup isOpen={isOpenAddNewTeamPopup} closeClb={() => setIsOpenAddNewTeamPopup(false)} />
+			<main className={style.main}>
+				<div className={style.btnContainer}>
+					<Button onClick={() => setIsOpenAddNewTeamPopup(true)}>Create new Team</Button>
+					<Button primary disabled>
+						Add new people
+					</Button>
+				</div>
+				<SearchField />
+				<Header as="h3">People</Header>
+				<PeopleList
+					people={people}
+					handlerClickItem={redirectToPersonProfile}
+					className={style.listContainer}
+				/>
+				<Header as="h3">Your teams</Header>
+				<TeamsList teams={teams} handlerClickItem={redirectToTeamPage} className={style.listContainer} />
+				<AddTeamPopup isOpen={isOpenAddNewTeamPopup} closeClb={() => setIsOpenAddNewTeamPopup(false)} />
+			</main>
 		</DefaultPageWrapper>
 	);
 };

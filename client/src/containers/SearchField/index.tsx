@@ -19,7 +19,7 @@ const SearchField: React.FC = (): ReactElement => {
 			loading={isLoading}
 			className={style.field}
 			size="large"
-			input={{ fluid: true }}
+			input={{ fluid: true, placeholder: 'Search for people and teams' }}
 			result={result}
 		/>
 	);
