@@ -11,12 +11,7 @@ import validator from 'validator';
 
 export const LoginPage: React.FC = () => {
 	const dispatch = useDispatch();
-	const authData = useSelector((rootState: RootState) => rootState.auth);
-
-	const getUser = (email: string, password: string) => {
-		dispatch(actions.logInUserTrigger({ email, password }));
-	};
-
+	const authState = useSelector((rootState: RootState) => rootState.auth);
 	const [email, setEmail] = useState<string>('');
 	const [password, setPassword] = useState<string>('');
 	const [isEmailValid, setIsEmailValid] = useState<boolean>(false);
@@ -24,11 +19,15 @@ export const LoginPage: React.FC = () => {
 	const [redirectToRootPage, setRedirectToRootPage] = useState<boolean>(false);
 
 	useEffect(() => {
-		if (!!authData.jwtToken) {
-			setToken(authData.jwtToken);
+		if (!!authState.jwtToken) {
+			setToken(authState.jwtToken);
 			setRedirectToRootPage(!redirectToRootPage);
 		}
-	}, [authData.jwtToken, redirectToRootPage]);
+	}, [authState.jwtToken, redirectToRootPage]);
+
+	const logInUser = (email: string, password: string) => {
+		dispatch(actions.logInUserTrigger({ email, password }));
+	};
 
 	const handleContinueSubmit: (event: SyntheticEvent) => void = (event) => {
 		event.preventDefault();
@@ -41,7 +40,7 @@ export const LoginPage: React.FC = () => {
 		setIsEmailValid(validator.isEmail(email));
 
 		if (isEmailValid) {
-			getUser(email, password);
+			logInUser(email, password);
 		}
 	};
 

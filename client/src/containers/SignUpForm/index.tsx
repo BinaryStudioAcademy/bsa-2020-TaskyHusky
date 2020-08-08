@@ -11,7 +11,7 @@ import styles from './styles.module.scss';
 
 const SignUpForm: React.FC = () => {
 	const dispatch = useDispatch();
-	const authStore = useSelector((rootStore: RootState) => rootStore.auth);
+	const authState = useSelector((rootState: RootState) => rootState.auth);
 
 	const [email, setEmail] = useState<string>('');
 	const [emailValid, setEmailValid] = useState<boolean>(true);
@@ -26,12 +26,12 @@ const SignUpForm: React.FC = () => {
 	const buttonDisabled = !(password && passwordValid && email && emailValid && firstName && firstNameValid);
 
 	useEffect(() => {
-		if (!!authStore.jwtToken) {
-			setToken(authStore.jwtToken);
+		if (!!authState.jwtToken) {
+			setToken(authState.jwtToken);
 			setLoading(false);
 			setRedirecting(true);
 		}
-	}, [authStore.isAuthorized, redirecting]);
+	}, [authState.isAuthorized, redirecting]);
 
 	const submit = async () => {
 		if (buttonDisabled) {
