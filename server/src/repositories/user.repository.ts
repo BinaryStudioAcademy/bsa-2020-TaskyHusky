@@ -5,12 +5,20 @@ import { apiErrorMessages } from '../constants/api.constants';
 
 @EntityRepository(UserProfile)
 export class UserRepository extends Repository<UserProfile> {
-	getById(id: string) {
-		return this.findOne({ where: { id } });
+	async getById(id: string): Promise<any> {
+		const user = await this.findOne({ where: { id } });
+		if (!user) {
+			throw new Error('Can not find such user');
+		}
+		return user;
 	}
 
-	getByEmail(email: string) {
-		return this.findOne({ where: { email } });
+	async getByEmail(email: string): Promise<any> {
+		const user = await this.findOne({ where: { email } });
+		if (!user) {
+			throw new Error('Can not find user such email');
+		}
+		return user;
 	}
 
 	createNew(data: UserModel) {
@@ -19,13 +27,6 @@ export class UserRepository extends Repository<UserProfile> {
 	}
 
 	async updateById(id: string, user: UserModel): Promise<any> {
-		const { email } = user;
-		const userToChange = await this.getByEmail(email);
-
-		if (userToChange && userToChange.id !== id) {
-			throw new Error(apiErrorMessages.NOT_UNIQUE_EMAIL);
-		}
-
 		this.update(id, user);
 
 		return this.findOne(id);

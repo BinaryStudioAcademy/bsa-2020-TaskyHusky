@@ -19,7 +19,6 @@ passport.use(
 		async (email: string, password: string, next): Promise<void> => {
 			const userRepository = getCustomRepository(UserRepository);
 			const user = await userRepository.getByEmail(email);
-
 			if (!user) {
 				return next(
 					new ErrorResponse(HttpStatusCode.UNAUTHORIZED, authErrorMessages.INCORRECT_CREDENTIALS),
