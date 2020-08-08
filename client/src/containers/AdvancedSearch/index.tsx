@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import styles from './styles.module.scss';
 import { useSelector, useDispatch } from 'react-redux';
-import * as actions from './logic/actions';
 import { RootState } from 'typings/rootState';
-import { Button, Table, Input, Form, List, Icon, Dropdown } from 'semantic-ui-react';
+import { Button, Table, Input, Form, List, Icon } from 'semantic-ui-react';
 import IssueItem from 'components/IssueItem';
 import FilterPart from 'components/FilterPart';
 import MoreFilterDefsDropdown from 'components/MoreFilters';
@@ -11,9 +10,9 @@ import { fetchFilterParts } from './logic/actions';
 import { FilterPartState } from './logic/state';
 
 const QUICK_FILTER_IDS = [
-	'336ae979-a47e-4aa6-bca3-e05da59432df',
-	'45405c8b-b75d-4bed-afa6-943830a30ca2',
-	'ea4649e1-80ee-4b54-bce3-b901239dd2d0',
+	'9d7cc2e4-f158-4ff2-a899-e89c657b70ef',
+	'932d024f-2ea6-448b-b614-ccb053bbde53',
+	'2c26b1a1-1a86-458a-bdcd-1d79055aa5ed',
 ];
 
 const AdvancedSearch: React.FC = () => {

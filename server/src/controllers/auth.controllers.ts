@@ -7,6 +7,11 @@ class AuthController {
 		const jwtToken = generateToken(user.id);
 		res.send({ jwtToken, user });
 	};
+
+	sendExistingProfile = (req: Request, res: Response) => {
+		const { password, ...user } = req.user;
+		res.send(user);
+	};
 }
 
 export default AuthController;

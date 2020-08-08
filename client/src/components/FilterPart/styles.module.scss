@@ -1,11 +1,17 @@
 .search {
-    width: 90% !important;
+	width: 90% !important;
+}
+
+.textSearch {
+	width: 90% !important;
+	border: none;
+	box-shadow: none;
 }
 .filterField {
-    display: flex;
-    align-items: center;
+	display: flex;
+	align-items: center;
 }
 .filterDefsWrapper {
-    display: flex;
-    flex-direction: row;
+	display: flex;
+	flex-direction: row;
 }

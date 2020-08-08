@@ -28,6 +28,11 @@ export class FilterDefinition1596802492647 implements MigrationInterface {
 				filterType: 'priority',
 				title: 'Priority',
 			},
+			{
+				dataType: 'searchText',
+				filterType: 'description',
+				title: 'Description',
+			},
 		];
 		await getRepository('FilterDefinition').save(filterDefs);
 	}

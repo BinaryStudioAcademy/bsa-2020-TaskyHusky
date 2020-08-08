@@ -5,7 +5,16 @@ import authSaga from 'containers/LoginPage/logic/saga';
 import advancedSearchSaga from 'containers/AdvancedSearch/logic/saga';
 import issueSaga from 'pages/CreateIssue/logic/saga';
 import filterDefsSaga from 'commonLogic/filterDefs/saga';
+import createProjectSaga from 'containers/CreateProjectModal/logic/saga';
 
 export default function* rootSaga() {
-	yield all([projectsSaga(), authSaga(), issueSaga(), filtersSaga(), filterDefsSaga(), advancedSearchSaga()]);
+	yield all([
+		projectsSaga(),
+		createProjectSaga(),
+		authSaga(),
+		issueSaga(),
+		filtersSaga(),
+		filterDefsSaga(),
+		advancedSearchSaga(),
+	]);
 }

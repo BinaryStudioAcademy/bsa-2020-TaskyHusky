@@ -9,8 +9,8 @@ export class Project1596804476033 implements MigrationInterface {
 				projectType: 'Project type',
 				category: 'Project category',
 				defaultAssigneeID: 'defaultAssigneeID',
-				leadID: 'leadID',
-				creatorID: 'creatorID',
+				leadID: '11217be4-4529-4cfc-a021-f38c5a22e8a6',
+				creatorID: '11217be4-4529-4cfc-a021-f38c5a22e8a6',
 			},
 			{
 				name: 'New Project name',
@@ -18,8 +18,8 @@ export class Project1596804476033 implements MigrationInterface {
 				projectType: 'Project type2',
 				category: 'Project category2',
 				defaultAssigneeID: 'assigneeID',
-				leadID: 'leadID',
-				creatorID: 'creatorID',
+				leadID: '11217be4-4529-4cfc-a021-f38c5a22e8a6',
+				creatorID: '11217be4-4529-4cfc-a021-f38c5a22e8a6',
 			},
 		];
 		await getRepository('Projects').save(filterDefs);
