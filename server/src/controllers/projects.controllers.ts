@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
 import { getCustomRepository } from 'typeorm';
 import { User } from '../entity/User';
-import { Projects } from '../entity/Projects';
 
 import { ProjectsRepository } from '../repositories/projects.repository';
 import { getWebError } from '../helpers/error.helper';
@@ -23,7 +22,6 @@ class ProjectsController {
 		const { id } = req.params;
 
 		try {
-			await this.checkForExisting(id);
 			const project = await projectsRepository.findOneById(id);
 			res.send(project);
 		} catch (err) {
@@ -34,28 +32,25 @@ class ProjectsController {
 	createProject = async (req: Request, res: Response): Promise<void> => {
 		const projectsRepository = getCustomRepository(ProjectsRepository);
 		const { id: userId } = req.user as User;
-		const projectData = req.body as Projects;
-		const { id } = projectData;
-
-		projectData.creatorID = userId;
+		const { project } = req.body;
+		project.creatorID = userId;
 
 		try {
-			await this.checkForNoExisting(id);
-			const createdProject = await projectsRepository.createOne(projectData);
+			const createdProject = await projectsRepository.createOne(project);
 			res.status(201).send(createdProject);
 		} catch (err) {
-			res.status(409).send(getWebError(err, 409));
+			res.status(500).send(getWebError(err, 500));
 		}
 	};
 
 	updateProject = async (req: Request, res: Response): Promise<void> => {
 		const projectsRepository = getCustomRepository(ProjectsRepository);
-		const projectData = req.body;
-		const { id } = projectData;
+		const { project } = req.body;
+		const { id } = project;
 
 		try {
 			await this.checkForExisting(id);
-			const updatedProject = await projectsRepository.updateOne(projectData);
+			const updatedProject = await projectsRepository.updateOne(project);
 			res.send(updatedProject);
 		} catch (err) {
 			res.status(404).send(getWebError(err, 404));

@@ -12,20 +12,17 @@ export class Projects {
 	@Column()
 	key!: string;
 
-	@Column()
-	projectType!: string;
+	@Column({ type: 'text', nullable: true })
+	category?: string;
 
-	@Column()
-	category!: string;
-
-	@Column()
+	@Column({ type: 'text', nullable: true })
 	defaultAssigneeID?: string;
 
-	@Column()
+	@Column({ type: 'uuid', nullable: true })
 	leadID?: string;
 
-	@Column()
-	creatorID?: string;
+	@Column({ type: 'uuid', nullable: true })
+	creatorID!: string;
 
 	@OneToMany((type) => Sprint, (sprint) => sprint.id)
 	sprints?: Sprint[];

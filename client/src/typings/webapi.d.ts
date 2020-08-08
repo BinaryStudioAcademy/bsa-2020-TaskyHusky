@@ -8,13 +8,13 @@ namespace WebApi.Board {
 namespace WebApi.Issue {
 	interface PartialIssue {
 		id?: string;
-		type?: string;
+		type: string;
 		summary?: string;
 		boardColumnID?: string;
 		labels?: string[];
 		attachments?: string[];
 		links?: string[];
-		priority?: string;
+		priority: string;
 		description?: string;
 		sprintID?: string;
 		projectID?: string;
@@ -26,11 +26,43 @@ namespace WebApi.Issue {
 
 namespace WebApi.Result {
 	interface UserAuthResult {
-		user: {
-			id: string;
-			email: string;
-		};
+		user: WebApi.User.UserModel;
 		jwtToken: string;
+	}
+
+	interface IssueResult {
+		id: string;
+		type: {
+			id: string;
+			color: string;
+			title: string;
+			icon: string;
+		};
+		summary?: string;
+		boardColumnID?: string;
+		labels?: string[];
+		attachments?: string[];
+		links?: string[];
+		priority: {
+			id: string;
+			color: string;
+			title: string;
+			icon: string;
+		};
+		description?: string;
+		sprintID?: string;
+		projectID?: string;
+		issueKey?: string;
+		assignedID?: string;
+		creatorID?: string;
+	}
+}
+
+namespace WebApi.Team {
+	export interface TeamModel {
+		id?: string;
+		description?: string;
+		links?: string[];
 	}
 }
 
@@ -137,8 +169,7 @@ namespace WebApi.Entities {
 		id: string;
 		name: string;
 		key: string;
-		projectType: string;
-		category: string;
+		category?: string;
 		defaultAssigneeID?: string;
 		leadID?: string;
 		creatorID?: string;

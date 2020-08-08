@@ -11,8 +11,10 @@ export type Project = {
 
 export interface ProjectsState {
 	projects: Project[];
+	isLoading: boolean;
 }
 
 export const initialState: ProjectsState = {
 	projects: [],
+	isLoading: false,
 };

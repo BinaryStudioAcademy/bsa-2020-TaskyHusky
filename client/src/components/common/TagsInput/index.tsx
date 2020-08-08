@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Input, Segment, Icon } from 'semantic-ui-react';
+import { Input, Segment, Icon, Label } from 'semantic-ui-react';
 import styles from './styles.module.scss';
 
 interface Props {
@@ -25,12 +25,16 @@ const TagsInput: React.FC<Props> = ({ onChange, placeholder, tags }) => {
 
 	return (
 		<Segment>
+			<div style={{ marginBottom: 5 }}>
+				Press &#39;Arrow Up <Icon name="arrow up" />
+				&#39; to apply tag.
+			</div>
 			<div className={styles.tagContainer}>
 				{tags.map((tag, i) => (
-					<div key={i} className={styles.tag}>
+					<Label key={i} color="teal" tag>
 						{tag}
 						<Icon name="close" link onClick={() => removeTag(i)} />
-					</div>
+					</Label>
 				))}
 			</div>
 			<Input
@@ -39,8 +43,9 @@ const TagsInput: React.FC<Props> = ({ onChange, placeholder, tags }) => {
 				value={value}
 				onChange={(event, data) => setValue(data.value)}
 				transparent
-				onKeyPress={(event: React.KeyboardEvent & { target: { value: string } }) => {
-					if (event.key === 'Enter' && value !== '') {
+				onKeyDown={(event: React.KeyboardEvent & { target: { value: string } }) => {
+					if (event.key === 'ArrowUp' && value !== '') {
+						event.preventDefault();
 						addTag(event.target.value);
 					}
 				}}
