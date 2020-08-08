@@ -9,7 +9,7 @@ export class Filter {
 	owner?: UserProfile;
 
 	@Column({ nullable: false })
-	ownerId?: UserProfile;
+	ownerId?: string;
 
 	@Column()
 	name?: string;

@@ -23,7 +23,7 @@ export const requestUpdateUser = async (userData: Partial<UserProfileState>): Pr
 };
 
 export const requestDeleteUser = async (): Promise<void> => {
-	const res = await callWebApi({
+	await callWebApi({
 		method: 'DELETE',
 		endpoint: 'user/',
 		skipAuthorization: false,
