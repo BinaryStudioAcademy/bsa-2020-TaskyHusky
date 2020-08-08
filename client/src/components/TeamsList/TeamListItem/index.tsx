@@ -26,4 +26,4 @@ const TeamListItem: React.FC<TeamListItem> = ({ team, handlerClick }): ReactElem
 	);
 };
 
-export default TeamListItem;
+export default React.memo(TeamListItem);

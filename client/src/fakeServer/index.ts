@@ -8,5 +8,6 @@ export default new Server({
 
 		this.get('/people', () => people, { timing: 2000 });
 		this.get('/teams', () => teams, { timing: 3000 });
+		this.post('/teams', () => teams, { timing: 3000 });
 	},
 });

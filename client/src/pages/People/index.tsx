@@ -3,10 +3,11 @@ import { useHistory } from 'react-router-dom';
 import { Header, Button } from 'semantic-ui-react';
 import PeopleList from '../../components/PeopleList';
 import TeamsList from '../../components/TeamsList';
-import AddTeamPopup from '../../containers/AddTeamPopup';
+import AddTeamPopup from '../../containers/CreateTeamModal';
 import { fetchPeople } from '../../services/people.service';
 import { fetchTeams } from '../../services/team.service';
 import style from './style.module.scss';
+import SearchField from '../../containers/SearchField';
 
 const People: React.FC = (): ReactElement => {
 	const history = useHistory();
@@ -41,6 +42,7 @@ const People: React.FC = (): ReactElement => {
 					Add new people
 				</Button>
 			</div>
+			<SearchField />
 			<Header as="h2">People</Header>
 			<PeopleList people={people} handlerClickItem={redirectToPersonProfile} className={style.listContainer} />
 			<Header as="h2">Your teams</Header>

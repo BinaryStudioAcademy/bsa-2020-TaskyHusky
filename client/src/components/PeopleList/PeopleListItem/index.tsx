@@ -23,4 +23,4 @@ const PeopleListItem: React.FC<PeopleListItem> = ({ person, handlerClick }): Rea
 	);
 };
 
-export default PeopleListItem;
+export default React.memo(PeopleListItem);

@@ -22,4 +22,4 @@ const PeopleList: React.FC<PeopleList> = ({ people, handlerClickItem, className 
 	return <Loader active inline="centered" />;
 };
 
-export default PeopleList;
+export default React.memo(PeopleList);

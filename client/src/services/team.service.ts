@@ -28,3 +28,15 @@ export const fetchTeams = async () => {
 
 	return await res.json();
 };
+
+export const addTeam = async (name: string) => {
+	const res = await callWebApi({
+		method: 'POST',
+		endpoint: 'fake/teams',
+		body: {
+			name,
+		},
+	});
+
+	return await res.json();
+};

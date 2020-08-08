@@ -23,4 +23,4 @@ const TeamsList: React.FC<TeamsList> = ({ teams, handlerClickItem, className = '
 	return <Loader active inline="centered" />;
 };
 
-export default TeamsList;
+export default React.memo(TeamsList);
