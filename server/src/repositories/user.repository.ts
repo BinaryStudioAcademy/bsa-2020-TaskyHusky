@@ -19,13 +19,6 @@ export class UserRepository extends Repository<UserProfile> {
 	}
 
 	async updateById(id: string, user: UserModel): Promise<any> {
-		const { email } = user;
-		const userToChange = await this.getByEmail(email);
-
-		if (userToChange && userToChange.id !== id) {
-			throw new Error(apiErrorMessages.NOT_UNIQUE_EMAIL);
-		}
-
 		this.update(id, user);
 
 		return this.findOne(id);
