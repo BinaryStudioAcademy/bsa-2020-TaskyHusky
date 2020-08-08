@@ -9,6 +9,7 @@ export const authReducer = createReducer<AuthState>(initialState, {
 			user: action.user,
 			isAuthorized: !!action.user,
 			jwtToken: action.jwtToken,
+			profileLoaded: false,
 		};
 	},
 	[actionTypes.REGISTER_USER_SUCCESS](state, action: WebApi.Result.UserAuthResult) {
@@ -21,12 +22,21 @@ export const authReducer = createReducer<AuthState>(initialState, {
 			isAuthorized: !!user,
 		};
 	},
-	[actionTypes.LOGOUT_USER_SUCCESS](state, action) {
+	[actionTypes.LOGOUT_USER_SUCCESS](state) {
 		return {
 			...state,
 			user: null,
 			isAuthorized: false,
 			jwtToken: '',
+		};
+	},
+	[actionTypes.LOAD_PROFILE_SUCCESS](state, action: actionTypes.LoadProfileSuccess) {
+		return {
+			...state,
+			user: action.user,
+			isAuthorized: action.isAuthorized,
+			jwtToken: action.jwtToken,
+			profileLoaded: true,
 		};
 	},
 });

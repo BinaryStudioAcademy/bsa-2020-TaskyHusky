@@ -1,11 +1,10 @@
 import React, { useState, SyntheticEvent, useEffect } from 'react';
 import styles from './styles.module.scss';
 import { Header, Form, Divider, Segment, Button, Grid, List, Popup } from 'semantic-ui-react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'typings/rootState';
 import * as actions from './logic/actions';
-import { setToken } from 'helpers/setToken.helper';
 import PasswordInput from 'components/common/PasswordInput';
 import { useTranslation } from 'react-i18next';
 import validator from 'validator';
@@ -14,25 +13,21 @@ export const LoginPage: React.FC = () => {
 	const dispatch = useDispatch();
 	const { t } = useTranslation();
 	const authData = useSelector((rootState: RootState) => rootState.auth);
-
-	const getUser = (email: string, password: string) => {
-		dispatch(actions.logInUserTrigger({ email, password }));
-	};
-
 	const [email, setEmail] = useState<string>('');
 	const [password, setPassword] = useState<string>('');
 	const [isEmailValid, setIsEmailValid] = useState<boolean>(false);
 	const [isEmailSubmitted, setIsEmailSubmitted] = useState<boolean>(false);
-	const [redirectToForgetPassword, setRedirectToForgetPassword] = useState<boolean>(false);
-	const [redirectToSignUp, setRedirectToSignUp] = useState<boolean>(false);
 	const [redirectToRootPage, setRedirectToRootPage] = useState<boolean>(false);
 
 	useEffect(() => {
-		if (!!authData.jwtToken) {
-			setToken(authData.jwtToken);
+		if (authData.isAuthorized) {
 			setRedirectToRootPage(!redirectToRootPage);
 		}
-	}, [authData.jwtToken, redirectToRootPage]);
+	}, [authData, redirectToRootPage]);
+
+	const logInUser = (email: string, password: string) => {
+		dispatch(actions.logInUserTrigger({ email, password }));
+	};
 
 	const handleContinueSubmit: (event: SyntheticEvent) => void = (event) => {
 		event.preventDefault();
@@ -45,23 +40,9 @@ export const LoginPage: React.FC = () => {
 		setIsEmailValid(validator.isEmail(email));
 
 		if (isEmailValid) {
-			getUser(email, password);
+			logInUser(email, password);
 		}
 	};
-
-	const toggleForgetPasswordHandler: () => void = () => {
-		setRedirectToForgetPassword(true);
-	};
-
-	const toggleSignUpHandler: () => void = () => {
-		setRedirectToSignUp(true);
-	};
-
-	const renderForgetPassword: JSX.Element | null = redirectToForgetPassword ? (
-		<Redirect to="/login/resetpassword" />
-	) : null;
-
-	const renderSignUp: JSX.Element | null = redirectToSignUp ? <Redirect to="/signup" /> : null;
 
 	const renderRootPage: JSX.Element | null = redirectToRootPage ? <Redirect to="/header" /> : null;
 
@@ -112,8 +93,6 @@ export const LoginPage: React.FC = () => {
 					</Segment>
 				</Grid.Column>
 			</Grid>
-			{renderForgetPassword}
-			{renderSignUp}
 			{renderRootPage}
 		</>
 	);

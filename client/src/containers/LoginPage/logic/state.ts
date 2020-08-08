@@ -16,6 +16,7 @@ export interface AuthState {
 	user: User | null;
 	isAuthorized: boolean;
 	jwtToken: string;
+	profileLoaded?: boolean;
 }
 
 export const initialState: AuthState = {
