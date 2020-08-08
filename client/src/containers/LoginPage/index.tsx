@@ -4,10 +4,12 @@ import { Header, Form, Divider, Segment, Button, Grid, List, Popup } from 'seman
 import { Redirect, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'typings/rootState';
+import * as actions from './logic/actions';
 import PasswordInput from 'components/common/PasswordInput';
 import validator from 'validator';
 
 export const LoginPage: React.FC = () => {
+	const dispatch = useDispatch();
 	const authData = useSelector((rootState: RootState) => rootState.auth);
 	const [email, setEmail] = useState<string>('');
 	const [password, setPassword] = useState<string>('');
@@ -20,6 +22,10 @@ export const LoginPage: React.FC = () => {
 			setRedirectToRootPage(!redirectToRootPage);
 		}
 	}, [authData, redirectToRootPage]);
+
+	const logInUser = (email: string, password: string) => {
+		dispatch(actions.logInUserTrigger({ email, password }));
+	};
 
 	const handleContinueSubmit: (event: SyntheticEvent) => void = (event) => {
 		event.preventDefault();
