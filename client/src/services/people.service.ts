@@ -6,5 +6,5 @@ export const fetchPeople = async () => {
 		endpoint: 'fake/people',
 	});
 
-	return (await res.json()) as WebApi.Entities.User[];
+	return (await res.json()) as WebApi.Entities.UserProfile[];
 };

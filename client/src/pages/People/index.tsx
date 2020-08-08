@@ -4,6 +4,7 @@ import { Header, Button } from 'semantic-ui-react';
 import PeopleList from '../../components/PeopleList';
 import TeamsList from '../../components/TeamsList';
 import AddTeamPopup from '../../containers/CreateTeamModal';
+import DefaultPageWrapper from '../../containers/DefaultPageWrapper';
 import { fetchPeople } from '../../services/people.service';
 import { fetchTeams } from '../../services/team.service';
 import style from './style.module.scss';
@@ -11,7 +12,7 @@ import SearchField from '../../containers/SearchField';
 
 const People: React.FC = (): ReactElement => {
 	const history = useHistory();
-	const [people, setPeople] = useState<null | WebApi.Entities.User[]>(null);
+	const [people, setPeople] = useState<null | WebApi.Entities.UserProfile[]>(null);
 	const [teams, setTeams] = useState(null);
 	const [isOpenAddNewTeamPopup, setIsOpenAddNewTeamPopup] = useState(false);
 
@@ -35,7 +36,7 @@ const People: React.FC = (): ReactElement => {
 	};
 
 	return (
-		<div>
+		<DefaultPageWrapper>
 			<div className={style.btnContainer}>
 				<Button onClick={() => setIsOpenAddNewTeamPopup(true)}>Create new Team</Button>
 				<Button primary disabled>
@@ -48,7 +49,7 @@ const People: React.FC = (): ReactElement => {
 			<Header as="h2">Your teams</Header>
 			<TeamsList teams={teams} handlerClickItem={redirectToTeamPage} className={style.listContainer} />
 			<AddTeamPopup isOpen={isOpenAddNewTeamPopup} closeClb={() => setIsOpenAddNewTeamPopup(false)} />
-		</div>
+		</DefaultPageWrapper>
 	);
 };
 

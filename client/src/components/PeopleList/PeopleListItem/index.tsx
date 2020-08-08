@@ -3,7 +3,7 @@ import { Card, Image } from 'semantic-ui-react';
 import style from './style.module.scss';
 
 interface PeopleListItem {
-	person: WebApi.Entities.User;
+	person: WebApi.Entities.UserProfile;
 	handlerClick?: () => void;
 }
 

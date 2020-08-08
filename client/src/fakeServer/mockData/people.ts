@@ -1,4 +1,4 @@
-export const people: WebApi.Entities.User[] = [
+export const people: WebApi.Entities.UserProfile[] = [
 	{
 		id: '1b03723a-e09d-4ccc-9729-bd434cc27cf2',
 		firstName: 'Fred',

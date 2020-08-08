@@ -7,7 +7,7 @@ import { addTeam } from '../../services/team.service';
 
 const SearchField: React.FC = (): ReactElement => {
 	const [isLoading, setIsLoading] = useState<boolean>(false);
-	const [result, setResult] = useState<WebApi.Entities.User[] | Team[]>([]);
+	const [result, setResult] = useState<WebApi.Entities.UserProfile[] | Team[]>([]);
 
 	const handlerChange = (e: MouseEvent<HTMLElement>, { value }: SearchProps): void => {
 		setIsLoading(true);
