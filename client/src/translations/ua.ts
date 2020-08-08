@@ -59,4 +59,7 @@ export const ua = {
 	tags_input_hint_1: "Натісніть 'Стрілка вгору",
 	tags_input_hint_2: "' щоб застосувати зміни.",
 	edit_issue: 'Оновити задачу',
+	reported_by: 'Створив',
+	assigned_by: 'Відповідає',
+	sprint: 'Спрінт',
 };

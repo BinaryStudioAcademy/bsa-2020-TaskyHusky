@@ -59,4 +59,7 @@ export const en = {
 	tags_input_hint_1: "Press 'Arrow Up",
 	tags_input_hint_2: "' to apply tag.",
 	edit_issue: 'Edit issue',
+	reported_by: 'Reported by',
+	assigned_by: 'Assigned by',
+	sprint: 'Sprint',
 };

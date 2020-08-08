@@ -59,4 +59,7 @@ export const ru = {
 	tags_input_hint_1: "Нажмите 'Стрелка вверх",
 	tags_input_hint_2: "' чтобы применить изменения.",
 	edit_issue: 'Обновить задачу',
+	reported_by: 'Создал',
+	assigned_by: 'Ответственный',
+	sprint: 'Спринт',
 };
