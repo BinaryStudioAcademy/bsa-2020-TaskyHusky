@@ -25,8 +25,10 @@ namespace WebApi.Issue {
 }
 
 namespace WebApi.Result {
+	import { UserModel } from './User';
+
 	interface UserAuthResult {
-		user: WebApi.User.UserModel;
+		user: UserModel;
 		jwtToken: string;
 	}
 
