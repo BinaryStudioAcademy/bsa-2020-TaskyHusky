@@ -12,10 +12,10 @@ export class Sprint {
 	@Column()
 	sprintName?: string;
 
-	@ManyToOne((type) => Projects, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
+	@ManyToOne((type) => Projects, { onDelete: 'CASCADE' })
 	project?: Projects;
 
-	@ManyToOne((type) => Board, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
+	@ManyToOne((type) => Board, { onDelete: 'CASCADE' })
 	board?: Board;
 
 	@Column()
