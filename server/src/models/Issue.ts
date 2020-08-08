@@ -1,12 +1,12 @@
 interface PartialIssue {
 	id?: string;
-	type?: string;
+	type: string;
 	summary?: string;
 	boardColumnID?: string;
 	labels?: string[];
 	attachments?: string[];
 	links?: string[];
-	priority?: string;
+	priority: string;
 	description?: string;
 	sprintID?: string;
 	projectID?: string;
