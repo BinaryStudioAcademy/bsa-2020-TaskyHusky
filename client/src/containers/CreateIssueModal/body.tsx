@@ -82,8 +82,21 @@ const CreateIssueModalBody: React.FC<Props> = ({ children, issueTypes, prioritie
 				data: {
 					...context.data,
 					boardColumnID: '6be0859b-05f6-447d-beb8-d5c324cc5043',
-					sprintID: '4ae23ba4-9b4b-49c6-9892-991884505ff9',
-					projectID: 'a7c26428-2978-4748-8d29-975ad423d8ef',
+					sprint: {
+						id: 'd24fe512-62f4-4821-a2f5-669725b34e1c',
+						sprintName: 't2',
+						isActive: true,
+						isCompleted: false,
+					},
+					project: {
+						id: 'ec68fb1f-797a-45f1-9a2d-544bea2c24e6',
+						name: 'PRName',
+						key: 'sd',
+						category: null,
+						defaultAssigneeID: null,
+						leadID: null,
+						creatorID: 'c278e065-9efd-4a07-8ed7-561971d66bfa',
+					},
 					issueKey: generateRandomString(KeyGenerate.LENGTH),
 					assignedID: '98601c2c-a103-489b-b89f-ea5ae568b582',
 					creatorID: 'f2235a1c-dfbc-47b7-bdb2-726d159c19a0',
