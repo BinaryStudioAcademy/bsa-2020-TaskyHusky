@@ -7,4 +7,13 @@ export const en = {
 	continue: 'Continue',
 	cant_login: "Can't login?",
 	sign_up_for_an_account: 'Sign up for an account',
+	sign_up_header: 'Sign up to TaskyHusky',
+	already_with_us: 'Already with us?',
+	first_name_required: 'First name is required',
+	invalid_password: 'Password must be at least 6 characters long',
+	google_log_in: 'Log in with Google',
+	or: 'or',
+	sign_up: 'Sign up',
+	first_name: 'First name',
+	last_name: 'Last name',
 };

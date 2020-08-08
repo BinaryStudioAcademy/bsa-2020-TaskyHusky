@@ -7,4 +7,13 @@ export const ru = {
 	continue: 'Далее',
 	cant_login: 'Не удаётся войти?',
 	sign_up_for_an_account: 'Регистрация',
+	sign_up_header: 'Регистрация в TaskyHusky',
+	already_with_us: 'Уже с нами?',
+	first_name_required: 'Имя обязательно',
+	invalid_password: 'Пароль должен быть длинной минимум 6 символов',
+	google_log_in: 'Войти с помощью Google',
+	or: 'или',
+	sign_up: 'Зарегистрироваться',
+	first_name: 'Имя',
+	last_name: 'Фамилия',
 };
