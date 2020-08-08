@@ -9,3 +9,6 @@ export const logInUserSuccess = createAction<actionTypes.LogInUserSuccess>(actio
 
 export const logOutUserTrigger = createAction(actionTypes.LOGOUT_USER_TRIGGER);
 export const logOutUserSuccess = createAction(actionTypes.LOGOUT_USER_SUCCESS);
+
+export const loadProfileTrigger = createAction(actionTypes.LOAD_PROFILE_TRIGGER);
+export const loadProfileSuccess = createAction<actionTypes.LoadProfileSuccess>(actionTypes.LOAD_PROFILE_SUCCESS);

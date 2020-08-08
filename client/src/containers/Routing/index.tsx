@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Switch } from 'react-router-dom';
 import PrivateRoute from 'components/PrivateRoute';
 import Login from 'pages/LogIn';
@@ -10,8 +10,25 @@ import Header from 'containers/Header';
 import IssuePage from 'pages/IssuePage';
 import Filters from 'pages/Filters';
 import ProjectsPage from 'pages/ProjectsPage';
+import { useDispatch, useSelector } from 'react-redux';
+import { loadProfileTrigger } from 'containers/LoginPage/logic/actions';
+import { RootState } from 'typings/rootState';
 
 const Routing: React.FC = () => {
+	const dispatch = useDispatch();
+	const profileLoaded = useSelector((state: RootState) => state.auth.profileLoaded);
+	const token = useSelector((state: RootState) => state.auth.jwtToken);
+
+	useEffect(() => {
+		if (!profileLoaded) {
+			dispatch(loadProfileTrigger()); // Must be called before all Routes
+		}
+	}, [dispatch, profileLoaded, token]);
+
+	if (!profileLoaded) {
+		return null;
+	}
+
 	return (
 		<Switch>
 			<PublicRoute exact restricted path="/login" component={Login} />

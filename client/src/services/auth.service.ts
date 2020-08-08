@@ -1,4 +1,5 @@
 import callWebApi from 'helpers/callApi.helper';
+import { User } from 'containers/LoginPage/logic/state';
 
 export const registerUser = async (settings: Partial<WebApi.Entities.User>) => {
 	const res = await callWebApi({
@@ -23,4 +24,13 @@ export const loginUser = async (email: string, password: string): Promise<WebApi
 	});
 
 	return (await res.json()) as WebApi.Result.UserAuthResult;
+};
+
+export const getProfile = async (): Promise<User> => {
+	const res = await callWebApi({
+		endpoint: 'auth/profile',
+		method: 'GET',
+	});
+
+	return (await res.json()) as User;
 };

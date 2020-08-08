@@ -5,7 +5,6 @@ import { Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'typings/rootState';
 import * as actions from './logic/actions';
-import { setToken } from 'helpers/setToken.helper';
 import PasswordInput from 'components/common/PasswordInput';
 import validator from 'validator';
 
@@ -26,11 +25,10 @@ export const LoginPage: React.FC = () => {
 	const [redirectToRootPage, setRedirectToRootPage] = useState<boolean>(false);
 
 	useEffect(() => {
-		if (!!authData.jwtToken) {
-			setToken(authData.jwtToken);
+		if (authData.isAuthorized) {
 			setRedirectToRootPage(!redirectToRootPage);
 		}
-	}, [authData.jwtToken, redirectToRootPage]);
+	}, [authData, redirectToRootPage]);
 
 	const handleContinueSubmit: (event: SyntheticEvent) => void = (event) => {
 		event.preventDefault();
