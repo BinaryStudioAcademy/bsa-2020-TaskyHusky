@@ -91,4 +91,9 @@ export const ua = {
 	select: 'Обрати',
 	whats_this: 'Що це?',
 	key: 'Ключ',
+	create_filter: 'Створити фільтр',
+	owner: 'Власник',
+	stared_by: 'Позначили',
+	project: 'Проект',
+	group: 'Група',
 };

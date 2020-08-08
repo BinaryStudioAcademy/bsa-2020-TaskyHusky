@@ -92,4 +92,9 @@ export const en = {
 	whats_this: 'What\u0027s this?',
 	name: 'Name',
 	key: 'Key',
+	create_filter: 'Create filter',
+	owner: 'Owner',
+	stared_by: 'Stared by',
+	project: 'Project',
+	group: 'Group',
 };

@@ -91,4 +91,9 @@ export const ru = {
 	select: 'Выбрать',
 	whats_this: 'Что это?',
 	key: 'Ключ',
+	create_filter: 'Создать фильтр',
+	owner: 'Владелец',
+	stared_by: 'Пометили',
+	project: 'Проект',
+	group: 'Группа',
 };
