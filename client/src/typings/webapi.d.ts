@@ -26,10 +26,7 @@ namespace WebApi.Issue {
 
 namespace WebApi.Result {
 	interface UserAuthResult {
-		user: {
-			id: string;
-			email: string;
-		};
+		user: WebApi.User.UserModel;
 		jwtToken: string;
 	}
 
