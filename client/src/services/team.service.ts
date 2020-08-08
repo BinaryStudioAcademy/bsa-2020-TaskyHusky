@@ -1,3 +1,5 @@
+import callWebApi from '../helpers/callApi.helper';
+
 const members = [
 	{
 		id: 101,
@@ -16,4 +18,13 @@ const members = [
 
 export const teamMembers = () => {
 	return members;
+};
+
+export const fetchTeams = async () => {
+	const res = await callWebApi({
+		method: 'GET',
+		endpoint: 'fake/teams',
+	});
+
+	return await res.json();
 };

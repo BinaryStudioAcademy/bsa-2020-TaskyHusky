@@ -5,6 +5,7 @@ import * as serviceWorker from './serviceWorker';
 import 'semantic-ui-css/semantic.min.css';
 import 'react-notifications/lib/notifications.css';
 import 'styles/index.scss';
+import './fakeServer/index';
 
 ReactDOM.render(<App />, document.getElementById('root'));
 

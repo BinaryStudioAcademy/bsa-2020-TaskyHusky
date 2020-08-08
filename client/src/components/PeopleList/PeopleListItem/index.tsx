@@ -1,15 +1,14 @@
 import React, { ReactElement } from 'react';
 import { Card, Image } from 'semantic-ui-react';
-import { Person } from '../../../mockData/people';
 import style from './style.module.scss';
 
 interface PeopleListItem {
-	person: Person;
+	person: WebApi.Entities.User;
 	handlerClick?: () => void;
 }
 
 const PeopleListItem: React.FC<PeopleListItem> = ({ person, handlerClick }): ReactElement => {
-	const { firstName, lastName, avatar, role } = person;
+	const { firstName, lastName, avatar, jobTitle } = person;
 
 	return (
 		<Card onClick={() => handlerClick && handlerClick()} className={style.card}>
@@ -18,7 +17,7 @@ const PeopleListItem: React.FC<PeopleListItem> = ({ person, handlerClick }): Rea
 				<Card.Header>
 					{firstName} {lastName}
 				</Card.Header>
-				<Card.Meta>{role}</Card.Meta>
+				<Card.Meta>{jobTitle}</Card.Meta>
 			</Card.Content>
 		</Card>
 	);

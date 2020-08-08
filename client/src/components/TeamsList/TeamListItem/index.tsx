@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import { Card, Image } from 'semantic-ui-react';
-import { Team } from '../../../mockData/teams';
+import { Team } from '../../../fakeServer/mockData/teams';
 import style from './style.module.scss';
 
 interface TeamListItem {

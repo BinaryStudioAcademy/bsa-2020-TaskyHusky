@@ -11,6 +11,7 @@ interface AddTeamPopup {
 const AddTeamPopup: React.FC<AddTeamPopup> = ({ isOpen = false, closeClb }): ReactElement => {
 	const [teamName, setTeamName] = useState('');
 
+	//TODO:
 	const handlerSubmit = () => {};
 
 	return (
@@ -28,13 +29,8 @@ const AddTeamPopup: React.FC<AddTeamPopup> = ({ isOpen = false, closeClb }): Rea
 						placeholder="What's your team called?"
 						value={teamName}
 						onChange={(e) => setTeamName(e.target.value)}
+						required
 					/>
-					<Form.Input
-						label="Invite people to your team"
-						placeholder="What's your team called?"
-						className={style.teamField}
-					/>
-					<small>You can invite up to 10 people at a time</small>
 				</Form>
 			</Modal.Content>
 			<Modal.Actions>
