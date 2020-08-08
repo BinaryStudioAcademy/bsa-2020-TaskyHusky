@@ -83,11 +83,11 @@ export const LoginPage: React.FC = () => {
 						</Form>
 						<Divider />
 						<List bulleted horizontal link className={styles.list}>
-							<List.Item as="a" className={styles.listItem} onClick={toggleForgetPasswordHandler}>
-								{t('cantLogin')}
+							<List.Item as="a" className={styles.listItem}>
+								<Link to="/reset/password" children={t('cantLogin')} />
 							</List.Item>
-							<List.Item as="a" className={styles.listItem} onClick={toggleSignUpHandler}>
-								{t('signUpForAnAccount')}
+							<List.Item as="a" className={styles.listItem}>
+								<Link to="/signup" children={t('signUpForAnAccount')} />
 							</List.Item>
 						</List>
 					</Segment>
