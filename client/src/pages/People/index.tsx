@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Header } from 'semantic-ui-react';
+import { Header, Button } from 'semantic-ui-react';
 import { people } from '../../mockData/people';
 import { teams } from '../../mockData/teams';
 import PeopleList from '../../components/PeopleList';
@@ -20,6 +20,12 @@ const People: React.FC = (): ReactElement => {
 
 	return (
 		<div>
+			<div className={style.btnContainer}>
+				<Button>Create new Team</Button>
+				<Button primary disabled>
+					Add new people
+				</Button>
+			</div>
 			<Header as="h2">People</Header>
 			<PeopleList people={people} handlerClickItem={redirectToPersonProfile} className={style.listContainer} />
 			<Header as="h2">Your teams</Header>

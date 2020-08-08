@@ -40,7 +40,7 @@ const Routing: React.FC = () => {
 			<PrivateRoute exact path="/projects" component={ProjectsPage} />
 			<PrivateRoute exact path="/team/:id" component={Team} />
 			<PrivateRoute exact path="/filters" component={Filters} />
-			<PublicRoute exact restricted={true} path="/people" component={People} />
+			<PublicRoute exact restricted path="/people" component={People} />
 		</Switch>
 	);
 };
