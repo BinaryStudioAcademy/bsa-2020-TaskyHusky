@@ -76,4 +76,20 @@ export const en = {
 	members_lower: 'members',
 	worked_on: 'Worked on',
 	no_works: 'There is no works to see here',
+	kanban_description:
+		'Monitor work in a continuous flow for agile teams ◦ Suits teams who control work volume from a backlog',
+	scrum_description:
+		'Manage stories, tasks, and workflows for a scrum team ◦ For teams that deliver work on a regular schedule',
+	bug_tracking_description:
+		'Manage a list of development tasks and bugs ◦ Great for teams who don\u0027t need a board',
+	enter_proj_name: 'Enter a project name',
+	enter_a_key: 'Enter a key',
+	share_settings_with_existing_project: 'Share settings with an existing project',
+	template: 'Template',
+	change_template: 'Change template',
+	choose_classic_template: 'Choose a classic template',
+	select: 'Select',
+	whats_this: 'What\u0027s this?',
+	name: 'Name',
+	key: 'Key',
 };
