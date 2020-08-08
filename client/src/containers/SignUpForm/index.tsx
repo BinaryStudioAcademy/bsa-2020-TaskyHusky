@@ -31,7 +31,7 @@ const SignUpForm: React.FC = () => {
 			setLoading(false);
 			setRedirecting(true);
 		}
-	}, [authState.isAuthorized, redirecting]);
+	}, [authState.jwtToken, authState.isAuthorized, redirecting]);
 
 	const submit = async () => {
 		if (buttonDisabled) {

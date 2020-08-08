@@ -1,4 +1,4 @@
-import { OptionsProps, ItemProps } from './../../../components/Options/index';
+import { ItemProps } from './../../../components/Options/index';
 interface Params {
 	id: string;
 	onOpenSettings: (id: string) => void;
