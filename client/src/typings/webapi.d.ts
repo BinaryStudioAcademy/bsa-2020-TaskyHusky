@@ -26,7 +26,10 @@ namespace WebApi.Issue {
 
 namespace WebApi.Result {
 	interface UserAuthResult {
-		user: WebApi.User.UserModel;
+		user: {
+			id: string;
+			email: string;
+		};
 		jwtToken: string;
 	}
 
@@ -91,7 +94,7 @@ namespace WebApi.Entities {
 		name: string;
 		location: string;
 		columns?: BoardColumn[];
-		createdBy: User;
+		createdBy: UserProfile;
 	}
 
 	interface BoardColumn {
@@ -177,7 +180,7 @@ namespace WebApi.Entities {
 
 	interface TeamsPeople {
 		id: string;
-		userId?: User;
+		userId?: UserProfile;
 		teamId?: Teams;
 	}
 
