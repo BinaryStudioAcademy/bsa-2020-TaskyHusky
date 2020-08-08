@@ -27,3 +27,22 @@ export const getPriorities = async (): Promise<WebApi.Entities.Priority[]> => {
 
 	return (await res.json()) as WebApi.Entities.Priority[];
 };
+
+export const getByKey = async (key: string): Promise<WebApi.Result.IssueResult> => {
+	const res: Response = await callWebApi({
+		method: 'GET',
+		endpoint: `issue/byKey/${key}`,
+	});
+
+	return (await res.json()) as WebApi.Result.IssueResult;
+};
+
+export const updateIssue = async (id: string, data: WebApi.Issue.PartialIssue) => {
+	const res: Response = await callWebApi({
+		endpoint: `issue/${id}`,
+		method: 'PUT',
+		body: { ...data },
+	});
+
+	return await res.json();
+};

@@ -1,5 +1,5 @@
 export type Project = {
-	projectID: string;
+	id: string;
 	name: string;
 	key: string;
 	projectType: string;
@@ -11,8 +11,10 @@ export type Project = {
 
 export interface ProjectsState {
 	projects: Project[];
+	isLoading: boolean;
 }
 
 export const initialState: ProjectsState = {
 	projects: [],
+	isLoading: false,
 };

@@ -1,8 +1,9 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { getCustomRepository } from 'typeorm';
 import { BoardRepository } from '../repositories/board.repository';
 import { BoardColumnRepository } from '../repositories/boardColumn.repository';
-import { getWebError } from '../helpers/error.helper';
+import { ErrorResponse } from '../helpers/errorHandler.helper';
+import HttpStatusCode from '../constants/httpStattusCode.constants';
 
 class BoardController {
 	getAll = async (req: Request, res: Response): Promise<void> => {
@@ -12,7 +13,7 @@ class BoardController {
 		res.status(200).send(boards);
 	};
 
-	getOne = async (req: Request, res: Response): Promise<void> => {
+	getOne = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
 		const boardRepository = getCustomRepository(BoardRepository);
 		const { id } = req.params;
 
@@ -20,11 +21,11 @@ class BoardController {
 			const board = await boardRepository.getOne(id);
 			res.status(200).send(board);
 		} catch (e) {
-			res.status(404).send(getWebError(e, 404));
+			next(new ErrorResponse(HttpStatusCode.NOT_FOUND, e.message));
 		}
 	};
 
-	getBoardColumns = async (req: Request, res: Response): Promise<void> => {
+	getBoardColumns = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
 		const boardRepository = getCustomRepository(BoardRepository);
 		const columnsRepository = getCustomRepository(BoardColumnRepository);
 		const { id } = req.params;
@@ -34,11 +35,11 @@ class BoardController {
 
 			res.status(200).send(columns);
 		} catch (e) {
-			res.status(404).send(getWebError(e, 404));
+			next(new ErrorResponse(HttpStatusCode.NOT_FOUND, e.message));
 		}
 	};
 
-	put = async (req: Request, res: Response): Promise<void> => {
+	put = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
 		const boardRepository = getCustomRepository(BoardRepository);
 		const { id } = req.params;
 		const { body } = req;
@@ -48,11 +49,11 @@ class BoardController {
 
 			res.status(200).send(board);
 		} catch (e) {
-			res.status(404).send(getWebError(e, 404));
+			next(new ErrorResponse(HttpStatusCode.NOT_FOUND, e.message));
 		}
 	};
 
-	post = async (req: Request, res: Response): Promise<void> => {
+	post = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
 		const boardRepository = getCustomRepository(BoardRepository);
 		const { body } = req;
 
@@ -61,13 +62,13 @@ class BoardController {
 
 			res.status(200).send(board);
 		} catch (e) {
-			res.status(422).send(getWebError(e, 422));
+			next(new ErrorResponse(HttpStatusCode.UNPROCESSABLE_ENTITY, e.message));
 		}
 
 
 	};
 
-	delete = async (req: Request, res: Response): Promise<void> => {
+	delete = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
 		const boardRepository = getCustomRepository(BoardRepository);
 		const { id } = req.params;
 
@@ -76,7 +77,7 @@ class BoardController {
 
 			res.status(200).send(board);
 		} catch (e) {
-			res.status(404).send(getWebError(e, 404));
+			next(new ErrorResponse(HttpStatusCode.NOT_FOUND, e.message));
 		}
 	};
 }

@@ -4,4 +4,6 @@ export const initialState: WebApi.Issue.PartialIssue = {
 	attachments: [],
 	labels: [],
 	description: '',
+	type: '',
+	priority: '',
 };
