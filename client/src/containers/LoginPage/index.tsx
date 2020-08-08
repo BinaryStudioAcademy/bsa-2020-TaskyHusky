@@ -79,12 +79,12 @@ export const LoginPage: React.FC = () => {
 							<Popup
 								className={styles.errorPopup}
 								open={!isEmailValid && isEmailSubmitted}
-								content="Please enter a valid email"
+								content={t('invalidEmail')}
 								on={[]}
 								trigger={
 									<Form.Input
 										error={!(isEmailValid || !isEmailSubmitted)}
-										placeholder="Email"
+										placeholder={t('email')}
 										type="text"
 										icon="at"
 										onChange={(event) => {
@@ -97,16 +97,16 @@ export const LoginPage: React.FC = () => {
 
 							{passwordInput}
 							<Button positive className={styles.continueButton}>
-								{isEmailValid ? 'Log in' : 'Continue'}
+								{isEmailValid ? t('logIn') : t('continue')}
 							</Button>
 						</Form>
 						<Divider />
 						<List bulleted horizontal link className={styles.list}>
 							<List.Item as="a" className={styles.listItem} onClick={toggleForgetPasswordHandler}>
-								Can&apos;t login
+								{t('cantLogin')}
 							</List.Item>
 							<List.Item as="a" className={styles.listItem} onClick={toggleSignUpHandler}>
-								Sign up for an account
+								{t('signUpForAnAccount')}
 							</List.Item>
 						</List>
 					</Segment>
