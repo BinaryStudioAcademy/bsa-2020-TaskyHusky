@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Header, Button, Grid, Table, Label, Icon } from 'semantic-ui-react';
 import { Redirect } from 'react-router-dom';
-import style from './styles.module.scss';
 import { getByKey } from 'services/issue.service';
 import UpdateIssueModal from 'containers/UpdateIssueModal';
 import { ContextProvider } from 'containers/CreateIssueModal/logic/context';
@@ -38,31 +37,19 @@ const IssuePage: React.FC<Props> = ({ match }) => {
 		<DefaultPageWrapper>
 			<main className="fill">
 				{redirecting ? <Redirect to="/createIssue" /> : ''}
-				<div className={style.siteHeader}>
-					<Grid className="fill" textAlign="center" verticalAlign="middle" columns="3">
-						<Grid.Column>
-							<Header as="h1" color="blue">
-								TaskyHusky
-							</Header>
-						</Grid.Column>
-						<Grid.Column>
-							<Header as="h2">Issue #{issue.issueKey}</Header>
-						</Grid.Column>
-						<Grid.Column>
-							<Button.Group>
-								<Button primary onClick={() => setRedirecting(true)}>
-									Add new issue
-								</Button>
-								<Button secondary inverted onClick={() => openEditModal()}>
-									Edit issue
-								</Button>
-							</Button.Group>
-						</Grid.Column>
-					</Grid>
-				</div>
 				<Grid columns="1" textAlign="center" className="fluid" style={{ marginTop: 50 }}>
 					<Grid.Column style={{ maxWidth: 700 }}>
-						<Header as="h1">{issue.summary}</Header>
+						<Button.Group>
+							<Button primary onClick={() => setRedirecting(true)}>
+								Add new issue
+							</Button>
+							<Button secondary inverted onClick={() => openEditModal()}>
+								Edit issue
+							</Button>
+						</Button.Group>
+						<Header as="h1">
+							{issue.summary} #{issue.issueKey}
+						</Header>
 						{issue.description}
 						<Table definition>
 							<Table.Body>
