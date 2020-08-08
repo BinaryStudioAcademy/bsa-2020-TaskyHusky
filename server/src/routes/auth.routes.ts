@@ -6,7 +6,9 @@ import register from '../middleware/register.middleware';
 const router = Router();
 const authController = new AuthController();
 
-router.post('/login', logIn, authController.sendUser);
-router.post('/register', register, authController.sendUser);
+router
+	.post('/login', logIn, authController.sendUser)
+	.post('/register', register, authController.sendUser)
+	.get('/profile', authController.sendExistingProfile);
 
 export default router;

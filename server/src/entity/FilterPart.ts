@@ -1,25 +1,23 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, JoinTable } from 'typeorm';
 import { FilterDefinition } from './FilterDefinition';
 import { Filter } from './Filter';
-// import User from './User';
+import { User } from './User';
 
 @Entity()
 export class FilterPart {
 	@PrimaryGeneratedColumn('uuid')
 	id!: string;
 
-	@OneToOne(type => Filter, filter => filter.id)
-	@JoinColumn()
-    filter?: Filter;
-	
-	@OneToOne(type => FilterDefinition, filterDef => filterDef.id)
-	@JoinColumn()
-	filterDef?: FilterDefinition;
+	@Column()
+	filterId?: string;
 
-	// @ManyToMany(type => User)
-	// @Column()
-	// members?: User[];
-	
+	@Column()
+	filterDefId?: string;
+
+	@ManyToMany((type) => User)
+	@JoinTable()
+	members?: User[];
+
 	@Column()
 	searchText?: string;
 }

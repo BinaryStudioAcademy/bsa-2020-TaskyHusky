@@ -6,10 +6,14 @@
 	"scripts": {
 		"start": "ts-node-dev --respawn --transpile-only index.ts",
 		"start:debug": "ts-node-dev --inspect=4321 --respawn --transpile-only index.ts",
+		"prod": "ts-node --transpile-only index.ts",
 		"typeorm": "node --require ts-node/register ./node_modules/typeorm/cli.js",
 		"typeorm:dropDB": "npm run typeorm schema:drop",
 		"lint": "eslint . --ext .ts",
-		"update-webapi": "ts-node scripts/update_webapi.ts"
+		"update-webapi": "ts-node scripts/update_webapi.ts",
+		"generate-seed": "ts-node node_modules/typeorm/cli.js migration:create -d src/seeders -n",
+		"run-seeds": "ts-node node_modules/typeorm/cli.js migration:run",
+		"revert-seeds": "ts-node node_modules/typeorm/cli.js migration:revert"
 	},
 	"keywords": [],
 	"author": "",

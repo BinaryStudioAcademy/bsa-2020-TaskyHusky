@@ -1,8 +1,21 @@
 import callWebApi from 'helpers/callApi.helper';
+import { User } from 'containers/LoginPage/logic/state';
 
-export const registerUser = async (email: string, password: string): Promise<WebApi.Result.UserAuthResult | null> => {
+export const registerUser = async (settings: Partial<WebApi.Entities.User>) => {
 	const res = await callWebApi({
 		endpoint: 'auth/register',
+		method: 'POST',
+		body: {
+			...settings,
+		},
+	});
+
+	return (await res.json()) as WebApi.Result.UserAuthResult;
+};
+
+export const loginUser = async (email: string, password: string): Promise<WebApi.Result.UserAuthResult | null> => {
+	const res = await callWebApi({
+		endpoint: 'auth/login',
 		method: 'POST',
 		body: {
 			email,
@@ -10,10 +23,14 @@ export const registerUser = async (email: string, password: string): Promise<Web
 		},
 	});
 
-	if (res.status > 399) {
-		// Replace this with error handling (when there will be a handler on server)
-		return null;
-	}
-
 	return (await res.json()) as WebApi.Result.UserAuthResult;
+};
+
+export const getProfile = async (): Promise<User> => {
+	const res = await callWebApi({
+		endpoint: 'auth/profile',
+		method: 'GET',
+	});
+
+	return (await res.json()) as User;
 };

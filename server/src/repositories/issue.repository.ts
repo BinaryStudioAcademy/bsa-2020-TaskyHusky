@@ -5,24 +5,28 @@ const RELS = ['priority', 'type'];
 
 @EntityRepository(Issue)
 export class IssueRepository extends Repository<Issue> {
-    findAll() {
-        return this.find({ relations: RELS });
-    }
+	findAll() {
+		return this.find({ relations: RELS });
+	}
 
-    findOneById(id: string) {
-        return this.findOneOrFail({ where: { id }, relations: RELS });
-    }
+	findOneById(id: string) {
+		return this.findOneOrFail({ where: { id }, relations: RELS });
+	}
 
-    createOne(data: Issue) {
-        const entity = this.create(data);
-        return this.save(entity);
-    }
+	findOneByKey(key: string) {
+		return this.findOneOrFail({ where: { issueKey: key }, relations: RELS });
+	}
 
-    updateOneById(id: string, data: Issue) {
-        return this.update(id, data);
-    }
+	createOne(data: Issue) {
+		const entity = this.create(data);
+		return this.save(entity);
+	}
 
-    deleteOneById(id: string) {
-        return this.delete(id);
-    }
+	updateOneById(id: string, data: Issue) {
+		return this.update(id, data);
+	}
+
+	deleteOneById(id: string) {
+		return this.delete(id);
+	}
 }

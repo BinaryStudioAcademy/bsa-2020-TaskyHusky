@@ -1,5 +1,9 @@
 import qs from 'qs';
 import { LocalStorageKeys } from 'constants/LocalStorageKeys';
+import { WebApiException } from 'typings/webApiException';
+
+const BASE_URL = process.env.REACT_APP_API_BASE_URL ?? '/';
+const API = 'api/';
 
 interface RequestArgs {
 	endpoint: string;
@@ -23,20 +27,36 @@ type Body =
 export default async function callWebApi(args: RequestArgs): Promise<Response> {
 	try {
 		const res: Response = await fetch(getUrl(args), getArgs(args));
+		await throwIfResponseFailed(res);
+
 		return res;
 	} catch (err) {
 		throw err;
 	}
 }
 
-const API = '/api/';
+export async function throwIfResponseFailed(res: Response) {
+	if (!res.ok) {
+		const exception: WebApiException = {
+			status: res.status,
+			statusText: res.statusText,
+			url: res.url,
+			clientException: null,
+		};
+
+		try {
+			exception.clientException = await res.json();
+		} catch {}
+		throw exception;
+	}
+}
 
 const getUrl = (args: RequestArgs): RequestInfo =>
-	API + args.endpoint + (args.query ? `?${qs.stringify(args.query)}` : '');
+	BASE_URL + API + args.endpoint + (args.query ? `?${qs.stringify(args.query)}` : '');
 
 const getArgs = (args: RequestArgs): RequestInit => {
 	const headers: Headers | string[][] | Record<string, string> | undefined = {};
-	const token = sessionStorage.getItem(LocalStorageKeys.SESSION_TOKEN);
+	const token = localStorage.getItem(LocalStorageKeys.SESSION_TOKEN);
 	let body: Body;
 
 	if (token && !args.skipAuthorization) {
