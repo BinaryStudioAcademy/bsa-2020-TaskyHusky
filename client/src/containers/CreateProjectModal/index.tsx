@@ -2,6 +2,7 @@ import React, { useState, ChangeEvent } from 'react';
 import { Modal, Button, Form, Checkbox, Image, Card } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
 
 import kanbanImg from '../../assets/images/kanban.svg';
 import scrumImg from '../../assets/images/scrum.svg';
@@ -31,7 +32,16 @@ const templatesInformation = {
 
 const CreateProjectModal = () => {
 	const dispatch = useDispatch();
-	const { isLoading, isModalOpened } = useSelector((rootState: RootState) => rootState.createProject);
+	const history = useHistory();
+
+	const { isLoading, isModalOpened, isProjectCreated } = useSelector(
+		(rootState: RootState) => rootState.createProject,
+	);
+
+	if (isProjectCreated) {
+		history.push(history.location.pathname + '/RapidBoard');
+		dispatch(actions.resetState());
+	}
 
 	const [isKeyTouched, setIsKeyTouched] = useState(false);
 	const [isTemplatesView, setIsTemplatesView] = useState(false);

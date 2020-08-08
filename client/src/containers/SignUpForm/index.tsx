@@ -1,13 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Button, Divider, Icon, Popup } from 'semantic-ui-react';
 import PasswordInput from 'components/common/PasswordInput';
 import validator from 'validator';
-import { registerUser } from 'services/auth.service';
 import { setToken } from 'helpers/setToken.helper';
 import { Redirect } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import * as actions from 'containers/LoginPage/logic/actions';
+import { RootState } from 'typings/rootState';
 import styles from './styles.module.scss';
 
 const SignUpForm: React.FC = () => {
+	const dispatch = useDispatch();
+	const authStore = useSelector((rootStore: RootState) => rootStore.auth);
+
 	const [email, setEmail] = useState<string>('');
 	const [emailValid, setEmailValid] = useState<boolean>(true);
 	const [password, setPassword] = useState<string>('');
@@ -20,26 +25,21 @@ const SignUpForm: React.FC = () => {
 
 	const buttonDisabled = !(password && passwordValid && email && emailValid && firstName && firstNameValid);
 
+	useEffect(() => {
+		if (!!authStore.jwtToken) {
+			setToken(authStore.jwtToken);
+			setLoading(false);
+			setRedirecting(true);
+		}
+	}, [authStore.jwtToken, authStore.isAuthorized, redirecting]);
+
 	const submit = async () => {
 		if (buttonDisabled) {
 			return;
 		}
 
 		setLoading(true);
-
-		const result: WebApi.Result.UserAuthResult | null = await registerUser({
-			email,
-			password,
-			firstName,
-			lastName,
-		});
-
-		setLoading(false);
-
-		if (result) {
-			setToken(result.jwtToken);
-			setRedirecting(true);
-		}
+		dispatch(actions.registerUserTrigger({ email, password, firstName, lastName }));
 	};
 
 	return (

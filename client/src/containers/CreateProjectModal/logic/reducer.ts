@@ -26,12 +26,18 @@ export const createProjectReducer = createReducer<CreateProjectsState>(initialSt
 			...state,
 			isLoading: false,
 			isModalOpened: false,
+			isProjectCreated: true,
 		};
 	},
 	[actionTypes.FAIL_CREATING_PROJECT](state) {
 		return {
 			...state,
 			isLoading: false,
+		};
+	},
+	[actionTypes.RESET_STATE]() {
+		return {
+			...initialState,
 		};
 	},
 });
