@@ -32,7 +32,7 @@ class ProjectsController {
 	createProject = async (req: Request, res: Response): Promise<void> => {
 		const projectsRepository = getCustomRepository(ProjectsRepository);
 		const { id: userId } = req.user as User;
-		const project = req.body;
+		const { project } = req.body;
 		project.creatorID = userId;
 
 		try {
