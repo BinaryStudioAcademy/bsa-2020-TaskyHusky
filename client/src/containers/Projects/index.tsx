@@ -4,10 +4,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'typings/rootState';
 import * as actions from './logic/actions';
 
+import Options from './../../components/common/Options';
 import CreateProjectModal from '../CreateProjectModal';
 import styles from './styles.module.scss';
 import Spinner from 'components/common/Spinner';
-import Options from 'components/Options';
 import { setProjectActions } from './config/projectActions';
 import { useHistory } from 'react-router-dom';
 
