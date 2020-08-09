@@ -9,4 +9,10 @@ export const userProfileReducer = createReducer<UserProfileState>(initialState, 
 			...action.partialState,
 		};
 	},
+	[actionTypes.DELETE_USER](state) {
+		return {
+			...state,
+			...initialState,
+		};
+	},
 });

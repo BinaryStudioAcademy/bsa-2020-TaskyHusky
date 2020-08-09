@@ -1,8 +1,7 @@
 @import 'styles/variables.scss';
 
 .inputView {
-  margin-left: 12px;
-  border: none;
+  border: 2px solid #1a9ced;
   width: 100%;
   height: 40px;
   color: black;
@@ -14,11 +13,6 @@
 
   &:hover {
     background-color: #e1e5e7;
-  }
-
-  &:focus {
-    border: 2px solid #1a9ced;
-    color: black;
   }
 }
 

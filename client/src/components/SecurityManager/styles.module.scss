@@ -1,0 +1,9 @@
+@import 'styles/mixins.scss';
+
+.container {
+  @include profile-container;
+}
+
+.submitButton {
+  margin-top: 20px !important;
+}

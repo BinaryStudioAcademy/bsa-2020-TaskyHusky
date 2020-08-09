@@ -1,0 +1,15 @@
+@import 'styles/mixins.scss';
+
+.container {
+  @include profile-container;
+  display: flex;
+  flex-direction: column;
+}
+
+.card {
+  @include profile-card;
+}
+
+.header {
+  margin: 19px 0 0 19px;
+}

@@ -1,19 +1,17 @@
 import React from 'react';
 import { Header, Button } from 'semantic-ui-react';
 import styles from './styles.module.scss';
-import { UserProfileState } from 'containers/ProfilePage/logiс/state';
+import { PropsExtendedData } from 'containers/ProfilePage';
 
-interface Props {
-	user: Partial<UserProfileState>;
-	isCurrentUser: boolean;
-}
-
-const ProfilePicture: React.FC<Props> = (props: Props) => {
+const ProfilePicture: React.FC<PropsExtendedData> = (props: PropsExtendedData) => {
 	const {
-		user: { avatar, username, firstName, lastName },
+		user: { avatar, username, firstName, lastName, editMode },
 		isCurrentUser,
+		showManager,
 	} = props;
+
 	const getInitials = () => (firstName && lastName ? firstName[0] + lastName[0] : '');
+
 	return (
 		<div className={styles.container}>
 			<div className={styles.mainInfo}>
@@ -31,7 +29,15 @@ const ProfilePicture: React.FC<Props> = (props: Props) => {
 				</Header>
 				{username && <p className={styles.mainInfo__username}>{username}</p>}
 			</div>
-			{isCurrentUser && <Button className={styles.managerButton}>Manage your account</Button>}
+			{isCurrentUser && showManager && (
+				<Button
+					className={styles.managerButton}
+					onClick={() => showManager('profile')}
+					disabled={!editMode ? false : true}
+				>
+					Manage your account
+				</Button>
+			)}
 		</div>
 	);
 };

@@ -21,3 +21,11 @@ export const requestUpdateUser = async (userData: Partial<UserProfileState>): Pr
 
 	return (await res.json()) as WebApi.Entities.UserProfile;
 };
+
+export const requestDeleteUser = async (): Promise<void> => {
+	await callWebApi({
+		method: 'DELETE',
+		endpoint: 'user/',
+		skipAuthorization: false,
+	});
+};

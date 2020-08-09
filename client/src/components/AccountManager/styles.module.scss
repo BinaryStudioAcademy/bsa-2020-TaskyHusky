@@ -1,0 +1,21 @@
+@import 'styles/mixins.scss';
+
+.container {
+  @include profile-container;
+}
+
+.footer {
+  &__button {
+    margin-right: 20px !important;
+  }
+
+  &__link {
+    position: relative;
+  }
+
+  &__icon {
+    position: absolute;
+    right: -20px;
+    top: -2px;
+  }
+}

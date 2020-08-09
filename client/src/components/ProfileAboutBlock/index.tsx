@@ -13,22 +13,37 @@ const ProfileAboutBlock: React.FC<PropsUserData> = (props: PropsUserData) => {
 			</Header>
 			{(user.jobTitle || isCurrentUser) && (
 				<ProfileAboutItem
-					data={{ text: user.jobTitle ? user.jobTitle : '', name: 'jobTitle', isCurrentUser }}
+					data={{ text: user.jobTitle || '', placeholder: 'Your job title', name: 'jobTitle', isCurrentUser }}
 				/>
 			)}
 			{(user.department || isCurrentUser) && (
 				<ProfileAboutItem
-					data={{ text: user.department ? user.department : '', name: 'department', isCurrentUser }}
+					data={{
+						text: user.department || '',
+						placeholder: 'Your department',
+						name: 'department',
+						isCurrentUser,
+					}}
 				/>
 			)}
 			{(user.organization || isCurrentUser) && (
 				<ProfileAboutItem
-					data={{ text: user.organization ? user.organization : '', name: 'organization', isCurrentUser }}
+					data={{
+						text: user.organization || '',
+						placeholder: 'Your organization',
+						name: 'organization',
+						isCurrentUser,
+					}}
 				/>
 			)}
 			{(user.location || isCurrentUser) && (
 				<ProfileAboutItem
-					data={{ text: user.location ? user.location : '', name: 'location', isCurrentUser }}
+					data={{
+						text: user.location || '',
+						placeholder: 'Your organization',
+						name: 'location',
+						isCurrentUser,
+					}}
 				/>
 			)}
 		</Container>
