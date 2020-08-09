@@ -1,5 +1,7 @@
-import { BreadcrumbItem } from '../../../components/common/Breadcrumbs/index';
 import { History } from 'history';
+import i18n from 'i18next';
+
+import { BreadcrumbItem } from 'components/common/Breadcrumbs/index';
 
 interface Params {
 	projectName: string;

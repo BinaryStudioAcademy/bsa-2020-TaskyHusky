@@ -7,7 +7,7 @@ import Options from 'components/common/Options';
 import { setBreadcrumbs } from './config/breadcrumbs';
 import { setProjectActions } from './config/projectActions';
 
-import mockAvatar from './../../assets/images/projectAvatars/viewavatar.svg';
+import mockAvatar from 'assets/images/projectAvatars/viewavatar.svg';
 import styles from './styles.module.scss';
 
 interface Props {}
