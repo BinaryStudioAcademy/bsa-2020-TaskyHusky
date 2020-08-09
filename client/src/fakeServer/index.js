@@ -12,7 +12,7 @@ export default new Server({
 	routes() {
 
 
-		this.get('/people', (sheme, request) => {
+		/*this.get('/people', (sheme, request) => {
 			const { name: nameFilter } = request.queryParams;
 			if (nameFilter) {
 				return people.filter((people) => {
@@ -28,7 +28,7 @@ export default new Server({
 				return teams.filter((team) => team.name.toLowerCase().indexOf(nameFilter.toLowerCase()) !== -1);
 			}
 			return teams;
-		});
+		});*/
 
 		this.post('/teams', () => teams, { timing: 3000 });
 	},

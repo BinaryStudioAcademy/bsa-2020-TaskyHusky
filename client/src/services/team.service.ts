@@ -1,4 +1,5 @@
 import callWebApi from '../helpers/callApi.helper';
+import { Team } from '../fakeServer/mockData/teams';
 
 const members = [
 	{
@@ -26,7 +27,7 @@ export const fetchTeams = async () => {
 		endpoint: 'fake/teams',
 	});
 
-	return await res.json();
+	return (await res.json()) as Team[];
 };
 
 export const fetchTeamsByNameFilter = async (name: string | undefined) => {

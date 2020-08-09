@@ -1,6 +1,6 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Header, Button } from 'semantic-ui-react';
+import { Header, Button, Loader, Message } from 'semantic-ui-react';
 import PeopleList from '../../components/PeopleList';
 import TeamsList from '../../components/TeamsList';
 import AddTeamPopup from '../../containers/CreateTeamModal';
@@ -9,22 +9,29 @@ import { fetchPeople } from '../../services/people.service';
 import { fetchTeams } from '../../services/team.service';
 import style from './style.module.scss';
 import SearchField from '../../containers/SearchPeopleAndTeamField';
+import { Team } from '../../fakeServer/mockData/teams';
 
 const People: React.FC = (): ReactElement => {
 	const history = useHistory();
-	const [people, setPeople] = useState<null | WebApi.Entities.UserProfile[]>(null);
-	const [teams, setTeams] = useState(null);
+	const [isLoading, setIsLoading] = useState<boolean>(true);
+	const [isError, setIsError] = useState<null | string>(null);
+	const [people, setPeople] = useState<WebApi.Entities.UserProfile[]>([]);
+	const [teams, setTeams] = useState<Team[]>([]);
 	const [isOpenAddNewTeamPopup, setIsOpenAddNewTeamPopup] = useState(false);
 
-	useEffect(() => {
-		(async function getPeople() {
-			const response = await fetchPeople();
-			setPeople(response);
-		})();
-		(async function getTeams() {
-			const response = await fetchTeams();
-			setTeams(response);
-		})();
+	useEffect((): void => {
+		Promise.all([fetchPeople(), fetchTeams()])
+			.then((response) => {
+				const [people, teams] = response;
+				setPeople(people);
+				setTeams(teams);
+			})
+			.catch((error) => {
+				setIsError(`Status: ${error.status}. ${error.statusText}`);
+			})
+			.finally(() => {
+				setIsLoading(false);
+			});
 	}, []);
 
 	const redirectToPersonProfile = (id: string) => {
@@ -45,15 +52,25 @@ const People: React.FC = (): ReactElement => {
 					</Button>
 				</div>
 				<SearchField />
-				<Header as="h3">People</Header>
-				<PeopleList
-					people={people}
-					handlerClickItem={redirectToPersonProfile}
-					className={style.listContainer}
-				/>
-				<Header as="h3">Your teams</Header>
-				<TeamsList teams={teams} handlerClickItem={redirectToTeamPage} className={style.listContainer} />
-				<AddTeamPopup isOpen={isOpenAddNewTeamPopup} closeClb={() => setIsOpenAddNewTeamPopup(false)} />
+				{isLoading && <Loader active inline={'centered'} />}
+				{isError && <Message color={'red'}>{isError}</Message>}
+				{!isLoading && !isError && (
+					<>
+						<Header as="h3">People</Header>
+						<PeopleList
+							people={people}
+							handlerClickItem={redirectToPersonProfile}
+							className={style.listContainer}
+						/>
+						<Header as="h3">Your teams</Header>
+						<TeamsList
+							teams={teams}
+							handlerClickItem={redirectToTeamPage}
+							className={style.listContainer}
+						/>
+						<AddTeamPopup isOpen={isOpenAddNewTeamPopup} closeClb={() => setIsOpenAddNewTeamPopup(false)} />
+					</>
+				)}
 			</main>
 		</DefaultPageWrapper>
 	);
