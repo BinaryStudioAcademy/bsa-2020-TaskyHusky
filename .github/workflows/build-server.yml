@@ -14,7 +14,9 @@ jobs:
         cd server
         npm install
     - name: ESlint
-      run: npm run lint
+      run: |
+        cd server
+        npm run lint
     - name: Generate deployment package
       run: |
         zip -r ../deploy.zip .
