@@ -11,7 +11,7 @@ interface Params {
 export const setBreadcrumbs = ({ projectName, history }: Params): BreadcrumbItem[] => [
 	{
 		key: 'Projects',
-		content: 'Projects',
+		content: i18n.t('projects'),
 		link: true,
 		onClickAction: () => history.push('/projects'),
 	},
@@ -23,7 +23,7 @@ export const setBreadcrumbs = ({ projectName, history }: Params): BreadcrumbItem
 	},
 	{
 		key: 'Project settings',
-		content: 'Project settings',
+		content: i18n.t('project_settings'),
 		active: true,
 	},
 ];

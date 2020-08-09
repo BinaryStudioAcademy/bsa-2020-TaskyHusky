@@ -1,3 +1,4 @@
+import i18n from 'i18next';
 import { ItemProps } from './../../../components/common/Options/index';
 
 interface Params {
@@ -8,7 +9,7 @@ interface Params {
 export const setProjectActions = ({ id, onTrash }: Params): ItemProps[] => [
 	{
 		id,
-		text: 'Move to trash',
+		text: i18n.t('move_to_trash'),
 		onClickAction: onTrash,
 	},
 ];
