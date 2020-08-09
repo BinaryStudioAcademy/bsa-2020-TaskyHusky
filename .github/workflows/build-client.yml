@@ -12,6 +12,8 @@ jobs:
       run: |
         cd client
         npm install
+    - name: ESlint
+      uses: eslint/github-action@v0
     - name: Build
       env:
         REACT_APP_API_BASE_URL: http://taskyhuskystage-env.eba-ffh8yemp.us-east-1.elasticbeanstalk.com/
