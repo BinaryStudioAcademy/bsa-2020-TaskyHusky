@@ -12,32 +12,36 @@ import ManagerAsideBlock from 'components/ManagerAsideBlock';
 const ProfileAside: React.FC<PropsExtendedData> = (props: PropsExtendedData) => {
 	const { user, isCurrentUser, mockData, showManager } = props;
 	return (
-		<aside className={styles.userInfo}>
-			<ProfilePicture
-				user={{
-					avatar: user.avatar,
-					firstName: user.firstName,
-					lastName: user.lastName,
-					username: user.username,
-				}}
-				isCurrentUser={isCurrentUser}
-				showManager={showManager}
-			/>
-			<Segment>
-				{user.editMode ? (
-					<ManagerAsideBlock showManager={showManager} />
-				) : (
-					<>
-						<ProfileAboutBlock user={user} isCurrentUser={isCurrentUser} />
-						<ProfileContacntBlock user={user} isCurrentUser={isCurrentUser} />
-						<ProfileTeamBlock user={user} isCurrentUser={isCurrentUser} mockData={mockData} />
-						<Link to="#" className={styles.policyLink}>
-							View privacy policy
-						</Link>
-					</>
-				)}
-			</Segment>
-		</aside>
+		<>
+			{user && (
+				<aside className={styles.userInfo}>
+					<ProfilePicture
+						user={{
+							avatar: user.avatar,
+							firstName: user.firstName,
+							lastName: user.lastName,
+							username: user.username,
+						}}
+						isCurrentUser={isCurrentUser}
+						showManager={showManager}
+					/>
+					<Segment>
+						{user.editMode ? (
+							<ManagerAsideBlock showManager={showManager} />
+						) : (
+							<>
+								<ProfileAboutBlock user={user} isCurrentUser={isCurrentUser} />
+								<ProfileContacntBlock user={user} isCurrentUser={isCurrentUser} />
+								<ProfileTeamBlock user={user} isCurrentUser={isCurrentUser} mockData={mockData} />
+								<Link to="#" className={styles.policyLink}>
+									View privacy policy
+								</Link>
+							</>
+						)}
+					</Segment>
+				</aside>
+			)}
+		</>
 	);
 };
 

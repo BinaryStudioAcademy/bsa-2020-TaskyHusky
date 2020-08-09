@@ -3,7 +3,7 @@ import { Switch } from 'react-router-dom';
 import PrivateRoute from 'components/PrivateRoute';
 import Login from 'pages/LogIn';
 import Team from 'pages/Team';
-import ProfilePage from 'containers/ProfilePage';
+import Profile from 'pages/Profile';
 import PublicRoute from 'components/PublicRoute';
 import SignUp from 'pages/SignUp';
 import Filters from 'pages/Filters';
@@ -39,7 +39,7 @@ const Routing: React.FC = () => {
 			<PrivateRoute exact path="/header" component={Header} />
 			<PrivateRoute exact path="/projects" component={ProjectsPage} />
 			<PrivateRoute exact path="/team/:id" component={Team} />
-			<PublicRoute exact restricted={false} path="/profile/:id" component={ProfilePage} />
+			<PrivateRoute exact path="/profile/:id" component={Profile} />
 			<PrivateRoute exact path="/filters" component={Filters} />
 		</Switch>
 	);

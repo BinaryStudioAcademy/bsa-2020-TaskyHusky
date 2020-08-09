@@ -10,7 +10,8 @@ export class UserRepository extends Repository<UserProfile> {
 		if (!user) {
 			throw new Error('Can not find such user');
 		}
-		return user;
+		const { password, ...rest } = user;
+		return rest;
 	}
 
 	async getByEmail(email: string): Promise<any> {

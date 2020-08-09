@@ -16,7 +16,7 @@ const ProfileManager = () => {
 					isCurrentUser={true}
 					contentData={{
 						text: user.firstName,
-						name: 'firstname',
+						name: 'firstName',
 						placeholder: 'Your firstname',
 						title: 'First name',
 					}}
@@ -25,7 +25,7 @@ const ProfileManager = () => {
 					isCurrentUser={true}
 					contentData={{
 						text: user.lastName,
-						name: 'lastname',
+						name: 'lastName',
 						placeholder: 'Your lastname',
 						title: 'Last name',
 					}}
