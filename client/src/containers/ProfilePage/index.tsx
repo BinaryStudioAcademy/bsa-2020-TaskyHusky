@@ -55,11 +55,15 @@ const ProfilePage = ({ match: { params } }: { match: any }) => {
 
 	useEffect(() => {
 		dispatch(actions.requestGetUser({ id: params.id }));
-	}, []);
+	}, [dispatch, params.id]);
 
 	useEffect(() => {
 		setUser({ ...user, ...userData });
-	}, [userData]);
+	}, [userData, user]);
+
+	if (!user.id) {
+		return null;
+	}
 
 	return (
 		<div className={styles.wrapper}>
