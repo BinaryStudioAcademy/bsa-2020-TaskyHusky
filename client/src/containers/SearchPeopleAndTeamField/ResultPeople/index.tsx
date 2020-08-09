@@ -1,7 +1,7 @@
 import React from 'react';
 import { Image } from 'semantic-ui-react';
 
-const ResultPeople = ({ firstName, lastName, avatar, email, id }: WebApi.Entities.UserProfile) => (
+const ResultPeople: React.FC<WebApi.Entities.UserProfile> = ({ firstName, lastName, avatar, email, id }) => (
 	<div>
 		<Image src={avatar} size="small" rounded centered wrapped />
 		<b>
@@ -11,4 +11,4 @@ const ResultPeople = ({ firstName, lastName, avatar, email, id }: WebApi.Entitie
 	</div>
 );
 
-export default ResultPeople;
+export default React.memo(ResultPeople);

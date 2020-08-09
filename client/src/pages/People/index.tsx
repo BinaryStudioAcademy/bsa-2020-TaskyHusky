@@ -14,7 +14,7 @@ import { Team } from '../../fakeServer/mockData/teams';
 const People: React.FC = (): ReactElement => {
 	const history = useHistory();
 	const [isLoading, setIsLoading] = useState<boolean>(true);
-	const [isError, setIsError] = useState<null | string>(null);
+	const [error, setIsError] = useState<null | string>(null);
 	const [people, setPeople] = useState<WebApi.Entities.UserProfile[]>([]);
 	const [teams, setTeams] = useState<Team[]>([]);
 	const [isOpenAddNewTeamPopup, setIsOpenAddNewTeamPopup] = useState(false);
@@ -53,8 +53,8 @@ const People: React.FC = (): ReactElement => {
 				</div>
 				<SearchField />
 				{isLoading && <Loader active inline={'centered'} />}
-				{isError && <Message color={'red'}>{isError}</Message>}
-				{!isLoading && !isError && (
+				{error && <Message color={'red'}>{error}</Message>}
+				{!isLoading && !error && (
 					<>
 						<Header as="h3">People</Header>
 						<PeopleList

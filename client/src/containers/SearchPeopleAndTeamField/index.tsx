@@ -41,7 +41,8 @@ const SearchField: React.FC = (): ReactElement => {
 
 	const resultRender = (value: any): ReactElement => {
 		if (value.firstName) {
-			return ResultPeople(value);
+			const { firstName, lastName, id, email, avatar } = value;
+			return <ResultPeople id={id} firstName={firstName} lastName={lastName} email={email} avatar={avatar} />;
 		}
 
 		const { name, color, id, creator } = value;
