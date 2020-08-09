@@ -15,3 +15,7 @@ export type UpdateUser = {
 };
 
 export type RequestUpdateUser = Partial<UserProfileState>;
+
+export type RequestDeleteUser = null;
+
+export type DeleteUser = null;
