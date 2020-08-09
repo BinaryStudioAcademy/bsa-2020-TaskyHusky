@@ -1,13 +1,20 @@
+namespace WebApi.Board {
+	export enum BoardType {
+		Scrum = 'Scrum',
+		Kanban = 'Kanban',
+	}
+}
+
 namespace WebApi.Issue {
 	interface PartialIssue {
 		id?: string;
-		type?: string;
+		type: string;
 		summary?: string;
 		boardColumnID?: string;
 		labels?: string[];
 		attachments?: string[];
 		links?: string[];
-		priority?: string;
+		priority: string;
 		description?: string;
 		sprintID?: string;
 		projectID?: string;
@@ -24,6 +31,41 @@ namespace WebApi.Result {
 			email: string;
 		};
 		jwtToken: string;
+	}
+
+	interface IssueResult {
+		id: string;
+		type: {
+			id: string;
+			color: string;
+			title: string;
+			icon: string;
+		};
+		summary?: string;
+		boardColumnID?: string;
+		labels?: string[];
+		attachments?: string[];
+		links?: string[];
+		priority: {
+			id: string;
+			color: string;
+			title: string;
+			icon: string;
+		};
+		description?: string;
+		sprintID?: string;
+		projectID?: string;
+		issueKey?: string;
+		assignedID?: string;
+		creatorID?: string;
+	}
+}
+
+namespace WebApi.Team {
+	export interface TeamModel {
+		id?: string;
+		description?: string;
+		links?: string[];
 	}
 }
 
@@ -48,8 +90,11 @@ namespace WebApi.User {
 namespace WebApi.Entities {
 	interface Board {
 		id: string;
-		boardType?: string;
+		boardType: BoardType;
+		name: string;
+		location: string;
 		columns?: BoardColumn[];
+		createdBy: UserProfile;
 	}
 
 	interface BoardColumn {
@@ -63,7 +108,7 @@ namespace WebApi.Entities {
 	interface Filter {
 		id: string;
 		owner?: UserProfile;
-		ownerId?: UserProfile;
+		ownerId?: string;
 		name?: string;
 		staredBy?: UserProfile[];
 	}
@@ -117,14 +162,26 @@ namespace WebApi.Entities {
 	}
 
 	interface Projects {
-		projectID: string;
+		id: string;
 		name: string;
 		key: string;
-		projectType: string;
-		category: string;
+		category?: string;
 		defaultAssigneeID?: string;
 		leadID?: string;
-		creatorID?: string;
+		creatorID: string;
+	}
+
+	interface Teams {
+		id: string;
+		teamId?: TeamsPeople[];
+		description?: string;
+		links?: string;
+	}
+
+	interface TeamsPeople {
+		id: string;
+		userId?: UserProfile;
+		teamId?: Teams;
 	}
 
 	interface UserProfile {
@@ -140,6 +197,8 @@ namespace WebApi.Entities {
 		jobTitle?: string;
 		userSettingsId?: string;
 		password?: string;
+		teams?: TeamsPeople[];
+		boards?: Board[];
 		filters?: Filter[];
 	}
 }

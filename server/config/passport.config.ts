@@ -7,6 +7,8 @@ import { authErrorMessages, EMAIL_FIELD } from '../src/constants/auth.constants'
 import { hashPassword, passwordValid } from '../src/helpers/password.helper';
 import { UserRepository } from '../src/repositories/user.repository';
 import { UserModel } from '../src/models/User';
+import { ErrorResponse } from '../src/helpers/errorHandler.helper';
+import HttpStatusCode from '../src/constants/httpStattusCode.constants';
 
 passport.use(
 	'local',
@@ -17,13 +19,18 @@ passport.use(
 		async (email: string, password: string, next): Promise<void> => {
 			const userRepository = getCustomRepository(UserRepository);
 			const user = await userRepository.getByEmail(email);
-
 			if (!user) {
-				return next(new Error(authErrorMessages.INCORRECT_CREDENTIALS), null);
+				return next(
+					new ErrorResponse(HttpStatusCode.UNAUTHORIZED, authErrorMessages.INCORRECT_CREDENTIALS),
+					null,
+				);
 			}
 
 			if (user.password && !passwordValid(password, user.password)) {
-				return next(new Error(authErrorMessages.INCORRECT_CREDENTIALS), null);
+				return next(
+					new ErrorResponse(HttpStatusCode.UNAUTHORIZED, authErrorMessages.INCORRECT_CREDENTIALS),
+					null,
+				);
 			}
 
 			return next(null, user);
@@ -43,7 +50,7 @@ passport.use(
 			const checkingUser = await userRepository.getByEmail(email);
 
 			if (checkingUser) {
-				return next(new Error(authErrorMessages.TAKEN_EMAIL), null);
+				return next(new ErrorResponse(HttpStatusCode.UNAUTHORIZED, authErrorMessages.TAKEN_EMAIL), null);
 			}
 
 			const encodedPassword = hashPassword(password);
@@ -66,7 +73,7 @@ passport.use(
 			const user = await userRepository.getById(id);
 
 			if (!user) {
-				return next(new Error(authErrorMessages.NO_USER), null);
+				return next(new ErrorResponse(HttpStatusCode.UNAUTHORIZED, authErrorMessages.NO_USER), null);
 			}
 
 			return next(null, user);

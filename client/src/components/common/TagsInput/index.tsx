@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Input, Segment, Icon } from 'semantic-ui-react';
+import { Input, Segment, Icon, Label } from 'semantic-ui-react';
 import styles from './styles.module.scss';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
 	onChange: (tags: string[]) => void;
@@ -9,6 +10,7 @@ interface Props {
 }
 
 const TagsInput: React.FC<Props> = (props: Props) => {
+	const { t } = useTranslation();
 	const { onChange, placeholder, tags } = props;
 	const [value, setValue] = useState<string>('');
 
@@ -26,12 +28,16 @@ const TagsInput: React.FC<Props> = (props: Props) => {
 
 	return (
 		<Segment>
+			<div style={{ marginBottom: 5 }}>
+				{t('tags_input_hint_1')} <Icon name="arrow up" />
+				{t('tags_input_hint_2')}
+			</div>
 			<div className={styles.tagContainer}>
 				{tags.map((tag, i) => (
-					<div key={i} className={styles.tag}>
+					<Label key={i} color="teal" tag>
 						{tag}
 						<Icon name="close" link onClick={() => removeTag(i)} />
-					</div>
+					</Label>
 				))}
 			</div>
 			<Input
@@ -40,8 +46,9 @@ const TagsInput: React.FC<Props> = (props: Props) => {
 				value={value}
 				onChange={(event, data) => setValue(data.value)}
 				transparent
-				onKeyPress={(event: React.KeyboardEvent & { target: { value: string } }) => {
-					if (event.key === 'Enter' && value !== '') {
+				onKeyDown={(event: React.KeyboardEvent & { target: { value: string } }) => {
+					if (event.key === 'ArrowUp' && value !== '') {
+						event.preventDefault();
 						addTag(event.target.value);
 					}
 				}}

@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
 import { getCustomRepository } from 'typeorm';
 import { UserProfile } from '../entity/UserProfile';
-import { Projects } from '../entity/Projects';
 import { ProjectsRepository } from '../repositories/projects.repository';
 import { getWebError } from '../helpers/error.helper';
 
@@ -19,11 +18,10 @@ class ProjectsController {
 
 	getProject = async (req: Request, res: Response): Promise<void> => {
 		const projectsRepository = getCustomRepository(ProjectsRepository);
-		const { id: projectID } = req.params;
 
 		try {
-			await this.checkForExisting(projectID);
-			const project = await projectsRepository.findOneById(projectID);
+			const { id } = req.params;
+			const project = await projectsRepository.findOneById(id);
 			res.send(project);
 		} catch (err) {
 			res.status(404).send(getWebError(err, 404));
@@ -32,29 +30,26 @@ class ProjectsController {
 
 	createProject = async (req: Request, res: Response): Promise<void> => {
 		const projectsRepository = getCustomRepository(ProjectsRepository);
-		const { id: userId } = req.user as UserProfile;
-		const projectData = req.body as Projects;
-		const { projectID } = projectData;
-
-		projectData.creatorID = userId;
 
 		try {
-			await this.checkForNoExisting(projectID);
-			const createdProject = await projectsRepository.createOne(projectData);
+			const { id: userId } = req.user as UserProfile;
+			const { project } = req.body;
+			project.creatorID = userId;
+			const createdProject = await projectsRepository.createOne(project);
 			res.status(201).send(createdProject);
 		} catch (err) {
-			res.status(409).send(getWebError(err, 409));
+			res.status(500).send(getWebError(err, 500));
 		}
 	};
 
 	updateProject = async (req: Request, res: Response): Promise<void> => {
 		const projectsRepository = getCustomRepository(ProjectsRepository);
-		const projectData = req.body;
-		const { projectID } = projectData;
 
 		try {
-			await this.checkForExisting(projectID);
-			const updatedProject = await projectsRepository.updateOne(projectData);
+			const { project } = req.body;
+			const { id } = project;
+			await this.checkForExisting(id);
+			const updatedProject = await projectsRepository.updateOne(project);
 			res.send(updatedProject);
 		} catch (err) {
 			res.status(404).send(getWebError(err, 404));
@@ -63,33 +58,33 @@ class ProjectsController {
 
 	deleteProject = async (req: Request, res: Response): Promise<void> => {
 		const projectsRepository = getCustomRepository(ProjectsRepository);
-		const { projectID } = req.body;
 
 		try {
-			await this.checkForExisting(projectID);
-			const deletedProject = await projectsRepository.deleteOneById(projectID);
+			const { id } = req.body;
+			await this.checkForExisting(id);
+			const deletedProject = await projectsRepository.deleteOneById(id);
 			res.send(deletedProject);
 		} catch (err) {
 			res.status(404).send(getWebError(err, 404));
 		}
 	};
 
-	protected getOneProjectById = async (projectID: string) => {
+	protected getOneProjectById = async (id: string) => {
 		const projectsRepository = getCustomRepository(ProjectsRepository);
-		const project = await projectsRepository.findOneById(projectID);
+		const project = await projectsRepository.findOneById(id);
 		return project;
 	};
 
-	protected checkForExisting = async (projectID: string) => {
-		const project = await this.getOneProjectById(projectID);
+	protected checkForExisting = async (id: string) => {
+		const project = await this.getOneProjectById(id);
 
 		if (!project) {
 			throw new Error('Not found');
 		}
 	};
 
-	protected checkForNoExisting = async (projectID: string) => {
-		const project = await this.getOneProjectById(projectID);
+	protected checkForNoExisting = async (id: string) => {
+		const project = await this.getOneProjectById(id);
 
 		if (project) {
 			throw new Error('Project exists');
