@@ -9,20 +9,20 @@ import { setProjectActions } from './config/projectActions';
 
 import mockAvatar from './../../assets/images/projectAvatars/viewavatar.svg';
 import styles from './styles.module.scss';
+import { useTranslation } from 'react-i18next';
 
 interface Props {}
 
-const ProjectSettings = (props: Props) => {
-	console.log('props', props);
+const ProjectSettings = () => {
+	const { t } = useTranslation();
 	const history = useHistory();
 	const projectName = '12';
 	const id = '12';
-	const text = '12';
 	const onTrash = () => {};
 
 	const options = [
-		{ key: 'm', text: 'Unassigned', value: 'unassigned' },
-		{ key: 'f', text: 'Project Lead', value: 'projectLead' },
+		{ key: 'm', text: t('unassigned'), value: 'unassigned' },
+		{ key: 'f', text: t('project_lead'), value: 'projectLead' },
 	];
 
 	return (
@@ -31,18 +31,24 @@ const ProjectSettings = (props: Props) => {
 				<div className={styles.header_inner__breadcrumbs}>
 					<Breadcrumbs sections={setBreadcrumbs({ history, projectName })} />
 				</div>
-				<h1 className={styles.header_inner__title}>Details</h1>
+				<h1 className={styles.header_inner__title}>{t('details')}</h1>
 				<div className={styles.header__options}>
 					<Options config={setProjectActions({ id, onTrash })} />
 				</div>
 			</div>
 			<div className={styles.form__container}>
 				<Form>
-					<Form.Input className={styles.form__input} label="Name" required type="text" />
+					<Form.Input
+						className={styles.form__input}
+						label={t('name')}
+						required
+						type="text"
+						placeholder={t('project_name')}
+					/>
 					<Form.Field className={styles.form__input_key} required>
-						<label>Key</label>
+						<label>{t('key')}</label>
 						<div className={styles.form__input_container}>
-							<input placeholder="Example: QA" />
+							<input placeholder={t('example') + ': QA'} />
 							<Popup
 								trigger={
 									<Icon name="info circle" className={styles.information__icon} size={'large'} />
@@ -52,11 +58,11 @@ const ProjectSettings = (props: Props) => {
 							/>
 						</div>
 					</Form.Field>
-					<Form.Input className={styles.form__input} label="URL" type="text" />
+					<Form.Input className={styles.form__input} label="URL" type="text" placeholder={'https://www...'} />
 					<Form.Field className={styles.form__input} required>
-						<label>Project type</label>
+						<label>{t('project_type')}</label>
 						<div className={styles.form__input_container}>
-							<input placeholder="" />
+							<input placeholder={t('type')} />
 							<Popup
 								trigger={
 									<Icon name="info circle" className={styles.information__icon} size={'large'} />
@@ -67,9 +73,9 @@ const ProjectSettings = (props: Props) => {
 						</div>
 					</Form.Field>
 					<Form.Field className={styles.form__input} required>
-						<label>Project category</label>
+						<label>{t('project_category')}</label>
 						<div className={styles.form__input_container}>
-							<input placeholder="" />
+							<input placeholder={t('category')} />
 							<Popup
 								trigger={
 									<Icon name="info circle" className={styles.information__icon} size={'large'} />
@@ -80,23 +86,29 @@ const ProjectSettings = (props: Props) => {
 						</div>
 					</Form.Field>
 					<Form.Field required className={styles.form__input}>
-						<label className={styles.avatar__label}>Avatar</label>
+						<label className={styles.avatar__label}>{t('avatar')}</label>
 						<button type="button" className={styles.form__avatar}>
 							<img className={styles.avatar__img} src={mockAvatar} alt="Project avatar" />
-							<span className={styles.avatar__text}>select image</span>
+							<span className={styles.avatar__text}>{t('select_image')}</span>
 						</button>
 					</Form.Field>
 					<Form.Field className={styles.form__area}>
-						<label className={styles.avatar__label}>Description</label>
-						<TextArea placeholder="Tell us more" rows={'7'} />
+						<label className={styles.avatar__label}>{t('description')}</label>
+						<TextArea placeholder={t('project_desc')} rows={'7'} />
 					</Form.Field>
-					<Form.Input className={styles.form__input} label="Project lead" required type="text" />
+					<Form.Input
+						className={styles.form__input}
+						label={t('project_lead')}
+						placeholder={t('project_lead_name')}
+						required
+						type="text"
+					/>
 					<Form.Field className={styles.form__input}>
-						<label className={styles.avatar__label}>Default Assignee</label>
+						<label className={styles.avatar__label}>{t('default_assignee')}</label>
 						<div className={styles.form__input_container}>
 							<Form.Select
 								options={options}
-								placeholder="Unassigned"
+								placeholder={t('unassigned')}
 								className={styles.form__input_select}
 							/>
 							<Popup
@@ -104,13 +116,13 @@ const ProjectSettings = (props: Props) => {
 									<Icon name="info circle" className={styles.information__icon} size={'large'} />
 								}
 								position="top center"
-								content="The default assignee when creating issues for this project."
+								content={t('default_assignee_desc')}
 							/>
 						</div>
 					</Form.Field>
 					<div>
-						<Button primary>Save details</Button>
-						<Button>Cancel</Button>
+						<Button primary>{t('save_details')}</Button>
+						<Button>{t('cancel')}</Button>
 					</div>
 				</Form>
 			</div>
