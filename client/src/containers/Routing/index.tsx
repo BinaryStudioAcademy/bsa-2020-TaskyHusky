@@ -10,6 +10,7 @@ import Header from 'containers/Header';
 import IssuePage from 'pages/IssuePage';
 import Filters from 'pages/Filters';
 import ProjectsPage from 'pages/ProjectsPage';
+import ProjectSettings from 'containers/ProjectSettings';
 
 const Routing: React.FC = () => {
 	return (
@@ -20,6 +21,7 @@ const Routing: React.FC = () => {
 			<PrivateRoute path="/issue/:key" component={IssuePage} />
 			<PrivateRoute exact path="/header" component={Header} />
 			<PrivateRoute exact path="/projects" component={ProjectsPage} />
+			<PrivateRoute exact path="/projectSettings" component={ProjectSettings} />
 			<PrivateRoute exact path="/team/:id" component={Team} />
 			<PrivateRoute exact path="/filters" component={Filters} />
 		</Switch>

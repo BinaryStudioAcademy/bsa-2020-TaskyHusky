@@ -31,7 +31,7 @@ const Projects: React.FC = () => {
 	const filteredData = (projects || []).filter(({ name }) => searchString.test(name));
 
 	const onOpenSettings = (id: string): void => {
-		history.push(history.location.pathname + '/edit-project/' + id);
+		history.push(history.location.pathname + '/projectSettings/' + id);
 		console.log('onOpenSettings');
 	};
 	const onTrash = (id: string): void => {
