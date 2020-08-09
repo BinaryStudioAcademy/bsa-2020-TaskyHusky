@@ -2,6 +2,7 @@ name: Stage - Client Build
 on:
   push:
     branches: [dev]
+    paths: 'client/**/*.*'
 
 jobs:
   build:
