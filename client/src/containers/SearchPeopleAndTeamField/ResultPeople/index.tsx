@@ -3,7 +3,7 @@ import { Image } from 'semantic-ui-react';
 
 const ResultPeople = ({ firstName, lastName, avatar, email, id }: WebApi.Entities.UserProfile) => (
 	<div>
-		<Image src={avatar} size={'small'} rounded centered wrapped />
+		<Image src={avatar} size="small" rounded centered wrapped />
 		<b>
 			{firstName} {lastName}
 		</b>
