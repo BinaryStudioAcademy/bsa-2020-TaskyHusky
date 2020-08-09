@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Input, Segment, Icon, Label } from 'semantic-ui-react';
 import styles from './styles.module.scss';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
 	onChange: (tags: string[]) => void;
@@ -8,7 +9,9 @@ interface Props {
 	tags: string[];
 }
 
-const TagsInput: React.FC<Props> = ({ onChange, placeholder, tags }) => {
+const TagsInput: React.FC<Props> = (props: Props) => {
+	const { t } = useTranslation();
+	const { onChange, placeholder, tags } = props;
 	const [value, setValue] = useState<string>('');
 
 	const addTag = (text: string) => {
@@ -26,8 +29,8 @@ const TagsInput: React.FC<Props> = ({ onChange, placeholder, tags }) => {
 	return (
 		<Segment>
 			<div style={{ marginBottom: 5 }}>
-				Press &#39;Arrow Up <Icon name="arrow up" />
-				&#39; to apply tag.
+				{t('tags_input_hint_1')} <Icon name="arrow up" />
+				{t('tags_input_hint_2')}
 			</div>
 			<div className={styles.tagContainer}>
 				{tags.map((tag, i) => (

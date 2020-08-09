@@ -31,6 +31,12 @@ class UserController {
 	updateUser = async (req: Request, res: Response): Promise<void> => {
 		const userRepository = getCustomRepository(UserRepository);
 		const { id } = req.user;
+		if (req.body.email) {
+			const checkUser = await userRepository.getByEmail(req.body.email);
+			if (checkUser.id !== id) {
+				throw new Error('Yhis email is already taken');
+			}
+		}
 		try {
 			const updatedUser = await userRepository.updateById(id, req.body);
 			res.status(200).send(updatedUser);
