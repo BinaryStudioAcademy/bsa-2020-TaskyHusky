@@ -3,33 +3,17 @@ import { Modal, Button, Form, Checkbox, Image, Card } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
-import kanbanImg from '../../assets/images/kanban.svg';
-import scrumImg from '../../assets/images/scrum.svg';
-import bugTrackingImg from '../../assets/images/bug_tracking.svg';
-import styles from './styles.module.scss';
-import * as actions from './logic/actions';
-import { RootState } from 'typings/rootState';
-import i18n from 'i18next';
 import { useTranslation } from 'react-i18next';
+import { RootState } from 'typings/rootState';
+
+import * as actions from './logic/actions';
+import getTemplatesInformation from './config/templatesInformation';
+import styles from './styles.module.scss';
 
 type ProjectTemplate = 'Scrum' | 'Kanban' | 'Bug tracking';
 
-const templatesInformation = {
-	Kanban: {
-		description: i18n.t('kanban_description'),
-		image: kanbanImg,
-	},
-	Scrum: {
-		description: i18n.t('scrum_description'),
-		image: scrumImg,
-	},
-	'Bug tracking': {
-		description: i18n.t('bug_tracking_description'),
-		image: bugTrackingImg,
-	},
-};
-
 const CreateProjectModal = () => {
+	const templatesInformation = getTemplatesInformation();
 	const dispatch = useDispatch();
 	const history = useHistory();
 	const { t } = useTranslation();
