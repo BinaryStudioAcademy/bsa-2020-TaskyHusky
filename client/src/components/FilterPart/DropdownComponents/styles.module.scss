@@ -1,9 +1,16 @@
-.moreFilterDropdown {
-	display: flex !important;
-	align-items: center !important;
-	.moreText {
-		color: #3275a8;
-	}
+.textSearch {
+	width: 90% !important;
+	border: none;
+	box-shadow: none;
+}
+.searchInput {
+	width: 90% !important;
+}
+.checkbox {
+	cursor: pointer;
+}
+
+.dropdown {
 	padding: 0 !important;
 	&:hover {
 		.dropdownMenu {

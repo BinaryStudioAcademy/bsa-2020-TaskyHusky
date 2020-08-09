@@ -5,7 +5,7 @@ import { RootState } from 'typings/rootState';
 import { Button, Table, Input, Form, List, Icon } from 'semantic-ui-react';
 import IssueItem from 'components/IssueItem';
 import FilterPart from 'components/FilterPart';
-import MoreFilterDefsDropdown from 'components/MoreFilters';
+import MoreFilterPartsDropdown from 'components/MoreFilters';
 import { fetchFilterParts } from './logic/actions';
 import { FilterPartState } from './logic/state';
 
@@ -47,6 +47,18 @@ const AdvancedSearch: React.FC = () => {
 		},
 	];
 
+	const getDefaultFilterParts = () => {
+		return filterParts.filter(({ filterDef }) =>
+			QUICK_FILTER_IDS.find((quickFilterID) => filterDef.id === quickFilterID),
+		);
+	};
+
+	const getAdditionalFilterParts = () => {
+		return filterParts.filter(
+			({ filterDef }) => !QUICK_FILTER_IDS.find((quickFilterID) => filterDef.id === quickFilterID),
+		);
+	};
+
 	return (
 		<div className={styles.filtersContainer}>
 			<div className={styles.outer}>
@@ -82,18 +94,11 @@ const AdvancedSearch: React.FC = () => {
 				<div className={styles.bottomBarWrapper}>
 					<Form>
 						<Form.Group>
-							{filterParts
-								.filter(({ filterDef }) =>
-									QUICK_FILTER_IDS.find((quickFilterID) => filterDef.id === quickFilterID),
-								)
-								.map((part) => (
-									<FilterPart key={part.id} filterPart={part} />
-								))}
-							<MoreFilterDefsDropdown
-								additionalFilterParts={filterParts.filter(
-									({ filterDef }) =>
-										!QUICK_FILTER_IDS.find((quickFilterID) => filterDef.id === quickFilterID),
-								)}
+							{getDefaultFilterParts().map((part) => (
+								<FilterPart key={part.id} filterPart={part} />
+							))}
+							<MoreFilterPartsDropdown
+								additionalFilterParts={getAdditionalFilterParts()}
 								addedFilterParts={addedFilterParts}
 								setAddedFilterParts={(data) => setAddedFilterParts(data)}
 							/>
@@ -101,7 +106,6 @@ const AdvancedSearch: React.FC = () => {
 							<Button primary content="Search" />
 						</Form.Group>
 						<Form.Group>
-							{console.log('addedFilterParts', addedFilterParts)}
 							{addedFilterParts.map((part) => (
 								<FilterPart key={part.id} filterPart={part} />
 							))}

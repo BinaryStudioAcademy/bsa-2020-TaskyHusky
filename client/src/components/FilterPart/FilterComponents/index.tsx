@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Input } from 'semantic-ui-react';
-import { DropdownTextSearch, DropdownSearch } from '../DropdownComponents/index';
-
+import { RootState } from 'typings/rootState';
+import { DropdownTextSearch, DropdownCheckboxSearch } from '../DropdownComponents/index';
+import { useSelector, useDispatch } from 'react-redux';
+import { startLoading } from 'containers/Projects/logic/actions';
 interface FilterPartState {
 	id: string;
 	members: string[];
@@ -12,22 +14,19 @@ interface FilterPartState {
 type ProjectsFilterProps = {
 	filterPart: FilterPartState;
 };
+
 export const ProjectsFilter = ({ filterPart }: ProjectsFilterProps) => {
-	const projects = [
-		{
-			name: 'project1',
-			id: 'project1',
-		},
-		{
-			name: 'project2',
-			id: 'project2',
-		},
-	];
+	const { projects } = useSelector((rootState: RootState) => rootState.projects);
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		dispatch(startLoading());
+	}, [dispatch]);
 
 	const projectsToDropdownData = (project: { name: string; id: string }) => {
 		const { id, name } = project;
 		const data = {
-			value: 'project',
+			value: name,
 			key: id,
 			text: name,
 		};
@@ -36,46 +35,80 @@ export const ProjectsFilter = ({ filterPart }: ProjectsFilterProps) => {
 
 	const data = projects.map(projectsToDropdownData);
 
-	return <DropdownSearch data={data} members={filterPart.members} title={filterPart.filterDef.title} />;
+	return <DropdownCheckboxSearch data={data} members={filterPart.members} title={filterPart.filterDef.title} />;
 };
 
 export const IssueTypeFilter = ({ filterPart }: ProjectsFilterProps) => {
+	// const { issueTypes } = useSelector((rootState: RootState) => rootState.issueTypes);
+
 	const issueTypes = [
 		{
 			name: 'issueTypes1',
 			id: 'issueTypes1',
+			title: 'Task',
+			color: 'green',
+			icon: 'close',
 		},
 		{
 			name: 'issueTypes2',
 			id: 'issueTypes2',
+			title: 'Task',
+			color: 'green',
+			icon: 'check',
+		},
+		{
+			id: 'issueTypes3',
+			title: 'Task',
+			color: 'green',
+			icon: 'check',
+		},
+		{
+			id: 'issueTypes4',
+			title: 'Bug',
+			color: 'red',
+			icon: 'close',
+		},
+		{
+			id: 'issueTypes5',
+			title: 'Story',
+			color: 'teal',
+			icon: 'file text',
+		},
+		{
+			id: 'issueTypes6',
+			title: 'Story',
+			color: 'red',
+			icon: 'file text',
 		},
 	];
 
-	const issueTypesToDropdownData = (issueType: { name: string; id: string }) => {
-		const { id, name } = issueType;
+	const issueTypesToDropdownData = (issueType: { id: string; title: string; color: string; icon: string }) => {
+		const { id, title, color, icon } = issueType;
 		const data = {
-			value: 'issueType',
+			value: title,
 			key: id,
-			text: name,
+			text: title,
+			icon,
+			color,
 		};
 		return data;
 	};
 
 	const data = issueTypes.map(issueTypesToDropdownData);
 
-	return <DropdownSearch data={data} members={filterPart.members} title={filterPart.filterDef.title} />;
+	return <DropdownCheckboxSearch data={data} members={filterPart.members} title={filterPart.filterDef.title} />;
 };
 
 export const IssueStatusFilter = ({ filterPart }: ProjectsFilterProps) => {
-	return <DropdownSearch data={[]} members={filterPart.members} title={filterPart.filterDef.title} />;
+	return <DropdownCheckboxSearch data={[]} members={filterPart.members} title={filterPart.filterDef.title} />;
 };
 
 export const AssigneeFilter = ({ filterPart }: ProjectsFilterProps) => {
-	return <DropdownSearch data={[]} members={filterPart.members} title={filterPart.filterDef.title} />;
+	return <DropdownCheckboxSearch data={[]} members={filterPart.members} title={filterPart.filterDef.title} />;
 };
 
 export const CreatorFilter = ({ filterPart }: ProjectsFilterProps) => {
-	return <DropdownSearch data={[]} members={filterPart.members} title={filterPart.filterDef.title} />;
+	return <DropdownCheckboxSearch data={[]} members={filterPart.members} title={filterPart.filterDef.title} />;
 };
 
 export const DescriptionFilter = ({ filterPart }: ProjectsFilterProps) => {

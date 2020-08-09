@@ -1,5 +1,5 @@
 import React from 'react';
-import { Input, Icon, Dropdown, DropdownItemProps } from 'semantic-ui-react';
+import { Input, Dropdown, Checkbox, Icon, DropdownItemProps } from 'semantic-ui-react';
 import styles from './styles.module.scss';
 import { FilterPartState } from 'containers/AdvancedSearch/logic/state';
 
@@ -14,16 +14,6 @@ const MoreFilterDefsDropdown = ({
 	additionalFilterParts,
 	setAddedFilterParts,
 }: MoreFilterDefsDropdownProps) => {
-	const getDropdownData = (filterParts: FilterPartState[]) => {
-		return filterParts.map((filterPart) => {
-			const { id, filterDef } = filterPart;
-			return {
-				key: id,
-				text: filterDef.title,
-				value: id,
-			};
-		});
-	};
 	const handleClick = (event: React.SyntheticEvent, data: DropdownItemProps) => {
 		const { value } = data;
 		const updatedAddedFilterParts = addedFilterParts.find((addedPart) => addedPart.id === value)
@@ -32,27 +22,38 @@ const MoreFilterDefsDropdown = ({
 
 		setAddedFilterParts(updatedAddedFilterParts as FilterPartState[]);
 	};
+	const isAdded = (filterPartId: string) => {
+		const filterPart = addedFilterParts.find(({ id }) => id === filterPartId);
+		return Boolean(filterPart);
+	};
 	return (
 		<Dropdown
-			className={styles.moreFilterDropdown}
 			trigger={
 				<span className={styles.moreText}>
 					<Icon color="blue" name="plus" /> More
 				</span>
 			}
 			icon={null}
+			item
+			floating
+			labeled
+			multiple
+			className={styles.moreFilterDropdown}
 		>
-			<Dropdown.Menu onClick={(e: Event) => e.stopPropagation()}>
+			<Dropdown.Menu className={styles.dropdownMenu} onClick={(e: Event) => e.stopPropagation()}>
 				<Input placeholder={'Search criteria'} icon="search" iconPosition="left" />
 				<Dropdown.Divider />
-				<Dropdown.Header icon="folder open" content={'Criteria'} />
+				<Dropdown.Header icon="filter" content={'Criteria'} />
 				<Dropdown.Menu scrolling>
-					{getDropdownData(additionalFilterParts).map((option) => (
-						<Dropdown.Item onClick={handleClick} key={option.key} value={option.value} text={option.text} />
+					{additionalFilterParts.map(({ id, filterDef }) => (
+						<Dropdown.Item onClick={handleClick} key={id} value={id}>
+							<Checkbox label={filterDef.title} checked={isAdded(id)} />
+						</Dropdown.Item>
 					))}
 				</Dropdown.Menu>
 			</Dropdown.Menu>
 		</Dropdown>
 	);
 };
+
 export default MoreFilterDefsDropdown;
