@@ -2,7 +2,7 @@ import { Model, Server } from 'miragejs';
 import { people } from './mockData/people';
 import { teams } from './mockData/teams';
 
-//import './fakeServer/index.js'; //uncomment in index.ts for work with fake server
+//uncomment fakeServer in index.ts for work with fake server
 export default new Server({
 	models: {
 		user: Model,
