@@ -1,5 +1,14 @@
 @import './variables.scss';
 
+@mixin profile-container {
+  width: 70%;
+  padding: 0 0 0 50px;
+}
+
+@mixin profile-card {
+  padding: 40px !important;
+}
+
 @mixin info-block-header {
   margin: 25px 0 !important;
 }

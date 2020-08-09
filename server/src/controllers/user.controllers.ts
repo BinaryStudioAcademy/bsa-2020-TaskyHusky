@@ -33,7 +33,7 @@ class UserController {
 		const { id } = req.user;
 		if (req.body.email) {
 			const checkUser = await userRepository.getByEmail(req.body.email);
-			if (checkUser.id !== id) {
+			if (checkUser && checkUser.id !== id) {
 				throw new Error('Yhis email is already taken');
 			}
 		}

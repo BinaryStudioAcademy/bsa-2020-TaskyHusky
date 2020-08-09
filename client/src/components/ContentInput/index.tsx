@@ -5,39 +5,42 @@ import * as actions from 'containers/ProfilePage/logiс/actions';
 import { UserProfileState } from 'containers/ProfilePage/logiс/state';
 
 interface Props {
-	contentData: { text: string; defaultContent: boolean; name: string };
+	contentData: { text: string; name: string; placeholder: string; title?: string };
 	isCurrentUser: boolean;
 }
 
 const ContentInput: React.FC<Props> = (props: Props) => {
 	const {
-		contentData: { text, defaultContent, name },
+		contentData: { text, name, placeholder, title },
 		isCurrentUser,
 	} = props;
-	const initialText = defaultContent ? '' : text;
-	const [textData, setTextData] = useState(initialText);
+
+	const [textData, setTextData] = useState(text);
 	const dispatch = useDispatch();
 
 	const handleChange = (event: any) => {
 		setTextData((event.target as HTMLInputElement).value);
 	};
 	const updateUserField = () => {
-		if ((defaultContent && textData !== text) || !defaultContent) {
-			dispatch(actions.requestUpdateUser({ userData: { [name]: textData } } as Partial<UserProfileState>));
+		if (textData !== text) {
+			dispatch(actions.requestUpdateUser({ userData: { [name]: textData.trim() } } as Partial<UserProfileState>));
 		}
 	};
 
 	return (
-		<input
-			className={`${styles.inputView} ${defaultContent ? styles.defaultContent : styles.content}`}
-			type="text"
-			name={name}
-			value={textData}
-			placeholder={text}
-			onChange={handleChange}
-			onBlur={updateUserField}
-			disabled={isCurrentUser ? false : true}
-		/>
+		<>
+			{title && <label className={styles.label}>{title}</label>}
+			<input
+				className={styles.inputView}
+				type="text"
+				name={name}
+				value={textData}
+				placeholder={placeholder}
+				onChange={handleChange}
+				onBlur={updateUserField}
+				disabled={isCurrentUser ? false : true}
+			/>
+		</>
 	);
 };
 
