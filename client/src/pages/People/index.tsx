@@ -8,7 +8,7 @@ import DefaultPageWrapper from '../../containers/DefaultPageWrapper';
 import { fetchPeople } from '../../services/people.service';
 import { fetchTeams } from '../../services/team.service';
 import style from './style.module.scss';
-import SearchField from '../../containers/SearchField';
+import SearchField from '../../containers/SearchPeopleAndTeamField';
 
 const People: React.FC = (): ReactElement => {
 	const history = useHistory();

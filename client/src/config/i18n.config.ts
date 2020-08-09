@@ -8,7 +8,7 @@ import { LocalStorageKeys } from 'constants/LocalStorageKeys';
 export default function configureLanguages() {
 	const countryInfo = navigator.language;
 	const countryInfoParts = countryInfo.split('-');
-	const countryCode = countryInfoParts[1].toLowerCase();
+	const countryCode = countryInfoParts[0].toLowerCase();
 	const lngInStore = localStorage.getItem(LocalStorageKeys.SESSION_LNG);
 
 	i18n.use(initReactI18next).init({

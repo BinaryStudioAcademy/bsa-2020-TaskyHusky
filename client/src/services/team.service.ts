@@ -29,6 +29,18 @@ export const fetchTeams = async () => {
 	return await res.json();
 };
 
+export const fetchTeamsByNameFilter = async (name: string | undefined) => {
+	const res = await callWebApi({
+		method: 'GET',
+		endpoint: 'fake/teams',
+		query: {
+			name,
+		},
+	});
+
+	return await res.json();
+};
+
 export const addTeam = async (name: string) => {
 	const res = await callWebApi({
 		method: 'POST',
