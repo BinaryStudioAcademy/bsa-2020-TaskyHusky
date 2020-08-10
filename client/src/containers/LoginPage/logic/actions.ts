@@ -1,7 +1,9 @@
 import { createAction } from 'helpers/createAction.helper';
 import * as actionTypes from './actionTypes';
 
-export const registerUserTrigger = createAction<Partial<WebApi.User.UserModel>>(actionTypes.REGISTER_USER_TRIGGER);
+export const registerUserTrigger = createAction<Partial<WebApi.Entities.UserProfile>>(
+	actionTypes.REGISTER_USER_TRIGGER,
+);
 export const registerUserSuccess = createAction<WebApi.Result.UserAuthResult>(actionTypes.REGISTER_USER_SUCCESS);
 
 export const logInUserTrigger = createAction<actionTypes.LogInUserTrigger>(actionTypes.LOGIN_USER_TRIGGER);
