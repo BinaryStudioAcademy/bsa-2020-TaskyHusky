@@ -1,9 +1,10 @@
 import { IBoard } from '../types';
 import { Form, Input, Dropdown } from 'semantic-ui-react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from '../styles.module.scss';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../typings/rootState';
+import * as actions from '../../../containers/Projects/logic/actions';
 
 interface Props {
 	board: IBoard;
@@ -12,50 +13,76 @@ interface Props {
 }
 
 const ThirdMenuExisting = (props: Props) => {
-	const [selectedLocation, setSelectedLocation] = useState(' ');
-	const [selectedName, setSelectedName] = useState(' ');
-	const [selectedProject, setSelectedProject] = useState([]);
+	const { board, setBoard } = props;
+
+	const dispatch = useDispatch();
+	useEffect(() => {
+		dispatch(actions.startLoading());
+	}, []);
+
+	const [selectedName, setSelectedName] = useState('');
+	const [selectedProjects, setSelectedProjects] = useState<Array<string>>([]);
+	useEffect(() => {
+		if (selectedProjects.length !== 0 && selectedName !== '' && selectedLocation !== '') {
+			props.changeSubmitStatus(false);
+			setBoard({
+				...board,
+				projects: [...selectedProjects],
+				name: selectedName,
+				admin: authData.user?.id,
+			});
+		} else {
+			props.changeSubmitStatus(true);
+		}
+	}, [selectedProjects, selectedName]);
 
 	const authData = useSelector((rootState: RootState) => rootState.auth);
 	const initials = `${authData.user?.firstName} ${authData.user?.lastName}`;
 	const projectData = useSelector((rootState: RootState) => rootState.projects.projects);
 
-	const projects = [
-		{ key: 'project1', text: 'project1', value: 'project1' },
-		{ key: 'project2', text: 'project2', value: 'project2' },
-	];
+	const projects = projectData.map((project) => ({
+		key: project.id,
+		text: `${project.name} (${project.key})`,
+		value: project.id,
+	}));
+
 	const personal = [
 		{
-			key: `${initials === ' ' ? 'Kostya Tsymbal' : initials}`,
-			text: `${initials === ' ' ? 'Kostya Tsymbal' : initials}`,
-			value: `${initials === ' ' ? 'Kostya Tsymbal' : initials}`,
+			key: authData.user?.id,
+			text: initials,
+			value: `${authData.user ? authData.user.id : 'fakeId'}`,
 		},
 	];
 
-	function checkAllFieldsStatus() {
-		console.log(projectData);
-	}
-
 	return (
 		<Form>
-			<Form.Field required width={5}>
+			<Form.Field width={5}>
 				<label>Board name</label>
 				<Input
 					placeholder="Board name"
 					onChange={(e, data) => {
 						setSelectedName(data.value);
-						checkAllFieldsStatus();
 					}}
 				/>
 			</Form.Field>
-			<Form.Field required width={7} className={styles.formField}>
+			<Form.Field width={7} className={styles.formField}>
 				<label>Project</label>
 				{/*
  				// @ts-ignore*/}
-				<Dropdown search header="Projects" multiple fluid selection options={projects} />
+				<Dropdown
+					search
+					header="Projects"
+					multiple
+					fluid
+					selection
+					options={projects}
+					onChange={(e, data) => {
+						setSelectedProjects([...(data.value as string[])]);
+					}}
+				/>
 				<p>Select one or more projects to include in this board</p>
 			</Form.Field>
-			<Form.Field required width={7} className={styles.formField}>
+			<Form.Field width={7} className={styles.formField}>
 				<label>Location</label>
 				{/*
  				// @ts-ignore*/}
@@ -68,7 +95,7 @@ const ThirdMenuExisting = (props: Props) => {
 									{...option}
 									key={option.key}
 									onClick={() => {
-										setSelectedLocation(option.value);
+										setSelectedLocation(option.text);
 									}}
 								/>
 							))}
@@ -79,7 +106,9 @@ const ThirdMenuExisting = (props: Props) => {
 								<Dropdown.Item
 									{...option}
 									key={option.key}
-									onClick={() => setSelectedLocation(option.value)}
+									onClick={() => {
+										setSelectedLocation(option.text);
+									}}
 								/>
 							))}
 						</Dropdown.Menu>
