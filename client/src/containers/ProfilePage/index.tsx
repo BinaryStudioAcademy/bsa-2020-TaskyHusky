@@ -8,6 +8,7 @@ import ProfileAside from 'components/ProfileAside';
 import ProfileSection from 'components/ProfileSection';
 import { UserProfileState, initialState } from 'containers/ProfilePage/logiс/state';
 import ProfileManagerSection from 'components/ProfileManagerSection';
+import HeaderMenu from 'containers/Header';
 
 export interface PropsExtendedData {
 	isCurrentUser: boolean;
@@ -66,17 +67,25 @@ const ProfilePage = ({ match: { params } }: { match: any }) => {
 	}
 
 	return (
-		<div className={styles.wrapper}>
-			<ProfileHeader />
-			<div className={styles.container}>
-				<ProfileAside user={user} isCurrentUser={isCurrentUser} mockData={mockData} showManager={showManager} />
-				{user.editMode ? (
-					<ProfileManagerSection user={user} showManager={showManager} />
-				) : (
-					<ProfileSection user={user} isCurrentUser={isCurrentUser} mockData={mockData} />
-				)}
+		<>
+			<HeaderMenu />
+			<div className={styles.wrapper}>
+				<ProfileHeader />
+				<div className={styles.container}>
+					<ProfileAside
+						user={user}
+						isCurrentUser={isCurrentUser}
+						mockData={mockData}
+						showManager={showManager}
+					/>
+					{user.editMode ? (
+						<ProfileManagerSection user={user} showManager={showManager} />
+					) : (
+						<ProfileSection user={user} isCurrentUser={isCurrentUser} mockData={mockData} />
+					)}
+				</div>
 			</div>
-		</div>
+		</>
 	);
 };
 

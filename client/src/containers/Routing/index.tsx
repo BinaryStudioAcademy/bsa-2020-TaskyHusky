@@ -8,10 +8,9 @@ import PublicRoute from 'components/PublicRoute';
 import SignUp from 'pages/SignUp';
 import Filters from 'pages/Filters';
 import CreateIssue from 'pages/CreateIssue';
-import Header from 'containers/Header';
 import IssuePage from 'pages/IssuePage';
 import ProjectsPage from 'pages/ProjectsPage';
-import ProjectSettings from 'containers/ProjectSettings';
+import ProjectSettings from 'pages/ProjectSettings';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadProfileTrigger } from 'containers/LoginPage/logic/actions';
 import { RootState } from 'typings/rootState';
@@ -37,9 +36,8 @@ const Routing: React.FC = () => {
 			<PublicRoute exact restricted path="/signup" component={SignUp} />
 			<PrivateRoute exact path="/createIssue" component={CreateIssue} />
 			<PrivateRoute path="/issue/:key" component={IssuePage} />
-			<PrivateRoute exact path="/header" component={Header} />
 			<PrivateRoute exact path="/projects" component={ProjectsPage} />
-			<PrivateRoute exact path="/projectSettings" component={ProjectSettings} />
+			<PrivateRoute exact path="/projects/projectSettings/:id" component={ProjectSettings} />
 			<PrivateRoute exact path="/team/:id" component={Team} />
 			<PublicRoute exact restricted={false} path="/profile/:id" component={ProfilePage} />
 			<PrivateRoute exact path="/filters" component={Filters} />
