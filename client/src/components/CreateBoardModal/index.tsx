@@ -15,6 +15,7 @@ const CreateBoardModal = (props: Props) => {
 	const [isTypeSelected, selectType] = useState(false);
 	const [isAlgorithmSelected, selectAlgorithm] = useState(false);
 	const { setIsModalShown, onCreateProject } = props;
+	const [isCreateDisabled, changeSubmitStatus] = useState(true);
 
 	const [board, setBoard] = useState<IBoard>({
 		type: boardTypes.scrum,
@@ -67,7 +68,7 @@ const CreateBoardModal = (props: Props) => {
 					<SecondMenu algorithm={board.algorithm} onRadioChange={onRadioChange} />
 				) : null}
 				{isAlgorithmSelected && board.algorithm === creatingAlgorithms.existingProject ? (
-					<ThirdMenuExisting board={board} setBoard={setBoard} />
+					<ThirdMenuExisting board={board} setBoard={setBoard} changeSubmitStatus={changeSubmitStatus} />
 				) : null}
 			</Modal.Content>
 			<Modal.Actions>
@@ -89,7 +90,11 @@ const CreateBoardModal = (props: Props) => {
 						Next
 					</Button>
 				) : null}
-				{isAlgorithmSelected ? <Button color={'facebook'}>Create board</Button> : null}
+				{isAlgorithmSelected ? (
+					<Button color={'facebook'} disabled={isCreateDisabled}>
+						Create board
+					</Button>
+				) : null}
 				<Button color="blue" basic onClick={onCancelClick}>
 					Cancel
 				</Button>

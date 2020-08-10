@@ -8,12 +8,17 @@ import { RootState } from '../../../typings/rootState';
 interface Props {
 	board: IBoard;
 	setBoard: (board: IBoard) => void;
+	changeSubmitStatus: (status: boolean) => void;
 }
 
 const ThirdMenuExisting = (props: Props) => {
 	const [selectedLocation, setSelectedLocation] = useState(' ');
+	const [selectedName, setSelectedName] = useState(' ');
+	const [selectedProject, setSelectedProject] = useState([]);
+
 	const authData = useSelector((rootState: RootState) => rootState.auth);
 	const initials = `${authData.user?.firstName} ${authData.user?.lastName}`;
+	const projectData = useSelector((rootState: RootState) => rootState.projects.projects);
 
 	const projects = [
 		{ key: 'project1', text: 'project1', value: 'project1' },
@@ -21,16 +26,27 @@ const ThirdMenuExisting = (props: Props) => {
 	];
 	const personal = [
 		{
-			key: `${initials === ' ' ? 'Ivan Ivanov' : initials}`,
-			text: `${initials === ' ' ? 'Ivan Ivanov' : initials}`,
-			value: `${initials === ' ' ? 'Ivan Ivanov' : initials}`,
+			key: `${initials === ' ' ? 'Kostya Tsymbal' : initials}`,
+			text: `${initials === ' ' ? 'Kostya Tsymbal' : initials}`,
+			value: `${initials === ' ' ? 'Kostya Tsymbal' : initials}`,
 		},
 	];
+
+	function checkAllFieldsStatus() {
+		console.log(projectData);
+	}
+
 	return (
 		<Form>
 			<Form.Field required width={5}>
 				<label>Board name</label>
-				<Input placeholder="Board name" />
+				<Input
+					placeholder="Board name"
+					onChange={(e, data) => {
+						setSelectedName(data.value);
+						checkAllFieldsStatus();
+					}}
+				/>
 			</Form.Field>
 			<Form.Field required width={7} className={styles.formField}>
 				<label>Project</label>
@@ -53,7 +69,6 @@ const ThirdMenuExisting = (props: Props) => {
 									key={option.key}
 									onClick={() => {
 										setSelectedLocation(option.value);
-										console.log(selectedLocation);
 									}}
 								/>
 							))}
