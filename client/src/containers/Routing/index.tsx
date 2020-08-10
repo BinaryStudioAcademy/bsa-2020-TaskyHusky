@@ -15,7 +15,7 @@ import ProjectSettings from 'pages/ProjectSettings';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadProfileTrigger } from 'containers/LoginPage/logic/actions';
 import { RootState } from 'typings/rootState';
-import Boards from '../Boards';
+import BoardsPage from '../../pages/Boards';
 
 const Routing: React.FC = () => {
 	const dispatch = useDispatch();
@@ -44,7 +44,7 @@ const Routing: React.FC = () => {
 			<PrivateRoute exact path="/team/:id" component={Team} />
 			<PublicRoute exact restricted={false} path="/profile/:id" component={ProfilePage} />
 			<PrivateRoute exact path="/filters" component={Filters} />
-			<PrivateRoute exact path="/boards" component={Boards} />
+			<PrivateRoute exact path="/boards" component={BoardsPage} />
 		</Switch>
 	);
 };
