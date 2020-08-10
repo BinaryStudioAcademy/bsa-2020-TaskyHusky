@@ -12,6 +12,12 @@ class AuthController {
 		const { password, ...user } = req.user;
 		res.send(user);
 	};
+
+	getEmail = (req: Request, res: Response) => {
+		const { email } = req.user;
+
+		res.send({ email });
+	};
 }
 
 export default AuthController;
