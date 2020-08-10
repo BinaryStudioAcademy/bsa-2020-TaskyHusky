@@ -1,22 +1,40 @@
-import React from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
 import { Form, TextArea, Button, Icon, Popup } from 'semantic-ui-react';
+import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { RootState } from 'typings/rootState';
 import Breadcrumbs from 'components/common/Breadcrumbs';
 import Options from 'components/common/Options';
 import { setBreadcrumbs } from './config/breadcrumbs';
 import { setProjectActions } from './config/projectActions';
-
+import * as actions from './logic/actions';
 import mockAvatar from 'assets/images/projectAvatars/viewavatar.svg';
 import styles from './styles.module.scss';
-import { useTranslation } from 'react-i18next';
 import ProjectSidebar from 'components/ProjectSidebar';
 
 const ProjectSettings = () => {
+	const { isLoading, project: projectData } = useSelector((rootState: RootState) => rootState.project);
+	const [project, setProject] = useState(projectData);
 	const { t } = useTranslation();
+	const dispatch = useDispatch();
 	const history = useHistory();
-	const projectName = 'NBA';
-	const id = '12';
+	const { name, key } = project;
+	const { id } = useParams();
+
+	const onProjectChange = (field: string, value: string) => {
+		setProject((state) => ({
+			...state,
+			[field]: value,
+		}));
+	};
+
+	useEffect(() => {
+		dispatch(actions.startGettingProject({ id }));
+		setProject(projectData);
+	}, [id]);
+
 	const onTrash = () => {};
 
 	const options = [
@@ -28,7 +46,7 @@ const ProjectSettings = () => {
 		<section>
 			<div className={styles.header_inner__container}>
 				<div className={styles.header_inner__breadcrumbs}>
-					<Breadcrumbs sections={setBreadcrumbs({ history, projectName })} />
+					<Breadcrumbs sections={setBreadcrumbs({ history, name })} />
 				</div>
 				<h1 className={styles.header_inner__title}>{t('details')}</h1>
 				<div className={styles.header__options}>
@@ -43,11 +61,17 @@ const ProjectSettings = () => {
 						required
 						type="text"
 						placeholder={t('project_name')}
+						value={name}
+						onChange={(e) => onProjectChange('name', e.target.value)}
 					/>
 					<Form.Field className={styles.form__input_key} required>
 						<label>{t('key')}</label>
 						<div className={styles.form__input_container}>
-							<input placeholder={t('example') + ': QA'} />
+							<input
+								placeholder={t('example') + ': QA'}
+								value={key}
+								onChange={(e) => onProjectChange('key', e.target.value)}
+							/>
 							<Popup
 								trigger={
 									<Icon name="info circle" className={styles.information__icon} size={'large'} />
