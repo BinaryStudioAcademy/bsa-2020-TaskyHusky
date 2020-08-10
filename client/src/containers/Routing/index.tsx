@@ -8,7 +8,6 @@ import PublicRoute from 'components/PublicRoute';
 import SignUp from 'pages/SignUp';
 import Filters from 'pages/Filters';
 import CreateIssue from 'pages/CreateIssue';
-import Header from 'containers/Header';
 import IssuePage from 'pages/IssuePage';
 import ProjectsPage from 'pages/ProjectsPage';
 import ProjectSettings from 'pages/ProjectSettings';
