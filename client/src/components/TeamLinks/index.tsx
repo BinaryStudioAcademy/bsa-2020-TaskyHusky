@@ -20,9 +20,9 @@ const TeamLinks = ({ addLinks, currentLinks, edit, deleteLink }: Props) => {
 			</div>
 			<div className={[styles.worked_block_wrapper, styles.shadow_top, styles.align_center].join(' ')}>
 				{currentLinks.length ? (
-					currentLinks.map((el: string) => {
-						const obj = JSON.parse(el);
-						return <LinkCard key={obj} link={obj} edit={edit} deleteLink={deleteLink} />;
+					currentLinks.map((el: any) => {
+						//const obj = JSON.parse(el);
+						return <LinkCard key={el.id} link={el} edit={edit} deleteLink={deleteLink} />;
 					})
 				) : (
 					<Image src={linksImg} size="large" />

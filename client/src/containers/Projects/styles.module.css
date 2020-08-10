@@ -1,0 +1,26 @@
+.wrapper {
+  padding: 30px 40px;
+}
+
+.wrapper__title {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.title {
+  margin: 0;
+  font-size: 24px;
+}
+
+.wrapper__filters {
+  margin-bottom: 20px;
+}
+
+.filters {
+  display: flex;
+}
+
+.wrapper__table {
+  position: relative;
+}

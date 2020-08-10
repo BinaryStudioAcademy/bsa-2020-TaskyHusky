@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Grid } from 'semantic-ui-react';
 import { useDispatch, connect } from 'react-redux';
+import validator from 'validator';
 import styles from './styles.module.scss';
 import TeamDevsCard from 'components/TeamDevsCard';
 import TeamsMembersCard from 'components/TeamsMembersCard';
@@ -22,7 +23,6 @@ const TeamPage = ({ match: { params }, team: { team } }: { match: any; team: any
 	const [addPeopleModal, setAddPeopleModal] = useState<boolean>(false);
 	const [editedLink, setEditedLink] = useState<Link | undefined>();
 	const [linkToDelete, setLinkToDelete] = useState<Link | undefined>();
-	const [deleteTeamModal, setShowDeleteTeamModal] = useState<boolean>(false);
 	const [addLinks, setAddLinks] = useState<boolean>(false);
 	const [deleteLink, setDeleteLinks] = useState<boolean>(false);
 
@@ -30,11 +30,15 @@ const TeamPage = ({ match: { params }, team: { team } }: { match: any; team: any
 
 	useEffect(() => {
 		dispatch(actions.startLoading({ id: params.id }));
-	}, []);
-
+	}, [dispatch]);
 	const toggleNotification = (): void => setNotification(false);
 	const showAddPeopleModal = (): void => setAddPeopleModal(true);
-	const toggleAddLinks = (): void => setAddLinks(!addLinks);
+	const toggleAddLinks = (): void => {
+		setAddLinks(!addLinks);
+		if (addLinks === true) {
+			setEditedLink(undefined);
+		}
+	};
 	const toggleDeleteLinkModal = (): void => setDeleteLinks(!deleteLink);
 	const editLink = (link: any) => {
 		setEditedLink(link);
@@ -44,22 +48,42 @@ const TeamPage = ({ match: { params }, team: { team } }: { match: any; team: any
 		toggleDeleteLinkModal();
 		setLinkToDelete(link);
 	};
+	const onDeleteLinkAccept = (link: Link) => {
+		dispatch(actions.deleteLinkLoading({ id: params.id, link }));
+		toggleDeleteLinkModal();
+	};
+	const changeMainFields = (field: any) => {
+		dispatch(actions.updateFieldsLoading({ id: params.id, field }));
+	};
+
+	const onEditLinkAccept = (link: any) => {
+		let isFullEmpty: boolean = true;
+		for (const i in link) {
+			if (!validator.isEmpty(link[i])) {
+				isFullEmpty = false;
+			}
+		}
+		if (!isFullEmpty) {
+			dispatch(actions.addLinkLoading({ id: params.id, link }));
+		}
+		setAddLinks(false);
+	};
 	return team.id ? (
 		<Grid columns="equal" centered>
 			<Grid.Row className={styles.header_z}>
 				<div className={[styles.header, styles.team_header].join(' ')}></div>
 			</Grid.Row>
 			<Grid.Row>
-				<Grid.Column width="4">
+				<Grid.Column width="4" className={styles.col_media}>
 					<TeamDevsCard
+						changeMainFields={changeMainFields}
 						description={team.description}
 						name={team.name}
 						showAddPeopleModal={showAddPeopleModal}
-						setShowDeleteTeamModal={setShowDeleteTeamModal}
 					/>
 					<TeamsMembersCard />
 				</Grid.Column>
-				<Grid.Column width="8">
+				<Grid.Column width="8" className={styles.col_media}>
 					{notification && <TeamNotification toggleNotification={toggleNotification} />}
 					<TeamWorkedProjects />
 					<TeamLinks
@@ -71,8 +95,10 @@ const TeamPage = ({ match: { params }, team: { team } }: { match: any; team: any
 				</Grid.Column>
 			</Grid.Row>
 			{addPeopleModal && <TeamAddPeopleModal onClose={setAddPeopleModal} />}
-			{addLinks && <CreateLink currentLink={editedLink} onClose={toggleAddLinks} />}
-			{deleteLink && <DeleteLink onClose={toggleDeleteLinkModal} linkName={linkToDelete?.name} />}
+			{addLinks && <CreateLink onConfirm={onEditLinkAccept} currentLink={editedLink} onClose={toggleAddLinks} />}
+			{deleteLink && (
+				<DeleteLink onClose={toggleDeleteLinkModal} link={linkToDelete} onDelete={onDeleteLinkAccept} />
+			)}
 		</Grid>
 	) : (
 		<Spinner />

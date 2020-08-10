@@ -18,8 +18,8 @@ export class TeamsRepository extends Repository<Teams> {
 		return this.save(entity);
 	}
 
-	updateOneById(id: string, data: Teams) {
-		this.update(id, data);
+	async updateOneById(id: string, data: any) {
+		await this.update(id, data);
 		return this.findOne(id);
 	}
 

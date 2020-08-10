@@ -2,26 +2,26 @@
   position: relative;
   margin-top: 10px;
   box-shadow: 0 0 10px #a3a3a3;
-  border: 1px solid rgb(231, 231, 231);
+  border: 1px solid #e7e7e7;
   width: 100%;
   padding: 20px;
   cursor: grab;
+}
 
-  .link_header {
-    color: #3d3c3c;
-  }
+.link_card_wrapper .link_header {
+  color: #3d3c3c;
+}
 
-  .link_href {
-    color: #9b9999;
-    font-size: 1.2rem;
-    cursor: pointer;
-  }
+.link_card_wrapper .link_href {
+  color: #9b9999;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
 
-  .btns_block {
-    position: absolute;
-    right: 0;
-    bottom: 5px;
-  }
+.link_card_wrapper .btns_block {
+  position: absolute;
+  right: 0;
+  bottom: 5px;
 }
 
 .link_title {
@@ -29,6 +29,7 @@
   font-weight: 700;
   font-size: 1.1rem;
 }
+
 .link_description {
   color: #888686;
   font-size: 1.3rem;

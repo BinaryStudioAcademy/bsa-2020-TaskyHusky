@@ -17,11 +17,5 @@ export class Teams {
   description?: string;
 
   @Column('text', { array: true })
-  links?: [
-    {
-      http?: string,
-      name?: string,
-      description?: string
-    }
-  ];
+  links?: string[];
 }

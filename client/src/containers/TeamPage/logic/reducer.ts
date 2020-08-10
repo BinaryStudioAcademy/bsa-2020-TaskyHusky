@@ -9,4 +9,16 @@ export const teamReducer = createReducer<TeamState>(initialState, {
 			team,
 		};
 	},
+	[actionTypes.ADD_LINK_SUCCESS](state, { team }) {
+		return {
+			...state,
+			team,
+		};
+	},
+	[actionTypes.DELETE_LINK_SUCCESS](state, { team }) {
+		return {
+			...state,
+			team,
+		};
+	},
 });

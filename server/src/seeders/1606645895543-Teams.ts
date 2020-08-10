@@ -13,11 +13,12 @@ export class Team1606645895543 implements MigrationInterface {
         team1.description = 'Our new team for cool projects';
         team1.name = 'Avengers v2';
         team1.links = [
-            {
+            JSON.stringify({
+                id: '1',
                 http: 'http://localhost:3002',
                 name: 'BSA Project Jira',
                 description: 'Our cool project'
-            }
+            })
         ]
         team1.users = [user1]
 

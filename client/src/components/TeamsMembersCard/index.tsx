@@ -1,7 +1,10 @@
 import ModalViewProfile from 'components/common/ModalViewProfile';
-import React, { useState } from 'react';
+import React, { useState, useMemo, useRef } from 'react';
 import { Card, Image } from 'semantic-ui-react';
+import Avatar from 'components/Avatar';
 import styles from './styles.module.scss';
+import { Link } from 'react-router-dom';
+
 interface User {
 	id: string;
 	avatar?: string;
@@ -13,10 +16,16 @@ interface User {
 }
 const TeamsMembersCard = () => {
 	const [modal, setModal] = useState(false);
-	const [viewUser, setViewUser] = useState<User>();
+	const [viewUser, setViewUser] = useState<User | undefined>();
 	const onHover = (user: User) => {
 		setViewUser(user);
 		setModal(true);
+	};
+	const hideModal = (e: any) => {
+		if (!e.target.classList.contains('card_body') && !e.target.classList.contains('block_wrapper')) {
+			setModal(false);
+			setViewUser(undefined);
+		}
 	};
 	const data = [
 		{
@@ -31,7 +40,7 @@ const TeamsMembersCard = () => {
 		},
 		{
 			id: '102',
-			avatar: 'https://images.clipartlogo.com/files/istock/previews/9859/98596917-worker-avatar-icon.jpg',
+			avatar: '',
 			name: 'Yaroslav Pryhoda',
 			position: 'Web developer',
 			timezone: '9:00 AM',
@@ -48,19 +57,27 @@ const TeamsMembersCard = () => {
 			{data.map((el) => {
 				return (
 					<Card.Content key={el.id}>
-						<div className={styles.card_body} onMouseEnter={() => onHover(el)}>
+						<div
+							className={styles.card_body}
+							onMouseEnter={() => onHover(el)}
+							onMouseLeave={(e) => hideModal(e)}
+						>
 							<div className={styles.icon}>
-								<Image src={el.avatar} centered circular />
+								<Link to={`/people/${el.id}`}>
+									<Avatar fullName={el.name} imgSrc={el.avatar} />
+								</Link>
 							</div>
 							<div className={styles.user_info}>
 								<p> {el.name}</p>
 								<p className={styles.metainfo}>{el.position}</p>
 							</div>
+							{modal && viewUser?.id === el.id && (
+								<ModalViewProfile user={viewUser} onClose={hideModal} />
+							)}
 						</div>
 					</Card.Content>
 				);
 			})}
-			{modal && <ModalViewProfile user={viewUser} />}
 		</Card>
 	);
 };

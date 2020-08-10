@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, Modal, Form } from 'semantic-ui-react';
 
 type Props = {
 	onClose: any;
+	onConfirm: any;
 	currentLink?: {
 		http: string;
 		name: string;
@@ -10,24 +11,49 @@ type Props = {
 	};
 };
 
-const CreateLink = ({ onClose, currentLink }: Props) => {
+const CreateLink = ({ onClose, currentLink, onConfirm }: Props) => {
+	const [data, setData] = useState(
+		currentLink || {
+			http: '',
+			name: '',
+			description: '',
+		},
+	);
+	const onChange = (e: any) => {
+		setData({
+			...data,
+			[e.target.name]: e.target.value,
+		});
+	};
 	return (
 		<Modal onClose={onClose} open size="tiny">
-			<Modal.Header>Add teammates</Modal.Header>
+			<Modal.Header>Add link</Modal.Header>
 			<Modal.Content>
 				<Form size="big">
 					<Form.Field>
 						<label>Web-address</label>
-						<input value={currentLink?.http || ''} placeholder="For example: http://google.com" />
+						<input
+							value={data.http}
+							onChange={(e) => onChange(e)}
+							placeholder="For example: http://google.com"
+							name="http"
+						/>
 					</Form.Field>
 					<Form.Field>
 						<label>Title</label>
-						<input value={currentLink?.name || ''} placeholder="For example: My first project" />
+						<input
+							value={data.name}
+							onChange={(e) => onChange(e)}
+							placeholder="For example: My first project"
+							name="name"
+						/>
 					</Form.Field>
 					<Form.Field>
 						<label>Small description</label>
 						<textarea
-							defaultValue={currentLink?.description || ''}
+							name="description"
+							onChange={(e) => onChange(e)}
+							defaultValue={data.description}
 							placeholder="Add small specification and other members of you team will know, why it's important"
 						/>
 					</Form.Field>
@@ -39,7 +65,7 @@ const CreateLink = ({ onClose, currentLink }: Props) => {
 					primary
 					labelPosition="left"
 					icon="checkmark"
-					onClick={() => 'onClose(false)'}
+					onClick={() => onConfirm(data)}
 				/>
 				<Button color="grey" onClick={onClose}>
 					Cancel
