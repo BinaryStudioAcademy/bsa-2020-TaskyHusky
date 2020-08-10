@@ -23,7 +23,6 @@ const CreateProjectModal = () => {
 	);
 
 	if (isProjectCreated) {
-		history.push(history.location.pathname + '/RapidBoard');
 		dispatch(actions.resetState());
 	}
 
