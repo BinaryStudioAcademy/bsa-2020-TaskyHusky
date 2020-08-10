@@ -66,12 +66,12 @@ passport.use(
 	new LocalStrategy(
 		{
 			usernameField: EMAIL_FIELD,
+			passwordField: EMAIL_FIELD, // DO NOT DELETE: LocalStrategy by default expects password, in /check_email we do not send password,
+			passReqToCallback: true,
 		},
-		async (email: string, password: string, next): Promise<void> => {
+		async (req, email: string, password: string, next): Promise<void> => {
 			const userRepository = getCustomRepository(UserRepository);
 			const user = await userRepository.getByEmail(email);
-
-			console.log(user);
 
 			if (!user) {
 				return next(null, { email: '' });
