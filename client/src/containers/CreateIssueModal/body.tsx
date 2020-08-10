@@ -83,8 +83,21 @@ const CreateIssueModalBody: React.FC<Props> = ({ children, issueTypes, prioritie
 				data: {
 					...context.data,
 					boardColumnID: '6be0859b-05f6-447d-beb8-d5c324cc5043',
-					sprintID: '4ae23ba4-9b4b-49c6-9892-991884505ff9',
-					projectID: 'a7c26428-2978-4748-8d29-975ad423d8ef',
+					sprint: {
+						id: '7dac8783-2421-4683-ae5d-d9adf0c75ecb',
+						sprintName: 'Innovative Chipmunk Ferret',
+						isActive: false,
+						isCompleted: true,
+					},
+					project: {
+						id: '1fbda607-5934-484c-9667-bd35574a2f1e',
+						name: 'Project name',
+						key: 'PN',
+						category: 'Business',
+						defaultAssigneeID: '30e6e687-9344-483f-8e14-0324c5f3733b',
+						leadID: 'e43002bf-ac10-49e2-adac-399a64e24ff2',
+						creatorID: 'e43002bf-ac10-49e2-adac-399a64e24ff2',
+					},
 					issueKey: generateRandomString(KeyGenerate.LENGTH),
 					assignedID: '98601c2c-a103-489b-b89f-ea5ae568b582',
 					creatorID: 'f2235a1c-dfbc-47b7-bdb2-726d159c19a0',
