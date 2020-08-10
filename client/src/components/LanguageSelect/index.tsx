@@ -4,6 +4,7 @@ import { Flag, FlagNameValues, Dropdown } from 'semantic-ui-react';
 import i18next from 'i18next';
 import { setLng } from 'helpers/setLng.helper';
 import { LocalStorageKeys } from 'constants/LocalStorageKeys';
+import { getLanguage } from 'helpers/getLanguage.helper';
 
 const LanguageSelect: React.FC = () => {
 	const lngInStore = localStorage.getItem(LocalStorageKeys.SESSION_LNG);
@@ -11,12 +12,10 @@ const LanguageSelect: React.FC = () => {
 
 	const selectLanguage = (value: string) => {
 		const lng = value ? value : undefined;
-		const countryInfo = navigator.language;
-		const countryInfoParts = countryInfo.split('-');
-		const countryCode = countryInfoParts[1].toLowerCase();
+		const defaultLng = getLanguage();
 
-		setLng(lng ?? countryCode);
-		i18next.changeLanguage(lng ?? countryCode);
+		setLng(lng ?? defaultLng);
+		i18next.changeLanguage(lng ?? defaultLng);
 	};
 
 	return (
