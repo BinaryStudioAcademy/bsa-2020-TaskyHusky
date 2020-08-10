@@ -1,0 +1,19 @@
+.mainInfo {
+  width: 70%;
+  padding: 0 0 0 50px;
+}
+
+.card {
+  margin: 40px 0 !important;
+}
+
+.emptyCard {
+  margin: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  &__image {
+    margin-right: 40px;
+  }
+}

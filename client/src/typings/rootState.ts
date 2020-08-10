@@ -5,6 +5,7 @@ import { FilterState } from 'containers/Filters/logic/state';
 import { AdvancedSearch } from 'containers/AdvancedSearch/logic/state';
 import { IssueState } from 'pages/CreateIssue/logic/types';
 import { CreateProjectsState } from 'containers/CreateProjectModal/logic/state';
+import { UserProfileState } from 'containers/ProfilePage/logiс/state';
 
 export interface RootState {
 	projects: ProjectsState;
@@ -14,4 +15,5 @@ export interface RootState {
 	filters: FilterState;
 	filterDefs: FilterDefsState;
 	advancedSearch: AdvancedSearch;
+	user: UserProfileState;
 }

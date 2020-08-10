@@ -12,6 +12,7 @@ interface FilterPartState {
 
 interface Props {
 	filterPart: FilterPartState;
+	// updateFilterPart: (filterPart: FilterPartState) => void;
 }
 
 const FilterPart = ({ filterPart }: Props) => {

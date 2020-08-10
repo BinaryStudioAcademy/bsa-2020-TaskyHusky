@@ -1,6 +1,6 @@
-import { getRepository, MigrationInterface, QueryRunner } from 'typeorm';
+import { MigrationInterface, QueryRunner, getRepository } from 'typeorm';
 
-export class FilterDefinition1596802492647 implements MigrationInterface {
+export class FilterDef1597050485179 implements MigrationInterface {
 	public async up(queryRunner: QueryRunner): Promise<void> {
 		const filterDefs = [
 			{
@@ -32,6 +32,11 @@ export class FilterDefinition1596802492647 implements MigrationInterface {
 				dataType: 'searchText',
 				filterType: 'description',
 				title: 'Description',
+			},
+			{
+				dataType: 'searchText',
+				filterType: 'comment',
+				title: 'Comment',
 			},
 		];
 		await getRepository('FilterDefinition').save(filterDefs);

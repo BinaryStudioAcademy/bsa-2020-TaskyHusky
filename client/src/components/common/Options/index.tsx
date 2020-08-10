@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Dropdown, Icon } from 'semantic-ui-react';
-// import { Link } from 'react-router-dom';
+
+import styles from './styles.module.scss';
 
 export type ItemProps = {
 	id: string;
@@ -8,18 +9,25 @@ export type ItemProps = {
 	onClickAction: (id: string) => void;
 };
 
-export interface OptionsProps {
+export interface Params {
 	config: ItemProps[];
+	isBackgroundShown?: boolean;
 }
 
-const Options = ({ config }: OptionsProps) => {
+const Options = ({ config, isBackgroundShown = true }: Params) => {
 	const [isOpened, setIsOpened] = useState(false);
 	return (
 		<Dropdown
 			onOpen={() => setIsOpened(true)}
 			onClose={() => setIsOpened(false)}
+			direction="left"
 			as="span"
-			icon={<Icon name="ellipsis horizontal" />}
+			icon={
+				<Icon
+					name="ellipsis horizontal"
+					className={isBackgroundShown ? (isOpened ? styles.opened : styles.closed) : ''}
+				/>
+			}
 		>
 			{isOpened ? (
 				<Dropdown.Menu as="span">

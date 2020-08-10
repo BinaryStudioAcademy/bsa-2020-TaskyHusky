@@ -2,16 +2,24 @@ name: Stage - Server Build
 on:
   push:
     branches: [dev]
+    paths: 'server/**/*.*'
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Generate deployment package
+    - name: Install dependencies
       run: |
         cd server
         npm install
+    - name: ESlint
+      run: |
+        cd server
+        npm run lint
+    - name: Generate deployment package
+      run: |
+        cd server
         zip -r ../deploy.zip .
     - name: Deploy to EB
       uses: einaregilsson/beanstalk-deploy@v7

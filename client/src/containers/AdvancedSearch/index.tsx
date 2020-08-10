@@ -10,9 +10,9 @@ import { fetchFilterParts } from './logic/actions';
 import { FilterPartState } from './logic/state';
 
 const QUICK_FILTER_IDS = [
-	'9d7cc2e4-f158-4ff2-a899-e89c657b70ef',
-	'932d024f-2ea6-448b-b614-ccb053bbde53',
-	'2c26b1a1-1a86-458a-bdcd-1d79055aa5ed',
+	'3aafb033-af0c-49d2-b31f-ad7fc676a74d',
+	'c85f7dcd-b658-4a96-b88f-9134bef1532d',
+	'acea985b-1e55-4dcb-a19c-934f958f1e3b',
 ];
 
 const AdvancedSearch: React.FC = () => {
@@ -33,17 +33,45 @@ const AdvancedSearch: React.FC = () => {
 			links: 'link1',
 			description: 'Very description',
 			sprintID: '52ce',
-			projectID: 'fc9e9ce',
+			projectID: '9fc89a01-f610-48f7-b0ac-f11ef4db4532', //real
 			issueKey: 'TH-1',
-			assignedID: 'b4e938e1',
-			creatorID: 'a01d',
+			assigned: {
+				id: 'id-2',
+				firstName: 'Ivan',
+				lastName: 'Ivanov',
+			},
+			creatorID: 'a01dcb1e-73d6-4a23-a3a3-ebc36206f551', //real
 			type: {
-				id: 'string',
-				icon: 'string',
-				color: 'string',
-				title: 'string',
+				id: 'type-id-12',
+				icon: 'check',
+				color: 'teal',
+				title: 'Issue',
 			},
 			id: 'a269d9f4-1c10-40ad-81e0-7ac333804d91',
+		},
+		{
+			summary: 'Interface implemented',
+			boardColumnID: '6d1',
+			labels: 'done',
+			attachments: 'attachments',
+			links: 'link1',
+			description: 'Very description',
+			sprintID: '52ce',
+			projectID: '47ab4c46-e506-4dcb-a4d3-79b47cdc16a5', //real
+			issueKey: 'TH-1',
+			assigned: {
+				id: 'id-2',
+				firstName: 'Fedor',
+				lastName: 'Petrov',
+			},
+			creatorID: 'e89a7a50-68f2-4a43-a043-80eec52e0ac8', // real
+			type: {
+				id: 'id-212',
+				icon: 'close',
+				color: 'blue',
+				title: 'Task',
+			},
+			id: 'a269d9f4-1c10-40ad-81e0-7ac333804d92',
 		},
 	];
 

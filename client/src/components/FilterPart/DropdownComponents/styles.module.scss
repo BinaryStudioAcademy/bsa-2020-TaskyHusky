@@ -2,6 +2,9 @@
 	width: 90% !important;
 	border: none;
 	box-shadow: none;
+	:local(input) {
+		border: none !important;
+	}
 }
 .searchInput {
 	width: 90% !important;

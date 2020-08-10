@@ -1,15 +1,9 @@
 import React, { useEffect } from 'react';
-import { Input } from 'semantic-ui-react';
 import { RootState } from 'typings/rootState';
 import { DropdownTextSearch, DropdownCheckboxSearch } from '../DropdownComponents/index';
 import { useSelector, useDispatch } from 'react-redux';
 import { startLoading } from 'containers/Projects/logic/actions';
-interface FilterPartState {
-	id: string;
-	members: string[];
-	searchText: string;
-	filterDef: WebApi.Entities.FilterDefinition;
-}
+import { FilterPartState } from '../logic/state';
 
 type ProjectsFilterProps = {
 	filterPart: FilterPartState;
@@ -35,7 +29,14 @@ export const ProjectsFilter = ({ filterPart }: ProjectsFilterProps) => {
 
 	const data = projects.map(projectsToDropdownData);
 
-	return <DropdownCheckboxSearch data={data} members={filterPart.members} title={filterPart.filterDef.title} />;
+	return (
+		<DropdownCheckboxSearch
+			data={data}
+			members={filterPart.members}
+			inputPlaceholder={'Find Projects'}
+			title={filterPart.filterDef.title}
+		/>
+	);
 };
 
 export const IssueTypeFilter = ({ filterPart }: ProjectsFilterProps) => {
@@ -96,23 +97,58 @@ export const IssueTypeFilter = ({ filterPart }: ProjectsFilterProps) => {
 
 	const data = issueTypes.map(issueTypesToDropdownData);
 
-	return <DropdownCheckboxSearch data={data} members={filterPart.members} title={filterPart.filterDef.title} />;
+	return (
+		<DropdownCheckboxSearch
+			key={`${filterPart.id} ${filterPart.filterDef.id}`}
+			data={data}
+			members={filterPart.members}
+			inputPlaceholder={'Find Issue Types'}
+			title={filterPart.filterDef.title}
+		/>
+	);
 };
 
 export const IssueStatusFilter = ({ filterPart }: ProjectsFilterProps) => {
-	return <DropdownCheckboxSearch data={[]} members={filterPart.members} title={filterPart.filterDef.title} />;
+	return (
+		<DropdownCheckboxSearch
+			data={[]}
+			inputPlaceholder={'Find Issue Statuses'}
+			members={filterPart.members}
+			title={filterPart.filterDef.title}
+		/>
+	);
 };
 
 export const AssigneeFilter = ({ filterPart }: ProjectsFilterProps) => {
-	return <DropdownCheckboxSearch data={[]} members={filterPart.members} title={filterPart.filterDef.title} />;
+	return (
+		<DropdownCheckboxSearch
+			data={[]}
+			inputPlaceholder={'Find Users/Groups'}
+			members={filterPart.members}
+			title={filterPart.filterDef.title}
+		/>
+	);
 };
 
 export const CreatorFilter = ({ filterPart }: ProjectsFilterProps) => {
-	return <DropdownCheckboxSearch data={[]} members={filterPart.members} title={filterPart.filterDef.title} />;
+	return (
+		<DropdownCheckboxSearch
+			data={[]}
+			inputPlaceholder={'Find Users/Groups'}
+			members={filterPart.members}
+			title={filterPart.filterDef.title}
+		/>
+	);
 };
 
 export const DescriptionFilter = ({ filterPart }: ProjectsFilterProps) => {
 	return <DropdownTextSearch data={[]} searchText={filterPart.searchText} title={filterPart.filterDef.title} />;
 };
 
-export const SearchInput = () => <Input icon="search" placeholder={'Search by ..'} />;
+export const CommentFilter = ({ filterPart }: ProjectsFilterProps) => {
+	return <DropdownTextSearch data={[]} searchText={filterPart.searchText} title={filterPart.filterDef.title} />;
+};
+
+export const SummaryFilter = ({ filterPart }: ProjectsFilterProps) => {
+	return <DropdownTextSearch data={[]} searchText={filterPart.searchText} title={filterPart.filterDef.title} />;
+};

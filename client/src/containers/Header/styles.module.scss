@@ -13,9 +13,11 @@
 		border-radius: 0;
 		padding: 0;
 		width: 100%;
-		position: absolute;
+		position: sticky;
 		top: 0;
 		left: 0;
+		margin: 0 !important;
+		z-index: 1;
 	}
 
 	.rightMenu {

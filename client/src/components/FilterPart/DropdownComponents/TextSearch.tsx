@@ -13,9 +13,9 @@ const DropdownTextSearch = ({ data, title, searchText }: DropdownTextSearchProps
 	return (
 		<Dropdown text={text} icon="angle down" floating labeled>
 			<Dropdown.Menu onClick={(e: Event) => e.stopPropagation()}>
-				<Input icon="search" iconPosition="left" className={styles.textSearch} />
+				<Input icon={null} className={styles.textSearch} />
 				<Button>Save</Button>
-				<Button>Cancel</Button>
+				<Button as="a">Cancel</Button>
 			</Dropdown.Menu>
 		</Dropdown>
 	);

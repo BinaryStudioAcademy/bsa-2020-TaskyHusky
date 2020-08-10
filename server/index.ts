@@ -28,6 +28,6 @@ createConnection()
 			// eslint-disable-next-line no-console
 			console.log(`Server is running on port ${appPort}`);
 		});
-		// eslint-disable-next-line no-console
 	})
+	// eslint-disable-next-line no-console
 	.catch((err) => console.log(err));

@@ -7,9 +7,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as actions from 'containers/LoginPage/logic/actions';
 import { RootState } from 'typings/rootState';
 import styles from './styles.module.scss';
+import { useTranslation } from 'react-i18next';
 
 const SignUpForm: React.FC = () => {
 	const dispatch = useDispatch();
+	const { t } = useTranslation();
 	const authState = useSelector((rootState: RootState) => rootState.auth);
 
 	const [email, setEmail] = useState<string>('');
@@ -44,11 +46,11 @@ const SignUpForm: React.FC = () => {
 				className={styles.errorPopup}
 				on={[]}
 				open={!firstNameValid}
-				content="First name is required"
+				content={t('first_name_required')}
 				position="top center"
 				trigger={
 					<Form.Input
-						placeholder="First name"
+						placeholder={t('first_name')}
 						onChange={(event, data) => {
 							setFirstName(data.value);
 							setFirstNameValid(true);
@@ -58,18 +60,18 @@ const SignUpForm: React.FC = () => {
 					/>
 				}
 			/>
-			<Form.Input placeholder="Last name" onChange={(event, data) => setLastName(data.value)} />
+			<Form.Input placeholder={t('last_name')} onChange={(event, data) => setLastName(data.value)} />
 			<Popup
 				className={styles.errorPopup}
 				on={[]}
 				open={!emailValid}
 				position="top center"
-				content="Enter a valid email"
+				content={t('invalid_email')}
 				trigger={
 					<Form.Input
 						type="email"
 						icon="at"
-						placeholder="Email"
+						placeholder={t('email')}
 						onChange={(event, data: { value: string }) => {
 							setEmail(data.value);
 							setEmailValid(true);
@@ -84,16 +86,16 @@ const SignUpForm: React.FC = () => {
 				on={[]}
 				open={!passwordValid}
 				position="bottom center"
-				content="Password must be at least 6 characters long"
+				content={t('invalid_password')}
 				trigger={<PasswordInput onChange={setPassword} onChangeValid={setPasswordValid} />}
 			/>
 			<Button disabled={buttonDisabled} fluid positive type="submit">
-				Sign up
+				{t('sign_up')}
 			</Button>
-			<Divider horizontal>Or</Divider>
+			<Divider horizontal>{t('or')}</Divider>
 			<Button type="button" fluid>
 				<Icon name="google" />
-				Log in with Google
+				{t('google_log_in')}
 			</Button>
 		</Form>
 	);

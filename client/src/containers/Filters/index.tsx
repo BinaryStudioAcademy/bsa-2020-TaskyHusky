@@ -7,8 +7,10 @@ import { Button, Table, Input, Dropdown, Form } from 'semantic-ui-react';
 import { ReactComponent as HeaderStar } from './headerStart.svg';
 import FilterItem from 'components/FilterItem';
 import { getFullUserName } from './logic/helpers';
+import { useTranslation } from 'react-i18next';
 
 const Filters: React.FC = () => {
+	const { t } = useTranslation();
 	const dispatch = useDispatch();
 	const { filters } = useSelector((rootState: RootState) => rootState.filters);
 
@@ -31,19 +33,19 @@ const Filters: React.FC = () => {
 			<div className={styles.outer}>
 				<div className={styles.titleWrapper}>
 					<div className={styles.titleContainer}>
-						<h1 className={styles.title}>Filters</h1>
+						<h1 className={styles.title}>{t('filters')}</h1>
 					</div>
 					<div className={styles.actionWrapper}>
-						<Button primary>Create filter</Button>
+						<Button primary>{t('create_filter')}</Button>
 					</div>
 				</div>
 				<div className={styles.bottomBarWrapper}>
 					<Form>
 						<Form.Group>
-							<Form.Field control={Input} icon="search" placeholder="Search..." />
-							<Form.Field control={Dropdown} placeholder="Owner" search selection options={[]} />
-							<Form.Field control={Dropdown} placeholder="Project" search selection options={[]} />
-							<Form.Field control={Dropdown} placeholder="Group" search selection options={[]} />
+							<Form.Field control={Input} icon="search" placeholder={t('search')} />
+							<Form.Field control={Dropdown} placeholder={t('owner')} search selection options={[]} />
+							<Form.Field control={Dropdown} placeholder={t('project')} search selection options={[]} />
+							<Form.Field control={Dropdown} placeholder={t('group')} search selection options={[]} />
 						</Form.Group>
 					</Form>
 				</div>
@@ -56,9 +58,9 @@ const Filters: React.FC = () => {
 								{' '}
 								<HeaderStar />{' '}
 							</Table.HeaderCell>
-							<Table.HeaderCell>Name</Table.HeaderCell>
-							<Table.HeaderCell>Owner</Table.HeaderCell>
-							<Table.HeaderCell>Stared by</Table.HeaderCell>
+							<Table.HeaderCell>{t('name')}</Table.HeaderCell>
+							<Table.HeaderCell>{t('owner')}</Table.HeaderCell>
+							<Table.HeaderCell>{t('stared_by')}</Table.HeaderCell>
 							<Table.HeaderCell> </Table.HeaderCell>
 						</Table.Row>
 					</Table.Header>
