@@ -3,36 +3,20 @@ import { Modal, Button, Form, Checkbox, Image, Card } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
-
-import kanbanImg from '../../assets/images/kanban.svg';
-import scrumImg from '../../assets/images/scrum.svg';
-import bugTrackingImg from '../../assets/images/bug_tracking.svg';
-import styles from './styles.module.scss';
-import * as actions from './logic/actions';
+import { useTranslation } from 'react-i18next';
 import { RootState } from 'typings/rootState';
+
+import * as actions from './logic/actions';
+import getTemplatesInformation from './config/templatesInformation';
+import styles from './styles.module.scss';
 
 type ProjectTemplate = 'Scrum' | 'Kanban' | 'Bug tracking';
 
-const templatesInformation = {
-	Kanban: {
-		description:
-			'Monitor work in a continuous flow for agile teams ◦ Suits teams who control work volume from a backlog',
-		image: kanbanImg,
-	},
-	Scrum: {
-		description:
-			'Manage stories, tasks, and workflows for a scrum team ◦ For teams that deliver work on a regular schedule',
-		image: scrumImg,
-	},
-	'Bug tracking': {
-		description: 'Manage a list of development tasks and bugs ◦ Great for teams who don\u0027t need a board',
-		image: bugTrackingImg,
-	},
-};
-
 const CreateProjectModal = () => {
+	const templatesInformation = getTemplatesInformation();
 	const dispatch = useDispatch();
 	const history = useHistory();
+	const { t } = useTranslation();
 
 	const { isLoading, isModalOpened, isProjectCreated } = useSelector(
 		(rootState: RootState) => rootState.createProject,
@@ -111,44 +95,44 @@ const CreateProjectModal = () => {
 			open={isModalOpened}
 			size={!isTemplatesView ? 'tiny' : undefined}
 			dimmer="inverted"
-			trigger={<Button primary>Create project</Button>}
+			trigger={<Button primary>{t('create_project')}</Button>}
 		>
 			{!isTemplatesView ? (
 				<>
-					<Modal.Header>Create project</Modal.Header>
+					<Modal.Header>{t('create_project')}</Modal.Header>
 
 					<Modal.Content>
 						<Form className={styles.form_container}>
 							<Form.Field>
-								<label>Name</label>
-								<input onChange={onNameChanged} value={name} placeholder="Enter a project name" />
+								<label>{t('name')}</label>
+								<input onChange={onNameChanged} value={name} placeholder={t('enter_proj_name')} />
 							</Form.Field>
 							<Form.Field>
-								<label>Key</label>
-								<input placeholder="Enter a key" onChange={onKeyChanged} value={key} />
+								<label>{t('key')}</label>
+								<input placeholder={t('enter_a_key')} onChange={onKeyChanged} value={key} />
 							</Form.Field>
 							<Form.Field>
-								<Checkbox label="Share settings with an existing project" disabled={true} />
+								<Checkbox label={t('share_settings_with_existing_project')} disabled={true} />
 							</Form.Field>
 						</Form>
-						<p>Template</p>
+						<p>{t('template')}</p>
 						<div className={styles.flex_container}>
 							<Image src={image} className={styles.modal__image} />
 							<div>
 								<h2>{template}</h2>
 								<p>{description}</p>
 								<Button color="grey" onClick={() => setIsTemplatesView(true)} disabled={isLoading}>
-									Change template
+									{t('change_template')}
 								</Button>
 							</div>
 						</div>
 					</Modal.Content>
 					<Modal.Actions>
 						<Button color="grey" onClick={onModalClose}>
-							Close
+							{t('cancel')}
 						</Button>
 						<Button
-							content="Create"
+							content={t('create')}
 							labelPosition="right"
 							icon="checkmark"
 							onClick={onCreateProject}
@@ -161,7 +145,7 @@ const CreateProjectModal = () => {
 			) : (
 				<>
 					<Modal.Header>
-						<h2 className={styles.modal__title}>Choose a classic template</h2>
+						<h2 className={styles.modal__title}>{t('choose_classic_template')}</h2>
 						<p className={styles.modal__description}>{description}</p>
 					</Modal.Header>
 					<Modal.Content className={styles.cards_container}>
@@ -175,13 +159,13 @@ const CreateProjectModal = () => {
 								extra={
 									<div className={styles.card__actions_container}>
 										<Link className={styles.card__link} to={''}>
-											{'What\u0027s this?'}
+											{t('whats_this')}
 										</Link>
 										<Button
 											className={styles.card__select_template}
 											onClick={() => selectTemplate(name)}
 										>
-											Select
+											{t('select')}
 										</Button>
 									</div>
 								}

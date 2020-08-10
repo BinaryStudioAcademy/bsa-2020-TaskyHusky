@@ -1,16 +1,15 @@
 import { EntityRepository, Repository } from 'typeorm';
-import { User } from '../entity/User';
+import { UserProfile } from '../entity/UserProfile';
 import { UserModel } from '../models/User';
-import { apiErrorMessages } from '../constants/api.constants';
 
-@EntityRepository(User)
-export class UserRepository extends Repository<User> {
-	getById(id: string) {
-		return this.findOne({ where: { id } });
+@EntityRepository(UserProfile)
+export class UserRepository extends Repository<UserProfile> {
+	async getById(id: string): Promise<any> {
+		return await this.findOne({ where: { id } });
 	}
 
-	getByEmail(email: string) {
-		return this.findOne({ where: { email } });
+	async getByEmail(email: string): Promise<any> {
+		return await this.findOne({ where: { email } });
 	}
 
 	createNew(data: UserModel) {
@@ -19,13 +18,6 @@ export class UserRepository extends Repository<User> {
 	}
 
 	async updateById(id: string, user: UserModel): Promise<any> {
-		const { email } = user;
-		const userToChange = await this.getByEmail(email);
-
-		if (userToChange && userToChange.id !== id) {
-			throw new Error(apiErrorMessages.NOT_UNIQUE_EMAIL);
-		}
-
 		this.update(id, user);
 
 		return this.findOne(id);

@@ -4,15 +4,17 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'typings/rootState';
 import * as actions from './logic/actions';
 
+import Options from './../../components/common/Options';
 import CreateProjectModal from '../CreateProjectModal';
 import styles from './styles.module.scss';
 import Spinner from 'components/common/Spinner';
-import Options from 'components/Options';
 import { setProjectActions } from './config/projectActions';
 import { useHistory } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const Projects: React.FC = () => {
 	const history = useHistory();
+	const { t } = useTranslation();
 	const dispatch = useDispatch();
 	const { projects, isLoading } = useSelector((rootState: RootState) => rootState.projects);
 
@@ -31,7 +33,7 @@ const Projects: React.FC = () => {
 	const filteredData = (projects || []).filter(({ name }) => searchString.test(name));
 
 	const onOpenSettings = (id: string): void => {
-		history.push(history.location.pathname + '/edit-project/' + id);
+		history.push(history.location.pathname + '/projectSettings/' + id);
 		console.log('onOpenSettings');
 	};
 	const onTrash = (id: string): void => {
@@ -41,21 +43,21 @@ const Projects: React.FC = () => {
 	return (
 		<div className={styles.wrapper}>
 			<div className={styles.wrapper__title}>
-				<h1 className={styles.title}>Projects</h1>
+				<h1 className={styles.title}>{t('projects')}</h1>
 				<CreateProjectModal />
 			</div>
 			<div className={[styles.wrapper__filters, styles.filters].join(' ')}>
-				<Input icon="search" placeholder="Search..." onChange={onSearch} value={searchName} />
+				<Input icon="search" placeholder={t('search')} onChange={onSearch} value={searchName} />
 			</div>
 			<div className={styles.wrapper__table}>
 				<Table celled padded>
 					<Table.Header>
 						<Table.Row>
-							<Table.HeaderCell>Name</Table.HeaderCell>
-							<Table.HeaderCell>Key</Table.HeaderCell>
-							<Table.HeaderCell>Type</Table.HeaderCell>
-							<Table.HeaderCell>Lead</Table.HeaderCell>
-							<Table.HeaderCell>Settings</Table.HeaderCell>
+							<Table.HeaderCell>{t('name')}</Table.HeaderCell>
+							<Table.HeaderCell>{t('key')}</Table.HeaderCell>
+							<Table.HeaderCell>{t('type')}</Table.HeaderCell>
+							<Table.HeaderCell>{t('lead')}</Table.HeaderCell>
+							<Table.HeaderCell>{t('settings')}</Table.HeaderCell>
 						</Table.Row>
 					</Table.Header>
 					{isLoading ? null : (

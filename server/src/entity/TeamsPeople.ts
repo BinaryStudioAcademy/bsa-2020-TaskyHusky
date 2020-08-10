@@ -1,15 +1,15 @@
 import { PrimaryGeneratedColumn, Column, Entity, ManyToOne } from 'typeorm';
 import { Teams } from './Teams';
-import { User } from './User';
+import { UserProfile } from './UserProfile';
 
 @Entity()
 export class TeamsPeople {
-    @PrimaryGeneratedColumn('uuid')
-    id!: string;
+	@PrimaryGeneratedColumn('uuid')
+	id!: string;
 
-    @ManyToOne(type => User, user => user.id)
-    userId?: User;
+	@ManyToOne((type) => UserProfile, (user) => user.id)
+	userId?: UserProfile;
 
-    @ManyToOne(type => Teams, team => team.id)
-    teamId?: Teams;
+	@ManyToOne((type) => Teams, (team) => team.id)
+	teamId?: Teams;
 }

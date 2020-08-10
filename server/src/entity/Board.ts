@@ -2,7 +2,7 @@ import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToOne } from 'ty
 import { IsDefined, IsString, MinLength } from 'class-validator';
 import { BoardColumn } from './BoardColumn';
 import { Sprint } from './Sprint';
-import { User } from './User';
+import { UserProfile } from './UserProfile';
 import { BoardType } from '../models/Board';
 
 @Entity()
@@ -29,9 +29,9 @@ export class Board {
 	@OneToMany((type) => Sprint, (sprint) => sprint.id)
 	sprints?: Sprint[];
 
-	@ManyToOne((type) => User, (user) => user.boards, {
+	@ManyToOne((type) => UserProfile, (user) => user.boards, {
 		onDelete: 'CASCADE',
 	})
 	@IsDefined()
-	createdBy!: User;
+	createdBy!: UserProfile;
 }
