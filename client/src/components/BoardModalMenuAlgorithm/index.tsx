@@ -1,5 +1,5 @@
 import { Form, Radio } from 'semantic-ui-react';
-import { creatingAlgorithms } from '../types';
+import { creatingAlgorithms } from '../../typings/boardTypes';
 import React from 'react';
 
 interface Props {
@@ -8,7 +8,7 @@ interface Props {
 	onRadioChange: (algorithmType: creatingAlgorithms) => void;
 }
 
-const SecondMenu = (props: Props) => {
+const BoardModalMenuAlgorithm = (props: Props) => {
 	const { algorithm, onRadioChange } = props;
 
 	return (
@@ -44,4 +44,4 @@ const SecondMenu = (props: Props) => {
 	);
 };
 
-export default SecondMenu;
+export default BoardModalMenuAlgorithm;

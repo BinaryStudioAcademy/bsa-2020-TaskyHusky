@@ -1,4 +1,4 @@
-import { boardTypes } from '../../../components/CreateBoardModal/types';
+import { boardTypes } from '../../../typings/boardTypes';
 
 export const START_LOADING = 'BOARDS:START_LOADING';
 export const SUCCESS_LOADING = 'BOARDS:SUCCESS_LOADING';

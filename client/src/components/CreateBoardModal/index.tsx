@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Button, Modal } from 'semantic-ui-react';
-import { boardTypes, creatingAlgorithms, IBoard } from './types';
-import FirstMenu from './modals/firstMenu';
-import SecondMenu from './modals/secondMenu';
-import ThirdMenuExisting from './modals/thirdMenuExisting';
+import { boardTypes, creatingAlgorithms, IBoard } from '../../typings/boardTypes';
+import BoardModalMenuType from '../BoardModalMenuType';
+import BoardModalMenuAlgorithm from '../BoardModalMenuAlgorithm';
+import BoardModalFinal from '../BoardModalFinal';
 import { createBoard } from '../../containers/Boards/logic/actionTypes';
 
 interface Props {
@@ -64,12 +64,12 @@ const CreateBoardModal = (props: Props) => {
 					: 'Name this board'}
 			</Modal.Header>
 			<Modal.Content>
-				{!isTypeSelected ? <FirstMenu onTypeSelection={onTypeSelection} /> : null}
+				{!isTypeSelected ? <BoardModalMenuType onTypeSelection={onTypeSelection} /> : null}
 				{isTypeSelected && !isAlgorithmSelected ? (
-					<SecondMenu algorithm={board.algorithm} onRadioChange={onRadioChange} />
+					<BoardModalMenuAlgorithm algorithm={board.algorithm} onRadioChange={onRadioChange} />
 				) : null}
 				{isAlgorithmSelected && board.algorithm === creatingAlgorithms.existingProject ? (
-					<ThirdMenuExisting board={board} setBoard={setBoard} changeSubmitStatus={changeSubmitStatus} />
+					<BoardModalFinal board={board} setBoard={setBoard} changeSubmitStatus={changeSubmitStatus} />
 				) : null}
 			</Modal.Content>
 			<Modal.Actions>

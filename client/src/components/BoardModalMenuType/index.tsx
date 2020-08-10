@@ -1,13 +1,14 @@
 import { Button, Container, Grid, Header } from 'semantic-ui-react';
-import styles from '../styles.module.scss';
-import { boardTypes } from '../types';
+
+import { boardTypes } from '../../typings/boardTypes';
 import React from 'react';
+import styles from './styles.module.scss';
 
 interface Props {
 	onTypeSelection: (type: boardTypes) => void;
 }
 
-const FirstMenu = (props: Props) => {
+const BoardModalMenuType = (props: Props) => {
 	return (
 		<Grid columns={2} relaxed="very" divided>
 			<Grid.Row>
@@ -48,4 +49,4 @@ const FirstMenu = (props: Props) => {
 	);
 };
 
-export default FirstMenu;
+export default BoardModalMenuType;
