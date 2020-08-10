@@ -60,8 +60,7 @@ const ThirdMenuExisting = (props: Props) => {
 				<label>Project</label>
 				{/*
  				// @ts-ignore*/}
-				<Dropdown
-					search
+				<Dropdown search
 					header="Projects"
 					multiple
 					fluid
