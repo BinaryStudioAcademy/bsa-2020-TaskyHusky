@@ -3,6 +3,19 @@ namespace WebApi.Board {
 		Scrum = 'Scrum',
 		Kanban = 'Kanban',
 	}
+
+	export interface IBoardModel {
+		id: string;
+		boardType: BoardType;
+		name: string;
+		location: string;
+		createdBy: {
+			id: string;
+			firstName: string;
+			lastName: string;
+			avatar: string;
+		};
+	}
 }
 
 namespace WebApi.Issue {
@@ -92,7 +105,6 @@ namespace WebApi.Entities {
 		id: string;
 		boardType: BoardType;
 		name: string;
-		location: string;
 		columns?: BoardColumn[];
 		createdBy: UserProfile;
 	}
