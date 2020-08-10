@@ -65,10 +65,11 @@ export const HeaderMenu = () => {
 						{t('people')}
 					</Menu.Item>
 					<Menu.Item
+						as="a"
+						href="/createIssue"
 						className={styles.createMenuItem}
 						name="create"
 						active={activeItem === 'create'}
-						onClick={() => toggleActiveItem('create')}
 					>
 						{t('create')}
 					</Menu.Item>
