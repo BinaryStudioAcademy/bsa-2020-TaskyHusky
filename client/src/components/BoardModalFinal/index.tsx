@@ -1,10 +1,11 @@
-import { IBoard } from '../types';
+import { IBoard } from '../../typings/boardTypes';
 import { Form, Input, Dropdown } from 'semantic-ui-react';
 import React, { useEffect, useState } from 'react';
-import styles from '../styles.module.scss';
+
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../../typings/rootState';
-import * as actions from '../../../containers/Projects/logic/actions';
+import { RootState } from '../../typings/rootState';
+import * as actions from '../../containers/Projects/logic/actions';
+import styles from './styles.module.scss';
 
 interface Props {
 	board: IBoard;
@@ -12,7 +13,7 @@ interface Props {
 	changeSubmitStatus: (status: boolean) => void;
 }
 
-const ThirdMenuExisting = (props: Props) => {
+const BoardModalFinal = (props: Props) => {
 	const { board, setBoard } = props;
 
 	const dispatch = useDispatch();
@@ -76,4 +77,4 @@ const ThirdMenuExisting = (props: Props) => {
 	);
 };
 
-export default ThirdMenuExisting;
+export default BoardModalFinal;
