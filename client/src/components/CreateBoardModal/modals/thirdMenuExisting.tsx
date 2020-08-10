@@ -1,7 +1,9 @@
 import { IBoard } from '../types';
 import { Form, Input, Dropdown } from 'semantic-ui-react';
-import React from 'react';
+import React, { useState } from 'react';
 import styles from '../styles.module.scss';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../typings/rootState';
 
 interface Props {
 	board: IBoard;
@@ -9,13 +11,20 @@ interface Props {
 }
 
 const ThirdMenuExisting = (props: Props) => {
+	const [selectedLocation, setSelectedLocation] = useState(' ');
+	const authData = useSelector((rootState: RootState) => rootState.auth);
+	const initials = `${authData.user?.firstName} ${authData.user?.lastName}`;
+
 	const projects = [
 		{ key: 'project1', text: 'project1', value: 'project1' },
 		{ key: 'project2', text: 'project2', value: 'project2' },
 	];
 	const personal = [
-		{ key: 'person1', text: 'person1', value: 'person1' },
-		{ key: 'person2', text: 'person2', value: 'person2' },
+		{
+			key: `${initials === ' ' ? 'Ivan Ivanov' : initials}`,
+			text: `${initials === ' ' ? 'Ivan Ivanov' : initials}`,
+			value: `${initials === ' ' ? 'Ivan Ivanov' : initials}`,
+		},
 	];
 	return (
 		<Form>
@@ -31,22 +40,34 @@ const ThirdMenuExisting = (props: Props) => {
 				<p>Select one or more projects to include in this board</p>
 			</Form.Field>
 			<Form.Field required width={7} className={styles.formField}>
-				<label>Project</label>
-				<Dropdown header="Projects" multiple fluid selection options={projects} />
-				<p>Select one or more projects to include in this board</p>
-			</Form.Field>
-			<Form.Field required width={7} className={styles.formField}>
+				<label>Location</label>
 				{/*
  				// @ts-ignore*/}
-				<Dropdown text="Shopping" multiple fluid search>
+				<Dropdown value={selectedLocation} text={selectedLocation} search className="selection">
 					<Dropdown.Menu>
-						<Dropdown.Header>Categories</Dropdown.Header>
-						<Dropdown.Item>Home Goods</Dropdown.Item>
-						<Dropdown.Item>Bedroom</Dropdown.Item>
-						<Dropdown.Divider />
-						<Dropdown.Header>Order</Dropdown.Header>
-						<Dropdown.Item>Status</Dropdown.Item>
-						<Dropdown.Item>Cancellations</Dropdown.Item>
+						<Dropdown.Header content="Projects" />
+						<Dropdown.Menu scrolling>
+							{projects.map((option) => (
+								<Dropdown.Item
+									{...option}
+									key={option.key}
+									onClick={() => {
+										setSelectedLocation(option.value);
+										console.log(selectedLocation);
+									}}
+								/>
+							))}
+						</Dropdown.Menu>
+						<Dropdown.Header content="Personal" />
+						<Dropdown.Menu scrolling>
+							{personal.map((option) => (
+								<Dropdown.Item
+									{...option}
+									key={option.key}
+									onClick={() => setSelectedLocation(option.value)}
+								/>
+							))}
+						</Dropdown.Menu>
 					</Dropdown.Menu>
 				</Dropdown>
 			</Form.Field>
