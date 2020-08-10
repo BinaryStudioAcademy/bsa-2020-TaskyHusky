@@ -23,7 +23,7 @@ const ThirdMenuExisting = (props: Props) => {
 	const [selectedName, setSelectedName] = useState('');
 	const [selectedProjects, setSelectedProjects] = useState<Array<string>>([]);
 	useEffect(() => {
-		if (selectedProjects.length !== 0 && selectedName !== '' && selectedLocation !== '') {
+		if (selectedProjects.length !== 0 && selectedName !== '') {
 			props.changeSubmitStatus(false);
 			setBoard({
 				...board,
@@ -37,7 +37,6 @@ const ThirdMenuExisting = (props: Props) => {
 	}, [selectedProjects, selectedName]);
 
 	const authData = useSelector((rootState: RootState) => rootState.auth);
-	const initials = `${authData.user?.firstName} ${authData.user?.lastName}`;
 	const projectData = useSelector((rootState: RootState) => rootState.projects.projects);
 
 	const projects = projectData.map((project) => ({
@@ -45,14 +44,6 @@ const ThirdMenuExisting = (props: Props) => {
 		text: `${project.name} (${project.key})`,
 		value: project.id,
 	}));
-
-	const personal = [
-		{
-			key: authData.user?.id,
-			text: initials,
-			value: `${authData.user ? authData.user.id : 'fakeId'}`,
-		},
-	];
 
 	return (
 		<Form>
@@ -81,39 +72,6 @@ const ThirdMenuExisting = (props: Props) => {
 					}}
 				/>
 				<p>Select one or more projects to include in this board</p>
-			</Form.Field>
-			<Form.Field width={7} className={styles.formField}>
-				<label>Location</label>
-				{/*
- 				// @ts-ignore*/}
-				<Dropdown value={selectedLocation} text={selectedLocation} search className="selection">
-					<Dropdown.Menu>
-						<Dropdown.Header content="Projects" />
-						<Dropdown.Menu scrolling>
-							{projects.map((option) => (
-								<Dropdown.Item
-									{...option}
-									key={option.key}
-									onClick={() => {
-										setSelectedLocation(option.text);
-									}}
-								/>
-							))}
-						</Dropdown.Menu>
-						<Dropdown.Header content="Personal" />
-						<Dropdown.Menu scrolling>
-							{personal.map((option) => (
-								<Dropdown.Item
-									{...option}
-									key={option.key}
-									onClick={() => {
-										setSelectedLocation(option.text);
-									}}
-								/>
-							))}
-						</Dropdown.Menu>
-					</Dropdown.Menu>
-				</Dropdown>
 			</Form.Field>
 		</Form>
 	);
