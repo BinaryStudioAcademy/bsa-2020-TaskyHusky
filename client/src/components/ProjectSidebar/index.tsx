@@ -1,6 +1,5 @@
 import React from 'react';
 import { Icon } from 'semantic-ui-react';
-
 import { Link } from 'react-router-dom';
 import mockAvatar from 'assets/images/projectAvatars/viewavatar.svg';
 import styles from './styles.module.scss';
