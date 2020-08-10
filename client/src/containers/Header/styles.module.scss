@@ -1,0 +1,68 @@
+:global(#root) {
+	.menuWrapper > * {
+		color: rgba(80, 80, 80, 0.9) !important;
+		padding: 7px 13px;
+		font-weight: bold !important;
+	}
+
+	.menuWrapper {
+		margin: 0px 20px;
+	}
+
+	.segmentWrapper {
+		border-radius: 0;
+		padding: 0;
+		width: 100%;
+		position: sticky;
+		top: 0;
+		left: 0;
+		margin: 0 !important;
+	}
+
+	.rightMenu {
+		padding: 0px;
+	}
+
+	.logoItem {
+		padding: 5px 7px;
+
+		&:hover {
+			background: none;
+		}
+	}
+
+	.createMenuItem {
+		background: rgba(0, 101, 253, 0.9);
+		color: #fff !important;
+
+		&:hover {
+			background: rgba(0, 101, 253, 1);
+		}
+	}
+
+	.circularIcon {
+		margin-left: 10px;
+		border-radius: 50%;
+		padding: 7px;
+		height: 30px;
+		width: 30px;
+
+		&:hover {
+			background: rgba(0, 0, 0, 0.05);
+			padding: 7px;
+		}
+		i {
+			margin: 0;
+		}
+	}
+
+	.circularDropdownMenu {
+		position: absolute;
+		top: 38px;
+		right: 4px !important;
+	}
+
+	.circularDropdownMenu > * {
+		color: rgba(80, 80, 80, 0.9) !important;
+	}
+}

@@ -1,34 +1,20 @@
 namespace WebApi.Board {
 	export enum BoardType {
 		Scrum = 'Scrum',
-		NextGen = 'Next-gen',
 		Kanban = 'Kanban',
-	}
-
-	export interface IBoardModel {
-		id: string;
-		boardType: BoardType;
-		name: string;
-		location: string;
-		createdBy: {
-			id: string;
-			firstName: string;
-			lastName: string;
-			avatar: string;
-		};
 	}
 }
 
 namespace WebApi.Issue {
 	interface PartialIssue {
 		id?: string;
-		type?: string;
+		type: string;
 		summary?: string;
 		boardColumnID?: string;
 		labels?: string[];
 		attachments?: string[];
 		links?: string[];
-		priority?: string;
+		priority: string;
 		description?: string;
 		sprintID?: string;
 		projectID?: string;
@@ -46,6 +32,41 @@ namespace WebApi.Result {
 		};
 		jwtToken: string;
 	}
+
+	interface IssueResult {
+		id: string;
+		type: {
+			id: string;
+			color: string;
+			title: string;
+			icon: string;
+		};
+		summary?: string;
+		boardColumnID?: string;
+		labels?: string[];
+		attachments?: string[];
+		links?: string[];
+		priority: {
+			id: string;
+			color: string;
+			title: string;
+			icon: string;
+		};
+		description?: string;
+		sprintID?: string;
+		projectID?: string;
+		issueKey?: string;
+		assignedID?: string;
+		creatorID?: string;
+	}
+}
+
+namespace WebApi.Team {
+	export interface TeamModel {
+		id?: string;
+		description?: string;
+		links?: string[];
+	}
 }
 
 namespace WebApi.User {
@@ -53,14 +74,16 @@ namespace WebApi.User {
 		id?: string;
 		email: string;
 		password?: string;
-		firstName?: string;
 		lastName?: string;
+		firstName?: string;
+		username?: string;
 		avatar?: string;
+		location?: string;
 		department?: string;
-		timezone?: string;
 		organization?: string;
 		jobTitle?: string;
 		userSettingsId?: string;
+		filtres?: string[];
 	}
 }
 
@@ -68,8 +91,10 @@ namespace WebApi.Entities {
 	interface Board {
 		id: string;
 		boardType: BoardType;
+		name: string;
+		location: string;
 		columns?: BoardColumn[];
-		createdBy: User;
+		createdBy: UserProfile;
 	}
 
 	interface BoardColumn {
@@ -82,8 +107,10 @@ namespace WebApi.Entities {
 
 	interface Filter {
 		id: string;
+		owner?: UserProfile;
 		ownerId?: string;
 		name?: string;
+		staredBy?: UserProfile[];
 	}
 
 	interface FilterDefinition {
@@ -95,9 +122,9 @@ namespace WebApi.Entities {
 
 	interface FilterPart {
 		id: string;
-		filter?: Filter;
-		filterDef?: FilterDefinition;
-		// members?: User[];
+		filterId?: string;
+		filterDefId?: string;
+		members?: UserProfile[];
 		searchText?: string;
 	}
 
@@ -135,28 +162,43 @@ namespace WebApi.Entities {
 	}
 
 	interface Projects {
-		projectID: string;
+		id: string;
 		name: string;
 		key: string;
-		projectType: string;
-		category: string;
+		category?: string;
 		defaultAssigneeID?: string;
 		leadID?: string;
-		creatorID?: string;
+		creatorID: string;
 	}
 
-	interface User {
+	interface Teams {
+		id: string;
+		teamId?: TeamsPeople[];
+		description?: string;
+		links?: string;
+	}
+
+	interface TeamsPeople {
+		id: string;
+		userId?: UserProfile;
+		teamId?: Teams;
+	}
+
+	interface UserProfile {
 		id: string;
 		firstName?: string;
 		lastName?: string;
+		username?: string;
 		avatar?: string;
 		department?: string;
-		timezone?: string;
+		location?: string;
 		organization?: string;
 		email?: string;
 		jobTitle?: string;
 		userSettingsId?: string;
 		password?: string;
+		teams?: TeamsPeople[];
 		boards?: Board[];
+		filters?: Filter[];
 	}
 }

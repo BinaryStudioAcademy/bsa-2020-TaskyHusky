@@ -1,9 +1,11 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { MinLength, IsEmail } from 'class-validator';
-import {Board} from './Board';
+import {TeamsPeople} from './TeamsPeople';
+import { Board } from './Board';
+import { Filter } from './Filter';
 
 @Entity()
-export class User {
+export class UserProfile {
 	@PrimaryGeneratedColumn('uuid')
 	id!: string;
 
@@ -14,22 +16,25 @@ export class User {
 	lastName?: string;
 
 	@Column({ nullable: true })
+	username?: string;
+
+	@Column({ nullable: true })
 	avatar?: string;
 
 	@Column({ nullable: true })
 	department?: string;
 
 	@Column({ nullable: true })
-	timezone?: string;
+	location?: string;
 
 	@Column({ nullable: true })
 	organization?: string;
 
 	@Column({ unique: true })
+	@IsEmail()
 	email?: string;
 
 	@Column({ nullable: true })
-	@IsEmail()
 	jobTitle?: string;
 
 	@Column({ nullable: true })
@@ -39,6 +44,12 @@ export class User {
 	@MinLength(6)
 	password?: string;
 
+	@OneToMany(type => TeamsPeople, teams => teams.userId)
+  teams?: TeamsPeople[];
+  
 	@OneToMany(type => Board, board => board.createdBy)
 	boards?: Board[];
+
+	@OneToMany((type) => Filter, (filter) => filter.owner)
+	filters?: Filter[];
 }

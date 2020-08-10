@@ -1,0 +1,33 @@
+name: Stage - Server Build
+on:
+  push:
+    branches: [dev]
+    paths: 'server/**/*.*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install dependencies
+      run: |
+        cd server
+        npm install
+    - name: ESlint
+      run: |
+        cd server
+        npm run lint
+    - name: Generate deployment package
+      run: |
+        cd server
+        zip -r ../deploy.zip .
+    - name: Deploy to EB
+      uses: einaregilsson/beanstalk-deploy@v7
+      with:
+        aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        application_name: ${{ secrets.APP_NAME }}
+        environment_name: ${{ secrets.APP_ENV_NAME }}
+        region: ${{ secrets.AWS_APP_REGION }}
+        version_label: ${{ github.sha }}
+        deployment_package: deploy.zip

@@ -1,0 +1,36 @@
+name: Stage - Client Build
+on:
+  push:
+    branches: [dev]
+    paths: 'client/**/*.*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install dependencies
+      run: |
+        cd client
+        npm install
+    - name: ESlint
+      run: |
+        cd client
+        npm run lint
+    - name: Build
+      env:
+        REACT_APP_API_BASE_URL: http://api-stage.taskyhusky.xyz/
+      run: |
+        cd client
+        npm run build
+    - name: Enable Amazon
+      uses: chrislennon/action-aws-cli@v1.1
+    - name: Deploy to S3
+      run: |
+          aws s3 rm --recursive s3://${{ secrets.AWS_S3_BUCKET_NAME_STAGE }}
+          aws s3 sync client/build/ s3://${{ secrets.AWS_S3_BUCKET_NAME_STAGE }}
+      env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+          SOURCE_DIR: 'client/build'

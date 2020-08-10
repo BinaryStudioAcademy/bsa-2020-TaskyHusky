@@ -1,9 +1,8 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToOne } from 'typeorm';
 import { IsDefined, IsString, MinLength } from 'class-validator';
-import {BoardColumn} from './BoardColumn';
-import {User} from './User';
-import{BoardType} from '../models/Board';
-
+import { BoardColumn } from './BoardColumn';
+import { UserProfile } from './UserProfile';
+import { BoardType } from '../models/Board';
 
 @Entity()
 export class Board {
@@ -16,19 +15,19 @@ export class Board {
 	@Column()
 	@IsString()
 	@MinLength(1)
-	name!:string
+	name!: string;
 
 	@Column()
 	@IsString()
 	@MinLength(1)
-	location!:string
+	location!: string;
 
-	@OneToMany(type => BoardColumn, boardColumn => boardColumn.board)
+	@OneToMany((type) => BoardColumn, (boardColumn) => boardColumn.board)
 	columns?: BoardColumn[];
 
-	@ManyToOne(type => User, user => user.boards, {
+	@ManyToOne((type) => UserProfile, (user) => user.boards, {
 		onDelete: 'CASCADE',
 	})
 	@IsDefined()
-	createdBy!: User;
+	createdBy!: UserProfile;
 }

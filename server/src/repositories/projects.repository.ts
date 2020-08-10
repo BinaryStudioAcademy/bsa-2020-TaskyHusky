@@ -9,7 +9,7 @@ export class ProjectsRepository extends Repository<Projects> {
 	}
 
 	findOneById(projectID: string) {
-		return this.findOne(projectID);
+		return this.findOneOrFail(projectID);
 	}
 
 	createOne(data: Projects) {

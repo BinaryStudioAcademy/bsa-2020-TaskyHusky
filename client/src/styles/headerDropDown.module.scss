@@ -1,0 +1,10 @@
+:global(#root) {
+	.dropDownMenu {
+		position: absolute;
+		top: 32px;
+	}
+
+	.dropDownMenu > * {
+		color: rgba(80, 80, 80, 0.9) !important;
+	}
+}
