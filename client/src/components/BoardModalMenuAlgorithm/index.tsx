@@ -15,6 +15,7 @@ const BoardModalMenuAlgorithm = (props: Props) => {
 		<Form>
 			<Form.Field>
 				<Radio
+					disabled
 					checked={algorithm === creatingAlgorithms.newProject}
 					label="Board created with new Software project"
 					name={creatingAlgorithms.newProject}
@@ -33,6 +34,7 @@ const BoardModalMenuAlgorithm = (props: Props) => {
 			</Form.Field>
 			<Form.Field>
 				<Radio
+					disabled
 					checked={algorithm === creatingAlgorithms.savedFilter}
 					label="Board from an existing Saved Filter"
 					name={creatingAlgorithms.savedFilter}

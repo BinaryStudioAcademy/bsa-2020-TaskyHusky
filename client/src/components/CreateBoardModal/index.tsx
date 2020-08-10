@@ -20,7 +20,7 @@ const CreateBoardModal = (props: Props) => {
 
 	const [board, setBoard] = useState<IBoard>({
 		boardType: boardTypes.scrum,
-		algorithm: creatingAlgorithms.newProject,
+		algorithm: creatingAlgorithms.existingProject,
 		projects: [],
 		name: '',
 		admin: '',
