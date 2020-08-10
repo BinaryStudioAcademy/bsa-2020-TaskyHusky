@@ -4,12 +4,12 @@ import { UserModel } from '../models/User';
 
 @EntityRepository(UserProfile)
 export class UserRepository extends Repository<UserProfile> {
-	async getById(id: string): Promise<any> {
-		return await this.findOne({ where: { id } });
+	getById(id: string): Promise<any> {
+		return this.findOne({ where: { id } });
 	}
 
-	async getByEmail(email: string): Promise<any> {
-		return await this.findOne({ where: { email } });
+	getByEmail(email: string): Promise<any> {
+		return this.findOne({ where: { email } });
 	}
 
 	createNew(data: UserModel) {
