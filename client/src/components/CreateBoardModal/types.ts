@@ -5,14 +5,14 @@ export enum creatingAlgorithms {
 }
 
 export enum boardTypes {
-	scrum = 'scrum',
-	kanban = 'kanban',
+	scrum = 'Scrum',
+	kanban = 'Kanban',
 }
 
 export interface IBoard {
-	type: boardTypes;
+	boardType: boardTypes;
 	algorithm: creatingAlgorithms;
-	projectName: string;
-	projectKey: string;
-	projectLead: string;
+	projects: Array<string>;
+	name: string;
+	admin?: string;
 }
