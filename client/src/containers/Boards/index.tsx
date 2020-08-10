@@ -1,11 +1,12 @@
 import React, { useState, ChangeEvent, useEffect, SyntheticEvent } from 'react';
-import { Button, Input, Table, Dropdown, DropdownProps, Menu } from 'semantic-ui-react';
+import { Button, Input, Table, Dropdown, DropdownProps } from 'semantic-ui-react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'typings/rootState';
 import * as actions from './logic/actions';
 import { createBoard } from './logic/actionTypes';
-
+import Options, { ItemProps } from '../../components/common/Options';
 import CreateBoardModal from '../../components/CreateBoardModal';
+
 import styles from './styles.module.scss';
 
 const Boards: React.FC = () => {
@@ -51,6 +52,30 @@ const Boards: React.FC = () => {
 	const onCreateBoard = (board: createBoard) => {
 		dispatch(actions.createBoard({ ...board }));
 	};
+
+	const getBoardMenuActions = (id: string): ItemProps[] => [
+		{
+			onClickAction: () => {},
+			id,
+			text: 'Edit settings',
+		},
+		{
+			onClickAction: () => {},
+			id,
+			text: 'Copy',
+		},
+		{
+			onClickAction: () => {},
+			id,
+			text: 'Move',
+		},
+		{
+			onClickAction: (id) => handleDelete(id),
+			id,
+			text: 'Delete',
+		},
+	];
+
 	return (
 		<div className={styles.wrapper}>
 			{isModalShown ? <CreateBoardModal setIsModalShown={setIsModalShown} onCreateBoard={onCreateBoard} /> : ''}
@@ -90,36 +115,7 @@ const Boards: React.FC = () => {
 									<Table.Cell>{boardType}</Table.Cell>
 									<Table.Cell>{`${user.firstName} ${user.lastName}`}</Table.Cell>
 									<Table.Cell>
-										<Menu borderless compact secondary>
-											<Dropdown
-												item
-												icon={
-													<svg
-														width="24"
-														height="24"
-														viewBox="0 0 24 24"
-														focusable="false"
-														role="presentation"
-													>
-														<g fill="currentColor" fillRule="evenodd">
-															<circle cx="5" cy="12" r="2" />
-															<circle cx="12" cy="12" r="2" />
-															<circle cx="19" cy="12" r="2" />
-														</g>
-													</svg>
-												}
-												direction="left"
-											>
-												<Dropdown.Menu>
-													<Dropdown.Item>Edit settings</Dropdown.Item>
-													<Dropdown.Item>Copy</Dropdown.Item>
-													<Dropdown.Item>Move</Dropdown.Item>
-													<Dropdown.Item onClick={() => handleDelete(id)}>
-														Delete
-													</Dropdown.Item>
-												</Dropdown.Menu>
-											</Dropdown>
-										</Menu>
+										<Options config={getBoardMenuActions(id)} />
 									</Table.Cell>
 								</Table.Row>
 							);
