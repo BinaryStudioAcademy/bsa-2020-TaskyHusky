@@ -17,11 +17,6 @@ export class Board {
 	@MinLength(1)
 	name!: string;
 
-	@Column()
-	@IsString()
-	@MinLength(1)
-	location!: string;
-
 	@OneToMany((type) => BoardColumn, (boardColumn) => boardColumn.board)
 	columns?: BoardColumn[];
 
