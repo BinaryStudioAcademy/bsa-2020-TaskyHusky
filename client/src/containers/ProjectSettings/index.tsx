@@ -10,13 +10,12 @@ import { setProjectActions } from './config/projectActions';
 import mockAvatar from 'assets/images/projectAvatars/viewavatar.svg';
 import styles from './styles.module.scss';
 import { useTranslation } from 'react-i18next';
-
-interface Props {}
+import ProjectSidebar from 'components/ProjectSidebar';
 
 const ProjectSettings = () => {
 	const { t } = useTranslation();
 	const history = useHistory();
-	const projectName = '12';
+	const projectName = 'NBA';
 	const id = '12';
 	const onTrash = () => {};
 
@@ -25,7 +24,7 @@ const ProjectSettings = () => {
 		{ key: 'f', text: t('project_lead'), value: 'projectLead' },
 	];
 
-	return (
+	return ProjectSidebar(
 		<section>
 			<div className={styles.header_inner__container}>
 				<div className={styles.header_inner__breadcrumbs}>
@@ -126,7 +125,7 @@ const ProjectSettings = () => {
 					</div>
 				</Form>
 			</div>
-		</section>
+		</section>,
 	);
 };
 
