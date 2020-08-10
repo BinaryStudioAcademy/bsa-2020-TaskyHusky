@@ -28,8 +28,9 @@ export const FiltersMenu = () => {
 					FavFilter #2
 				</Dropdown.Item>
 				<Dropdown.Divider />
-				<Dropdown.Item>{t('view_all_filters')}</Dropdown.Item>
-				<Dropdown.Item>{t('advanced_issue_search')}</Dropdown.Item>
+				<Dropdown.Item as="a" href="/filters">
+					{t('view_all_filters')}
+				</Dropdown.Item>
 			</Dropdown.Menu>
 		</Dropdown>
 	);
