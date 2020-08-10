@@ -21,6 +21,18 @@ export function* watchDeleteBoard() {
 	yield takeEvery(actionTypes.DELETE_BOARD, deleteBoard);
 }
 
+export function* createBoard(action: ReturnType<typeof actions.createBoard>) {
+	const { type, ...board } = action;
+	yield call(service.createBoard, {
+		...board,
+	});
+	yield put(actions.startLoading());
+}
+
+export function* watchCreateBoard() {
+	yield takeEvery(actionTypes.CREATE_BOARD, createBoard);
+}
+
 export default function* boardsSaga() {
-	yield all([watchStartLoading(), watchDeleteBoard()]);
+	yield all([watchStartLoading(), watchDeleteBoard(), watchCreateBoard()]);
 }

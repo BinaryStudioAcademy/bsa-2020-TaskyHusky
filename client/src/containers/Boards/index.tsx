@@ -3,6 +3,7 @@ import { Button, Input, Table, Dropdown, DropdownProps, Menu } from 'semantic-ui
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'typings/rootState';
 import * as actions from './logic/actions';
+import { createBoard } from './logic/actionTypes';
 
 import CreateBoardModal from '../../components/CreateBoardModal';
 import styles from './styles.module.scss';
@@ -18,8 +19,6 @@ const Boards: React.FC = () => {
 	useEffect(() => {
 		dispatch(actions.startLoading());
 	}, []);
-
-	const onCreateBoard = () => {};
 
 	const onSearch = (event: ChangeEvent<HTMLInputElement>) => {
 		const searchValue = event.target.value;
@@ -48,9 +47,13 @@ const Boards: React.FC = () => {
 	const handleDelete = (id: string) => {
 		dispatch(actions.deleteBoard({ id }));
 	};
+
+	const onCreateBoard = (board: createBoard) => {
+		dispatch(actions.createBoard({ ...board }));
+	};
 	return (
 		<div className={styles.wrapper}>
-			{isModalShown ? <CreateBoardModal setIsModalShown={setIsModalShown} onCreateProject={onCreateBoard} /> : ''}
+			{isModalShown ? <CreateBoardModal setIsModalShown={setIsModalShown} onCreateBoard={onCreateBoard} /> : ''}
 			<div className={styles.wrapper__title}>
 				<h1 className={styles.title}>Boards</h1>
 				<Button primary onClick={() => setIsModalShown(true)}>
@@ -75,19 +78,17 @@ const Boards: React.FC = () => {
 							<Table.HeaderCell width={5}>Name</Table.HeaderCell>
 							<Table.HeaderCell width={5}>Type</Table.HeaderCell>
 							<Table.HeaderCell width={5}>Admin</Table.HeaderCell>
-							<Table.HeaderCell width={5}>Location</Table.HeaderCell>
-							<Table.HeaderCell width={2} />
+							<Table.HeaderCell width={1} />
 						</Table.Row>
 					</Table.Header>
 
 					<Table.Body>
-						{filteredData.map(({ location, name, id, boardType, createdBy: user }) => {
+						{filteredData.map(({ name, id, boardType, createdBy: user }) => {
 							return (
 								<Table.Row key={id}>
 									<Table.Cell>{name}</Table.Cell>
 									<Table.Cell>{boardType}</Table.Cell>
 									<Table.Cell>{`${user.firstName} ${user.lastName}`}</Table.Cell>
-									<Table.Cell>{location}</Table.Cell>
 									<Table.Cell>
 										<Menu borderless compact secondary>
 											<Dropdown

@@ -1,4 +1,5 @@
 import callWebApi from '../helpers/callApi.helper';
+import { createBoard as createBoardType } from '../containers/Boards/logic/actionTypes';
 
 export const getBoards = async (): Promise<WebApi.Board.IBoardModel[]> => {
 	const res: Response = await callWebApi({
@@ -15,6 +16,19 @@ export const deleteBoard = async (id: string): Promise<any> => {
 		method: 'DELETE',
 		endpoint: `board/${id}`,
 		skipAuthorization: false,
+	});
+
+	return await res.json();
+};
+
+export const createBoard = async (board: createBoardType): Promise<any> => {
+	const res: Response = await callWebApi({
+		method: 'POST',
+		endpoint: `board`,
+		skipAuthorization: false,
+		body: {
+			...board,
+		},
 	});
 
 	return await res.json();

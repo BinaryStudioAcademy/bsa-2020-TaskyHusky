@@ -6,3 +6,4 @@ export const successLoading = createAction<actionTypes.successLoading>(actionTyp
 export const failLoading = createAction(actionTypes.FAIL_LOADING);
 
 export const deleteBoard = createAction<actionTypes.deleteBoard>(actionTypes.DELETE_BOARD);
+export const createBoard = createAction<actionTypes.createBoard>(actionTypes.CREATE_BOARD);

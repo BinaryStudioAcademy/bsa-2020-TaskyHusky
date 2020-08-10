@@ -4,25 +4,26 @@ import { boardTypes, creatingAlgorithms, IBoard } from './types';
 import FirstMenu from './modals/firstMenu';
 import SecondMenu from './modals/secondMenu';
 import ThirdMenuExisting from './modals/thirdMenuExisting';
+import { createBoard } from '../../containers/Boards/logic/actionTypes';
 
 interface Props {
 	setIsModalShown(params: boolean): void;
 
-	onCreateProject(): void;
+	onCreateBoard(board: createBoard): void;
 }
 
 const CreateBoardModal = (props: Props) => {
 	const [isTypeSelected, selectType] = useState(false);
 	const [isAlgorithmSelected, selectAlgorithm] = useState(false);
-	const { setIsModalShown, onCreateProject } = props;
+	const { setIsModalShown, onCreateBoard } = props;
 	const [isCreateDisabled, changeSubmitStatus] = useState(true);
 
 	const [board, setBoard] = useState<IBoard>({
-		type: boardTypes.scrum,
+		boardType: boardTypes.scrum,
 		algorithm: creatingAlgorithms.newProject,
-		projectName: '',
-		projectKey: '',
-		projectLead: '',
+		projects: [],
+		name: '',
+		admin: '',
 	});
 
 	const onCancelClick = () => {
@@ -38,11 +39,11 @@ const CreateBoardModal = (props: Props) => {
 		});
 	};
 
-	const onTypeSelection = (type: boardTypes) => {
+	const onTypeSelection = () => {
 		selectType(true);
 		setBoard({
 			...board,
-			type: boardTypes.kanban,
+			boardType: boardTypes.kanban,
 		});
 	};
 
@@ -91,7 +92,22 @@ const CreateBoardModal = (props: Props) => {
 					</Button>
 				) : null}
 				{isAlgorithmSelected ? (
-					<Button color={'facebook'} disabled={isCreateDisabled}>
+					<Button
+						color={'facebook'}
+						disabled={isCreateDisabled}
+						onClick={() => {
+							const { projects, algorithm, admin, ...boardData } = board;
+							if (admin) {
+								onCreateBoard({
+									...boardData,
+									createdBy: {
+										id: admin,
+									},
+								});
+							}
+							onCancelClick();
+						}}
+					>
 						Create board
 					</Button>
 				) : null}
