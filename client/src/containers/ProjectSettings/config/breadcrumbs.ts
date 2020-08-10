@@ -4,11 +4,11 @@ import i18n from 'i18next';
 import { BreadcrumbItem } from 'components/common/Breadcrumbs/index';
 
 interface Params {
-	name: string;
+	projectName: string;
 	history: History;
 }
 
-export const setBreadcrumbs = ({ name, history }: Params): BreadcrumbItem[] => [
+export const setBreadcrumbs = ({ projectName, history }: Params): BreadcrumbItem[] => [
 	{
 		key: 'Projects',
 		content: i18n.t('projects'),
@@ -16,10 +16,10 @@ export const setBreadcrumbs = ({ name, history }: Params): BreadcrumbItem[] => [
 		onClick: () => history.push('/projects'),
 	},
 	{
-		key: name,
-		content: name,
+		key: projectName,
+		content: projectName,
 		link: true,
-		onClick: () => history.push(`/projects/${name}/${name} board`),
+		onClick: () => history.push(`/projects/${projectName}/${projectName} board`),
 	},
 	{
 		key: 'Project settings',
