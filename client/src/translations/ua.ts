@@ -116,4 +116,10 @@ export const ua = {
 	category: 'Категорія',
 	project_name: 'Введіть назву проекту',
 	project_lead_name: 'Введіть им’я',
+	save_as: 'Зберегти як',
+	filter_not_created_by_you:
+		'Цей фільтр був створенний іншим користувачем. Ви можете зберегти копію, але не змінюючи оригіналу.',
+	save_filter: 'Зберегти Фільтр',
+	filter_name: 'Назва фільтру',
+	enter_filter_name: 'Введіть назву фільтру',
 };
