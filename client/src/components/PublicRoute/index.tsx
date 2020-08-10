@@ -15,7 +15,7 @@ const PublicRoute: React.FC<Props> = (props: Props) => {
 	return (
 		<Route
 			{...rest}
-			render={(props) => (isAuthorized && restricted ? <Redirect to="/" /> : <Component {...props} />)}
+			render={(props) => (isAuthorized && restricted ? <Redirect to="/projects" /> : <Component {...props} />)}
 		/>
 	);
 };
