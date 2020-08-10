@@ -1,4 +1,5 @@
 import callWebApi from 'helpers/callApi.helper';
+import { InitialFilter } from './../containers/SaveFilterModal/logic/actionTypes';
 
 export const fetchFilters = async (): Promise<WebApi.Entities.Filter[]> => {
 	const res = await callWebApi({
@@ -28,10 +29,20 @@ export const fetchFilterDefs = async (): Promise<WebApi.Entities.FilterDefinitio
 };
 
 export const updateFilter = async (data: WebApi.Entities.Filter): Promise<WebApi.Entities.Filter> => {
-	console.log('Aloha', data);
-
 	const res = await callWebApi({
 		method: 'PUT',
+		endpoint: 'filter/',
+		body: {
+			...data,
+		},
+	});
+
+	return (await res.json()) as WebApi.Entities.Filter;
+};
+
+export const saveFilter = async (data: InitialFilter): Promise<WebApi.Entities.Filter> => {
+	const res = await callWebApi({
+		method: 'POST',
 		endpoint: 'filter/',
 		body: {
 			...data,

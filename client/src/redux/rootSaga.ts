@@ -7,6 +7,7 @@ import advancedSearchSaga from 'containers/AdvancedSearch/logic/saga';
 import issueSaga from 'pages/CreateIssue/logic/saga';
 import filterDefsSaga from 'commonLogic/filterDefs/saga';
 import createProjectSaga from 'containers/CreateProjectModal/logic/saga';
+import saveFilterSaga from 'containers/SaveFilterModal/logic/saga';
 
 export default function* rootSaga() {
 	yield all([
@@ -18,5 +19,6 @@ export default function* rootSaga() {
 		filterDefsSaga(),
 		advancedSearchSaga(),
 		userSaga(),
+		saveFilterSaga(),
 	]);
 }

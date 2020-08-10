@@ -8,6 +8,7 @@ import FilterPart from 'components/FilterPart';
 import MoreFilterPartsDropdown from 'components/MoreFilters';
 import { fetchFilterParts } from './logic/actions';
 import { FilterPartState } from './logic/state';
+import SaveFilterModal from 'containers/SaveFilterModal';
 
 const QUICK_FILTER_IDS = [
 	'3aafb033-af0c-49d2-b31f-ad7fc676a74d',
@@ -17,6 +18,7 @@ const QUICK_FILTER_IDS = [
 
 const AdvancedSearch: React.FC = () => {
 	const dispatch = useDispatch();
+	const [stared, setStared] = useState(false);
 	const { filterParts } = useSelector((rootState: RootState) => rootState.advancedSearch);
 	const [addedFilterParts, setAddedFilterParts] = useState([] as FilterPartState[]);
 
@@ -93,12 +95,17 @@ const AdvancedSearch: React.FC = () => {
 				<div className={styles.titleWrapper}>
 					<div className={styles.titleContainer}>
 						<h1 className={styles.title}>Search</h1>
-						<Button compact basic className={styles.saveBtn}>
-							Save as
-						</Button>
+						<SaveFilterModal />
 					</div>
 					<div className={styles.actionWrapper}>
 						<List selection horizontal>
+							<List.Item>
+								<div onClick={() => setStared(!stared)} className={styles.actionItem}>
+									<div className={styles.star}>
+										{stared ? <Icon name="star" color="yellow" /> : <Icon name="star outline" />}
+									</div>
+								</div>
+							</List.Item>
 							<List.Item>
 								<div className={styles.actionItem}>
 									<Icon name="share alternate" />

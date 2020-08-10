@@ -36,7 +36,7 @@ const DropdownSearch = ({ inputPlaceholder, data, title, members }: DropdownSear
 		}
 		if (color) {
 			items.push(
-				<Label horizontal color={color as 'red'}>
+				<Label key={`label-${key}`} horizontal color={color as 'red'}>
 					{text}
 				</Label>,
 			);

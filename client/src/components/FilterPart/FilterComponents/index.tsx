@@ -99,7 +99,6 @@ export const IssueTypeFilter = ({ filterPart }: ProjectsFilterProps) => {
 
 	return (
 		<DropdownCheckboxSearch
-			key={`${filterPart.id} ${filterPart.filterDef.id}`}
 			data={data}
 			members={filterPart.members}
 			inputPlaceholder={'Find Issue Types'}

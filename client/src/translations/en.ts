@@ -116,4 +116,10 @@ export const en = {
 	category: 'Category',
 	project_name: 'Enter project name',
 	project_lead_name: 'Enter name',
+	save_as: 'Save as',
+	filter_not_created_by_you:
+		"This filter wasn't created by you . You can save a copy of this filter but you cannot modify the original.",
+	save_filter: 'Save Filter',
+	filter_name: 'Filter name',
+	enter_filter_name: 'Enter filter name',
 };
