@@ -1,6 +1,9 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Table, Dropdown, Icon, Popup, Label } from 'semantic-ui-react';
 import styles from './styles.module.scss';
+import { getFullUserName } from './helpers';
+import DeleteIssueModal from 'containers/DeleteIssueModal';
 
 interface Props {
 	issue: WebApi.Entities.Issue;
@@ -20,7 +23,6 @@ const renderIssueType = (issueType: WebApi.Entities.IssueType) => {
 };
 const renderStatus = (status: { title: string; color: string }) => {
 	const { color, title } = status;
-
 	return (
 		<Label horizontal color={color as 'red'}>
 			{title}
@@ -29,6 +31,8 @@ const renderStatus = (status: { title: string; color: string }) => {
 };
 
 const IssueItem = ({ issue }: Props) => {
+	const [open, setOpen] = React.useState(false);
+	const { t } = useTranslation();
 	const mockedIssue = {
 		summary: 'Very summary',
 		issueKey: 'TH-1',
@@ -52,7 +56,7 @@ const IssueItem = ({ issue }: Props) => {
 			title: 'In Progress',
 			color: 'blue',
 		},
-		priority: { color: 'orange', icon: 'arrow up' },
+		priority: { title: 'Hight', color: 'orange', icon: 'arrow up' },
 		id: 'a269d9f4-1c10-40ad-81e0-7ac333804d91',
 	};
 	const { id, creator, type, issueKey, summary, assigned, priority, status } = mockedIssue; /*issue*/
@@ -74,27 +78,45 @@ const IssueItem = ({ issue }: Props) => {
 			</Table.Cell>
 			<Table.Cell>
 				<a href={`/profile/${assigned.id}`} className={styles.underlinedLink}>
-					{assigned.firstName} {assigned.lastName}
+					{getFullUserName(assigned)}
 				</a>
 			</Table.Cell>
 			<Table.Cell>
 				<a href={`/profile/${creator.id}`} className={styles.underlinedLink}>
-					{creator.firstName} {creator.lastName}
+					{getFullUserName(creator)}
 				</a>
 			</Table.Cell>
 			<Table.Cell>
-				<Icon color={priority.color as 'red'} name={priority.icon as 'arrow up'} />
+				<Popup
+					content={`Priority: ${priority.title}`}
+					trigger={<Icon color={priority.color as 'red'} name={priority.icon as 'arrow up'} />}
+				/>
 			</Table.Cell>
 			<Table.Cell>{renderStatus(status)}</Table.Cell>
-			<Table.Cell>Resolution</Table.Cell>
+			<Table.Cell>Unresolved{/* resolution.title */}</Table.Cell>
 			<Table.Cell>03/серп./20</Table.Cell>
 			<Table.Cell>10/серп./20</Table.Cell>
 			<Table.Cell className={styles.editCell}>
 				<Dropdown className={styles.dropdown} compact fluid icon={<Icon name="ellipsis horizontal" />}>
-					<Dropdown.Menu>
-						<Dropdown.Item text="Edit" />
-						<Dropdown.Divider />
-						<Dropdown.Item text="Share..." />
+					<Dropdown.Menu direction="left">
+						<Dropdown.Item
+							content={
+								<a className={styles.issueAction} href={`/issue/${id}`}>
+									{t('Edit')}
+								</a>
+							}
+						/>
+						<Dropdown.Item
+							content={
+								<DeleteIssueModal
+									onClose={() => setOpen(false)}
+									open={open}
+									onOpen={() => setOpen(true)}
+									onDelete={() => window.location.reload()}
+									currentIssueId={issue.id}
+								/>
+							}
+						/>
 					</Dropdown.Menu>
 				</Dropdown>
 			</Table.Cell>

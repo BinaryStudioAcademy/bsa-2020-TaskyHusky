@@ -17,7 +17,7 @@ const SaveFilterModal = () => {
 		dispatch(actions.resetState());
 	}
 
-	const [isFilterCreatedByCurrentUser, setIsFilterCreatedByCurrentUser] = useState(false);
+	const [isFilterCreatedByCurrentUser] = useState(false);
 
 	const [name, setName] = useState<string>('');
 

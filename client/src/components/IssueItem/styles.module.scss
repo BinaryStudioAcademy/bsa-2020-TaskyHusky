@@ -1,12 +1,12 @@
 .editCell {
-  overflow: visible !important;
+	overflow: visible !important;
 }
 .userCell {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
 	&:hover {
-    		cursor: pointer;
+		cursor: pointer;
 	}
 }
 .underlinedLink {
@@ -16,5 +16,8 @@
 	}
 }
 .dropdown {
-  text-align: center !important;
+	text-align: center !important;
+	.issueAction {
+		color: rgba(0, 0, 0, 0.87);
+	}
 }
