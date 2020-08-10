@@ -17,6 +17,7 @@ export class Project1597048908491 implements MigrationInterface {
 		project1.leadID = user1.id;
 		project1.creatorID = user1.id;
 		project1.defaultAssigneeID = user2.id;
+		project1.id = '1fbda607-5934-484c-9667-bd35574a2f1e';
 
 		const project2 = new Projects();
 		project2.name = 'Our Project';
@@ -25,6 +26,7 @@ export class Project1597048908491 implements MigrationInterface {
 		project2.leadID = user2.id;
 		project2.creatorID = user2.id;
 		project2.defaultAssigneeID = user1.id;
+		project2.id = 'e040e267-3533-4579-93fa-e749ca93f72f';
 
 		await getRepository('Projects').save([project1, project2]);
 	}
