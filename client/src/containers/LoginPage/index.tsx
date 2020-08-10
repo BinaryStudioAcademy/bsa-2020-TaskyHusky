@@ -12,18 +12,10 @@ import validator from 'validator';
 export const LoginPage: React.FC = () => {
 	const dispatch = useDispatch();
 	const { t } = useTranslation();
-	const authData = useSelector((rootState: RootState) => rootState.auth);
 	const [email, setEmail] = useState<string>('');
 	const [password, setPassword] = useState<string>('');
 	const [isEmailValid, setIsEmailValid] = useState<boolean>(false);
 	const [isEmailSubmitted, setIsEmailSubmitted] = useState<boolean>(false);
-	const [redirectToRootPage, setRedirectToRootPage] = useState<boolean>(false);
-
-	useEffect(() => {
-		if (authData.isAuthorized) {
-			setRedirectToRootPage(!redirectToRootPage);
-		}
-	}, [authData, redirectToRootPage]);
 
 	const logInUser = (email: string, password: string) => {
 		dispatch(actions.logInUserTrigger({ email, password }));
@@ -43,8 +35,6 @@ export const LoginPage: React.FC = () => {
 			logInUser(email, password);
 		}
 	};
-
-	const renderRootPage: JSX.Element | null = redirectToRootPage ? <Redirect to="/header" /> : null;
 
 	const passwordInput = isEmailValid ? <PasswordInput onChange={(text) => setPassword(text)} /> : null;
 
@@ -93,7 +83,6 @@ export const LoginPage: React.FC = () => {
 					</Segment>
 				</Grid.Column>
 			</Grid>
-			{renderRootPage}
 		</>
 	);
 };
