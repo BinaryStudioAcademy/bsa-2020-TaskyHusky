@@ -62,6 +62,27 @@ passport.use(
 );
 
 passport.use(
+	'check_email',
+	new LocalStrategy(
+		{
+			usernameField: EMAIL_FIELD,
+		},
+		async (email: string, password: string, next): Promise<void> => {
+			const userRepository = getCustomRepository(UserRepository);
+			const user = await userRepository.getByEmail(email);
+
+			console.log(user);
+
+			if (!user) {
+				return next(null, { email: '' });
+			}
+
+			return next(null, user);
+		},
+	),
+);
+
+passport.use(
 	'jwt',
 	new JwtStrategy(
 		{
