@@ -85,7 +85,7 @@ namespace WebApi.User {
 		organization?: string;
 		jobTitle?: string;
 		userSettingsId?: string;
-		filtres?: string[];
+		filters?: string[];
 	}
 }
 
