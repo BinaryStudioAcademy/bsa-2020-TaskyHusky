@@ -13,13 +13,13 @@ export const setBreadcrumbs = ({ projectName, history }: Params): BreadcrumbItem
 		key: 'Projects',
 		content: i18n.t('projects'),
 		link: true,
-		onClickAction: () => history.push('/projects'),
+		onClick: () => history.push('/projects'),
 	},
 	{
 		key: projectName,
 		content: projectName,
 		link: true,
-		onClickAction: () => history.push(`/projects/${projectName}/${projectName} board`),
+		onClick: () => history.push(`/projects/${projectName}/${projectName} board`),
 	},
 	{
 		key: 'Project settings',
