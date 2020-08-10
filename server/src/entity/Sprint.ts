@@ -18,11 +18,11 @@ export class Sprint {
 	@ManyToOne((type) => Board, { onDelete: 'CASCADE' })
 	board?: Board;
 
-	@Column()
+	@Column({ type: 'boolean' })
 	@IsBoolean()
 	isActive?: boolean;
 
-	@Column()
+	@Column({ type: 'boolean' })
 	@IsBoolean()
 	isCompleted?: boolean;
 
