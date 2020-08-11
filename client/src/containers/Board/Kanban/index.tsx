@@ -12,6 +12,7 @@ const Kanban: BoardComponent = ({ board }) => {
 	const [, update] = useState();
 	const [search, setSearch] = useState<string>('');
 	const { t } = useTranslation();
+	const leftPadded = { marginLeft: 20 };
 
 	const onDragEnd: OnDragEndResponder = (event) => {
 		const { destination, draggableId } = event;
@@ -36,10 +37,10 @@ const Kanban: BoardComponent = ({ board }) => {
 
 	return (
 		<>
-			<Header as="h2" style={{ marginLeft: 20 }}>
+			<Header as="h2" style={leftPadded}>
 				{board.name}
 			</Header>
-			<Breadcrumb style={{ marginLeft: 20, marginBottom: 20 }}>
+			<Breadcrumb style={{ ...leftPadded, marginBottom: 20 }}>
 				<Breadcrumb.Section link>{t('projects')}</Breadcrumb.Section>
 				<Breadcrumb.Divider icon="right chevron" />
 				<Breadcrumb.Section link>Test project name</Breadcrumb.Section>
@@ -53,7 +54,7 @@ const Kanban: BoardComponent = ({ board }) => {
 						icon="search"
 						value={search}
 						onChange={(event, data) => setSearch(data.value)}
-						style={{ marginLeft: 20, marginRight: 60, maxWidth: 250 }}
+						style={{ ...leftPadded, marginRight: 60, maxWidth: 250 }}
 					/>
 					<Button onClick={() => setSearch('')} secondary>
 						{t('clear')}
