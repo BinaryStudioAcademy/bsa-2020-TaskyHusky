@@ -133,7 +133,7 @@ const AdvancedSearch: React.FC = () => {
 				</div>
 				<div className={styles.bottomBarWrapper}>
 					<Form>
-						<Form.Group>
+						<Form.Group className={styles.searchContentContainer}>
 							{getDefaultFilterParts().map((part) => (
 								<FilterPart key={part.id} filterPart={part} />
 							))}
@@ -142,8 +142,14 @@ const AdvancedSearch: React.FC = () => {
 								addedFilterParts={addedFilterParts}
 								setAddedFilterParts={(data) => setAddedFilterParts(data)}
 							/>
-							<Form.Field control={Input} placeholder="Contains text" />
-							<Button primary content="Search" />
+							<Form.Field
+								control={() => (
+									<div className={styles.searchInputContainer}>
+										<Input placeholder="Contains text" className={styles.containTextInput} />
+										<Button className={styles.searchBtn} primary content="Search" />
+									</div>
+								)}
+							/>
 						</Form.Group>
 						<Form.Group>
 							{addedFilterParts.map((part) => (
