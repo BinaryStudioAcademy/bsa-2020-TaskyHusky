@@ -5,11 +5,10 @@ import { IssueRepository } from '../repositories/issue.repository';
 
 class IssueController {
 	async getAll(req: Request, res: Response) {
-		const { filter } = req.query;
 		const repository = getCustomRepository(IssueRepository);
 
 		try {
-			const result = await repository.findAll(filter as string);
+			const result = await repository.findAll();
 			res.send(result);
 		} catch (err) {
 			res.status(500).send(getWebError(err, 500));
@@ -29,12 +28,11 @@ class IssueController {
 	}
 
 	async getByColumnId(req: Request, res: Response) {
-		const { filter } = req.query;
 		const { id } = req.params;
 		const repository = getCustomRepository(IssueRepository);
 
 		try {
-			const result = await repository.findAllByColumnId(id, filter as string);
+			const result = await repository.findAllByColumnId(id);
 			res.send(result);
 		} catch (err) {
 			res.status(500).send(getWebError(err, 500));
@@ -72,6 +70,19 @@ class IssueController {
 
 		try {
 			const result = await repository.updateOneById(id, data);
+			res.send(result);
+		} catch (err) {
+			res.status(404).send(getWebError(err, 404));
+		}
+	}
+
+	async updateByKey(req: Request, res: Response) {
+		const { key } = req.params;
+		const { body: data } = req;
+		const repository = getCustomRepository(IssueRepository);
+
+		try {
+			const result = await repository.updateOneByKey(key, data);
 			res.send(result);
 		} catch (err) {
 			res.status(404).send(getWebError(err, 404));

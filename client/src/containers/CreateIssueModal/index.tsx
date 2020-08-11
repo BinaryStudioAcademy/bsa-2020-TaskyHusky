@@ -5,7 +5,7 @@ import { ContextProvider } from './logic/context';
 interface Props {
 	children: JSX.Element;
 	boardColumnID?: string;
-	onClose: () => void;
+	onClose: (data: WebApi.Issue.PartialIssue) => void;
 }
 
 const CreateIssueModal: React.FC<Props> = ({ children, boardColumnID, onClose }) => {

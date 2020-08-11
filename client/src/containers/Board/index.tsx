@@ -24,7 +24,7 @@ interface Props {
 }
 
 const Board: React.FC<Props> = ({ boardId }) => {
-	const [board, setBoard] = useState<WebApi.Result.ComposedBoardResult | null>(null);
+	const [board, setBoard] = useState<WebApi.Result.ComposedBoardResult | undefined>();
 
 	const refetch = useCallback(() => {
 		getBoardById(boardId).then(setBoard);
