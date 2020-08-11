@@ -10,7 +10,7 @@ import validator from 'validator';
 
 import { RootState } from 'typings/rootState';
 
-export const LoginPage: React.FC = (props) => {
+export const LoginPage: React.FC = () => {
 	const history = useHistory();
 	const authState = useSelector((rootState: RootState) => rootState.auth);
 	const dispatch = useDispatch();
@@ -20,15 +20,15 @@ export const LoginPage: React.FC = (props) => {
 	const [isEmailValid, setIsEmailValid] = useState<boolean>(false);
 	const [isEmailSubmitted, setIsEmailSubmitted] = useState<boolean>(false);
 
-	const logInUser = (email: string, password: string) => {
+	const logInUser: (email: string, password: string) => void = (email, password) => {
 		dispatch(actions.logInUserTrigger({ email, password }));
 	};
 
-	const checkEmail = useCallback(() => {
+	const checkEmail: () => void = useCallback(() => {
 		dispatch(actions.checkEmailTrigger({ email }));
 	}, [dispatch, email]);
 
-	const checkEmailReset = useCallback(() => {
+	const checkEmailReset: () => void = useCallback(() => {
 		dispatch(actions.checkEmailReset());
 	}, [dispatch]);
 
@@ -36,7 +36,7 @@ export const LoginPage: React.FC = (props) => {
 		if (isEmailValid && isEmailSubmitted) {
 			checkEmail();
 		}
-	}, [isEmailValid, isEmailSubmitted, checkEmail, email]);
+	}, [isEmailValid, isEmailSubmitted, checkEmail]);
 
 	useEffect(() => {
 		if (!authState.isEmailInDB && authState.isEmailInDB !== null && isEmailSubmitted) {
@@ -56,7 +56,7 @@ export const LoginPage: React.FC = (props) => {
 		}
 	};
 
-	const passwordInput =
+	const passwordInput: JSX.Element | null =
 		authState.isEmailInDB && isEmailSubmitted ? <PasswordInput onChange={(text) => setPassword(text)} /> : null;
 
 	return (
@@ -79,8 +79,10 @@ export const LoginPage: React.FC = (props) => {
 										placeholder={t('email')}
 										type="text"
 										icon="at"
+										value={email}
 										onChange={(event) => {
-											setEmail(event.target.value);
+											const email = event.target.value.trim();
+											setEmail(email);
 											setIsEmailSubmitted(false);
 										}}
 									/>
