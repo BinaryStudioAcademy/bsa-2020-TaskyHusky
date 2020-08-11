@@ -15,7 +15,7 @@ interface Props {
 	priorities: WebApi.Entities.Priority[];
 	boardColumnID?: string;
 	projectID?: string;
-	onClose?: () => void;
+	onClose?: (data: WebApi.Issue.PartialIssue) => void;
 }
 
 interface SelectOption {
@@ -81,27 +81,25 @@ const CreateIssueModalBody: React.FC<Props> = ({
 			return;
 		}
 
-		dispatch(
-			createIssue({
-				data: {
-					...context.data,
-					...(boardColumnID ? { boardColumn: boardColumnID } : {}),
-					sprint: {
-						id: '7dac8783-2421-4683-ae5d-d9adf0c75ecb',
-						sprintName: 'Innovative Chipmunk Ferret',
-						isActive: false,
-						isCompleted: true,
-					},
-					...(projectID ? { project: projectID } : {}),
-					issueKey: generateRandomString(KeyGenerate.LENGTH),
-					assignedID: '98601c2c-a103-489b-b89f-ea5ae568b582',
-					creatorID: 'f2235a1c-dfbc-47b7-bdb2-726d159c19a0',
-				},
-			}),
-		);
+		const data = {
+			...context.data,
+			...(boardColumnID ? { boardColumn: boardColumnID } : {}),
+			sprint: {
+				id: '7dac8783-2421-4683-ae5d-d9adf0c75ecb',
+				sprintName: 'Innovative Chipmunk Ferret',
+				isActive: false,
+				isCompleted: true,
+			},
+			...(projectID ? { project: projectID } : {}),
+			issueKey: generateRandomString(KeyGenerate.LENGTH),
+			assignedID: '98601c2c-a103-489b-b89f-ea5ae568b582',
+			creatorID: 'f2235a1c-dfbc-47b7-bdb2-726d159c19a0',
+		};
+
+		dispatch(createIssue({ data }));
 
 		if (onClose) {
-			onClose();
+			onClose(data);
 		}
 
 		setIsOpened(false);

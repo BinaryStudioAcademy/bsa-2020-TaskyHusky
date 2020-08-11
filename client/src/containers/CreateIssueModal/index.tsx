@@ -6,7 +6,7 @@ interface Props {
 	children: JSX.Element;
 	boardColumnID?: string;
 	projectID?: string;
-	onClose?: () => void;
+	onClose?: (data: WebApi.Issue.PartialIssue) => void;
 }
 
 const CreateIssueModal: React.FC<Props> = (props) => {

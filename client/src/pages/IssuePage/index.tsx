@@ -13,7 +13,7 @@ interface Props {
 }
 
 const IssuePage: React.FC<Props> = ({ match }) => {
-	const [issue, setIssue] = useState<WebApi.Result.IssueResult | null>(null);
+	const [issue, setIssue] = useState<WebApi.Result.IssueResult | undefined>();
 
 	useEffect(() => {
 		getByKey(match.params.key as string).then(setIssue);

@@ -5,14 +5,12 @@ const RELS = ['priority', 'type'];
 
 @EntityRepository(Issue)
 export class IssueRepository extends Repository<Issue> {
-	findAll(filter?: string) {
-		const where = filter ? { where: { summary: Like(`%${filter}%`) } } : {};
-		return this.find({ relations: RELS, ...where });
+	findAll() {
+		return this.find({ relations: RELS });
 	}
 
-	findAllByColumnId(id: string, filter?: string) {
-		const summaryFilter = filter ? { summary: Like(`%${filter}%`) } : {};
-		return this.find({ relations: RELS, where: { boardColumn: { id }, ...summaryFilter } });
+	findAllByColumnId(id: string) {
+		return this.find({ relations: RELS, where: { boardColumn: { id } } });
 	}
 
 	findAllByProjectId(id: string) {
@@ -34,6 +32,10 @@ export class IssueRepository extends Repository<Issue> {
 
 	updateOneById(id: string, data: Issue) {
 		return this.update(id, data);
+	}
+
+	updateOneByKey(key: string, data: Issue) {
+		return this.update({ issueKey: key }, data);
 	}
 
 	deleteOneById(id: string) {

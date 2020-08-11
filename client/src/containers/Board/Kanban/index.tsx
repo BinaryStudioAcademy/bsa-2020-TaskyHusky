@@ -4,35 +4,35 @@ import BoardColumn from 'containers/BoardColumn';
 import { DragDropContext, OnDragEndResponder } from 'react-beautiful-dnd';
 import styles from './styles.module.scss';
 import { extractIdFormDragDropId } from 'helpers/extractId.helper';
-import { getById, updateIssue } from 'services/issue.service';
+import { getByKey, updateIssueByKey } from 'services/issue.service';
 import { Header, Form, Button, Breadcrumb } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 
 const Kanban: BoardComponent = ({ board }) => {
-	const [, update] = useState();
 	const [search, setSearch] = useState<string>('');
 	const { t } = useTranslation();
 	const leftPadded = { marginLeft: 20 };
+	const onDragEndFuncs: Map<string, OnDragEndResponder> = new Map<string, OnDragEndResponder>();
 
-	const onDragEnd: OnDragEndResponder = (event) => {
+	const onDragEnd: OnDragEndResponder = (event, provided) => {
 		const { destination, draggableId } = event;
+
 		if (!destination) {
 			return;
 		}
 
 		const destinationId = extractIdFormDragDropId(destination.droppableId);
-		const cardId = extractIdFormDragDropId(draggableId);
+		const cardKey = extractIdFormDragDropId(draggableId);
+		onDragEndFuncs.forEach((func) => func(event, provided));
 
-		getById(cardId)
-			.then((issue) =>
-				updateIssue(cardId, {
-					...issue,
-					type: issue.type.id,
-					priority: issue.priority.id,
-					boardColumn: destinationId,
-				}),
-			)
-			.then(update);
+		getByKey(cardKey).then((issue) =>
+			updateIssueByKey(cardKey, {
+				...issue,
+				type: issue.type.id,
+				priority: issue.priority.id,
+				boardColumn: destinationId,
+			}),
+		);
 	};
 
 	return (
@@ -67,7 +67,13 @@ const Kanban: BoardComponent = ({ board }) => {
 					style={{ gridTemplateColumns: '300px '.repeat(board.columns.length).trim() }}
 				>
 					{board.columns.map((column, i) => (
-						<BoardColumn search={search} className={styles.column} column={column} key={i} />
+						<BoardColumn
+							getOnDragEndFunc={(id, responder) => onDragEndFuncs.set(id, responder)}
+							search={search}
+							className={styles.column}
+							column={column}
+							key={i}
+						/>
 					))}
 				</div>
 			</DragDropContext>

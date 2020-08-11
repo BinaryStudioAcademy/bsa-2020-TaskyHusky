@@ -84,7 +84,7 @@ const IssueCard: React.FC<Props> = ({ issue, index, noDrag, noRedirect, selectab
 	}
 
 	return (
-		<Draggable draggableId={`issue-card__${issue.id}`} index={index}>
+		<Draggable draggableId={`issue-card__${issue.issueKey}`} index={index}>
 			{(provided, snapshot) => (
 				<div ref={provided.innerRef} {...provided.dragHandleProps} {...provided.draggableProps}>
 					{content}
