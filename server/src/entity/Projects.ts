@@ -1,7 +1,14 @@
+<<<<<<< Updated upstream
+import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, OneToMany, ManyToOne, JoinTable } from 'typeorm';
+import { UserProfile } from './UserProfile';
 import { Sprint } from './Sprint';
 import { Board } from './Board';
+=======
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, ManyToMany, JoinTable, OneToMany } from 'typeorm';
+import { Sprint } from './Sprint';
+import { Board } from './Board';
 import { UserProfile } from './UserProfile';
+>>>>>>> Stashed changes
 
 @Entity()
 export class Projects {
@@ -18,13 +25,13 @@ export class Projects {
 	category?: string;
 
 	@ManyToOne((type) => UserProfile, (userProfile) => userProfile.assignedProjects)
-	defaultAssignee?: UserProfile;
+	defaultAssigneeId: UserProfile;
 
 	@ManyToOne((type) => UserProfile, (userProfile) => userProfile.leadedProjects)
-	lead?: UserProfile;
+	leadId?: UserProfile;
 
 	@ManyToOne((type) => UserProfile, (userProfile) => userProfile.createdProjects)
-	creator!: UserProfile;
+	creatorId!: UserProfile;
 
 	@ManyToMany((type) => UserProfile)
 	@JoinTable({
@@ -35,6 +42,6 @@ export class Projects {
 	@OneToMany((type) => Sprint, (sprint) => sprint.id)
 	sprints?: Sprint[];
 
-	@ManyToMany((type) => Board, board => board.projects)
+	@ManyToMany((type) => Board, (board) => board.projects)
 	boards?: Board[];
 }
