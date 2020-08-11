@@ -28,6 +28,7 @@ export const authReducer = createReducer<AuthState>(initialState, {
 			user: null,
 			isAuthorized: false,
 			jwtToken: '',
+			isEmailInDB: null,
 		};
 	},
 	[actionTypes.LOAD_PROFILE_SUCCESS](state, action: actionTypes.LoadProfileSuccess) {
@@ -41,9 +42,10 @@ export const authReducer = createReducer<AuthState>(initialState, {
 	},
 	[actionTypes.CHECK_EMAIL_SUCCESS](state, action: actionTypes.CheckEmail) {
 		console.log('authReducer', action.email);
+
 		return {
 			...state,
-			user: { email: action.email },
+			isEmailInDB: !!action.email,
 		};
 	},
 });
