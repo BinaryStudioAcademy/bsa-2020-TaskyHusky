@@ -14,13 +14,11 @@ export class Board1596645901833 implements MigrationInterface {
 		board1.boardType = BoardType.Kanban;
 		board1.createdBy = user1;
 		board1.name = 'Table1';
-		board1.location = 'Ukraine';
 
 		const board2 = new Board();
 		board2.boardType = BoardType.Scrum;
 		board2.createdBy = user1;
 		board2.name = 'Table2';
-		board2.location = 'USA';
 
 		await getRepository('Board').save([board1, board2]);
 

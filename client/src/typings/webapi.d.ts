@@ -119,7 +119,6 @@ namespace WebApi.Entities {
 		id: string;
 		boardType: BoardType;
 		name: string;
-		location: string;
 		columns?: BoardColumn[];
 		sprints?: Sprint[];
 		createdBy: UserProfile;
