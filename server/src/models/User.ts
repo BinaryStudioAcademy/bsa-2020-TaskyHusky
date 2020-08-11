@@ -12,4 +12,6 @@ export interface UserModel {
 	jobTitle?: string;
 	userSettingsId?: string;
 	filtres?: string[];
+	resetPasswordToken?:string;
+	resetPasswordExpires?:Date;
 }

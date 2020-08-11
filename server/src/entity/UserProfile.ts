@@ -44,11 +44,11 @@ export class UserProfile {
 	@MinLength(6)
 	password?: string;
 
-	@Column()
+	@Column({ nullable: true })
 	resetPasswordToken?:string;
 
-	@Column()
-	resetPasswordExpires?:string;
+	@Column({ nullable: true })
+	resetPasswordExpires?:Date;
 
 	@OneToMany(type => TeamsPeople, teams => teams.userId)
   	teams?: TeamsPeople[];

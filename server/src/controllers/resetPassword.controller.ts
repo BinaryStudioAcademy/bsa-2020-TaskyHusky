@@ -6,6 +6,7 @@ import { UserProfile } from '../entity/UserProfile';
 import { ErrorResponse } from '../helpers/errorHandler.helper';
 import HttpStatusCode from '../constants/httpStattusCode.constants';
 
+const expirationTime = 1000 * 60 * 60 * 24;
 
 class ResetPasswordController {
 	forgotPassword = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -16,13 +17,48 @@ class ResetPasswordController {
 			const user = <UserProfile>await userRepository.getByEmail(email);
 			if (!user) throw new Error('User with this email does not exist');
 
-			const token = randomBytes(20).toString('hex');
+			const resetPasswordToken = randomBytes(20).toString('hex');
 
+			const resetPasswordExpires = new Date(Date.now() + expirationTime);
 
+			if (!user.email) throw new Error('Can not update user with unknown email');
 
+			const savedUser = await userRepository.updateById(user.id, {
+				email: user.email,
+				resetPasswordToken,
+				resetPasswordExpires,
+			});
+
+			res.status(200).send(savedUser);
 		} catch (e) {
 			next(new ErrorResponse(HttpStatusCode.NOT_FOUND, e.message));
 		}
+	};
 
+	resetPassword = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+		const userRepository = getCustomRepository(UserRepository);
+		const { password } = req.body;
+		const { token } = req.params;
+
+		try {
+			const user = <UserProfile>await userRepository.getByToken(token);
+
+			if (!user) throw new Error('Token is expired or invalid');
+
+			if (!user.email) throw new Error('Can not update user with unknown email');
+
+			const savedUser = await userRepository.updateById(user.id, {
+				email: user.email,
+				password,
+				resetPasswordToken:undefined,
+				resetPasswordExpires:undefined,
+			});
+
+			res.status(200).send(savedUser);
+		} catch (e) {
+			next(new ErrorResponse(HttpStatusCode.NOT_FOUND, e.message));
+		}
 	};
 }
+
+export default ResetPasswordController
