@@ -4,7 +4,7 @@ import { connect, useDispatch } from 'react-redux';
 import { RootState } from 'typings/rootState';
 import TagsInput from 'components/common/TagsInput';
 import { useCreateIssueModalContext } from 'containers/CreateIssueModal/logic/context';
-import { updateIssue } from 'pages/CreateIssue/logic/actions';
+import { updateIssue } from 'pages/IssuePage/logic/actions';
 import { useTranslation } from 'react-i18next';
 
 interface Props {

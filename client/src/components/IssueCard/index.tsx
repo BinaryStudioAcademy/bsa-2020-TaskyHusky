@@ -1,29 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Segment, Header, Icon } from 'semantic-ui-react';
 import { Draggable } from 'react-beautiful-dnd';
-import { getById } from 'services/issue.service';
 import styles from './styles.module.scss';
 
 interface Props {
-	issueId: string;
+	issue: WebApi.Result.IssueResult;
 	index: number;
 }
 
-const IssueCard: React.FC<Props> = ({ issueId, index }) => {
-	const [issue, setIssue] = useState<WebApi.Result.IssueResult | null>(null);
-
-	useEffect(() => {
-		if (!issue) {
-			getById(issueId).then(setIssue);
-		}
-	}, [issue, issueId]);
-
-	if (!issue) {
-		return null;
-	}
-
+const IssueCard: React.FC<Props> = ({ issue, index }) => {
 	return (
-		<Draggable draggableId={`issue-card__${issueId}`} index={index}>
+		<Draggable draggableId={`issue-card__${issue.issueKey}`} index={index}>
 			{(provided, snapshot) => (
 				<div ref={provided.innerRef} {...provided.dragHandleProps} {...provided.draggableProps}>
 					<Segment>

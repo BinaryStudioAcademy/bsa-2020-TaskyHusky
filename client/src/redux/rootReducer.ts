@@ -5,7 +5,7 @@ import { filtersReducer } from 'containers/Filters/logic/reducer';
 import { authReducer } from 'containers/LoginPage/logic/reducer';
 import { combineReducers, Reducer } from 'redux';
 import { RootState } from 'typings/rootState';
-import { issueReducer } from 'pages/CreateIssue/logic/reducer';
+import { issueReducer } from 'pages/IssuePage/logic/reducer';
 import { filterDefsReducer } from 'commonLogic/filterDefs/reducer';
 
 const rootReducer: Reducer<RootState> = combineReducers({
