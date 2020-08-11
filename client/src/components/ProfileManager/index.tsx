@@ -38,73 +38,59 @@ const ProfileManager: React.FC<Props> = (props: Props) => {
 				<Form onSubmit={onSubmit}>
 					<SubmitedInput
 						handleChange={handleChange}
-						contentData={{
-							text: user.firstName,
-							name: 'firstName',
-							placeholder: 'Your firstname',
-							title: 'First name',
-							type: 'text',
-						}}
+						text={user.firstName}
+						name="firstName"
+						placeholder="Your firstname"
+						title="First name"
+						type="text"
 					/>
 					<SubmitedInput
 						handleChange={handleChange}
-						contentData={{
-							text: user.lastName,
-							name: 'lastName',
-							placeholder: 'Your lastname',
-							title: 'Last name',
-							type: 'text',
-						}}
+						text={user.lastName}
+						name="lastName"
+						placeholder="Your lastname"
+						title="Last name"
+						type="text"
 					/>
 					<SubmitedInput
 						handleChange={handleChange}
-						contentData={{
-							text: user.username,
-							name: 'username',
-							placeholder: 'Your username',
-							title: 'Public name',
-							type: 'text',
-						}}
+						text={user.username}
+						name="username"
+						placeholder="Your username"
+						title="Public name"
+						type="text"
 					/>
 					<SubmitedInput
 						handleChange={handleChange}
-						contentData={{
-							text: user.jobTitle,
-							name: 'jobTitle',
-							placeholder: 'Your jobtitle',
-							title: 'Job title',
-							type: 'text',
-						}}
+						text={user.jobTitle}
+						name="jobTitle"
+						placeholder="Your jobtitle"
+						title="Job title"
+						type="text"
 					/>
 					<SubmitedInput
 						handleChange={handleChange}
-						contentData={{
-							text: user.department,
-							name: 'department',
-							placeholder: 'Your department',
-							title: 'Department',
-							type: 'text',
-						}}
+						text={user.department}
+						name="department"
+						placeholder="Your department"
+						title="Department"
+						type="text"
 					/>
 					<SubmitedInput
 						handleChange={handleChange}
-						contentData={{
-							text: user.organization,
-							name: 'organization',
-							placeholder: 'Your organization',
-							title: 'Organization',
-							type: 'text',
-						}}
+						text={user.organization}
+						name="organization"
+						placeholder="Your organization"
+						title="Organization"
+						type="text"
 					/>
 					<SubmitedInput
 						handleChange={handleChange}
-						contentData={{
-							text: user.location,
-							name: 'location',
-							placeholder: 'Your location',
-							title: 'Based in',
-							type: 'text',
-						}}
+						text={user.location}
+						name="location"
+						placeholder="Your location"
+						title="Based in"
+						type="text"
 					/>
 					<Form.Field className={styles.formFooter}>
 						<Button className={styles.submitButton} type="submit">

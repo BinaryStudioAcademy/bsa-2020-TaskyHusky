@@ -35,13 +35,11 @@ const EmailManager = () => {
 			<Form onSubmit={updateUserField}>
 				<Form.Field>
 					<SubmitedInput
-						contentData={{
-							text: textData,
-							name: 'email',
-							title: 'New Email Adress',
-							placeholder: 'Enter new email adress',
-							type: 'text',
-						}}
+						text={textData}
+						name="email"
+						title="New Email Adress"
+						placeholder="Enter new email adress"
+						type="text"
 						handleChange={handleChange}
 					/>
 					<Button type="submit" className={styles.submitButton}>
