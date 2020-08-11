@@ -30,6 +30,20 @@ export class BoardRepository extends Repository<Board> {
 		return board;
 	}
 
+	async getProjects(id:string){
+		const board = await this
+			.createQueryBuilder('board')
+			.where('board.id = :id', { id })
+			.leftJoinAndSelect('board.projects', 'project')
+			.getOne();
+
+		if (!board) {
+			throw new Error('Board with this ID does not exist');
+		}
+
+		return board.projects;
+	}
+
 	async put(id: string, data: any) {
 		const userRepository = getCustomRepository(UserRepository);
 
