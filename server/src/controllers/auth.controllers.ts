@@ -13,7 +13,7 @@ class AuthController {
 		res.send(user);
 	};
 
-	getEmail = (req: Request, res: Response) => {
+	checkEmail = (req: Request, res: Response) => {
 		const { email } = req.user;
 
 		res.send({ email });

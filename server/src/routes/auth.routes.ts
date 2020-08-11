@@ -11,6 +11,6 @@ router
 	.post('/login', logIn, authController.sendUser)
 	.post('/register', register, authController.sendUser)
 	.get('/profile', authController.sendExistingProfile)
-	.get('/check_email', checkEmail, authController.getEmail);
+	.post('/check_email', checkEmail, authController.checkEmail);
 
 export default router;
