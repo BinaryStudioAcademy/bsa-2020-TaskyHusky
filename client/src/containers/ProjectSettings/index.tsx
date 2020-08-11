@@ -15,7 +15,7 @@ import Spinner from 'components/common/Spinner';
 import Form from './form';
 
 const ProjectSettings = () => {
-	const { isLoading, isError, project: projectData } = useSelector((rootState: RootState) => rootState.project);
+	const { isLoading, project: projectData } = useSelector((rootState: RootState) => rootState.project);
 	const { t } = useTranslation();
 	const dispatch = useDispatch();
 	const history = useHistory();
