@@ -14,10 +14,12 @@ jobs:
         cd client
         npm install
     - name: ESlint
-      run: npm run lint
+      run: |
+        cd client
+        npm run lint
     - name: Build
       env:
-        REACT_APP_API_BASE_URL: http://taskyhuskystage-env.eba-ffh8yemp.us-east-1.elasticbeanstalk.com/
+        REACT_APP_API_BASE_URL: http://api-stage.taskyhusky.xyz/
       run: |
         cd client
         npm run build

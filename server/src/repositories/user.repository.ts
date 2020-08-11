@@ -1,7 +1,6 @@
 import { EntityRepository, Repository } from 'typeorm';
 import { UserProfile } from '../entity/UserProfile';
 import { UserModel } from '../models/User';
-import { apiErrorMessages } from '../constants/api.constants';
 
 @EntityRepository(UserProfile)
 export class UserRepository extends Repository<UserProfile> {
@@ -14,9 +13,8 @@ export class UserRepository extends Repository<UserProfile> {
 		return rest;
 	}
 
-	async getByEmail(email: string): Promise<any> {
-		const user = await this.findOne({ where: { email } });
-		return user;
+	getByEmail(email: string): Promise<any> {
+		return this.findOne({ where: { email } });
 	}
 
 	async createNew(data: UserModel): Promise<any> {

@@ -1,9 +1,8 @@
-import React, { useState, SyntheticEvent, useEffect } from 'react';
+import React, { useState, SyntheticEvent } from 'react';
 import styles from './styles.module.scss';
 import { Header, Form, Divider, Segment, Button, Grid, List, Popup } from 'semantic-ui-react';
-import { Redirect, Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from 'typings/rootState';
+import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import * as actions from './logic/actions';
 import PasswordInput from 'components/common/PasswordInput';
 import { useTranslation } from 'react-i18next';
@@ -12,18 +11,10 @@ import validator from 'validator';
 export const LoginPage: React.FC = () => {
 	const dispatch = useDispatch();
 	const { t } = useTranslation();
-	const authData = useSelector((rootState: RootState) => rootState.auth);
 	const [email, setEmail] = useState<string>('');
 	const [password, setPassword] = useState<string>('');
 	const [isEmailValid, setIsEmailValid] = useState<boolean>(false);
 	const [isEmailSubmitted, setIsEmailSubmitted] = useState<boolean>(false);
-	const [redirectToRootPage, setRedirectToRootPage] = useState<boolean>(false);
-
-	useEffect(() => {
-		if (authData.isAuthorized) {
-			setRedirectToRootPage(!redirectToRootPage);
-		}
-	}, [authData, redirectToRootPage]);
 
 	const logInUser = (email: string, password: string) => {
 		dispatch(actions.logInUserTrigger({ email, password }));
@@ -43,8 +34,6 @@ export const LoginPage: React.FC = () => {
 			logInUser(email, password);
 		}
 	};
-
-	const renderRootPage: JSX.Element | null = redirectToRootPage ? <Redirect to="/header" /> : null;
 
 	const passwordInput = isEmailValid ? <PasswordInput onChange={(text) => setPassword(text)} /> : null;
 
@@ -93,7 +82,6 @@ export const LoginPage: React.FC = () => {
 					</Segment>
 				</Grid.Column>
 			</Grid>
-			{renderRootPage}
 		</>
 	);
 };

@@ -1,0 +1,15 @@
+:local(.inlineContainer) {
+	.left {
+		float: left;
+	}
+
+	.right {
+		float: right;
+	}
+
+	padding-bottom: 10px;
+}
+
+:local(.meta) {
+	color: grey;
+}

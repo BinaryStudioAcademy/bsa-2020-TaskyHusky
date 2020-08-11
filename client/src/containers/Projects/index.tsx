@@ -4,10 +4,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'typings/rootState';
 import * as actions from './logic/actions';
 
+import Options from './../../components/common/Options';
 import CreateProjectModal from '../CreateProjectModal';
 import styles from './styles.module.scss';
 import Spinner from 'components/common/Spinner';
-import Options from 'components/Options';
 import { setProjectActions } from './config/projectActions';
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -33,7 +33,7 @@ const Projects: React.FC = () => {
 	const filteredData = (projects || []).filter(({ name }) => searchString.test(name));
 
 	const onOpenSettings = (id: string): void => {
-		history.push(history.location.pathname + '/edit-project/' + id);
+		history.push(history.location.pathname + '/projectSettings/' + id);
 		console.log('onOpenSettings');
 	};
 	const onTrash = (id: string): void => {

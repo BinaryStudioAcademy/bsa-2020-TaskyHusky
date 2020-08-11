@@ -70,7 +70,11 @@ const ProfilePage = ({ id }: { id: string }) => {
 
 	useEffect(() => {
 		setUser({ ...user, ...userData });
-	}, [userData]);
+	}, [userData, user]);
+
+	if (!user.id) {
+		return null;
+	}
 
 	return (
 		<>
