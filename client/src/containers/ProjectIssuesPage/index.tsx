@@ -1,40 +1,39 @@
 import React, { useState, useEffect } from 'react';
-import { getProjectIssues, getProjectById } from 'services/projects.service';
+import { getProjectById } from 'services/projects.service';
 import { Breadcrumb, Header } from 'semantic-ui-react';
+import { useTranslation } from 'react-i18next';
+import ProjectIssuesColumn from 'components/ProjectIssuesColumn';
 
 interface Props {
 	projectId: string;
 }
 
 const ProjectIssuesPage: React.FC<Props> = ({ projectId }) => {
-	const [issues, setIssues] = useState<WebApi.Result.IssueResult[] | null>(null);
 	const [project, setProject] = useState<WebApi.Entities.Projects | null>(null);
 	const leftPadded = { marginLeft: 20 };
+	const { t } = useTranslation();
 
 	useEffect(() => {
-		if (!issues) {
-			getProjectIssues(projectId).then(setIssues);
-		}
-
 		if (!project) {
 			getProjectById(projectId).then(setProject);
 		}
-	}, [issues, project, projectId]);
+	}, [project, projectId]);
 
-	if (!project || !issues) {
+	if (!project) {
 		return null;
 	}
 
 	return (
 		<>
 			<Header style={leftPadded} as="h2">
-				Issues
+				{t('issues')}
 			</Header>
 			<Breadcrumb style={leftPadded}>
-				<Breadcrumb.Section link>Projects</Breadcrumb.Section>
+				<Breadcrumb.Section href="/projects">{t('projects')}</Breadcrumb.Section>
 				<Breadcrumb.Divider icon="right arrow" />
 				<Breadcrumb.Section active>{project.name}</Breadcrumb.Section>
 			</Breadcrumb>
+			<ProjectIssuesColumn projectId={projectId} />
 		</>
 	);
 };

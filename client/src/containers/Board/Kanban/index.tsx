@@ -41,7 +41,7 @@ const Kanban: BoardComponent = ({ board }) => {
 				{board.name}
 			</Header>
 			<Breadcrumb style={{ ...leftPadded, marginBottom: 20 }}>
-				<Breadcrumb.Section link>{t('projects')}</Breadcrumb.Section>
+				<Breadcrumb.Section href="/projects">{t('projects')}</Breadcrumb.Section>
 				<Breadcrumb.Divider icon="right chevron" />
 				<Breadcrumb.Section link>Test project name</Breadcrumb.Section>
 				<Breadcrumb.Divider icon="right arrow" />
