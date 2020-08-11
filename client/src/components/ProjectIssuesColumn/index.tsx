@@ -7,10 +7,16 @@ import { getProjectIssues } from 'services/projects.service';
 
 interface Props {
 	projectId: string;
+	onChangeSelectedCard: (key: string | null) => void;
 }
 
-const ProjectIssuesColumn: React.FC<Props> = ({ projectId }) => {
+interface Dictionary<V> {
+	[key: string]: V;
+}
+
+const ProjectIssuesColumn: React.FC<Props> = ({ projectId, onChangeSelectedCard }) => {
 	const [issues, setIssues] = useState<WebApi.Result.IssueResult[] | null>(null);
+	const issueCardUnselect: Dictionary<() => void> = {};
 	const { t } = useTranslation();
 
 	useEffect(() => {
@@ -24,7 +30,7 @@ const ProjectIssuesColumn: React.FC<Props> = ({ projectId }) => {
 	}
 
 	return (
-		<Segment style={{ backgroundColor: '#EEE', height: '80%', width: 300, marginLeft: 20 }}>
+		<Segment style={{ backgroundColor: '#EEE', height: '95%', width: 300, marginLeft: 20 }}>
 			<CreateIssueModal projectID={projectId} onClose={() => setIssues(null)}>
 				<Button floated="right" positive compact>
 					<Icon name="plus circle" />
@@ -32,9 +38,32 @@ const ProjectIssuesColumn: React.FC<Props> = ({ projectId }) => {
 				</Button>
 			</CreateIssueModal>
 			<div style={{ clear: 'both' }} />
-			<div style={{ marginTop: 10 }}>
+			<div style={{ marginTop: 10, overflowY: 'auto', height: '71vh' }}>
 				{issues.length > 0
-					? issues.map((issue, i) => <IssueCard noDrag issue={issue} index={i} key={i} />)
+					? issues.map((issue, i) => (
+							<IssueCard
+								onSelectChange={(event) => {
+									if (event.selected) {
+										onChangeSelectedCard(event.key);
+									} else {
+										onChangeSelectedCard(null);
+									}
+
+									for (const key in issueCardUnselect) {
+										if (key !== event.key) {
+											issueCardUnselect[key]();
+										}
+									}
+								}}
+								getUnselect={(event) => (issueCardUnselect[event.key] = event.unselect)}
+								selectable
+								noRedirect
+								noDrag
+								issue={issue}
+								index={i}
+								key={i}
+							/>
+					  ))
 					: 'No cards'}
 			</div>
 		</Segment>
