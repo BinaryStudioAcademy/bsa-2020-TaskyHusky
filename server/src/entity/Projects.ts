@@ -1,14 +1,7 @@
-<<<<<<< Updated upstream
 import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, OneToMany, ManyToOne, JoinTable } from 'typeorm';
 import { UserProfile } from './UserProfile';
 import { Sprint } from './Sprint';
 import { Board } from './Board';
-=======
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, ManyToMany, JoinTable, OneToMany } from 'typeorm';
-import { Sprint } from './Sprint';
-import { Board } from './Board';
-import { UserProfile } from './UserProfile';
->>>>>>> Stashed changes
 
 @Entity()
 export class Projects {
