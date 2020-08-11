@@ -3,14 +3,7 @@ import { Languages } from 'config/i18n.config';
 import { Flag, FlagNameValues, Dropdown } from 'semantic-ui-react';
 import i18next from 'i18next';
 import { setLng } from 'helpers/setLng.helper';
-import { LocalStorageKeys } from 'constants/LocalStorageKeys';
 import { getLanguage } from 'helpers/getLanguage.helper';
-
-interface Option {
-	key: string | number;
-	value: any;
-	text: string | JSX.Element | JSX.Element[];
-}
 
 const LanguageSelect: React.FC = () => {
 	const language = getLanguage();
