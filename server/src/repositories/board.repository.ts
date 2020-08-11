@@ -1,7 +1,7 @@
 import { EntityRepository, getCustomRepository, Repository } from 'typeorm';
 import { Board } from '../entity/Board';
 import { UserRepository } from './user.repository';
-import {IBoardModel} from '../models/Board';
+import { IBoardModel } from '../models/Board';
 
 @EntityRepository(Board)
 export class BoardRepository extends Repository<Board> {
@@ -9,12 +9,22 @@ export class BoardRepository extends Repository<Board> {
 		return this.findOneOrFail({ where: { boardType } });
 	}
 
-	getAll = async ():Promise<IBoardModel[]> => {
+	getAll = async (): Promise<IBoardModel[]> => {
 		const extendedBoards = await this.find().then(boards =>
 			boards.map(async (board) => this.getOne(board.id)),
 		);
 
 		return Promise.all(extendedBoards);
+	};
+
+	getRecent = () => {
+		const boards = this
+			.createQueryBuilder('board')
+			.select(['board.id', 'board.name'])
+			.orderBy('board.createdAt', 'DESC')
+			.getMany()
+
+		return boards;
 	};
 
 	async getOne(id: string) {

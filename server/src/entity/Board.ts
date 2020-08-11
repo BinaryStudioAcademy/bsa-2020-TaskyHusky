@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToOne } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToOne, CreateDateColumn } from 'typeorm';
 import { IsDefined, IsString, MinLength } from 'class-validator';
 import { BoardColumn } from './BoardColumn';
 import { UserProfile } from './UserProfile';
@@ -25,4 +25,7 @@ export class Board {
 	})
 	@IsDefined()
 	createdBy!: UserProfile;
+
+	@CreateDateColumn({type:'timestamp', default:()=>'CURRENT_TIMESTAMP(6)'})
+	createdAt!: Date;
 }

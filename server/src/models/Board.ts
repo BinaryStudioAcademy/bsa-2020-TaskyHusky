@@ -8,6 +8,7 @@ export interface IBoardModel {
 	boardType: BoardType,
 	name: string,
 	location: string,
+	createdAt: Date,
 	createdBy: {
 		id: string,
 		firstName: string,

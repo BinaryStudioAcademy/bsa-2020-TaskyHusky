@@ -9,6 +9,7 @@ namespace WebApi.Board {
 		boardType: BoardType;
 		name: string;
 		location: string;
+		createdAt: Date;
 		createdBy: {
 			id: string;
 			firstName: string;
@@ -107,6 +108,7 @@ namespace WebApi.Entities {
 		name: string;
 		columns?: BoardColumn[];
 		createdBy: UserProfile;
+		createdAt: Date;
 	}
 
 	interface BoardColumn {
