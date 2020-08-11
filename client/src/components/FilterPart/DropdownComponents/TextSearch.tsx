@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Input, Dropdown, Button } from 'semantic-ui-react';
 import styles from './styles.module.scss';
 
