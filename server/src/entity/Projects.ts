@@ -1,4 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Board } from './Board';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, ManyToMany, JoinTable } from 'typeorm';
+import { UserProfile } from './UserProfile';
 
 @Entity()
 export class Projects {
@@ -14,12 +16,24 @@ export class Projects {
 	@Column({ type: 'text', nullable: true })
 	category?: string;
 
-	@Column({ type: 'text', nullable: true })
-	defaultAssigneeID?: string;
+	@ManyToOne((type) => UserProfile, (userProfile) => userProfile.assignedProjects)
+	defaultAssignee?: UserProfile;
 
-	@Column({ type: 'uuid', nullable: true })
-	leadID?: string;
+	@ManyToOne((type) => UserProfile, (userProfile) => userProfile.leadedProjects)
+	lead?: UserProfile;
 
-	@Column({ type: 'uuid', nullable: true })
-	creatorID!: string;
+	@ManyToOne((type) => UserProfile, (userProfile) => userProfile.createdProjects)
+	creator!: UserProfile;
+
+	@ManyToMany((type) => UserProfile)
+	@JoinTable({
+		name: 'ProjectsPeople',
+	})
+	users?: UserProfile[];
+
+	@ManyToMany((type) => Board)
+	@JoinTable({
+		name: 'ProjectBoards',
+	})
+	boards?: Board[];
 }
