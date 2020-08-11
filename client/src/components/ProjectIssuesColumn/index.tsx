@@ -8,13 +8,14 @@ import { getProjectIssues } from 'services/projects.service';
 interface Props {
 	projectId: string;
 	onChangeSelectedCard: (key: string | null) => void;
+	search: string;
 }
 
 interface Dictionary<V> {
 	[key: string]: V;
 }
 
-const ProjectIssuesColumn: React.FC<Props> = ({ projectId, onChangeSelectedCard }) => {
+const ProjectIssuesColumn: React.FC<Props> = ({ projectId, onChangeSelectedCard, search }) => {
 	const [issues, setIssues] = useState<WebApi.Result.IssueResult[] | null>(null);
 	const issueCardUnselect: Dictionary<() => void> = {};
 	const { t } = useTranslation();
@@ -29,6 +30,10 @@ const ProjectIssuesColumn: React.FC<Props> = ({ projectId, onChangeSelectedCard 
 		return null;
 	}
 
+	const displayIssues = issues.filter((issue) =>
+		(issue.summary as string).toLowerCase().includes(search.toLowerCase()),
+	);
+
 	return (
 		<Segment style={{ backgroundColor: '#EEE', height: '95%', width: 300, marginLeft: 20 }}>
 			<CreateIssueModal projectID={projectId} onClose={() => setIssues(null)}>
@@ -39,8 +44,8 @@ const ProjectIssuesColumn: React.FC<Props> = ({ projectId, onChangeSelectedCard 
 			</CreateIssueModal>
 			<div style={{ clear: 'both' }} />
 			<div style={{ marginTop: 10, overflowY: 'auto', height: '71vh' }}>
-				{issues.length > 0
-					? issues.map((issue, i) => (
+				{displayIssues.length > 0
+					? displayIssues.map((issue, i) => (
 							<IssueCard
 								onSelectChange={(event) => {
 									if (event.selected) {

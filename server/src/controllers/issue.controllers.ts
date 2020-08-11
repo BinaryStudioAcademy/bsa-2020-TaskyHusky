@@ -42,12 +42,11 @@ class IssueController {
 	}
 
 	async getByProjectId(req: Request, res: Response) {
-		const { filter } = req.query;
 		const { id } = req.params;
 		const repository = getCustomRepository(IssueRepository);
 
 		try {
-			const result = await repository.findAllByProjectId(id, filter as string);
+			const result = await repository.findAllByProjectId(id);
 			res.send(result);
 		} catch (err) {
 			res.status(500).send(getWebError(err, 500));

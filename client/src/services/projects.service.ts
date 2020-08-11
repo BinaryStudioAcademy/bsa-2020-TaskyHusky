@@ -31,11 +31,10 @@ export const createProject = async (project: InitialProject): Promise<WebApi.Ent
 	return (await res.json()) as WebApi.Entities.Projects;
 };
 
-export const getProjectIssues = async (id: string, filter?: string): Promise<WebApi.Result.IssueResult[]> => {
+export const getProjectIssues = async (id: string): Promise<WebApi.Result.IssueResult[]> => {
 	const res: Response = await callWebApi({
 		method: 'GET',
 		endpoint: `projects/${id}/issues`,
-		...(filter ? { query: { filter } } : {}),
 	});
 
 	return (await res.json()) as WebApi.Result.IssueResult[];
