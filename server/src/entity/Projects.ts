@@ -17,14 +17,14 @@ export class Projects {
 	@Column({ type: 'text', nullable: true })
 	category?: string;
 
-	@ManyToOne((type) => UserProfile, (userProfile) => userProfile.assignedProjects)
-	defaultAssigneeId?: UserProfile;
+	@ManyToOne((type) => UserProfile, (userProfile) => userProfile.assignedProjects, { cascade: true })
+	defaultAssignee?: UserProfile;
 
-	@ManyToOne((type) => UserProfile, (userProfile) => userProfile.leadedProjects)
-	leadId?: UserProfile;
+	@ManyToOne((type) => UserProfile, (userProfile) => userProfile.leadedProjects, { cascade: true })
+	lead?: UserProfile;
 
-	@ManyToOne((type) => UserProfile, (userProfile) => userProfile.createdProjects)
-	creatorId!: UserProfile;
+	@ManyToOne((type) => UserProfile, (userProfile) => userProfile.createdProjects, { cascade: true })
+	creator!: UserProfile;
 
 	@ManyToMany((type) => UserProfile)
 	@JoinTable({
