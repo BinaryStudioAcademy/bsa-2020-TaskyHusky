@@ -6,6 +6,9 @@ namespace WebApi.Board {
 }
 
 namespace WebApi.Issue {
+	import { Sprint } from '../entity/Sprint';
+	import { Projects } from '../entity/Projects';
+
 	interface PartialIssue {
 		id?: string;
 		type: string;
@@ -16,8 +19,8 @@ namespace WebApi.Issue {
 		links?: string[];
 		priority: string;
 		description?: string;
-		sprintID?: string;
-		projectID?: string;
+		sprint?: Sprint;
+		project?: Projects;
 		issueKey?: string;
 		assignedID?: string;
 		creatorID?: string;
@@ -25,11 +28,10 @@ namespace WebApi.Issue {
 }
 
 namespace WebApi.Result {
+	import { UserModel } from './User';
+
 	interface UserAuthResult {
-		user: {
-			id: string;
-			email: string;
-		};
+		user: UserModel;
 		jwtToken: string;
 	}
 
@@ -83,14 +85,16 @@ namespace WebApi.User {
 		id?: string;
 		email: string;
 		password?: string;
-		firstName?: string;
 		lastName?: string;
+		firstName?: string;
+		username?: string;
 		avatar?: string;
+		location?: string;
 		department?: string;
-		timezone?: string;
 		organization?: string;
 		jobTitle?: string;
 		userSettingsId?: string;
+		filtres?: string[];
 	}
 }
 
@@ -99,9 +103,9 @@ namespace WebApi.Entities {
 		id: string;
 		boardType: BoardType;
 		name: string;
-		location: string;
 		columns?: BoardColumn[];
-		createdBy: User;
+		sprints?: Sprint[];
+		createdBy: UserProfile;
 	}
 
 	interface BoardColumn {
@@ -114,10 +118,10 @@ namespace WebApi.Entities {
 
 	interface Filter {
 		id: string;
-		owner?: User;
+		owner?: UserProfile;
 		ownerId?: string;
 		name?: string;
-		staredBy?: User[];
+		staredBy?: UserProfile[];
 	}
 
 	interface FilterDefinition {
@@ -131,7 +135,7 @@ namespace WebApi.Entities {
 		id: string;
 		filterId?: string;
 		filterDefId?: string;
-		members?: User[];
+		members?: UserProfile[];
 		searchText?: string;
 	}
 
@@ -145,8 +149,8 @@ namespace WebApi.Entities {
 		links?: string;
 		priority?: Priority;
 		description?: string;
-		sprintID?: string;
-		projectID?: string;
+		sprint?: Sprint;
+		project?: Projects;
 		issueKey?: string;
 		assignedID?: string;
 		creatorID?: string;
@@ -176,6 +180,17 @@ namespace WebApi.Entities {
 		defaultAssigneeID?: string;
 		leadID?: string;
 		creatorID: string;
+		sprints?: Sprint[];
+	}
+
+	interface Sprint {
+		id: string;
+		sprintName?: string;
+		project?: Projects;
+		board?: Board;
+		isActive?: boolean;
+		isCompleted?: boolean;
+		issues?: [];
 	}
 
 	interface Teams {
@@ -187,7 +202,7 @@ namespace WebApi.Entities {
 
 	interface TeamsPeople {
 		id: string;
-		userId?: User;
+		userId?: UserProfile;
 		teamId?: Teams;
 	}
 
@@ -205,13 +220,14 @@ namespace WebApi.Entities {
 		teamId?: Teams;
 	}
 
-	interface User {
+	interface UserProfile {
 		id: string;
 		firstName?: string;
 		lastName?: string;
+		username?: string;
 		avatar?: string;
 		department?: string;
-		timezone?: string;
+		location?: string;
 		organization?: string;
 		email?: string;
 		jobTitle?: string;

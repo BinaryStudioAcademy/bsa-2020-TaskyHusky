@@ -1,7 +1,8 @@
 name: Stage - Client Build
 on:
   push:
-    branches: [master]
+    branches: [dev]
+    paths: 'client/**/*.*'
 
 jobs:
   build:
@@ -12,9 +13,13 @@ jobs:
       run: |
         cd client
         npm install
+    - name: ESlint
+      run: |
+        cd client
+        npm run lint
     - name: Build
       env:
-        REACT_APP_API_BASE_URL: http://localhost:5000/
+        REACT_APP_API_BASE_URL: http://api-stage.taskyhusky.xyz/
       run: |
         cd client
         npm run build

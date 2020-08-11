@@ -6,23 +6,19 @@ import { BoardType } from '../models/Board';
 import { UserRepository } from '../repositories/user.repository';
 
 export class Board1596645901833 implements MigrationInterface {
-
 	public async up(queryRunner: QueryRunner): Promise<void> {
 		const userRepository = getCustomRepository(UserRepository);
 		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 		const user1 = (await userRepository.getByEmail('test@test.com'))!;
-
 		const board1 = new Board();
 		board1.boardType = BoardType.Kanban;
 		board1.createdBy = user1;
 		board1.name = 'Table1';
-		board1.location = 'Ukraine';
 
 		const board2 = new Board();
 		board2.boardType = BoardType.Scrum;
 		board2.createdBy = user1;
 		board2.name = 'Table2';
-		board2.location = 'USA';
 
 		await getRepository('Board').save([board1, board2]);
 
@@ -48,5 +44,5 @@ export class Board1596645901833 implements MigrationInterface {
 		await getRepository('board').save(board);
 	}
 
-	public async down(queryRunner: QueryRunner): Promise<void> { }
+	public async down(queryRunner: QueryRunner): Promise<void> {}
 }

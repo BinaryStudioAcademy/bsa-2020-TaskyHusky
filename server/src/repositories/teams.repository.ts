@@ -8,9 +8,8 @@ export class TeamsRepository extends Repository<Teams> {
 	}
 
 	findOneById(id: string) {
-		return this.find({
-			where: { id },
-			relations: ['User']
+		return this.findOne({
+			where: { id }
 		});
 	}
 

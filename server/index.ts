@@ -18,7 +18,7 @@ createConnection()
 		app.use(cors());
 		app.use(bodyParser.json());
 		app.use(passport.initialize());
-
+		app.use('/', (req, res, next) => (req.path === '/' ? res.sendStatus(200) : next())); // health check
 		app.use('/api', authenticateJwt(routesWhiteList), routes);
 		app.use(errorHandlerMiddleware);
 
@@ -26,6 +26,6 @@ createConnection()
 			// eslint-disable-next-line no-console
 			console.log(`Server is running on port ${appPort}`);
 		});
-		// eslint-disable-next-line no-console
 	})
+	// eslint-disable-next-line no-console
 	.catch((err) => console.log(err));

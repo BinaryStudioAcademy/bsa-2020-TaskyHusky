@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Card, Icon, Form, Input, Button, TextArea } from 'semantic-ui-react';
 import styles from 'containers/TeamPage/styles.module.scss';
 import AditionalModal from 'components/TeamAddPeopleModal/aditionalModal';
+import { useTranslation } from 'react-i18next';
 
 type CardProps = {
 	description: string;
@@ -14,6 +15,8 @@ const TeamDevsCard = ({ changeMainFields, description, name, showAddPeopleModal 
 	const [showDelete, setShowDelete] = useState<boolean>(false);
 	const [title, setTitle] = useState<string>(name || '');
 	const [teamDescription, setTeamDescription] = useState<string>(description || '');
+	const { t } = useTranslation();
+
 	return (
 		<Card>
 			<Card.Content className={styles.card_header}>
@@ -38,10 +41,10 @@ const TeamDevsCard = ({ changeMainFields, description, name, showAddPeopleModal 
 			<Card.Content extra>
 				<Button.Group fluid>
 					<Button compact className={styles.margin_1} onClick={showAddPeopleModal}>
-						Add people
+						{t('Add people')}
 					</Button>
 					<Button compact color="red" onClick={() => setShowDelete(true)}>
-						Delete team
+						{t('Delete team')}
 					</Button>
 				</Button.Group>
 			</Card.Content>

@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
 import { getCustomRepository } from 'typeorm';
-import { User } from '../entity/User';
-
+import { UserProfile } from '../entity/UserProfile';
 import { ProjectsRepository } from '../repositories/projects.repository';
 import { getWebError } from '../helpers/error.helper';
 
@@ -19,9 +18,9 @@ class ProjectsController {
 
 	getProject = async (req: Request, res: Response): Promise<void> => {
 		const projectsRepository = getCustomRepository(ProjectsRepository);
-		const { id } = req.params;
 
 		try {
+			const { id } = req.params;
 			const project = await projectsRepository.findOneById(id);
 			res.send(project);
 		} catch (err) {
@@ -31,11 +30,11 @@ class ProjectsController {
 
 	createProject = async (req: Request, res: Response): Promise<void> => {
 		const projectsRepository = getCustomRepository(ProjectsRepository);
-		const { id: userId } = req.user as User;
-		const project = req.body;
-		project.creatorID = userId;
 
 		try {
+			const { id: userId } = req.user as UserProfile;
+			const { project } = req.body;
+			project.creatorID = userId;
 			const createdProject = await projectsRepository.createOne(project);
 			res.status(201).send(createdProject);
 		} catch (err) {
@@ -45,10 +44,10 @@ class ProjectsController {
 
 	updateProject = async (req: Request, res: Response): Promise<void> => {
 		const projectsRepository = getCustomRepository(ProjectsRepository);
-		const project = req.body;
-		const { id } = project;
 
 		try {
+			const { project } = req.body;
+			const { id } = project;
 			await this.checkForExisting(id);
 			const updatedProject = await projectsRepository.updateOne(project);
 			res.send(updatedProject);
@@ -59,9 +58,9 @@ class ProjectsController {
 
 	deleteProject = async (req: Request, res: Response): Promise<void> => {
 		const projectsRepository = getCustomRepository(ProjectsRepository);
-		const { id } = req.body;
 
 		try {
+			const { id } = req.body;
 			await this.checkForExisting(id);
 			const deletedProject = await projectsRepository.deleteOneById(id);
 			res.send(deletedProject);

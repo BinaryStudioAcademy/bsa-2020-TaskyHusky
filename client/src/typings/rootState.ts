@@ -5,6 +5,7 @@ import { FilterState } from 'containers/Filters/logic/state';
 import { IssueState } from 'pages/CreateIssue/logic/types';
 import { TeamState } from 'containers/TeamPage/logic/state';
 import { CreateProjectsState } from 'containers/CreateProjectModal/logic/state';
+import { UserProfileState } from 'containers/ProfilePage/logiс/state';
 
 export interface RootState {
 	projects: ProjectsState;
@@ -14,4 +15,5 @@ export interface RootState {
 	filters: FilterState;
 	filterDefs: FilterDefsState;
 	team: TeamState;
+	user: UserProfileState;
 }

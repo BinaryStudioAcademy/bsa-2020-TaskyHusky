@@ -1,9 +1,10 @@
 import ModalViewProfile from 'components/common/ModalViewProfile';
-import React, { useState, useMemo, useRef } from 'react';
-import { Card, Image } from 'semantic-ui-react';
+import React, { useState } from 'react';
+import { Card } from 'semantic-ui-react';
 import Avatar from 'components/Avatar';
 import styles from './styles.module.scss';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 interface User {
 	id: string;
@@ -14,6 +15,7 @@ interface User {
 	email: string;
 	location?: string;
 }
+
 const TeamsMembersCard = () => {
 	const [modal, setModal] = useState(false);
 	const [viewUser, setViewUser] = useState<User | undefined>();
@@ -48,11 +50,16 @@ const TeamsMembersCard = () => {
 			location: 'London, UK',
 		},
 	];
+	const { t } = useTranslation();
+
 	return (
 		<Card>
-			<Card.Content header="Members" />
+			<Card.Content header={t('members')} />
 			<Card.Meta>
-				<span className={styles.meta_header}> {data.length} members</span>
+				<span className={styles.meta_header}>
+					{' '}
+					{data.length} {t('members')}
+				</span>
 			</Card.Meta>
 			{data.map((el) => {
 				return (

@@ -5,7 +5,7 @@ import { Filter } from './Filter';
 import { Teams } from './Teams';
 
 @Entity()
-export class User {
+export class UserProfile {
 	@PrimaryGeneratedColumn('uuid')
 	id!: string;
 
@@ -16,13 +16,16 @@ export class User {
 	lastName?: string;
 
 	@Column({ nullable: true })
+	username?: string;
+
+	@Column({ nullable: true })
 	avatar?: string;
 
 	@Column({ nullable: true })
 	department?: string;
 
 	@Column({ nullable: true })
-	timezone?: string;
+	location?: string;
 
 	@Column({ nullable: true })
 	organization?: string;

@@ -1,16 +1,16 @@
 import { RelationId, Entity, Column, ManyToMany, JoinTable, PrimaryGeneratedColumn } from 'typeorm';
-import { User } from './User';
+import { UserProfile } from './UserProfile';
 
 @Entity()
 export class Teams {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
-  @ManyToMany(() => User, (user: User) => user.teams, { cascade: true })
+  @ManyToMany(() => UserProfile, (user: UserProfile) => user.teams, { cascade: true })
   @JoinTable()
-  users?: User[];
+  users?: UserProfile[];
 
-  @Column({ unique: true })
+  @Column()
   name?: string;
 
   @Column({ nullable: true })

@@ -5,7 +5,7 @@ import { TeamsSeed } from '../seeds/teams.seed';
 export class Teams1597155507178 implements MigrationInterface {
 
     public async up(_: QueryRunner): Promise<any> {
-        const users = await getRepository('User').save(
+        const users = await getRepository('UserProfile').save(
             UsersSeed
         );
         const teams: any = TeamsSeed;
