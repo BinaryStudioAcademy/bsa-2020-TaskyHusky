@@ -77,7 +77,7 @@ passport.use(
 			const encodedPassword = hashPassword(password);
 			const newUserObject = await userRepository.createNew({
 				...req.body,
-				trimmedEmail,
+				email: trimmedEmail,
 				password: encodedPassword,
 			});
 
