@@ -42,7 +42,7 @@ export class User {
 	password?: string;
 
 	@ManyToMany(() => Teams, (team: Teams) => team.users)
-	teams!: Teams[];
+	teams?: Teams[];
 
 	@OneToMany(type => Board, board => board.createdBy)
 	boards?: Board[];

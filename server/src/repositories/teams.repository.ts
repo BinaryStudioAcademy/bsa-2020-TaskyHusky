@@ -8,13 +8,18 @@ export class TeamsRepository extends Repository<Teams> {
 	}
 
 	findOneById(id: string) {
-		return this.findOne({
-			where: { id }
+		return this.find({
+			where: { id },
+			relations: ['User']
 		});
 	}
 
-	createOne(data: Teams) {
-		const entity = this.create(data);
+	findByName(name: string) {
+		return this.findOne({ where: { name } });
+	}
+
+	async createOne(data: Teams) {
+		const entity = await this.create(data);
 		return this.save(entity);
 	}
 
