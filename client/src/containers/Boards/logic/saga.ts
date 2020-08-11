@@ -6,7 +6,6 @@ import * as actions from './actions';
 export function* fetchBoards() {
 	const boards = yield call(service.getBoards);
 	yield put(actions.successLoading({ boards }));
-	yield put(actions.getRecentBoards());
 }
 
 export function* watchStartLoading() {

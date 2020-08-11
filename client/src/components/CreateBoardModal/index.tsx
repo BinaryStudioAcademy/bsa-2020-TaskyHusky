@@ -96,7 +96,7 @@ const CreateBoardModal = (props: Props) => {
 						color={'facebook'}
 						disabled={isCreateDisabled}
 						onClick={() => {
-							const { projects, algorithm, admin, ...boardData } = board;
+							const { algorithm, admin, ...boardData } = board;
 							if (admin) {
 								onCreateBoard({
 									...boardData,
