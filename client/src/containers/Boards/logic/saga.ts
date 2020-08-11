@@ -6,10 +6,20 @@ import * as actions from './actions';
 export function* fetchBoards() {
 	const boards = yield call(service.getBoards);
 	yield put(actions.successLoading({ boards }));
+	yield put(actions.getRecentBoards());
 }
 
 export function* watchStartLoading() {
 	yield takeEvery(actionTypes.START_LOADING, fetchBoards);
+}
+
+export function* getRecentBoards() {
+	const recentBoards = yield call(service.getRecentBoards);
+	yield put(actions.successGetRecentBoards({ recentBoards }));
+}
+
+export function* watchGetRecentBoards() {
+	yield takeEvery(actionTypes.GET_RECENT_BOARDS, getRecentBoards);
 }
 
 export function* deleteBoard(action: ReturnType<typeof actions.deleteBoard>) {
@@ -34,5 +44,5 @@ export function* watchCreateBoard() {
 }
 
 export default function* boardsSaga() {
-	yield all([watchStartLoading(), watchDeleteBoard(), watchCreateBoard()]);
+	yield all([watchStartLoading(), watchDeleteBoard(), watchCreateBoard(), watchGetRecentBoards()]);
 }

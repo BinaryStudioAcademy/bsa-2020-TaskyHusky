@@ -11,6 +11,16 @@ export const getBoards = async (): Promise<WebApi.Board.IBoardModel[]> => {
 	return (await res.json()) as WebApi.Board.IBoardModel[];
 };
 
+export const getRecentBoards = async (): Promise<WebApi.Board.IBoardModel[]> => {
+	const res: Response = await callWebApi({
+		method: 'GET',
+		endpoint: 'board/recent',
+		skipAuthorization: false,
+	});
+
+	return (await res.json()) as WebApi.Board.IBoardModel[];
+};
+
 export const deleteBoard = async (id: string): Promise<any> => {
 	const res: Response = await callWebApi({
 		method: 'DELETE',
