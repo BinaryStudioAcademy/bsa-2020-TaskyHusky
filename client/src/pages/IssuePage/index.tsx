@@ -17,7 +17,7 @@ interface Props {
 
 const IssuePage: React.FC<Props> = ({ match }) => {
 	const { t } = useTranslation();
-	const [issue, setIssue] = useState<WebApi.Result.IssueResult | null>(null);
+	const [issue, setIssue] = useState<WebApi.Result.IssueResult | undefined>();
 	const [redirecting, setRedirecting] = useState<boolean>(false);
 	let openEditModal: () => void = () => {};
 

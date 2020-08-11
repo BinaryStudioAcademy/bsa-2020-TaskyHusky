@@ -116,4 +116,5 @@ export const en = {
 	category: 'Category',
 	project_name: 'Enter project name',
 	project_lead_name: 'Enter name',
+	clear: 'Clear',
 };

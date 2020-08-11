@@ -2,19 +2,19 @@ import React, { useState } from 'react';
 import { Modal, Form, Button, Grid, Header, Icon, Divider } from 'semantic-ui-react';
 import { useCreateIssueModalContext } from './logic/context';
 import TagsInput from 'components/common/TagsInput';
-import { ControlsGetter } from './logic/types';
 import { connect, useDispatch } from 'react-redux';
 import { RootState } from 'typings/rootState';
-import { Redirect } from 'react-router-dom';
-import { createIssue } from 'pages/CreateIssue/logic/actions';
+import { createIssue } from 'pages/IssuePage/logic/actions';
 import { generateRandomString } from 'helpers/randomString.helper';
 import { KeyGenerate } from 'constants/KeyGenerate';
 import { useTranslation } from 'react-i18next';
 
 interface Props {
-	children: ControlsGetter;
+	children: JSX.Element;
 	issueTypes: WebApi.Entities.IssueType[];
 	priorities: WebApi.Entities.Priority[];
+	boardColumnID?: string;
+	onClose?: (data: WebApi.Issue.PartialIssue) => void;
 }
 
 interface SelectOption {
@@ -24,11 +24,9 @@ interface SelectOption {
 	style?: any;
 }
 
-const CreateIssueModalBody: React.FC<Props> = ({ children, issueTypes, priorities }) => {
+const CreateIssueModalBody: React.FC<Props> = ({ children, issueTypes, priorities, boardColumnID, onClose }) => {
 	const { t } = useTranslation();
 	const [isOpened, setIsOpened] = useState<boolean>(false);
-	const [loading, setLoading] = useState<boolean>(false);
-	const [redirecting, setRedirecting] = useState<boolean>(false);
 	const dispatch = useDispatch();
 
 	const typeOpts: SelectOption[] = issueTypes.map((type) => ({
@@ -67,7 +65,6 @@ const CreateIssueModalBody: React.FC<Props> = ({ children, issueTypes, prioritie
 
 	const context = useCreateIssueModalContext();
 	const getSetOpenFunc = (value: boolean) => () => setIsOpened(value);
-	children(getSetOpenFunc(true), getSetOpenFunc(false));
 
 	const submit = async () => {
 		const allFields = context.data.type && context.data.summary && context.data.priority;
@@ -76,49 +73,48 @@ const CreateIssueModalBody: React.FC<Props> = ({ children, issueTypes, prioritie
 			return;
 		}
 
-		setLoading(true);
+		const data = {
+			...context.data,
+			...(boardColumnID ? { boardColumn: boardColumnID } : {}),
+			sprint: {
+				id: '7dac8783-2421-4683-ae5d-d9adf0c75ecb',
+				sprintName: 'Innovative Chipmunk Ferret',
+				isActive: false,
+				isCompleted: true,
+			},
+			project: {
+				id: '1fbda607-5934-484c-9667-bd35574a2f1e',
+				name: 'Project name',
+				key: 'PN',
+				category: 'Business',
+				defaultAssigneeID: '30e6e687-9344-483f-8e14-0324c5f3733b',
+				leadID: 'e43002bf-ac10-49e2-adac-399a64e24ff2',
+				creatorID: 'e43002bf-ac10-49e2-adac-399a64e24ff2',
+			},
+			issueKey: generateRandomString(KeyGenerate.LENGTH),
+			assignedID: '98601c2c-a103-489b-b89f-ea5ae568b582',
+			creatorID: 'f2235a1c-dfbc-47b7-bdb2-726d159c19a0',
+		} as WebApi.Issue.PartialIssue;
 
-		dispatch(
-			createIssue({
-				data: {
-					...context.data,
-					boardColumnID: '6be0859b-05f6-447d-beb8-d5c324cc5043',
-					sprint: {
-						id: '7dac8783-2421-4683-ae5d-d9adf0c75ecb',
-						sprintName: 'Innovative Chipmunk Ferret',
-						isActive: false,
-						isCompleted: true,
-					},
-					project: {
-						id: '1fbda607-5934-484c-9667-bd35574a2f1e',
-						name: 'Project name',
-						key: 'PN',
-						category: 'Business',
-						defaultAssigneeID: '30e6e687-9344-483f-8e14-0324c5f3733b',
-						leadID: 'e43002bf-ac10-49e2-adac-399a64e24ff2',
-						creatorID: 'e43002bf-ac10-49e2-adac-399a64e24ff2',
-					},
-					issueKey: generateRandomString(KeyGenerate.LENGTH),
-					assignedID: '98601c2c-a103-489b-b89f-ea5ae568b582',
-					creatorID: 'f2235a1c-dfbc-47b7-bdb2-726d159c19a0',
-				},
-			}),
-		);
+		dispatch(createIssue({ data }));
 
-		setLoading(false);
+		if (onClose) {
+			onClose(data);
+		}
+
 		setIsOpened(false);
-		setRedirecting(true);
 	};
 
 	return (
 		<>
-			{redirecting ? <Redirect to="/" /> : ''}
 			<Modal
 				open={isOpened}
 				closeIcon
 				closeOnEscape
 				closeOnDimmerClick
 				onClose={getSetOpenFunc(false)}
+				openOnTriggerClick
+				trigger={<div onClick={getSetOpenFunc(true)}>{children}</div>}
 				style={{ maxWidth: 700 }}
 			>
 				<Grid className="fill" verticalAlign="middle">
@@ -201,7 +197,7 @@ const CreateIssueModalBody: React.FC<Props> = ({ children, issueTypes, prioritie
 								/>
 							</Form.Field>
 							<Button.Group floated="right">
-								<Button primary type="submit" loading={loading}>
+								<Button primary type="submit">
 									{t('submit')}
 								</Button>
 								<Button onClick={getSetOpenFunc(false)} basic>

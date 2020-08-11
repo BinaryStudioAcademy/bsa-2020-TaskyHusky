@@ -1,9 +1,9 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { MinLength, IsEmail } from 'class-validator';
-import { Projects } from './Projects';
 import { TeamsPeople } from './TeamsPeople';
 import { Board } from './Board';
 import { Filter } from './Filter';
+import { Projects } from './Projects';
 
 @Entity()
 export class UserProfile {
@@ -54,12 +54,12 @@ export class UserProfile {
 	@OneToMany((type) => Filter, (filter) => filter.owner)
 	filters?: Filter[];
 
-	@OneToMany((type) => Projects, (projects) => projects.defaultAssigneeId)
+	@OneToMany((type) => Projects, (projects) => projects.defaultAssignee)
 	assignedProjects?: Projects[];
 
-	@OneToMany((type) => Projects, (projects) => projects.leadId)
+	@OneToMany((type) => Projects, (projects) => projects.lead)
 	leadedProjects?: Projects[];
 
-	@OneToMany((type) => Projects, (projects) => projects.creatorId)
+	@OneToMany((type) => Projects, (projects) => projects.creator)
 	createdProjects!: Projects[];
 }
