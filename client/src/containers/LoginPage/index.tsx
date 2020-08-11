@@ -28,14 +28,14 @@ export const LoginPage: React.FC = (props) => {
 		if (isEmailValid && isEmailSubmitted) {
 			dispatch(actions.checkEmailTrigger({ email }));
 		}
-	}, [isEmailValid, isEmailSubmitted]);
+	}, [isEmailValid, isEmailSubmitted, dispatch, email]);
 
 	useEffect(() => {
-		if (!authState.user?.email && isEmailSubmitted && isEmailValid) {
+		if (!authState.isEmailInDB && authState.isEmailInDB !== null && isEmailSubmitted) {
 			setIsEmailSubmitted(false);
 			history.push('/signup');
 		}
-	}, [authState.user?.email]);
+	}, [authState.isEmailInDB, isEmailSubmitted, history]);
 
 	const handleContinueSubmit: (event: SyntheticEvent) => void = (event) => {
 		event.preventDefault();
@@ -53,9 +53,7 @@ export const LoginPage: React.FC = (props) => {
 	};
 
 	const passwordInput =
-		isEmailValid && isEmailSubmitted && authState.user?.email ? (
-			<PasswordInput onChange={(text) => setPassword(text)} />
-		) : null;
+		authState.isEmailInDB && isEmailSubmitted ? <PasswordInput onChange={(text) => setPassword(text)} /> : null;
 
 	return (
 		<>
@@ -67,9 +65,7 @@ export const LoginPage: React.FC = (props) => {
 					<Segment>
 						<Form
 							onSubmit={
-								isEmailValid && isEmailSubmitted && authState.user?.email
-									? handleLogInSubmit
-									: handleContinueSubmit
+								authState.isEmailInDB && isEmailSubmitted ? handleLogInSubmit : handleContinueSubmit
 							}
 						>
 							<Popup
