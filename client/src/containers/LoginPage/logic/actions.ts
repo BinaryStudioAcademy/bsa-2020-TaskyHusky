@@ -17,3 +17,4 @@ export const loadProfileSuccess = createAction<actionTypes.LoadProfileSuccess>(a
 
 export const checkEmailTrigger = createAction<actionTypes.CheckEmail>(actionTypes.CHECK_EMAIL_TRIGGER);
 export const checkEmailSuccess = createAction<actionTypes.CheckEmail>(actionTypes.CHECK_EMAIL_SUCCESS);
+export const checkEmailReset = createAction(actionTypes.CHECK_EMAIL_RESET);

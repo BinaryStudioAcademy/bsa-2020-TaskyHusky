@@ -41,11 +41,15 @@ export const authReducer = createReducer<AuthState>(initialState, {
 		};
 	},
 	[actionTypes.CHECK_EMAIL_SUCCESS](state, action: actionTypes.CheckEmail) {
-		console.log('authReducer', action.email);
-
 		return {
 			...state,
 			isEmailInDB: !!action.email,
+		};
+	},
+	[actionTypes.CHECK_EMAIL_RESET](state, action: actionTypes.CheckEmail) {
+		return {
+			...state,
+			isEmailInDB: null,
 		};
 	},
 });

@@ -14,6 +14,7 @@ export const LOAD_PROFILE_SUCCESS = 'LOAD_PROFILE_SUCCESS';
 
 export const CHECK_EMAIL_TRIGGER = 'CHECK_EMAIL_TRIGGER';
 export const CHECK_EMAIL_SUCCESS = 'CHECK_EMAIL_SUCCESS';
+export const CHECK_EMAIL_RESET = 'CHECK_EMAIL_RESET';
 
 export type LogInUserTrigger = {
 	email: string;
