@@ -2,6 +2,7 @@ import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
 import { getCustomRepository } from 'typeorm';
+import { isEmail } from 'class-validator';
 import { jwtSecret } from './jwt.config';
 import { authErrorMessages, EMAIL_FIELD } from '../src/constants/auth.constants';
 import { hashPassword, passwordValid } from '../src/helpers/password.helper';
@@ -9,6 +10,7 @@ import { UserRepository } from '../src/repositories/user.repository';
 import { UserModel } from '../src/models/User';
 import { ErrorResponse } from '../src/helpers/errorHandler.helper';
 import HttpStatusCode from '../src/constants/httpStattusCode.constants';
+import { trimText } from '../src/helpers/trimText.helper';
 
 passport.use(
 	'local',
@@ -17,8 +19,18 @@ passport.use(
 			usernameField: EMAIL_FIELD,
 		},
 		async (email: string, password: string, next): Promise<void> => {
+			const trimmedEmail = trimText(email);
+
+			if (!isEmail(trimmedEmail)) {
+				return next(
+					new ErrorResponse(HttpStatusCode.UNPROCESSABLE_ENTITY, authErrorMessages.INVALID_EMAIL),
+					null,
+				);
+			}
+
 			const userRepository = getCustomRepository(UserRepository);
-			const user = await userRepository.getByEmail(email);
+			const user = await userRepository.getByEmail(trimmedEmail);
+
 			if (!user) {
 				return next(
 					new ErrorResponse(HttpStatusCode.UNAUTHORIZED, authErrorMessages.INCORRECT_CREDENTIALS),
@@ -46,15 +58,28 @@ passport.use(
 			passReqToCallback: true,
 		},
 		async (req, email: string, password: string, next): Promise<void> => {
+			const trimmedEmail = trimText(email);
+
+			if (!isEmail(trimmedEmail)) {
+				return next(
+					new ErrorResponse(HttpStatusCode.UNPROCESSABLE_ENTITY, authErrorMessages.INVALID_EMAIL),
+					null,
+				);
+			}
+
 			const userRepository = getCustomRepository(UserRepository);
-			const checkingUser = await userRepository.getByEmail(email);
+			const checkingUser = await userRepository.getByEmail(trimmedEmail);
 
 			if (checkingUser) {
 				return next(new ErrorResponse(HttpStatusCode.UNAUTHORIZED, authErrorMessages.TAKEN_EMAIL), null);
 			}
 
 			const encodedPassword = hashPassword(password);
-			const newUserObject = await userRepository.createNew({ ...req.body, email, password: encodedPassword });
+			const newUserObject = await userRepository.createNew({
+				...req.body,
+				trimmedEmail,
+				password: encodedPassword,
+			});
 
 			return next(null, newUserObject);
 		},
