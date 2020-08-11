@@ -7,7 +7,7 @@ import * as actions from './logic/actions';
 import PasswordInput from 'components/common/PasswordInput';
 import { useTranslation } from 'react-i18next';
 import validator from 'validator';
-import { trimText } from 'helpers/trimText.helper';
+import { fixEmail } from 'helpers/fixEmail.helper';
 
 import { RootState } from 'typings/rootState';
 
@@ -82,8 +82,8 @@ export const LoginPage: React.FC = () => {
 										icon="at"
 										value={email}
 										onChange={(event) => {
-											setEmail(trimText(event.target.value));
-											if (trimText(event.target.value) !== email) {
+											setEmail(fixEmail(event.target.value));
+											if (fixEmail(event.target.value) !== email) {
 												setIsEmailSubmitted(false);
 											}
 										}}

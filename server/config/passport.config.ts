@@ -10,7 +10,7 @@ import { UserRepository } from '../src/repositories/user.repository';
 import { UserModel } from '../src/models/User';
 import { ErrorResponse } from '../src/helpers/errorHandler.helper';
 import HttpStatusCode from '../src/constants/httpStattusCode.constants';
-import { trimText } from '../src/helpers/trimText.helper';
+import { fixEmail } from '../src/helpers/fixEmail.helper';
 
 passport.use(
 	'local',
@@ -19,7 +19,7 @@ passport.use(
 			usernameField: EMAIL_FIELD,
 		},
 		async (email: string, password: string, next): Promise<void> => {
-			const trimmedEmail = trimText(email);
+			const trimmedEmail = fixEmail(email);
 
 			if (!isEmail(trimmedEmail)) {
 				return next(
@@ -58,7 +58,7 @@ passport.use(
 			passReqToCallback: true,
 		},
 		async (req, email: string, password: string, next): Promise<void> => {
-			const trimmedEmail = trimText(email);
+			const trimmedEmail = fixEmail(email);
 
 			if (!isEmail(trimmedEmail)) {
 				return next(
