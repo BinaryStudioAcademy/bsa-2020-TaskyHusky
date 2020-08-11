@@ -19,7 +19,7 @@ jobs:
         npm run lint
     - name: Build
       env:
-        REACT_APP_API_BASE_URL: http://api-stage.taskyhusky.xyz/
+        REACT_APP_API_BASE_URL: https://api.taskyhusky.xyz/
       run: |
         cd client
         npm run build
@@ -28,7 +28,7 @@ jobs:
     - name: Deploy to S3
       run: |
           aws s3 rm --recursive s3://${{ secrets.AWS_S3_BUCKET_NAME_STAGE }}
-          aws s3 sync client/build/ s3://${{ secrets.AWS_S3_BUCKET_NAME_STAGE }}
+          aws s3 sync client/build/ s3://${{ secrets.AWS_S3_BUCKET_NAME_PROD }}
       env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
