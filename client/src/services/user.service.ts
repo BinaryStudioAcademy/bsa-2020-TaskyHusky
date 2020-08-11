@@ -25,7 +25,7 @@ export const requestUpdateUser = async (userData: Partial<UserProfileState>): Pr
 export const requestChangePassword = async (oldPassword: string, newPassword: string): Promise<void> => {
 	const res = await callWebApi({
 		method: 'PUT',
-		endpoint: 'user/changepass',
+		endpoint: 'user/password',
 		body: { oldPassword, newPassword },
 		skipAuthorization: false,
 	});

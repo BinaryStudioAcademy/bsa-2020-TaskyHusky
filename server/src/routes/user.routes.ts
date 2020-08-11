@@ -6,7 +6,7 @@ const userController = new UserController();
 
 router.get('/:id', userController.getUser);
 router.put('/', userController.updateUser);
-router.put('/changepass', userController.changePassword);
+router.put('/password', userController.changePassword);
 router.post('/', userController.createUser);
 router.delete('/', userController.deleteUser);
 

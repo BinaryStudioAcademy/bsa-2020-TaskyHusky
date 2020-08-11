@@ -20,14 +20,13 @@ class UserController {
 	changePassword = async (req: Request, res: Response): Promise<void> => {
 		const userRepository = getCustomRepository(UserRepository);
 		const { oldPassword, newPassword } = req.body;
-
+		const { password, id } = req.user;
 		try {
-			const user = await userRepository.getByEmail(req.user.email);
-			if (!passwordValid(oldPassword, user.password)) {
+			if (!passwordValid(oldPassword, password)) {
 				throw new Error('Old password is incorrect');
 			}
-			const password = hashPassword(newPassword);
-			userRepository.updateById(user.id, { password });
+			const changedPassword = hashPassword(newPassword);
+			userRepository.updateById(id, { password: changedPassword });
 			res.send({ message: 'Password was changed' });
 		} catch (error) {
 			res.status(400).send(error.message);
