@@ -10,7 +10,7 @@ namespace WebApi.Issue {
 		id?: string;
 		type: string;
 		summary?: string;
-		boardColumnID?: string;
+		boardColumn?: string;
 		labels?: string[];
 		attachments?: string[];
 		links?: string[];
@@ -42,7 +42,7 @@ namespace WebApi.Result {
 			icon: string;
 		};
 		summary?: string;
-		boardColumnID?: string;
+		boardColumn?: string;
 		labels?: string[];
 		attachments?: string[];
 		links?: string[];
@@ -58,6 +58,31 @@ namespace WebApi.Result {
 		issueKey?: string;
 		assignedID?: string;
 		creatorID?: string;
+	}
+
+	interface BoardResult {
+		id: string;
+		boardType: 'Kanban' | 'Scrum';
+		name: string;
+		location: string;
+		createdAt: {
+			firstName: string;
+			lastName?: string;
+			id: string;
+			avatar: string | null;
+		};
+	}
+
+	interface BoardColumnResult {
+		id: string;
+		columnName: string;
+		status: string;
+		isResolutionSet: boolean;
+		board: BoardResult;
+	}
+
+	interface ComposedBoardResult extends BoardResult {
+		columns: BoardColumnResult[];
 	}
 }
 
@@ -103,6 +128,7 @@ namespace WebApi.Entities {
 		status?: string;
 		isResolutionSet?: boolean;
 		board: Board;
+		issues: Issue[];
 	}
 
 	interface Filter {
@@ -132,7 +158,7 @@ namespace WebApi.Entities {
 		id: string;
 		type?: IssueType;
 		summary?: string;
-		boardColumnID?: string;
+		boardColumn?: BoardColumn;
 		labels?: string;
 		attachments?: string;
 		links?: string;

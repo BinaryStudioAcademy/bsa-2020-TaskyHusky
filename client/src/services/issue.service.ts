@@ -55,3 +55,13 @@ export const updateIssue = async (id: string, data: WebApi.Issue.PartialIssue) =
 
 	return await res.json();
 };
+
+export const getByColumnId = async (id: string, search?: string): Promise<WebApi.Result.IssueResult[]> => {
+	const res: Response = await callWebApi({
+		method: 'GET',
+		endpoint: `board/column/${id}/issues`,
+		...(search ? { query: { filter: search } } : {}),
+	});
+
+	return (await res.json()) as WebApi.Result.IssueResult[];
+};

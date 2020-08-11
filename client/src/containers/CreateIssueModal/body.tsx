@@ -2,19 +2,19 @@ import React, { useState } from 'react';
 import { Modal, Form, Button, Grid, Header, Icon, Divider } from 'semantic-ui-react';
 import { useCreateIssueModalContext } from './logic/context';
 import TagsInput from 'components/common/TagsInput';
-import { ControlsGetter } from './logic/types';
 import { connect, useDispatch } from 'react-redux';
 import { RootState } from 'typings/rootState';
-import { Redirect } from 'react-router-dom';
-import { createIssue } from 'pages/CreateIssue/logic/actions';
+import { createIssue } from 'pages/IssuePage/logic/actions';
 import { generateRandomString } from 'helpers/randomString.helper';
 import { KeyGenerate } from 'constants/KeyGenerate';
 import { useTranslation } from 'react-i18next';
 
 interface Props {
-	children: ControlsGetter;
+	children: JSX.Element;
 	issueTypes: WebApi.Entities.IssueType[];
 	priorities: WebApi.Entities.Priority[];
+	boardColumnID?: string;
+	onClose?: () => void;
 }
 
 interface SelectOption {
@@ -24,11 +24,9 @@ interface SelectOption {
 	style?: any;
 }
 
-const CreateIssueModalBody: React.FC<Props> = ({ children, issueTypes, priorities }) => {
+const CreateIssueModalBody: React.FC<Props> = ({ children, issueTypes, priorities, boardColumnID, onClose }) => {
 	const { t } = useTranslation();
 	const [isOpened, setIsOpened] = useState<boolean>(false);
-	const [loading, setLoading] = useState<boolean>(false);
-	const [redirecting, setRedirecting] = useState<boolean>(false);
 	const dispatch = useDispatch();
 
 	const typeOpts: SelectOption[] = issueTypes.map((type) => ({
@@ -67,7 +65,6 @@ const CreateIssueModalBody: React.FC<Props> = ({ children, issueTypes, prioritie
 
 	const context = useCreateIssueModalContext();
 	const getSetOpenFunc = (value: boolean) => () => setIsOpened(value);
-	children(getSetOpenFunc(true), getSetOpenFunc(false));
 
 	const submit = async () => {
 		const allFields = context.data.type && context.data.summary && context.data.priority;
@@ -76,13 +73,11 @@ const CreateIssueModalBody: React.FC<Props> = ({ children, issueTypes, prioritie
 			return;
 		}
 
-		setLoading(true);
-
 		dispatch(
 			createIssue({
 				data: {
 					...context.data,
-					boardColumnID: '6be0859b-05f6-447d-beb8-d5c324cc5043',
+					...(boardColumnID ? { boardColumn: boardColumnID } : {}),
 					sprintID: '4ae23ba4-9b4b-49c6-9892-991884505ff9',
 					projectID: 'a7c26428-2978-4748-8d29-975ad423d8ef',
 					issueKey: generateRandomString(KeyGenerate.LENGTH),
@@ -92,20 +87,23 @@ const CreateIssueModalBody: React.FC<Props> = ({ children, issueTypes, prioritie
 			}),
 		);
 
-		setLoading(false);
+		if (onClose) {
+			onClose();
+		}
+
 		setIsOpened(false);
-		setRedirecting(true);
 	};
 
 	return (
 		<>
-			{redirecting ? <Redirect to="/" /> : ''}
 			<Modal
 				open={isOpened}
 				closeIcon
 				closeOnEscape
 				closeOnDimmerClick
 				onClose={getSetOpenFunc(false)}
+				openOnTriggerClick
+				trigger={<div onClick={getSetOpenFunc(true)}>{children}</div>}
 				style={{ maxWidth: 700 }}
 			>
 				<Grid className="fill" verticalAlign="middle">
@@ -188,7 +186,7 @@ const CreateIssueModalBody: React.FC<Props> = ({ children, issueTypes, prioritie
 								/>
 							</Form.Field>
 							<Button.Group floated="right">
-								<Button primary type="submit" loading={loading}>
+								<Button primary type="submit">
 									{t('submit')}
 								</Button>
 								<Button onClick={getSetOpenFunc(false)} basic>

@@ -1,12 +1,18 @@
-import { EntityRepository, Repository } from 'typeorm';
+import { EntityRepository, Repository, Like } from 'typeorm';
 import { Issue } from '../entity/Issue';
 
 const RELS = ['priority', 'type'];
 
 @EntityRepository(Issue)
 export class IssueRepository extends Repository<Issue> {
-	findAll() {
-		return this.find({ relations: RELS });
+	findAll(filter?: string) {
+		const where = filter ? { where: { summary: Like(`%${filter}%`) } } : {};
+		return this.find({ relations: RELS, ...where });
+	}
+
+	findAllByColumnId(id: string, filter?: string) {
+		const summaryFilter = filter ? { summary: Like(`%${filter}%`) } : {};
+		return this.find({ relations: RELS, where: { boardColumn: { id }, ...summaryFilter } });
 	}
 
 	findOneById(id: string) {

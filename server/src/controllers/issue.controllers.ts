@@ -5,10 +5,11 @@ import { IssueRepository } from '../repositories/issue.repository';
 
 class IssueController {
 	async getAll(req: Request, res: Response) {
+		const { filter } = req.query;
 		const repository = getCustomRepository(IssueRepository);
 
 		try {
-			const result = await repository.findAll();
+			const result = await repository.findAll(filter as string);
 			res.send(result);
 		} catch (err) {
 			res.status(500).send(getWebError(err, 500));
@@ -24,6 +25,19 @@ class IssueController {
 			res.send(result);
 		} catch (err) {
 			res.status(404).send(getWebError(err, 404));
+		}
+	}
+
+	async getByColumnId(req: Request, res: Response) {
+		const { filter } = req.query;
+		const { id } = req.params;
+		const repository = getCustomRepository(IssueRepository);
+
+		try {
+			const result = await repository.findAllByColumnId(id, filter as string);
+			res.send(result);
+		} catch (err) {
+			res.status(500).send(getWebError(err, 500));
 		}
 	}
 
