@@ -1,6 +1,7 @@
-import { EntityRepository, getCustomRepository, Repository } from 'typeorm';
+import { EntityRepository, getCustomRepository, Repository, getRepository } from 'typeorm';
 import { Board } from '../entity/Board';
-import {UserRepository} from './user.repository';
+import { UserRepository } from './user.repository';
+import { Projects } from '../entity/Projects';
 
 @EntityRepository(Board)
 export class BoardRepository extends Repository<Board> {
@@ -30,7 +31,7 @@ export class BoardRepository extends Repository<Board> {
 		return board;
 	}
 
-	async getProjects(id:string){
+	async getProjects(id: string) {
 		const board = await this
 			.createQueryBuilder('board')
 			.where('board.id = :id', { id })
@@ -48,30 +49,57 @@ export class BoardRepository extends Repository<Board> {
 		const userRepository = getCustomRepository(UserRepository);
 
 		let board = await this.getOne(id);
-		const { createdBy:user, ...dataToCreate } = data;
+		const { createdBy: user,projects, ...dataToCreate } = data;
 
 		if (user) {
 			const userToAdd = await userRepository.getById(user.id);
-			if(!userToAdd) throw new Error('User with current ID not found');
+			if (!userToAdd) throw new Error('User with current ID not found');
 
-			board = { ...board, ...dataToCreate, createdBy: userToAdd };
-		} else {
-			board = { ...board, ...dataToCreate };
+			board = { ...board, createdBy: userToAdd };
 		}
+
+		if(projects){
+			const projectPromises:Array<Promise<Projects>> = projects.map( (projectId: string):Promise<Projects> => {
+				return <Promise<Projects>>getRepository('Projects').findOne({
+					where: {
+						id: projectId,
+					},
+				});
+
+
+			});
+
+			const projectsToAdd= await Promise.all(projectPromises);
+
+			board={...board, projects:projectsToAdd};
+		}
+
+		board = { ...board, ...dataToCreate };
 
 		return this.save([board]);
 	}
 
 	async post(data: any) {
 		const userRepository = getCustomRepository(UserRepository);
-		const { createdBy:user, ...dataToCreate } = data;
+		const { createdBy: user, projects, ...dataToCreate } = data;
 
 		const userToAdd = await userRepository.getById(user.id);
-		if(!userToAdd) throw new Error('User with current ID not found');
+		if (!userToAdd) throw new Error('User with current ID not found');
+
+		const projectPromises:Array<Promise<Projects>> = projects.map( (projectId: string):Promise<Projects> => {
+			return <Promise<Projects>>getRepository('Projects').findOne({
+				where: {
+					id: projectId,
+				},
+			});
+
+
+		});
+
+		const projectsToAdd= await Promise.all(projectPromises);
 
 		let board = new Board();
-		board = { ...board, ...dataToCreate, createdBy: userToAdd };
-
+		board = { ...board, ...dataToCreate, createdBy: userToAdd, projects:projectsToAdd };
 		return this.save([board]);
 	}
 
