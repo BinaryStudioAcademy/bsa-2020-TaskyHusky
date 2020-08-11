@@ -20,6 +20,6 @@ routes
 	.use('/projects', projects)
 	.use('/sprint', sprint)
 	.use('/team', team)
-	.use(error404Middleware)
+	.use(error404Middleware);
 
 export default routes;
