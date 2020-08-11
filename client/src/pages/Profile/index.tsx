@@ -2,10 +2,21 @@ import React from 'react';
 import ProfilePage from 'containers/ProfilePage';
 import DefaultPageWrapper from 'containers/DefaultPageWrapper';
 
-const profilePage = ({ match: { params } }: { match: any }) => {
+interface Props {
+	match: {
+		params: {
+			id: string;
+		};
+	};
+}
+const profilePage: React.FC<Props> = ({ match }: Props) => {
+	const {
+		params: { id },
+	} = match;
+
 	return (
 		<DefaultPageWrapper>
-			<ProfilePage id={params.id} />
+			<ProfilePage id={id} />
 		</DefaultPageWrapper>
 	);
 };

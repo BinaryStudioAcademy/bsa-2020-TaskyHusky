@@ -12,7 +12,8 @@ interface Props {
 
 const ProfileManagerSection: React.FC<Props> = (props: Props) => {
 	const { user, showManager } = props;
-	switch (user.editMode) {
+	const { editMode } = user;
+	switch (editMode) {
 		case 'profile':
 			return <ProfileManager showManager={showManager} />;
 		case 'email':

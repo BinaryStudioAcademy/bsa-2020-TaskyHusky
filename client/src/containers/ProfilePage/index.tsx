@@ -14,7 +14,7 @@ import Spinner from 'components/common/Spinner';
 export interface PropsExtendedData {
 	isCurrentUser: boolean;
 	mockData?: any;
-	user?: Partial<UserProfileState>;
+	user: Partial<UserProfileState>;
 	showManager: (modeToShow: string) => void;
 }
 
@@ -28,6 +28,7 @@ const ProfilePage = ({ id }: { id: string }) => {
 	const dispatch = useDispatch();
 	const userData = useSelector((state: RootState) => state.user);
 	const [user, setUser] = useState(userData);
+	const { isLoading, editMode } = user;
 	const currentUserId = useSelector((state: RootState) => state.auth.user && state.auth.user.id);
 
 	const isCurrentUser = id === currentUserId;
@@ -77,7 +78,7 @@ const ProfilePage = ({ id }: { id: string }) => {
 
 	return (
 		<>
-			{userData.isLoading ? (
+			{isLoading ? (
 				<Spinner />
 			) : (
 				<div className={styles.wrapper}>
@@ -89,7 +90,7 @@ const ProfilePage = ({ id }: { id: string }) => {
 							mockData={mockData}
 							showManager={showManager}
 						/>
-						{user.editMode ? (
+						{editMode ? (
 							<ProfileManagerSection user={user} showManager={showManager} />
 						) : (
 							<ProfileSection user={user} isCurrentUser={isCurrentUser} mockData={mockData} />

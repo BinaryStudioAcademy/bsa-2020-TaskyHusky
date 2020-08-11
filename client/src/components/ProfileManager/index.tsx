@@ -17,6 +17,7 @@ const ProfileManager: React.FC<Props> = (props: Props) => {
 	const userData = useSelector((state: RootState) => state.user);
 	const dispatch = useDispatch();
 	const [user, setUser] = useState(userData);
+	const { firstName, lastName, username, jobTitle, department, location, organization } = user;
 	const handleChange = (event: any) => {
 		setUser({
 			...user,
@@ -38,7 +39,7 @@ const ProfileManager: React.FC<Props> = (props: Props) => {
 				<Form onSubmit={onSubmit}>
 					<SubmitedInput
 						handleChange={handleChange}
-						text={user.firstName}
+						text={firstName}
 						name="firstName"
 						placeholder="Your firstname"
 						title="First name"
@@ -46,7 +47,7 @@ const ProfileManager: React.FC<Props> = (props: Props) => {
 					/>
 					<SubmitedInput
 						handleChange={handleChange}
-						text={user.lastName}
+						text={lastName}
 						name="lastName"
 						placeholder="Your lastname"
 						title="Last name"
@@ -54,7 +55,7 @@ const ProfileManager: React.FC<Props> = (props: Props) => {
 					/>
 					<SubmitedInput
 						handleChange={handleChange}
-						text={user.username}
+						text={username}
 						name="username"
 						placeholder="Your username"
 						title="Public name"
@@ -62,7 +63,7 @@ const ProfileManager: React.FC<Props> = (props: Props) => {
 					/>
 					<SubmitedInput
 						handleChange={handleChange}
-						text={user.jobTitle}
+						text={jobTitle}
 						name="jobTitle"
 						placeholder="Your jobtitle"
 						title="Job title"
@@ -70,7 +71,7 @@ const ProfileManager: React.FC<Props> = (props: Props) => {
 					/>
 					<SubmitedInput
 						handleChange={handleChange}
-						text={user.department}
+						text={department}
 						name="department"
 						placeholder="Your department"
 						title="Department"
@@ -78,7 +79,7 @@ const ProfileManager: React.FC<Props> = (props: Props) => {
 					/>
 					<SubmitedInput
 						handleChange={handleChange}
-						text={user.organization}
+						text={organization}
 						name="organization"
 						placeholder="Your organization"
 						title="Organization"
@@ -86,7 +87,7 @@ const ProfileManager: React.FC<Props> = (props: Props) => {
 					/>
 					<SubmitedInput
 						handleChange={handleChange}
-						text={user.location}
+						text={location}
 						name="location"
 						placeholder="Your location"
 						title="Based in"

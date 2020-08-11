@@ -5,6 +5,7 @@ import { PropsExtendedData } from 'containers/ProfilePage';
 
 const ProfilePicture: React.FC<PropsExtendedData> = (props: PropsExtendedData) => {
 	const { user, isCurrentUser, showManager } = props;
+	const { firstName, lastName, username, avatar, editMode } = user;
 	const [uploadUrl, setUploadUrl] = useState<ArrayBuffer | string | null>('');
 	const [formData, setFormData] = useState(null);
 	const uploadPhoto = async (e: any) => {
@@ -18,49 +19,47 @@ const ProfilePicture: React.FC<PropsExtendedData> = (props: PropsExtendedData) =
 			};
 		}
 	};
-	const getInitials = () => (user && user.firstName && user.lastName ? user.firstName[0] + user.lastName[0] : '');
+	const getInitials = () => (user && firstName && lastName ? firstName[0] + lastName[0] : '');
 
 	return (
 		<>
-			{user && (
-				<div className={styles.container}>
-					<div className={styles.mainInfo}>
-						<div className={styles.mainInfo__avatarContainer}>
-							<div className={styles.mainInfo__borderHelper}>
-								{uploadUrl ? (
-									<img src={uploadUrl as string} className={styles.mainInfo__avatar} alt="Avatar" />
-								) : user.avatar ? (
-									<img src={user.avatar} className={styles.mainInfo__avatar} alt="Avatar" />
-								) : (
-									<h1 className={styles.mainInfo__initials}>{getInitials()}</h1>
-								)}
-								<Icon name="photo" size="big" className={styles.mainInfo__editBtn} />
-								<input
-									accept="image/*"
-									id="contained-button-file"
-									multiple
-									type="file"
-									onChange={uploadPhoto}
-									className={styles.hidden}
-								/>
-							</div>
+			<div className={styles.container}>
+				<div className={styles.mainInfo}>
+					<div className={styles.mainInfo__avatarContainer}>
+						<div className={styles.mainInfo__borderHelper}>
+							{uploadUrl ? (
+								<img src={uploadUrl as string} className={styles.mainInfo__avatar} alt="Avatar" />
+							) : avatar ? (
+								<img src={avatar} className={styles.mainInfo__avatar} alt="Avatar" />
+							) : (
+								<h1 className={styles.mainInfo__initials}>{getInitials()}</h1>
+							)}
+							<Icon name="photo" size="big" className={styles.mainInfo__editBtn} />
+							<input
+								accept="image/*"
+								id="contained-button-file"
+								multiple
+								type="file"
+								onChange={uploadPhoto}
+								className={styles.hidden}
+							/>
 						</div>
-						<Header as="h2" className={styles.mainInfo__fullName}>
-							{user.firstName} {user.lastName}
-						</Header>
-						{user.username && <p className={styles.mainInfo__username}>{user.username}</p>}
 					</div>
-					{isCurrentUser && showManager && (
-						<Button
-							className={styles.managerButton}
-							onClick={() => showManager('profile')}
-							disabled={!user.editMode ? false : true}
-						>
-							Manage your account
-						</Button>
-					)}
+					<Header as="h2" className={styles.mainInfo__fullName}>
+						{firstName} {lastName}
+					</Header>
+					{username && <p className={styles.mainInfo__username}>{username}</p>}
 				</div>
-			)}
+				{isCurrentUser && showManager && (
+					<Button
+						className={styles.managerButton}
+						onClick={() => showManager('profile')}
+						disabled={!editMode ? false : true}
+					>
+						Manage your account
+					</Button>
+				)}
+			</div>
 		</>
 	);
 };

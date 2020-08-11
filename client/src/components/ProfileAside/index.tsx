@@ -11,22 +11,23 @@ import ManagerAsideBlock from 'components/ManagerAsideBlock';
 
 const ProfileAside: React.FC<PropsExtendedData> = (props: PropsExtendedData) => {
 	const { user, isCurrentUser, mockData, showManager } = props;
+	const { avatar = '', firstName = '', lastName = '', username = '', editMode = '' } = user;
 	return (
 		<>
 			{user && (
 				<aside className={styles.userInfo}>
 					<ProfilePicture
 						user={{
-							avatar: user.avatar,
-							firstName: user.firstName,
-							lastName: user.lastName,
-							username: user.username,
+							avatar,
+							firstName,
+							lastName,
+							username,
 						}}
 						isCurrentUser={isCurrentUser}
 						showManager={showManager}
 					/>
 					<Segment>
-						{user.editMode ? (
+						{editMode ? (
 							<ManagerAsideBlock showManager={showManager} />
 						) : (
 							<>
