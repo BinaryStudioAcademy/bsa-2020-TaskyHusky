@@ -1,4 +1,4 @@
-import React, { useState, SyntheticEvent, useEffect } from 'react';
+import React, { useState, SyntheticEvent, useEffect, useCallback } from 'react';
 import styles from './styles.module.scss';
 import { Header, Form, Divider, Segment, Button, Grid, List, Popup } from 'semantic-ui-react';
 import { Link, useHistory } from 'react-router-dom';
@@ -24,19 +24,19 @@ export const LoginPage: React.FC = (props) => {
 		dispatch(actions.logInUserTrigger({ email, password }));
 	};
 
-	const checkEmail = (email: string) => {
+	const checkEmail = useCallback(() => {
 		dispatch(actions.checkEmailTrigger({ email }));
-	};
+	}, [dispatch, email]);
 
-	const checkEmailReset = () => {
+	const checkEmailReset = useCallback(() => {
 		dispatch(actions.checkEmailReset());
-	};
+	}, [dispatch]);
 
 	useEffect(() => {
 		if (isEmailValid && isEmailSubmitted) {
-			checkEmail(email);
+			checkEmail();
 		}
-	}, [isEmailValid, isEmailSubmitted, dispatch, email]);
+	}, [isEmailValid, isEmailSubmitted, checkEmail, email]);
 
 	useEffect(() => {
 		if (!authState.isEmailInDB && authState.isEmailInDB !== null && isEmailSubmitted) {
@@ -44,7 +44,7 @@ export const LoginPage: React.FC = (props) => {
 			setIsEmailSubmitted(false);
 			checkEmailReset();
 		}
-	}, [authState.isEmailInDB, isEmailSubmitted, history]);
+	}, [authState.isEmailInDB, isEmailSubmitted, history, checkEmailReset]);
 
 	const handleSubmit: (event: SyntheticEvent) => void = (event) => {
 		event.preventDefault();
