@@ -66,7 +66,7 @@ passport.use(
 	new LocalStrategy(
 		{
 			usernameField: EMAIL_FIELD,
-			passwordField: EMAIL_FIELD, // DO NOT DELETE: LocalStrategy by default expects password, in /check_email we do not send password,
+			passwordField: EMAIL_FIELD, // DO NOT DELETE: LocalStrategy by default expects two arguments, in /check_email we send only email, this is a workaround
 			passReqToCallback: true,
 		},
 		async (req, email: string, password: string, next): Promise<void> => {
