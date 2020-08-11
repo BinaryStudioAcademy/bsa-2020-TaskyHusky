@@ -1,8 +1,7 @@
+import { UserModel } from './User';
+
 interface UserAuthResult {
-	user: {
-		id: string;
-		email: string;
-	};
+	user: UserModel;
 	jwtToken: string;
 }
 

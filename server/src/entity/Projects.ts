@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany } from 'typeorm';
+import { Sprint } from './Sprint';
 
 @Entity()
 export class Projects {
@@ -22,4 +23,7 @@ export class Projects {
 
 	@Column({ type: 'uuid', nullable: true })
 	creatorID!: string;
+
+	@OneToMany((type) => Sprint, (sprint) => sprint.id)
+	sprints?: Sprint[];
 }

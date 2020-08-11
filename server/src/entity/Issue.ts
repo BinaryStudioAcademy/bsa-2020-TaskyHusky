@@ -2,6 +2,8 @@ import { Entity, Column, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { IssueType } from './IssueType';
 import { Priority } from './Priority';
 import { BoardColumn } from './BoardColumn';
+import { Sprint } from './Sprint';
+import { Projects } from './Projects';
 
 @Entity()
 export class Issue {
@@ -32,11 +34,11 @@ export class Issue {
 	@Column()
 	description?: string;
 
-	@Column() // Replace with rel.
-	sprintID?: string;
+	@ManyToOne((type) => Sprint)
+	sprint?: Sprint;
 
-	@Column() // Replace with rel.
-	projectID?: string;
+	@ManyToOne((type) => Projects)
+	project?: Projects;
 
 	@Column()
 	issueKey?: string;
