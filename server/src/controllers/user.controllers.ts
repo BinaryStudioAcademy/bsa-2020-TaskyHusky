@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { getCustomRepository } from 'typeorm';
+import { passwordValid, hashPassword } from '../helpers/password.helper';
 import { UserRepository } from '../repositories/user.repository';
 
 class UserController {
@@ -13,6 +14,23 @@ class UserController {
 		} catch (error) {
 			const { status }: { status: number } = error;
 			res.status(status);
+		}
+	};
+
+	changePassword = async (req: Request, res: Response): Promise<void> => {
+		const userRepository = getCustomRepository(UserRepository);
+		const { oldPassword, newPassword } = req.body;
+
+		try {
+			const user = await userRepository.getByEmail(req.user.email);
+			if (!passwordValid(oldPassword, user.password)) {
+				throw new Error('Old password is incorrect');
+			}
+			const password = hashPassword(newPassword);
+			userRepository.updateById(user.id, { password });
+			res.send({ message: 'Password was changed' });
+		} catch (error) {
+			res.status(400).send(error.message);
 		}
 	};
 

@@ -40,7 +40,7 @@ const ProfileAboutBlock: React.FC<PropsUserData> = (props: PropsUserData) => {
 				<ProfileAboutItem
 					data={{
 						text: user.location || '',
-						placeholder: 'Your organization',
+						placeholder: 'Your location',
 						name: 'location',
 						isCurrentUser,
 					}}

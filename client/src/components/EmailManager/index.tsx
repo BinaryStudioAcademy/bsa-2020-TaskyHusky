@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { RootState } from 'typings/rootState';
 import styles from './styles.module.scss';
 import { Header, Button, Checkbox, Select, Form } from 'semantic-ui-react';
-import * as actions from 'containers/ProfilePage/logiс/actions';
+import { requestUpdateUser } from 'containers/ProfilePage/logiс/actions';
 import { UserProfileState } from 'containers/ProfilePage/logiс/state';
 import SubmitedInput from 'components/SubmitedInput';
 
@@ -18,7 +18,7 @@ const EmailManager = () => {
 
 	const updateUserField = () => {
 		if (textData !== email) {
-			dispatch(actions.requestUpdateUser({ userData: { email: textData.trim() } } as Partial<UserProfileState>));
+			dispatch(requestUpdateUser({ userData: { email: textData.trim() } } as Partial<UserProfileState>));
 		}
 	};
 
@@ -40,6 +40,7 @@ const EmailManager = () => {
 							name: 'email',
 							title: 'New Email Adress',
 							placeholder: 'Enter new email adress',
+							type: 'text',
 						}}
 						handleChange={handleChange}
 					/>

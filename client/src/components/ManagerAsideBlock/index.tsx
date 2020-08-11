@@ -12,7 +12,7 @@ const ManagerAsideBlock: React.FC<Props> = (props: Props) => {
 	return (
 		<div className={styles.container}>
 			<Button className={styles.button} onClick={() => showManager('profile')}>
-				Profile and visibility
+				Profile
 			</Button>
 			<Button className={styles.button} onClick={() => showManager('email')}>
 				Email
@@ -23,7 +23,7 @@ const ManagerAsideBlock: React.FC<Props> = (props: Props) => {
 			<Button className={styles.button} onClick={() => showManager('account')}>
 				Account preferences
 			</Button>
-			<Button className={styles.button} onClick={() => showManager('back')}>
+			<Button className={styles.button} onClick={() => showManager('')}>
 				Back
 			</Button>
 		</div>

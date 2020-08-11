@@ -17,6 +17,16 @@
     font-size: 16px;
   }
 
+  &__editBtn {
+    position: absolute !important;
+    display: none !important;
+    z-index: 2;
+    top: calc(50% - 16px);
+    left: calc(50% - 14px);
+    color: #d1c6c6;
+    z-index: 1;
+  }
+
   &__borderHelper {
     width: 144px;
     height: 144px;
@@ -26,6 +36,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
+
+    &:hover .mainInfo__editBtn {
+      display: block !important;
+    }
   }
 
   &__initials {
@@ -45,4 +60,14 @@
 
 .managerButton {
   width: 100%;
+}
+
+.hidden {
+  width: 50px;
+  z-index: 2;
+  height: 50px;
+  position: absolute;
+  top: 50px;
+  left: 50px;
+  opacity: 0;
 }

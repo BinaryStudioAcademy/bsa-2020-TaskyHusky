@@ -16,21 +16,27 @@ export class UserRepository extends Repository<UserProfile> {
 
 	async getByEmail(email: string): Promise<any> {
 		const user = await this.findOne({ where: { email } });
-		if (!user) {
-			throw new Error('Can not find user such email');
-		}
 		return user;
 	}
 
-	createNew(data: UserModel) {
+	async createNew(data: UserModel): Promise<any> {
 		const user = this.create(data);
-		return this.save(user);
+		const newUser = await this.save(user);
+		if (!newUser) {
+			throw new Error('Can not save user');
+		}
+		const { password, ...rest } = newUser;
+		return rest;
 	}
 
 	async updateById(id: string, user: UserModel): Promise<any> {
 		this.update(id, user);
-
-		return this.findOne(id);
+		const updatedUser = await this.findOne(id);
+		if (!updatedUser) {
+			throw new Error('Can not find user');
+		}
+		const { password, ...rest } = updatedUser;
+		return rest;
 	}
 
 	deleteById(id: string) {

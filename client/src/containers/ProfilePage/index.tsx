@@ -65,8 +65,6 @@ const ProfilePage = ({ id }: { id: string }) => {
 		}
 	};
 	useEffect(() => {
-		console.log(requestGetUser(id));
-		// eslint-disable-next-line @typescript-eslint/no-unused-expressions
 		getUser();
 	}, [isCurrentUser]);
 

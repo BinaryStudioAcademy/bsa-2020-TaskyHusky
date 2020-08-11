@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import styles from './styles.module.scss';
-import * as actions from 'containers/ProfilePage/logiс/actions';
+import { requestUpdateUser } from 'containers/ProfilePage/logiс/actions';
 import { UserProfileState } from 'containers/ProfilePage/logiс/state';
 
 interface Props {
@@ -23,9 +23,13 @@ const ContentInput: React.FC<Props> = (props: Props) => {
 	};
 	const updateUserField = () => {
 		if (textData !== text) {
-			dispatch(actions.requestUpdateUser({ userData: { [name]: textData.trim() } } as Partial<UserProfileState>));
+			dispatch(requestUpdateUser({ userData: { [name]: textData.trim() } } as Partial<UserProfileState>));
 		}
 	};
+
+	useEffect(() => {
+		setTextData(text);
+	}, [text]);
 
 	return (
 		<>

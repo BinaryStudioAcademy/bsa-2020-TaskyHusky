@@ -1,4 +1,4 @@
-import { requestUpdateUser, requestGetUser, requestDeleteUser } from 'services/user.service';
+import { requestUpdateUser, requestGetUser, requestDeleteUser, requestChangePassword } from 'services/user.service';
 import { all, put, call, takeEvery } from 'redux-saga/effects';
 import * as actionTypes from './actionTypes';
 import * as actions from './actions';
@@ -9,6 +9,10 @@ function* UpdateUser(action: ReturnType<typeof actions.requestUpdateUser>) {
 	yield put(actions.updateUser({ partialState: user }));
 }
 
+function* ChangePassword(action: ReturnType<typeof actions.requestChangePassword>) {
+	const { oldPassword, newPassword } = action;
+	yield call(requestChangePassword, oldPassword, newPassword);
+}
 function* GetUser(action: ReturnType<typeof actions.requestGetUser>) {
 	const { id } = action;
 	const user: WebApi.Entities.UserProfile = yield call(requestGetUser, id);
@@ -18,6 +22,10 @@ function* GetUser(action: ReturnType<typeof actions.requestGetUser>) {
 function* DeleteUser() {
 	yield call(requestDeleteUser);
 	yield put(actions.deleteUser(null));
+}
+
+function* watchChangePassword() {
+	yield takeEvery(actionTypes.REQUEST_CHANGE_PASSWORD, ChangePassword);
 }
 
 function* watchUpdateUser() {
@@ -33,5 +41,5 @@ function* watchDeleteUser() {
 }
 
 export default function* userSaga() {
-	yield all([watchUpdateUser(), watchGetUser(), watchDeleteUser()]);
+	yield all([watchUpdateUser(), watchGetUser(), watchDeleteUser(), watchChangePassword()]);
 }
