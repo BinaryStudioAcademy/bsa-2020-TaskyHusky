@@ -15,6 +15,11 @@ export class IssueRepository extends Repository<Issue> {
 		return this.find({ relations: RELS, where: { boardColumn: { id }, ...summaryFilter } });
 	}
 
+	findAllByProjectId(id: string, filter?: string) {
+		const summaryFilter = filter ? { summary: Like(`%${filter}%`) } : {};
+		return this.find({ relations: RELS, where: { project: { id }, ...summaryFilter } });
+	}
+
 	findOneById(id: string) {
 		return this.findOneOrFail({ where: { id }, relations: RELS });
 	}
