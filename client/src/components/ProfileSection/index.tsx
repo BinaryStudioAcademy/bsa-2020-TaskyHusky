@@ -2,9 +2,13 @@ import React from 'react';
 import styles from './styles.module.scss';
 import { Header, Segment, Button } from 'semantic-ui-react';
 import UserActivityItem from 'components/UserActivityItem';
-import { PropsUserData } from 'containers/ProfilePage';
 
-const ProfileSection: React.FC<PropsUserData> = (props: PropsUserData) => {
+interface Props {
+	isCurrentUser: boolean;
+	mockData: any;
+}
+
+const ProfileSection: React.FC<Props> = (props: Props) => {
 	const { isCurrentUser, mockData } = props;
 	return (
 		<section className={styles.mainInfo}>

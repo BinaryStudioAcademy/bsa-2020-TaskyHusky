@@ -1,11 +1,20 @@
 import React, { useState } from 'react';
 import { Header, Button, Icon } from 'semantic-ui-react';
 import styles from './styles.module.scss';
-import { PropsExtendedData } from 'containers/ProfilePage';
+import { UserProfileState } from 'containers/ProfilePage/logiс/state';
 
-const ProfilePicture: React.FC<PropsExtendedData> = (props: PropsExtendedData) => {
-	const { user, isCurrentUser, showManager } = props;
-	const { firstName, lastName, username, avatar, editMode } = user;
+interface Props {
+	firstName: keyof UserProfileState;
+	lastName: keyof UserProfileState;
+	username: keyof UserProfileState;
+	avatar: keyof UserProfileState;
+	editMode: keyof UserProfileState;
+	isCurrentUser: boolean;
+	showManager: (modeToShow: string) => void;
+}
+
+const ProfilePicture: React.FC<Props> = (props: Props) => {
+	const { firstName, lastName, username, avatar, editMode, isCurrentUser, showManager } = props;
 	const [uploadUrl, setUploadUrl] = useState<ArrayBuffer | string | null>('');
 	const [formData, setFormData] = useState(null);
 	const uploadPhoto = async (e: any) => {
@@ -19,7 +28,7 @@ const ProfilePicture: React.FC<PropsExtendedData> = (props: PropsExtendedData) =
 			};
 		}
 	};
-	const getInitials = () => (user && firstName && lastName ? firstName[0] + lastName[0] : '');
+	const getInitials = () => firstName[0] + lastName[0];
 
 	return (
 		<>

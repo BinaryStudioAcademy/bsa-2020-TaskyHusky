@@ -4,8 +4,8 @@ import * as actionTypes from './actionTypes';
 import * as actions from './actions';
 
 function* UpdateUser(action: ReturnType<typeof actions.requestUpdateUser>) {
-	const { userData } = action;
-	const user: WebApi.Entities.UserProfile = yield call(requestUpdateUser, userData);
+	const { type, ...rest } = action;
+	const user: WebApi.Entities.UserProfile = yield call(requestUpdateUser, rest);
 	yield put(actions.updateUser({ partialState: user }));
 }
 

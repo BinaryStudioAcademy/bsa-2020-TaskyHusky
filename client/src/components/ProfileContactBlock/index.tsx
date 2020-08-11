@@ -1,11 +1,14 @@
 import React from 'react';
 import { Header, Icon } from 'semantic-ui-react';
 import styles from './styles.module.scss';
-import { PropsUserData } from 'containers/ProfilePage';
+import { UserProfileState } from 'containers/ProfilePage/logiс/state';
 
-const ProfileContacntBlock: React.FC<PropsUserData> = (props: PropsUserData) => {
-	const { user, isCurrentUser } = props;
-	const { email } = user;
+interface Props {
+	email: keyof UserProfileState;
+	isCurrentUser: boolean;
+}
+const ProfileContacntBlock: React.FC<Props> = (props: Props) => {
+	const { email, isCurrentUser } = props;
 	return (
 		<>
 			<Header as="h3" className={styles.header}>

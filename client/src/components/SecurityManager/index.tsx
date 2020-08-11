@@ -33,7 +33,7 @@ const SecurityManager = () => {
 			<Form onSubmit={onSubmit}>
 				<SubmitedInput
 					text={passwords.oldPassword}
-					name="oldPassword"
+					propKey="oldPassword"
 					title="Current password"
 					placeholder="Enter old password"
 					type="password"
@@ -41,7 +41,7 @@ const SecurityManager = () => {
 				/>
 				<SubmitedInput
 					text={passwords.newPassword}
-					name="newPassword"
+					propKey="newPassword"
 					title="New password"
 					placeholder="Enter new password"
 					type="password"
@@ -49,7 +49,7 @@ const SecurityManager = () => {
 				/>
 				<SubmitedInput
 					text={passwords.repeatedPassword}
-					name="repeatedPassword"
+					propKey="repeatedPassword"
 					title="Repeat password"
 					placeholder="Repeat new password"
 					type="password"

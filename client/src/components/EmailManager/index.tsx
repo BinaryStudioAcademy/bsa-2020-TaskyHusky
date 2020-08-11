@@ -18,7 +18,7 @@ const EmailManager = () => {
 
 	const updateUserField = () => {
 		if (textData !== email) {
-			dispatch(requestUpdateUser({ userData: { email: textData.trim() } } as Partial<UserProfileState>));
+			dispatch(requestUpdateUser({ email: textData.trim() } as Partial<UserProfileState>));
 		}
 	};
 
@@ -36,7 +36,7 @@ const EmailManager = () => {
 				<Form.Field>
 					<SubmitedInput
 						text={textData}
-						name="email"
+						propKey="email"
 						title="New Email Adress"
 						placeholder="Enter new email adress"
 						type="text"

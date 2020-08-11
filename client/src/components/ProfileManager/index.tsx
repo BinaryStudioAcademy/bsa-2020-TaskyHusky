@@ -26,7 +26,7 @@ const ProfileManager: React.FC<Props> = (props: Props) => {
 	};
 	const onSubmit = () => {
 		const { editMode, isLoading, ...rest } = user;
-		dispatch(requestUpdateUser({ userData: rest } as Partial<UserProfileState>));
+		dispatch(requestUpdateUser({ ...rest } as Partial<UserProfileState>));
 	};
 
 	const onCancel = () => {
@@ -40,7 +40,7 @@ const ProfileManager: React.FC<Props> = (props: Props) => {
 					<SubmitedInput
 						handleChange={handleChange}
 						text={firstName}
-						name="firstName"
+						propKey="firstName"
 						placeholder="Your firstname"
 						title="First name"
 						type="text"
@@ -48,7 +48,7 @@ const ProfileManager: React.FC<Props> = (props: Props) => {
 					<SubmitedInput
 						handleChange={handleChange}
 						text={lastName}
-						name="lastName"
+						propKey="lastName"
 						placeholder="Your lastname"
 						title="Last name"
 						type="text"
@@ -56,7 +56,7 @@ const ProfileManager: React.FC<Props> = (props: Props) => {
 					<SubmitedInput
 						handleChange={handleChange}
 						text={username}
-						name="username"
+						propKey="username"
 						placeholder="Your username"
 						title="Public name"
 						type="text"
@@ -64,7 +64,7 @@ const ProfileManager: React.FC<Props> = (props: Props) => {
 					<SubmitedInput
 						handleChange={handleChange}
 						text={jobTitle}
-						name="jobTitle"
+						propKey="jobTitle"
 						placeholder="Your jobtitle"
 						title="Job title"
 						type="text"
@@ -72,7 +72,7 @@ const ProfileManager: React.FC<Props> = (props: Props) => {
 					<SubmitedInput
 						handleChange={handleChange}
 						text={department}
-						name="department"
+						propKey="department"
 						placeholder="Your department"
 						title="Department"
 						type="text"
@@ -80,7 +80,7 @@ const ProfileManager: React.FC<Props> = (props: Props) => {
 					<SubmitedInput
 						handleChange={handleChange}
 						text={organization}
-						name="organization"
+						propKey="organization"
 						placeholder="Your organization"
 						title="Organization"
 						type="text"
@@ -88,7 +88,7 @@ const ProfileManager: React.FC<Props> = (props: Props) => {
 					<SubmitedInput
 						handleChange={handleChange}
 						text={location}
-						name="location"
+						propKey="location"
 						placeholder="Your location"
 						title="Based in"
 						type="text"

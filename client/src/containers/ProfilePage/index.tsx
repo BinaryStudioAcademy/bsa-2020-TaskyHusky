@@ -6,23 +6,23 @@ import ProfileHeader from 'components/ProfileHeader';
 import { RootState } from 'typings/rootState';
 import ProfileAside from 'components/ProfileAside';
 import ProfileSection from 'components/ProfileSection';
-import { UserProfileState } from 'containers/ProfilePage/logiс/state';
+// import { UserProfileState } from 'containers/ProfilePage/logiс/state';
 import ProfileManagerSection from 'components/ProfileManagerSection';
 import { requestGetUser } from 'services/user.service';
 import Spinner from 'components/common/Spinner';
 
-export interface PropsExtendedData {
-	isCurrentUser: boolean;
-	mockData?: any;
-	user: Partial<UserProfileState>;
-	showManager: (modeToShow: string) => void;
-}
+// export interface PropsExtendedData {
+// 	isCurrentUser: boolean;
+// 	mockData?: any;
+// 	user: Partial<UserProfileState>;
+// 	showManager: (modeToShow: string) => void;
+// }
 
-export interface PropsUserData {
-	isCurrentUser: boolean;
-	mockData?: any;
-	user: Partial<UserProfileState>;
-}
+// export interface PropsUserData {
+// 	isCurrentUser: boolean;
+// 	mockData?: any;
+// 	user: Partial<UserProfileState>;
+// }
 
 const ProfilePage = ({ id }: { id: string }) => {
 	const dispatch = useDispatch();
@@ -93,7 +93,7 @@ const ProfilePage = ({ id }: { id: string }) => {
 						{editMode ? (
 							<ProfileManagerSection user={user} showManager={showManager} />
 						) : (
-							<ProfileSection user={user} isCurrentUser={isCurrentUser} mockData={mockData} />
+							<ProfileSection isCurrentUser={isCurrentUser} mockData={mockData} />
 						)}
 					</div>
 				</div>

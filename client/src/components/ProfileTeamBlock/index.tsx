@@ -1,9 +1,13 @@
 import React from 'react';
 import { Header, Icon } from 'semantic-ui-react';
 import styles from './styles.module.scss';
-import { PropsUserData } from 'containers/ProfilePage';
 
-const ProfileTeamBlock: React.FC<PropsUserData> = (props: PropsUserData) => {
+interface Props {
+	isCurrentUser: boolean;
+	mockData: any;
+}
+
+const ProfileTeamBlock: React.FC<Props> = (props: Props) => {
 	const { isCurrentUser, mockData } = props;
 	return (
 		<div>

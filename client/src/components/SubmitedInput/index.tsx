@@ -4,7 +4,7 @@ import { UserProfileState } from 'containers/ProfilePage/logiс/state';
 
 interface Props {
 	text: string;
-	name: string;
+	propKey: string;
 	placeholder: string;
 	title: string;
 	type: string;
@@ -12,7 +12,7 @@ interface Props {
 }
 
 const SubmitedInput: React.FC<Props> = (props: Props) => {
-	const { text, name, placeholder, title, type, handleChange } = props;
+	const { text, propKey, placeholder, title, type, handleChange } = props;
 
 	return (
 		<>
@@ -20,7 +20,7 @@ const SubmitedInput: React.FC<Props> = (props: Props) => {
 			<input
 				className={styles.inputView}
 				type={type}
-				name={name}
+				name={propKey}
 				value={text}
 				placeholder={placeholder}
 				onChange={(event) => handleChange(event)}
