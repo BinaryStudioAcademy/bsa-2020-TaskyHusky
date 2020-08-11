@@ -4,6 +4,7 @@ import styles from './styles.module.scss';
 import { requestChangePassword } from 'containers/ProfilePage/logiс/actions';
 import { Header, Button, Form } from 'semantic-ui-react';
 import SubmitedInput from 'components/SubmitedInput';
+import PasswordCheck from 'components/PasswordCheck';
 
 const SecurityManager = () => {
 	const dispatch = useDispatch();
@@ -47,6 +48,7 @@ const SecurityManager = () => {
 					type="password"
 					handleChange={handleChange}
 				/>
+				<PasswordCheck passLength={passwords.newPassword.length} />
 				<SubmitedInput
 					text={passwords.repeatedPassword}
 					propKey="repeatedPassword"
