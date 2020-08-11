@@ -44,9 +44,15 @@ export class UserProfile {
 	@MinLength(6)
 	password?: string;
 
+	@Column()
+	resetPasswordToken?:string;
+
+	@Column()
+	resetPasswordExpires?:string;
+
 	@OneToMany(type => TeamsPeople, teams => teams.userId)
-  teams?: TeamsPeople[];
-  
+  	teams?: TeamsPeople[];
+
 	@OneToMany(type => Board, board => board.createdBy)
 	boards?: Board[];
 
