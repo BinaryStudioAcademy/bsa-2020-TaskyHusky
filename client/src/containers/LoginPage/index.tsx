@@ -46,17 +46,12 @@ export const LoginPage: React.FC = (props) => {
 		}
 	}, [authState.isEmailInDB, isEmailSubmitted, history]);
 
-	const handleContinueSubmit: (event: SyntheticEvent) => void = (event) => {
+	const handleSubmit: (event: SyntheticEvent) => void = (event) => {
 		event.preventDefault();
 		setIsEmailSubmitted(true);
 		setIsEmailValid(validator.isEmail(email));
-	};
 
-	const handleLogInSubmit: (event: SyntheticEvent) => void = (event) => {
-		event.preventDefault();
-		setIsEmailValid(validator.isEmail(email));
-
-		if (isEmailValid) {
+		if (isEmailValid && authState.isEmailInDB) {
 			logInUser(email, password);
 		}
 	};
@@ -72,11 +67,7 @@ export const LoginPage: React.FC = (props) => {
 						{t('login_header')}
 					</Header>
 					<Segment>
-						<Form
-							onSubmit={
-								authState.isEmailInDB && isEmailSubmitted ? handleLogInSubmit : handleContinueSubmit
-							}
-						>
+						<Form onSubmit={handleSubmit}>
 							<Popup
 								className={styles.errorPopup}
 								open={!isEmailValid && isEmailSubmitted}
