@@ -24,16 +24,25 @@ export const LoginPage: React.FC = (props) => {
 		dispatch(actions.logInUserTrigger({ email, password }));
 	};
 
+	const checkEmail = (email: string) => {
+		dispatch(actions.checkEmailTrigger({ email }));
+	};
+
+	const checkEmailReset = () => {
+		dispatch(actions.checkEmailReset());
+	};
+
 	useEffect(() => {
 		if (isEmailValid && isEmailSubmitted) {
-			dispatch(actions.checkEmailTrigger({ email }));
+			checkEmail(email);
 		}
 	}, [isEmailValid, isEmailSubmitted, dispatch, email]);
 
 	useEffect(() => {
 		if (!authState.isEmailInDB && authState.isEmailInDB !== null && isEmailSubmitted) {
-			setIsEmailSubmitted(false);
 			history.push('/signup');
+			setIsEmailSubmitted(false);
+			checkEmailReset();
 		}
 	}, [authState.isEmailInDB, isEmailSubmitted, history]);
 
