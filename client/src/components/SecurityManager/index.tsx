@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import styles from './styles.module.scss';
 import { requestChangePassword } from 'containers/ProfilePage/logiс/actions';
-import { UserProfileState } from 'containers/ProfilePage/logiс/state';
 import { Header, Button, Form } from 'semantic-ui-react';
 import SubmitedInput from 'components/SubmitedInput';
 
