@@ -6,7 +6,7 @@ import ProfileHeader from 'components/ProfileHeader';
 import { RootState } from 'typings/rootState';
 import ProfileAside from 'components/ProfileAside';
 import ProfileSection from 'components/ProfileSection';
-import { UserProfileState, initialState } from 'containers/ProfilePage/logiс/state';
+import { UserProfileState } from 'containers/ProfilePage/logiс/state';
 import ProfileManagerSection from 'components/ProfileManagerSection';
 import { requestGetUser } from 'services/user.service';
 import Spinner from 'components/common/Spinner';
@@ -27,7 +27,7 @@ export interface PropsUserData {
 const ProfilePage = ({ id }: { id: string }) => {
 	const dispatch = useDispatch();
 	const userData = useSelector((state: RootState) => state.user);
-	const [user, setUser] = useState(initialState);
+	const [user, setUser] = useState(userData);
 	const currentUserId = useSelector((state: RootState) => state.auth.user && state.auth.user.id);
 
 	const isCurrentUser = id === currentUserId;
@@ -64,17 +64,16 @@ const ProfilePage = ({ id }: { id: string }) => {
 			dispatch(actions.updateUser({ partialState: { isLoading: false } }));
 		}
 	};
+
 	useEffect(() => {
 		getUser();
 	}, [isCurrentUser]);
 
 	useEffect(() => {
-		setUser({ ...user, ...userData });
+		if (isCurrentUser) {
+			setUser({ ...user, ...userData });
+		}
 	}, [userData]);
-
-	if (!user.id) {
-		return null;
-	}
 
 	return (
 		<>

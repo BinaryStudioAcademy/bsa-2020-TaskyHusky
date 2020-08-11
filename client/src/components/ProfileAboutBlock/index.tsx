@@ -13,7 +13,11 @@ const ProfileAboutBlock: React.FC<PropsUserData> = (props: PropsUserData) => {
 			</Header>
 			{(user.jobTitle || isCurrentUser) && (
 				<ProfileAboutItem
-					data={{ text: user.jobTitle || '', placeholder: 'Your job title', name: 'jobTitle', isCurrentUser }}
+					data={{
+						text: user.jobTitle || '',
+						placeholder: 'Your job title',
+						icon: 'briefcase',
+					}}
 				/>
 			)}
 			{(user.department || isCurrentUser) && (
@@ -21,8 +25,7 @@ const ProfileAboutBlock: React.FC<PropsUserData> = (props: PropsUserData) => {
 					data={{
 						text: user.department || '',
 						placeholder: 'Your department',
-						name: 'department',
-						isCurrentUser,
+						icon: 'code branch',
 					}}
 				/>
 			)}
@@ -31,8 +34,7 @@ const ProfileAboutBlock: React.FC<PropsUserData> = (props: PropsUserData) => {
 					data={{
 						text: user.organization || '',
 						placeholder: 'Your organization',
-						name: 'organization',
-						isCurrentUser,
+						icon: 'fax',
 					}}
 				/>
 			)}
@@ -41,8 +43,7 @@ const ProfileAboutBlock: React.FC<PropsUserData> = (props: PropsUserData) => {
 					data={{
 						text: user.location || '',
 						placeholder: 'Your location',
-						name: 'location',
-						isCurrentUser,
+						icon: 'map marker alternate',
 					}}
 				/>
 			)}

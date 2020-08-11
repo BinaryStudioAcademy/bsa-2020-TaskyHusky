@@ -31,41 +31,39 @@ const SecurityManager = () => {
 			<Header as="h3">Security</Header>
 			<Header as="h4">Change your password</Header>
 			<Form onSubmit={onSubmit}>
-				<Form.Field>
-					<SubmitedInput
-						contentData={{
-							text: passwords.oldPassword,
-							name: 'oldPassword',
-							title: 'Current password',
-							placeholder: 'Enter old password',
-							type: 'password',
-						}}
-						handleChange={handleChange}
-					/>
-					<SubmitedInput
-						contentData={{
-							text: passwords.newPassword,
-							name: 'newPassword',
-							title: 'New password',
-							placeholder: 'Enter new password',
-							type: 'password',
-						}}
-						handleChange={handleChange}
-					/>
-					<SubmitedInput
-						contentData={{
-							text: passwords.repeatedPassword,
-							name: 'repeatedPassword',
-							title: 'Repeat password',
-							placeholder: 'Repeat new password',
-							type: 'password',
-						}}
-						handleChange={handleChange}
-					/>
-					<Button className={styles.submitButton} type="submit">
-						Save changes
-					</Button>
-				</Form.Field>
+				<SubmitedInput
+					contentData={{
+						text: passwords.oldPassword,
+						name: 'oldPassword',
+						title: 'Current password',
+						placeholder: 'Enter old password',
+						type: 'password',
+					}}
+					handleChange={handleChange}
+				/>
+				<SubmitedInput
+					contentData={{
+						text: passwords.newPassword,
+						name: 'newPassword',
+						title: 'New password',
+						placeholder: 'Enter new password',
+						type: 'password',
+					}}
+					handleChange={handleChange}
+				/>
+				<SubmitedInput
+					contentData={{
+						text: passwords.repeatedPassword,
+						name: 'repeatedPassword',
+						title: 'Repeat password',
+						placeholder: 'Repeat new password',
+						type: 'password',
+					}}
+					handleChange={handleChange}
+				/>
+				<Button className={styles.submitButton} type="submit">
+					Save changes
+				</Button>
 			</Form>
 		</section>
 	);

@@ -11,16 +11,16 @@ const ManagerAsideBlock: React.FC<Props> = (props: Props) => {
 
 	return (
 		<div className={styles.container}>
-			<Button className={styles.button} onClick={() => showManager('profile')}>
+			<Button className={`${styles.button} ${styles.profileBtn}`} onClick={() => showManager('profile')}>
 				Profile
 			</Button>
-			<Button className={styles.button} onClick={() => showManager('email')}>
+			<Button className={`${styles.button} ${styles.emailBtn}`} onClick={() => showManager('email')}>
 				Email
 			</Button>
-			<Button className={styles.button} onClick={() => showManager('security')}>
+			<Button className={`${styles.button} ${styles.securityBtn}`} onClick={() => showManager('security')}>
 				Security
 			</Button>
-			<Button className={styles.button} onClick={() => showManager('account')}>
+			<Button className={`${styles.button} ${styles.accountBtn}`} onClick={() => showManager('account')}>
 				Account preferences
 			</Button>
 			<Button className={styles.button} onClick={() => showManager('')}>

@@ -14,7 +14,7 @@ const ProfileManagerSection: React.FC<Props> = (props: Props) => {
 	const { user, showManager } = props;
 	switch (user.editMode) {
 		case 'profile':
-			return <ProfileManager />;
+			return <ProfileManager showManager={showManager} />;
 		case 'email':
 			return <EmailManager />;
 		case 'security':
