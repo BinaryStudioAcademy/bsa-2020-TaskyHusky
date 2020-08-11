@@ -1,10 +1,7 @@
 .moreFilterDropdown {
-	display: flex !important;
-	align-items: center !important;
 	.moreText {
 		color: #3275a8;
 	}
-	padding: 0 !important;
 	&:hover {
 		.dropdownMenu {
 			display: none !important;

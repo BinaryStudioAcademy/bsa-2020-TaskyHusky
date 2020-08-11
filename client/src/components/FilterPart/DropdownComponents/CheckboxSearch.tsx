@@ -18,7 +18,6 @@ type ItemDropdownOption = {
 const DropdownSearch = ({ filterPart, data }: DropdownSearchProps) => {
 	const { filterDef } = filterPart;
 	const { title } = filterDef;
-	const [text] = useState(title);
 	const [selection, setSelection] = useState([]);
 	const [searchText, setSearchText] = useState('');
 
@@ -63,7 +62,14 @@ const DropdownSearch = ({ filterPart, data }: DropdownSearchProps) => {
 	const filteredData = (data || []).filter(({ text }) => searchString.test(text));
 
 	return (
-		<Dropdown multiple className={styles.dropdown} text={text} icon="angle down" floating labeled>
+		<Dropdown
+			multiple
+			className={styles.dropdown}
+			trigger={<span>{title}</span>}
+			icon="angle down"
+			floating
+			labeled
+		>
 			<Dropdown.Menu className={styles.dropdownMenu} onClick={(e: Event) => e.stopPropagation()}>
 				<Input
 					placeholder={getInputPlaceholder(filterDef)}

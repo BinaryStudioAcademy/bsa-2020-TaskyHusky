@@ -34,7 +34,7 @@ const MoreFilterDefsDropdown = ({
 				</span>
 			}
 			icon={null}
-			item
+			// item
 			floating
 			labeled
 			multiple

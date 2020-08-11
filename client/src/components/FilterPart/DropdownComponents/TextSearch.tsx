@@ -9,9 +9,8 @@ interface DropdownTextSearchProps {
 }
 
 const DropdownTextSearch = ({ data, title, searchText }: DropdownTextSearchProps) => {
-	const [text] = useState(title);
 	return (
-		<Dropdown text={text} icon="angle down" floating labeled>
+		<Dropdown trigger={<span>{title}</span>} icon="angle down" floating labeled>
 			<Dropdown.Menu onClick={(e: Event) => e.stopPropagation()}>
 				<Input icon={null} className={styles.textSearch} />
 				<Button>Save</Button>
