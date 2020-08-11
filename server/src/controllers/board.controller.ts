@@ -39,6 +39,18 @@ class BoardController {
 		}
 	};
 
+	getBoardProjects = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+		const boardRepository = getCustomRepository(BoardRepository);
+		const { id } = req.params;
+		try {
+			const projects=await boardRepository.getProjects(id);
+
+			res.status(200).send(projects);
+		} catch (e) {
+			next(new ErrorResponse(HttpStatusCode.NOT_FOUND, e.message));
+		}
+	};
+
 	put = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
 		const boardRepository = getCustomRepository(BoardRepository);
 		const { id } = req.params;
@@ -64,8 +76,6 @@ class BoardController {
 		} catch (e) {
 			next(new ErrorResponse(HttpStatusCode.UNPROCESSABLE_ENTITY, e.message));
 		}
-
-
 	};
 
 	delete = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
