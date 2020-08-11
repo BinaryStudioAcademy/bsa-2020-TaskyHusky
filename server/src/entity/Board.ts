@@ -18,10 +18,6 @@ export class Board {
 	@MinLength(1)
 	name!: string;
 
-	@Column()
-	@IsString()
-	@MinLength(1)
-	location!: string;
 
 	@OneToMany((type) => BoardColumn, (boardColumn) => boardColumn.board)
 	columns?: BoardColumn[];
@@ -32,6 +28,9 @@ export class Board {
 	@ManyToOne((type) => UserProfile, (user) => user.boards, {
 		onDelete: 'CASCADE',
 	})
+
 	@IsDefined()
 	createdBy!: UserProfile;
+
+
 }
