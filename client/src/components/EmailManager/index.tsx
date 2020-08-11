@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
+import validator from 'validator';
 import { RootState } from 'typings/rootState';
 import styles from './styles.module.scss';
-import { Header, Button, Checkbox, Select, Form } from 'semantic-ui-react';
+import { Header, Button, Checkbox, Select, Form, Popup } from 'semantic-ui-react';
 import { requestUpdateUser } from 'containers/ProfilePage/logiс/actions';
 import { UserProfileState } from 'containers/ProfilePage/logiс/state';
 import SubmitedInput from 'components/SubmitedInput';
@@ -11,14 +12,17 @@ import SubmitedInput from 'components/SubmitedInput';
 const EmailManager = () => {
 	const dispatch = useDispatch();
 	const email = useSelector((state: RootState) => state.user.email);
-	const [textData, setTextData] = useState('');
+	const [emailData, setEmailData] = useState('');
+	const [isEmailValid, setIsEmailValid] = useState(true);
 	const handleChange = (event: any) => {
-		setTextData((event.target as HTMLInputElement).value);
+		setEmailData((event.target as HTMLInputElement).value);
 	};
-
+	const onBlur = () => {
+		setIsEmailValid(validator.isEmail(emailData));
+	};
 	const updateUserField = () => {
-		if (textData !== email) {
-			dispatch(requestUpdateUser({ email: textData.trim() } as Partial<UserProfileState>));
+		if (emailData !== email && isEmailValid) {
+			dispatch(requestUpdateUser({ email: emailData.trim() } as Partial<UserProfileState>));
 		}
 	};
 
@@ -33,20 +37,28 @@ const EmailManager = () => {
 			<Header as="h4">Change Email</Header>
 			<p>Your current email adress is {email}</p>
 			<Form onSubmit={updateUserField}>
-				<Form.Field>
-					<SubmitedInput
-						text={textData}
-						propKey="email"
-						title="New Email Adress"
-						placeholder="Enter new email adress"
-						type="text"
-						handleChange={handleChange}
-					/>
-					<Button type="submit" className={styles.submitButton}>
-						{' '}
-						Save changes
-					</Button>
-				</Form.Field>
+				<Popup
+					className={styles.errorPopup}
+					open={!isEmailValid}
+					content="Email should be valid"
+					on={[]}
+					trigger={
+						<SubmitedInput
+							text={emailData}
+							propKey="email"
+							title="New Email Adress"
+							placeholder="Enter new email adress"
+							type="text"
+							handleChange={handleChange}
+							isValid={isEmailValid}
+							onBlur={onBlur}
+						/>
+					}
+				/>
+				<Button type="submit" className={styles.submitButton}>
+					{' '}
+					Save changes
+				</Button>
 			</Form>
 			<Header as="h4">Email notifications</Header>
 			<p>Email notifications for issue activity</p>

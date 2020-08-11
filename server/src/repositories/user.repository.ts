@@ -7,7 +7,7 @@ export class UserRepository extends Repository<UserProfile> {
 	async getById(id: string): Promise<any> {
 		const user = await this.findOne({ where: { id } });
 		if (!user) {
-			throw new Error('Can not find such user');
+			throw new Error('Can not find user');
 		}
 		const { password, ...rest } = user;
 		return rest;
