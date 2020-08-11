@@ -25,7 +25,7 @@ export class Projects {
 	category?: string;
 
 	@ManyToOne((type) => UserProfile, (userProfile) => userProfile.assignedProjects)
-	defaultAssigneeId: UserProfile;
+	defaultAssigneeId?: UserProfile;
 
 	@ManyToOne((type) => UserProfile, (userProfile) => userProfile.leadedProjects)
 	leadId?: UserProfile;
