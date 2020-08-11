@@ -67,10 +67,11 @@ export const HeaderMenu = () => {
 						{t('people')}
 					</Menu.Item>
 					<Menu.Item
+						as="a"
+						href="/createIssue"
 						className={styles.createMenuItem}
 						name="create"
 						active={activeItem === 'create'}
-						onClick={() => toggleActiveItem('create')}
 					>
 						{t('create')}
 					</Menu.Item>
@@ -114,7 +115,9 @@ export const HeaderMenu = () => {
 						<Dropdown icon="user" className={styles.circularIcon} direction="left" id="userProfileMenuItem">
 							<Dropdown.Menu className={styles.circularDropdownMenu}>
 								<Dropdown.Header>{`${user?.firstName} ${user?.lastName}`}</Dropdown.Header>
-								<Dropdown.Item>{t('profile')}</Dropdown.Item>
+								<Dropdown.Item as="a" href={`/profile/${user?.id}`}>
+									{t('profile')}
+								</Dropdown.Item>
 								<Dropdown.Item>{t('acc_settings')}</Dropdown.Item>
 								<Dropdown.Divider />
 								<Dropdown.Item onClick={logOutHandler}>{t('log_out')}</Dropdown.Item>

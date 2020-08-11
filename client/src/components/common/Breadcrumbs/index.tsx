@@ -6,7 +6,7 @@ export type BreadcrumbItem = {
 	content: string;
 	link?: boolean;
 	active?: boolean;
-	onClickAction?: () => void;
+	onClick?: () => void;
 };
 
 interface Params {

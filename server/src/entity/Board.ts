@@ -1,6 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToOne, CreateDateColumn } from 'typeorm';
 import { IsDefined, IsString, MinLength } from 'class-validator';
 import { BoardColumn } from './BoardColumn';
+import { Sprint } from './Sprint';
 import { UserProfile } from './UserProfile';
 import { BoardType } from '../models/Board';
 
@@ -19,6 +20,9 @@ export class Board {
 
 	@OneToMany((type) => BoardColumn, (boardColumn) => boardColumn.board)
 	columns?: BoardColumn[];
+
+	@OneToMany((type) => Sprint, (sprint) => sprint.id)
+	sprints?: Sprint[];
 
 	@ManyToOne((type) => UserProfile, (user) => user.boards, {
 		onDelete: 'CASCADE',

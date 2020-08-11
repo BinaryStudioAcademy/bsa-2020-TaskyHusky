@@ -2,7 +2,6 @@ import React, { useState, ChangeEvent } from 'react';
 import { Modal, Button, Form, Checkbox, Image, Card } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { RootState } from 'typings/rootState';
 
@@ -15,7 +14,6 @@ type ProjectTemplate = 'Scrum' | 'Kanban' | 'Bug tracking';
 const CreateProjectModal = () => {
 	const templatesInformation = getTemplatesInformation();
 	const dispatch = useDispatch();
-	const history = useHistory();
 	const { t } = useTranslation();
 
 	const { isLoading, isModalOpened, isProjectCreated } = useSelector(
