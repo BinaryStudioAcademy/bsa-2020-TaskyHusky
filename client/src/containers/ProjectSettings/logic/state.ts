@@ -2,7 +2,6 @@ export type Project = {
 	id: string;
 	name: string;
 	key: string;
-	projectType: string;
 	category: string;
 	defaultAssigneeID: string;
 	leadID: string;
@@ -19,7 +18,6 @@ export const initialState: ProjectState = {
 		id: '',
 		name: '',
 		key: '',
-		projectType: '',
 		category: '',
 		defaultAssigneeID: '',
 		leadID: '',

@@ -1,5 +1,8 @@
+import { updateProject, deleteProject } from './../../../services/projects.service';
 import { getProject } from 'services/projects.service';
 import { all, put, takeEvery, call } from 'redux-saga/effects';
+
+import { ProjectId } from 'containers/ProjectSettings/logic/actionTypes';
 import * as actionTypes from './actionTypes';
 import * as actions from './actions';
 
@@ -8,10 +11,28 @@ export function* fetchProject({ id }: ReturnType<typeof actions.startGettingProj
 	yield put(actions.successGettingProject({ project }));
 }
 
-export function* watchGetProject() {
+function* watchGetProject() {
 	yield takeEvery(actionTypes.START_GETTING_PROJECT, fetchProject);
 }
 
+export function* updatingProject({ project }: ReturnType<typeof actions.startUpdatingProject>) {
+	const updatedProject = yield call(updateProject, project);
+	yield put(actions.successUpdatingProject({ project: updatedProject }));
+}
+
+function* watchUpdatingProject() {
+	yield takeEvery(actionTypes.START_UPDATING_PROJECT, updatingProject);
+}
+
+export function* deletingProject({ id }: ReturnType<typeof actions.startDeletingProject>) {
+	yield call(deleteProject, { id });
+	yield put(actions.successDeletingProject());
+}
+
+function* watchDeletingProject() {
+	yield takeEvery(actionTypes.START_DELETING_PROJECT, deletingProject);
+}
+
 export default function* projectSaga() {
-	yield all([watchGetProject()]);
+	yield all([watchGetProject(), watchUpdatingProject(), watchDeletingProject()]);
 }

@@ -3,16 +3,15 @@ import { ProjectState, initialState } from './state';
 import { createReducer } from 'helpers/createReducer.helper';
 
 export const projectReducer = createReducer<ProjectState>(initialState, {
-	[actionTypes.START_DELETING](state) {
+	[actionTypes.START_DELETING_PROJECT](state) {
 		return {
 			...state,
 			isLoading: true,
 		};
 	},
-	[actionTypes.SUCCESS_DELETING](state, { projects }) {
+	[actionTypes.SUCCESS_DELETING_PROJECT]() {
 		return {
-			...state,
-			projects,
+			...initialState,
 			isLoading: false,
 		};
 	},
@@ -23,6 +22,19 @@ export const projectReducer = createReducer<ProjectState>(initialState, {
 		};
 	},
 	[actionTypes.SUCCESS_GETTING_PROJECT](state, { project }) {
+		return {
+			...state,
+			project,
+			isLoading: false,
+		};
+	},
+	[actionTypes.START_UPDATING_PROJECT](state) {
+		return {
+			...state,
+			isLoading: true,
+		};
+	},
+	[actionTypes.SUCCESS_UPDATING_PROJECT](state, { project }) {
 		return {
 			...state,
 			project,

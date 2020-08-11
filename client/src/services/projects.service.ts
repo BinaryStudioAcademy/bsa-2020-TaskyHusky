@@ -1,3 +1,4 @@
+import { ProjectId } from './../containers/ProjectSettings/logic/actionTypes';
 import callWebApi from './../helpers/callApi.helper';
 import { InitialProject } from './../containers/CreateProjectModal/logic/actionTypes';
 
@@ -25,6 +26,30 @@ export const createProject = async (project: InitialProject): Promise<WebApi.Ent
 		endpoint: 'projects',
 		body: {
 			project,
+		},
+	});
+
+	return (await res.json()) as WebApi.Entities.Projects;
+};
+
+export const updateProject = async (project: WebApi.Entities.Projects): Promise<WebApi.Entities.Projects> => {
+	const res: Response = await callWebApi({
+		method: 'PUT',
+		endpoint: 'projects',
+		body: {
+			project,
+		},
+	});
+
+	return (await res.json()) as WebApi.Entities.Projects;
+};
+
+export const deleteProject = async (id: ProjectId): Promise<WebApi.Entities.Projects> => {
+	const res: Response = await callWebApi({
+		method: 'DELETE',
+		endpoint: 'projects',
+		body: {
+			id,
 		},
 	});
 
