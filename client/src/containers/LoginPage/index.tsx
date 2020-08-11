@@ -1,14 +1,18 @@
-import React, { useState, SyntheticEvent } from 'react';
+import React, { useState, SyntheticEvent, useEffect } from 'react';
 import styles from './styles.module.scss';
 import { Header, Form, Divider, Segment, Button, Grid, List, Popup } from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { Link, useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import * as actions from './logic/actions';
 import PasswordInput from 'components/common/PasswordInput';
 import { useTranslation } from 'react-i18next';
 import validator from 'validator';
 
-export const LoginPage: React.FC = () => {
+import { RootState } from 'typings/rootState';
+
+export const LoginPage: React.FC = (props) => {
+	const history = useHistory();
+	const authState = useSelector((rootState: RootState) => rootState.auth);
 	const dispatch = useDispatch();
 	const { t } = useTranslation();
 	const [email, setEmail] = useState<string>('');
@@ -20,10 +24,23 @@ export const LoginPage: React.FC = () => {
 		dispatch(actions.logInUserTrigger({ email, password }));
 	};
 
+	useEffect(() => {
+		if (isEmailValid && isEmailSubmitted) {
+			dispatch(actions.checkEmailTrigger({ email }));
+		}
+	}, [isEmailValid, isEmailSubmitted]);
+
+	useEffect(() => {
+		if (!authState.user?.email && isEmailSubmitted && isEmailValid) {
+			setIsEmailSubmitted(false);
+			history.push('/signup');
+		}
+	}, [authState.user?.email]);
+
 	const handleContinueSubmit: (event: SyntheticEvent) => void = (event) => {
 		event.preventDefault();
 		setIsEmailSubmitted(true);
-		setIsEmailValid(validator.isEmail(email)); // TODO: replace with request to server side via redux-saga when server side is ready
+		setIsEmailValid(validator.isEmail(email));
 	};
 
 	const handleLogInSubmit: (event: SyntheticEvent) => void = (event) => {
@@ -35,7 +52,10 @@ export const LoginPage: React.FC = () => {
 		}
 	};
 
-	const passwordInput = isEmailValid ? <PasswordInput onChange={(text) => setPassword(text)} /> : null;
+	const passwordInput =
+		isEmailValid && isEmailSubmitted && authState.user?.email ? (
+			<PasswordInput onChange={(text) => setPassword(text)} />
+		) : null;
 
 	return (
 		<>
@@ -45,7 +65,13 @@ export const LoginPage: React.FC = () => {
 						{t('login_header')}
 					</Header>
 					<Segment>
-						<Form onSubmit={isEmailSubmitted ? handleLogInSubmit : handleContinueSubmit}>
+						<Form
+							onSubmit={
+								isEmailValid && isEmailSubmitted && authState.user?.email
+									? handleLogInSubmit
+									: handleContinueSubmit
+							}
+						>
 							<Popup
 								className={styles.errorPopup}
 								open={!isEmailValid && isEmailSubmitted}
