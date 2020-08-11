@@ -26,4 +26,8 @@ export class UserRepository extends Repository<UserProfile> {
 	deleteById(id: string) {
 		return this.delete(id);
 	}
+
+	findAll() {
+		return this.find();
+	}
 }

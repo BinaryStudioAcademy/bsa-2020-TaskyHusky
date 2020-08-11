@@ -122,4 +122,10 @@ export const en = {
 	save_filter: 'Save Filter',
 	filter_name: 'Filter name',
 	enter_filter_name: 'Enter filter name',
+	delete: 'Delete',
+	close: 'Close',
+	sure_to_delete: 'If you are not sure, you can resolve or close this issue instead.',
+	permanently_delete:
+		'You are about to permanently delete this issue, its comments and attachments, and all of its data.',
+	delete_issue: 'Delete issue?',
 };

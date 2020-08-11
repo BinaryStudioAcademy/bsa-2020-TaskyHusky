@@ -9,4 +9,12 @@ export const advancedSearchReducer = createReducer<AdvancedSearch>(initialState,
 			...action.partialState,
 		};
 	},
+	[actionTypes.UPDATE_FILTER_PART_SUCCESS](state, action: actionTypes.UpdateFilterPartArgs) {
+		const { filterPart } = action;
+		const updatedFilterParts = state.filterParts.map((part) => (part.id === filterPart.id ? filterPart : part));
+		return {
+			...state,
+			filterParts: updatedFilterParts,
+		};
+	},
 });

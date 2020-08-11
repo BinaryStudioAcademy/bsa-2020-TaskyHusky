@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { Input, Dropdown, CheckboxProps, Checkbox, Icon, Label } from 'semantic-ui-react';
+import { Input, Dropdown, CheckboxProps, Checkbox, Icon, Label, InputOnChangeData } from 'semantic-ui-react';
 import styles from './styles.module.scss';
+import { FilterPartState } from 'containers/AdvancedSearch/logic/state';
+
 interface DropdownSearchProps {
-	title: string;
-	inputPlaceholder: string;
-	members: string[];
+	filterPart: FilterPartState;
 	data: any[];
 }
 
@@ -15,9 +15,12 @@ type ItemDropdownOption = {
 	text?: string;
 };
 
-const DropdownSearch = ({ inputPlaceholder, data, title, members }: DropdownSearchProps) => {
+const DropdownSearch = ({ filterPart, data }: DropdownSearchProps) => {
+	const { filterDef } = filterPart;
+	const { title } = filterDef;
 	const [text] = useState(title);
 	const [selection, setSelection] = useState([]);
+	const [searchText, setSearchText] = useState('');
 
 	const toggleSelection = (e: React.SyntheticEvent, { label, checked }: CheckboxProps) => {
 		if (checked) {
@@ -32,7 +35,7 @@ const DropdownSearch = ({ inputPlaceholder, data, title, members }: DropdownSear
 
 		const items = [];
 		if (icon) {
-			items.push(<Icon key={`icon-${key}`} name={`${icon}` as 'folder'} />);
+			items.push(<Icon color={color as 'red'} key={`icon-${key}`} name={icon as 'folder'} />);
 		}
 		if (color) {
 			items.push(
@@ -47,19 +50,33 @@ const DropdownSearch = ({ inputPlaceholder, data, title, members }: DropdownSear
 		return items;
 	};
 
+	const getInputPlaceholder = ({ title }: WebApi.Entities.FilterDefinition) => {
+		return `Find ${title}`;
+	};
+
+	const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>, data: InputOnChangeData) => {
+		const { value } = data;
+		setSearchText(value);
+	};
+
+	const searchString = new RegExp(searchText, 'i');
+	const filteredData = (data || []).filter(({ text }) => searchString.test(text));
+
 	return (
 		<Dropdown multiple className={styles.dropdown} text={text} icon="angle down" floating labeled>
 			<Dropdown.Menu className={styles.dropdownMenu} onClick={(e: Event) => e.stopPropagation()}>
 				<Input
-					placeholder={inputPlaceholder}
+					placeholder={getInputPlaceholder(filterDef)}
 					icon="search"
+					value={searchText}
 					iconPosition="left"
 					className={styles.searchInput}
+					onChange={handleSearchChange}
 				/>
 				<Dropdown.Divider />
 				<Dropdown.Header icon="folder open" content={title} />
 				<Dropdown.Menu scrolling>
-					{data.map((option) => (
+					{filteredData.map((option) => (
 						<Dropdown.Item key={option.key}>
 							<Checkbox label={<label>{renderLabel(option)}</label>} onChange={toggleSelection} />
 						</Dropdown.Item>

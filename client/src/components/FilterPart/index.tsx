@@ -2,17 +2,10 @@ import React from 'react';
 import { Form } from 'semantic-ui-react';
 import styles from './styles.module.scss';
 import { getByFilterType } from './helper';
-
-interface FilterPartState {
-	id: string;
-	members: string[];
-	searchText: string;
-	filterDef: WebApi.Entities.FilterDefinition;
-}
+import { FilterPartState } from 'containers/AdvancedSearch/logic/state';
 
 interface Props {
 	filterPart: FilterPartState;
-	// updateFilterPart: (filterPart: FilterPartState) => void;
 }
 
 const FilterPart = ({ filterPart }: Props) => {

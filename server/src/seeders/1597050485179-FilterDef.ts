@@ -39,6 +39,11 @@ export class FilterDef1597050485179 implements MigrationInterface {
 				title: 'Comment',
 			},
 			{
+				dataType: 'searchText',
+				filterType: 'summary',
+				title: 'Summary',
+			},
+			{
 				dataType: 'dropdown',
 				filterType: 'assignee',
 				title: 'Assignee',

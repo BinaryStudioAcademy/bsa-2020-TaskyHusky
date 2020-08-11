@@ -14,13 +14,31 @@ const renderIssueType = (issueType: WebApi.Entities.IssueType) => {
 
 	return (
 		<Popup
-			content={title}
+			content={`Type: ${title}`}
 			trigger={
-				<Icon size="small" bordered color={color as 'red'} key={`icon-${id}`} name={`${icon}` as 'folder'} />
+				<Icon
+					size="small"
+					bordered
+					color={color as 'red'}
+					key={`issueTypeIc-${id}`}
+					name={`${icon}` as 'folder'}
+				/>
 			}
 		/>
 	);
 };
+
+const renderPriority = (priority: WebApi.Entities.Priority) => {
+	const { icon, color, title, id } = priority;
+
+	return (
+		<Popup
+			content={`Priority: ${title}`}
+			trigger={<Icon key={`priorityIc-${id}`} color={color as 'red'} name={icon as 'arrow up'} />}
+		/>
+	);
+};
+
 const renderStatus = (status: { title: string; color: string }) => {
 	const { color, title } = status;
 	return (
@@ -50,13 +68,13 @@ const IssueItem = ({ issue }: Props) => {
 			id: 'type-id-12',
 			icon: 'check',
 			color: 'teal',
-			title: 'Issue',
+			title: 'Task',
 		},
 		status: {
 			title: 'In Progress',
 			color: 'blue',
 		},
-		priority: { title: 'Hight', color: 'orange', icon: 'arrow up' },
+		priority: { title: 'Hight', color: 'orange', icon: 'arrow up', id: '1' },
 		id: 'a269d9f4-1c10-40ad-81e0-7ac333804d91',
 	};
 	const { id, creator, type, issueKey, summary, assigned, priority, status } = mockedIssue; /*issue*/
@@ -86,12 +104,7 @@ const IssueItem = ({ issue }: Props) => {
 					{getFullUserName(creator)}
 				</a>
 			</Table.Cell>
-			<Table.Cell>
-				<Popup
-					content={`Priority: ${priority.title}`}
-					trigger={<Icon color={priority.color as 'red'} name={priority.icon as 'arrow up'} />}
-				/>
-			</Table.Cell>
+			<Table.Cell>{renderPriority(priority)}</Table.Cell>
 			<Table.Cell>{renderStatus(status)}</Table.Cell>
 			<Table.Cell>Unresolved{/* resolution.title */}</Table.Cell>
 			<Table.Cell>03/серп./20</Table.Cell>

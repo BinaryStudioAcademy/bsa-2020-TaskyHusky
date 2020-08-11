@@ -7,6 +7,7 @@ import {
 	CreatorFilter,
 	DescriptionFilter,
 	SummaryFilter,
+	PriorityFilter,
 } from './FilterComponents';
 
 export const getByFilterType = (filterType: string) => {
@@ -15,10 +16,12 @@ export const getByFilterType = (filterType: string) => {
 			return ProjectsFilter;
 		case 'issueTypes':
 			return IssueTypeFilter;
-		case 'issueStatus':
-			return IssueStatusFilter;
 		case 'assignee':
 			return AssigneeFilter;
+		case 'priority':
+			return PriorityFilter;
+		case 'issueStatus':
+			return IssueStatusFilter;
 		case 'creator':
 			return CreatorFilter;
 		case 'description':

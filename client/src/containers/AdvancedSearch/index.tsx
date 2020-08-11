@@ -11,9 +11,10 @@ import { FilterPartState } from './logic/state';
 import SaveFilterModal from 'containers/SaveFilterModal';
 
 const QUICK_FILTER_IDS = [
-	'3aafb033-af0c-49d2-b31f-ad7fc676a74d',
-	'c85f7dcd-b658-4a96-b88f-9134bef1532d',
-	'acea985b-1e55-4dcb-a19c-934f958f1e3b',
+	'c96b69bd-4285-4cf0-81d9-d81316a4c234',
+	'89104794-fc1b-466e-92a8-bc759b98b8e4',
+	'ecf71215-3c72-4aa5-afac-fa55588d51b6',
+	'88a10c4b-bf0c-42fb-8f4b-63107dc0f10f',
 ];
 
 const AdvancedSearch: React.FC = () => {

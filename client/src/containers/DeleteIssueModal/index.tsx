@@ -3,7 +3,7 @@ import { Modal, Button } from 'semantic-ui-react';
 import { useDispatch } from 'react-redux';
 import { deleteIssue } from 'pages/CreateIssue/logic/actions';
 import { useTranslation } from 'react-i18next';
-
+import styles from './styles.module.scss';
 interface Props {
 	currentIssueId: string;
 	onDelete: () => void;
@@ -28,20 +28,24 @@ const DeleteIssueModal: React.FC<Props> = ({ open, onOpen, onClose, currentIssue
 	};
 
 	return (
-		<Modal centered={false} open={open} onClose={onClose} onOpen={onOpen} trigger={<span>{t('delete')}</span>}>
-			<Modal.Header>Delete issue?</Modal.Header>
+		<Modal
+			centered={false}
+			open={open}
+			onClose={onClose}
+			onOpen={onOpen}
+			trigger={<span className={styles.trigger}>{t('delete')}</span>}
+		>
+			<Modal.Header>{t('delete_issue')}</Modal.Header>
 			<Modal.Content>
-				<Modal.Description>
-					You are about to permanently delete this issue, its comments and attachments, and all of its data.
-				</Modal.Description>
+				<Modal.Description>{t('permanently_delete')}</Modal.Description>
 				<br />
-				<Modal.Description>If you are not sure, you can resolve or close this issue instead.</Modal.Description>
+				<Modal.Description>{t('sure_to_delete')}</Modal.Description>
 			</Modal.Content>
 			<Modal.Actions>
 				<Button color="red" onClick={handleDelete}>
-					Delete
+					{t('delete')}
 				</Button>
-				<Button onClick={onClose}>Close</Button>
+				<Button onClick={onClose}>{t('close')}</Button>
 			</Modal.Actions>
 		</Modal>
 	);

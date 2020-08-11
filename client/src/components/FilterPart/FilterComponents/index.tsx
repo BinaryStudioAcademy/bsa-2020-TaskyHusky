@@ -3,17 +3,38 @@ import { RootState } from 'typings/rootState';
 import { DropdownTextSearch, DropdownCheckboxSearch } from '../DropdownComponents/index';
 import { useSelector, useDispatch } from 'react-redux';
 import { startLoading } from 'containers/Projects/logic/actions';
-import { FilterPartState } from '../logic/state';
+import { requestAllUsers } from 'commonLogic/users/actions';
+import { FilterPartState } from 'containers/AdvancedSearch/logic/state';
 
-type ProjectsFilterProps = {
+type FilterProps = {
 	filterPart: FilterPartState;
 };
 
-export const ProjectsFilter = ({ filterPart }: ProjectsFilterProps) => {
+type DefinitionEntity = {
+	id: string;
+	title: string;
+	icon: string;
+	color: string;
+};
+
+const definitionTypesToDropdownData = (entity: DefinitionEntity) => {
+	const { id, title, color, icon } = entity;
+	const data = {
+		value: title,
+		key: id,
+		text: title,
+		icon,
+		color,
+	};
+	return data;
+};
+
+export const ProjectsFilter = ({ filterPart }: FilterProps) => {
 	const { projects } = useSelector((rootState: RootState) => rootState.projects);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
+		// recommended to load on app start
 		dispatch(startLoading());
 	}, [dispatch]);
 
@@ -29,125 +50,102 @@ export const ProjectsFilter = ({ filterPart }: ProjectsFilterProps) => {
 
 	const data = projects.map(projectsToDropdownData);
 
-	return (
-		<DropdownCheckboxSearch
-			data={data}
-			members={filterPart.members}
-			inputPlaceholder={'Find Projects'}
-			title={filterPart.filterDef.title}
-		/>
-	);
+	return <DropdownCheckboxSearch data={data} filterPart={filterPart} />;
 };
 
-export const IssueTypeFilter = ({ filterPart }: ProjectsFilterProps) => {
-	// const { issueTypes } = useSelector((rootState: RootState) => rootState.issueTypes);
+export const IssueTypeFilter = ({ filterPart }: FilterProps) => {
+	const { types } = useSelector((rootState: RootState) => rootState.issues);
 
-	const issueTypes = [
+	const data = (types as DefinitionEntity[]).map(definitionTypesToDropdownData);
+
+	return <DropdownCheckboxSearch data={data} filterPart={filterPart} />;
+};
+
+export const PriorityFilter = ({ filterPart }: FilterProps) => {
+	const { priorities } = useSelector((rootState: RootState) => rootState.issues);
+
+	const data = (priorities as DefinitionEntity[]).map(definitionTypesToDropdownData);
+
+	return <DropdownCheckboxSearch data={data} filterPart={filterPart} />;
+};
+
+export const IssueStatusFilter = ({ filterPart }: FilterProps) => {
+	// const { statuses } = useSelector((rootState: RootState) => rootState.issues);
+	const statuses = [
 		{
-			name: 'issueTypes1',
-			id: 'issueTypes1',
-			title: 'Task',
+			id: '1',
+			title: 'In progress',
+			color: 'blue',
+		},
+		{
+			id: '2',
+			title: 'Done',
 			color: 'green',
-			icon: 'close',
-		},
-		{
-			name: 'issueTypes2',
-			id: 'issueTypes2',
-			title: 'Task',
-			color: 'green',
-			icon: 'check',
-		},
-		{
-			id: 'issueTypes3',
-			title: 'Task',
-			color: 'green',
-			icon: 'check',
-		},
-		{
-			id: 'issueTypes4',
-			title: 'Bug',
-			color: 'red',
-			icon: 'close',
-		},
-		{
-			id: 'issueTypes5',
-			title: 'Story',
-			color: 'teal',
-			icon: 'file text',
-		},
-		{
-			id: 'issueTypes6',
-			title: 'Story',
-			color: 'red',
-			icon: 'file text',
 		},
 	];
+	const data = (statuses as DefinitionEntity[]).map(definitionTypesToDropdownData);
 
-	const issueTypesToDropdownData = (issueType: { id: string; title: string; color: string; icon: string }) => {
-		const { id, title, color, icon } = issueType;
+	return <DropdownCheckboxSearch data={data} filterPart={filterPart} />;
+};
+
+export const AssigneeFilter = ({ filterPart }: FilterProps) => {
+	const { users } = useSelector((rootState: RootState) => rootState.users);
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		// recommended to load on app start
+		dispatch(requestAllUsers());
+	}, [dispatch]);
+
+	const usersToDropdownData = (user: WebApi.Entities.UserProfile) => {
+		const { id, firstName, lastName } = user;
+		const fullName = `${firstName} ${lastName}`;
 		const data = {
-			value: title,
+			value: fullName,
 			key: id,
-			text: title,
-			icon,
-			color,
+			text: fullName,
 		};
 		return data;
 	};
 
-	const data = issueTypes.map(issueTypesToDropdownData);
+	const data = users.map(usersToDropdownData);
 
-	return (
-		<DropdownCheckboxSearch
-			data={data}
-			members={filterPart.members}
-			inputPlaceholder={'Find Issue Types'}
-			title={filterPart.filterDef.title}
-		/>
-	);
+	return <DropdownCheckboxSearch data={data} filterPart={filterPart} />;
 };
 
-export const IssueStatusFilter = ({ filterPart }: ProjectsFilterProps) => {
-	return (
-		<DropdownCheckboxSearch
-			data={[]}
-			inputPlaceholder={'Find Issue Statuses'}
-			members={filterPart.members}
-			title={filterPart.filterDef.title}
-		/>
-	);
+export const CreatorFilter = ({ filterPart }: FilterProps) => {
+	const { users } = useSelector((rootState: RootState) => rootState.users);
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		// recommended to load on app start
+		dispatch(requestAllUsers());
+	}, [dispatch]);
+
+	const usersToDropdownData = (user: WebApi.Entities.UserProfile) => {
+		const { id, firstName, lastName } = user;
+		const fullName = `${firstName} ${lastName}`;
+		const data = {
+			value: fullName,
+			key: id,
+			text: fullName,
+		};
+		return data;
+	};
+
+	const data = users.map(usersToDropdownData);
+
+	return <DropdownCheckboxSearch data={data} filterPart={filterPart} />;
 };
 
-export const AssigneeFilter = ({ filterPart }: ProjectsFilterProps) => {
-	return (
-		<DropdownCheckboxSearch
-			data={[]}
-			inputPlaceholder={'Find Users/Groups'}
-			members={filterPart.members}
-			title={filterPart.filterDef.title}
-		/>
-	);
-};
-
-export const CreatorFilter = ({ filterPart }: ProjectsFilterProps) => {
-	return (
-		<DropdownCheckboxSearch
-			data={[]}
-			inputPlaceholder={'Find Users/Groups'}
-			members={filterPart.members}
-			title={filterPart.filterDef.title}
-		/>
-	);
-};
-
-export const DescriptionFilter = ({ filterPart }: ProjectsFilterProps) => {
+export const DescriptionFilter = ({ filterPart }: FilterProps) => {
 	return <DropdownTextSearch data={[]} searchText={filterPart.searchText} title={filterPart.filterDef.title} />;
 };
 
-export const CommentFilter = ({ filterPart }: ProjectsFilterProps) => {
+export const CommentFilter = ({ filterPart }: FilterProps) => {
 	return <DropdownTextSearch data={[]} searchText={filterPart.searchText} title={filterPart.filterDef.title} />;
 };
 
-export const SummaryFilter = ({ filterPart }: ProjectsFilterProps) => {
+export const SummaryFilter = ({ filterPart }: FilterProps) => {
 	return <DropdownTextSearch data={[]} searchText={filterPart.searchText} title={filterPart.filterDef.title} />;
 };
