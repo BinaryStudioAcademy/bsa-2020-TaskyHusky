@@ -13,7 +13,7 @@ export type successLoading = {
 };
 
 export type successGetRecentBoards = {
-	recentBoards: WebApi.Board.IBoardModel[];
+	recentBoards: WebApi.Board.IReducedBoard[];
 };
 
 export type deleteBoard = {

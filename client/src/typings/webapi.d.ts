@@ -17,6 +17,11 @@ namespace WebApi.Board {
 			avatar: string;
 		};
 	}
+
+	export interface IReducedBoard {
+		id: string;
+		name: string;
+	}
 }
 
 namespace WebApi.Issue {

@@ -1,7 +1,7 @@
 import { EntityRepository, getCustomRepository, Repository } from 'typeorm';
 import { Board } from '../entity/Board';
 import { UserRepository } from './user.repository';
-import { IBoardModel } from '../models/Board';
+import { IBoardModel, IReducedBoard } from '../models/Board';
 
 @EntityRepository(Board)
 export class BoardRepository extends Repository<Board> {
@@ -17,7 +17,7 @@ export class BoardRepository extends Repository<Board> {
 		return Promise.all(extendedBoards);
 	};
 
-	getRecent = () => {
+	getRecent = ():Promise<IReducedBoard[]> => {
 		const boards = this
 			.createQueryBuilder('board')
 			.select(['board.id', 'board.name'])

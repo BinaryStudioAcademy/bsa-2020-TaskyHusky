@@ -16,3 +16,8 @@ export interface IBoardModel {
 		avatar: string
 	}
 }
+
+export interface IReducedBoard {
+	id: string,
+	name: string
+}
