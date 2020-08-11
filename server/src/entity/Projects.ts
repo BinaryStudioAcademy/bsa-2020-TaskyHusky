@@ -1,5 +1,5 @@
-import { UserProfile } from './UserProfile';
 import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, OneToMany, ManyToOne, JoinTable } from 'typeorm';
+import { UserProfile } from './UserProfile';
 import { Sprint } from './Sprint';
 import { Board } from './Board';
 
@@ -35,6 +35,6 @@ export class Projects {
 	@OneToMany((type) => Sprint, (sprint) => sprint.id)
 	sprints?: Sprint[];
 
-	@ManyToMany((type) => Board, board => board.projects)
+	@ManyToMany((type) => Board, (board) => board.projects)
 	boards?: Board[];
 }
