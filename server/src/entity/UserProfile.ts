@@ -54,12 +54,12 @@ export class UserProfile {
 	@OneToMany((type) => Filter, (filter) => filter.owner)
 	filters?: Filter[];
 
-	@OneToMany((type) => Projects, (projects) => projects.defaultAssigneeId)
+	@OneToMany((type) => Projects, (projects) => projects.defaultAssignee)
 	assignedProjects?: Projects[];
 
-	@OneToMany((type) => Projects, (projects) => projects.leadId)
+	@OneToMany((type) => Projects, (projects) => projects.lead)
 	leadedProjects?: Projects[];
 
-	@OneToMany((type) => Projects, (projects) => projects.creatorId)
+	@OneToMany((type) => Projects, (projects) => projects.creator)
 	createdProjects!: Projects[];
 }
