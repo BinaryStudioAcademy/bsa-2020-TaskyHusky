@@ -1,6 +1,5 @@
 import React, { ChangeEvent } from 'react';
 import styles from './styles.module.scss';
-import { UserProfileState } from 'containers/ProfilePage/logiс/state';
 
 interface Props {
 	text: string;
