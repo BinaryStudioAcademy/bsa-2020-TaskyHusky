@@ -60,7 +60,7 @@ const ProfilePage = ({ match: { params } }: { match: any }) => {
 
 	useEffect(() => {
 		setUser({ ...user, ...userData });
-	}, [userData]);
+	}, [userData, user]);
 
 	if (!user.id) {
 		return null;

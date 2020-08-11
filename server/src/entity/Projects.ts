@@ -1,6 +1,7 @@
-import { Board } from './Board';
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, ManyToMany, JoinTable } from 'typeorm';
 import { UserProfile } from './UserProfile';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, OneToMany, ManyToOne, JoinTable } from 'typeorm';
+import { Sprint } from './Sprint';
+import { Board } from './Board';
 
 @Entity()
 export class Projects {
@@ -31,9 +32,9 @@ export class Projects {
 	})
 	users?: UserProfile[];
 
-	@ManyToMany((type) => Board)
-	@JoinTable({
-		name: 'ProjectBoards',
-	})
+	@OneToMany((type) => Sprint, (sprint) => sprint.id)
+	sprints?: Sprint[];
+
+	@ManyToMany((type) => Board, board => board.projects)
 	boards?: Board[];
 }
