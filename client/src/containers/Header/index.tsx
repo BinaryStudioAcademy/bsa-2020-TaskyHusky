@@ -5,6 +5,7 @@ import styles from './styles.module.scss';
 import { Redirect } from 'react-router-dom';
 import ProjectsMenu from 'components/ProjectsMenu';
 import FiltersMenu from 'components/FiltersMenu';
+import BoardsMenu from '../../components/BoardsMenu';
 import DashboardsMenu from 'components/DashboardsMenu';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'typings/rootState';
@@ -57,6 +58,7 @@ export const HeaderMenu = () => {
 					<ProjectsMenu />
 					<FiltersMenu />
 					<DashboardsMenu />
+					<BoardsMenu />
 					<Menu.Item
 						name="people"
 						active={activeItem === 'people'}
