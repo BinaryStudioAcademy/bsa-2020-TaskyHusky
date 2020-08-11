@@ -14,3 +14,6 @@ export const logOutUserSuccess = createAction(actionTypes.LOGOUT_USER_SUCCESS);
 
 export const loadProfileTrigger = createAction(actionTypes.LOAD_PROFILE_TRIGGER);
 export const loadProfileSuccess = createAction<actionTypes.LoadProfileSuccess>(actionTypes.LOAD_PROFILE_SUCCESS);
+
+export const checkEmailTrigger = createAction<actionTypes.CheckEmail>(actionTypes.CHECK_EMAIL_TRIGGER);
+export const checkEmailSuccess = createAction<actionTypes.CheckEmail>(actionTypes.CHECK_EMAIL_SUCCESS);

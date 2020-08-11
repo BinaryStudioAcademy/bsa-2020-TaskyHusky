@@ -34,3 +34,13 @@ export const getProfile = async (): Promise<User> => {
 
 	return (await res.json()) as User;
 };
+
+export const checkEmail = async (email: string) => {
+	const res = await callWebApi({
+		endpoint: 'auth/check_email',
+		method: 'POST',
+		body: { email },
+	});
+
+	return await res.json();
+};

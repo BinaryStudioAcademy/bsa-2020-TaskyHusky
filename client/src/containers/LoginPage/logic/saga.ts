@@ -1,4 +1,4 @@
-import { loginUser, registerUser, getProfile } from 'services/auth.service';
+import { loginUser, registerUser, getProfile, checkEmail } from 'services/auth.service';
 import { all, put, takeEvery, call } from 'redux-saga/effects';
 import * as actionTypes from './actionTypes';
 import * as actions from './actions';
@@ -85,6 +85,23 @@ export function* watchLoadProfile() {
 	yield takeEvery(actionTypes.LOAD_PROFILE_TRIGGER, getProfileRequest);
 }
 
+export function* checkEmailRequest(action: ReturnType<typeof actions.checkEmailTrigger>) {
+	try {
+		const { email } = action;
+
+		const response = yield call(checkEmail, email);
+		console.log('saga', response);
+		const { email: resEmail } = response;
+		yield put(actions.checkEmailSuccess({ email: resEmail }));
+	} catch (error) {
+		console.log(error);
+	}
+}
+
+export function* watchCheckEmail() {
+	yield takeEvery(actionTypes.CHECK_EMAIL_TRIGGER, checkEmailRequest);
+}
+
 export default function* authSaga() {
-	yield all([watchUserLogin(), watchUserLogOut(), watchRegisterUser(), watchLoadProfile()]);
+	yield all([watchUserLogin(), watchUserLogOut(), watchRegisterUser(), watchLoadProfile(), watchCheckEmail()]);
 }

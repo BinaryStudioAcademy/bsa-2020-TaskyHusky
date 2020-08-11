@@ -39,4 +39,11 @@ export const authReducer = createReducer<AuthState>(initialState, {
 			profileLoaded: true,
 		};
 	},
+	[actionTypes.CHECK_EMAIL_SUCCESS](state, action: actionTypes.CheckEmail) {
+		console.log('authReducer', action.email);
+		return {
+			...state,
+			user: { email: action.email },
+		};
+	},
 });
