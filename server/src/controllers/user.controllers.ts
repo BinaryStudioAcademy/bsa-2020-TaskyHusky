@@ -51,8 +51,11 @@ class UserController {
 		if (req.body.email) {
 			const checkUser = await userRepository.getByEmail(req.body.email);
 			if (checkUser && checkUser.id !== id) {
-				throw new Error('Yhis email is already taken');
+				throw new Error('This email is already taken');
 			}
+		}
+		if (req.body.password) {
+			throw new Error('Forbidden to change password');
 		}
 		try {
 			const updatedUser = await userRepository.updateById(id, req.body);
