@@ -1,0 +1,27 @@
+.avatar {
+  height: 50px;
+  width: 50px;
+  border-radius: 25px;
+}
+
+.avatarContainer {
+  margin-right: 8px;
+}
+
+.placeholderContainer {
+  height: 100%;
+  width: 100%;
+  background: #172b4d;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 50%;
+  display: flex;
+  flex: 1 1 100%;
+}
+
+.placeholderContainer .placeholder {
+  font-size: 13px;
+  color: white;
+  margin: 3px;
+}

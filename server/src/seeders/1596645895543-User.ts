@@ -1,4 +1,5 @@
-import { getRepository, MigrationInterface, QueryRunner } from 'typeorm';
+import { getRepository, getCustomRepository, MigrationInterface, QueryRunner } from 'typeorm';
+import { TeamsRepository } from '../repositories/teams.repository';
 
 export class User1596645895543 implements MigrationInterface {
 

@@ -1,18 +1,21 @@
-import { Entity, Column, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { TeamsPeople } from './TeamsPeople';
+import { RelationId, Entity, Column, ManyToMany, JoinTable, PrimaryGeneratedColumn } from 'typeorm';
+import { User } from './User';
 
 @Entity()
 export class Teams {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
-  @OneToMany(type => TeamsPeople, teams => teams.teamId)
-  teamId?: TeamsPeople[];
+  @ManyToMany(() => User, (user: User) => user.teams, { cascade: true })
+  @JoinTable()
+  users?: User[];
 
-  @Column()
+  @Column({ unique: true })
+  name?: string;
+
+  @Column({ nullable: true })
   description?: string;
 
   @Column('text', { array: true })
-  links?: string;
-
+  links?: string[];
 }

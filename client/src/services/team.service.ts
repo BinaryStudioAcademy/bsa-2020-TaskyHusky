@@ -1,19 +1,51 @@
-const members = [
-	{
-		id: 101,
-		avatar:
-			'https://i7.pngflow.com/pngimage/779/60/png-computer-icons-login-avatar-avatar-heroes-silhouette-user-symbol-clipart.png',
-		name: 'Vladimir Barkalov',
-		position: 'Java developer',
-	},
-	{
-		id: 102,
-		avatar: 'https://images.clipartlogo.com/files/istock/previews/9859/98596917-worker-avatar-icon.jpg',
-		name: 'Yaroslav Pryhoda',
-		position: 'Web developer',
-	},
-];
+import callWebApi from 'helpers/callApi.helper';
+export const getTeam = async (id: string): Promise<WebApi.Entities.Teams[] | undefined> => {
+	try {
+		const res: Response = await callWebApi({
+			method: 'GET',
+			endpoint: `team/${id}`,
+		});
+		return (await res.json()) as WebApi.Entities.Teams[];
+	} catch (error) {
+		console.log(error);
+	}
+};
 
-export const teamMembers = () => {
-	return members;
+export const updateLinks = async (id: string, data: any): Promise<WebApi.Entities.Teams[] | undefined> => {
+	try {
+		const res: Response = await callWebApi({
+			method: 'PUT',
+			body: { data },
+			endpoint: `team/fields/${id}`,
+		});
+		return (await res.json()) as WebApi.Entities.Teams[];
+	} catch (error) {
+		console.log(error);
+	}
+};
+
+export const deleteOneLink = async (id: string, data: any): Promise<WebApi.Entities.Teams[] | undefined> => {
+	try {
+		const res: Response = await callWebApi({
+			method: 'DELETE',
+			body: { data },
+			endpoint: `team/fields/${id}`,
+		});
+		return (await res.json()) as WebApi.Entities.Teams[];
+	} catch (error) {
+		console.log(error);
+	}
+};
+
+export const updateFieldById = async (id: string, field: any): Promise<WebApi.Entities.Teams[] | undefined> => {
+	try {
+		const res: Response = await callWebApi({
+			method: 'PUT',
+			body: field,
+			endpoint: `team/${id}`,
+		});
+		return (await res.json()) as WebApi.Entities.Teams[];
+	} catch (error) {
+		console.log(error);
+	}
 };

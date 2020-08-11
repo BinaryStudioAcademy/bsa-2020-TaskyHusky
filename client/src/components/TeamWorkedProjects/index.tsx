@@ -7,7 +7,7 @@ const TeamWorkedProjects = () => {
 	return (
 		<>
 			<Header as="h3">Worked on</Header>
-			<div className={styles.worked_block_wrapper}>
+			<div className={[styles.worked_block_wrapper, styles.flex_row].join(' ')}>
 				<Image src={worksImg} size="small" />
 				<div className={styles.worked_block}>
 					<Header as="h4">There is no works to see here</Header>

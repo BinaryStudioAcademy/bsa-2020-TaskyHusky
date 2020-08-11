@@ -1,0 +1,15 @@
+.description_p {
+  color: #cccccc;
+  margin: 20px 0;
+}
+
+.text_modal {
+  color: #292828;
+  font-size: 1.2rem;
+}
+
+.title_modal {
+  color: #292828;
+  font-size: 1.4rem;
+  text-transform: uppercase;
+}
