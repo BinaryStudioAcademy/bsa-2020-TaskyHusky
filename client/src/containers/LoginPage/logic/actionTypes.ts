@@ -36,7 +36,3 @@ export type LoadProfileSuccess = {
 export type CheckEmail = {
 	email: string;
 };
-
-export type CheckEmailTrigger = {
-	email: string;
-};

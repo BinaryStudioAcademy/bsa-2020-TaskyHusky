@@ -88,13 +88,12 @@ export function* watchLoadProfile() {
 export function* checkEmailRequest(action: ReturnType<typeof actions.checkEmailTrigger>) {
 	try {
 		const { email } = action;
-
 		const response = yield call(checkEmail, email);
-		console.log('saga', response);
+
 		const { email: resEmail } = response;
 		yield put(actions.checkEmailSuccess({ email: resEmail }));
 	} catch (error) {
-		console.log(error);
+		NotificationManager.error(error.clientException.message, 'Error');
 	}
 }
 
