@@ -14,7 +14,7 @@ router
 	.get('/byKey/:key', controller.getByKey)
 	.post('/', controller.create)
 	.put('/:id', controller.update)
-	.put('/byKey/:id', controller.updateByKey)
+	.put('/byKey/:key', controller.updateByKey)
 	.delete('/:id', controller.delete);
 
 export default router;
