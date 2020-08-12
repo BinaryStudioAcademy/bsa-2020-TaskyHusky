@@ -19,17 +19,8 @@ passport.use(
 			usernameField: EMAIL_FIELD,
 		},
 		async (email: string, password: string, next): Promise<void> => {
-			const trimmedEmail = fixEmail(email);
-
-			if (!isEmail(trimmedEmail)) {
-				return next(
-					new ErrorResponse(HttpStatusCode.UNPROCESSABLE_ENTITY, authErrorMessages.INVALID_EMAIL),
-					null,
-				);
-			}
-
 			const userRepository = getCustomRepository(UserRepository);
-			const user = await userRepository.getByEmail(trimmedEmail);
+			const user = await userRepository.getByEmail(email);
 
 			if (!user) {
 				return next(
@@ -58,17 +49,8 @@ passport.use(
 			passReqToCallback: true,
 		},
 		async (req, email: string, password: string, next): Promise<void> => {
-			const trimmedEmail = fixEmail(email);
-
-			if (!isEmail(trimmedEmail)) {
-				return next(
-					new ErrorResponse(HttpStatusCode.UNPROCESSABLE_ENTITY, authErrorMessages.INVALID_EMAIL),
-					null,
-				);
-			}
-
 			const userRepository = getCustomRepository(UserRepository);
-			const checkingUser = await userRepository.getByEmail(trimmedEmail);
+			const checkingUser = await userRepository.getByEmail(email);
 
 			if (checkingUser) {
 				return next(new ErrorResponse(HttpStatusCode.UNAUTHORIZED, authErrorMessages.TAKEN_EMAIL), null);
@@ -77,32 +59,11 @@ passport.use(
 			const encodedPassword = hashPassword(password);
 			const newUserObject = await userRepository.createNew({
 				...req.body,
-				email: trimmedEmail,
+				email,
 				password: encodedPassword,
 			});
 
 			return next(null, newUserObject);
-		},
-	),
-);
-
-passport.use(
-	'check_email',
-	new LocalStrategy(
-		{
-			usernameField: EMAIL_FIELD,
-			passwordField: EMAIL_FIELD, // DO NOT DELETE: LocalStrategy by default expects two arguments, in /check_email we send only email, this is a workaround
-			passReqToCallback: true,
-		},
-		async (req, email: string, password: string, next): Promise<void> => {
-			const userRepository = getCustomRepository(UserRepository);
-			const user = await userRepository.getByEmail(email);
-
-			if (!user) {
-				return next(null, { email: '' });
-			}
-
-			return next(null, user);
 		},
 	),
 );
