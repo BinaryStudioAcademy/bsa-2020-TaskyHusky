@@ -97,12 +97,16 @@ const BoardColumn: React.FC<Props> = ({ column, className, search, getOnDragEndF
 						</CreateIssueModal>
 						<div style={{ clear: 'both' }} />
 						<div style={{ marginTop: 10 }}>
-							<div ref={provided.innerRef} {...provided.droppableProps}>
+							<div
+								ref={provided.innerRef}
+								{...provided.droppableProps}
+								style={{ overflowY: 'auto', height: '65vh' }}
+							>
 								{displayIssues.length > 0
 									? displayIssues.map((issue, i) => (
 											<IssueCard issue={issue} index={i} key={issue.issueKey} />
 									  ))
-									: 'No cards'}
+									: t('no_cards')}
 								{provided.placeholder}
 							</div>
 						</div>
