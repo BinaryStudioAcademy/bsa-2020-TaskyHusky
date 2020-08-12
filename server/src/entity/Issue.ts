@@ -1,6 +1,7 @@
 import { Entity, Column, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { IssueType } from './IssueType';
 import { Priority } from './Priority';
+import { BoardColumn } from './BoardColumn';
 import { Sprint } from './Sprint';
 import { Projects } from './Projects';
 
@@ -15,8 +16,8 @@ export class Issue {
 	@Column()
 	summary?: string;
 
-	@Column() // Replace with rel.
-	boardColumnID?: string;
+	@ManyToOne((type) => BoardColumn)
+	boardColumn?: BoardColumn;
 
 	@Column({ array: true })
 	labels?: string;

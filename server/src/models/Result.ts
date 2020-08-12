@@ -14,7 +14,7 @@ interface IssueResult {
 		icon: string;
 	};
 	summary?: string;
-	boardColumnID?: string;
+	boardColumn?: string;
 	labels?: string[];
 	attachments?: string[];
 	links?: string[];
@@ -30,4 +30,29 @@ interface IssueResult {
 	issueKey?: string;
 	assignedID?: string;
 	creatorID?: string;
+}
+
+interface BoardResult {
+	id: string;
+	boardType: 'Kanban' | 'Scrum';
+	name: string;
+	location: string;
+	createdAt: {
+		firstName: string;
+		lastName?: string;
+		id: string;
+		avatar: string | null;
+	};
+}
+
+interface BoardColumnResult {
+	id: string;
+	columnName: string;
+	status: string;
+	isResolutionSet: boolean;
+	board: BoardResult;
+}
+
+interface ComposedBoardResult extends BoardResult {
+	columns: BoardColumnResult[];
 }
