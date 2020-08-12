@@ -1,14 +1,11 @@
 import React, { useState } from 'react';
 import { Button, Modal, Form } from 'semantic-ui-react';
+import { CurrentLink } from './index';
 
 type Props = {
-	onClose: any;
-	onConfirm: any;
-	currentLink?: {
-		http: string;
-		name: string;
-		description: string;
-	};
+	onClose: () => void;
+	onConfirm: (arg: CurrentLink) => void;
+	currentLink?: CurrentLink;
 };
 
 const CreateLink = ({ onClose, currentLink, onConfirm }: Props) => {
@@ -19,7 +16,7 @@ const CreateLink = ({ onClose, currentLink, onConfirm }: Props) => {
 			description: '',
 		},
 	);
-	const onChange = (e: any) => {
+	const onChange = (e: React.BaseSyntheticEvent) => {
 		setData({
 			...data,
 			[e.target.name]: e.target.value,

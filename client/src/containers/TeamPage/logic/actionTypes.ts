@@ -16,9 +16,9 @@ export const UPDATE_FIELD_SUCCESS = 'TEAM:UPDATE_FIELD_SUCCESS';
 export type AddLinkSuccess = {
 	id: string;
 	link: {
-		name: string;
-		http: string;
-		description: string;
+		name?: string;
+		http?: string;
+		description?: string;
 	};
 };
 
