@@ -1,9 +1,5 @@
-import { EntityRepository, Repository, Like, FindOperator, Any, In, Raw } from 'typeorm';
-import { Projects } from '../entity/Projects';
-import { Sprint } from '../entity/Sprint';
-import { Priority } from '../entity/Priority';
+import { EntityRepository, Repository, FindOperator, Any, Raw } from 'typeorm';
 import { Issue } from '../entity/Issue';
-import { IssueType } from '../entity/IssueType';
 
 const RELS = ['priority', 'type'];
 
