@@ -24,7 +24,7 @@ const ProjectSettings = () => {
 
 	useEffect(() => {
 		dispatch(actions.startGettingProject({ id }));
-	}, [id]);
+	}, [id, dispatch]);
 
 	const onTrash = () => {
 		dispatch(actions.startDeletingProject({ id }));
