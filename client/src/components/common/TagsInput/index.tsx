@@ -34,9 +34,9 @@ const TagsInput: React.FC<Props> = (props: Props) => {
 			</div>
 			<div className={styles.tagContainer}>
 				{tags.map((tag, i) => (
-					<Label key={i} color="teal" tag>
+					<Label key={i}>
 						{tag}
-						<Icon name="close" link onClick={() => removeTag(i)} />
+						<Icon name="delete" link onClick={() => removeTag(i)} />
 					</Label>
 				))}
 			</div>
