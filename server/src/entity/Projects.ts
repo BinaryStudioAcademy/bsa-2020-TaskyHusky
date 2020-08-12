@@ -1,6 +1,6 @@
+import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, OneToMany, ManyToOne } from 'typeorm';
 import { Sprint } from './Sprint';
 import { Board } from './Board';
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, ManyToMany, JoinTable, OneToMany } from 'typeorm';
 import { UserProfile } from './UserProfile';
 
 @Entity()
@@ -17,24 +17,18 @@ export class Projects {
 	@Column({ type: 'text', nullable: true })
 	category?: string;
 
-	@ManyToOne((type) => UserProfile, (userProfile) => userProfile.assignedProjects)
-	defaultAssignee?: UserProfile;
-
-	@ManyToOne((type) => UserProfile, (userProfile) => userProfile.leadedProjects)
-	lead?: UserProfile;
-
-	@ManyToOne((type) => UserProfile, (userProfile) => userProfile.createdProjects)
-	creator!: UserProfile;
-
-	@ManyToMany((type) => UserProfile)
-	@JoinTable({
-		name: 'ProjectsPeople',
-	})
-	users?: UserProfile[];
-
 	@OneToMany((type) => Sprint, (sprint) => sprint.id)
 	sprints?: Sprint[];
 
-	@ManyToMany((type) => Board, board => board.projects)
+	@ManyToMany((type) => Board, (board) => board.projects)
 	boards?: Board[];
+
+	@ManyToOne((type) => UserProfile, (userProfile) => userProfile.assignedProjects, { cascade: true })
+	defaultAssignee?: UserProfile;
+
+	@ManyToOne((type) => UserProfile, (userProfile) => userProfile.leadedProjects, { cascade: true })
+	lead?: UserProfile;
+
+	@ManyToOne((type) => UserProfile, (userProfile) => userProfile.createdProjects, { cascade: true })
+	creator!: UserProfile;
 }
