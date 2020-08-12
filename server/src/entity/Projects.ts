@@ -36,4 +36,8 @@ export class Projects {
 
 	@OneToMany((type) => Issue, (issue) => issue.project)
 	issues?: Issue[];
+
+	@ManyToMany((type) => UserProfile, (userProfile) => userProfile.projects)
+	@JoinTable({ name: 'projects_people' })
+	users?: UserProfile[];
 }

@@ -68,4 +68,7 @@ export class UserProfile {
 		cascade: true,
 	})
 	teams?: Team[];
+
+	@ManyToMany((type) => Projects, (projects) => projects.users)
+	projects?: Projects[];
 }
