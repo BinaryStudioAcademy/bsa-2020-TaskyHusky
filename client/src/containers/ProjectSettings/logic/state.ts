@@ -1,15 +1,5 @@
-export type Project = {
-	id: string;
-	name: string;
-	key: string;
-	category: string;
-	defaultAssigneeID: string;
-	leadID: string;
-	creatorID: string;
-};
-
 export interface ProjectState {
-	project: Project;
+	project: WebApi.Entities.Projects;
 	isLoading: boolean;
 }
 
@@ -19,9 +9,30 @@ export const initialState: ProjectState = {
 		name: '',
 		key: '',
 		category: '',
-		defaultAssigneeID: '',
-		leadID: '',
-		creatorID: '',
+		sprints: [],
+		boards: [],
+		defaultAssignee: undefined,
+		lead: undefined,
+		creator: {
+			id: '',
+			firstName: '',
+			lastName: '',
+			username: '',
+			avatar: '',
+			department: '',
+			location: '',
+			organization: '',
+			email: '',
+			jobTitle: '',
+			userSettingsId: '',
+			password: '',
+			teams: [],
+			boards: [],
+			filters: [],
+			assignedProjects: [],
+			leadedProjects: [],
+			createdProjects: [],
+		},
 	},
 	isLoading: true,
 };
