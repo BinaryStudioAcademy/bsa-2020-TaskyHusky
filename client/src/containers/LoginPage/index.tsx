@@ -1,14 +1,18 @@
-import React, { useState, SyntheticEvent } from 'react';
+import React, { useState, SyntheticEvent, useEffect, useCallback } from 'react';
 import styles from './styles.module.scss';
 import { Header, Form, Divider, Segment, Button, Grid, List, Popup } from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { Link, useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import * as actions from './logic/actions';
 import PasswordInput from 'components/common/PasswordInput';
 import { useTranslation } from 'react-i18next';
 import validator from 'validator';
 
-export const LoginPage: React.FC = () => {
+import { RootState } from 'typings/rootState';
+
+export const LoginPage: React.FC = (props) => {
+	const history = useHistory();
+	const authState = useSelector((rootState: RootState) => rootState.auth);
 	const dispatch = useDispatch();
 	const { t } = useTranslation();
 	const [email, setEmail] = useState<string>('');
@@ -20,22 +24,40 @@ export const LoginPage: React.FC = () => {
 		dispatch(actions.logInUserTrigger({ email, password }));
 	};
 
-	const handleContinueSubmit: (event: SyntheticEvent) => void = (event) => {
+	const checkEmail = useCallback(() => {
+		dispatch(actions.checkEmailTrigger({ email }));
+	}, [dispatch, email]);
+
+	const checkEmailReset = useCallback(() => {
+		dispatch(actions.checkEmailReset());
+	}, [dispatch]);
+
+	useEffect(() => {
+		if (isEmailValid && isEmailSubmitted) {
+			checkEmail();
+		}
+	}, [isEmailValid, isEmailSubmitted, checkEmail, email]);
+
+	useEffect(() => {
+		if (!authState.isEmailInDB && authState.isEmailInDB !== null && isEmailSubmitted) {
+			history.push('/signup');
+			setIsEmailSubmitted(false);
+			checkEmailReset();
+		}
+	}, [authState.isEmailInDB, isEmailSubmitted, history, checkEmailReset]);
+
+	const handleSubmit: (event: SyntheticEvent) => void = (event) => {
 		event.preventDefault();
 		setIsEmailSubmitted(true);
-		setIsEmailValid(validator.isEmail(email)); // TODO: replace with request to server side via redux-saga when server side is ready
-	};
-
-	const handleLogInSubmit: (event: SyntheticEvent) => void = (event) => {
-		event.preventDefault();
 		setIsEmailValid(validator.isEmail(email));
 
-		if (isEmailValid) {
+		if (isEmailValid && authState.isEmailInDB) {
 			logInUser(email, password);
 		}
 	};
 
-	const passwordInput = isEmailValid ? <PasswordInput onChange={(text) => setPassword(text)} /> : null;
+	const passwordInput =
+		authState.isEmailInDB && isEmailSubmitted ? <PasswordInput onChange={(text) => setPassword(text)} /> : null;
 
 	return (
 		<>
@@ -45,7 +67,7 @@ export const LoginPage: React.FC = () => {
 						{t('login_header')}
 					</Header>
 					<Segment>
-						<Form onSubmit={isEmailSubmitted ? handleLogInSubmit : handleContinueSubmit}>
+						<Form onSubmit={handleSubmit}>
 							<Popup
 								className={styles.errorPopup}
 								open={!isEmailValid && isEmailSubmitted}

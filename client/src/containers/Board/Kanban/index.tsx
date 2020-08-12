@@ -11,6 +11,7 @@ import { useTranslation } from 'react-i18next';
 const Kanban: BoardComponent = ({ board }) => {
 	const [search, setSearch] = useState<string>('');
 	const { t } = useTranslation();
+	const leftPadded = { marginLeft: 20 };
 	const onDragEndFuncs: Map<string, OnDragEndResponder> = new Map<string, OnDragEndResponder>();
 
 	const onDragEnd: OnDragEndResponder = (event, provided) => {
@@ -36,30 +37,28 @@ const Kanban: BoardComponent = ({ board }) => {
 
 	return (
 		<>
-			<Header as="h2" style={{ marginLeft: 20 }}>
-				{board.name}
-			</Header>
-			<Breadcrumb style={{ marginLeft: 20, marginBottom: 20 }}>
-				<Breadcrumb.Section link>{t('projects')}</Breadcrumb.Section>
+			<div className={styles.inlineContainer}>
+				<Header as="h2" style={leftPadded}>
+					{board.name}
+				</Header>
+				<Form.Input
+					placeholder={t('search')}
+					icon="search"
+					value={search}
+					onChange={(event, data) => setSearch(data.value)}
+					style={{ ...leftPadded, marginRight: 60, maxWidth: 250 }}
+				/>
+				<Button onClick={() => setSearch('')} secondary>
+					{t('clear')}
+				</Button>
+			</div>
+			<Breadcrumb style={{ ...leftPadded, marginBottom: 20 }}>
+				<Breadcrumb.Section href="/projects">{t('projects')}</Breadcrumb.Section>
 				<Breadcrumb.Divider icon="right chevron" />
 				<Breadcrumb.Section link>Test project name</Breadcrumb.Section>
 				<Breadcrumb.Divider icon="right arrow" />
 				<Breadcrumb.Section active>{board.name}</Breadcrumb.Section>
 			</Breadcrumb>
-			<Form>
-				<Form.Group>
-					<Form.Input
-						placeholder={t('search')}
-						icon="search"
-						value={search}
-						onChange={(event, data) => setSearch(data.value)}
-						style={{ marginLeft: 20, marginRight: 60, maxWidth: 250 }}
-					/>
-					<Button onClick={() => setSearch('')} secondary>
-						{t('clear')}
-					</Button>
-				</Form.Group>
-			</Form>
 			<DragDropContext onDragEnd={onDragEnd}>
 				<div
 					className={styles.columnsGrid}

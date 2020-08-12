@@ -39,6 +39,18 @@ class IssueController {
 		}
 	}
 
+	async getByProjectId(req: Request, res: Response) {
+		const { id } = req.params;
+		const repository = getCustomRepository(IssueRepository);
+
+		try {
+			const result = await repository.findAllByProjectId(id);
+			res.send(result);
+		} catch (err) {
+			res.status(500).send(getWebError(err, 500));
+		}
+	}
+
 	async getByKey(req: Request, res: Response) {
 		const { key } = req.params;
 		const repository = getCustomRepository(IssueRepository);
@@ -79,6 +91,7 @@ class IssueController {
 	async updateByKey(req: Request, res: Response) {
 		const { key } = req.params;
 		const { body: data } = req;
+		console.log(key);
 		const repository = getCustomRepository(IssueRepository);
 
 		try {

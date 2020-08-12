@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Menu, Image, Input, Segment, Dropdown, Button } from 'semantic-ui-react';
+import { Menu, Image, Input, Dropdown, Button, Icon } from 'semantic-ui-react';
 import logo from 'assets/logo192.png'; // TODO: replace with logo once it is ready
 import styles from './styles.module.scss';
 import { Redirect } from 'react-router-dom';
@@ -12,7 +12,6 @@ import { removeToken } from 'helpers/setToken.helper';
 import * as actions from 'containers/LoginPage/logic/actions';
 import { User } from 'containers/LoginPage/logic/state';
 import { useTranslation } from 'react-i18next';
-import LanguageSelect from 'components/LanguageSelect';
 import CreateIssueModal from 'containers/CreateIssueModal';
 
 export const HeaderMenu = () => {
@@ -43,10 +42,11 @@ export const HeaderMenu = () => {
 
 	return (
 		<>
-			<Segment className={styles.segmentWrapper}>
+			<div className={`${styles.segmentWrapper} site-header`}>
 				<Menu secondary className={styles.menuWrapper}>
-					<Menu.Item onClick={logoClickHandler} className={styles.logoItem}>
+					<Menu.Item onClick={logoClickHandler} className={`${styles.logoItem} site-logo`}>
 						<Image src={logo} size="mini" alt={t('taskyhusky_logo')} />
+						<span className={`${styles.logoText} site-logo-text`}>TaskyHusky</span>
 					</Menu.Item>
 					<Menu.Item
 						name="your-work"
@@ -65,7 +65,7 @@ export const HeaderMenu = () => {
 					>
 						{t('people')}
 					</Menu.Item>
-					<CreateIssueModal onClose={() => {}}>
+					<CreateIssueModal>
 						<Menu.Item
 							as={Button}
 							className={styles.createMenuItem}
@@ -73,10 +73,10 @@ export const HeaderMenu = () => {
 							active={activeItem === 'create'}
 						>
 							{t('create')}
+							<Icon name="plus" style={{ marginLeft: 5, marginRight: -5 }} />
 						</Menu.Item>
 					</CreateIssueModal>
 					<Menu.Item position="right" className={styles.rightMenu}>
-						<LanguageSelect />
 						<Input
 							className="icon"
 							icon="search"
@@ -125,7 +125,7 @@ export const HeaderMenu = () => {
 						</Dropdown>
 					</Menu.Item>
 				</Menu>
-			</Segment>
+			</div>
 			{renderDashboards}
 		</>
 	);
