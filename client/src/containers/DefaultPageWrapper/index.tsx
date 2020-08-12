@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import Header from '../Header';
 import { useDispatch } from 'react-redux';
-import { loadTypes, loadPriorities } from 'pages/CreateIssue/logic/actions';
+import { loadTypes, loadPriorities } from 'pages/IssuePage/logic/actions';
 import { fetchFilterDefs } from '../../commonLogic/filterDefs/actions';
 import { Container } from 'semantic-ui-react';
 import styles from './styles.module.scss';
@@ -20,7 +20,7 @@ const DefaultPageWrapper: React.FC<Props> = ({ children }) => {
 	}, [dispatch]);
 
 	return (
-		<Container className={styles.container}>
+		<Container className={styles.container + ' fill'}>
 			<Header />
 			{children}
 		</Container>

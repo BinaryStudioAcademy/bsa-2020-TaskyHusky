@@ -3,6 +3,8 @@ import { MinLength, IsEmail } from 'class-validator';
 import { Board } from './Board';
 import { Filter } from './Filter';
 import { Teams } from './Teams';
+import { Projects } from './Projects';
+
 
 @Entity()
 export class UserProfile {
@@ -47,9 +49,18 @@ export class UserProfile {
 	@ManyToMany(() => Teams, (team: Teams) => team.users)
 	teams?: Teams[];
 
-	@OneToMany(type => Board, board => board.createdBy)
+	@OneToMany((type) => Board, (board) => board.createdBy)
 	boards?: Board[];
 
 	@OneToMany((type) => Filter, (filter) => filter.owner)
 	filters?: Filter[];
+
+	@OneToMany((type) => Projects, (projects) => projects.defaultAssignee)
+	assignedProjects?: Projects[];
+
+	@OneToMany((type) => Projects, (projects) => projects.lead)
+	leadedProjects?: Projects[];
+
+	@OneToMany((type) => Projects, (projects) => projects.creator)
+	createdProjects!: Projects[];
 }

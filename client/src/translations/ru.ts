@@ -116,4 +116,7 @@ export const ru = {
 	category: 'Категория',
 	project_name: 'Введите название проекта',
 	project_lead_name: 'Введите имя',
+	clear: 'Очистить',
+	issues: 'Задачи',
+	no_cards: 'Нет карточек',
 };
