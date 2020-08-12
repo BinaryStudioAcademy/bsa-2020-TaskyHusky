@@ -1,6 +1,6 @@
 import React from 'react';
 import { Header, Image, Button } from 'semantic-ui-react';
-import linksImg from 'assets/images/team-page-links.jpg';
+import linksImg from 'assets/images/team-page-links.svg';
 import styles from 'containers/TeamPage/styles.module.scss';
 import { useTranslation } from 'react-i18next';
 import LinkCard from './linkCard';

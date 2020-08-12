@@ -59,7 +59,7 @@ const TeamPage = ({ match: { params }, team: { team } }: { match: any; team: any
 	const onEditLinkAccept = (link: any) => {
 		let isFullEmpty: boolean = true;
 		for (const i in link) {
-			if (!validator.isEmpty(link[i])) {
+			if (!validator.isEmpty(link[i], { ignore_whitespace: true })) {
 				isFullEmpty = false;
 			}
 		}

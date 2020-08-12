@@ -1,6 +1,6 @@
 import React from 'react';
 import { Header, Image } from 'semantic-ui-react';
-import worksImg from 'assets/images/team-page-works.jpg';
+import worksImg from 'assets/images/team-page-works.svg';
 import styles from 'containers/TeamPage/styles.module.scss';
 import { useTranslation } from 'react-i18next';
 
