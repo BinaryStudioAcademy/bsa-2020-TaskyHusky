@@ -117,4 +117,6 @@ export const en = {
 	project_name: 'Enter project name',
 	project_lead_name: 'Enter name',
 	clear: 'Clear',
+	issues: 'Issues',
+	no_cards: 'No cards',
 };
