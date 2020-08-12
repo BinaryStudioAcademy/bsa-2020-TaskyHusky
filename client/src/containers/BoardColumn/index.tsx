@@ -106,7 +106,7 @@ const BoardColumn: React.FC<Props> = ({ column, className, search, getOnDragEndF
 									? displayIssues.map((issue, i) => (
 											<IssueCard issue={issue} index={i} key={issue.issueKey} />
 									  ))
-									: 'No cards'}
+									: t('no_cards')}
 								{provided.placeholder}
 							</div>
 						</div>
