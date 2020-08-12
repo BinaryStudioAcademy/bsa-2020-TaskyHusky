@@ -2,7 +2,6 @@ import { updateProject, deleteProject } from './../../../services/projects.servi
 import { getProject } from 'services/projects.service';
 import { all, put, takeEvery, call } from 'redux-saga/effects';
 
-import { ProjectId } from 'containers/ProjectSettings/logic/actionTypes';
 import * as actionTypes from './actionTypes';
 import * as actions from './actions';
 

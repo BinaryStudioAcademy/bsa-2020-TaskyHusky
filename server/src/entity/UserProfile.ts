@@ -1,4 +1,3 @@
-import { Projects } from './Projects';
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { MinLength, IsEmail } from 'class-validator';
 import { TeamsPeople } from './TeamsPeople';
