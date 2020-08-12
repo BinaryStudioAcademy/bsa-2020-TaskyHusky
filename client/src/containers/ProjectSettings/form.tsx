@@ -7,6 +7,8 @@ import styles from './styles.module.scss';
 import { useDispatch } from 'react-redux';
 import mockAvatar from 'assets/images/projectAvatars/viewavatar.svg';
 import { Link, Redirect } from 'react-router-dom';
+import CustomInput from 'components/common/Input/CustomInput';
+import validator from 'validator';
 
 interface Props {
 	projectData: WebApi.Entities.Projects;
@@ -17,7 +19,10 @@ const ProjectForm = ({ projectData }: Props) => {
 	const dispatch = useDispatch();
 
 	const [project, setProject] = useState<WebApi.Entities.Projects>(projectData);
-	const { name, key } = project;
+
+	const [isNameValid, setIsNameValid] = useState<boolean>(true);
+	const [isKeyValid, setIsKeyValid] = useState<boolean>(true);
+	const [isValidErrorShown, setIsValidErrorShown] = useState<boolean>(false);
 
 	const onProjectChange = (field: string, value: string) => {
 		setProject((state) => ({
@@ -27,6 +32,11 @@ const ProjectForm = ({ projectData }: Props) => {
 	};
 
 	const onSave = () => {
+		if (!isNameValid || !isKeyValid) {
+			setIsValidErrorShown(true);
+			return;
+		}
+
 		dispatch(actions.startUpdatingProject({ project }));
 	};
 
@@ -42,22 +52,33 @@ const ProjectForm = ({ projectData }: Props) => {
 			) : (
 				<div className={styles.form__container}>
 					<Form>
-						<Form.Input
-							className={styles.form__input}
-							label={t('name')}
-							required
-							type="text"
-							placeholder={t('project_name')}
-							value={name}
-							onChange={(e) => onProjectChange('name', e.target.value)}
-						/>
+						<Form.Field className={styles.form__input_key} required>
+							<label className={styles.avatar__label}>{t('name')}</label>
+							<CustomInput
+								isValidErrorShown={isValidErrorShown}
+								isDataValid={isNameValid}
+								setIsDataValid={setIsNameValid}
+								data={project.name}
+								setData={(data) => onProjectChange('name', data)}
+								placeholder="Enter project name"
+								popUpContent="Project name should contain at least 5 symbols long"
+								validation={(name) => validator.isLength(name, { min: 5 })}
+								popUpPosition="bottom right"
+							/>
+						</Form.Field>
 						<Form.Field className={styles.form__input_key} required>
 							<label>{t('key')}</label>
 							<div className={styles.form__input_container}>
-								<input
+								<CustomInput
+									isValidErrorShown={isValidErrorShown}
+									isDataValid={isKeyValid}
+									setIsDataValid={setIsKeyValid}
+									data={project.key}
+									setData={(data) => onProjectChange('key', data)}
 									placeholder={t('example') + ': QA'}
-									value={key}
-									onChange={(e) => onProjectChange('key', e.target.value)}
+									popUpContent="Key should contain at least 2 symbols long"
+									validation={(key) => validator.isLength(key, { min: 2 })}
+									popUpPosition="bottom left"
 								/>
 								<Popup
 									trigger={
@@ -74,19 +95,6 @@ const ProjectForm = ({ projectData }: Props) => {
 							type="text"
 							placeholder={'https://www...'}
 						/>
-						<Form.Field className={styles.form__input} required>
-							<label>{t('project_type')}</label>
-							<div className={styles.form__input_container}>
-								<input placeholder={t('type')} />
-								<Popup
-									trigger={
-										<Icon name="info circle" className={styles.information__icon} size={'large'} />
-									}
-									position="bottom center"
-									content="To change project type, create a new project and bulk move your issues into it."
-								/>
-							</div>
-						</Form.Field>
 						<Form.Field className={styles.form__input} required>
 							<label>{t('project_category')}</label>
 							<div className={styles.form__input_container}>
