@@ -9,7 +9,7 @@ export const BoardsMenu = () => {
 	const dispatch = useDispatch();
 	useEffect(() => {
 		dispatch(actions.getRecentBoards());
-	}, []);
+	}, [dispatch]);
 
 	const recentBoards = useSelector((rootState: RootState) => rootState.boards.recentBoards);
 

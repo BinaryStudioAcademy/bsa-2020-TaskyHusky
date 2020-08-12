@@ -19,7 +19,7 @@ const Boards: React.FC = () => {
 
 	useEffect(() => {
 		dispatch(actions.startLoading());
-	}, []);
+	}, [dispatch]);
 
 	const onSearch = (event: ChangeEvent<HTMLInputElement>) => {
 		const searchValue = event.target.value;

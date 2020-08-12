@@ -14,18 +14,18 @@ interface Props {
 }
 
 const BoardModalFinal = (props: Props) => {
-	const { board, setBoard } = props;
+	const { board, setBoard, changeSubmitStatus } = props;
 
 	const dispatch = useDispatch();
 	useEffect(() => {
 		dispatch(actions.startLoading());
-	}, []);
+	}, [dispatch]);
 
 	const [selectedName, setSelectedName] = useState('');
 	const [selectedProjects, setSelectedProjects] = useState<Array<string>>([]);
 	useEffect(() => {
 		if (selectedProjects.length !== 0 && selectedName !== '') {
-			props.changeSubmitStatus(false);
+			changeSubmitStatus(false);
 			setBoard({
 				...board,
 				projects: [...selectedProjects],
@@ -33,7 +33,7 @@ const BoardModalFinal = (props: Props) => {
 				admin: authData.user?.id,
 			});
 		} else {
-			props.changeSubmitStatus(true);
+			changeSubmitStatus(true);
 		}
 	}, [selectedProjects, selectedName]);
 
