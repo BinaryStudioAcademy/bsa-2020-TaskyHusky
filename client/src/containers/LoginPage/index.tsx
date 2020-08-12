@@ -83,8 +83,9 @@ export const LoginPage: React.FC = () => {
 										value={email}
 										onChange={(event) => {
 											setEmail(fixEmail(event.target.value));
-											if (fixEmail(event.target.value) !== email) {
+											if (fixEmail(event.target.value) !== email && isEmailSubmitted) {
 												setIsEmailSubmitted(false);
+												checkEmailReset();
 											}
 										}}
 									/>
