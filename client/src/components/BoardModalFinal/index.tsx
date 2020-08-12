@@ -59,9 +59,8 @@ const BoardModalFinal = (props: Props) => {
 			</Form.Field>
 			<Form.Field width={7} className={styles.formField}>
 				<label>Project</label>
-				{/*
- 				// @ts-ignore*/}
-				<Dropdown search
+				<Dropdown
+					search
 					header="Projects"
 					multiple
 					fluid
