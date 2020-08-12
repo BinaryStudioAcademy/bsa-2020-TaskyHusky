@@ -9,12 +9,14 @@ const TeamWorkedProjects = () => {
 
 	return (
 		<>
-			<div className={[styles.worked_block_wrapper, styles.flex_row].join(' ')}>
+			<div className={styles.worked_block_wrapper}>
 				<Header as="h3">{t('worked_on')}</Header>
-				<Image src={worksImg} size="small" />
-				<div className={styles.worked_block}>
-					<Header as="h4">{t('no_works')}</Header>
-					<p>There is no projects you have started</p>
+				<div className={styles.flex_row}>
+					<Image src={worksImg} size="small" />
+					<div className={styles.worked_block}>
+						<Header as="h4">{t('no_works')}</Header>
+						<p>{t('There are no projects you have started')}</p>
+					</div>
 				</div>
 			</div>
 		</>
