@@ -12,7 +12,6 @@ import { removeToken } from 'helpers/setToken.helper';
 import * as actions from 'containers/LoginPage/logic/actions';
 import { User } from 'containers/LoginPage/logic/state';
 import { useTranslation } from 'react-i18next';
-import LanguageSelect from 'components/LanguageSelect';
 import CreateIssueModal from 'containers/CreateIssueModal';
 
 export const HeaderMenu = () => {
@@ -77,7 +76,6 @@ export const HeaderMenu = () => {
 						</Menu.Item>
 					</CreateIssueModal>
 					<Menu.Item position="right" className={styles.rightMenu}>
-						<LanguageSelect />
 						<Input
 							className="icon"
 							icon="search"
