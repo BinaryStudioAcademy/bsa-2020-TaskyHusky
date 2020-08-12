@@ -1,12 +1,11 @@
 import { updateProject, deleteProject } from './../../../services/projects.service';
-import { getProject } from 'services/projects.service';
+import { getProjectById } from 'services/projects.service';
 import { all, put, takeEvery, call } from 'redux-saga/effects';
-
 import * as actionTypes from './actionTypes';
 import * as actions from './actions';
 
 export function* fetchProject({ id }: ReturnType<typeof actions.startGettingProject>) {
-	const project = yield call(getProject, id);
+	const project = yield call(getProjectById, id);
 	yield put(actions.successGettingProject({ project }));
 }
 

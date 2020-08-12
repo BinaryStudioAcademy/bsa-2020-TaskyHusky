@@ -117,4 +117,5 @@ export const ua = {
 	project_name: 'Введіть назву проекту',
 	project_lead_name: 'Введіть им’я',
 	clear: 'Очистити',
+	issues: 'Задачі',
 };

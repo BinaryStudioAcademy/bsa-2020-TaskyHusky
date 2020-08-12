@@ -14,6 +14,7 @@ interface Props {
 	issueTypes: WebApi.Entities.IssueType[];
 	priorities: WebApi.Entities.Priority[];
 	boardColumnID?: string;
+	projectID?: string;
 	onClose?: (data: WebApi.Issue.PartialIssue) => void;
 }
 
@@ -24,7 +25,14 @@ interface SelectOption {
 	style?: any;
 }
 
-const CreateIssueModalBody: React.FC<Props> = ({ children, issueTypes, priorities, boardColumnID, onClose }) => {
+const CreateIssueModalBody: React.FC<Props> = ({
+	children,
+	issueTypes,
+	priorities,
+	boardColumnID,
+	onClose,
+	projectID,
+}) => {
 	const { t } = useTranslation();
 	const [isOpened, setIsOpened] = useState<boolean>(false);
 	const dispatch = useDispatch();
@@ -82,19 +90,11 @@ const CreateIssueModalBody: React.FC<Props> = ({ children, issueTypes, prioritie
 				isActive: false,
 				isCompleted: true,
 			},
-			project: {
-				id: '1fbda607-5934-484c-9667-bd35574a2f1e',
-				name: 'Project name',
-				key: 'PN',
-				category: 'Business',
-				defaultAssigneeID: '30e6e687-9344-483f-8e14-0324c5f3733b',
-				leadID: 'e43002bf-ac10-49e2-adac-399a64e24ff2',
-				creatorID: 'e43002bf-ac10-49e2-adac-399a64e24ff2',
-			},
+			...(projectID ? { project: projectID } : {}),
 			issueKey: generateRandomString(KeyGenerate.LENGTH),
 			assignedID: '98601c2c-a103-489b-b89f-ea5ae568b582',
 			creatorID: 'f2235a1c-dfbc-47b7-bdb2-726d159c19a0',
-		} as WebApi.Issue.PartialIssue;
+		};
 
 		dispatch(createIssue({ data }));
 

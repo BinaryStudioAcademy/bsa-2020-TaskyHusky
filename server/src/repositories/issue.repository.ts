@@ -13,6 +13,10 @@ export class IssueRepository extends Repository<Issue> {
 		return this.find({ relations: RELS, where: { boardColumn: { id } } });
 	}
 
+	findAllByProjectId(id: string) {
+		return this.find({ relations: RELS, where: { project: { id } } });
+	}
+
 	findOneById(id: string) {
 		return this.findOneOrFail({ where: { id }, relations: RELS });
 	}
