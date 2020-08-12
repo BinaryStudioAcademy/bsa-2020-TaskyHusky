@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
-import { MinLength, IsEmail } from 'class-validator';
-import {TeamsPeople} from './TeamsPeople';
+import { MinLength, IsEmail, Length } from 'class-validator';
+import { TeamsPeople } from './TeamsPeople';
 import { Board } from './Board';
 import { Filter } from './Filter';
 
@@ -32,6 +32,7 @@ export class UserProfile {
 
 	@Column({ unique: true })
 	@IsEmail()
+	@Length(6, 30)
 	email?: string;
 
 	@Column({ nullable: true })
@@ -44,12 +45,21 @@ export class UserProfile {
 	@MinLength(6)
 	password?: string;
 
-	@OneToMany(type => TeamsPeople, teams => teams.userId)
-  teams?: TeamsPeople[];
-  
-	@OneToMany(type => Board, board => board.createdBy)
+	@OneToMany((type) => TeamsPeople, (teams) => teams.userId)
+	teams?: TeamsPeople[];
+
+	@OneToMany((type) => Board, (board) => board.createdBy)
 	boards?: Board[];
 
 	@OneToMany((type) => Filter, (filter) => filter.owner)
 	filters?: Filter[];
+
+	constructor(userData: Partial<UserProfile>) {
+		if (userData) {
+			const { email, password } = userData;
+
+			this.email = email;
+			this.password = password;
+		}
+	}
 }
