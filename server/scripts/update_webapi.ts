@@ -59,7 +59,7 @@ glob('src/{entity,models}/**/*.ts', (err: Error | null, matches: string[]) => {
 	const modelsTypes = getModelsTypes(models);
 	const entitiesTypes = getEntitiesTypes(entities);
 
-	const webApiTypes = `${modelsTypes}\n\n${entitiesTypes}`.trim() + '\n';
+	const webApiTypes = `${`${modelsTypes}\n\n${entitiesTypes}`.trim()}\n`;
 
 	fs.writeFileSync('../client/src/typings/webapi.d.ts', webApiTypes, 'utf8');
 	console.log('...Written to webapi.d.ts');

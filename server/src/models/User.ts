@@ -11,5 +11,5 @@ export interface UserModel {
 	organization?: string;
 	jobTitle?: string;
 	userSettingsId?: string;
-	filtres?: string[];
+	filters?: string[];
 }

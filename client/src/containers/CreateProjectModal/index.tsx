@@ -1,37 +1,21 @@
-import React, { useState, ChangeEvent } from 'react';
+import React, { useState } from 'react';
 import { Modal, Button, Form, Checkbox, Image, Card } from 'semantic-ui-react';
+import validator from 'validator';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router';
-import kanbanImg from '../../assets/images/kanban.svg';
-import scrumImg from '../../assets/images/scrum.svg';
-import bugTrackingImg from '../../assets/images/bug_tracking.svg';
-import styles from './styles.module.scss';
-import * as actions from './logic/actions';
-import { RootState } from 'typings/rootState';
-import i18n from 'i18next';
 import { useTranslation } from 'react-i18next';
+import { RootState } from 'typings/rootState';
+
+import * as actions from './logic/actions';
+import getTemplatesInformation from './config/templatesInformation';
+import styles from './styles.module.scss';
+import CustomInput from 'components/common/Input/CustomInput';
 
 type ProjectTemplate = 'Scrum' | 'Kanban' | 'Bug tracking';
 
-const templatesInformation = {
-	Kanban: {
-		description: i18n.t('kanban_description'),
-		image: kanbanImg,
-	},
-	Scrum: {
-		description: i18n.t('scrum_description'),
-		image: scrumImg,
-	},
-	'Bug tracking': {
-		description: i18n.t('bug_tracking_description'),
-		image: bugTrackingImg,
-	},
-};
-
-const CreateProjectModal = () => {
+const CreateProjectModal: React.FC = () => {
+	const templatesInformation = getTemplatesInformation();
 	const dispatch = useDispatch();
-	const history = useHistory();
 	const { t } = useTranslation();
 
 	const { isLoading, isModalOpened, isProjectCreated } = useSelector(
@@ -39,7 +23,6 @@ const CreateProjectModal = () => {
 	);
 
 	if (isProjectCreated) {
-		history.push(history.location.pathname + '/RapidBoard');
 		dispatch(actions.resetState());
 	}
 
@@ -50,9 +33,18 @@ const CreateProjectModal = () => {
 	const [key, setKey] = useState<string>('');
 	const [template, setTemplate] = useState<string>('Scrum');
 
+	const [isNameValid, setIsNameValid] = useState<boolean>(false);
+	const [isKeyValid, setIsKeyValid] = useState<boolean>(false);
+	const [isValidErrorShown, setIsValidErrorShown] = useState<boolean>(false);
+
 	const { description, image } = templatesInformation[template as ProjectTemplate];
 
 	const onCreateProject = (): void => {
+		if (!isNameValid || !isKeyValid) {
+			setIsValidErrorShown(true);
+			return;
+		}
+
 		dispatch(
 			actions.startCreatingProject({
 				name,
@@ -83,19 +75,18 @@ const CreateProjectModal = () => {
 		dispatch(actions.openModal());
 	};
 
-	const onNameChanged = (event: ChangeEvent<HTMLInputElement>): void => {
-		const name = event.target.value;
+	const onNameChanged = (name: string): void => {
 		const key = generateKey(name);
 		setName(name);
 		setKey(key);
 	};
 
-	const onKeyChanged = (event: ChangeEvent<HTMLInputElement>): void => {
-		const key = event.target.value;
+	const onKeyChanged = (key: string): void => {
+		const newKey = key.toUpperCase();
 		if (!isKeyTouched) {
 			setIsKeyTouched(true);
 		}
-		setKey(key);
+		setKey(newKey);
 	};
 
 	const selectTemplate = (template: string) => {
@@ -121,11 +112,29 @@ const CreateProjectModal = () => {
 						<Form className={styles.form_container}>
 							<Form.Field>
 								<label>{t('name')}</label>
-								<input onChange={onNameChanged} value={name} placeholder={t('enter_proj_name')} />
+								<CustomInput
+									isValidErrorShown={isValidErrorShown}
+									isDataValid={isNameValid}
+									setIsDataValid={setIsNameValid}
+									data={name}
+									setData={onNameChanged}
+									placeholder="Enter project name"
+									popUpContent="Project name should contain at least 5 symbols long"
+									validation={(key) => validator.isLength(key, { min: 5 })}
+								/>
 							</Form.Field>
 							<Form.Field>
 								<label>{t('key')}</label>
-								<input placeholder={t('enter_a_key')} onChange={onKeyChanged} value={key} />
+								<CustomInput
+									isValidErrorShown={isValidErrorShown}
+									isDataValid={isKeyValid}
+									setIsDataValid={setIsKeyValid}
+									data={key}
+									setData={onKeyChanged}
+									placeholder="Enter your key"
+									popUpContent="Key should contain at least 2 symbols long"
+									validation={(key) => validator.isLength(key, { min: 2 })}
+								/>
 							</Form.Field>
 							<Form.Field>
 								<Checkbox label={t('share_settings_with_existing_project')} disabled={true} />

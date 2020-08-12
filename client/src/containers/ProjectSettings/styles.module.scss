@@ -1,0 +1,86 @@
+.header_inner__container {
+    padding: 25px 25px 20px;
+    position: relative;
+}
+
+.header__options {
+    position: absolute;
+    right: 30px;
+    top: 30px;
+}
+
+.header_inner__breadcrumbs {
+    margin-bottom: 10px;
+}
+
+.header_inner__title {
+    font-size: 24px;
+    margin: 0;
+}
+.body_inner__container {
+    position: relative;
+}
+
+.form__container {
+    width: 580px;
+    margin: 0 auto;
+    margin-bottom: 25px;
+}
+
+.fix_start_after_input {
+    &::after {
+        content: ''!important;
+    }
+}
+
+.form__input {
+    @extend .fix_start_after_input;
+    width: 250px;
+}
+
+.form__input_key{
+    @extend .fix_start_after_input;
+    width: 125px;
+}
+
+.form__avatar {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+    color: rgb(0, 101, 255);
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.avatar__img {
+    height: 40px;
+    min-width: 40px;
+    margin-right: 10px;
+    border-radius: 3px;
+}
+
+.form__area {
+    @extend .fix_start_after_input;
+}
+
+.form__input_container {
+    display: flex;
+    align-items: baseline;
+    position: relative;
+}
+
+.information__icon {
+    position: absolute;
+    right: -40px;
+    top: 9px;
+    display: block !important;
+    color: gray;
+}
+
+.form__input_select {
+    width: 100% !important;
+}

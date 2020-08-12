@@ -6,18 +6,21 @@ namespace WebApi.Board {
 }
 
 namespace WebApi.Issue {
+	import { Sprint } from '../entity/Sprint';
+	import { Projects } from '../entity/Projects';
+
 	interface PartialIssue {
 		id?: string;
 		type: string;
 		summary?: string;
-		boardColumnID?: string;
+		boardColumn?: string;
 		labels?: string[];
 		attachments?: string[];
 		links?: string[];
 		priority: string;
 		description?: string;
-		sprintID?: string;
-		projectID?: string;
+		sprint?: Sprint;
+		project?: Projects;
 		issueKey?: string;
 		assignedID?: string;
 		creatorID?: string;
@@ -25,11 +28,10 @@ namespace WebApi.Issue {
 }
 
 namespace WebApi.Result {
+	import { UserModel } from './User';
+
 	interface UserAuthResult {
-		user: {
-			id: string;
-			email: string;
-		};
+		user: UserModel;
 		jwtToken: string;
 	}
 
@@ -42,7 +44,7 @@ namespace WebApi.Result {
 			icon: string;
 		};
 		summary?: string;
-		boardColumnID?: string;
+		boardColumn?: string;
 		labels?: string[];
 		attachments?: string[];
 		links?: string[];
@@ -58,6 +60,31 @@ namespace WebApi.Result {
 		issueKey?: string;
 		assignedID?: string;
 		creatorID?: string;
+	}
+
+	interface BoardResult {
+		id: string;
+		boardType: 'Kanban' | 'Scrum';
+		name: string;
+		location: string;
+		createdAt: {
+			firstName: string;
+			lastName?: string;
+			id: string;
+			avatar: string | null;
+		};
+	}
+
+	interface BoardColumnResult {
+		id: string;
+		columnName: string;
+		status: string;
+		isResolutionSet: boolean;
+		board: BoardResult;
+	}
+
+	interface ComposedBoardResult extends BoardResult {
+		columns: BoardColumnResult[];
 	}
 }
 
@@ -83,7 +110,7 @@ namespace WebApi.User {
 		organization?: string;
 		jobTitle?: string;
 		userSettingsId?: string;
-		filtres?: string[];
+		filters?: string[];
 	}
 }
 
@@ -92,8 +119,8 @@ namespace WebApi.Entities {
 		id: string;
 		boardType: BoardType;
 		name: string;
-		location: string;
 		columns?: BoardColumn[];
+		sprints?: Sprint[];
 		createdBy: UserProfile;
 	}
 
@@ -103,6 +130,7 @@ namespace WebApi.Entities {
 		status?: string;
 		isResolutionSet?: boolean;
 		board: Board;
+		issues: Issue[];
 	}
 
 	interface Filter {
@@ -132,14 +160,14 @@ namespace WebApi.Entities {
 		id: string;
 		type?: IssueType;
 		summary?: string;
-		boardColumnID?: string;
+		boardColumn?: BoardColumn;
 		labels?: string;
 		attachments?: string;
 		links?: string;
 		priority?: Priority;
 		description?: string;
-		sprintID?: string;
-		projectID?: string;
+		sprint?: Sprint;
+		project?: Projects;
 		issueKey?: string;
 		assignedID?: string;
 		creatorID?: string;
@@ -169,6 +197,17 @@ namespace WebApi.Entities {
 		defaultAssigneeID?: string;
 		leadID?: string;
 		creatorID: string;
+		sprints?: Sprint[];
+	}
+
+	interface Sprint {
+		id: string;
+		sprintName?: string;
+		project?: Projects;
+		board?: Board;
+		isActive?: boolean;
+		isCompleted?: boolean;
+		issues?: [];
 	}
 
 	interface Teams {

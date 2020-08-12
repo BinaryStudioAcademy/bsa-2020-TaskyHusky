@@ -37,6 +37,15 @@ export const getByKey = async (key: string): Promise<WebApi.Result.IssueResult> 
 	return (await res.json()) as WebApi.Result.IssueResult;
 };
 
+export const getById = async (id: string): Promise<WebApi.Result.IssueResult> => {
+	const res: Response = await callWebApi({
+		method: 'GET',
+		endpoint: `issue/${id}`,
+	});
+
+	return (await res.json()) as WebApi.Result.IssueResult;
+};
+
 export const updateIssue = async (id: string, data: WebApi.Issue.PartialIssue) => {
 	const res: Response = await callWebApi({
 		endpoint: `issue/${id}`,
@@ -45,4 +54,23 @@ export const updateIssue = async (id: string, data: WebApi.Issue.PartialIssue) =
 	});
 
 	return await res.json();
+};
+
+export const updateIssueByKey = async (key: string, data: WebApi.Issue.PartialIssue) => {
+	const res: Response = await callWebApi({
+		endpoint: `issue/byKey/${key}`,
+		method: 'PUT',
+		body: { ...data },
+	});
+
+	return await res.json();
+};
+
+export const getByColumnId = async (id: string): Promise<WebApi.Result.IssueResult[]> => {
+	const res: Response = await callWebApi({
+		method: 'GET',
+		endpoint: `board/column/${id}/issues`,
+	});
+
+	return (await res.json()) as WebApi.Result.IssueResult[];
 };

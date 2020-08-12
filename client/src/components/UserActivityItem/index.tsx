@@ -9,7 +9,7 @@ const UserActivityItem = (
 		<Icon name="bookmark" size="large" className={styles.activityItem__icon} />
 		<div className={styles.activityItem__block}>
 			<p className={styles.activityItem__content}>{item.name}</p>
-			<p className={styles.activityItem__content__secondary}>{item.project} - You updates yhis on</p>
+			<p className={styles.activityItem__content__secondary}>{item.project} - You updates this on</p>
 		</div>
 	</div>
 );
