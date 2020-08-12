@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToMany } from 'typeorm';
-import { MinLength, IsEmail } from 'class-validator';
+import { MinLength, IsEmail, IsString, IsNotEmpty } from 'class-validator';
 import { Issue } from './Issue';
 import { Board } from './Board';
 import { Filter } from './Filter';
@@ -11,32 +11,43 @@ export class UserProfile {
 	@PrimaryGeneratedColumn('uuid')
 	id!: string;
 
-	@Column({ nullable: true })
-	firstName?: string;
+	@Column()
+	@IsString()
+	@IsNotEmpty()
+	firstName!: string;
+
+	@Column()
+	@IsString()
+	@IsNotEmpty()
+	lastName!: string;
 
 	@Column({ nullable: true })
-	lastName?: string;
-
-	@Column({ nullable: true })
+	@IsString()
 	username?: string;
 
 	@Column({ nullable: true })
+	@IsString()
 	avatar?: string;
 
 	@Column({ nullable: true })
+	@IsString()
 	department?: string;
 
 	@Column({ nullable: true })
+	@IsString()
 	location?: string;
 
 	@Column({ nullable: true })
+	@IsString()
 	organization?: string;
 
 	@Column({ unique: true })
 	@IsEmail()
+	@IsNotEmpty()
 	email?: string;
 
 	@Column({ nullable: true })
+	@IsString()
 	jobTitle?: string;
 
 	@Column({ nullable: true })
