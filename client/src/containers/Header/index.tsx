@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Menu, Image, Input, Segment, Dropdown, Button } from 'semantic-ui-react';
+import { Menu, Image, Input, Dropdown, Button } from 'semantic-ui-react';
 import logo from 'assets/logo192.png'; // TODO: replace with logo once it is ready
 import styles from './styles.module.scss';
 import { Redirect } from 'react-router-dom';
@@ -43,10 +43,11 @@ export const HeaderMenu = () => {
 
 	return (
 		<>
-			<Segment className={styles.segmentWrapper}>
+			<div className={`${styles.segmentWrapper} site-header`}>
 				<Menu secondary className={styles.menuWrapper}>
-					<Menu.Item onClick={logoClickHandler} className={styles.logoItem}>
+					<Menu.Item onClick={logoClickHandler} className={`${styles.logoItem} site-logo`}>
 						<Image src={logo} size="mini" alt={t('taskyhusky_logo')} />
+						<span className={`${styles.logoText} site-logo-text`}>TaskyHusky</span>
 					</Menu.Item>
 					<Menu.Item
 						name="your-work"
@@ -125,7 +126,7 @@ export const HeaderMenu = () => {
 						</Dropdown>
 					</Menu.Item>
 				</Menu>
-			</Segment>
+			</div>
 			{renderDashboards}
 		</>
 	);

@@ -19,6 +19,30 @@ label {
 	left: 5px;
 }
 
+.site-header > .menu > .item:not(.createMenuItem):not(.right):not(.site-logo) {
+	border-radius: 1px !important;
+	background-color: #ffffff !important;
+
+	&.active {
+		border-bottom: 2px solid #f3cb46 !important;
+	}
+
+	&:hover:not(.active) {
+		border-bottom: 2px solid #000000 !important;
+	}
+}
+
+.site-header > .menu > .item.site-logo {
+	.site-logo-text {
+		padding: 5px 10px;
+		border-radius: 2px;
+	}
+
+	&:hover > .site-logo-text {
+		background-color: rgba(0, 0, 0, 0.05) !important;
+	}
+}
+
 .required:after {
 	color: red;
 	content: '*';
