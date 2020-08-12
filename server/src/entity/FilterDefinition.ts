@@ -1,4 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { IsString, IsNotEmpty } from 'class-validator';
 
 @Entity()
 export class FilterDefinition {
@@ -6,11 +7,17 @@ export class FilterDefinition {
 	id!: string;
 
 	@Column()
-	filterType?: string;
+	@IsString()
+	@IsNotEmpty()
+	filterType!: string;
 
 	@Column()
-	dataType?: string;
+	@IsString()
+	@IsNotEmpty()
+	dataType!: string;
 
 	@Column()
-	title?: string;
+	@IsString()
+	@IsNotEmpty()
+	title!: string;
 }

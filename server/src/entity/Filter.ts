@@ -1,4 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, ManyToMany, JoinTable } from 'typeorm';
+import { IsString, IsNotEmpty } from 'class-validator';
 import { UserProfile } from './UserProfile';
 @Entity()
 export class Filter {
@@ -8,11 +9,14 @@ export class Filter {
 	@ManyToOne((type) => UserProfile, (user) => user.filters)
 	owner?: UserProfile;
 
+	// TODO: add rel to
 	@Column({ nullable: false })
 	ownerId?: string;
 
 	@Column()
-	name?: string;
+	@IsString()
+	@IsNotEmpty()
+	name!: string;
 
 	@ManyToMany((type) => UserProfile)
 	@JoinTable()
