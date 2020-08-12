@@ -2,15 +2,14 @@ import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
 import { getCustomRepository } from 'typeorm';
-import { isEmail } from 'class-validator';
-import { jwtSecret } from './jwt.config';
+import { validateUserProfile } from '../src/helpers/validateUserProfile.helper';
 import { authErrorMessages, EMAIL_FIELD } from '../src/constants/auth.constants';
-import { hashPassword, passwordValid } from '../src/helpers/password.helper';
+import { passwordValid, hashPassword } from '../src/helpers/password.helper';
+import { jwtSecret } from './jwt.config';
 import { UserRepository } from '../src/repositories/user.repository';
 import { UserModel } from '../src/models/User';
 import { ErrorResponse } from '../src/helpers/errorHandler.helper';
 import HttpStatusCode from '../src/constants/httpStattusCode.constants';
-import { fixEmail } from '../src/helpers/fixEmail.helper';
 
 passport.use(
 	'local',
@@ -56,14 +55,17 @@ passport.use(
 				return next(new ErrorResponse(HttpStatusCode.UNAUTHORIZED, authErrorMessages.TAKEN_EMAIL), null);
 			}
 
-			const encodedPassword = hashPassword(password);
-			const newUserObject = await userRepository.createNew({
-				...req.body,
-				email,
-				password: encodedPassword,
-			});
+			const isValidEntity = await validateUserProfile({ email, password }, next);
 
-			return next(null, newUserObject);
+			if (isValidEntity) {
+				const encodedPassword = hashPassword(password);
+				const newUserObject = await userRepository.createNew({
+					...req.body,
+					email,
+					password: encodedPassword,
+				});
+				return next(null, newUserObject);
+			}
 		},
 	),
 );
