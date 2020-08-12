@@ -139,7 +139,6 @@ const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, p
 							<Form.Dropdown
 								clearable
 								selection
-								style={{ maxWidth: 200 }}
 								multiple
 								placeholder={t('labels')}
 								options={labelOpts}

@@ -161,7 +161,6 @@ const CreateIssueModalBody: React.FC<Props> = ({
 									clearable
 									selection
 									multiple
-									style={{ maxWidth: 200 }}
 									placeholder={t('labels')}
 									options={labelOpts}
 									onChange={(event, data) => context.set('labels', data.value)}
