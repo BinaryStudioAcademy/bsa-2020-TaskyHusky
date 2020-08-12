@@ -62,6 +62,27 @@ passport.use(
 );
 
 passport.use(
+	'check_email',
+	new LocalStrategy(
+		{
+			usernameField: EMAIL_FIELD,
+			passwordField: EMAIL_FIELD, // DO NOT DELETE: LocalStrategy by default expects two arguments, in /check_email we send only email, this is a workaround
+			passReqToCallback: true,
+		},
+		async (req, email: string, password: string, next): Promise<void> => {
+			const userRepository = getCustomRepository(UserRepository);
+			const user = await userRepository.getByEmail(email);
+
+			if (!user) {
+				return next(null, { email: '' });
+			}
+
+			return next(null, user);
+		},
+	),
+);
+
+passport.use(
 	'jwt',
 	new JwtStrategy(
 		{

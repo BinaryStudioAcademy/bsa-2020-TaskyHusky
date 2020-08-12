@@ -1,6 +1,7 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, OneToMany } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, OneToMany, ManyToOne } from 'typeorm';
 import { Sprint } from './Sprint';
 import { Board } from './Board';
+import { UserProfile } from './UserProfile';
 
 @Entity()
 export class Projects {
@@ -16,18 +17,18 @@ export class Projects {
 	@Column({ type: 'text', nullable: true })
 	category?: string;
 
-	@Column({ type: 'text', nullable: true })
-	defaultAssigneeID?: string;
-
-	@Column({ type: 'uuid', nullable: true })
-	leadID?: string;
-
-	@Column({ type: 'uuid', nullable: true })
-	creatorID!: string;
-
 	@OneToMany((type) => Sprint, (sprint) => sprint.id)
 	sprints?: Sprint[];
 
-	@ManyToMany((type) => Board, board => board.projects)
+	@ManyToMany((type) => Board, (board) => board.projects)
 	boards?: Board[];
+
+	@ManyToOne((type) => UserProfile, (userProfile) => userProfile.assignedProjects, { cascade: true })
+	defaultAssignee?: UserProfile;
+
+	@ManyToOne((type) => UserProfile, (userProfile) => userProfile.leadedProjects, { cascade: true })
+	lead?: UserProfile;
+
+	@ManyToOne((type) => UserProfile, (userProfile) => userProfile.createdProjects, { cascade: true })
+	creator!: UserProfile;
 }

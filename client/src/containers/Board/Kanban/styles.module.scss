@@ -1,0 +1,24 @@
+:local(.columnsGrid) {
+	display: grid;
+	width: 100%;
+	padding: 0 20px;
+	overflow-x: auto;
+	gap: 20px;
+	height: 75%;
+}
+
+:local(.column) {
+	width: 300px;
+	height: min-content;
+	max-height: 100%;
+}
+
+:local(.inlineContainer) {
+	display: flex;
+	align-items: center;
+	margin: 20px 0 10px 15px;
+
+	* {
+		margin: 0 5px !important;
+	}
+}

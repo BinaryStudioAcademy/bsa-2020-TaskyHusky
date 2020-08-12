@@ -7,13 +7,14 @@ import ProfilePage from 'containers/ProfilePage';
 import PublicRoute from 'components/PublicRoute';
 import SignUp from 'pages/SignUp';
 import Filters from 'pages/Filters';
-import CreateIssue from 'pages/CreateIssue';
 import IssuePage from 'pages/IssuePage';
 import ProjectsPage from 'pages/ProjectsPage';
 import ProjectSettings from 'pages/ProjectSettings';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadProfileTrigger } from 'containers/LoginPage/logic/actions';
 import { RootState } from 'typings/rootState';
+import BoardPage from 'pages/BoardPage';
+import ProjectIssues from 'pages/ProjectIssues';
 
 const Routing: React.FC = () => {
 	const dispatch = useDispatch();
@@ -34,13 +35,14 @@ const Routing: React.FC = () => {
 		<Switch>
 			<PublicRoute exact restricted path="/login" component={Login} />
 			<PublicRoute exact restricted path="/signup" component={SignUp} />
-			<PrivateRoute exact path="/createIssue" component={CreateIssue} />
 			<PrivateRoute path="/issue/:key" component={IssuePage} />
 			<PrivateRoute exact path="/projects" component={ProjectsPage} />
 			<PrivateRoute exact path="/projects/projectSettings/:id" component={ProjectSettings} />
 			<PrivateRoute exact path="/team/:id" component={Team} />
 			<PublicRoute exact restricted={false} path="/profile/:id" component={ProfilePage} />
 			<PrivateRoute exact path="/filters" component={Filters} />
+			<PrivateRoute path="/board/:id" component={BoardPage} />
+			<PrivateRoute path="/project/:id/issues" component={ProjectIssues} />
 		</Switch>
 	);
 };

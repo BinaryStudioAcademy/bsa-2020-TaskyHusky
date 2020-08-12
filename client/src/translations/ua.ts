@@ -116,4 +116,7 @@ export const ua = {
 	category: 'Категорія',
 	project_name: 'Введіть назву проекту',
 	project_lead_name: 'Введіть им’я',
+	clear: 'Очистити',
+	issues: 'Задачі',
+	no_cards: 'Нема карток',
 };

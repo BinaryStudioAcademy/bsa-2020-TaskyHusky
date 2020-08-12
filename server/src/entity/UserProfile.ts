@@ -1,8 +1,9 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { MinLength, IsEmail } from 'class-validator';
-import {TeamsPeople} from './TeamsPeople';
+import { TeamsPeople } from './TeamsPeople';
 import { Board } from './Board';
 import { Filter } from './Filter';
+import { Projects } from './Projects';
 
 @Entity()
 export class UserProfile {
@@ -44,18 +45,27 @@ export class UserProfile {
 	@MinLength(6)
 	password?: string;
 
+	@OneToMany((type) => TeamsPeople, (teams) => teams.userId)
+	teams?: TeamsPeople[];
+
+	@OneToMany((type) => Board, (board) => board.createdBy)
+	boards?: Board[];
+
 	@Column({ nullable: true })
 	resetPasswordToken?:string;
 
 	@Column({ nullable: true })
 	resetPasswordExpires?:Date;
 
-	@OneToMany(type => TeamsPeople, teams => teams.userId)
-  	teams?: TeamsPeople[];
-
-	@OneToMany(type => Board, board => board.createdBy)
-	boards?: Board[];
-
 	@OneToMany((type) => Filter, (filter) => filter.owner)
 	filters?: Filter[];
+
+	@OneToMany((type) => Projects, (projects) => projects.defaultAssignee)
+	assignedProjects?: Projects[];
+
+	@OneToMany((type) => Projects, (projects) => projects.lead)
+	leadedProjects?: Projects[];
+
+	@OneToMany((type) => Projects, (projects) => projects.creator)
+	createdProjects!: Projects[];
 }

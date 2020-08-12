@@ -14,8 +14,7 @@ export class BoardRepository extends Repository<Board> {
 	}
 
 	async getOne(id: string) {
-		const board = await this
-			.createQueryBuilder('board')
+		const board = await this.createQueryBuilder('board')
 			.where('board.id = :id', { id })
 			.innerJoin('board.createdBy', 'user')
 			.addSelect('user.id')
@@ -32,8 +31,7 @@ export class BoardRepository extends Repository<Board> {
 	}
 
 	async getProjects(id: string) {
-		const board = await this
-			.createQueryBuilder('board')
+		const board = await this.createQueryBuilder('board')
 			.where('board.id = :id', { id })
 			.leftJoinAndSelect('board.projects', 'project')
 			.getOne();
@@ -49,7 +47,7 @@ export class BoardRepository extends Repository<Board> {
 		const userRepository = getCustomRepository(UserRepository);
 
 		let board = await this.getOne(id);
-		const { createdBy: user,projects, ...dataToCreate } = data;
+		const { createdBy: user, projects, ...dataToCreate } = data;
 
 		if (user) {
 			const userToAdd = await userRepository.getById(user.id);
@@ -58,20 +56,20 @@ export class BoardRepository extends Repository<Board> {
 			board = { ...board, createdBy: userToAdd };
 		}
 
-		if(projects){
-			const projectPromises:Array<Promise<Projects>> = projects.map( (projectId: string):Promise<Projects> => {
-				return <Promise<Projects>>getRepository('Projects').findOne({
-					where: {
-						id: projectId,
-					},
-				});
+		if (projects) {
+			const projectPromises: Array<Promise<Projects>> = projects.map(
+				(projectId: string): Promise<Projects> => {
+					return <Promise<Projects>>getRepository('Projects').findOne({
+						where: {
+							id: projectId,
+						},
+					});
+				},
+			);
 
+			const projectsToAdd = await Promise.all(projectPromises);
 
-			});
-
-			const projectsToAdd= await Promise.all(projectPromises);
-
-			board={...board, projects:projectsToAdd};
+			board = { ...board, projects: projectsToAdd };
 		}
 
 		board = { ...board, ...dataToCreate };
@@ -86,20 +84,20 @@ export class BoardRepository extends Repository<Board> {
 		const userToAdd = await userRepository.getById(user.id);
 		if (!userToAdd) throw new Error('User with current ID not found');
 
-		const projectPromises:Array<Promise<Projects>> = projects.map( (projectId: string):Promise<Projects> => {
-			return <Promise<Projects>>getRepository('Projects').findOne({
-				where: {
-					id: projectId,
-				},
-			});
+		const projectPromises: Array<Promise<Projects>> = projects.map(
+			(projectId: string): Promise<Projects> => {
+				return <Promise<Projects>>getRepository('Projects').findOne({
+					where: {
+						id: projectId,
+					},
+				});
+			},
+		);
 
-
-		});
-
-		const projectsToAdd= await Promise.all(projectPromises);
+		const projectsToAdd = await Promise.all(projectPromises);
 
 		let board = new Board();
-		board = { ...board, ...dataToCreate, createdBy: userToAdd, projects:projectsToAdd };
+		board = { ...board, ...dataToCreate, createdBy: userToAdd, projects: projectsToAdd };
 		return this.save([board]);
 	}
 
