@@ -37,7 +37,7 @@ export class Issue {
 	@ManyToOne((type) => Priority, (priority) => priority.issues)
 	priority?: Priority;
 
-	@Column()
+	@Column({ nullable: true })
 	@IsString()
 	description?: string;
 

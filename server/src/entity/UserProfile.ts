@@ -1,5 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { MinLength, IsEmail } from 'class-validator';
+import { Issue } from './Issue';
 import { TeamsPeople } from './TeamsPeople';
 import { Board } from './Board';
 import { Filter } from './Filter';
@@ -62,4 +63,7 @@ export class UserProfile {
 
 	@OneToMany((type) => Projects, (projects) => projects.creator)
 	createdProjects!: Projects[];
+
+	@OneToMany((type) => Issue, (issue) => issue.assignee)
+	assignedIssues?: Issue[];
 }

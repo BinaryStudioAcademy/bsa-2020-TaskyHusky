@@ -1,4 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, OneToMany, ManyToOne } from 'typeorm';
+import { Issue } from './Issue';
 import { Sprint } from './Sprint';
 import { Board } from './Board';
 import { UserProfile } from './UserProfile';
@@ -31,4 +32,7 @@ export class Projects {
 
 	@ManyToOne((type) => UserProfile, (userProfile) => userProfile.createdProjects, { cascade: true })
 	creator!: UserProfile;
+
+	@OneToMany((type) => Issue, (issue) => issue.project)
+	issues?: Issue[];
 }
