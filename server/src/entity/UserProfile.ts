@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
-import { MinLength, IsEmail, Length } from 'class-validator';
+import { MinLength, IsEmail, Length, IsLowercase } from 'class-validator';
 import { TeamsPeople } from './TeamsPeople';
 import { Board } from './Board';
 import { Filter } from './Filter';
@@ -33,6 +33,7 @@ export class UserProfile {
 	@Column({ unique: true })
 	@IsEmail()
 	@Length(6, 30)
+	@IsLowercase()
 	email?: string;
 
 	@Column({ nullable: true })
