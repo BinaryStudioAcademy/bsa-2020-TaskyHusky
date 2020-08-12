@@ -5,6 +5,8 @@ import { UserRepository } from '../repositories/user.repository';
 import { UserProfile } from '../entity/UserProfile';
 import { ErrorResponse } from '../helpers/errorHandler.helper';
 import HttpStatusCode from '../constants/httpStattusCode.constants';
+import { transporter, email as nodeMailerEmail } from '../../config/nodeMailer.config';
+import { appPort } from '../../config/app.config';
 
 const expirationTime = 1000 * 60 * 60 * 24;
 
@@ -29,7 +31,21 @@ class ResetPasswordController {
 				resetPasswordExpires,
 			});
 
-			res.status(200).send(savedUser);
+			const mailOptions = {
+				from: nodeMailerEmail,
+				to: user.email,
+				subject: 'Please, confirm your email',
+				text:`http://localhost:${appPort}/api/auth/reset_password/${resetPasswordToken} your token will expire in 1 day`
+			};
+
+			transporter.sendMail(mailOptions,(err)=>{
+				if(!err){
+					res.status(200).send(savedUser);
+				}else {
+					throw err;
+				}
+			});
+
 		} catch (e) {
 			next(new ErrorResponse(HttpStatusCode.NOT_FOUND, e.message));
 		}
@@ -50,8 +66,8 @@ class ResetPasswordController {
 			const savedUser = await userRepository.updateById(user.id, {
 				email: user.email,
 				password,
-				resetPasswordToken:undefined,
-				resetPasswordExpires:undefined,
+				resetPasswordToken: undefined,
+				resetPasswordExpires: undefined,
 			});
 
 			res.status(200).send(savedUser);
@@ -61,4 +77,4 @@ class ResetPasswordController {
 	};
 }
 
-export default ResetPasswordController
+export default ResetPasswordController;
