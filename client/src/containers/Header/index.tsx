@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Menu, Image, Input, Dropdown, Button } from 'semantic-ui-react';
+import { Menu, Image, Input, Dropdown, Button, Icon } from 'semantic-ui-react';
 import logo from 'assets/logo192.png'; // TODO: replace with logo once it is ready
 import styles from './styles.module.scss';
 import { Redirect } from 'react-router-dom';
@@ -73,6 +73,7 @@ export const HeaderMenu = () => {
 							active={activeItem === 'create'}
 						>
 							{t('create')}
+							<Icon name="plus" style={{ marginLeft: 5, marginRight: -5 }} />
 						</Menu.Item>
 					</CreateIssueModal>
 					<Menu.Item position="right" className={styles.rightMenu}>

@@ -64,6 +64,7 @@
 			background: rgba(0, 0, 0, 0.05);
 			padding: 7px;
 		}
+
 		i {
 			margin: 0;
 		}
@@ -97,6 +98,13 @@
 
 		.menuWrapper .circularIcon {
 			margin-left: -2px;
+		}
+	}
+
+	@media screen and (max-width: $less-than-medium-screen) {
+		.menuWrapper > .rightMenu input,
+		.menuWrapper > .rightMenu input ~ i {
+			display: none;
 		}
 	}
 }
