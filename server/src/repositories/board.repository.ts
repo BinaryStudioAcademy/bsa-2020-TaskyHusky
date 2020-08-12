@@ -10,19 +10,21 @@ export class BoardRepository extends Repository<Board> {
 	}
 
 	getAll = async (): Promise<IBoardModel[]> => {
-		const extendedBoards = await this.find().then(boards =>
-			boards.map(async (board) => this.getOne(board.id)),
-		);
+		const extendedBoards = <IBoardModel[]>await this
+			.createQueryBuilder('board')
+			.innerJoin('board.createdBy', 'user')
+			.addSelect(['user.id', 'user.firstName','user.lastName','user.avatar'])
+			.getMany();
 
-		return Promise.all(extendedBoards);
+		return extendedBoards;
 	};
 
-	getRecent = ():Promise<IReducedBoard[]> => {
+	getRecent = (): Promise<IReducedBoard[]> => {
 		const boards = this
 			.createQueryBuilder('board')
 			.select(['board.id', 'board.name'])
 			.orderBy('board.createdAt', 'DESC')
-			.getMany()
+			.getMany();
 
 		return boards;
 	};
@@ -32,10 +34,7 @@ export class BoardRepository extends Repository<Board> {
 			.createQueryBuilder('board')
 			.where('board.id = :id', { id })
 			.innerJoin('board.createdBy', 'user')
-			.addSelect('user.id')
-			.addSelect('user.firstName')
-			.addSelect('user.lastName')
-			.addSelect('user.avatar')
+			.addSelect(['user.id', 'user.firstName','user.lastName','user.avatar'])
 			.getOne();
 
 		if (!board) {
