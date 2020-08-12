@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import styles from './styles.module.scss';
+import { useTranslation } from 'react-i18next';
 import { requestChangePassword } from 'containers/ProfilePage/logiс/actions';
 import { Header, Button, Form, Popup } from 'semantic-ui-react';
 import SubmitedInput from 'components/SubmitedInput';
 import PasswordCheck from 'components/PasswordCheck';
 
 const SecurityManager = () => {
+	const { t } = useTranslation();
 	const dispatch = useDispatch();
 	const [passwords, setPasswords] = useState({
 		oldPassword: '',
@@ -42,28 +44,28 @@ const SecurityManager = () => {
 	};
 	return (
 		<section className={styles.container}>
-			<Header as="h3">Security</Header>
-			<Header as="h4">Change your password</Header>
+			<Header as="h3">{t('security')}</Header>
+			<Header as="h4">{t('change_pass')}</Header>
 			<Form onSubmit={onSubmit}>
 				<SubmitedInput
 					text={passwords.oldPassword}
 					propKey="oldPassword"
-					title="Current password"
-					placeholder="Enter old password"
+					title={t('current_pass')}
+					placeholder={t('enter_old_pass')}
 					type="password"
 					handleChange={handleChange}
 				/>
 				<Popup
 					className={styles.errorPopup}
 					open={!isPasswordValid}
-					content="Password should be more than 6 symbols"
+					content={t('pass_error_length')}
 					on={[]}
 					trigger={
 						<SubmitedInput
 							text={passwords.newPassword}
 							propKey="newPassword"
-							title="New password"
-							placeholder="Enter new password"
+							title={t('new_pass')}
+							placeholder={t('enter_new_pass')}
 							type="password"
 							handleChange={handleChange}
 							isValid={isPasswordValid}
@@ -76,14 +78,14 @@ const SecurityManager = () => {
 				<Popup
 					className={styles.errorPopup}
 					open={!isRepeatedPassValid}
-					content="Passwords should be equal"
+					content={t('pass_error_equal')}
 					on={[]}
 					trigger={
 						<SubmitedInput
 							text={passwords.repeatedPassword}
 							propKey="repeatedPassword"
-							title="Repeat password"
-							placeholder="Repeat new password"
+							title={t('repeat_pass')}
+							placeholder={t('placeholder_pass')}
 							type="password"
 							handleChange={handleChange}
 							isValid={isRepeatedPassValid}
@@ -92,7 +94,7 @@ const SecurityManager = () => {
 					}
 				/>
 				<Button className={styles.submitButton} type="submit">
-					Save changes
+					{t('save_changes')}
 				</Button>
 			</Form>
 		</section>

@@ -97,7 +97,7 @@ export const HeaderMenu = () => {
 								<Dropdown.Item>{t('docs')}</Dropdown.Item>
 								<Dropdown.Item>{t('community')}</Dropdown.Item>
 								<Dropdown.Item>{t('get_mobile')}</Dropdown.Item>
-								<Dropdown.Item>{t('about')}</Dropdown.Item>
+								<Dropdown.Item>{t('about_tasky')}</Dropdown.Item>
 								<Dropdown.Header>{t('legal')}</Dropdown.Header>
 								<Dropdown.Item>{t('term_of_use')}</Dropdown.Item>
 								<Dropdown.Item>{t('privacy_policy')}</Dropdown.Item>

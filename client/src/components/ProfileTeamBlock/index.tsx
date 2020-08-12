@@ -1,5 +1,6 @@
 import React from 'react';
 import { Header, Icon } from 'semantic-ui-react';
+import { useTranslation } from 'react-i18next';
 import styles from './styles.module.scss';
 
 interface Props {
@@ -8,11 +9,12 @@ interface Props {
 }
 
 const ProfileTeamBlock: React.FC<Props> = (props: Props) => {
+	const { t } = useTranslation();
 	const { isCurrentUser, mockData } = props;
 	return (
 		<div>
 			<Header as="h3" className={styles.header}>
-				Teams
+				{t('team')}
 			</Header>
 			{mockData.teams.map((item: any) => (
 				<div key={item.id} className={styles.item}>
@@ -33,7 +35,7 @@ const ProfileTeamBlock: React.FC<Props> = (props: Props) => {
 					<div className={styles.groupIcon__secondary}>
 						<Icon disabled name="group" size="small" />
 					</div>
-					<p className={styles.content}>Start a team...</p>
+					<p className={styles.content}>{t('start_team')}</p>
 				</div>
 			)}
 		</div>

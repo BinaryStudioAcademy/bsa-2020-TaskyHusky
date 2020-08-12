@@ -4,7 +4,7 @@ import { Icon } from 'semantic-ui-react';
 import { UserProfileState } from 'containers/ProfilePage/logiс/state';
 
 interface Props {
-	text: keyof UserProfileState;
+	text: string;
 	placeholder: string;
 	icon: string;
 }

@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './styles.module.scss';
+import { useTranslation } from 'react-i18next';
 import { Header, Segment, Button } from 'semantic-ui-react';
 import UserActivityItem from 'components/UserActivityItem';
 
@@ -9,11 +10,12 @@ interface Props {
 }
 
 const ProfileSection: React.FC<Props> = (props: Props) => {
+	const { t } = useTranslation();
 	const { isCurrentUser, mockData } = props;
 	return (
 		<section className={styles.mainInfo}>
-			<Header as="h3">Worked on</Header>
-			{isCurrentUser && <p>Others will only see what they can access</p>}
+			<Header as="h3">{t('worked_on')}</Header>
+			{isCurrentUser && <p>{t('content_privat_message')}</p>}
 			<Segment className={styles.card}>
 				{mockData.activity.length ? (
 					<div className={styles.recentActivity}>
@@ -29,13 +31,13 @@ const ProfileSection: React.FC<Props> = (props: Props) => {
 							alt="user do not have a work experience"
 						/>
 						<div className={styles.emptyCard__content}>
-							<Header as="h3">There is no work to see here</Header>
-							<p>Things you created, edited or commented on in the last 90 days.</p>
+							<Header as="h3">{t('no_work')}</Header>
+							<p>{t('content_no_work')}</p>
 						</div>
 					</div>
 				)}
 			</Segment>
-			<Header as="h3">You work with</Header>
+			<Header as="h3">{t('work_with')}</Header>
 			<Segment className={styles.card}>
 				<div className={styles.emptyCard}>
 					<img
@@ -44,15 +46,15 @@ const ProfileSection: React.FC<Props> = (props: Props) => {
 						alt="user do not have a work experience with other people"
 					/>
 					<div className={styles.emptyCard__content}>
-						<Header as="h3">There are no people to see here</Header>
-						<p>People you collaborated with in the last 90 days will show here.</p>
+						<Header as="h3">{t('no_people')}</Header>
+						<p>{t('content_no_people')}</p>
 					</div>
 				</div>
 			</Segment>
 			{isCurrentUser && (
 				<>
-					<p>Tell us about your experience with profiles and search within this directory.</p>
-					<Button>Send Tasky-Husky feedback</Button>
+					<p>{t('tell_experience')}</p>
+					<Button>{t('send_feedback')}</Button>
 				</>
 			)}
 		</section>

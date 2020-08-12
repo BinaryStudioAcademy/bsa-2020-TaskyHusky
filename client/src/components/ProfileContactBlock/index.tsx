@@ -1,18 +1,19 @@
 import React from 'react';
 import { Header, Icon } from 'semantic-ui-react';
 import styles from './styles.module.scss';
-import { UserProfileState } from 'containers/ProfilePage/logiс/state';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
-	email: keyof UserProfileState;
+	email: string;
 	isCurrentUser: boolean;
 }
 const ProfileContacntBlock: React.FC<Props> = (props: Props) => {
+	const { t } = useTranslation();
 	const { email, isCurrentUser } = props;
 	return (
 		<>
 			<Header as="h3" className={styles.header}>
-				Contact
+				{t('contact')}
 			</Header>
 			{email ? (
 				<div className={`${styles.email} ${styles.neverPoint}`}>
@@ -22,7 +23,7 @@ const ProfileContacntBlock: React.FC<Props> = (props: Props) => {
 			) : isCurrentUser ? (
 				<div className={styles.item}>
 					<Icon disabled name="envelope outline" size="large" />
-					<p>Your location</p>
+					<p>{t('your_location')}</p>
 				</div>
 			) : (
 				''

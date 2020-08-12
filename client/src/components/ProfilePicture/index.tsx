@@ -1,19 +1,20 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Header, Button, Icon } from 'semantic-ui-react';
 import styles from './styles.module.scss';
-import { UserProfileState } from 'containers/ProfilePage/logiс/state';
 
 interface Props {
-	firstName: keyof UserProfileState;
-	lastName: keyof UserProfileState;
-	username: keyof UserProfileState;
-	avatar: keyof UserProfileState;
-	editMode: keyof UserProfileState;
+	firstName: string;
+	lastName: string;
+	username: string;
+	avatar: string;
+	editMode: string;
 	isCurrentUser: boolean;
 	showManager: (modeToShow: string) => void;
 }
 
 const ProfilePicture: React.FC<Props> = (props: Props) => {
+	const { t } = useTranslation();
 	const { firstName, lastName, username, avatar, editMode, isCurrentUser, showManager } = props;
 	const [uploadUrl, setUploadUrl] = useState<ArrayBuffer | string | null>('');
 	const [formData, setFormData] = useState(null);
@@ -65,7 +66,7 @@ const ProfilePicture: React.FC<Props> = (props: Props) => {
 						onClick={() => showManager('profile')}
 						disabled={!editMode ? false : true}
 					>
-						Manage your account
+						{t('manage_account')}
 					</Button>
 				)}
 			</div>

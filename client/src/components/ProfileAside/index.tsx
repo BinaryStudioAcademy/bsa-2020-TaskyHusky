@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import styles from './styles.module.scss';
 import ProfilePicture from 'components/ProfilePicture';
 import { Segment } from 'semantic-ui-react';
@@ -17,6 +18,7 @@ interface Props {
 }
 
 const ProfileAside: React.FC<Props> = (props: Props) => {
+	const { t } = useTranslation();
 	const { user, isCurrentUser, mockData, showManager } = props;
 	const {
 		avatar = '',
@@ -33,11 +35,11 @@ const ProfileAside: React.FC<Props> = (props: Props) => {
 	return (
 		<aside className={styles.userInfo}>
 			<ProfilePicture
-				avatar={avatar as keyof UserProfileState}
-				firstName={firstName as keyof UserProfileState}
-				lastName={lastName as keyof UserProfileState}
-				username={username as keyof UserProfileState}
-				editMode={editMode as keyof UserProfileState}
+				avatar={avatar}
+				firstName={firstName}
+				lastName={lastName}
+				username={username}
+				editMode={editMode}
 				isCurrentUser={isCurrentUser}
 				showManager={showManager}
 			/>
@@ -47,16 +49,16 @@ const ProfileAside: React.FC<Props> = (props: Props) => {
 				) : (
 					<>
 						<ProfileAboutBlock
-							jobTitle={jobTitle as keyof UserProfileState}
-							organization={organization as keyof UserProfileState}
-							department={department as keyof UserProfileState}
-							location={location as keyof UserProfileState}
+							jobTitle={jobTitle}
+							organization={organization}
+							department={department}
+							location={location}
 							isCurrentUser={isCurrentUser}
 						/>
-						<ProfileContacntBlock email={email as keyof UserProfileState} isCurrentUser={isCurrentUser} />
+						<ProfileContacntBlock email={email} isCurrentUser={isCurrentUser} />
 						<ProfileTeamBlock isCurrentUser={isCurrentUser} mockData={mockData} />
 						<Link to="#" className={styles.policyLink}>
-							View privacy policy
+							{t('view_privacy_policy')}
 						</Link>
 					</>
 				)}
