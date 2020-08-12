@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToOne } from 'typeorm';
-import { IsBoolean } from 'class-validator';
+import { IsBoolean, IsString, IsUUID } from 'class-validator';
 import { Issue } from './Issue';
 import { Projects } from './Projects';
 import { Board } from './Board';
@@ -10,22 +10,24 @@ export class Sprint {
 	id!: string;
 
 	@Column()
+	@IsString()
 	sprintName?: string;
 
-	@ManyToOne((type) => Projects, { onDelete: 'CASCADE' })
+	@ManyToOne((type) => Projects, (projects) => projects.sprints, { onDelete: 'CASCADE' })
 	project?: Projects;
 
-	@ManyToOne((type) => Board, { onDelete: 'CASCADE' })
+	@ManyToOne((type) => Board, (board) => board.sprints, { onDelete: 'CASCADE' })
+	@IsUUID()
 	board?: Board;
 
-	@Column({ type: 'boolean' })
+	@Column()
 	@IsBoolean()
 	isActive?: boolean;
 
-	@Column({ type: 'boolean' })
+	@Column()
 	@IsBoolean()
 	isCompleted?: boolean;
 
-	@OneToMany((type) => Issue, (issue) => issue.id)
-	issues?: [];
+	@OneToMany((type) => Issue, (issue) => issue.sprint, { onDelete: 'CASCADE' })
+	issues?: Issue[];
 }
