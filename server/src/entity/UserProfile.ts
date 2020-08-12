@@ -1,10 +1,10 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToMany } from 'typeorm';
 import { MinLength, IsEmail } from 'class-validator';
 import { Issue } from './Issue';
-import { TeamsPeople } from './TeamsPeople';
 import { Board } from './Board';
 import { Filter } from './Filter';
 import { Projects } from './Projects';
+import { Team } from './Team';
 
 @Entity()
 export class UserProfile {
@@ -46,9 +46,6 @@ export class UserProfile {
 	@MinLength(6)
 	password?: string;
 
-	@OneToMany((type) => TeamsPeople, (teams) => teams.userId)
-	teams?: TeamsPeople[];
-
 	@OneToMany((type) => Board, (board) => board.createdBy)
 	boards?: Board[];
 
@@ -66,4 +63,9 @@ export class UserProfile {
 
 	@OneToMany((type) => Issue, (issue) => issue.assignee)
 	assignedIssues?: Issue[];
+
+	@ManyToMany((type) => Team, (team) => team.users, {
+		cascade: true,
+	})
+	teams?: Team[];
 }
