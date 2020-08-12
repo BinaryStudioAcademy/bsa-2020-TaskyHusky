@@ -10,11 +10,11 @@ import styles from './styles.module.scss';
 interface Props {
 	board: IBoard;
 	setBoard: (board: IBoard) => void;
-	changeSubmitStatus: (status: boolean) => void;
+	setCreateButtonDisabled: (status: boolean) => void;
 }
 
 const BoardModalFinal = (props: Props) => {
-	const { board, setBoard, changeSubmitStatus } = props;
+	const { board, setBoard, setCreateButtonDisabled } = props;
 
 	const dispatch = useDispatch();
 	useEffect(() => {
@@ -24,17 +24,18 @@ const BoardModalFinal = (props: Props) => {
 	const [selectedName, setSelectedName] = useState('');
 	const [selectedProjects, setSelectedProjects] = useState<Array<string>>([]);
 	useEffect(() => {
-		if (selectedProjects.length !== 0 && selectedName !== '') {
-			changeSubmitStatus(false);
+		const isCreateButtonHidden = selectedProjects.length === 0 || selectedName === '';
+
+		if (!isCreateButtonHidden) {
 			setBoard({
 				...board,
 				projects: [...selectedProjects],
 				name: selectedName,
 				admin: authData.user?.id,
 			});
-		} else {
-			changeSubmitStatus(true);
 		}
+
+		setCreateButtonDisabled(isCreateButtonHidden);
 	}, [selectedProjects, selectedName]);
 
 	const authData = useSelector((rootState: RootState) => rootState.auth);

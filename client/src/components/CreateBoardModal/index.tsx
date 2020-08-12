@@ -20,8 +20,8 @@ enum ModalNames {
 
 const CreateBoardModal = (props: Props) => {
 	const [modalWindowName, selectModalWindowName] = useState<ModalNames>(ModalNames.selectType);
+	const [isCreateDisabled, setCreateButtonDisabled] = useState(true);
 	const { setIsModalShown, onCreateBoard } = props;
-	const [isCreateDisabled, changeSubmitStatus] = useState(true);
 
 	const [board, setBoard] = useState<IBoard>({
 		boardType: boardTypes.scrum,
@@ -71,7 +71,11 @@ const CreateBoardModal = (props: Props) => {
 					<BoardModalMenuAlgorithm algorithm={board.algorithm} onRadioChange={onRadioChange} />
 				) : null}
 				{modalWindowName === ModalNames.createBoard ? (
-					<BoardModalFinal board={board} setBoard={setBoard} changeSubmitStatus={changeSubmitStatus} />
+					<BoardModalFinal
+						board={board}
+						setBoard={setBoard}
+						setCreateButtonDisabled={setCreateButtonDisabled}
+					/>
 				) : null}
 			</Modal.Content>
 			<Modal.Actions>
