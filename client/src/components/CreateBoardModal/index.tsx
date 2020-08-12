@@ -12,9 +12,14 @@ interface Props {
 	onCreateBoard(board: createBoard): void;
 }
 
+enum ModalNames {
+	selectType,
+	selectAlgorithm,
+	createBoard,
+}
+
 const CreateBoardModal = (props: Props) => {
-	const [isTypeSelected, selectType] = useState(false);
-	const [isAlgorithmSelected, selectAlgorithm] = useState(false);
+	const [modalWindowName, selectModalWindowName] = useState<ModalNames>(ModalNames.selectType);
 	const { setIsModalShown, onCreateBoard } = props;
 	const [isCreateDisabled, changeSubmitStatus] = useState(true);
 
@@ -27,8 +32,7 @@ const CreateBoardModal = (props: Props) => {
 	});
 
 	const onCancelClick = () => {
-		selectType(false);
-		selectAlgorithm(false);
+		selectModalWindowName(ModalNames.selectType);
 		setIsModalShown(false);
 	};
 
@@ -39,11 +43,11 @@ const CreateBoardModal = (props: Props) => {
 		});
 	};
 
-	const onTypeSelection = () => {
-		selectType(true);
+	const onTypeSelection = (type: boardTypes) => {
+		selectModalWindowName(ModalNames.selectAlgorithm);
 		setBoard({
 			...board,
-			boardType: boardTypes.kanban,
+			boardType: type,
 		});
 	};
 
@@ -57,41 +61,35 @@ const CreateBoardModal = (props: Props) => {
 			dimmer="inverted"
 		>
 			<Modal.Header>
-				{!isAlgorithmSelected
-					? 'Create a board'
-					: board.algorithm === creatingAlgorithms.newProject
-					? 'New project with board'
-					: 'Name this board'}
+				{modalWindowName !== ModalNames.createBoard ? 'Create a board' : 'Name this board'}
 			</Modal.Header>
 			<Modal.Content>
-				{!isTypeSelected ? <BoardModalMenuType onTypeSelection={onTypeSelection} /> : null}
-				{isTypeSelected && !isAlgorithmSelected ? (
+				{modalWindowName === ModalNames.selectType ? (
+					<BoardModalMenuType onTypeSelection={onTypeSelection} />
+				) : null}
+				{modalWindowName === ModalNames.selectAlgorithm ? (
 					<BoardModalMenuAlgorithm algorithm={board.algorithm} onRadioChange={onRadioChange} />
 				) : null}
-				{isAlgorithmSelected && board.algorithm === creatingAlgorithms.existingProject ? (
+				{modalWindowName === ModalNames.createBoard ? (
 					<BoardModalFinal board={board} setBoard={setBoard} changeSubmitStatus={changeSubmitStatus} />
 				) : null}
 			</Modal.Content>
 			<Modal.Actions>
-				{isTypeSelected ? (
+				{modalWindowName !== ModalNames.selectType ? (
 					<Button
 						onClick={() => {
-							if (isAlgorithmSelected) {
-								selectAlgorithm(false);
-							} else {
-								selectType(false);
-							}
+							selectModalWindowName(modalWindowName - 1);
 						}}
 					>
 						Back
 					</Button>
 				) : null}
-				{isTypeSelected && !isAlgorithmSelected ? (
-					<Button color={'facebook'} onClick={() => selectAlgorithm(true)}>
+				{modalWindowName === ModalNames.selectAlgorithm ? (
+					<Button color={'facebook'} onClick={() => selectModalWindowName(ModalNames.createBoard)}>
 						Next
 					</Button>
 				) : null}
-				{isAlgorithmSelected ? (
+				{modalWindowName === ModalNames.createBoard ? (
 					<Button
 						color={'facebook'}
 						disabled={isCreateDisabled}
