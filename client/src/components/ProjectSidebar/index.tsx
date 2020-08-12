@@ -40,16 +40,6 @@ const ProjectSidebar = (ProjectComponent: any) => (
 							People
 						</Link>
 					</div>
-					<div className={styles.body__group_item}>
-						<Link to={'/'} className={styles.body__link}>
-							Automation
-						</Link>
-					</div>
-					<div className={styles.body__group_item}>
-						<Link to={'/'} className={styles.body__link}>
-							Summary
-						</Link>
-					</div>
 				</div>
 				<div className={styles.body__group}>
 					<div className={styles.body__group_item}>
@@ -57,35 +47,9 @@ const ProjectSidebar = (ProjectComponent: any) => (
 							Issue types
 						</Link>
 					</div>
-					<div className={styles.body__group_item}>
-						<Link to={'/'} className={styles.body__link}>
-							Issue layout
-						</Link>
-					</div>
 				</div>
+
 				<div className={styles.body__group}>
-					<div className={styles.body__group_item}>
-						<Link to={'/'} className={styles.body__link}>
-							Workflows
-						</Link>
-					</div>
-					<div className={styles.body__group_item}>
-						<Link to={'/'} className={styles.body__link}>
-							Screens
-						</Link>
-					</div>
-					<div className={styles.body__group_item}>
-						<Link to={'/'} className={styles.body__link}>
-							Fields
-						</Link>
-					</div>
-				</div>
-				<div className={styles.body__group}>
-					<div className={styles.body__group_item}>
-						<Link to={'/'} className={styles.body__link}>
-							Code
-						</Link>
-					</div>
 					<div className={styles.body__group_item}>
 						<Link to={'/'} className={styles.body__link}>
 							Versions
@@ -103,33 +67,10 @@ const ProjectSidebar = (ProjectComponent: any) => (
 							Permissions
 						</Link>
 					</div>
-					<div className={styles.body__group_item}>
-						<Link to={'/'} className={styles.body__link}>
-							Issue security
-						</Link>
-					</div>
+
 					<div className={styles.body__group_item}>
 						<Link to={'/'} className={styles.body__link}>
 							Notifications
-						</Link>
-					</div>
-				</div>
-				<div className={styles.body__group}>
-					<div className={styles.body__group_item}>
-						<Link to={'/'} className={styles.body__link}>
-							Issue collectors
-						</Link>
-					</div>
-				</div>
-				<div className={styles.body__group}>
-					<div className={styles.body__group_item}>
-						<Link to={'/'} className={styles.body__link}>
-							Opsgenie
-						</Link>
-					</div>
-					<div className={styles.body__group_item}>
-						<Link to={'/'} className={styles.body__link}>
-							Development tools
 						</Link>
 					</div>
 				</div>
