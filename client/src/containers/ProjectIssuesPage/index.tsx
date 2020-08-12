@@ -20,7 +20,7 @@ const ProjectIssuesPage: React.FC<Props> = ({ projectId }) => {
 
 	useEffect(() => {
 		if (!project) {
-			getProjectById(projectId).then((projectArr) => setProject(projectArr[0]));
+			getProjectById(projectId).then(setProject);
 		}
 	}, [project, projectId]);
 

@@ -69,7 +69,7 @@ const ProjectIssuesColumn: React.FC<Props> = ({ projectId, onChangeSelectedCard,
 								key={i}
 							/>
 					  ))
-					: 'No cards'}
+					: t('no_cards')}
 			</div>
 		</Segment>
 	);

@@ -118,4 +118,5 @@ export const ru = {
 	project_lead_name: 'Введите имя',
 	clear: 'Очистить',
 	issues: 'Задачи',
+	no_cards: 'Нет карточек',
 };
