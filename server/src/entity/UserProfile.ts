@@ -1,9 +1,9 @@
-import { Projects } from './Projects';
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { MinLength, IsEmail } from 'class-validator';
 import { TeamsPeople } from './TeamsPeople';
 import { Board } from './Board';
 import { Filter } from './Filter';
+import { Projects } from './Projects';
 
 @Entity()
 export class UserProfile {
