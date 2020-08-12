@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, OneToMany, ManyToOne } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, OneToMany, ManyToOne, JoinTable } from 'typeorm';
 import { Issue } from './Issue';
 import { Sprint } from './Sprint';
 import { Board } from './Board';
@@ -22,6 +22,7 @@ export class Projects {
 	sprints?: Sprint[];
 
 	@ManyToMany((type) => Board, (board) => board.projects)
+	@JoinTable({ name: 'project_boards' })
 	boards?: Board[];
 
 	@ManyToOne((type) => UserProfile, (userProfile) => userProfile.assignedProjects, { cascade: true })

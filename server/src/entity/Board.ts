@@ -34,6 +34,5 @@ export class Board {
 	@ManyToMany((type) => Projects, (project) => project.boards, {
 		cascade: true,
 	})
-	@JoinTable()
 	projects?: Projects[];
 }
