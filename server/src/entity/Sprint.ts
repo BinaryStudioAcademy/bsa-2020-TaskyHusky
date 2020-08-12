@@ -14,6 +14,7 @@ export class Sprint {
 	sprintName?: string;
 
 	@ManyToOne((type) => Projects, (projects) => projects.sprints, { onDelete: 'CASCADE' })
+	@IsUUID()
 	project?: Projects;
 
 	@ManyToOne((type) => Board, (board) => board.sprints, { onDelete: 'CASCADE' })
