@@ -7,10 +7,11 @@ import { authErrorMessages, EMAIL, PASSWORD } from '../constants/auth.constants'
 
 interface ValidateUserProfile {
 	(data: Partial<UserProfile>, next: (error: any, user?: any, options?: IVerifyOptions | undefined) => void): Promise<
-		true | undefined
+		boolean
 	>;
 }
 
+// eslint-disable-next-line consistent-return
 export const validateUserProfile: ValidateUserProfile = async (data, next) => {
 	const userInstance = new UserProfile(data);
 	const errorsArray = await validate(userInstance);
@@ -39,5 +40,5 @@ export const validateUserProfile: ValidateUserProfile = async (data, next) => {
 		});
 	}
 
-	if (!errors) return true;
+	return !errors;
 };
