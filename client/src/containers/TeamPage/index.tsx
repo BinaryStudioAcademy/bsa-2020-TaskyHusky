@@ -13,6 +13,7 @@ import TeamAddPeopleModal from 'components/TeamAddPeopleModal';
 import CreateLink from 'components/TeamLinks/createLink';
 import DeleteLink from 'components/TeamLinks/deleteLink';
 import Spinner from 'components/common/Spinner';
+import { StateFromReducersMapObject } from 'redux';
 
 type Team = {
 	team: WebApi.Team.TeamModel;
@@ -56,7 +57,7 @@ const TeamPage = ({ match: { params }, team: { team } }: { match: any; team: Tea
 		setAddLinks(true);
 	};
 
-	const onDeleteLink = (link: any) => {
+	const onDeleteLink = (link: Link) => {
 		toggleDeleteLinkModal();
 		setLinkToDelete(link);
 	};
@@ -64,7 +65,7 @@ const TeamPage = ({ match: { params }, team: { team } }: { match: any; team: Tea
 		dispatch(actions.deleteLinkLoading({ id: params.id, link }));
 		toggleDeleteLinkModal();
 	};
-	const changeMainFields = (field: any) => {
+	const changeMainFields = (field: { [key: string]: string }) => {
 		dispatch(actions.updateFieldsLoading({ id: params.id, field }));
 	};
 
@@ -116,6 +117,7 @@ const TeamPage = ({ match: { params }, team: { team } }: { match: any; team: Tea
 		<Spinner />
 	);
 };
+
 const mapStateToProps = (state: any) => ({
 	team: state.team,
 });

@@ -1,15 +1,12 @@
 import React, { useState } from 'react';
 import { Icon, Button } from 'semantic-ui-react';
 import styles from './styles.module.scss';
+import { CurrentLink } from './index';
 
 export type Props = {
-	edit: any;
-	deleteLink: any;
-	link: {
-		http: string;
-		name: string;
-		description: string;
-	};
+	edit: (arg: CurrentLink) => void;
+	deleteLink: (arg: CurrentLink) => void;
+	link: CurrentLink;
 };
 
 const LinkCard = ({ link, edit, deleteLink }: Props) => {

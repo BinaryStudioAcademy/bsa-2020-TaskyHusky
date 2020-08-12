@@ -23,7 +23,7 @@ const TeamsMembersCard = () => {
 		setViewUser(user);
 		setModal(true);
 	};
-	const hideModal = (e: any) => {
+	const hideModal = (e: React.BaseSyntheticEvent) => {
 		if (!e.target.classList.contains('card_body') && !e.target.classList.contains('block_wrapper')) {
 			setModal(false);
 			setViewUser(undefined);
