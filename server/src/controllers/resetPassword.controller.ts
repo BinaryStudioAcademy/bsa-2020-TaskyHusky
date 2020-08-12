@@ -4,9 +4,10 @@ import { getCustomRepository } from 'typeorm';
 import { UserRepository } from '../repositories/user.repository';
 import { UserProfile } from '../entity/UserProfile';
 import { ErrorResponse } from '../helpers/errorHandler.helper';
+import { hashPassword } from '../helpers/password.helper';
 import HttpStatusCode from '../constants/httpStattusCode.constants';
 import { transporter, email as nodeMailerEmail } from '../../config/nodeMailer.config';
-import { appPort } from '../../config/app.config';
+import { appPort, appHost } from '../../config/app.config';
 
 const expirationTime = 1000 * 60 * 60 * 24;
 
@@ -35,13 +36,13 @@ class ResetPasswordController {
 				from: nodeMailerEmail,
 				to: user.email,
 				subject: 'Please, confirm your email',
-				text:`http://localhost:${appPort}/api/auth/reset_password/${resetPasswordToken} your token will expire in 1 day`
+				text: `http://${appHost}:${appPort}/api/auth/reset_password/${resetPasswordToken} your token will expire in 1 day`,
 			};
 
-			transporter.sendMail(mailOptions,(err)=>{
-				if(!err){
+			transporter.sendMail(mailOptions, (err) => {
+				if (!err) {
 					res.status(200).send(savedUser);
-				}else {
+				} else {
 					throw err;
 				}
 			});
@@ -65,9 +66,9 @@ class ResetPasswordController {
 
 			const savedUser = await userRepository.updateById(user.id, {
 				email: user.email,
-				password,
-				resetPasswordToken: undefined,
-				resetPasswordExpires: undefined,
+				password: hashPassword(password),
+				resetPasswordToken: null,
+				resetPasswordExpires: null,
 			});
 
 			res.status(200).send(savedUser);
