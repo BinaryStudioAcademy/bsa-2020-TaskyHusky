@@ -13,18 +13,27 @@ import TeamAddPeopleModal from 'components/TeamAddPeopleModal';
 import CreateLink from 'components/TeamLinks/createLink';
 import DeleteLink from 'components/TeamLinks/deleteLink';
 import Spinner from 'components/common/Spinner';
+
+type Team = {
+	team: WebApi.Team.TeamModel;
+};
 export interface Link {
-	http: string;
-	name: string;
-	description: string;
+	http?: string;
+	name?: string;
+	description?: string;
 }
-const TeamPage = ({ match: { params }, team: { team } }: { match: any; team: any }) => {
+
+const TeamPage = ({ match: { params }, team: { team } }: { match: any; team: Team }) => {
 	const [notification, setNotification] = useState<boolean>(true);
 	const [addPeopleModal, setAddPeopleModal] = useState<boolean>(false);
 	const [editedLink, setEditedLink] = useState<Link | undefined>();
-	const [linkToDelete, setLinkToDelete] = useState<Link | undefined>();
 	const [addLinks, setAddLinks] = useState<boolean>(false);
 	const [deleteLink, setDeleteLinks] = useState<boolean>(false);
+	const [linkToDelete, setLinkToDelete] = useState<Link>({
+		http: '',
+		name: '',
+		description: '',
+	});
 
 	const dispatch = useDispatch();
 
@@ -33,6 +42,7 @@ const TeamPage = ({ match: { params }, team: { team } }: { match: any; team: any
 	}, [dispatch]);
 	const toggleNotification = (): void => setNotification(false);
 	const showAddPeopleModal = (): void => setAddPeopleModal(true);
+
 	const toggleAddLinks = (): void => {
 		setAddLinks(!addLinks);
 		if (addLinks === true) {
@@ -40,10 +50,12 @@ const TeamPage = ({ match: { params }, team: { team } }: { match: any; team: any
 		}
 	};
 	const toggleDeleteLinkModal = (): void => setDeleteLinks(!deleteLink);
-	const editLink = (link: any) => {
+
+	const editLink = (link: Link) => {
 		setEditedLink(link);
 		setAddLinks(true);
 	};
+
 	const onDeleteLink = (link: any) => {
 		toggleDeleteLinkModal();
 		setLinkToDelete(link);

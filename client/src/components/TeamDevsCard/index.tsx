@@ -5,10 +5,10 @@ import AditionalModal from 'components/TeamAddPeopleModal/aditionalModal';
 import { useTranslation } from 'react-i18next';
 
 type CardProps = {
-	description: string;
-	name: string;
-	showAddPeopleModal: any;
-	changeMainFields: any;
+	description?: string;
+	name?: string;
+	showAddPeopleModal: () => void;
+	changeMainFields: (arg: { [key: string]: string }) => void;
 };
 
 const TeamDevsCard = ({ changeMainFields, description, name, showAddPeopleModal }: CardProps) => {

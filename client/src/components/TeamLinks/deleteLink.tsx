@@ -1,11 +1,12 @@
 import React from 'react';
 import { Button, Modal } from 'semantic-ui-react';
 import styles from './styles.module.scss';
+import { CurrentLink } from './index';
 
 type Props = {
-	onClose: any;
-	link: any;
-	onDelete: any;
+	onClose: () => void;
+	link: CurrentLink;
+	onDelete: (arg: CurrentLink) => void;
 };
 
 const DeleteLink = ({ onClose, link, onDelete }: Props) => {

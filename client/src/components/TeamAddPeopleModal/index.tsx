@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Modal, Input } from 'semantic-ui-react';
 import styles from './styles.module.scss';
 type Props = {
-	onClose: any;
+	onClose: (arg: boolean) => void;
 };
 
 const TeamAddPeopleModal = ({ onClose }: Props) => {

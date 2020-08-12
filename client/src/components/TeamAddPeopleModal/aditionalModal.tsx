@@ -3,7 +3,7 @@ import { Modal, Button, Icon } from 'semantic-ui-react';
 import styles from './styles.module.scss';
 
 type Props = {
-	setShowDelete: any;
+	setShowDelete: (arg: boolean) => void;
 };
 
 const AditionalModal = ({ setShowDelete }: Props) => {

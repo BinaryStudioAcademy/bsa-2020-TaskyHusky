@@ -15,7 +15,10 @@ const TeamWorkedProjects = () => {
 					<Image src={worksImg} size="small" />
 					<div className={styles.worked_block}>
 						<Header as="h4">{t('no_works')}</Header>
-						<p>{t('There are no projects you have started')}</p>
+						<p className={styles.p_descr}>
+							There are no projects which have been started yet. When it&apos;ll happen you can get quick
+							access to one you need
+						</p>
 					</div>
 				</div>
 			</div>
