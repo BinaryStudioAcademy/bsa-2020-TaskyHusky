@@ -65,7 +65,7 @@ export const HeaderMenu = () => {
 					>
 						{t('people')}
 					</Menu.Item>
-					<CreateIssueModal onClose={() => {}}>
+					<CreateIssueModal>
 						<Menu.Item
 							as={Button}
 							className={styles.createMenuItem}
