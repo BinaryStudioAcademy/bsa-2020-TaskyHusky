@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Card, Icon, Form, Input, Button, TextArea } from 'semantic-ui-react';
+import { Card, Icon, Button } from 'semantic-ui-react';
 import styles from 'containers/TeamPage/styles.module.scss';
 import AditionalModal from 'components/TeamAddPeopleModal/aditionalModal';
 import { useTranslation } from 'react-i18next';

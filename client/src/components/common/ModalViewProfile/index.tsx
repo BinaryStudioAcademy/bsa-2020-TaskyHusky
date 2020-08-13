@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useCallback } from 'react';
+import React from 'react';
 import styles from './styles.module.scss';
 import Avatar from 'components/Avatar';
 import { Link } from 'react-router-dom';

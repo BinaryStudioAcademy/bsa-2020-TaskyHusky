@@ -23,7 +23,7 @@ export type AddLinkSuccess = {
 };
 
 export type SuccessLoading = {
-	team: Team[];
+	team: Team;
 };
 
 export type StartLoadingArgs = {

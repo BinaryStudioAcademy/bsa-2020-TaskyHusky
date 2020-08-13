@@ -12,20 +12,20 @@ type Props = {
 };
 export function* fetchTeam(props: Props) {
 	const team = yield call(getTeam, props.id);
-	yield put(actions.successLoading({ team }));
+	yield put(actions.update({ team }));
 }
 
 export function* fetchLinks(props: Props) {
 	const team = yield call(updateLinks, props.id, props.link);
-	yield put(actions.successLoading({ team }));
+	yield put(actions.update({ team }));
 }
 export function* deleteLink(props: Props) {
 	const team = yield call(deleteOneLink, props.id, props.link);
-	yield put(actions.successLoading({ team }));
+	yield put(actions.update({ team }));
 }
 export function* updateField(props: Props) {
 	const team = yield call(updateFieldById, props.id, props.field);
-	yield put(actions.successLoading({ team }));
+	yield put(actions.update({ team }));
 }
 
 export function* watchStartLoading() {

@@ -1,8 +1,8 @@
-import { EntityRepository, Repository, createQueryBuilder } from 'typeorm';
-import { Teams } from '../entity/Teams';
+import { EntityRepository, Repository } from 'typeorm';
+import { Team } from '../entity/Team';
 
-@EntityRepository(Teams)
-export class TeamsRepository extends Repository<Teams> {
+@EntityRepository(Team)
+export class TeamRepository extends Repository<Team> {
 	findAll() {
 		return this.find();
 	}
@@ -17,12 +17,12 @@ export class TeamsRepository extends Repository<Teams> {
 		return this.findOne({ where: { name } });
 	}
 
-	async createOne(data: Teams) {
+	async createOne(data: Team) {
 		const entity = await this.create(data);
 		return this.save(entity);
 	}
 
-	async updateOneById(id: string, data: any) {
+	async updateOneById(id: string, data: Team) {
 		await this.update(id, data);
 		return this.findOne(id);
 	}

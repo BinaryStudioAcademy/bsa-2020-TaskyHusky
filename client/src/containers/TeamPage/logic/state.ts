@@ -7,9 +7,15 @@ export type Team = {
 };
 
 export interface TeamState {
-	team: Team[];
+	team: Team;
 }
 
 export const initialState: TeamState = {
-	team: [],
+	team: {
+		id: '',
+		name: '',
+		description: '',
+		links: [],
+		members: [],
+	},
 };
