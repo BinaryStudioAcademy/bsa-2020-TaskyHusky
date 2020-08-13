@@ -10,7 +10,6 @@ import { Projects } from './Projects';
 @Entity()
 export class Issue {
 	@PrimaryGeneratedColumn('uuid')
-	@IsUUID()
 	id!: string;
 
 	@ManyToOne((type) => IssueType, (issueType) => issueType.issues)

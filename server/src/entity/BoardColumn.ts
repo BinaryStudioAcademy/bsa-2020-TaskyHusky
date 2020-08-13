@@ -6,7 +6,6 @@ import { Issue } from './Issue';
 @Entity()
 export class BoardColumn {
 	@PrimaryGeneratedColumn('uuid')
-	@IsUUID()
 	id!: string;
 
 	@Column()

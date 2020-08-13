@@ -9,7 +9,6 @@ import { Projects } from './Projects';
 @Entity()
 export class Board {
 	@PrimaryGeneratedColumn('uuid')
-	@IsUUID()
 	id!: string;
 
 	@Column('text')
