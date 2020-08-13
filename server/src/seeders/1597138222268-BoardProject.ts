@@ -4,7 +4,6 @@ import { BoardType } from '../models/Board';
 import { Projects } from '../entity/Projects';
 
 export class BoardProject1597138222268 implements MigrationInterface {
-
 	public async up(queryRunner: QueryRunner): Promise<void> {
 		const customBoardRepository = getCustomRepository(BoardRepository);
 		const boardRepository = getRepository('Board');
@@ -23,12 +22,13 @@ export class BoardProject1597138222268 implements MigrationInterface {
 		});
 
 		const board1 = await customBoardRepository.findByType(BoardType.Kanban);
+		const board2 = await customBoardRepository.findByType(BoardType.Scrum);
 
-		board1.projects = [project1, project2];
+		board1.projects = [project2];
+		board2.projects = [project1];
 		boardRepository.save(board1);
+		boardRepository.save(board2);
 	}
 
-	public async down(queryRunner: QueryRunner): Promise<void> {
-	}
-
+	public async down(queryRunner: QueryRunner): Promise<void> {}
 }

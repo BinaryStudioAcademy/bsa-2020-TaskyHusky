@@ -1,0 +1,23 @@
+.editCell {
+	overflow: visible !important;
+}
+.userCell {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	&:hover {
+		cursor: pointer;
+	}
+}
+.underlinedLink {
+	text-decoration: none;
+	&:hover {
+		text-decoration: underline;
+	}
+}
+.dropdown {
+	text-align: center !important;
+	.issueAction {
+		color: rgba(0, 0, 0, 0.87);
+	}
+}

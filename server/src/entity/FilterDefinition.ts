@@ -6,11 +6,11 @@ export class FilterDefinition {
 	id!: string;
 
 	@Column()
-	filterType?: string;
+	filterType!: string;
 
 	@Column()
-	dataType?: string;
+	dataType!: string;
 
 	@Column()
-	title?: string;
+	title!: string;
 }

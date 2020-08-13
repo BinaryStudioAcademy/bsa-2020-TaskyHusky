@@ -12,12 +12,12 @@ export class UserRepository extends Repository<UserProfile> {
 		return this.findOne({ where: { email } });
 	}
 
-	createNew(data: UserModel) {
+	createNew(data: UserProfile) {
 		const user = this.create(data);
 		return this.save(user);
 	}
 
-	async updateById(id: string, user: UserModel): Promise<any> {
+	async updateById(id: string, user: UserProfile): Promise<any> {
 		this.update(id, user);
 
 		return this.findOne(id);
@@ -25,5 +25,9 @@ export class UserRepository extends Repository<UserProfile> {
 
 	deleteById(id: string) {
 		return this.delete(id);
+	}
+
+	findAll() {
+		return this.find();
 	}
 }
