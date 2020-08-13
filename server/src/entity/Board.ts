@@ -1,5 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToOne, JoinTable, ManyToMany } from 'typeorm';
-import { IsDefined, IsString, MinLength, IsNotEmpty } from 'class-validator';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToOne, ManyToMany } from 'typeorm';
+import { IsDefined, IsString, IsNotEmpty } from 'class-validator';
 import { BoardColumn } from './BoardColumn';
 import { Sprint } from './Sprint';
 import { UserProfile } from './UserProfile';

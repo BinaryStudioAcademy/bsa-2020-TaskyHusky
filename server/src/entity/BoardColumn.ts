@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany } from 'typeorm';
-import { IsBoolean, IsDefined, IsString, MinLength, IsNotEmpty } from 'class-validator';
+import { IsBoolean, IsDefined, IsString, IsNotEmpty } from 'class-validator';
 import { Board } from './Board';
 import { Issue } from './Issue';
 
