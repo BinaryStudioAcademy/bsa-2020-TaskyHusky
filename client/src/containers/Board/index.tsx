@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import Kanban from './Kanban';
 import { getBoardById } from 'services/board.service';
+import Scrum from './Scrum';
 
 export interface BoardComponentProps {
 	board: WebApi.Result.ComposedBoardResult;
@@ -12,6 +13,9 @@ const getBoardComponent = (type: string): BoardComponent => {
 	switch (type) {
 		case 'Kanban': {
 			return Kanban;
+		}
+		case 'Scrum': {
+			return Scrum;
 		}
 		default: {
 			throw new Error(`Unknown board type: ${type}`);

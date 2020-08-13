@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import ProjectIssuesColumn from 'components/ProjectIssuesColumn';
 import IssuePageContent from 'containers/IssuePageContent';
 import { getByKey } from 'services/issue.service';
+import Board from 'containers/Board';
 
 interface Props {
 	projectId: string;
@@ -32,6 +33,10 @@ const ProjectIssuesPage: React.FC<Props> = ({ projectId }) => {
 
 	if (!project) {
 		return null;
+	}
+
+	if (project.boards && project.boards.length > 0) {
+		return <Board boardId={project.boards[0].id} />;
 	}
 
 	return (

@@ -1,4 +1,4 @@
-import { fetchFilterDefs, updateFilterPart } from 'services/filter.service';
+import { fetchFilterDefs } from 'services/filter.service';
 import { all, put, takeEvery, call } from 'redux-saga/effects';
 import { v4 as uuidv4 } from 'uuid';
 import * as actionTypes from './actionTypes';
@@ -14,15 +14,13 @@ export function* fetchFilterPartsSaga(action: ReturnType<typeof actions.fetchFil
 	};
 
 	const filterParts = filterDefs.map(getInitialFilterPart);
-	console.log('filterParts', filterParts);
 
 	yield put(actions.updateSearchSuccess({ partialState: { filterParts } }));
 }
 
 export function* updateFilterPartSaga(action: AnyAction) {
-	// const filterPart = yield call(updateFilterPart, action.filterPart);
-	// yield put(actions.updateFilterPartSuccess({ filterPart: action.filterPart }));
-	// yield put(actions.fetchFilterParts());
+	yield put(actions.updateFilterPartSuccess({ filterPart: action.filterPart }));
+	// every time when update filterPart we should load issues
 }
 
 export function* watchFetchFilterParts() {

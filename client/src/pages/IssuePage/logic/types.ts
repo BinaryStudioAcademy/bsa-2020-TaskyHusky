@@ -1,4 +1,4 @@
 export interface IssueState {
-	types: WebApi.Entities.Issue[];
+	types: WebApi.Entities.IssueType[];
 	priorities: WebApi.Entities.Priority[];
 }

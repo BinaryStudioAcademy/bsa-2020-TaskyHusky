@@ -37,7 +37,7 @@ const IssuePageContent: React.FC<Props> = ({ issue }) => {
 				<Table.Body>
 					<Table.Row>
 						<Table.Cell>{t('reported_by')}</Table.Cell>
-						<Table.Cell>Reporter will be here</Table.Cell>
+						<Table.Cell>{issue.creator.firstName + ' ' + (issue.creator.lastName ?? '')}</Table.Cell>
 					</Table.Row>
 					<Table.Row>
 						<Table.Cell>{t('assigned_by')}</Table.Cell>

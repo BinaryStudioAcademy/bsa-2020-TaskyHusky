@@ -6,12 +6,12 @@ export class Priority1596718071573 implements MigrationInterface {
 		const data = [
 			{
 				color: 'green',
-				icon: 'window close outline',
+				icon: 'angle double down',
 				title: 'Lowest',
 			},
 			{
 				color: 'teal',
-				icon: 'battery low',
+				icon: 'chevron down',
 				title: 'Low',
 			},
 			{
@@ -21,12 +21,12 @@ export class Priority1596718071573 implements MigrationInterface {
 			},
 			{
 				color: 'orange',
-				icon: 'arrow up',
+				icon: 'chevron up',
 				title: 'High',
 			},
 			{
 				color: 'red',
-				icon: 'arrow circle up',
+				icon: 'angle double up',
 				title: 'Highest',
 			},
 		];
