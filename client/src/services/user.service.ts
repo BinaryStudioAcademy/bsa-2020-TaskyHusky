@@ -11,6 +11,18 @@ export const requestGetUser = async (id: string): Promise<WebApi.Entities.UserPr
 	return (await res.json()) as WebApi.Entities.UserProfile;
 };
 
+export const requestUdateAvatar = async (image: File): Promise<WebApi.Entities.UserProfile> => {
+	console.log(image);
+	const res = await callWebApi({
+		method: 'POST',
+		endpoint: `user/avatar`,
+		skipAuthorization: false,
+		attachment: image,
+	});
+
+	return (await res.json()) as WebApi.Entities.UserProfile;
+};
+
 export const requestUpdateUser = async (userData: Partial<UserProfileState>): Promise<WebApi.Entities.UserProfile> => {
 	const res = await callWebApi({
 		method: 'PUT',

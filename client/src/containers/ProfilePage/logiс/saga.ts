@@ -1,4 +1,11 @@
-import { requestUpdateUser, requestGetUser, requestDeleteUser, requestChangePassword } from 'services/user.service';
+import {
+	requestUpdateUser,
+	requestGetUser,
+	requestDeleteUser,
+	requestChangePassword,
+	requestUdateAvatar,
+} from 'services/user.service';
+
 import { all, put, call, takeEvery } from 'redux-saga/effects';
 import * as actionTypes from './actionTypes';
 import * as actions from './actions';
@@ -19,9 +26,18 @@ function* getUser(action: ReturnType<typeof actions.requestGetUser>) {
 	yield put(actions.updateUser({ partialState: user }));
 }
 
+function* updateAvatar(action: ReturnType<typeof actions.requestUpdateAvatar>) {
+	const { image } = action;
+	yield call(requestUdateAvatar, image);
+}
+
 function* deleteUser() {
 	yield call(requestDeleteUser);
 	yield put(actions.deleteUser(null));
+}
+
+function* watchUpdateAvatar() {
+	yield takeEvery(actionTypes.REQUEST_UPDATE_AVATAR, updateAvatar);
 }
 
 function* watchChangePassword() {
@@ -41,5 +57,5 @@ function* watchDeleteUser() {
 }
 
 export default function* userSaga() {
-	yield all([watchUpdateUser(), watchGetUser(), watchDeleteUser(), watchChangePassword()]);
+	yield all([watchUpdateUser(), watchGetUser(), watchDeleteUser(), watchChangePassword(), watchUpdateAvatar()]);
 }

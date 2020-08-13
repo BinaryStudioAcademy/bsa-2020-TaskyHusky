@@ -15,6 +15,8 @@ const ProfilePage = ({ id }: { id: string }) => {
 	const [user, setUser] = useState(initialState);
 	const { editMode, isLoading } = user;
 	const currentUser = useSelector((state: RootState) => state.auth.user);
+	const userData = useSelector((state: RootState) => state.user);
+
 	const isCurrentUser = currentUser ? id === currentUser.id : false;
 
 	const showManager = (modeToShow: string) => {
@@ -45,9 +47,10 @@ const ProfilePage = ({ id }: { id: string }) => {
 	const getUser = async () => {
 		if (isCurrentUser) {
 			setUser({ ...user, ...currentUser, isLoading: false });
-			dispatch(actions.updateUser({ partialState: { isLoading: false } }));
+			dispatch(actions.updateUser({ partialState: { ...currentUser, isLoading: false } }));
 		} else {
 			dispatch(actions.requestGetUser({ id }));
+			setUser({ ...user, ...userData });
 		}
 	};
 

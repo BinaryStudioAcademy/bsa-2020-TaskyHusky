@@ -6,7 +6,6 @@ const s3 = new AWS.S3();
 
 export default (folder: string, file: Express.Multer.File, fileName: string): Promise<string> =>
 	new Promise((resolve, reject) => {
-		const timestamp = +new Date();
 		const filename = `${folder}/${fileName}`;
 		if (awsTeam) {
 			s3.upload(

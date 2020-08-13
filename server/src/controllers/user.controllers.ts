@@ -12,7 +12,7 @@ class UserController {
 		const name = `${firstName}_${lastName}_${id}`;
 		try {
 			const avatar = await uploadS3(avatarFolder, req.file, name);
-			const user = userRepository.updateById(id, { avatar });
+			const user = await userRepository.updateById(id, { avatar });
 			res.send(user);
 		} catch (error) {
 			res.status(400).send(error.message);
