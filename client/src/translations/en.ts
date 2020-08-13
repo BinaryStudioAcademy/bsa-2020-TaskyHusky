@@ -125,4 +125,8 @@ export const en = {
 	versions: 'Versions',
 	components: 'Components',
 	permissions: 'Permissions',
+	project_category_info: "You haven't created any project categories yet.",
+	project_type_info: 'To change project type, create a new project and bulk move your issues into it.',
+	key_info:
+		'Changing the project key will start a background re-index of your project, and may break some external integrations.',
 };
