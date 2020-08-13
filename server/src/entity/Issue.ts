@@ -1,6 +1,6 @@
 import { Entity, Column, ManyToOne, PrimaryGeneratedColumn, OneToOne, JoinColumn } from 'typeorm';
 import { IsNotEmpty, IsString, IsArray, IsUUID } from 'class-validator';
-import { UserProfile } from './UserProfile';
+import { UserProfile, UserProfile } from './UserProfile';
 import { IssueType } from './IssueType';
 import { Priority } from './Priority';
 import { BoardColumn } from './BoardColumn';
@@ -56,7 +56,6 @@ export class Issue {
 	@ManyToOne((type) => UserProfile, (userProfile) => userProfile.assignedIssues)
 	assignee?: UserProfile;
 
-	@OneToOne((type) => UserProfile)
-	@JoinColumn()
-	creator?: UserProfile;
+	@ManyToOne((type) => UserProfile, (userProfile) => userProfile.createdIssues)
+	creator!: UserProfile;
 }
