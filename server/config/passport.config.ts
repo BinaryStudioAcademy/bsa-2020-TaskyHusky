@@ -10,6 +10,8 @@ import { UserModel } from '../src/models/User';
 import { ErrorResponse } from '../src/helpers/errorHandler.helper';
 import HttpStatusCode from '../src/constants/httpStattusCode.constants';
 
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
+
 passport.use(
 	'local',
 	new LocalStrategy(
@@ -111,5 +113,17 @@ passport.deserializeUser(async (id: string, next) => {
 	const user = await userRepository.getById(id);
 	next(null, user);
 });
+
+passport.use(new GoogleStrategy({
+	clientID: '1051291061989-cb9hska688bc3no26n701sr5dtahu300.apps.googleusercontent.com',
+	clientSecret: 'dbYNWM1y6N5qlMSLjT6WkMKb',
+	callbackURL: 'http://www.example.com/auth/google/callback'
+},
+	function (accessToken, refreshToken, profile, done) {
+		/* 	User.findOrCreate({ googleId: profile.id }, function (err, user) {
+				return done(err, user);
+			}); */
+	}
+));
 
 export default passport;
