@@ -13,7 +13,7 @@ namespace WebApi.Issue {
 		id?: string;
 		type: string;
 		summary?: string;
-		boardColumnID?: string;
+		boardColumn?: string;
 		labels?: string[];
 		attachments?: string[];
 		links?: string[];
@@ -44,7 +44,7 @@ namespace WebApi.Result {
 			icon: string;
 		};
 		summary?: string;
-		boardColumnID?: string;
+		boardColumn?: string;
 		labels?: string[];
 		attachments?: string[];
 		links?: string[];
@@ -60,6 +60,31 @@ namespace WebApi.Result {
 		issueKey?: string;
 		assignedID?: string;
 		creatorID?: string;
+	}
+
+	interface BoardResult {
+		id: string;
+		boardType: 'Kanban' | 'Scrum';
+		name: string;
+		location: string;
+		createdAt: {
+			firstName: string;
+			lastName?: string;
+			id: string;
+			avatar: string | null;
+		};
+	}
+
+	interface BoardColumnResult {
+		id: string;
+		columnName: string;
+		status: string;
+		isResolutionSet: boolean;
+		board: BoardResult;
+	}
+
+	interface ComposedBoardResult extends BoardResult {
+		columns: BoardColumnResult[];
 	}
 }
 
@@ -85,7 +110,7 @@ namespace WebApi.User {
 		organization?: string;
 		jobTitle?: string;
 		userSettingsId?: string;
-		filtres?: string[];
+		filters?: string[];
 	}
 }
 
@@ -97,6 +122,7 @@ namespace WebApi.Entities {
 		columns?: BoardColumn[];
 		sprints?: Sprint[];
 		createdBy: UserProfile;
+		projects?: Projects[];
 	}
 
 	interface BoardColumn {
@@ -105,6 +131,7 @@ namespace WebApi.Entities {
 		status?: string;
 		isResolutionSet?: boolean;
 		board: Board;
+		issues: Issue[];
 	}
 
 	interface Filter {
@@ -134,7 +161,7 @@ namespace WebApi.Entities {
 		id: string;
 		type?: IssueType;
 		summary?: string;
-		boardColumnID?: string;
+		boardColumn?: BoardColumn;
 		labels?: string;
 		attachments?: string;
 		links?: string;
@@ -168,10 +195,11 @@ namespace WebApi.Entities {
 		name: string;
 		key: string;
 		category?: string;
-		defaultAssigneeID?: string;
-		leadID?: string;
-		creatorID: string;
 		sprints?: Sprint[];
+		boards?: Board[];
+		defaultAssignee?: UserProfile;
+		lead?: UserProfile;
+		creator: UserProfile;
 	}
 
 	interface Sprint {
@@ -213,5 +241,8 @@ namespace WebApi.Entities {
 		teams?: TeamsPeople[];
 		boards?: Board[];
 		filters?: Filter[];
+		assignedProjects?: Projects[];
+		leadedProjects?: Projects[];
+		createdProjects: Projects[];
 	}
 }

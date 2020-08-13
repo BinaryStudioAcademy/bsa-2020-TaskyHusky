@@ -96,12 +96,12 @@ const IssueItem = ({ issue }: Props) => {
 			</Table.Cell>
 			<Table.Cell>
 				<a href={`/profile/${assigned.id}`} className={styles.underlinedLink}>
-					{getFullUserName(assigned)}
+					{getFullUserName(assigned.firstName, assigned.lastName)}
 				</a>
 			</Table.Cell>
 			<Table.Cell>
 				<a href={`/profile/${creator.id}`} className={styles.underlinedLink}>
-					{getFullUserName(creator)}
+					{getFullUserName(creator.firstName, creator.lastName)}
 				</a>
 			</Table.Cell>
 			<Table.Cell>{renderPriority(priority)}</Table.Cell>

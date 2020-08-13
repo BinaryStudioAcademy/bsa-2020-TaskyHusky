@@ -1,7 +1,7 @@
 import React from 'react';
 import { Modal, Button } from 'semantic-ui-react';
 import { useDispatch } from 'react-redux';
-import { deleteIssue } from 'pages/CreateIssue/logic/actions';
+import { deleteIssue } from 'pages/IssuePage/logic/actions';
 import { useTranslation } from 'react-i18next';
 import styles from './styles.module.scss';
 interface Props {
