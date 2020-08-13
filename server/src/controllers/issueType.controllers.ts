@@ -6,7 +6,6 @@ import { IssueTypeRepository } from '../repositories/issueType.repository';
 class IssueTypeController {
     async getAll(req: Request, res: Response) {
         const repository = getCustomRepository(IssueTypeRepository);
-
         try {
             const result = await repository.findAll();
             res.send(result);

@@ -29,3 +29,13 @@ export const requestDeleteUser = async (): Promise<void> => {
 		skipAuthorization: false,
 	});
 };
+
+export const requestAllUsers = async (): Promise<WebApi.Entities.UserProfile[]> => {
+	const res = await callWebApi({
+		method: 'GET',
+		endpoint: `user/`,
+		skipAuthorization: false,
+	});
+
+	return (await res.json()) as WebApi.Entities.UserProfile[];
+};

@@ -28,13 +28,25 @@ class UserController {
 		}
 	};
 
+	getAllUser = async (req: Request, res: Response): Promise<void> => {
+		const userRepository = getCustomRepository(UserRepository);
+		const { id } = req.params;
+
+		try {
+			const user = await userRepository.findAll();
+			res.send(user);
+		} catch (error) {
+			res.status(404).send();
+		}
+	};
+
 	updateUser = async (req: Request, res: Response): Promise<void> => {
 		const userRepository = getCustomRepository(UserRepository);
 		const { id } = req.user;
 		if (req.body.email) {
 			const checkUser = await userRepository.getByEmail(req.body.email);
 			if (checkUser && checkUser.id !== id) {
-				throw new Error('Yhis email is already taken');
+				throw new Error('This email is already taken');
 			}
 		}
 		try {

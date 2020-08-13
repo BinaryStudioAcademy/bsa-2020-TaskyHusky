@@ -1,0 +1,24 @@
+.moreFilterDropdown {
+	.moreText {
+		color: #3275a8;
+	}
+	&:hover {
+		.dropdownMenu {
+			display: none !important;
+		}
+	}
+	&:focus {
+		.dropdownMenu {
+			display: block !important;
+		}
+	}
+	.dropdownMenu {
+		position: absolute !important;
+		&:focus {
+			display: block !important;
+		}
+		&:hover {
+			display: block !important;
+		}
+	}
+}
