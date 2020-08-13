@@ -1,5 +1,5 @@
 import { all, call, put, takeEvery } from 'redux-saga/effects';
-import { getTypes, getPriorities, createIssue, updateIssue } from 'services/issue.service';
+import { getTypes, getPriorities, createIssue, updateIssue, deleteIssue } from 'services/issue.service';
 import { setTypes, setPriorities } from './actions';
 import * as actionTypes from './actionTypes';
 import { AnyAction } from 'redux';
@@ -34,10 +34,24 @@ function* fetchUpdateIssue(action: AnyAction) {
 	yield call(updateIssue, action.id, action.data);
 }
 
+function* fetchDeleteIssue(action: AnyAction) {
+	yield call(deleteIssue, action.id);
+}
+
 function* watchUpdateIssue() {
 	yield takeEvery(actionTypes.UPDATE_ISSUE, fetchUpdateIssue);
 }
 
+function* watchDeleteIssue() {
+	yield takeEvery(actionTypes.DELETE_ISSUE, fetchDeleteIssue);
+}
+
 export default function* issueSaga() {
-	yield all([watchLoadIssueTypes(), watchLoadPriorities(), watchCreateIssue(), watchUpdateIssue()]);
+	yield all([
+		watchLoadIssueTypes(),
+		watchLoadPriorities(),
+		watchCreateIssue(),
+		watchUpdateIssue(),
+		watchDeleteIssue(),
+	]);
 }

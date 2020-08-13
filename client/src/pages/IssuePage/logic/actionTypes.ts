@@ -4,6 +4,7 @@ export const SET_PRIORITIES = 'ISSUE:PRIORITIES:SET';
 export const LOAD_PRIORITIES = 'ISSUE:PRIORITIES:LOAD';
 export const CREATE_ISSUE = 'ISSUE:CREATE';
 export const UPDATE_ISSUE = 'ISSUE:UPDATE';
+export const DELETE_ISSUE = 'ISSUE:DELETE_ISSUE';
 
 export type SetTypes = {
 	data: WebApi.Entities.IssueType[];
@@ -20,4 +21,8 @@ export type CreateIssue = {
 export type UpdateIssue = {
 	id: string;
 	data: WebApi.Issue.PartialIssue;
+};
+
+export type DeleteIssue = {
+	id: string;
 };

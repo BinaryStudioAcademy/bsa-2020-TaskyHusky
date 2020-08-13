@@ -122,6 +122,7 @@ namespace WebApi.Entities {
 		columns?: BoardColumn[];
 		sprints?: Sprint[];
 		createdBy: UserProfile;
+		projects?: Projects[];
 	}
 
 	interface BoardColumn {
@@ -143,9 +144,9 @@ namespace WebApi.Entities {
 
 	interface FilterDefinition {
 		id: string;
-		filterType?: string;
-		dataType?: string;
-		title?: string;
+		filterType: string;
+		dataType: string;
+		title: string;
 	}
 
 	interface FilterPart {
@@ -194,10 +195,11 @@ namespace WebApi.Entities {
 		name: string;
 		key: string;
 		category?: string;
-		defaultAssigneeID?: string;
-		leadID?: string;
-		creatorID: string;
 		sprints?: Sprint[];
+		boards?: Board[];
+		defaultAssignee?: UserProfile;
+		lead?: UserProfile;
+		creator: UserProfile;
 	}
 
 	interface Sprint {
@@ -239,5 +241,8 @@ namespace WebApi.Entities {
 		teams?: TeamsPeople[];
 		boards?: Board[];
 		filters?: Filter[];
+		assignedProjects?: Projects[];
+		leadedProjects?: Projects[];
+		createdProjects: Projects[];
 	}
 }
