@@ -1,4 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, OneToMany, ManyToOne, JoinTable } from 'typeorm';
+import { IsNotEmpty, IsString } from 'class-validator';
 import { Issue } from './Issue';
 import { Sprint } from './Sprint';
 import { Board } from './Board';
@@ -10,9 +11,13 @@ export class Projects {
 	id!: string;
 
 	@Column()
+	@IsNotEmpty()
+	@IsString()
 	name!: string;
 
 	@Column()
+	@IsNotEmpty()
+	@IsString()
 	key!: string;
 
 	@Column({ type: 'text', nullable: true })
