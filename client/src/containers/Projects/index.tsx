@@ -1,9 +1,7 @@
-import React, { useState, ChangeEvent, useEffect } from 'react';
+import React, { useState, ChangeEvent } from 'react';
 import { Input, Table } from 'semantic-ui-react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { RootState } from 'typings/rootState';
-import * as actions from './logic/actions';
-
 import Options from './../../components/common/Options';
 import CreateProjectModal from '../CreateProjectModal';
 import styles from './styles.module.scss';
@@ -15,14 +13,9 @@ import { useTranslation } from 'react-i18next';
 const Projects: React.FC = () => {
 	const history = useHistory();
 	const { t } = useTranslation();
-	const dispatch = useDispatch();
 	const { projects, isLoading } = useSelector((rootState: RootState) => rootState.projects);
 
 	const [searchName, setSearchName] = useState('');
-
-	useEffect(() => {
-		dispatch(actions.startLoading());
-	}, [dispatch]);
 
 	const onSearch = (event: ChangeEvent<HTMLInputElement>) => {
 		const searchValue = event.target.value;
