@@ -108,8 +108,8 @@ const CreateIssueModalBody: React.FC<Props> = ({
 			},
 			project: projectID ?? context.data.project,
 			issueKey: generateRandomString(KeyGenerate.LENGTH),
-			assignedID: '98601c2c-a103-489b-b89f-ea5ae568b582',
-			creatorID: user.id,
+			assigned: context.data.assigned,
+			creator: user.id as string,
 		};
 
 		dispatch(createIssue({ data }));

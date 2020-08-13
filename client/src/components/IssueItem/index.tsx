@@ -6,7 +6,7 @@ import { getFullUserName } from './helpers';
 import DeleteIssueModal from 'containers/DeleteIssueModal';
 
 interface Props {
-	issue: WebApi.Entities.Issue;
+	issue: WebApi.Result.IssueResult;
 }
 
 const renderIssueType = (issueType: WebApi.Entities.IssueType) => {
@@ -126,7 +126,7 @@ const IssueItem = ({ issue }: Props) => {
 									open={open}
 									onOpen={() => setOpen(true)}
 									onDelete={() => window.location.reload()}
-									currentIssueId={issue.id}
+									currentIssueId={issue.id as string}
 								/>
 							}
 						/>
