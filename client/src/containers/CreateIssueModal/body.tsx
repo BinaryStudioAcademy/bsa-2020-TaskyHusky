@@ -16,6 +16,8 @@ interface Props {
 	boardColumnID?: string;
 	projectID?: string;
 	onClose?: (data: WebApi.Issue.PartialIssue) => void;
+	projects: WebApi.Entities.Projects[];
+	projectsLoading: boolean;
 }
 
 interface SelectOption {
@@ -29,6 +31,8 @@ const CreateIssueModalBody: React.FC<Props> = ({
 	children,
 	issueTypes,
 	priorities,
+	projects,
+	projectsLoading,
 	boardColumnID,
 	onClose,
 	projectID,
@@ -36,6 +40,11 @@ const CreateIssueModalBody: React.FC<Props> = ({
 	const { t } = useTranslation();
 	const [isOpened, setIsOpened] = useState<boolean>(false);
 	const dispatch = useDispatch();
+	const context = useCreateIssueModalContext();
+
+	if (projectsLoading) {
+		return null;
+	}
 
 	const typeOpts: SelectOption[] = issueTypes.map((type) => ({
 		key: type.id,
@@ -71,11 +80,17 @@ const CreateIssueModalBody: React.FC<Props> = ({
 		text: label,
 	}));
 
-	const context = useCreateIssueModalContext();
+	const projectsOpts: SelectOption[] = projects.map((project) => ({
+		key: project.id,
+		value: project.id,
+		text: project.name,
+	}));
+
 	const getSetOpenFunc = (value: boolean) => () => setIsOpened(value);
 
 	const submit = async () => {
-		const allFields = context.data.type && context.data.summary && context.data.priority;
+		const projectCond = !projectID && !boardColumnID ? context.data.project : true;
+		const allFields = context.data.type && context.data.summary && context.data.priority && projectCond;
 
 		if (!allFields) {
 			return;
@@ -90,7 +105,7 @@ const CreateIssueModalBody: React.FC<Props> = ({
 				isActive: false,
 				isCompleted: true,
 			},
-			...(projectID ? { project: projectID } : {}),
+			project: projectID ?? context.data.project,
 			issueKey: generateRandomString(KeyGenerate.LENGTH),
 			assignedID: '98601c2c-a103-489b-b89f-ea5ae568b582',
 			creatorID: 'f2235a1c-dfbc-47b7-bdb2-726d159c19a0',
@@ -155,6 +170,19 @@ const CreateIssueModalBody: React.FC<Props> = ({
 									onChange={(event, data) => context.set('summary', data.value)}
 								/>
 							</Form.Field>
+							{!projectID && !boardColumnID ? (
+								<Form.Field>
+									<label className="required">{t('project')}</label>
+									<Form.Dropdown
+										selection
+										placeholder={t('project')}
+										options={projectsOpts}
+										onChange={(event, data) => context.set('project', data.value)}
+									/>
+								</Form.Field>
+							) : (
+								''
+							)}
 							<Form.Field>
 								<label>{t('labels')}</label>
 								<Form.Dropdown
@@ -214,6 +242,8 @@ const CreateIssueModalBody: React.FC<Props> = ({
 const mapStateToProps = (state: RootState) => ({
 	issueTypes: state.issues.types,
 	priorities: state.issues.priorities,
+	projects: state.projects.projects,
+	projectsLoading: state.projects.isLoading,
 });
 
 const labels: string[] = ['label1', 'label2'];
