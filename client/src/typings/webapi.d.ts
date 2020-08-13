@@ -144,9 +144,9 @@ namespace WebApi.Entities {
 
 	interface FilterDefinition {
 		id: string;
-		filterType?: string;
-		dataType?: string;
-		title?: string;
+		filterType: string;
+		dataType: string;
+		title: string;
 	}
 
 	interface FilterPart {

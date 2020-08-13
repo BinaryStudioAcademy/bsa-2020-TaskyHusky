@@ -56,6 +56,15 @@ export const updateIssue = async (id: string, data: WebApi.Issue.PartialIssue) =
 	return await res.json();
 };
 
+export const deleteIssue = async (id: string) => {
+	const res: Response = await callWebApi({
+		endpoint: `issue/${id}`,
+		method: 'DELETE',
+	});
+
+	return await res.json();
+};
+
 export const updateIssueByKey = async (key: string, data: WebApi.Issue.PartialIssue) => {
 	const res: Response = await callWebApi({
 		endpoint: `issue/byKey/${key}`,

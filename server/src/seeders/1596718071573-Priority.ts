@@ -21,12 +21,12 @@ export class Priority1596718071573 implements MigrationInterface {
 			},
 			{
 				color: 'orange',
-				icon: 'check',
+				icon: 'arrow up',
 				title: 'High',
 			},
 			{
 				color: 'red',
-				icon: 'check circle',
+				icon: 'arrow circle up',
 				title: 'Highest',
 			},
 		];

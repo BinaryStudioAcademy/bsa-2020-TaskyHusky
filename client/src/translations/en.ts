@@ -116,6 +116,18 @@ export const en = {
 	category: 'Category',
 	project_name: 'Enter project name',
 	project_lead_name: 'Enter name',
+	save_as: 'Save as',
+	filter_not_created_by_you:
+		"This filter wasn't created by you . You can save a copy of this filter but you cannot modify the original.",
+	save_filter: 'Save Filter',
+	filter_name: 'Filter name',
+	enter_filter_name: 'Enter filter name',
+	delete: 'Delete',
+	close: 'Close',
+	sure_to_delete: 'If you are not sure, you can resolve or close this issue instead.',
+	permanently_delete:
+		'You are about to permanently delete this issue, its comments and attachments, and all of its data.',
+	delete_issue: 'Delete issue?',
 	clear: 'Clear',
 	issues: 'Issues',
 	no_cards: 'No cards',
