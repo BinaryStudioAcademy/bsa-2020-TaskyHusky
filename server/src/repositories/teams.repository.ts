@@ -1,23 +1,29 @@
 import { EntityRepository, Repository } from 'typeorm';
-import { Teams } from '../entity/Teams';
+import { Team } from '../entity/Team';
 
-@EntityRepository(Teams)
-export class TeamsRepository extends Repository<Teams> {
+@EntityRepository(Team)
+export class TeamRepository extends Repository<Team> {
 	findAll() {
 		return this.find();
 	}
 
-	findOneById(projectID: string) {
-		return this.findOne(projectID);
+	findOneById(id: string) {
+		return this.findOne({
+			where: { id }
+		});
 	}
 
-	createOne(data: Teams) {
-		const entity = this.create(data);
+	findByName(name: string) {
+		return this.findOne({ where: { name } });
+	}
+
+	async createOne(data: Team) {
+		const entity = await this.create(data);
 		return this.save(entity);
 	}
 
-	updateOneById(id: string, data: Teams) {
-		this.update(id, data);
+	async updateOneById(id: string, data: Team) {
+		await this.update(id, data);
 		return this.findOne(id);
 	}
 

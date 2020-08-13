@@ -1,12 +1,20 @@
 import { EntityRepository, Repository } from 'typeorm';
 import { Issue } from '../entity/Issue';
 
-const RELS = ['priority', 'type'];
+const RELS = ['priority', 'type', 'creator', 'assigned'];
 
 @EntityRepository(Issue)
 export class IssueRepository extends Repository<Issue> {
 	findAll() {
 		return this.find({ relations: RELS });
+	}
+
+	findAllByColumnId(id: string) {
+		return this.find({ relations: RELS, where: { boardColumn: { id } } });
+	}
+
+	findAllByProjectId(id: string) {
+		return this.find({ relations: RELS, where: { project: { id } } });
 	}
 
 	findOneById(id: string) {
@@ -24,6 +32,10 @@ export class IssueRepository extends Repository<Issue> {
 
 	updateOneById(id: string, data: Issue) {
 		return this.update(id, data);
+	}
+
+	updateOneByKey(key: string, data: Issue) {
+		return this.update({ issueKey: key }, data);
 	}
 
 	deleteOneById(id: string) {

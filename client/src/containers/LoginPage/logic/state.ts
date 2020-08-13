@@ -17,10 +17,12 @@ export interface AuthState {
 	isAuthorized: boolean;
 	jwtToken: string;
 	profileLoaded?: boolean;
+	isEmailInDB: boolean | null;
 }
 
 export const initialState: AuthState = {
 	user: null,
 	isAuthorized: false,
 	jwtToken: '',
+	isEmailInDB: null,
 };

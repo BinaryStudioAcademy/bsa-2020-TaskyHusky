@@ -27,6 +27,30 @@ class IssueController {
 		}
 	}
 
+	async getByColumnId(req: Request, res: Response) {
+		const { id } = req.params;
+		const repository = getCustomRepository(IssueRepository);
+
+		try {
+			const result = await repository.findAllByColumnId(id);
+			res.send(result);
+		} catch (err) {
+			res.status(500).send(getWebError(err, 500));
+		}
+	}
+
+	async getByProjectId(req: Request, res: Response) {
+		const { id } = req.params;
+		const repository = getCustomRepository(IssueRepository);
+
+		try {
+			const result = await repository.findAllByProjectId(id);
+			res.send(result);
+		} catch (err) {
+			res.status(500).send(getWebError(err, 500));
+		}
+	}
+
 	async getByKey(req: Request, res: Response) {
 		const { key } = req.params;
 		const repository = getCustomRepository(IssueRepository);
@@ -44,7 +68,11 @@ class IssueController {
 		const repository = getCustomRepository(IssueRepository);
 
 		try {
-			const result = await repository.createOne(data);
+			const result = await repository.createOne({
+				...data,
+				creator: req.user.id,
+			});
+
 			res.status(201).send(result);
 		} catch (err) {
 			res.status(422).send(getWebError(err, 422));
@@ -58,6 +86,20 @@ class IssueController {
 
 		try {
 			const result = await repository.updateOneById(id, data);
+			res.send(result);
+		} catch (err) {
+			res.status(404).send(getWebError(err, 404));
+		}
+	}
+
+	async updateByKey(req: Request, res: Response) {
+		const { key } = req.params;
+		const { body: data } = req;
+
+		const repository = getCustomRepository(IssueRepository);
+
+		try {
+			const result = await repository.updateOneByKey(key, data);
 			res.send(result);
 		} catch (err) {
 			res.status(404).send(getWebError(err, 404));

@@ -1,0 +1,11 @@
+.del_star::after {
+  display: none !important;
+}
+.buttons_block {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 10px;
+  button:nth-last-child(1) {
+    margin-right: 0 !important;
+  }
+}
