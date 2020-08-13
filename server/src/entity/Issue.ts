@@ -1,52 +1,61 @@
-import { Entity, Column, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, ManyToOne, PrimaryGeneratedColumn, OneToOne, JoinColumn } from 'typeorm';
+import { IsNotEmpty, IsString, IsArray, IsUUID } from 'class-validator';
+import { UserProfile } from './UserProfile';
 import { IssueType } from './IssueType';
 import { Priority } from './Priority';
 import { BoardColumn } from './BoardColumn';
 import { Sprint } from './Sprint';
 import { Projects } from './Projects';
-import { UserProfile } from './UserProfile';
 
 @Entity()
 export class Issue {
 	@PrimaryGeneratedColumn('uuid')
+	@IsUUID()
 	id!: string;
 
-	@ManyToOne((type) => IssueType)
+	@ManyToOne((type) => IssueType, (issueType) => issueType.issues)
 	type?: IssueType;
 
 	@Column()
+	@IsNotEmpty()
+	@IsString()
 	summary?: string;
 
-	@ManyToOne((type) => BoardColumn)
+	@ManyToOne((type) => BoardColumn, (boardColumn) => boardColumn.issues)
 	boardColumn?: BoardColumn;
 
 	@Column({ array: true })
 	labels?: string;
 
 	@Column({ array: true })
+	@IsArray()
 	attachments?: string;
 
 	@Column({ array: true })
+	@IsArray()
 	links?: string;
 
-	@ManyToOne((type) => Priority)
+	@ManyToOne((type) => Priority, (priority) => priority.issues)
 	priority?: Priority;
 
-	@Column()
+	@Column({ nullable: true })
+	@IsString()
 	description?: string;
 
-	@ManyToOne((type) => Sprint)
+	@ManyToOne((type) => Sprint, (sprint) => sprint.issues)
 	sprint?: Sprint;
 
-	@ManyToOne((type) => Projects)
+	@ManyToOne((type) => Projects, (projects) => projects.issues)
 	project?: Projects;
 
 	@Column()
+	@IsNotEmpty()
+	@IsString()
 	issueKey?: string;
 
-	@ManyToOne((type) => UserProfile)
+	@ManyToOne((type) => UserProfile, (userProfile) => userProfile.assignedIssues)
 	assigned?: UserProfile;
 
-	@ManyToOne((type) => UserProfile)
+	@ManyToOne((type) => UserProfile, (userProfile) => userProfile.createdIssues)
 	creator!: UserProfile;
 }
