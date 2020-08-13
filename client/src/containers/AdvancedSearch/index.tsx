@@ -10,12 +10,7 @@ import { fetchFilterParts } from './logic/actions';
 import { FilterPartState } from './logic/state';
 import SaveFilterModal from 'containers/SaveFilterModal';
 
-const QUICK_FILTER_IDS = [
-	'c96b69bd-4285-4cf0-81d9-d81316a4c234',
-	'89104794-fc1b-466e-92a8-bc759b98b8e4',
-	'ecf71215-3c72-4aa5-afac-fa55588d51b6',
-	'88a10c4b-bf0c-42fb-8f4b-63107dc0f10f',
-];
+const QUICK_FILTER_IDS = [1, 2, 3, 4];
 
 const AdvancedSearch: React.FC = () => {
 	const dispatch = useDispatch();
