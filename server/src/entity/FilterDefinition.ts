@@ -21,7 +21,7 @@ export class FilterDefinition {
 	dataType!: string;
 
 	@Column()
-	@IsString()
 	@IsNotEmpty()
+	@IsString()
 	title!: string;
 }

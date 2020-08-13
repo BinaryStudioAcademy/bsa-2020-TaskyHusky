@@ -1,15 +1,10 @@
 import React from 'react';
 import styles from './styles.module.scss';
-import { Header, Button, Select, Icon } from 'semantic-ui-react';
+import { Header, Button, Icon } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { requestDeleteUser } from 'containers/ProfilePage/logiс/actions';
 import { useDispatch } from 'react-redux';
-
-const languagesOptions = [
-	{ key: 'english', value: 'english', text: 'English (US)' },
-	{ key: 'ukrainian', value: 'ukrainian', text: 'Ukrainian (UA)' },
-	{ key: 'russian', value: 'russian', text: 'Russian (RU)' },
-];
+import LanguageSelect from 'components/LanguageSelect';
 
 const AccountManager = () => {
 	const dispatch = useDispatch();
@@ -25,7 +20,7 @@ const AccountManager = () => {
 				Changes to your language and timezone will be reflected across Confluence, Jira and directory. Update
 				your language and timezone for other products from your <Link to="#">product settings</Link>.
 			</p>
-			<Select placeholder="Choose language" options={languagesOptions} />
+			<LanguageSelect />
 			<Header as="h4">Delete your account</Header>
 			<p>
 				When you delete your account, you lose access to Atlassian account services, and we permanently delete

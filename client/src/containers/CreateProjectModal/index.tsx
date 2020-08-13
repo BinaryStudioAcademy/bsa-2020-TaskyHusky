@@ -7,11 +7,11 @@ import { useTranslation } from 'react-i18next';
 import { RootState } from 'typings/rootState';
 
 import * as actions from './logic/actions';
-import getTemplatesInformation from './config/templatesInformation';
+import getTemplatesInformation, { MethodologyInfo } from './config/templatesInformation';
 import styles from './styles.module.scss';
 import CustomInput from 'components/common/Input/CustomInput';
 
-type ProjectTemplate = 'Scrum' | 'Kanban' | 'Bug tracking';
+type Template = keyof typeof WebApi.Board.BoardType;
 
 const CreateProjectModal: React.FC = () => {
 	const templatesInformation = getTemplatesInformation();
@@ -31,13 +31,13 @@ const CreateProjectModal: React.FC = () => {
 
 	const [name, setName] = useState<string>('');
 	const [key, setKey] = useState<string>('');
-	const [template, setTemplate] = useState<string>('Scrum');
+	const [template, setTemplate] = useState<Template>('Scrum');
 
 	const [isNameValid, setIsNameValid] = useState<boolean>(false);
 	const [isKeyValid, setIsKeyValid] = useState<boolean>(false);
 	const [isValidErrorShown, setIsValidErrorShown] = useState<boolean>(false);
 
-	const { description, image } = templatesInformation[template as ProjectTemplate];
+	const { description, image } = templatesInformation[template];
 
 	const onCreateProject = (): void => {
 		if (!isNameValid || !isKeyValid) {
@@ -89,9 +89,9 @@ const CreateProjectModal: React.FC = () => {
 		setKey(newKey);
 	};
 
-	const selectTemplate = (template: string) => {
+	const selectTemplate = (template: Template) => {
 		setIsTemplatesView(false);
-		setTemplate(template);
+		setTemplate(WebApi.Board.BoardType[template]);
 	};
 
 	return (
@@ -174,28 +174,30 @@ const CreateProjectModal: React.FC = () => {
 						<p className={styles.modal__description}>{description}</p>
 					</Modal.Header>
 					<Modal.Content className={styles.cards_container}>
-						{Object.entries(templatesInformation).map(([name, { image, description }]) => (
-							<Card
-								key={name}
-								className={styles.card__container}
-								image={<Image src={image} className={styles.card__image} alt={name + ' image'} />}
-								header={name}
-								description={description}
-								extra={
-									<div className={styles.card__actions_container}>
-										<Link className={styles.card__link} to={''}>
-											{t('whats_this')}
-										</Link>
-										<Button
-											className={styles.card__select_template}
-											onClick={() => selectTemplate(name)}
-										>
-											{t('select')}
-										</Button>
-									</div>
-								}
-							/>
-						))}
+						{Object.entries(templatesInformation).map(
+							([name, { image, description }]: [any, MethodologyInfo]) => (
+								<Card
+									key={name}
+									className={styles.card__container}
+									image={<Image src={image} className={styles.card__image} alt={name + ' image'} />}
+									header={name}
+									description={description}
+									extra={
+										<div className={styles.card__actions_container}>
+											<Link className={styles.card__link} to={''}>
+												{t('whats_this')}
+											</Link>
+											<Button
+												className={styles.card__select_template}
+												onClick={() => selectTemplate(name)}
+											>
+												{t('select')}
+											</Button>
+										</div>
+									}
+								/>
+							),
+						)}
 					</Modal.Content>
 				</>
 			)}

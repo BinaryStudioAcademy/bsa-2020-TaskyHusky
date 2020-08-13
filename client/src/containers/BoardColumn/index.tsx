@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { extractIdFormDragDropId } from 'helpers/extractId.helper';
 import { useSelector } from 'react-redux';
 import { RootState } from 'typings/rootState';
+import styles from './styles.module.scss';
 
 interface Props {
 	column: WebApi.Result.BoardColumnResult;
@@ -71,7 +72,7 @@ const BoardColumn: React.FC<Props> = ({ column, className, search, getOnDragEndF
 			<Droppable droppableId={`board-column__${column.id}`}>
 				{(provided, snapshot) => (
 					<Segment style={{ backgroundColor: snapshot.isDraggingOver ? '#CCC' : '#EEE' }} className="fill">
-						<Header as="h3" floated="left">
+						<Header as="h3" floated="left" className={styles.columnHeader}>
 							{column.columnName}
 						</Header>
 						<CreateIssueModal
@@ -90,7 +91,7 @@ const BoardColumn: React.FC<Props> = ({ column, className, search, getOnDragEndF
 								]);
 							}}
 						>
-							<Button floated="right" positive compact>
+							<Button floated="right" compact>
 								<Icon name="plus circle" />
 								{t('create_issue')}
 							</Button>
@@ -100,7 +101,7 @@ const BoardColumn: React.FC<Props> = ({ column, className, search, getOnDragEndF
 							<div
 								ref={provided.innerRef}
 								{...provided.droppableProps}
-								style={{ overflowY: 'auto', height: '65vh' }}
+								style={{ overflowY: 'auto', height: '100%' }}
 							>
 								{displayIssues.length > 0
 									? displayIssues.map((issue, i) => (
