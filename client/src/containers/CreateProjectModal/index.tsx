@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Modal, Button, Form, Checkbox, Image, Card } from 'semantic-ui-react';
 import validator from 'validator';
 import { Link } from 'react-router-dom';
@@ -22,10 +22,6 @@ const CreateProjectModal: React.FC = () => {
 		(rootState: RootState) => rootState.createProject,
 	);
 
-	if (isProjectCreated) {
-		dispatch(actions.resetState());
-	}
-
 	const [isKeyTouched, setIsKeyTouched] = useState(false);
 	const [isTemplatesView, setIsTemplatesView] = useState(false);
 
@@ -39,12 +35,17 @@ const CreateProjectModal: React.FC = () => {
 
 	const { description, image } = templatesInformation[template];
 
-	const onCreateProject = (): void => {
-		if (!isNameValid || !isKeyValid) {
-			setIsValidErrorShown(true);
-			return;
-		}
+	if (isProjectCreated) {
+		dispatch(actions.resetState());
+		setName('');
+		setKey('');
+		setTemplate('Scrum');
+		setIsNameValid(false);
+		setIsKeyValid(false);
+		setIsValidErrorShown(false);
+	}
 
+	const startCreatingProject = () => {
 		dispatch(
 			actions.startCreatingProject({
 				name,
@@ -52,6 +53,21 @@ const CreateProjectModal: React.FC = () => {
 				template,
 			}),
 		);
+	};
+
+	const onCreateProject = (): void => {
+		if (!isKeyTouched) {
+			const isGeneratedKeyValid = validator.isLength(key, { min: 2 });
+			if (isGeneratedKeyValid && isNameValid) {
+				startCreatingProject();
+			}
+		}
+
+		if (!isNameValid || !isKeyValid) {
+			setIsValidErrorShown(true);
+			return;
+		}
+		startCreatingProject();
 	};
 
 	const generateKey = (name: string): string => {
@@ -91,7 +107,7 @@ const CreateProjectModal: React.FC = () => {
 
 	const selectTemplate = (template: Template) => {
 		setIsTemplatesView(false);
-		setTemplate(WebApi.Board.BoardType[template]);
+		setTemplate(template);
 	};
 
 	return (
