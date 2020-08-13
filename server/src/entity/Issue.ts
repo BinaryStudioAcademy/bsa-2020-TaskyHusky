@@ -38,7 +38,6 @@ export class Issue {
 	priority?: Priority;
 
 	@Column({ nullable: true })
-	@IsString()
 	description?: string;
 
 	@ManyToOne((type) => Sprint, (sprint) => sprint.issues)
