@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Modal, Form, Button, Grid, Header, Icon, Divider } from 'semantic-ui-react';
 import { useCreateIssueModalContext } from './logic/context';
 import TagsInput from 'components/common/TagsInput';
-import { connect, useDispatch } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'typings/rootState';
 import { createIssue } from 'pages/IssuePage/logic/actions';
 import { generateRandomString } from 'helpers/randomString.helper';
@@ -41,8 +41,9 @@ const CreateIssueModalBody: React.FC<Props> = ({
 	const [isOpened, setIsOpened] = useState<boolean>(false);
 	const dispatch = useDispatch();
 	const context = useCreateIssueModalContext();
+	const user = useSelector((state: RootState) => state.auth.user);
 
-	if (projectsLoading) {
+	if (projectsLoading || !user) {
 		return null;
 	}
 
@@ -108,7 +109,7 @@ const CreateIssueModalBody: React.FC<Props> = ({
 			project: projectID ?? context.data.project,
 			issueKey: generateRandomString(KeyGenerate.LENGTH),
 			assignedID: '98601c2c-a103-489b-b89f-ea5ae568b582',
-			creatorID: 'f2235a1c-dfbc-47b7-bdb2-726d159c19a0',
+			creatorID: user.id,
 		};
 
 		dispatch(createIssue({ data }));
