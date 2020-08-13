@@ -120,4 +120,9 @@ export const ua = {
 	issues: 'Задачі',
 	no_cards: 'Нема карток',
 	select_icon: 'виберіть значок',
+	back_to_project: 'Повернутися до проекту',
+	issue_types: 'Типи завдань',
+	versions: 'Версії',
+	components: 'Компоненти',
+	permissions: 'Дозволи',
 };

@@ -120,4 +120,9 @@ export const ru = {
 	issues: 'Задачи',
 	no_cards: 'Нет карточек',
 	select_icon: 'выберите значок',
+	back_to_project: 'Вернуться к проекту',
+	issue_types: 'Типы задач',
+	versions: 'Версии',
+	components: 'Компоненты',
+	permissions: 'Разрешения',
 };

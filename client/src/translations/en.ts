@@ -120,4 +120,9 @@ export const en = {
 	issues: 'Issues',
 	no_cards: 'No cards',
 	select_icon: 'select icon',
+	back_to_project: 'Back to project',
+	issue_types: 'Issue types',
+	versions: 'Versions',
+	components: 'Components',
+	permissions: 'Permissions',
 };
