@@ -1,7 +1,7 @@
-import { IssueCommentRepository } from '../repositories/issueComment.repository';
-import { getCustomRepository } from 'typeorm';
 import { Request, Response } from 'express';
+import { getCustomRepository } from 'typeorm';
 import { getWebError } from '../helpers/error.helper';
+import { IssueCommentRepository } from '../repositories/issueComment.repository';
 
 export class IssueCommentController {
 	async getAllByIssueId(req: Request, res: Response) {
