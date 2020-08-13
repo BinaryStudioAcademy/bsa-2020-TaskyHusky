@@ -1,9 +1,9 @@
 import { validate } from 'class-validator';
 import { IVerifyOptions } from 'passport-local';
+import { authErrorMessages, EMAIL, PASSWORD, FIRST_NAME, LAST_NAME } from '../constants/auth.constants';
 import { UserProfile } from '../entity/UserProfile';
 import { ErrorResponse } from './errorHandler.helper';
 import HttpStatusCode from '../constants/httpStattusCode.constants';
-import { authErrorMessages, EMAIL, PASSWORD } from '../constants/auth.constants';
 
 interface ValidateUserProfile {
 	(data: Partial<UserProfile>, next: (error: any, user?: any, options?: IVerifyOptions | undefined) => void): Promise<
@@ -14,6 +14,7 @@ interface ValidateUserProfile {
 // eslint-disable-next-line consistent-return
 export const validateUserProfile: ValidateUserProfile = async (data, next) => {
 	const userInstance = new UserProfile(data);
+
 	const errorsArray = await validate(userInstance);
 	const errors = errorsArray.length > 0;
 
@@ -25,10 +26,19 @@ export const validateUserProfile: ValidateUserProfile = async (data, next) => {
 						new ErrorResponse(HttpStatusCode.UNPROCESSABLE_ENTITY, authErrorMessages.INVALID_EMAIL),
 						null,
 					);
-
 				case PASSWORD:
 					return next(
 						new ErrorResponse(HttpStatusCode.UNPROCESSABLE_ENTITY, authErrorMessages.INVALID_PASSWORD),
+						null,
+					);
+				case FIRST_NAME:
+					return next(
+						new ErrorResponse(HttpStatusCode.UNPROCESSABLE_ENTITY, authErrorMessages.INVALID_FIRST_NAME),
+						null,
+					);
+				case LAST_NAME:
+					return next(
+						new ErrorResponse(HttpStatusCode.UNPROCESSABLE_ENTITY, authErrorMessages.INVALID_LAST_NAME),
 						null,
 					);
 				default:

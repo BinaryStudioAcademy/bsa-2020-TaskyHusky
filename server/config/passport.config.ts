@@ -47,6 +47,7 @@ passport.use(
 			usernameField: EMAIL_FIELD,
 			passReqToCallback: true,
 		},
+		// eslint-disable-next-line consistent-return
 		async (req, email: string, password: string, next): Promise<void> => {
 			const userRepository = getCustomRepository(UserRepository);
 			const checkingUser = await userRepository.getByEmail(email);
@@ -55,7 +56,9 @@ passport.use(
 				return next(new ErrorResponse(HttpStatusCode.UNAUTHORIZED, authErrorMessages.TAKEN_EMAIL), null);
 			}
 
-			const isValidEntity = await validateUserProfile({ email, password }, next);
+			const { firstName, lastName } = req.body;
+
+			const isValidEntity = await validateUserProfile({ email, password, firstName, lastName }, next);
 
 			if (isValidEntity) {
 				const encodedPassword = hashPassword(password);
