@@ -16,7 +16,7 @@ export class Teams {
   @Column()
   name?: string;
 
-  @Column()
+  @Column({ nullable: true })
   color?: string;
 
   @Column({ nullable: true })

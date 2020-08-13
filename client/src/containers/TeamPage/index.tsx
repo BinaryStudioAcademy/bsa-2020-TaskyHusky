@@ -13,7 +13,12 @@ import TeamAddPeopleModal from 'components/TeamAddPeopleModal';
 import CreateLink from 'components/TeamLinks/createLink';
 import DeleteLink from 'components/TeamLinks/deleteLink';
 import Spinner from 'components/common/Spinner';
-import { TeamState } from './logic/state';
+interface Match {
+	params: { [key: string]: string };
+	isExact: boolean;
+	path: string;
+	url: string;
+}
 
 type Team = {
 	team: WebApi.Team.TeamModel;
@@ -24,7 +29,7 @@ export interface Link {
 	description: string;
 }
 
-const TeamPage = ({ match: { params }, currentTeam: { team } }: { match: any; currentTeam: Team }) => {
+const TeamPage = ({ match: { params }, currentTeam: { team } }: { match: Match; currentTeam: Team }) => {
 	const [notification, setNotification] = useState<boolean>(true);
 	const [addPeopleModal, setAddPeopleModal] = useState<boolean>(false);
 	const [editedLink, setEditedLink] = useState<Link | undefined>();
