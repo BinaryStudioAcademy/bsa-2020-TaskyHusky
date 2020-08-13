@@ -73,7 +73,7 @@ const CreateProjectModal: React.FC = () => {
 	const generateKey = (name: string): string => {
 		let result = key;
 		if (!isKeyTouched) {
-			const isSpace = name.search(' ');
+			const isSpace = name.trimEnd().search(' ');
 
 			if (isSpace !== -1) {
 				result = name
@@ -82,7 +82,7 @@ const CreateProjectModal: React.FC = () => {
 					.map((word) => word[0].toUpperCase())
 					.join('');
 			} else {
-				result = name.substr(0, 3).toUpperCase();
+				result = name.substr(0, 2).padStart(2, name[0]).toUpperCase();
 			}
 		}
 		return result;
@@ -99,12 +99,14 @@ const CreateProjectModal: React.FC = () => {
 
 	const onNameChanged = (name: string): void => {
 		const key = generateKey(name);
-		setName(name);
+		const regexp = new RegExp('\\s{1,}', 'g');
+		const removeSpaces = name.replace(regexp, ' ').trimStart();
+		setName(removeSpaces);
 		setKey(key);
 	};
 
 	const onKeyChanged = (key: string): void => {
-		const newKey = key.toUpperCase();
+		const newKey = key.trim().toUpperCase();
 		if (!isKeyTouched) {
 			setIsKeyTouched(true);
 		}
@@ -122,7 +124,7 @@ const CreateProjectModal: React.FC = () => {
 			onClose={onModalClose}
 			onOpen={onModalOpen}
 			open={isModalOpened}
-			size={!isTemplatesView ? 'tiny' : undefined}
+			size={'tiny'}
 			dimmer="inverted"
 			trigger={<Button primary>{t('create_project')}</Button>}
 		>
