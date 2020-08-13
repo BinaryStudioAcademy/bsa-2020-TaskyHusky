@@ -241,6 +241,7 @@ namespace WebApi.Entities {
 		leadedProjects?: Projects[];
 		createdProjects: Projects[];
 		assignedIssues?: Issue[];
+		createdIssues?: Issue[];
 		teams?: Team[];
 		projects?: Projects[];
 	}
