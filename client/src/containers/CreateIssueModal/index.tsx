@@ -1,16 +1,18 @@
 import React from 'react';
 import CreateIssueModalBody from './body';
 import { ContextProvider } from './logic/context';
-import { ControlsGetter } from './logic/types';
 
 interface Props {
-	children: ControlsGetter;
+	children: JSX.Element;
+	boardColumnID?: string;
+	projectID?: string;
+	onClose?: (data: WebApi.Issue.PartialIssue) => void;
 }
 
-const CreateIssueModal: React.FC<Props> = ({ children }) => {
+const CreateIssueModal: React.FC<Props> = (props) => {
 	return (
 		<ContextProvider>
-			<CreateIssueModalBody>{children}</CreateIssueModalBody>
+			<CreateIssueModalBody {...props}>{props.children}</CreateIssueModalBody>
 		</ContextProvider>
 	);
 };

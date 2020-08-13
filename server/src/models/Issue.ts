@@ -5,7 +5,7 @@ interface PartialIssue {
 	id?: string;
 	type: string;
 	summary?: string;
-	boardColumnID?: string;
+	boardColumn?: string;
 	labels?: string[];
 	attachments?: string[];
 	links?: string[];
