@@ -21,7 +21,7 @@ const AdvancedSearch: React.FC = () => {
 	const dispatch = useDispatch();
 	const [stared, setStared] = useState(false);
 	const { filterParts } = useSelector((rootState: RootState) => rootState.advancedSearch);
-	const [addedFilterParts, setAddedFilterParts] = useState([] as FilterPartState[]);
+	const [addedFilterParts, setAddedFilterParts] = useState<FilterPartState[]>([]);
 
 	useEffect(() => {
 		dispatch(fetchFilterParts());
