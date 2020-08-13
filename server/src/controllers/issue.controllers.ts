@@ -6,14 +6,10 @@ import { IssueRepository } from '../repositories/issue.repository';
 class IssueController {
 	async getAll(req: Request, res: Response) {
 		const repository = getCustomRepository(IssueRepository);
+		const { filter } = req.body;
 
 		try {
-			const result = await repository.findAll({
-				summaries: ['Bug'],
-				descriptions: ['dark'],
-				priorityIds: ['aac0adb2-6ea8-4c67-9a4c-2c99ff6d842f'],
-				typeIds: ['e90e87ad-cc19-4680-a4ee-d5eefce030c2'],
-			});
+			const result = await repository.findAll(filter);
 			res.send(result);
 		} catch (err) {
 			res.status(500).send(getWebError(err, 500));
