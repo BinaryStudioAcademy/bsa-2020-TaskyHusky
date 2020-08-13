@@ -20,6 +20,11 @@ export class FilterDef1597050485179 implements MigrationInterface {
 			},
 			{
 				dataType: 'dropdown',
+				filterType: 'assignee',
+				title: 'Assignee',
+			},
+			{
+				dataType: 'dropdown',
 				filterType: 'creator',
 				title: 'Creator',
 			},
@@ -42,11 +47,6 @@ export class FilterDef1597050485179 implements MigrationInterface {
 				dataType: 'searchText',
 				filterType: 'summary',
 				title: 'Summary',
-			},
-			{
-				dataType: 'dropdown',
-				filterType: 'assignee',
-				title: 'Assignee',
 			},
 		];
 		await getRepository('FilterDefinition').save(filterDefs);
