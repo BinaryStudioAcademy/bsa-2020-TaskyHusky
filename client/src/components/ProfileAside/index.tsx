@@ -13,7 +13,7 @@ import { UserProfileState } from 'containers/ProfilePage/logiс/state';
 interface Props {
 	isCurrentUser: boolean;
 	mockData?: any;
-	user: Partial<UserProfileState>;
+	user: UserProfileState;
 	showManager: (modeToShow: string) => void;
 }
 

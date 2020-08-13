@@ -9,13 +9,12 @@ import { useDispatch } from 'react-redux';
 
 interface Props {
 	showManager: (modeToShow: string) => void;
-	updateUser: (changedUser: Partial<UserProfileState>) => void;
 	user: UserProfileState;
 }
 
 const ProfileManager: React.FC<Props> = (props: Props) => {
 	const { t } = useTranslation();
-	const { showManager, updateUser, user: userData } = props;
+	const { showManager, user: userData } = props;
 	const dispatch = useDispatch();
 	const [user, setUser] = useState(userData);
 	const { firstName, lastName, username, jobTitle, department, location, organization } = user;
@@ -27,7 +26,6 @@ const ProfileManager: React.FC<Props> = (props: Props) => {
 	};
 	const onSubmit = () => {
 		const { editMode, isLoading, ...rest } = user;
-		updateUser(user);
 		dispatch(requestUpdateUser({ ...rest } as Partial<UserProfileState>));
 	};
 

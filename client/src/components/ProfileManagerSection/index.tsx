@@ -8,17 +8,16 @@ import AccountManager from 'components/AccountManager';
 interface Props {
 	user: UserProfileState;
 	showManager: (modeToShow: string) => void;
-	updateUser: (changedUser: Partial<UserProfileState>) => void;
 }
 
 const ProfileManagerSection: React.FC<Props> = (props: Props) => {
-	const { user, showManager, updateUser } = props;
+	const { user, showManager } = props;
 	const { editMode, email } = user;
 	switch (editMode) {
 		case 'profile':
-			return <ProfileManager showManager={showManager} updateUser={updateUser} user={user} />;
+			return <ProfileManager showManager={showManager} user={user} />;
 		case 'email':
-			return <EmailManager updateUser={updateUser} email={email} />;
+			return <EmailManager email={email} />;
 		case 'security':
 			return <SecurityManager />;
 		case 'account':

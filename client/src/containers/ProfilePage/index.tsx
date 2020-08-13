@@ -12,16 +12,14 @@ import { UserProfileState, initialState } from './logiс/state';
 
 const ProfilePage = ({ id }: { id: string }) => {
 	const dispatch = useDispatch();
-	const [user, setUser] = useState(initialState);
-	const { editMode, isLoading } = user;
+	const [user, setUser] = useState<UserProfileState | null>(null);
+
 	const currentUser = useSelector((state: RootState) => state.auth.user);
 	const isCurrentUser = currentUser ? id === currentUser.id : false;
+	const userData = useSelector((state: RootState) => state.user);
+	const { editMode, isLoading } = userData;
 
 	const showManager = (modeToShow: string) => {
-		setUser({
-			...user,
-			editMode: modeToShow,
-		});
 		dispatch(actions.updateUser({ partialState: { editMode: modeToShow } }));
 	};
 
@@ -44,15 +42,10 @@ const ProfilePage = ({ id }: { id: string }) => {
 
 	const getUser = async () => {
 		if (isCurrentUser) {
-			setUser({ ...user, ...currentUser, isLoading: false });
 			dispatch(actions.updateUser({ partialState: { isLoading: false } }));
 		} else {
 			dispatch(actions.requestGetUser({ id }));
 		}
-	};
-
-	const updateUser = (changedUser: Partial<UserProfileState>) => {
-		setUser({ ...user, ...changedUser });
 	};
 
 	useEffect(() => {
@@ -60,6 +53,9 @@ const ProfilePage = ({ id }: { id: string }) => {
 		//eslint-disable-next-line
 	}, [id]);
 
+	useEffect(() => {
+		setUser(userData);
+	}, [userData]);
 	return (
 		<>
 			{isLoading ? (
@@ -75,7 +71,7 @@ const ProfilePage = ({ id }: { id: string }) => {
 							showManager={showManager}
 						/>
 						{editMode ? (
-							<ProfileManagerSection user={user} showManager={showManager} updateUser={updateUser} />
+							<ProfileManagerSection user={user} showManager={showManager} />
 						) : (
 							<ProfileSection isCurrentUser={isCurrentUser} mockData={mockData} />
 						)}
