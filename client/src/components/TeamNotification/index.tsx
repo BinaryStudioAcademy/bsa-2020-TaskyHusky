@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 type NotifProps = {
-	toggleNotification(): void;
+	toggleNotification: () => void;
 };
 
 const TeamNotification = ({ toggleNotification }: NotifProps) => {

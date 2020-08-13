@@ -91,6 +91,16 @@ namespace WebApi.Result {
 namespace WebApi.Team {
 	export interface TeamModel {
 		id?: string;
+		name?: string;
+		description?: string;
+		links: string[];
+	}
+}
+
+namespace WebApi.Team {
+	export interface TeamModel {
+		id?: string;
+		name?: string;
 		description?: string;
 		links?: string[];
 	}
@@ -143,7 +153,7 @@ namespace WebApi.Entities {
 	}
 
 	interface FilterDefinition {
-		id: string;
+		id: number;
 		filterParts?: FilterPart[];
 		filterType: string;
 		dataType: string;
@@ -216,10 +226,15 @@ namespace WebApi.Entities {
 	}
 
 	interface Team {
-		id: string;
+		id?: string;
+		name: string;
 		description?: string;
-		links?: string;
-		users?: UserProfile[];
+		links?: string[{
+			http?: string;
+			name?: string;
+			description?: string;
+			color?: string;
+		}];
 	}
 
 	interface UserProfile {
@@ -234,7 +249,7 @@ namespace WebApi.Entities {
 		email?: string;
 		jobTitle?: string;
 		userSettingsId?: string;
-		password?: string;
+		password: string;
 		boards?: Board[];
 		filters?: Filter[];
 		assignedProjects?: Projects[];
