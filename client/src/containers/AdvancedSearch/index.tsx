@@ -9,8 +9,14 @@ import MoreFilterPartsDropdown from 'components/MoreFilters';
 import { fetchFilterParts } from './logic/actions';
 import { FilterPartState } from './logic/state';
 import SaveFilterModal from 'containers/SaveFilterModal';
+import { filterDefsIDS } from 'constants/FilterDef';
 
-const QUICK_FILTER_IDS = [1, 2, 3, 4];
+const QUICK_FILTER_IDS = [
+	filterDefsIDS.PROJECTS,
+	filterDefsIDS.STATUS,
+	filterDefsIDS.ISSUE_TYPE,
+	filterDefsIDS.ASSIGNEE,
+];
 
 const AdvancedSearch: React.FC = () => {
 	const dispatch = useDispatch();
