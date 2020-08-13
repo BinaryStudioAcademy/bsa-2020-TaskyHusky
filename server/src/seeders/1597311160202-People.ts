@@ -164,7 +164,11 @@ export class People1597311160202 implements MigrationInterface {
                 avatar: 'https://robohash.org/maioresmagnamnemo.png?size=200x200&set=set1',
                 jobTitle: 'Assistant Professor',
             },
-        ]
+        ].map(user=>{
+            const {id, ...userData}=user;
+
+            return {...userData, password:'1234567'}
+        });
 
         await getRepository('UserProfile').save(users);
     }
