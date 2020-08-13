@@ -4,6 +4,7 @@ import { Priority } from './Priority';
 import { BoardColumn } from './BoardColumn';
 import { Sprint } from './Sprint';
 import { Projects } from './Projects';
+import { UserProfile } from './UserProfile';
 
 @Entity()
 export class Issue {
@@ -43,9 +44,9 @@ export class Issue {
 	@Column()
 	issueKey?: string;
 
-	@Column() // Replace with rel.
-	assignedID?: string;
+	@ManyToOne((type) => UserProfile)
+	assigned?: UserProfile;
 
-	@Column() // Replace with rel.
-	creatorID?: string;
+	@ManyToOne((type) => UserProfile)
+	creator!: UserProfile;
 }

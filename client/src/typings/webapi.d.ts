@@ -22,8 +22,8 @@ namespace WebApi.Issue {
 		sprint?: Sprint;
 		project?: Projects;
 		issueKey?: string;
-		assignedID?: string;
-		creatorID?: string;
+		assigned?: string;
+		creator: string;
 	}
 }
 
@@ -58,8 +58,8 @@ namespace WebApi.Result {
 		sprintID?: string;
 		projectID?: string;
 		issueKey?: string;
-		assignedID?: string;
-		creatorID?: string;
+		assigned?: UserModel;
+		creator: UserModel;
 	}
 
 	interface BoardResult {
@@ -170,8 +170,8 @@ namespace WebApi.Entities {
 		sprint?: Sprint;
 		project?: Projects;
 		issueKey?: string;
-		assignedID?: string;
-		creatorID?: string;
+		assigned?: UserProfile;
+		creator: UserProfile;
 	}
 
 	interface IssueType {
