@@ -144,9 +144,7 @@ const CreateProjectModal: React.FC = () => {
 									setData={onNameChanged}
 									placeholder="Enter project name"
 									popUpContent="Project name should contain at least 5 symbols long"
-									validation={(key) =>
-										validator.isLength(key, { min: 5 }) && validator.isAlphanumeric(key)
-									}
+									validation={(name) => validator.isLength(name, { min: 5 })}
 								/>
 							</Form.Field>
 							<Form.Field>
@@ -159,9 +157,7 @@ const CreateProjectModal: React.FC = () => {
 									setData={onKeyChanged}
 									placeholder="Enter your key"
 									popUpContent="Key should contain at least 2 symbols long"
-									validation={(key) =>
-										validator.isLength(key, { min: 2 }) && validator.isAlphanumeric(key)
-									}
+									validation={(key) => validator.isLength(key, { min: 2 })}
 								/>
 							</Form.Field>
 							<Form.Field>
