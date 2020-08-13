@@ -37,16 +37,16 @@ const AdvancedSearch: React.FC = () => {
 				icon: 'string',
 			},
 			summary: 'Very summary',
-			boardColumnID: '6d1',
-			labels: 'done',
-			attachments: 'attachments',
-			links: 'link1',
+			boardColumn: '6d1',
+			labels: ['done'],
+			attachments: ['attachments'],
+			links: ['link1'],
 			description: 'Very description',
 			sprintID: '52ce',
-			projectID: '9fc89a01-f610-48f7-b0ac-f11ef4db4532', //real
+			project: '9fc89a01-f610-48f7-b0ac-f11ef4db4532', //real
 			issueKey: 'TH-1',
-			assignedID: 'a01dcb1e-73d6-4a23-a3a3-ebc36206f551',
-			creatorID: 'a01dcb1e-73d6-4a23-a3a3-ebc36206f551', //real
+			assigned: 'a01dcb1e-73d6-4a23-a3a3-ebc36206f551',
+			creator: 'a01dcb1e-73d6-4a23-a3a3-ebc36206f551', //real
 			type: {
 				id: 'type-id-12',
 				icon: 'check',
@@ -63,16 +63,16 @@ const AdvancedSearch: React.FC = () => {
 				icon: 'string',
 			},
 			summary: 'Interface implemented',
-			boardColumnID: '6d1',
-			labels: 'done',
-			attachments: 'attachments',
-			links: 'link1',
+			boardColumn: '6d1',
+			labels: ['done'],
+			attachments: ['attachments'],
+			links: ['link1'],
 			description: 'Very description',
 			sprintID: '52ce',
-			projectID: '47ab4c46-e506-4dcb-a4d3-79b47cdc16a5', //real
+			project: '47ab4c46-e506-4dcb-a4d3-79b47cdc16a5', //real
 			issueKey: 'TH-1',
-			assignedID: 'e89a7a50-68f2-4a43-a043-80eec52e0ac8',
-			creatorID: 'e89a7a50-68f2-4a43-a043-80eec52e0ac8', // real
+			assigned: 'e89a7a50-68f2-4a43-a043-80eec52e0ac8',
+			creator: 'e89a7a50-68f2-4a43-a043-80eec52e0ac8', // real
 			type: {
 				id: 'id-212',
 				icon: 'close',

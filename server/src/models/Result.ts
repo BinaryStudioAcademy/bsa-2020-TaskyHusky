@@ -28,8 +28,8 @@ interface IssueResult {
 	sprintID?: string;
 	projectID?: string;
 	issueKey?: string;
-	assignedID?: string;
-	creatorID?: string;
+	assigned?: UserModel;
+	creator: UserModel;
 }
 
 interface BoardResult {

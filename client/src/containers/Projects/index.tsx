@@ -1,28 +1,21 @@
-import React, { useState, ChangeEvent, useEffect } from 'react';
+import React, { useState, ChangeEvent } from 'react';
 import { Input, Table } from 'semantic-ui-react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { RootState } from 'typings/rootState';
-import * as actions from './logic/actions';
-
 import Options from './../../components/common/Options';
 import CreateProjectModal from '../CreateProjectModal';
 import styles from './styles.module.scss';
 import Spinner from 'components/common/Spinner';
 import { setProjectActions } from './config/projectActions';
-import { useHistory } from 'react-router-dom';
+import { useHistory, NavLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 const Projects: React.FC = () => {
 	const history = useHistory();
 	const { t } = useTranslation();
-	const dispatch = useDispatch();
 	const { projects, isLoading } = useSelector((rootState: RootState) => rootState.projects);
 
 	const [searchName, setSearchName] = useState('');
-
-	useEffect(() => {
-		dispatch(actions.startLoading());
-	}, [dispatch]);
 
 	const onSearch = (event: ChangeEvent<HTMLInputElement>) => {
 		const searchValue = event.target.value;
@@ -57,6 +50,7 @@ const Projects: React.FC = () => {
 							<Table.HeaderCell>{t('key')}</Table.HeaderCell>
 							<Table.HeaderCell>{t('type')}</Table.HeaderCell>
 							<Table.HeaderCell>{t('lead')}</Table.HeaderCell>
+							<Table.HeaderCell>{t('board')}</Table.HeaderCell>
 							<Table.HeaderCell>{t('settings')}</Table.HeaderCell>
 						</Table.Row>
 					</Table.Header>
@@ -68,6 +62,9 @@ const Projects: React.FC = () => {
 									<Table.Cell>{key}</Table.Cell>
 									<Table.Cell>Cell</Table.Cell>
 									<Table.Cell>Cell</Table.Cell>
+									<Table.Cell>
+										<NavLink to={`/project/${id}/issues`}>{t('go_to_board')}</NavLink>
+									</Table.Cell>
 									<Table.Cell>
 										<Options config={setProjectActions({ id, onOpenSettings, onTrash })} />
 									</Table.Cell>
