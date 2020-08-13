@@ -18,9 +18,9 @@ const MoreFilterDefsDropdown = ({
 		const { value } = data;
 		const updatedAddedFilterParts = addedFilterParts.find((addedPart) => addedPart.id === value)
 			? addedFilterParts.filter(({ id }) => id !== `${value}`)
-			: [...addedFilterParts, additionalFilterParts.find(({ id }) => id === value)];
+			: ([...addedFilterParts, additionalFilterParts.find(({ id }) => id === value)] as FilterPartState[]);
 
-		setAddedFilterParts(updatedAddedFilterParts as FilterPartState[]);
+		setAddedFilterParts(updatedAddedFilterParts);
 	};
 	const isAdded = (filterPartId: string) => {
 		const filterPart = addedFilterParts.find(({ id }) => id === filterPartId);

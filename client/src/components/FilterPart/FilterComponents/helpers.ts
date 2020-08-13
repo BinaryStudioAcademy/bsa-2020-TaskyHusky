@@ -1,6 +1,7 @@
 import { DefinitionEntity } from './types';
+import { DropdownOption } from '../types';
 
-export const definitionTypesToDropdownData = (entity: DefinitionEntity) => {
+export const definitionTypesToDropdownData = (entity: DefinitionEntity): DropdownOption => {
 	const { id, title, color, icon } = entity;
 	const data = {
 		value: title,

@@ -7,29 +7,22 @@ import FilterPart from 'components/FilterPart';
 import MoreFilterPartsDropdown from 'components/MoreFilters';
 import { fetchFilterParts } from './logic/actions';
 import { FilterPartState } from './logic/state';
+import { filterDefsIDS } from 'constants/FilterDef';
 
 const QUICK_FILTER_IDS = [
-	'c96b69bd-4285-4cf0-81d9-d81316a4c234',
-	'89104794-fc1b-466e-92a8-bc759b98b8e4',
-	'ecf71215-3c72-4aa5-afac-fa55588d51b6',
-	'88a10c4b-bf0c-42fb-8f4b-63107dc0f10f',
+	filterDefsIDS.PROJECTS,
+	filterDefsIDS.STATUS,
+	filterDefsIDS.ISSUE_TYPE,
+	filterDefsIDS.ASSIGNEE,
 ];
 
 const AdvancedFilters: React.FC = () => {
 	const dispatch = useDispatch();
 	const { filterParts } = useSelector((rootState: RootState) => rootState.advancedSearch);
-	const [addedFilterParts, setAddedFilterParts] = useState([] as FilterPartState[]);
-	const getFilterOptionsFormQueryParams = () => {
-		const options = filterParts.map((filterPart) => {
-			const { filterDef, members } = filterPart;
-			console.log('members', members);
-		});
-	};
+	const [addedFilterParts, setAddedFilterParts] = useState<FilterPartState[]>([]);
 
 	useEffect(() => {
 		dispatch(fetchFilterParts());
-		//
-		getFilterOptionsFormQueryParams();
 	}, [dispatch]);
 
 	const getDefaultFilterParts = () => {

@@ -1,25 +1,8 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from 'typings/rootState';
+import React from 'react';
 import { Table } from 'semantic-ui-react';
 import IssueItem from 'components/IssueItem';
-import { fetchFilterParts } from './logic/actions';
 
 const IssueTable: React.FC = () => {
-	const dispatch = useDispatch();
-	const { filterParts } = useSelector((rootState: RootState) => rootState.advancedSearch);
-	const getFilterOptionsFormQueryParams = () => {
-		const options = filterParts.map((filterPart) => {
-			const { filterDef, members } = filterPart;
-			console.log('members', members);
-		});
-	};
-
-	useEffect(() => {
-		dispatch(fetchFilterParts());
-		getFilterOptionsFormQueryParams();
-	}, [dispatch]);
-
 	const issues = [
 		{
 			priority: {

@@ -4,65 +4,57 @@ import styles from './styles.module.scss';
 import { FilterPartState } from 'containers/AdvancedSearch/logic/state';
 import { updateFilterPart } from 'containers/AdvancedSearch/logic/actions';
 import { useDispatch } from 'react-redux';
+import { DropdownOption } from '../types';
+
 interface DropdownSearchProps {
 	filterPart: FilterPartState;
-	data: any[];
+	data: DropdownOption[];
 }
-
-type ItemDropdownOption = {
-	key: string;
-	icon?: string;
-	color?: string;
-	text?: string;
-};
 
 const DropdownSearch = ({ filterPart, data }: DropdownSearchProps) => {
 	const dispatch = useDispatch();
 	const { filterDef } = filterPart;
 	const { title } = filterDef;
-	const [selection, setSelection] = useState([]);
+	const [selection, setSelection] = useState<string[]>([]);
 	const [searchText, setSearchText] = useState('');
 
-	const toggleSelection = (e: React.SyntheticEvent, { value }: DropdownItemProps) => {
+	const toggleSelection = (e: React.SyntheticEvent, { value: checkedValue }: DropdownItemProps) => {
+		const value = checkedValue as string;
 		if (isSelected(value as string)) {
 			const updated = selection.filter((el) => el !== value);
 			setSelection(updated);
 			filterPart.members = updated;
 		} else {
-			const updated = [...selection, value] as never[];
+			const updated = [...selection, value];
 			setSelection(updated);
 			filterPart.members = updated;
 		}
 		toggleUpdateFilterPart();
 	};
-	const toggleUpdateFilterPart = () => {
-		console.log('here');
 
+	const toggleUpdateFilterPart = () => {
 		dispatch(updateFilterPart({ filterPart }));
 	};
+
 	const isSelected = (valueId: string) => {
 		const filterPart = selection.find((id) => id === valueId);
 		return Boolean(filterPart);
 	};
 
-	const renderLabel = (option: ItemDropdownOption) => {
+	const LabelC = (option: DropdownOption) => {
 		const { icon, color, text, key } = option;
-
-		const items = [];
-		if (icon) {
-			items.push(<Icon color={color as 'red'} key={`icon-${key}`} name={icon as 'folder'} />);
-		}
-		if (color) {
-			items.push(
-				<Label key={`label-${key}`} horizontal color={color as 'red'}>
-					{text}
-				</Label>,
-			);
-		} else {
-			items.push(text);
-		}
-
-		return items;
+		return (
+			<label>
+				{!!icon && <Icon color={color as 'red'} key={`icon-${key}`} name={icon as 'folder'} />}
+				{color ? (
+					<Label key={`label-${key}`} horizontal color={color as 'red'}>
+						{text}
+					</Label>
+				) : (
+					text
+				)}
+			</label>
+		);
 	};
 
 	const getInputPlaceholder = ({ title }: WebApi.Entities.FilterDefinition) => {
@@ -75,7 +67,7 @@ const DropdownSearch = ({ filterPart, data }: DropdownSearchProps) => {
 	};
 
 	const searchString = new RegExp(searchText, 'i');
-	const filteredData = (data || []).filter(({ text }) => searchString.test(text));
+	const filteredData = data.filter(({ text }) => searchString.test(text));
 
 	return (
 		<Dropdown
@@ -100,7 +92,7 @@ const DropdownSearch = ({ filterPart, data }: DropdownSearchProps) => {
 				<Dropdown.Menu scrolling>
 					{filteredData.map((option) => (
 						<Dropdown.Item value={option.value} key={option.key} onClick={toggleSelection}>
-							<Checkbox label={<label>{renderLabel(option)}</label>} checked={isSelected(option.value)} />
+							<Checkbox label={LabelC(option)} checked={isSelected(option.value)} />
 						</Dropdown.Item>
 					))}
 				</Dropdown.Menu>
