@@ -1,5 +1,5 @@
 import { Entity, Column, ManyToOne, PrimaryGeneratedColumn, OneToOne, JoinColumn } from 'typeorm';
-import { IsNotEmpty, IsString, IsArray } from 'class-validator';
+import { IsNotEmpty, IsString, IsArray, IsUUID } from 'class-validator';
 import { UserProfile } from './UserProfile';
 import { IssueType } from './IssueType';
 import { Priority } from './Priority';
@@ -10,6 +10,7 @@ import { Projects } from './Projects';
 @Entity()
 export class Issue {
 	@PrimaryGeneratedColumn('uuid')
+	@IsUUID()
 	id!: string;
 
 	@ManyToOne((type) => IssueType, (issueType) => issueType.issues)

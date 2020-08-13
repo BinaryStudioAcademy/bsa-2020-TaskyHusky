@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToOne, ManyToMany } from 'typeorm';
-import { IsDefined, IsString, IsNotEmpty } from 'class-validator';
+import { IsDefined, IsString, IsNotEmpty, IsUUID } from 'class-validator';
 import { BoardColumn } from './BoardColumn';
 import { Sprint } from './Sprint';
 import { UserProfile } from './UserProfile';
@@ -9,6 +9,7 @@ import { Projects } from './Projects';
 @Entity()
 export class Board {
 	@PrimaryGeneratedColumn('uuid')
+	@IsUUID()
 	id!: string;
 
 	@Column('text')

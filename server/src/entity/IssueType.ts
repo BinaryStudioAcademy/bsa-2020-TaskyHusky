@@ -1,10 +1,11 @@
 import { PrimaryGeneratedColumn, Column, Entity, OneToMany } from 'typeorm';
-import { IsString, IsNotEmpty } from 'class-validator';
+import { IsString, IsNotEmpty, IsUUID } from 'class-validator';
 import { Issue } from './Issue';
 
 @Entity()
 export class IssueType {
 	@PrimaryGeneratedColumn('uuid')
+	@IsUUID()
 	id!: string;
 
 	@Column()

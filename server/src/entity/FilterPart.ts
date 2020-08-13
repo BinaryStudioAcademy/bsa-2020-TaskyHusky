@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, JoinTable, ManyToOne } from 'typeorm';
-import { IsString } from 'class-validator';
+import { IsString, IsUUID } from 'class-validator';
 import { FilterDefinition } from './FilterDefinition';
 import { Filter } from './Filter';
 import { UserProfile } from './UserProfile';
@@ -7,6 +7,7 @@ import { UserProfile } from './UserProfile';
 @Entity()
 export class FilterPart {
 	@PrimaryGeneratedColumn('uuid')
+	@IsUUID()
 	id!: string;
 
 	@ManyToOne((type) => Filter, (filter) => filter.filterParts)

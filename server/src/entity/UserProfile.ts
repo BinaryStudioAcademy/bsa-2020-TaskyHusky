@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToMany } from 'typeorm';
-import { MinLength, IsEmail, IsString, IsNotEmpty } from 'class-validator';
+import { MinLength, IsEmail, IsString, IsNotEmpty, IsUUID } from 'class-validator';
 import { Issue } from './Issue';
 import { Board } from './Board';
 import { Filter } from './Filter';
@@ -9,6 +9,7 @@ import { Team } from './Team';
 @Entity()
 export class UserProfile {
 	@PrimaryGeneratedColumn('uuid')
+	@IsUUID()
 	id!: string;
 
 	@Column()

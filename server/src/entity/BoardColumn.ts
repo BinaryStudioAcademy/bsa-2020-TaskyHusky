@@ -1,11 +1,12 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany } from 'typeorm';
-import { IsBoolean, IsDefined, IsString, IsNotEmpty } from 'class-validator';
+import { IsBoolean, IsDefined, IsString, IsNotEmpty, IsUUID } from 'class-validator';
 import { Board } from './Board';
 import { Issue } from './Issue';
 
 @Entity()
 export class BoardColumn {
 	@PrimaryGeneratedColumn('uuid')
+	@IsUUID()
 	id!: string;
 
 	@Column()
