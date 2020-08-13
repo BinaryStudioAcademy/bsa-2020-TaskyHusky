@@ -5,16 +5,14 @@ import { BoardRepository } from './board.repository';
 @EntityRepository(BoardColumn)
 export class BoardColumnRepository extends Repository<BoardColumn> {
 	getAll() {
-		return this
-			.createQueryBuilder('boardColumn')
+		return this.createQueryBuilder('boardColumn')
 			.innerJoin('boardColumn.board', 'board')
 			.addSelect('board.id')
 			.getMany();
-	};
+	}
 
 	getBoardColumns(id: string) {
-		return this
-			.createQueryBuilder('boardColumn')
+		return this.createQueryBuilder('boardColumn')
 			.innerJoin('boardColumn.board', 'board')
 			.addSelect('board.id')
 			.where('board.id = :id', { id })
@@ -22,8 +20,7 @@ export class BoardColumnRepository extends Repository<BoardColumn> {
 	}
 
 	async getOne(id: string) {
-		const column = await this
-			.createQueryBuilder('boardColumn')
+		const column = await this.createQueryBuilder('boardColumn')
 			.where('boardColumn.id = :id', { id })
 			.innerJoin('boardColumn.board', 'board')
 			.addSelect('board.id')
