@@ -20,7 +20,7 @@ type DefinitionEntity = {
 const definitionTypesToDropdownData = (entity: DefinitionEntity) => {
 	const { id, title, color, icon } = entity;
 	const data = {
-		value: title,
+		value: id,
 		key: id,
 		text: title,
 		icon,
@@ -41,7 +41,7 @@ export const ProjectsFilter = ({ filterPart }: FilterProps) => {
 	const projectsToDropdownData = (project: { name: string; id: string }) => {
 		const { id, name } = project;
 		const data = {
-			value: name,
+			value: id,
 			key: id,
 			text: name,
 		};
@@ -101,7 +101,7 @@ export const AssigneeFilter = ({ filterPart }: FilterProps) => {
 		const { id, firstName, lastName } = user;
 		const fullName = `${firstName} ${lastName}`;
 		const data = {
-			value: fullName,
+			value: id,
 			key: id,
 			text: fullName,
 		};
@@ -126,7 +126,7 @@ export const CreatorFilter = ({ filterPart }: FilterProps) => {
 		const { id, firstName, lastName } = user;
 		const fullName = `${firstName} ${lastName}`;
 		const data = {
-			value: fullName,
+			value: id,
 			key: id,
 			text: fullName,
 		};

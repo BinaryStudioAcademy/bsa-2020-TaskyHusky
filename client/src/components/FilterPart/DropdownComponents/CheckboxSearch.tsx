@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Input, Dropdown, CheckboxProps, Checkbox, Icon, Label, InputOnChangeData } from 'semantic-ui-react';
+import { Input, Dropdown, Checkbox, Icon, Label, InputOnChangeData, DropdownItemProps } from 'semantic-ui-react';
 import styles from './styles.module.scss';
 import { FilterPartState } from 'containers/AdvancedSearch/logic/state';
-
+import { updateFilterPart } from 'containers/AdvancedSearch/logic/actions';
+import { useDispatch } from 'react-redux';
 interface DropdownSearchProps {
 	filterPart: FilterPartState;
 	data: any[];
@@ -16,17 +17,32 @@ type ItemDropdownOption = {
 };
 
 const DropdownSearch = ({ filterPart, data }: DropdownSearchProps) => {
+	const dispatch = useDispatch();
 	const { filterDef } = filterPart;
 	const { title } = filterDef;
 	const [selection, setSelection] = useState([]);
 	const [searchText, setSearchText] = useState('');
 
-	const toggleSelection = (e: React.SyntheticEvent, { label, checked }: CheckboxProps) => {
-		if (checked) {
-			setSelection([...selection, label] as never[]);
+	const toggleSelection = (e: React.SyntheticEvent, { value }: DropdownItemProps) => {
+		if (isSelected(value as string)) {
+			const updated = selection.filter((el) => el !== value);
+			setSelection(updated);
+			filterPart.members = updated;
 		} else {
-			setSelection(selection.filter((el) => el !== label));
+			const updated = [...selection, value] as never[];
+			setSelection(updated);
+			filterPart.members = updated;
 		}
+		toggleUpdateFilterPart();
+	};
+	const toggleUpdateFilterPart = () => {
+		console.log('here');
+
+		dispatch(updateFilterPart({ filterPart }));
+	};
+	const isSelected = (valueId: string) => {
+		const filterPart = selection.find((id) => id === valueId);
+		return Boolean(filterPart);
 	};
 
 	const renderLabel = (option: ItemDropdownOption) => {
@@ -83,8 +99,8 @@ const DropdownSearch = ({ filterPart, data }: DropdownSearchProps) => {
 				<Dropdown.Header icon="folder open" content={title} />
 				<Dropdown.Menu scrolling>
 					{filteredData.map((option) => (
-						<Dropdown.Item key={option.key}>
-							<Checkbox label={<label>{renderLabel(option)}</label>} onChange={toggleSelection} />
+						<Dropdown.Item value={option.value} key={option.key} onClick={toggleSelection}>
+							<Checkbox label={<label>{renderLabel(option)}</label>} checked={isSelected(option.value)} />
 						</Dropdown.Item>
 					))}
 				</Dropdown.Menu>

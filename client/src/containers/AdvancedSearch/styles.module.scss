@@ -34,34 +34,5 @@
 	.bottomBarWrapper {
 		margin-bottom: 5px;
 		padding: 5px 24px 5px 0;
-		.moreFilterDropdown {
-			display: flex;
-			align-items: center;
-			.moreText {
-				color: #3275a8;
-			}
-		}
-		.searchContentContainer {
-			display: flex;
-			flex-direction: row;
-			align-items: center;
-			.searchInputContainer {
-				display: flex;
-				flex-direction: row;
-				align-items: center;
-				.containTextInput {
-					height: 30px;
-					width: 120px !important;
-				}
-				.searchBtn {
-					height: 30px !important;
-					width: 60px;
-					display: flex;
-					align-items: center;
-					justify-content: center;
-					margin-left: 5px;
-				}
-			}
-		}
 	}
 }
