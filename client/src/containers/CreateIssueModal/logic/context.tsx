@@ -11,7 +11,7 @@ const reducer = (state: Issue, action: any) => {
 		case CHANGE: {
 			return {
 				...state,
-				[action.key]: action.value,
+				[action.key]: action.value || null,
 			};
 		}
 		default: {

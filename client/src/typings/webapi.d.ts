@@ -249,7 +249,7 @@ namespace WebApi.Entities {
 		email?: string;
 		jobTitle?: string;
 		userSettingsId?: string;
-		password?: string;
+		password: string;
 		boards?: Board[];
 		filters?: Filter[];
 		assignedProjects?: Projects[];

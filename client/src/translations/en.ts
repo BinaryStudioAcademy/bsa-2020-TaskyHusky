@@ -143,4 +143,6 @@ export const en = {
 		'Changing the project key will start a background re-index of your project, and may break some external integrations.',
 	board: 'Board',
 	go_to_board: 'Go to board',
+	assignee: 'Assignee',
+	no: 'No',
 };
