@@ -1,24 +1,21 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, JoinTable } from 'typeorm';
-import { IsNotEmpty, IsString } from 'class-validator';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, JoinTable, ManyToOne } from 'typeorm';
+import { IsString } from 'class-validator';
 import { FilterDefinition } from './FilterDefinition';
 import { Filter } from './Filter';
 import { UserProfile } from './UserProfile';
-import { IssueType } from './IssueType';
 
 @Entity()
 export class FilterPart {
 	@PrimaryGeneratedColumn('uuid')
 	id!: string;
 
-	// TODO: add many to one rel to filters
-	@Column()
-	filterId?: string;
+	@ManyToOne((type) => Filter, (filter) => filter.filterParts)
+	filter?: Filter;
 
-	// TODO: add many to one rel to filters
-	@Column()
-	filterDefId?: string;
+	@ManyToOne((type) => FilterDefinition, (filterDefinition) => filterDefinition.filterParts)
+	filterDef?: FilterDefinition;
 
-	// TODO: can be any of existing entity - filter tasks by userID or taskType etc... (or empty)
+	// TODO: can be any of existing entity - you filter tasks by userID or taskType, or some string etc... (or empty);
 	@ManyToMany((type) => UserProfile)
 	@JoinTable()
 	members?: UserProfile[];

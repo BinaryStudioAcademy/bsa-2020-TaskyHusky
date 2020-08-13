@@ -1,6 +1,7 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, ManyToMany, JoinTable } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, ManyToMany, JoinTable, OneToOne, OneToMany } from 'typeorm';
 import { IsString, IsNotEmpty } from 'class-validator';
 import { UserProfile } from './UserProfile';
+import { FilterPart } from './FilterPart';
 @Entity()
 export class Filter {
 	@PrimaryGeneratedColumn('uuid')
@@ -9,9 +10,8 @@ export class Filter {
 	@ManyToOne((type) => UserProfile, (user) => user.filters)
 	owner?: UserProfile;
 
-	// TODO: add rel to
-	@Column({ nullable: false })
-	ownerId?: string;
+	@OneToMany((type) => FilterPart, (filterPart) => filterPart.filter)
+	filterParts?: FilterPart[];
 
 	@Column()
 	@IsString()
