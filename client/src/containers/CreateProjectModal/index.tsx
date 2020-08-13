@@ -30,7 +30,7 @@ const CreateProjectModal: React.FC = () => {
 	const [template, setTemplate] = useState<Template>('Scrum');
 
 	const [isNameValid, setIsNameValid] = useState<boolean>(false);
-	const [isKeyValid, setIsKeyValid] = useState<boolean>(false);
+	const [isKeyValid, setIsKeyValid] = useState<boolean>(true);
 	const [isValidErrorShown, setIsValidErrorShown] = useState<boolean>(false);
 
 	const { description, image } = templatesInformation[template];
@@ -41,7 +41,7 @@ const CreateProjectModal: React.FC = () => {
 		setKey('');
 		setTemplate('Scrum');
 		setIsNameValid(false);
-		setIsKeyValid(false);
+		setIsKeyValid(true);
 		setIsValidErrorShown(false);
 	}
 
@@ -73,11 +73,17 @@ const CreateProjectModal: React.FC = () => {
 	const generateKey = (name: string): string => {
 		let result = key;
 		if (!isKeyTouched) {
-			result = name
-				.split(' ')
-				.filter(Boolean)
-				.map((word) => word[0].toUpperCase())
-				.join('');
+			const isSpace = name.search(' ');
+
+			if (isSpace !== -1) {
+				result = name
+					.split(' ')
+					.filter(Boolean)
+					.map((word) => word[0].toUpperCase())
+					.join('');
+			} else {
+				result = name.substr(0, 3).toUpperCase();
+			}
 		}
 		return result;
 	};
@@ -136,7 +142,9 @@ const CreateProjectModal: React.FC = () => {
 									setData={onNameChanged}
 									placeholder="Enter project name"
 									popUpContent="Project name should contain at least 5 symbols long"
-									validation={(key) => validator.isLength(key, { min: 5 })}
+									validation={(key) =>
+										validator.isLength(key, { min: 5 }) && validator.isAlphanumeric(key)
+									}
 								/>
 							</Form.Field>
 							<Form.Field>
@@ -149,7 +157,9 @@ const CreateProjectModal: React.FC = () => {
 									setData={onKeyChanged}
 									placeholder="Enter your key"
 									popUpContent="Key should contain at least 2 symbols long"
-									validation={(key) => validator.isLength(key, { min: 2 })}
+									validation={(key) =>
+										validator.isLength(key, { min: 2 }) && validator.isAlphanumeric(key)
+									}
 								/>
 							</Form.Field>
 							<Form.Field>
