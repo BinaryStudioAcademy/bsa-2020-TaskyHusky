@@ -1,16 +1,28 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { IsString, IsNotEmpty, IsNumber } from 'class-validator';
+import { FilterPart } from './FilterPart';
 
 @Entity()
 export class FilterDefinition {
-	@PrimaryGeneratedColumn('uuid')
-	id!: string;
+	@PrimaryGeneratedColumn('increment')
+	@IsNumber()
+	id!: number;
+
+	@OneToMany((type) => FilterPart, (filterPart) => filterPart.filterDefId)
+	filterParts?: FilterPart[];
 
 	@Column()
-	filterType?: string;
+	@IsString()
+	@IsNotEmpty()
+	filterType!: string;
 
 	@Column()
-	dataType?: string;
+	@IsString()
+	@IsNotEmpty()
+	dataType!: string;
 
 	@Column()
-	title?: string;
+	@IsNotEmpty()
+	@IsString()
+	title!: string;
 }
