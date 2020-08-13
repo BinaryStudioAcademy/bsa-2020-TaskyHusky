@@ -9,6 +9,9 @@ import { RootState } from 'typings/rootState';
 import { teamReducer } from 'containers/TeamPage/logic/reducer';
 import { issueReducer } from 'pages/IssuePage/logic/reducer';
 import { filterDefsReducer } from 'commonLogic/filterDefs/reducer';
+import { saveFilterReducer } from './../containers/SaveFilterModal/logic/reducer';
+import { usersReducer } from 'commonLogic/users/reducer';
+import { advancedSearchReducer } from 'containers/AdvancedSearch/logic/reducer';
 
 const rootReducer: Reducer<RootState> = combineReducers({
 	user: userProfileReducer,
@@ -20,6 +23,9 @@ const rootReducer: Reducer<RootState> = combineReducers({
 	filters: filtersReducer,
 	filterDefs: filterDefsReducer,
 	team: teamReducer,
+	saveFilter: saveFilterReducer,
+	users: usersReducer,
+	advancedSearch: advancedSearchReducer,
 });
 
 export default rootReducer;

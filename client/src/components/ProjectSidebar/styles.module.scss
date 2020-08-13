@@ -23,10 +23,14 @@
   }
 }
 
-.sidebar__header, 
-.sidebar__body {
+.sidebar__header {
   @extend .split;
+}
+
+.sidebar__header,
+.sidebar__body {
   padding: 16px 16px 0;
+
 }
 
 .sidebar__body {
@@ -54,8 +58,6 @@
   &:hover {
   background-color: rgb(235,236,240);}
 }
-
-
 
 .header__img {
   width: 28px;

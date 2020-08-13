@@ -64,7 +64,7 @@ const ProjectForm = ({ projectData }: Props) => {
 										<Icon name="info circle" className={styles.information__icon} size={'large'} />
 									}
 									position="bottom center"
-									content="Changing the project key will start a background re-index of your project, and may break some external integrations."
+									content={t('key_info')}
 								/>
 							</div>
 						</Form.Field>
@@ -83,7 +83,7 @@ const ProjectForm = ({ projectData }: Props) => {
 										<Icon name="info circle" className={styles.information__icon} size={'large'} />
 									}
 									position="bottom center"
-									content="To change project type, create a new project and bulk move your issues into it."
+									content={t('project_type_info')}
 								/>
 							</div>
 						</Form.Field>
@@ -96,7 +96,7 @@ const ProjectForm = ({ projectData }: Props) => {
 										<Icon name="info circle" className={styles.information__icon} size={'large'} />
 									}
 									position="bottom center"
-									content="You haven't created any project categories yet."
+									content={t('project_category_info')}
 								/>
 							</div>
 						</Form.Field>

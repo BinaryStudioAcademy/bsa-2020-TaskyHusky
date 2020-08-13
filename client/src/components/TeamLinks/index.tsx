@@ -6,9 +6,9 @@ import { useTranslation } from 'react-i18next';
 import LinkCard from './linkCard';
 
 export type CurrentLink = {
-	http?: string;
-	name?: string;
-	description?: string;
+	http: string;
+	name: string;
+	description: string;
 };
 
 type Props = {

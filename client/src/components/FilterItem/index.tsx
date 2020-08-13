@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Table, Rating, Dropdown } from 'semantic-ui-react';
+import { Table, Rating, Dropdown, Icon } from 'semantic-ui-react';
 import styles from './styles.module.scss';
 import Avatar from 'components/Avatar';
 import { useTranslation } from 'react-i18next';
@@ -47,7 +47,7 @@ const FilterItem: React.FC<Props> = (props: Props) => {
 				{staredBy?.length} {staredBy?.length === 1 ? t('person') : t('people_rating')}
 			</Table.HeaderCell>
 			<Table.HeaderCell className={styles.editCell}>
-				<Dropdown className={styles.dropdown} compact fluid icon={null} text="...">
+				<Dropdown className={styles.dropdown} compact fluid icon={<Icon name="ellipsis horizontal" />}>
 					<Dropdown.Menu>
 						<Dropdown.Item text={t('edit')} />
 						<Dropdown.Divider />

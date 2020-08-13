@@ -13,18 +13,23 @@ import TeamAddPeopleModal from 'components/TeamAddPeopleModal';
 import CreateLink from 'components/TeamLinks/createLink';
 import DeleteLink from 'components/TeamLinks/deleteLink';
 import Spinner from 'components/common/Spinner';
-import { StateFromReducersMapObject } from 'redux';
+interface Match {
+	params: { [key: string]: string };
+	isExact: boolean;
+	path: string;
+	url: string;
+}
 
 type Team = {
 	team: WebApi.Team.TeamModel;
 };
 export interface Link {
-	http?: string;
-	name?: string;
-	description?: string;
+	http: string;
+	name: string;
+	description: string;
 }
 
-const TeamPage = ({ match: { params }, team: { team } }: { match: any; team: Team }) => {
+const TeamPage = ({ match: { params }, currentTeam: { team } }: { match: Match; currentTeam: Team }) => {
 	const [notification, setNotification] = useState<boolean>(true);
 	const [addPeopleModal, setAddPeopleModal] = useState<boolean>(false);
 	const [editedLink, setEditedLink] = useState<Link | undefined>();
@@ -69,18 +74,16 @@ const TeamPage = ({ match: { params }, team: { team } }: { match: any; team: Tea
 		dispatch(actions.updateFieldsLoading({ id: params.id, field }));
 	};
 
-	const onEditLinkAccept = (link: any) => {
-		let isFullEmpty: boolean = true;
-		for (const i in link) {
-			if (!validator.isEmpty(link[i], { ignore_whitespace: true })) {
-				isFullEmpty = false;
-			}
-		}
-		if (!isFullEmpty) {
+	const onEditLinkAccept = (link: Link) => {
+		const { name, http, description } = link;
+		const checkNotEmpty = (arg: string) => !validator.isEmpty(arg, { ignore_whitespace: true });
+		if (checkNotEmpty(name) || checkNotEmpty(http) || checkNotEmpty(description)) {
 			dispatch(actions.addLinkLoading({ id: params.id, link }));
 		}
 		setAddLinks(false);
+		setEditedLink(undefined);
 	};
+
 	return team.id ? (
 		<Grid columns="equal" centered>
 			<Grid.Row className={styles.header_z}>
@@ -118,8 +121,8 @@ const TeamPage = ({ match: { params }, team: { team } }: { match: any; team: Tea
 	);
 };
 
-const mapStateToProps = (state: any) => ({
-	team: state.team,
+const mapStateToProps = (state: { team: Team }) => ({
+	currentTeam: state.team,
 });
 
 export default connect(mapStateToProps)(TeamPage);

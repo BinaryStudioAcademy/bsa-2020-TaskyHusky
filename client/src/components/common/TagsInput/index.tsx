@@ -35,7 +35,9 @@ const TagsInput: React.FC<Props> = (props: Props) => {
 			<div className={styles.tagContainer}>
 				{tags.map((tag, i) => (
 					<Label key={i}>
-						{tag}
+						<a target="_blank" href={tag} rel="noopener noreferrer">
+							{tag}
+						</a>
 						<Icon name="delete" link onClick={() => removeTag(i)} />
 					</Label>
 				))}

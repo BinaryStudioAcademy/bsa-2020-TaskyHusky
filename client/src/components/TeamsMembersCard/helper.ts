@@ -1,5 +1,5 @@
-export const getBgColor = (): string => {
+export const getBgColor = (): { [key: string]: string } => {
 	const colors: string[] = ['goldenrod', 'red', 'green', 'orange', 'brown', 'darkviolet', 'chocolate'];
 	const randomNum: number = Math.round(Math.random() * 6);
-	return colors[randomNum];
+	return { backgroundColor: colors[randomNum] };
 };
