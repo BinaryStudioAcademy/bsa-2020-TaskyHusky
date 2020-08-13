@@ -119,4 +119,14 @@ export const en = {
 	clear: 'Clear',
 	issues: 'Issues',
 	no_cards: 'No cards',
+	select_icon: 'select icon',
+	back_to_project: 'Back to project',
+	issue_types: 'Issue types',
+	versions: 'Versions',
+	components: 'Components',
+	permissions: 'Permissions',
+	project_category_info: "You haven't created any project categories yet.",
+	project_type_info: 'To change project type, create a new project and bulk move your issues into it.',
+	key_info:
+		'Changing the project key will start a background re-index of your project, and may break some external integrations.',
 };
