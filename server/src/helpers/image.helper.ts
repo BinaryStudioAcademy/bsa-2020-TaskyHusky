@@ -4,10 +4,10 @@ import AWS from '../../libs/aws';
 
 const s3 = new AWS.S3();
 
-export default (folder: string, file: Express.Multer.File) =>
+export default (folder: string, file: Express.Multer.File, fileName: string): Promise<string> =>
 	new Promise((resolve, reject) => {
 		const timestamp = +new Date();
-		const filename = `${folder}/${timestamp}${path.extname(file.originalname)}`;
+		const filename = `${folder}/${fileName}`;
 		if (awsTeam) {
 			s3.upload(
 				{
@@ -17,9 +17,9 @@ export default (folder: string, file: Express.Multer.File) =>
 				},
 				(err, data) => {
 					if (err) {
-						return reject(err);
+						reject(err);
 					}
-					return resolve(data.Location);
+					resolve(data.Location);
 				},
 			);
 		}

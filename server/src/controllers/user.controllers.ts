@@ -7,12 +7,15 @@ import { avatarFolder } from '../../config/aws.config';
 
 class UserController {
 	uploadAvatar = async (req: Request, res: Response): Promise<void> => {
+		const userRepository = getCustomRepository(UserRepository);
+		const { id, firstName, lastName } = req.user;
+		const name = `${firstName}_${lastName}_${id}`;
 		try {
-			const photo = await uploadS3(avatarFolder, req.file);
-			res.send(photo);
+			const avatar = await uploadS3(avatarFolder, req.file, name);
+			const user = userRepository.updateById(id, { avatar });
+			res.send(user);
 		} catch (error) {
-			const { status }: { status: number } = error;
-			res.status(status);
+			res.status(400).send(error.message);
 		}
 	};
 

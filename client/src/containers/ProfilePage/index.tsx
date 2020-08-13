@@ -41,6 +41,7 @@ const ProfilePage = ({ id }: { id: string }) => {
 		],
 		project: 'Example project1',
 	};
+
 	const getUser = async () => {
 		if (isCurrentUser) {
 			setUser({ ...user, ...currentUser, isLoading: false });
