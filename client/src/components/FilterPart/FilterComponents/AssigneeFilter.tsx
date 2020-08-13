@@ -4,6 +4,7 @@ import { DropdownCheckboxSearch } from '../DropdownComponents/index';
 import { useSelector, useDispatch } from 'react-redux';
 import { requestAllUsers } from 'commonLogic/users/actions';
 import { FilterProps } from './types';
+import { DropdownOption } from '../types';
 
 const AssigneeFilter = ({ filterPart }: FilterProps) => {
 	const { users } = useSelector((rootState: RootState) => rootState.users);
@@ -13,7 +14,7 @@ const AssigneeFilter = ({ filterPart }: FilterProps) => {
 		dispatch(requestAllUsers());
 	}, [dispatch]);
 
-	const usersToDropdownData = (user: WebApi.Entities.UserProfile) => {
+	const usersToDropdownData = (user: WebApi.Entities.UserProfile): DropdownOption => {
 		const { id, firstName, lastName } = user;
 		const fullName = `${firstName} ${lastName}`;
 		const data = {
