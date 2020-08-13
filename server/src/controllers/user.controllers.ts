@@ -2,15 +2,14 @@ import { Request, Response } from 'express';
 import { getCustomRepository } from 'typeorm';
 import { passwordValid, hashPassword } from '../helpers/password.helper';
 import { UserRepository } from '../repositories/user.repository';
+import uploadS3 from '../helpers/image.helper';
+import { avatarFolder } from '../../config/aws.config';
 
 class UserController {
-	createUser = async (req: Request, res: Response): Promise<void> => {
-		const userRepository = getCustomRepository(UserRepository);
-		const { body } = req;
-
+	uploadAvatar = async (req: Request, res: Response): Promise<void> => {
 		try {
-			const user = await userRepository.createNew(body);
-			res.send(user);
+			const photo = await uploadS3(avatarFolder, req.file);
+			res.send(photo);
 		} catch (error) {
 			const { status }: { status: number } = error;
 			res.status(status);
@@ -20,7 +19,8 @@ class UserController {
 	changePassword = async (req: Request, res: Response): Promise<void> => {
 		const userRepository = getCustomRepository(UserRepository);
 		const { oldPassword, newPassword } = req.body;
-		const { password, id } = req.user;
+		const { email, id } = req.user;
+		const { password } = await userRepository.getByEmail(email);
 		try {
 			if (!passwordValid(oldPassword, password)) {
 				throw new Error('Old password is incorrect');

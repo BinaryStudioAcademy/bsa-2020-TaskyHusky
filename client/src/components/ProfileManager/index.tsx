@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { RootState } from 'typings/rootState';
 import styles from './styles.module.scss';
 import { Header, Segment, Form, Button } from 'semantic-ui-react';
 import SubmitedInput from 'components/SubmitedInput';
@@ -12,12 +10,12 @@ import { useDispatch } from 'react-redux';
 interface Props {
 	showManager: (modeToShow: string) => void;
 	updateUser: (changedUser: Partial<UserProfileState>) => void;
+	user: UserProfileState;
 }
 
 const ProfileManager: React.FC<Props> = (props: Props) => {
 	const { t } = useTranslation();
-	const { showManager, updateUser } = props;
-	const userData = useSelector((state: RootState) => state.user);
+	const { showManager, updateUser, user: userData } = props;
 	const dispatch = useDispatch();
 	const [user, setUser] = useState(userData);
 	const { firstName, lastName, username, jobTitle, department, location, organization } = user;

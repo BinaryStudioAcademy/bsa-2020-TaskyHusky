@@ -7,19 +7,16 @@ import { RootState } from 'typings/rootState';
 import ProfileAside from 'components/ProfileAside';
 import ProfileSection from 'components/ProfileSection';
 import ProfileManagerSection from 'components/ProfileManagerSection';
-import { requestGetUser } from 'services/user.service';
 import Spinner from 'components/common/Spinner';
-import { UserProfileState } from './logiс/state';
+import { UserProfileState, initialState } from './logiс/state';
 
 const ProfilePage = ({ id }: { id: string }) => {
 	const dispatch = useDispatch();
-	const userData = useSelector((state: RootState) => state.user);
-	// const isLoadingTest = useSelector((state: RootState) => state.user.isLoading);
-	const [user, setUser] = useState(userData);
-	const { isLoading, editMode } = userData;
-	const currentUserId = useSelector((state: RootState) => state.auth.user && state.auth.user.id);
+	const [user, setUser] = useState(initialState);
+	const { editMode, isLoading } = user;
+	const currentUser = useSelector((state: RootState) => state.auth.user);
+	const isCurrentUser = currentUser ? id === currentUser.id : false;
 
-	const isCurrentUser = id === currentUserId;
 	const showManager = (modeToShow: string) => {
 		setUser({
 			...user,
@@ -46,11 +43,10 @@ const ProfilePage = ({ id }: { id: string }) => {
 	};
 	const getUser = async () => {
 		if (isCurrentUser) {
-			dispatch(actions.requestGetUser({ id }));
-		} else {
-			const requestedUser = await requestGetUser(id);
-			setUser({ ...user, ...requestedUser });
+			setUser({ ...user, ...currentUser, isLoading: false });
 			dispatch(actions.updateUser({ partialState: { isLoading: false } }));
+		} else {
+			dispatch(actions.requestGetUser({ id }));
 		}
 	};
 
@@ -60,8 +56,8 @@ const ProfilePage = ({ id }: { id: string }) => {
 
 	useEffect(() => {
 		getUser();
-		// eslint-disable-next-line
-	}, [isCurrentUser]);
+		//eslint-disable-next-line
+	}, [id]);
 
 	return (
 		<>
@@ -72,13 +68,13 @@ const ProfilePage = ({ id }: { id: string }) => {
 					<ProfileHeader />
 					<div className={styles.container}>
 						<ProfileAside
-							user={userData}
+							user={user}
 							isCurrentUser={isCurrentUser}
 							mockData={mockData}
 							showManager={showManager}
 						/>
 						{editMode ? (
-							<ProfileManagerSection user={userData} showManager={showManager} updateUser={updateUser} />
+							<ProfileManagerSection user={user} showManager={showManager} updateUser={updateUser} />
 						) : (
 							<ProfileSection isCurrentUser={isCurrentUser} mockData={mockData} />
 						)}

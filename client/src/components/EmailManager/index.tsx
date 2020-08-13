@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import validator from 'validator';
 import { useTranslation } from 'react-i18next';
-import { RootState } from 'typings/rootState';
 import styles from './styles.module.scss';
 import { Header, Button, Checkbox, Select, Form, Popup } from 'semantic-ui-react';
 import { requestUpdateUser } from 'containers/ProfilePage/logiс/actions';
@@ -12,12 +10,12 @@ import SubmitedInput from 'components/SubmitedInput';
 
 interface Props {
 	updateUser: (changedUser: Partial<UserProfileState>) => void;
+	email: string;
 }
 const EmailManager: React.FC<Props> = (props: Props) => {
-	const { updateUser } = props;
+	const { updateUser, email } = props;
 	const dispatch = useDispatch();
 	const { t } = useTranslation();
-	const email = useSelector((state: RootState) => state.user.email);
 	const [emailData, setEmailData] = useState('');
 	const [isEmailValid, setIsEmailValid] = useState(true);
 	const handleChange = (event: any) => {

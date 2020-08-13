@@ -5,7 +5,9 @@ export class Filter {
 	@PrimaryGeneratedColumn('uuid')
 	id!: string;
 
-	@ManyToOne((type) => UserProfile, (user) => user.filters)
+	@ManyToOne((type) => UserProfile, (user) => user.filters, {
+		onDelete: 'CASCADE',
+	})
 	owner?: UserProfile;
 
 	@Column({ nullable: false })
