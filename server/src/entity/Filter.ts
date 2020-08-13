@@ -1,18 +1,23 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, ManyToMany, JoinTable } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, ManyToMany, JoinTable, OneToMany } from 'typeorm';
+import { IsString, IsNotEmpty, IsUUID } from 'class-validator';
 import { UserProfile } from './UserProfile';
+import { FilterPart } from './FilterPart';
 @Entity()
 export class Filter {
 	@PrimaryGeneratedColumn('uuid')
+	@IsUUID()
 	id!: string;
 
 	@ManyToOne((type) => UserProfile, (user) => user.filters)
 	owner?: UserProfile;
 
-	@Column({ nullable: false })
-	ownerId?: string;
+	@OneToMany((type) => FilterPart, (filterPart) => filterPart.filter)
+	filterParts?: FilterPart[];
 
 	@Column()
-	name?: string;
+	@IsString()
+	@IsNotEmpty()
+	name!: string;
 
 	@ManyToMany((type) => UserProfile)
 	@JoinTable()
