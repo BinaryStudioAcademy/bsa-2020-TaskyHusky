@@ -1,7 +1,7 @@
 import { EntityRepository, Repository } from 'typeorm';
 import { Issue } from '../entity/Issue';
 
-const RELS = ['priority', 'type', 'creator'];
+const RELS = ['priority', 'type', 'creator', 'assigned'];
 
 @EntityRepository(Issue)
 export class IssueRepository extends Repository<Issue> {

@@ -3,7 +3,6 @@ import { RootState } from 'typings/rootState';
 import { DropdownTextSearch, DropdownCheckboxSearch } from '../DropdownComponents/index';
 import { useSelector, useDispatch } from 'react-redux';
 import { startLoading } from 'containers/Projects/logic/actions';
-import { requestAllUsers } from 'commonLogic/users/actions';
 import { FilterPartState } from 'containers/AdvancedSearch/logic/state';
 
 type FilterProps = {
@@ -90,12 +89,6 @@ export const IssueStatusFilter = ({ filterPart }: FilterProps) => {
 
 export const AssigneeFilter = ({ filterPart }: FilterProps) => {
 	const { users } = useSelector((rootState: RootState) => rootState.users);
-	const dispatch = useDispatch();
-
-	useEffect(() => {
-		// recommended to load on app start
-		dispatch(requestAllUsers());
-	}, [dispatch]);
 
 	const usersToDropdownData = (user: WebApi.Entities.UserProfile) => {
 		const { id, firstName, lastName } = user;
@@ -115,12 +108,6 @@ export const AssigneeFilter = ({ filterPart }: FilterProps) => {
 
 export const CreatorFilter = ({ filterPart }: FilterProps) => {
 	const { users } = useSelector((rootState: RootState) => rootState.users);
-	const dispatch = useDispatch();
-
-	useEffect(() => {
-		// recommended to load on app start
-		dispatch(requestAllUsers());
-	}, [dispatch]);
 
 	const usersToDropdownData = (user: WebApi.Entities.UserProfile) => {
 		const { id, firstName, lastName } = user;

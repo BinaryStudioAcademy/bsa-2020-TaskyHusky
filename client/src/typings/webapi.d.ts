@@ -227,7 +227,7 @@ namespace WebApi.Entities {
 
 	interface UserProfile {
 		id: string;
-		firstName?: string;
+		firstName: string;
 		lastName?: string;
 		username?: string;
 		avatar?: string;
@@ -237,7 +237,7 @@ namespace WebApi.Entities {
 		email?: string;
 		jobTitle?: string;
 		userSettingsId?: string;
-		password?: string;
+		password: string;
 		teams?: TeamsPeople[];
 		boards?: Board[];
 		filters?: Filter[];

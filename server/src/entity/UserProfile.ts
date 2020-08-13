@@ -10,8 +10,8 @@ export class UserProfile {
 	@PrimaryGeneratedColumn('uuid')
 	id!: string;
 
-	@Column({ nullable: true })
-	firstName?: string;
+	@Column()
+	firstName!: string;
 
 	@Column({ nullable: true })
 	lastName?: string;
@@ -43,7 +43,7 @@ export class UserProfile {
 
 	@Column()
 	@MinLength(6)
-	password?: string;
+	password!: string;
 
 	@OneToMany((type) => TeamsPeople, (teams) => teams.userId)
 	teams?: TeamsPeople[];
