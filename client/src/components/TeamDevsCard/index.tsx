@@ -11,10 +11,10 @@ type CardProps = {
 	changeMainFields: (arg: { [key: string]: string }) => void;
 };
 
-const TeamDevsCard = ({ changeMainFields, description, name, showAddPeopleModal }: CardProps) => {
+const TeamDevsCard = ({ changeMainFields, description = '', name = '', showAddPeopleModal }: CardProps) => {
 	const [showDelete, setShowDelete] = useState<boolean>(false);
-	const [title, setTitle] = useState<string>(name || '');
-	const [teamDescription, setTeamDescription] = useState<string>(description || '');
+	const [title, setTitle] = useState<string>(name);
+	const [teamDescription, setTeamDescription] = useState<string>(description);
 	const { t } = useTranslation();
 
 	return (

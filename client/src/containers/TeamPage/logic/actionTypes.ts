@@ -32,5 +32,5 @@ export type StartLoadingArgs = {
 
 export type EditFieldLoadingArgs = {
 	id: string;
-	field: any;
+	field: { [key: string]: string };
 };

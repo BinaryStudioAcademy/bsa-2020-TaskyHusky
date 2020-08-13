@@ -17,15 +17,15 @@ export function* fetchTeam(props: Props) {
 
 export function* fetchLinks(props: Props) {
 	const team = yield call(updateLinks, props.id, props.link);
-	yield put(actions.addLinkSuccess({ team }));
+	yield put(actions.successLoading({ team }));
 }
 export function* deleteLink(props: Props) {
 	const team = yield call(deleteOneLink, props.id, props.link);
-	yield put(actions.deleteLinkSuccess({ team }));
+	yield put(actions.successLoading({ team }));
 }
 export function* updateField(props: Props) {
 	const team = yield call(updateFieldById, props.id, props.field);
-	yield put(actions.deleteLinkSuccess({ team }));
+	yield put(actions.successLoading({ team }));
 }
 
 export function* watchStartLoading() {

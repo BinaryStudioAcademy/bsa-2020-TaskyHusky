@@ -9,7 +9,7 @@ type Props = {
 };
 
 const CreateLink = ({ onClose, currentLink, onConfirm }: Props) => {
-	const [data, setData] = useState(
+	const [newLink, setnewLink] = useState(
 		currentLink || {
 			http: '',
 			name: '',
@@ -17,8 +17,8 @@ const CreateLink = ({ onClose, currentLink, onConfirm }: Props) => {
 		},
 	);
 	const onChange = (e: React.BaseSyntheticEvent) => {
-		setData({
-			...data,
+		setnewLink({
+			...newLink,
 			[e.target.name]: e.target.value,
 		});
 	};
@@ -30,7 +30,7 @@ const CreateLink = ({ onClose, currentLink, onConfirm }: Props) => {
 					<Form.Field>
 						<label>Web-address</label>
 						<input
-							value={data.http}
+							value={newLink.http}
 							onChange={(e) => onChange(e)}
 							placeholder="For example: http://google.com"
 							name="http"
@@ -39,7 +39,7 @@ const CreateLink = ({ onClose, currentLink, onConfirm }: Props) => {
 					<Form.Field>
 						<label>Title</label>
 						<input
-							value={data.name}
+							value={newLink.name}
 							onChange={(e) => onChange(e)}
 							placeholder="For example: My first project"
 							name="name"
@@ -50,7 +50,7 @@ const CreateLink = ({ onClose, currentLink, onConfirm }: Props) => {
 						<textarea
 							name="description"
 							onChange={(e) => onChange(e)}
-							defaultValue={data.description}
+							defaultValue={newLink.description}
 							placeholder="Add small specification and other members of you team will know, why it's important"
 						/>
 					</Form.Field>
@@ -62,7 +62,7 @@ const CreateLink = ({ onClose, currentLink, onConfirm }: Props) => {
 					primary
 					labelPosition="left"
 					icon="checkmark"
-					onClick={() => onConfirm(data)}
+					onClick={() => onConfirm(newLink)}
 				/>
 				<Button color="grey" onClick={onClose}>
 					Cancel
