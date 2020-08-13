@@ -4,14 +4,23 @@ import Avatar from 'components/Avatar';
 import { Link } from 'react-router-dom';
 import { Button, Icon } from 'semantic-ui-react';
 import Spinner from 'components/common/Spinner';
-import { getBgColor } from './helper';
+type UserModel = {
+	id: string;
+	email?: string;
+	firstName: string;
+	avatar: string;
+	location?: string;
+	department?: string;
+	jobTitle?: string;
+};
 
-const ModalViewProfile = ({ user, onClose }: any) => {
-	const header = useRef<any>(null);
-	useEffect(() => {
-		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-		header.current.style.backgroundColor = getBgColor();
-	}, []);
+type Props = {
+	user: UserModel;
+	onClose: (arg: React.BaseSyntheticEvent) => void;
+	color: { [key: string]: string };
+};
+
+const ModalViewProfile = ({ user, onClose, color }: Props) => {
 	return (
 		<>
 			<div className={styles.block_wrapper} onMouseLeave={(e) => onClose(e)}>
@@ -19,16 +28,16 @@ const ModalViewProfile = ({ user, onClose }: any) => {
 					<Spinner />
 				) : (
 					<>
-						<div className={styles.header} id="bg" ref={header}>
+						<div className={styles.header} style={color}>
 							<div className={styles.left_margin}></div>
 							<div className={styles.name}>
-								<span>{user.name}</span>
-								<span>{user.position}</span>
+								<span>{user.firstName}</span>
+								<span>{user.jobTitle}</span>
 							</div>
 						</div>
 						<div className={styles.avatar}>
 							<Link to={`/profile/${user.id}`}>
-								<Avatar fullName={user.name} imgSrc={user.avatar} />
+								<Avatar fullName={user.firstName} imgSrc={user.avatar} />
 							</Link>
 						</div>
 						<div className={styles.main_info}>
@@ -40,11 +49,11 @@ const ModalViewProfile = ({ user, onClose }: any) => {
 								</span>
 								<span>
 									<Icon name="clock outline" size="small" color="grey" />
-									{user.timezone}
+									{user.location}
 								</span>
 								<span>
 									<Icon name="map signs" size="small" color="grey" />
-									{user.location}
+									{user.department}
 								</span>
 								<Link to={`/profile/${user.id}`}>
 									<Button primary className={styles.view}>
