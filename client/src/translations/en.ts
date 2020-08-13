@@ -129,4 +129,6 @@ export const en = {
 	project_type_info: 'To change project type, create a new project and bulk move your issues into it.',
 	key_info:
 		'Changing the project key will start a background re-index of your project, and may break some external integrations.',
+	board: 'Board',
+	go_to_board: 'Go to board',
 };
