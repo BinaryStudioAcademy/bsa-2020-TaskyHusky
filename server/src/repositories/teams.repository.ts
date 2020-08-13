@@ -7,17 +7,23 @@ export class TeamRepository extends Repository<Team> {
 		return this.find();
 	}
 
-	findOneById(projectID: string) {
-		return this.findOne(projectID);
+	findOneById(id: string) {
+		return this.findOne({
+			where: { id }
+		});
 	}
 
-	createOne(data: Team) {
-		const entity = this.create(data);
+	findByName(name: string) {
+		return this.findOne({ where: { name } });
+	}
+
+	async createOne(data: Team) {
+		const entity = await this.create(data);
 		return this.save(entity);
 	}
 
-	updateOneById(id: string, data: Team) {
-		this.update(id, data);
+	async updateOneById(id: string, data: Team) {
+		await this.update(id, data);
 		return this.findOne(id);
 	}
 

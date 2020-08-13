@@ -1,11 +1,18 @@
 import React from 'react';
-import { TeamPage } from 'containers/TeamPage';
+import TeamPage from 'containers/TeamPage';
 import DefaultPageWrapper from 'containers/DefaultPageWrapper';
 
-const teamPage: React.FC = () => {
+interface Match {
+	params: { [key: string]: string };
+	isExact: boolean;
+	path: string;
+	url: string;
+}
+
+const teamPage = ({ match }: { match: Match }) => {
 	return (
 		<DefaultPageWrapper>
-			<TeamPage />
+			<TeamPage match={match} />
 		</DefaultPageWrapper>
 	);
 };
