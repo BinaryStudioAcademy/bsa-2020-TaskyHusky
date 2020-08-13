@@ -13,9 +13,9 @@ interface DropdownSearchProps {
 
 const DropdownSearch = ({ filterPart, data }: DropdownSearchProps) => {
 	const dispatch = useDispatch();
-	const { filterDef } = filterPart;
+	const { filterDef, members } = filterPart;
 	const { title } = filterDef;
-	const [selection, setSelection] = useState<string[]>([]);
+	const [selection, setSelection] = useState<string[]>(members);
 	const [searchText, setSearchText] = useState('');
 
 	const toggleSelection = (e: React.SyntheticEvent, { value: checkedValue }: DropdownItemProps) => {

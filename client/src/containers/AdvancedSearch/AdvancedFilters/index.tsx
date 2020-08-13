@@ -5,8 +5,8 @@ import { RootState } from 'typings/rootState';
 import { Button, Input, Form } from 'semantic-ui-react';
 import FilterPart from 'components/FilterPart';
 import MoreFilterPartsDropdown from 'components/MoreFilters';
-import { fetchFilterParts } from './logic/actions';
-import { FilterPartState } from './logic/state';
+import { fetchFilterParts } from '../logic/actions';
+import { FilterPartState } from '../logic/state';
 import { filterDefsIDS } from 'constants/FilterDef';
 
 const QUICK_FILTER_IDS = [
