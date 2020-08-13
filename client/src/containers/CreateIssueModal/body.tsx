@@ -130,110 +130,118 @@ const CreateIssueModalBody: React.FC<Props> = ({
 				onClose={getSetOpenFunc(false)}
 				openOnTriggerClick
 				trigger={<div onClick={getSetOpenFunc(true)}>{children}</div>}
-				style={{ maxWidth: 700 }}
+				style={{ maxWidth: 700, height: '95%' }}
 			>
-				<Grid className="fill" verticalAlign="middle">
-					<Grid.Column style={{ marginTop: 20, marginBottom: 20, marginLeft: 20 }}>
-						<Header floated="left" as="h1" style={{ marginBottom: 20 }}>
-							{t('create_issue')}
-						</Header>
-						<Form onSubmit={submit}>
-							<Form.Field>
-								<label className="required">{t('type')}</label>
-								<Form.Dropdown
-									clearable
-									selection
-									style={{ maxWidth: 200 }}
-									options={typeOpts}
-									placeholder={t('type')}
-									onChange={(event, data) => context.set('type', data.value)}
-								/>
-							</Form.Field>
-							<Form.Field>
+				<Modal.Content scrolling style={{ height: '100%', maxHeight: '100%' }}>
+					<Grid className="fill" verticalAlign="middle">
+						<Grid.Column
+							style={{
+								marginTop: 20,
+								marginBottom: 20,
+								marginLeft: 20,
+							}}
+						>
+							<Header floated="left" as="h1" style={{ marginBottom: 20 }}>
+								{t('create_issue')}
+							</Header>
+							<Form onSubmit={submit}>
 								<Form.Field>
-									<label className="required">{t('priority')}</label>
-								</Form.Field>
-								<Form.Dropdown
-									clearable
-									selection
-									style={{ maxWidth: 200 }}
-									options={priorityOpts}
-									placeholder={t('priority')}
-									onChange={(event, data) => context.set('priority', data.value)}
-								/>
-							</Form.Field>
-							<Form.Field>
-								<label className="required">{t('summary')}</label>
-								<Form.Input
-									placeholder={t('summary')}
-									fluid
-									onChange={(event, data) => context.set('summary', data.value)}
-								/>
-							</Form.Field>
-							{!projectID && !boardColumnID ? (
-								<Form.Field>
-									<label className="required">{t('project')}</label>
+									<label className="required">{t('type')}</label>
 									<Form.Dropdown
+										clearable
 										selection
-										placeholder={t('project')}
-										options={projectsOpts}
-										onChange={(event, data) => context.set('project', data.value)}
+										style={{ maxWidth: 200 }}
+										options={typeOpts}
+										placeholder={t('type')}
+										onChange={(event, data) => context.set('type', data.value)}
 									/>
 								</Form.Field>
-							) : (
-								''
-							)}
-							<Form.Field>
-								<label>{t('labels')}</label>
-								<Form.Dropdown
-									clearable
-									selection
-									multiple
-									placeholder={t('labels')}
-									options={labelOpts}
-									onChange={(event, data) => context.set('labels', data.value)}
-								/>
-							</Form.Field>
-							<Divider />
-							<Form.Field>
-								<label>{t('links')}</label>
-								<TagsInput
-									placeholder={t('add_link')}
-									tags={context.data.links ?? []}
-									onChange={(tags) => context.set('links', [...tags])}
-								/>
-							</Form.Field>
-							<Form.Field>
-								<label>{t('attachments')}</label>
-								<TagsInput
-									placeholder={t('add_attachment')}
-									tags={context.data.attachments ?? []}
-									onChange={(tags) => context.set('attachments', [...tags])}
-								/>
-							</Form.Field>
-							<Form.Field>
-								<label>{t('description')}</label>
-								<Form.TextArea
-									placeholder={t('description')}
-									onChange={(event, data) =>
-										data
-											? context.set('description', data.value as string)
-											: context.set('description', '')
-									}
-									rows={10}
-								/>
-							</Form.Field>
-							<Button.Group floated="right">
-								<Button primary type="submit">
-									{t('submit')}
-								</Button>
-								<Button onClick={getSetOpenFunc(false)} basic>
-									<span>{t('cancel')}</span>
-								</Button>
-							</Button.Group>
-						</Form>
-					</Grid.Column>
-				</Grid>
+								<Form.Field>
+									<Form.Field>
+										<label className="required">{t('priority')}</label>
+									</Form.Field>
+									<Form.Dropdown
+										clearable
+										selection
+										style={{ maxWidth: 200 }}
+										options={priorityOpts}
+										placeholder={t('priority')}
+										onChange={(event, data) => context.set('priority', data.value)}
+									/>
+								</Form.Field>
+								<Form.Field>
+									<label className="required">{t('summary')}</label>
+									<Form.Input
+										placeholder={t('summary')}
+										fluid
+										onChange={(event, data) => context.set('summary', data.value)}
+									/>
+								</Form.Field>
+								{!projectID && !boardColumnID ? (
+									<Form.Field>
+										<label className="required">{t('project')}</label>
+										<Form.Dropdown
+											selection
+											placeholder={t('project')}
+											options={projectsOpts}
+											onChange={(event, data) => context.set('project', data.value)}
+										/>
+									</Form.Field>
+								) : (
+									''
+								)}
+								<Form.Field>
+									<label>{t('labels')}</label>
+									<Form.Dropdown
+										clearable
+										selection
+										multiple
+										placeholder={t('labels')}
+										options={labelOpts}
+										onChange={(event, data) => context.set('labels', data.value)}
+									/>
+								</Form.Field>
+								<Divider />
+								<Form.Field>
+									<label>{t('links')}</label>
+									<TagsInput
+										placeholder={t('add_link')}
+										tags={context.data.links ?? []}
+										onChange={(tags) => context.set('links', [...tags])}
+									/>
+								</Form.Field>
+								<Form.Field>
+									<label>{t('attachments')}</label>
+									<TagsInput
+										placeholder={t('add_attachment')}
+										tags={context.data.attachments ?? []}
+										onChange={(tags) => context.set('attachments', [...tags])}
+									/>
+								</Form.Field>
+								<Form.Field>
+									<label>{t('description')}</label>
+									<Form.TextArea
+										placeholder={t('description')}
+										onChange={(event, data) =>
+											data
+												? context.set('description', data.value as string)
+												: context.set('description', '')
+										}
+										rows={10}
+									/>
+								</Form.Field>
+								<Button.Group floated="right">
+									<Button primary type="submit">
+										{t('submit')}
+									</Button>
+									<Button onClick={getSetOpenFunc(false)} basic>
+										<span>{t('cancel')}</span>
+									</Button>
+								</Button.Group>
+							</Form>
+						</Grid.Column>
+					</Grid>
+				</Modal.Content>
 			</Modal>
 		</>
 	);
