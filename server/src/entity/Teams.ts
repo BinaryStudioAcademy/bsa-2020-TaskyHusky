@@ -6,7 +6,7 @@ export class Teams {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
-  @ManyToMany(() => UserProfile, (user: UserProfile) => user.teams, { cascade: true })
+  @ManyToMany(() => UserProfile, (user: UserProfile) => user.teams)
   @JoinTable()
   users?: UserProfile[];
 
