@@ -4,7 +4,7 @@ import { connect, useDispatch } from 'react-redux';
 import { RootState } from 'typings/rootState';
 import TagsInput from 'components/common/TagsInput';
 import { useCreateIssueModalContext } from 'containers/CreateIssueModal/logic/context';
-import { updateIssue } from 'pages/CreateIssue/logic/actions';
+import { updateIssue } from 'pages/IssuePage/logic/actions';
 import { useTranslation } from 'react-i18next';
 
 interface Props {
@@ -25,7 +25,6 @@ interface SelectOption {
 const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, priorities, onSubmit }) => {
 	const context = useCreateIssueModalContext();
 	const [opened, setOpened] = useState<boolean>(false);
-	const [loading, setLoading] = useState<boolean>(false);
 	const dispatch = useDispatch();
 	const { t } = useTranslation();
 	getOpenFunc(() => setOpened(true));
@@ -71,8 +70,6 @@ const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, p
 			return;
 		}
 
-		setLoading(true);
-
 		dispatch(
 			updateIssue({
 				id: current.id,
@@ -80,7 +77,6 @@ const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, p
 			}),
 		);
 
-		setLoading(false);
 		setOpened(false);
 		onSubmit();
 	};
@@ -143,7 +139,6 @@ const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, p
 							<Form.Dropdown
 								clearable
 								selection
-								style={{ maxWidth: 200 }}
 								multiple
 								placeholder={t('labels')}
 								options={labelOpts}
@@ -181,7 +176,7 @@ const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, p
 							/>
 						</Form.Field>
 						<Button.Group floated="right">
-							<Button primary type="submit" loading={loading}>
+							<Button primary type="submit">
 								{t('submit')}
 							</Button>
 							<Button onClick={() => setOpened(false)} basic>

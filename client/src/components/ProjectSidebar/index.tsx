@@ -1,6 +1,8 @@
 import React from 'react';
+import i18n from 'i18next';
 import { Icon } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
+
 import mockAvatar from 'assets/images/projectAvatars/viewavatar.svg';
 import styles from './styles.module.scss';
 
@@ -23,113 +25,54 @@ const ProjectSidebar = (ProjectComponent: any) => (
 							name="arrow alternate circle left"
 							size={'large'}
 						/>
-						<span className={styles.header__text}>Back to project</span>
+						<span className={styles.header__text}>{i18n.t('back_to_project')}</span>
 					</Link>
 				</div>
 			</div>
 			<div className={styles.sidebar__body}>
-				<div className={styles.body__title}>Project settings</div>
+				<div className={styles.body__title}>{i18n.t('project_settings')}</div>
 				<div className={styles.body__group}>
 					<div className={styles.body__group_item}>
 						<Link to={'/'} className={styles.body__link}>
-							Details
+							{i18n.t('details')}
 						</Link>
 					</div>
 					<div className={styles.body__group_item}>
 						<Link to={'/'} className={styles.body__link}>
-							People
-						</Link>
-					</div>
-					<div className={styles.body__group_item}>
-						<Link to={'/'} className={styles.body__link}>
-							Automation
-						</Link>
-					</div>
-					<div className={styles.body__group_item}>
-						<Link to={'/'} className={styles.body__link}>
-							Summary
+							{i18n.t('people')}
 						</Link>
 					</div>
 				</div>
 				<div className={styles.body__group}>
 					<div className={styles.body__group_item}>
 						<Link to={'/'} className={styles.body__link}>
-							Issue types
+							{i18n.t('issue_types')}
+						</Link>
+					</div>
+				</div>
+
+				<div className={styles.body__group}>
+					<div className={styles.body__group_item}>
+						<Link to={'/'} className={styles.body__link}>
+							{i18n.t('versions')}
 						</Link>
 					</div>
 					<div className={styles.body__group_item}>
 						<Link to={'/'} className={styles.body__link}>
-							Issue layout
+							{i18n.t('components')}
 						</Link>
 					</div>
 				</div>
 				<div className={styles.body__group}>
 					<div className={styles.body__group_item}>
 						<Link to={'/'} className={styles.body__link}>
-							Workflows
+							{i18n.t('permissions')}
 						</Link>
 					</div>
+
 					<div className={styles.body__group_item}>
 						<Link to={'/'} className={styles.body__link}>
-							Screens
-						</Link>
-					</div>
-					<div className={styles.body__group_item}>
-						<Link to={'/'} className={styles.body__link}>
-							Fields
-						</Link>
-					</div>
-				</div>
-				<div className={styles.body__group}>
-					<div className={styles.body__group_item}>
-						<Link to={'/'} className={styles.body__link}>
-							Code
-						</Link>
-					</div>
-					<div className={styles.body__group_item}>
-						<Link to={'/'} className={styles.body__link}>
-							Versions
-						</Link>
-					</div>
-					<div className={styles.body__group_item}>
-						<Link to={'/'} className={styles.body__link}>
-							Components
-						</Link>
-					</div>
-				</div>
-				<div className={styles.body__group}>
-					<div className={styles.body__group_item}>
-						<Link to={'/'} className={styles.body__link}>
-							Permissions
-						</Link>
-					</div>
-					<div className={styles.body__group_item}>
-						<Link to={'/'} className={styles.body__link}>
-							Issue security
-						</Link>
-					</div>
-					<div className={styles.body__group_item}>
-						<Link to={'/'} className={styles.body__link}>
-							Notifications
-						</Link>
-					</div>
-				</div>
-				<div className={styles.body__group}>
-					<div className={styles.body__group_item}>
-						<Link to={'/'} className={styles.body__link}>
-							Issue collectors
-						</Link>
-					</div>
-				</div>
-				<div className={styles.body__group}>
-					<div className={styles.body__group_item}>
-						<Link to={'/'} className={styles.body__link}>
-							Opsgenie
-						</Link>
-					</div>
-					<div className={styles.body__group_item}>
-						<Link to={'/'} className={styles.body__link}>
-							Development tools
+							{i18n.t('notifications')}
 						</Link>
 					</div>
 				</div>

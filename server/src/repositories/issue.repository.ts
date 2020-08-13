@@ -61,6 +61,14 @@ export class IssueRepository extends Repository<Issue> {
 		return this.find({ relations: RELS, where });
 	}
 
+	findAllByColumnId(id: string) {
+		return this.find({ relations: RELS, where: { boardColumn: { id } } });
+	}
+
+	findAllByProjectId(id: string) {
+		return this.find({ relations: RELS, where: { project: { id } } });
+	}
+
 	findOneById(id: string) {
 		return this.findOneOrFail({ where: { id }, relations: RELS });
 	}
@@ -76,6 +84,10 @@ export class IssueRepository extends Repository<Issue> {
 
 	updateOneById(id: string, data: Issue) {
 		return this.update(id, data);
+	}
+
+	updateOneByKey(key: string, data: Issue) {
+		return this.update({ issueKey: key }, data);
 	}
 
 	deleteOneById(id: string) {
