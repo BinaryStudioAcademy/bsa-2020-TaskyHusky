@@ -6,29 +6,17 @@ import ProfileHeader from 'components/ProfileHeader';
 import { RootState } from 'typings/rootState';
 import ProfileAside from 'components/ProfileAside';
 import ProfileSection from 'components/ProfileSection';
-// import { UserProfileState } from 'containers/ProfilePage/logiс/state';
 import ProfileManagerSection from 'components/ProfileManagerSection';
 import { requestGetUser } from 'services/user.service';
 import Spinner from 'components/common/Spinner';
-
-// export interface PropsExtendedData {
-// 	isCurrentUser: boolean;
-// 	mockData?: any;
-// 	user: Partial<UserProfileState>;
-// 	showManager: (modeToShow: string) => void;
-// }
-
-// export interface PropsUserData {
-// 	isCurrentUser: boolean;
-// 	mockData?: any;
-// 	user: Partial<UserProfileState>;
-// }
+import { UserProfileState } from './logiс/state';
 
 const ProfilePage = ({ id }: { id: string }) => {
 	const dispatch = useDispatch();
 	const userData = useSelector((state: RootState) => state.user);
+	// const isLoadingTest = useSelector((state: RootState) => state.user.isLoading);
 	const [user, setUser] = useState(userData);
-	const { isLoading, editMode } = user;
+	const { isLoading, editMode } = userData;
 	const currentUserId = useSelector((state: RootState) => state.auth.user && state.auth.user.id);
 
 	const isCurrentUser = id === currentUserId;
@@ -66,15 +54,14 @@ const ProfilePage = ({ id }: { id: string }) => {
 		}
 	};
 
-	useEffect(() => {
-		getUser();
-	}, [isCurrentUser]);
+	const updateUser = (changedUser: Partial<UserProfileState>) => {
+		setUser({ ...user, ...changedUser });
+	};
 
 	useEffect(() => {
-		if (isCurrentUser) {
-			setUser({ ...user, ...userData });
-		}
-	}, [userData]);
+		getUser();
+		// eslint-disable-next-line
+	}, [isCurrentUser]);
 
 	return (
 		<>
@@ -85,13 +72,13 @@ const ProfilePage = ({ id }: { id: string }) => {
 					<ProfileHeader />
 					<div className={styles.container}>
 						<ProfileAside
-							user={user}
+							user={userData}
 							isCurrentUser={isCurrentUser}
 							mockData={mockData}
 							showManager={showManager}
 						/>
 						{editMode ? (
-							<ProfileManagerSection user={user} showManager={showManager} />
+							<ProfileManagerSection user={userData} showManager={showManager} updateUser={updateUser} />
 						) : (
 							<ProfileSection isCurrentUser={isCurrentUser} mockData={mockData} />
 						)}

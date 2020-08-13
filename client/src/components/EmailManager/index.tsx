@@ -10,7 +10,11 @@ import { requestUpdateUser } from 'containers/ProfilePage/logiс/actions';
 import { UserProfileState } from 'containers/ProfilePage/logiс/state';
 import SubmitedInput from 'components/SubmitedInput';
 
-const EmailManager = () => {
+interface Props {
+	updateUser: (changedUser: Partial<UserProfileState>) => void;
+}
+const EmailManager: React.FC<Props> = (props: Props) => {
+	const { updateUser } = props;
 	const dispatch = useDispatch();
 	const { t } = useTranslation();
 	const email = useSelector((state: RootState) => state.user.email);
@@ -24,6 +28,7 @@ const EmailManager = () => {
 	};
 	const updateUserField = () => {
 		if (emailData !== email && isEmailValid) {
+			updateUser({ email: emailData.trim() });
 			dispatch(requestUpdateUser({ email: emailData.trim() } as Partial<UserProfileState>));
 		}
 	};

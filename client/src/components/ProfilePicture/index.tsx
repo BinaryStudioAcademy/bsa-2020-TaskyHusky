@@ -28,6 +28,7 @@ const ProfilePicture: React.FC<Props> = (props: Props) => {
 				setUploadUrl(result);
 			};
 		}
+		console.log(formData);
 	};
 	const getInitials = () => firstName[0] + lastName[0];
 
