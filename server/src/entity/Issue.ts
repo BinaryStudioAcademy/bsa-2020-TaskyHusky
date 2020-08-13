@@ -54,7 +54,7 @@ export class Issue {
 	issueKey?: string;
 
 	@ManyToOne((type) => UserProfile, (userProfile) => userProfile.assignedIssues)
-	assignee?: UserProfile;
+	assigned?: UserProfile;
 
 	@ManyToOne((type) => UserProfile, (userProfile) => userProfile.createdIssues)
 	creator!: UserProfile;

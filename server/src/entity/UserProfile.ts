@@ -73,8 +73,11 @@ export class UserProfile {
 	@OneToMany((type) => Projects, (projects) => projects.creator)
 	createdProjects!: Projects[];
 
-	@OneToMany((type) => Issue, (issue) => issue.assignee)
+	@OneToMany((type) => Issue, (issue) => issue.assigned)
 	assignedIssues?: Issue[];
+
+	@OneToMany((type) => Issue, (issue) => issue.creator)
+	createdIssues?: Issue[];
 
 	@ManyToMany((type) => Team, (team) => team.users, {
 		cascade: true,
