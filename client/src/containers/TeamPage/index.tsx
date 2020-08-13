@@ -46,7 +46,7 @@ const TeamPage = ({ match: { params }, currentTeam: { team } }: { match: Match; 
 
 	useEffect(() => {
 		dispatch(actions.startLoading({ id: params.id }));
-	}, [dispatch]);
+	}, [dispatch, params.id]);
 	const toggleNotification = (): void => setNotification(false);
 	const showAddPeopleModal = (): void => setAddPeopleModal(true);
 

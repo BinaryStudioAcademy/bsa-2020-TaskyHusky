@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Header, Image, Modal, Input, Label, Form, Icon } from 'semantic-ui-react';
+import { Button, Header, Image, Modal, Input, Form } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 import createImg from 'assets/images/team-build.svg';
 import styles from './styles.module.scss';
