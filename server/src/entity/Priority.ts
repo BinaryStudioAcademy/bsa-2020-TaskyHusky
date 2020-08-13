@@ -5,7 +5,6 @@ import { Issue } from './Issue';
 @Entity()
 export class Priority {
 	@PrimaryGeneratedColumn('uuid')
-	@IsUUID()
 	id!: string;
 
 	@Column()

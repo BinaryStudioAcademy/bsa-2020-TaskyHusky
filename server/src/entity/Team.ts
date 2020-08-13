@@ -5,7 +5,6 @@ import { UserProfile } from './UserProfile';
 @Entity()
 export class Team {
 	@PrimaryGeneratedColumn('uuid')
-	@IsUUID()
 	id!: string;
 
 	@Column({ nullable: true })

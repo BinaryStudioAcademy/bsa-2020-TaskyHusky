@@ -7,7 +7,6 @@ import { UserProfile } from './UserProfile';
 @Entity()
 export class FilterPart {
 	@PrimaryGeneratedColumn('uuid')
-	@IsUUID()
 	id!: string;
 
 	@ManyToOne((type) => Filter, (filter) => filter.filterParts)

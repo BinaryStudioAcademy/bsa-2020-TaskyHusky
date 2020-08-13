@@ -95,6 +95,7 @@ class IssueController {
 	async updateByKey(req: Request, res: Response) {
 		const { key } = req.params;
 		const { body: data } = req;
+
 		const repository = getCustomRepository(IssueRepository);
 
 		try {
