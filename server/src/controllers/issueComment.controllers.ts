@@ -12,7 +12,7 @@ export class IssueCommentController {
 			const result = await repository.findAllByIssueId(id);
 			res.send(result);
 		} catch (err) {
-			res.send(getWebError(err, 404));
+			res.send(getWebError(err, 500));
 		}
 	}
 
@@ -21,7 +21,7 @@ export class IssueCommentController {
 		const { id } = req.params;
 
 		try {
-			const result = await repository.findAllByIssueId(id);
+			const result = await repository.findOneById(id);
 			res.send(result);
 		} catch (err) {
 			res.send(getWebError(err, 404));

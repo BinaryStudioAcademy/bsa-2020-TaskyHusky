@@ -13,7 +13,7 @@ export class IssueComment {
 	@Column()
 	createdAt!: Date;
 
-	@Column()
+	@Column({ nullable: true })
 	editedAt?: Date;
 
 	@ManyToOne((type) => Issue)
