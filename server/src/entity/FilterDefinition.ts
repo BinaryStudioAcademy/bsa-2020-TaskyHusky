@@ -8,7 +8,7 @@ export class FilterDefinition {
 	@IsNumber()
 	id!: number;
 
-	@OneToMany((type) => FilterPart, (filterPart) => filterPart.filterDefId)
+	@OneToMany((type) => FilterPart, (filterPart) => filterPart.filterDef)
 	filterParts?: FilterPart[];
 
 	@Column()

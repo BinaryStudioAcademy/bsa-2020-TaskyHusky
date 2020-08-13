@@ -10,7 +10,6 @@ import { Projects } from './Projects';
 @Entity()
 export class Issue {
 	@PrimaryGeneratedColumn('uuid')
-	@IsUUID()
 	id!: string;
 
 	@ManyToOne((type) => IssueType, (issueType) => issueType.issues)
@@ -39,7 +38,6 @@ export class Issue {
 	priority?: Priority;
 
 	@Column({ nullable: true })
-	@IsString()
 	description?: string;
 
 	@ManyToOne((type) => Sprint, (sprint) => sprint.issues)

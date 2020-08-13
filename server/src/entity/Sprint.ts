@@ -7,7 +7,6 @@ import { Board } from './Board';
 @Entity()
 export class Sprint {
 	@PrimaryGeneratedColumn('uuid')
-	@IsUUID()
 	id!: string;
 
 	@Column()
