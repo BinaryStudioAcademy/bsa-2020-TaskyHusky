@@ -1,6 +1,6 @@
 import { Entity, Column, ManyToOne, PrimaryGeneratedColumn, OneToOne, JoinColumn } from 'typeorm';
 import { IsNotEmpty, IsString, IsArray, IsUUID } from 'class-validator';
-import { UserProfile, UserProfile } from './UserProfile';
+import { UserProfile } from './UserProfile';
 import { IssueType } from './IssueType';
 import { Priority } from './Priority';
 import { BoardColumn } from './BoardColumn';
