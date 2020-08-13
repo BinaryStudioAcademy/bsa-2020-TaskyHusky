@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, JoinTable } from 'typeorm';
-import { IsNotEmpty, IsString, IsArray, IsUUID } from 'class-validator';
+import { IsString, IsArray, IsUUID } from 'class-validator';
 import { UserProfile } from './UserProfile';
 
 @Entity()
@@ -8,9 +8,7 @@ export class Team {
 	@IsUUID()
 	id!: string;
 
-	@Column()
-	@IsNotEmpty()
-	@IsString()
+	@Column({ nullable: true })
 	description?: string;
 
 	@Column('text', { array: true })
