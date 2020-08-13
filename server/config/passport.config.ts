@@ -2,7 +2,7 @@ import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
 import { getCustomRepository } from 'typeorm';
-import { validateUserProfile } from '../src/helpers/validateUserProfile.helper';
+import { validateUserProfile } from '../validators/validateUserProfile.validator';
 import { authErrorMessages, EMAIL_FIELD } from '../src/constants/auth.constants';
 import { passwordValid, hashPassword } from '../src/helpers/password.helper';
 import { jwtSecret } from './jwt.config';

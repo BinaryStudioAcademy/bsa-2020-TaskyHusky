@@ -1,9 +1,9 @@
 import { validate } from 'class-validator';
 import { IVerifyOptions } from 'passport-local';
-import { authErrorMessages, EMAIL, PASSWORD, FIRST_NAME, LAST_NAME } from '../constants/auth.constants';
-import { UserProfile } from '../entity/UserProfile';
-import { ErrorResponse } from './errorHandler.helper';
-import HttpStatusCode from '../constants/httpStattusCode.constants';
+import { authErrorMessages, EMAIL, PASSWORD, FIRST_NAME, LAST_NAME } from '../src/constants/auth.constants';
+import { UserProfile } from '../src/entity/UserProfile';
+import { ErrorResponse } from '../src/helpers/errorHandler.helper';
+import HttpStatusCode from '../src/constants/httpStattusCode.constants';
 
 interface ValidateUserProfile {
 	(data: Partial<UserProfile>, next: (error: any, user?: any, options?: IVerifyOptions | undefined) => void): Promise<
