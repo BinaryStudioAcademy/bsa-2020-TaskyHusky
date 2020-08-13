@@ -59,17 +59,12 @@ class TeamsController {
 			if (!data.id) {
 				data.id = v4();
 				const newEl: string = JSON.stringify(data);
-				links = updatedTeam.links.slice();
-				links.unshift(newEl);
+				links = [newEl, ...updatedTeam.links];
 			} else {
-				const parse = updatedTeam.links.map((el: string) => {
+				links = updatedTeam.links.map((el: string) => {
 					const item = JSON.parse(el);
-					if (item.id === data.id) {
-						return JSON.stringify({ ...data })
-					}
-					return JSON.stringify(item);
+					return (item.id === data.id) ? JSON.stringify({ ...data }) : el;
 				})
-				links = [...parse];
 			}
 			const result: any = await teamRepository.updateOneById(id, { links });
 			res.status(200).send(linksParse(result));

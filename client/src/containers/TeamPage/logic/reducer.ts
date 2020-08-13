@@ -3,10 +3,10 @@ import { TeamState, initialState } from './state';
 import { createReducer } from 'helpers/createReducer.helper';
 
 export const teamReducer = createReducer<TeamState>(initialState, {
-	[actionTypes.SUCCESS_LOADING](state: TeamState, { team }: TeamState) {
+	[actionTypes.SUCCESS_LOADING](state: TeamState, action: actionTypes.SuccessLoading) {
 		return {
 			...state,
-			team,
+			team: action.team,
 		};
 	},
 });

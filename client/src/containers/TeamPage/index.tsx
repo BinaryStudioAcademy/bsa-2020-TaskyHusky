@@ -13,6 +13,7 @@ import TeamAddPeopleModal from 'components/TeamAddPeopleModal';
 import CreateLink from 'components/TeamLinks/createLink';
 import DeleteLink from 'components/TeamLinks/deleteLink';
 import Spinner from 'components/common/Spinner';
+import { RootState } from 'typings/rootState';
 interface Match {
 	params: { [key: string]: string };
 	isExact: boolean;
@@ -121,7 +122,7 @@ const TeamPage = ({ match: { params }, currentTeam: { team } }: { match: Match; 
 	);
 };
 
-const mapStateToProps = (state: { team: Team }) => ({
+const mapStateToProps = (state: RootState) => ({
 	currentTeam: state.team,
 });
 
