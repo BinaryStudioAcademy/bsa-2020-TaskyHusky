@@ -114,15 +114,14 @@ passport.deserializeUser(async (id: string, next) => {
 	next(null, user);
 });
 
-passport.use(new GoogleStrategy({
+passport.use('google', new GoogleStrategy({
 	clientID: '1051291061989-cb9hska688bc3no26n701sr5dtahu300.apps.googleusercontent.com',
 	clientSecret: 'dbYNWM1y6N5qlMSLjT6WkMKb',
-	callbackURL: 'http://www.example.com/auth/google/callback'
+	callbackURL: 'http://localhost:3000/api/auth/google/callback'
 },
-	function (accessToken, refreshToken, profile, done) {
-		/* 	User.findOrCreate({ googleId: profile.id }, function (err, user) {
-				return done(err, user);
-			}); */
+	function (accessToken: any, refreshToken: any, profile: any, done: (arg0: null, arg1: any) => any) {
+
+		return done(null, profile);
 	}
 ));
 
