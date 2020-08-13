@@ -7,7 +7,7 @@ import * as actions from './logic/actions';
 import PasswordInput from 'components/common/PasswordInput';
 import { useTranslation } from 'react-i18next';
 import validator from 'validator';
-import { fixEmail } from 'helpers/fixEmail.helper';
+import { normalizeEmail } from 'helpers/normalizeEmail.helper';
 
 import { RootState } from 'typings/rootState';
 
@@ -82,8 +82,8 @@ export const LoginPage: React.FC = () => {
 										icon="at"
 										value={email}
 										onChange={(event) => {
-											setEmail(fixEmail(event.target.value));
-											if (fixEmail(event.target.value) !== email && isEmailSubmitted) {
+											setEmail(normalizeEmail(event.target.value));
+											if (normalizeEmail(event.target.value) !== email && isEmailSubmitted) {
 												setIsEmailSubmitted(false);
 												checkEmailReset();
 											}

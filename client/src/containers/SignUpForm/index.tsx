@@ -8,7 +8,7 @@ import * as actions from 'containers/LoginPage/logic/actions';
 import { RootState } from 'typings/rootState';
 import styles from './styles.module.scss';
 import { useTranslation } from 'react-i18next';
-import { fixEmail } from 'helpers/fixEmail.helper';
+import { normalizeEmail } from 'helpers/normalizeEmail.helper';
 
 const SignUpForm: React.FC = () => {
 	const dispatch = useDispatch();
@@ -75,7 +75,7 @@ const SignUpForm: React.FC = () => {
 						placeholder={t('email')}
 						value={email}
 						onChange={(event) => {
-							setEmail(fixEmail(event.target.value));
+							setEmail(normalizeEmail(event.target.value));
 							setEmailValid(true);
 						}}
 						onBlur={() => setEmailValid(validator.isEmail(email))}
