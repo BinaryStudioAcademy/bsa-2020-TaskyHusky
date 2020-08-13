@@ -68,7 +68,11 @@ class IssueController {
 		const repository = getCustomRepository(IssueRepository);
 
 		try {
-			const result = await repository.createOne(data);
+			const result = await repository.createOne({
+				...data,
+				creator: req.user.id,
+			});
+
 			res.status(201).send(result);
 		} catch (err) {
 			res.status(422).send(getWebError(err, 422));

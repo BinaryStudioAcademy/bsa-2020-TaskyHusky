@@ -33,7 +33,11 @@ export class IssueCommentController {
 		const { body: data } = req;
 
 		try {
-			const result = await repository.createOne(data);
+			const result = await repository.createOne({
+				...data,
+				creator: req.user.id,
+			});
+
 			res.send(result);
 		} catch (err) {
 			res.send(getWebError(err, 422));

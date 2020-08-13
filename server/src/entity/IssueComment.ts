@@ -14,7 +14,7 @@ export class IssueComment {
 	createdAt!: Date;
 
 	@Column()
-	editedAt!: Date;
+	editedAt?: Date;
 
 	@ManyToOne((type) => Issue)
 	issue!: Issue;

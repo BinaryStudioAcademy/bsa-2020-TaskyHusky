@@ -1,5 +1,6 @@
 import { EntityRepository, Repository } from 'typeorm';
 import { IssueComment } from '../entity/IssueComment';
+import { PartialIssueComment } from '../models/Issue';
 
 const RELS = ['creator'];
 
@@ -14,12 +15,22 @@ export class IssueCommentRepository extends Repository<IssueComment> {
 	}
 
 	createOne(data: IssueComment) {
-		const instance = this.create(data);
+		const instance = this.create({
+			...data,
+			createdAt: new Date(),
+		});
+
 		return this.save(instance);
 	}
 
-	updateOne(id: string, data: Partial<IssueComment>) {
-		return this.update({ id }, data);
+	updateOne(id: string, data: PartialIssueComment) {
+		return this.update(
+			{ id },
+			{
+				...data,
+				editedAt: new Date(),
+			},
+		);
 	}
 
 	deleteOne(id: string) {

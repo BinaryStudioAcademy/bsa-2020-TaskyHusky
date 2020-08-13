@@ -17,3 +17,7 @@ interface PartialIssue {
 	assigned?: string;
 	creator: string;
 }
+
+export interface PartialIssueComment {
+	text?: string;
+}
