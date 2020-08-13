@@ -1,14 +1,16 @@
 import { EntityRepository, Repository } from 'typeorm';
 import { IssueComment } from '../entity/IssueComment';
 
+const RELS = ['creator'];
+
 @EntityRepository(IssueComment)
 export class IssueCommentRepository extends Repository<IssueComment> {
 	findAllByIssueId(id: string) {
-		return this.find({ where: { issue: { id } } });
+		return this.find({ where: { issue: { id } }, relations: RELS });
 	}
 
 	findOneById(id: string) {
-		return this.findOne({ where: { id } });
+		return this.findOne({ where: { id }, relations: RELS });
 	}
 
 	createOne(data: IssueComment) {
