@@ -1,43 +1,32 @@
 import React from 'react';
-import { Header, Icon } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 import styles from './styles.module.scss';
+import teamIcon from 'icons/profile/teamIcon.svg';
 
 interface Props {
-	isCurrentUser: boolean;
 	mockData: any;
 }
 
 const ProfileTeamBlock: React.FC<Props> = (props: Props) => {
 	const { t } = useTranslation();
-	const { isCurrentUser, mockData } = props;
+	const { mockData } = props;
 	return (
 		<div>
-			<Header as="h3" className={styles.header}>
-				{t('team')}
-			</Header>
+			<h3 className={styles.header}>{t('team')}</h3>
 			{mockData.teams.map((item: any) => (
 				<div key={item.id} className={styles.item}>
 					<div className={styles.groupIcon}>
-						<Icon disabled name="group" size="small" />
+						<img src={teamIcon} alt="icon" />
 					</div>
-					<div>
-						<p className={styles.content}>{item.name}</p>
-						<p className={styles.content__secondary}>
+					<div className={styles.content}>
+						<span className={styles.content__primary}>{item.name}</span>
+						<span className={styles.content__secondary}>
 							{item.members}
 							{item.members === 1 ? ' member' : ' members'}
-						</p>
+						</span>
 					</div>
 				</div>
 			))}
-			{isCurrentUser && (
-				<div className={styles.item}>
-					<div className={styles.groupIcon__secondary}>
-						<Icon disabled name="group" size="small" />
-					</div>
-					<p className={styles.content}>{t('start_team')}</p>
-				</div>
-			)}
 		</div>
 	);
 };

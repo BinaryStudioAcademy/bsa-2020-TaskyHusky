@@ -4,6 +4,10 @@
   @include profile-container;
 }
 
+.card {
+  @include card-container;
+}
+
 .footer {
   &__button {
     margin-right: 20px !important;
@@ -17,5 +21,13 @@
     position: absolute;
     right: -20px;
     top: -2px;
+  }
+}
+
+@media screen and (max-width: $less-than-medium-screen) {
+  .container {
+    margin-top: 50px;
+    width: 100%;
+    padding: 0;
   }
 }

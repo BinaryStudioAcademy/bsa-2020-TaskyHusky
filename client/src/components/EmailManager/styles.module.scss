@@ -5,7 +5,7 @@
 }
 
 .card {
-  @include profile-card;
+  @include card-container;
 }
 
 .checkbox {
@@ -15,6 +15,7 @@
 
 .submitButton {
   margin-top: 20px !important;
+  @include content-btn;
   background-color: #76ef8a !important;
 }
 
@@ -24,4 +25,12 @@
 
 .errorPopup {
   @include error-popup;
+}
+
+@media screen and (max-width: $less-than-medium-screen) {
+  .container {
+    margin-top: 50px;
+    width: 100%;
+    padding: 0;
+  }
 }

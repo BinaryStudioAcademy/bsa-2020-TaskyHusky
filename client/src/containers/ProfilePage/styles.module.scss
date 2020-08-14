@@ -6,6 +6,12 @@
 }
 
 .container {
-	margin: 22px 15%;
+	margin: 22px 13%;
 	display: flex;
+}
+
+@media screen and (max-width: $less-than-medium-screen) {
+	.container {
+		display: block;
+	}
 }

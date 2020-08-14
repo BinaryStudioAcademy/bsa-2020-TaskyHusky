@@ -33,15 +33,24 @@ const ProfilePage = ({ id }: { id: string }) => {
 			{ name: 'Example name2', members: 2, id: 2 },
 		],
 		activity: [
-			{ id: 1, project: 'Example project1', name: 'Fsp-1 Implement dark mode color theme' },
-			{ id: 2, project: 'Example project1', name: 'Fsp-1 Anonymus user shouldnt be able to loq in' },
-			{ id: 3, project: 'Example project1', name: 'Fsp-1 Implement dark somethin else very important' },
-			{ id: 4, project: 'Example project1', name: 'Fsp-1 Implement dark somethin else very important' },
-			{ id: 5, project: 'Example project1', name: 'Fsp-1 Implement dark somethin else very important' },
-			{ id: 6, project: 'Example project1', name: 'Fsp-1 Implement dark somethin else very important' },
-			{ id: 7, project: 'Example project1', name: 'Fsp-1 Implement dark somethin else very important' },
+			{ id: 1, project: 'First scrum project', name: 'Homepage footer uses an inline style-should use a class' },
+			{ id: 2, project: 'First scrum project', name: 'Homepage footer uses an inline style-should use a class' },
+			{ id: 3, project: 'First scrum project', name: 'Homepage footer uses an inline style-should use a class' },
+			{ id: 4, project: 'First scrum project', name: 'Homepage footer uses an inline style-should use a class' },
+			{ id: 5, project: 'First scrum project', name: 'Homepage footer uses an inline style-should use a class' },
+			{ id: 6, project: 'First scrum project', name: 'Homepage footer uses an inline style-should use a class' },
+			{ id: 7, project: 'First scrum project', name: 'Fsp-1 Implement dark somethin else very important' },
 		],
-		project: 'Example project1',
+		projects: [
+			{ id: 1, project: 'Software project', name: 'Project 1' },
+			{ id: 2, project: 'Software project', name: 'Project 2' },
+			{ id: 3, project: 'Software project', name: 'Project 3' },
+			{ id: 4, project: 'Software project', name: 'Project 4' },
+		],
+		colleagues: [
+			{ id: 1, project: 'Software project', name: 'Fan Angel' },
+			{ id: 2, project: 'Software project', name: 'Fan Angel' },
+		],
 	};
 
 	const getUser = async () => {

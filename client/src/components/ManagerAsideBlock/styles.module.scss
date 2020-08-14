@@ -1,3 +1,5 @@
+@import 'styles/mixins.scss';
+
 .container {
   display: flex;
   flex-direction: column;
@@ -5,24 +7,25 @@
 
 .button {
   margin: 10px 0 !important;
+  @include content-btn;
 }
 
 .profileBtn {
-  background-color: #ef7676 !important;
-  font-size: 1.2rem !important;
+  background-color: $red !important;
+  // font-size: 1.2rem !important;
 }
 
 .emailBtn {
-  background-color: #e2ef10 !important;
-  font-size: 1.2rem !important;
+  background-color: $yellow !important;
+  //   font-size: 1.2rem !important;
 }
 
 .securityBtn {
-  background-color: #76ef8a !important;
-  font-size: 1.2rem !important;
+  background-color: $green !important;
+  // font-size: 1.2rem !important;
 }
 
 .accountBtn {
-  background-color: #7690ef !important;
-  font-size: 1.2rem !important;
+  background-color: $blue !important;
+  // font-size: 1.2rem !important;
 }

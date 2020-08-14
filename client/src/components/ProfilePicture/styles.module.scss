@@ -1,7 +1,7 @@
 @import 'styles/mixins.scss';
 
 .mainInfo {
-  margin-bottom: 35px;
+  margin-bottom: 32px;
   text-align: center;
 
   &__fullName {
@@ -29,7 +29,7 @@
     z-index: 2;
     top: calc(50% - 16px);
     left: calc(50% - 14px);
-    color: #d1c6c6;
+    color: $ligth-gray;
     z-index: 1;
   }
 
@@ -67,6 +67,7 @@
 .managerButton {
   width: 100%;
   @include content-btn;
+  margin-bottom: 40px !important;
 }
 
 .hidden {

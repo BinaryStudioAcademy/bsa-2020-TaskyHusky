@@ -39,43 +39,49 @@ const EmailManager: React.FC<Props> = (props: Props) => {
 	return (
 		<section className={styles.container}>
 			<Header as="h3">{t('email')}</Header>
-			<Header as="h4">{t('change_email')}</Header>
-			<p>
-				{t('current_email')}
-				{email}
-			</p>
-			<Form onSubmit={updateUserField}>
-				<Popup
-					className={styles.errorPopup}
-					open={!isEmailValid}
-					content={t('invalid_email')}
-					on={[]}
-					trigger={
-						<SubmitedInput
-							text={emailData}
-							propKey="email"
-							title={t('email_title')}
-							placeholder={t('email_placeholder')}
-							type="text"
-							handleChange={handleChange}
-							isValid={isEmailValid}
-							onBlur={onBlur}
-						/>
-					}
+			<div className={styles.card}>
+				<Header as="h4">{t('change_email')}</Header>
+				<p>
+					{t('current_email')}
+					{email}
+				</p>
+				<Form onSubmit={updateUserField}>
+					<Popup
+						className={styles.errorPopup}
+						open={!isEmailValid}
+						content={t('invalid_email')}
+						on={[]}
+						trigger={
+							<SubmitedInput
+								text={emailData}
+								propKey="email"
+								title={t('email_title')}
+								placeholder={t('email_placeholder')}
+								type="text"
+								handleChange={handleChange}
+								isValid={isEmailValid}
+								onBlur={onBlur}
+							/>
+						}
+					/>
+					<Button type="submit" className={styles.submitButton}>
+						{t('save_changes')}
+					</Button>
+				</Form>
+				<Header as="h4">{t('email_notif')}</Header>
+				<p>{t('content_notif')}</p>
+				<Select
+					placeholder={t('choose_option_notif')}
+					className={styles.select}
+					options={notifaictionsOptions}
 				/>
-				<Button type="submit" className={styles.submitButton}>
-					{t('save_changes')}
-				</Button>
-			</Form>
-			<Header as="h4">{t('email_notif')}</Header>
-			<p>{t('content_notif')}</p>
-			<Select placeholder={t('choose_option_notif')} className={styles.select} options={notifaictionsOptions} />
-			<p>{t('get_email_when')}</p>
-			<Checkbox className={styles.checkbox} label={t('watching_issue')} />
-			<Checkbox className={styles.checkbox} label={t('you_reporter')} />
-			<Checkbox className={styles.checkbox} label={t('you_asignee')} />
-			<Checkbox className={styles.checkbox} label={t('someone_mention')} />
-			<Checkbox className={styles.checkbox} label={t('make_changes')} />
+				<p>{t('get_email_when')}</p>
+				<Checkbox className={styles.checkbox} label={t('watching_issue')} />
+				<Checkbox className={styles.checkbox} label={t('you_reporter')} />
+				<Checkbox className={styles.checkbox} label={t('you_asignee')} />
+				<Checkbox className={styles.checkbox} label={t('someone_mention')} />
+				<Checkbox className={styles.checkbox} label={t('make_changes')} />
+			</div>
 		</section>
 	);
 };

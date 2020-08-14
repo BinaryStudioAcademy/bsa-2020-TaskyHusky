@@ -168,8 +168,6 @@ export const en = {
 	alt_user_experience: 'user do not have a work experience with other people',
 	no_people: 'There are no people to see here',
 	content_no_people: 'People you collaborated with in the last 90 days will show here.',
-	tell_experience: 'Tell us about your experience with profiles and search within this directory.',
-	send_feedback: 'Send Tasky-Husky feedback',
 	start_team: 'Start a team...',
 	change_pass: 'Change your password',
 	pass_error_length: 'Password should be more than 6 symbols',
@@ -211,4 +209,5 @@ export const en = {
 	go_to_board: 'Go to board',
 	assignee: 'Assignee',
 	no: 'No',
+	work_places: 'Places you work',
 };

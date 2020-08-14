@@ -168,8 +168,6 @@ export const ua = {
 	alt_user_experience: 'Немає людей для відображення',
 	no_people: 'Немає людей для відображення',
 	content_no_people: 'Тут будуть відображатися люди, з якими ви працювали протягом останніх 90 днів.',
-	tell_experience: 'Розкажіть нам про своє використання профілів і пошуку в цьому каталозі.',
-	send_feedback: 'Надіслати відгук до Tasky-Husky',
 	start_team: 'Створити команду...',
 	change_pass: 'Змінити пароль',
 	pass_error_length: 'Пароль має бути довшим за 6 символів',
@@ -210,4 +208,5 @@ export const ua = {
 	go_to_board: 'Перейти до дошки',
 	assignee: 'Відповідає',
 	no: 'Нема',
+	work_places: 'Places you work',
 };

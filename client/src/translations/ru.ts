@@ -168,8 +168,6 @@ export const ru = {
 	alt_user_experience: 'Здесь никого нет',
 	no_people: 'Здесь никого нет',
 	content_no_people: 'Здесь указаны люди, с которыми вы работали в течение последних 90 дней.',
-	tell_experience: 'Расскажите, удобно ли вам пользоваться функциями профилей и поиска внутри этого',
-	send_feedback: 'Отправить отзыв по Tasky-Husky',
 	start_team: 'Создать команду...',
 	change_pass: 'Изменить пароль',
 	pass_error_length: 'Пароль должен быть длинее чем 6 символов',
@@ -210,4 +208,5 @@ export const ru = {
 	go_to_board: 'Перейти к доске',
 	assignee: 'Ответственный',
 	no: 'Нет',
+	work_places: 'Places you work',
 };

@@ -2,15 +2,15 @@
 @import 'styles/mixins.scss';
 
 .userInfo {
-  width: 30%;
+  width: 32%;
   min-width: 200px;
   @include primary-box;
   padding: 50px 40px 25px;
 }
 
-.policyLink {
-  margin: 25px 0;
-  display: block;
-  font-size: 16px;
-  color: $secondary-content;
+@media screen and (max-width: $less-than-medium-screen) {
+  .userInfo {
+    width: 100%;
+    padding: 50px 15% 25px;
+  }
 }
