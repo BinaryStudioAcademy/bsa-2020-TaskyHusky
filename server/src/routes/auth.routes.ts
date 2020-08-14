@@ -9,6 +9,7 @@ const authController = new AuthController();
 router
 	.post('/login', logIn, authController.sendUser)
 	.post('/register', register, authController.sendUser)
-	.get('/profile', authController.sendExistingProfile);
+	.get('/profile', authController.sendExistingProfile)
+	.post('/check_email', authController.checkEmail);
 
 export default router;

@@ -10,6 +10,7 @@ router.get('/', boardController.getAll);
 router.get('/recent', boardController.getRecent);
 router.get('/:id', boardController.getOne);
 router.get('/:id/columns', boardController.getBoardColumns);
+router.get('/:id/projects', boardController.getBoardProjects);
 router.put('/:id', boardController.put);
 router.delete('/:id', boardController.delete);
 router.post('/', boardController.post);

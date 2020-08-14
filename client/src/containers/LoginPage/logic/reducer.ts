@@ -28,6 +28,7 @@ export const authReducer = createReducer<AuthState>(initialState, {
 			user: null,
 			isAuthorized: false,
 			jwtToken: '',
+			isEmailInDB: null,
 		};
 	},
 	[actionTypes.LOAD_PROFILE_SUCCESS](state, action: actionTypes.LoadProfileSuccess) {
@@ -37,6 +38,18 @@ export const authReducer = createReducer<AuthState>(initialState, {
 			isAuthorized: action.isAuthorized,
 			jwtToken: action.jwtToken,
 			profileLoaded: true,
+		};
+	},
+	[actionTypes.CHECK_EMAIL_SUCCESS](state, action: actionTypes.CheckEmail) {
+		return {
+			...state,
+			isEmailInDB: !!action.email,
+		};
+	},
+	[actionTypes.CHECK_EMAIL_RESET](state, action: actionTypes.CheckEmail) {
+		return {
+			...state,
+			isEmailInDB: null,
 		};
 	},
 });

@@ -5,7 +5,7 @@ interface PartialIssue {
 	id?: string;
 	type: string;
 	summary?: string;
-	boardColumnID?: string;
+	boardColumn?: string;
 	labels?: string[];
 	attachments?: string[];
 	links?: string[];
@@ -14,6 +14,10 @@ interface PartialIssue {
 	sprint?: Sprint;
 	project?: Projects;
 	issueKey?: string;
-	assignedID?: string;
-	creatorID?: string;
+	assigned?: string;
+	creator: string;
+}
+
+export interface PartialIssueComment {
+	text?: string;
 }

@@ -2,13 +2,15 @@ import i18n from 'i18next';
 
 import kanbanImg from 'assets/images/kanban.svg';
 import scrumImg from 'assets/images/scrum.svg';
-import bugTrackingImg from 'assets/images/bug_tracking.svg';
+
+export interface MethodologyInfo {
+	description: string;
+	image: string;
+}
 
 export interface TemplatesInformation {
-	[key: string]: {
-		description: string;
-		image: string;
-	};
+	[WebApi.Board.BoardType.Kanban]: MethodologyInfo;
+	[WebApi.Board.BoardType.Scrum]: MethodologyInfo;
 }
 
 const getTemplatesInformation = (): TemplatesInformation => ({
@@ -19,10 +21,6 @@ const getTemplatesInformation = (): TemplatesInformation => ({
 	Scrum: {
 		description: i18n.t('scrum_description'),
 		image: scrumImg,
-	},
-	'Bug tracking': {
-		description: i18n.t('bug_tracking_description'),
-		image: bugTrackingImg,
 	},
 });
 

@@ -1,8 +1,10 @@
+@import "../../styles/variables.scss";
+
 :global(#root) {
 	.menuWrapper > * {
-		color: rgba(80, 80, 80, 0.9) !important;
+		color: $header-text !important;
 		padding: 7px 13px;
-		font-weight: bold !important;
+		font-weight: normal !important;
 	}
 
 	.menuWrapper {
@@ -17,7 +19,8 @@
 		top: 0;
 		left: 0;
 		margin: 0 !important;
-		z-index: 1;
+		z-index: 1000;
+		background-color: #ffffff;
 	}
 
 	.rightMenu {
@@ -33,12 +36,21 @@
 	}
 
 	.createMenuItem {
-		background: rgba(0, 101, 253, 0.9);
-		color: #fff !important;
+		font-weight: 600;
+		height: 30px;
+		border-radius: 5px;
+		border: 1px solid $header-text;
 
 		&:hover {
-			background: rgba(0, 101, 253, 1);
+			background-color: $header-text;
+			color: white;
 		}
+	}
+
+	.logoText {
+		margin: 0 50px 0 10px;
+		font-weight: bolder;
+		font-size: larger;
 	}
 
 	.circularIcon {
@@ -52,6 +64,7 @@
 			background: rgba(0, 0, 0, 0.05);
 			padding: 7px;
 		}
+
 		i {
 			margin: 0;
 		}
@@ -65,5 +78,33 @@
 
 	.circularDropdownMenu > * {
 		color: rgba(80, 80, 80, 0.9) !important;
+	}
+
+	@media screen and (max-width: $medium-screen) {
+		.logoText {
+			display: none;
+		}
+
+		.menuWrapper > * {
+			margin-left: -1px;
+			padding: 5px;
+		}
+
+		.menuWrapper input {
+			padding: 5px;
+			width: 150px;
+			margin-right: 2px;
+		}
+
+		.menuWrapper .circularIcon {
+			margin-left: -2px;
+		}
+	}
+
+	@media screen and (max-width: $less-than-medium-screen) {
+		.menuWrapper > .rightMenu input,
+		.menuWrapper > .rightMenu input ~ i {
+			display: none;
+		}
 	}
 }
