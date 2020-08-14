@@ -1,11 +1,12 @@
 import { fetchFilterDefs } from 'services/filter.service';
 import { loadIssues } from 'services/issue.service';
-import { all, put, takeEvery, call } from 'redux-saga/effects';
+import { all, put, takeEvery, call, select } from 'redux-saga/effects';
 import { v4 as uuidv4 } from 'uuid';
 import * as actionTypes from './actionTypes';
 import * as actions from './actions';
 import { FilterPartState } from './state';
 import { AnyAction } from 'redux';
+import { getFilterOptionsFromFilterParts } from './helpers';
 
 export function* fetchFilterPartsSaga(action: ReturnType<typeof actions.fetchFilterParts>) {
 	const filterDefs: WebApi.Entities.FilterDefinition[] = yield call(fetchFilterDefs);
@@ -21,12 +22,19 @@ export function* fetchFilterPartsSaga(action: ReturnType<typeof actions.fetchFil
 
 export function* updateFilterPartSaga(action: AnyAction) {
 	yield put(actions.updateFilterPartSuccess({ filterPart: action.filterPart }));
-	// every time when update filterPart we should load issues
+	const {
+		advancedSearch: { filterParts },
+	} = yield select();
+
+	const filterOption = getFilterOptionsFromFilterParts(filterParts);
+	const issues = yield call(loadIssues, filterOption);
+
+	yield put(actions.loadIssuesSuccess({ issues }));
 }
 
 export function* loadIssuesSaga(action: AnyAction) {
-	const { filter } = action;
-	yield call(loadIssues, filter ? filter : {});
+	const issues = yield call(loadIssues, undefined);
+	yield put(actions.loadIssuesSuccess({ issues }));
 }
 
 export function* watchFetchFilterParts() {
@@ -42,5 +50,5 @@ export function* watchLoadIssues() {
 }
 
 export default function* advancedSearchSaga() {
-	yield all([watchFetchFilterParts(), watchUpdateFilterPart()]);
+	yield all([watchFetchFilterParts(), watchUpdateFilterPart(), watchLoadIssues()]);
 }

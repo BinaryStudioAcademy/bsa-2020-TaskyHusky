@@ -3,44 +3,15 @@ import { Table } from 'semantic-ui-react';
 import IssueItem from 'components/IssueItem';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'typings/rootState';
-import { loadIssues } from '../logic/actions';
+import { loadIssues } from 'containers/AdvancedSearch/logic/actions';
+
 const IssueTable: React.FC = () => {
-	// get filtered issues from state
-	// issue state updates with updating filter parts. So, on updateFilterPart we update issues.
-	// here we will have filtered issues from state
 	const dispatch = useDispatch();
 	const { issues } = useSelector((rootState: RootState) => rootState.advancedSearch);
+
 	useEffect(() => {
-		dispatch(loadIssues({}));
-	});
-	// const issues = [
-	// 	{
-	// 		priority: {
-	// 			id: 'id',
-	// 			color: 'string',
-	// 			title: 'string',
-	// 			icon: 'string',
-	// 		},
-	// 		summary: 'Very summary',
-	// 		boardColumnID: '6d1',
-	// 		labels: 'done',
-	// 		attachments: 'attachments',
-	// 		links: 'link1',
-	// 		description: 'Very description',
-	// 		sprintID: '52ce',
-	// 		projectID: '9fc89a01-f610-48f7-b0ac-f11ef4db4532', //real
-	// 		issueKey: 'TH-1',
-	// 		assignedID: 'a01dcb1e-73d6-4a23-a3a3-ebc36206f551',
-	// 		creator: 'a01dcb1e-73d6-4a23-a3a3-ebc36206f551', //real
-	// 		type: {
-	// 			id: 'type-id-12',
-	// 			icon: 'check',
-	// 			color: 'teal',
-	// 			title: 'Issue',
-	// 		},
-	// 		id: 'a269d9f4-1c10-40ad-81e0-7ac333804d91',
-	// 	},
-	// ];
+		dispatch(loadIssues());
+	}, [dispatch]);
 
 	return (
 		<Table selectable compact>
