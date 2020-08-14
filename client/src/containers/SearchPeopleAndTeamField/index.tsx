@@ -16,7 +16,6 @@ const SearchField: React.FC = (): ReactElement => {
 		if (value) {
 			dispatch(actions.startLoading({ name: value }));
 		}
-		console.log(results);
 	};
 
 	const resultRender = (value: any): React.ReactElement => {

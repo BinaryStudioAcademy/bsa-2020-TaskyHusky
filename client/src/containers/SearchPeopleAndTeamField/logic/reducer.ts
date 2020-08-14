@@ -14,6 +14,7 @@ export const peoplePageSearchReducer = createReducer<PeoplePagesSearchState>(ini
 			return {
 				...state,
 				results: undefined,
+				isLoading: false,
 			};
 		}
 		return {
