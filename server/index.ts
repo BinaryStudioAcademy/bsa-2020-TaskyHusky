@@ -15,11 +15,19 @@ createConnection()
 	.then(async (connection) => {
 		await connection.runMigrations();
 		const app = express();
-		app.use(cors());
+		app.use(
+			cors({
+				origin: '*',
+				allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization'],
+			}),
+		);
+
 		app.use(bodyParser.json());
 		app.use(passport.initialize());
+
 		app.use('/', (req, res, next) => (req.path === '/' ? res.sendStatus(200) : next())); // health check
 		app.use('/api', authenticateJwt(routesWhiteList), routes);
+
 		app.use(errorHandlerMiddleware);
 
 		app.listen(appPort, () => {

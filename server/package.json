@@ -6,7 +6,7 @@
 	"scripts": {
 		"start": "ts-node-dev --respawn --transpile-only index.ts",
 		"start:debug": "ts-node-dev --inspect=4321 --respawn --transpile-only index.ts",
-		"prod": "ts-node --transpile-only index.ts",
+		"prod": "npm run typeorm:dropDB && ts-node --transpile-only index.ts",
 		"typeorm": "node --require ts-node/register ./node_modules/typeorm/cli.js",
 		"typeorm:dropDB": "npm run typeorm schema:drop",
 		"lint": "eslint . --ext .ts",
@@ -22,7 +22,6 @@
 		"@types/nodemailer": "^6.4.0",
 		"bcryptjs": "^2.4.3",
 		"body-parser": "^1.19.0",
-		"class-validator": "^0.12.2",
 		"cors": "^2.8.5",
 		"crypto-js": "^4.0.0",
 		"dotenv": "^8.2.0",
@@ -35,7 +34,9 @@
 		"passport-local": "^1.0.0",
 		"pg": "^8.3.0",
 		"reflect-metadata": "^0.1.13",
-		"typeorm": "^0.2.25"
+		"typeorm": "^0.2.25",
+		"class-validator": "^0.12.2",
+		"uuid": "^8.3.0"
 	},
 	"devDependencies": {
 		"@types/bcryptjs": "^2.4.2",
@@ -57,8 +58,7 @@
 		"lint-staged": "^10.2.11",
 		"prettier": "^2.0.5",
 		"ts-node-dev": "^1.0.0-pre.52",
-		"typescript": "^3.9.7",
-		"uuid": "^8.3.0"
+		"typescript": "^3.9.7"
 	},
 	"husky": {
 		"hooks": {

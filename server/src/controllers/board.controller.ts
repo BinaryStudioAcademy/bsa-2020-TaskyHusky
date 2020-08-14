@@ -25,6 +25,13 @@ class BoardController {
 		}
 	};
 
+	getRecent = async (req: Request, res: Response): Promise<void> => {
+		const boardRepository = getCustomRepository(BoardRepository);
+		const boards = await boardRepository.getRecent();
+
+		res.status(200).send(boards.slice(0, 5));
+	};
+
 	getBoardColumns = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
 		const boardRepository = getCustomRepository(BoardRepository);
 		const columnsRepository = getCustomRepository(BoardColumnRepository);
@@ -69,8 +76,10 @@ class BoardController {
 		const boardRepository = getCustomRepository(BoardRepository);
 		const { body } = req;
 
+		const { projects, ...bodyData } = body;
 		try {
-			const board = await boardRepository.post(body);
+			console.log(projects);
+			const board = await boardRepository.post(bodyData);
 
 			res.status(200).send(board);
 		} catch (e) {

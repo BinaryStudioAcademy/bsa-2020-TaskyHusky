@@ -4,11 +4,10 @@
 	.menuWrapper > * {
 		color: $header-text !important;
 		padding: 7px 13px;
-		font-weight: normal !important;
 	}
 
 	.menuWrapper {
-		margin: 0px 20px;
+		margin: 10px 50px !important;
 	}
 
 	.segmentWrapper {
@@ -21,6 +20,8 @@
 		margin: 0 !important;
 		z-index: 1000;
 		background-color: #ffffff;
+		height: 70px;
+		box-shadow: 0 3px 2px 0 #0003;
 	}
 
 	.rightMenu {
@@ -36,10 +37,15 @@
 	}
 
 	.createMenuItem {
-		font-weight: 600;
+		font-weight: 400;
+		font-size: 12px;
 		height: 30px;
 		border-radius: 5px;
 		border: 1px solid $header-text;
+
+		* {
+			font-size: 12px;
+		}
 
 		&:hover {
 			background-color: $header-text;
@@ -49,8 +55,8 @@
 
 	.logoText {
 		margin: 0 50px 0 10px;
-		font-weight: bolder;
-		font-size: larger;
+		font-weight: 900;
+		font-size: 24px;
 	}
 
 	.circularIcon {
@@ -78,6 +84,32 @@
 
 	.circularDropdownMenu > * {
 		color: rgba(80, 80, 80, 0.9) !important;
+	}
+
+	.avatar {
+		width: 50px;
+		height: 50px;
+		background-color: #ddd;
+		color: #555;
+		text-transform: uppercase;
+		border-radius: 50%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin-right: 10px;
+	}
+
+	.avatarImage {
+		width: 50px;
+		height: 50px;
+		margin-right: 10px;
+	}
+
+	.userBlock {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin-left: 20px;
 	}
 
 	@media screen and (max-width: $medium-screen) {

@@ -4,7 +4,9 @@ import { useDispatch } from 'react-redux';
 import { loadTypes, loadPriorities } from 'pages/IssuePage/logic/actions';
 import { fetchFilterDefs } from '../../commonLogic/filterDefs/actions';
 import { Container } from 'semantic-ui-react';
+import { startLoading as loadProjects } from 'containers/Projects/logic/actions';
 import styles from './styles.module.scss';
+import { requestAllUsers } from 'commonLogic/users/actions';
 
 interface Props {
 	children: JSX.Element[] | JSX.Element;
@@ -15,8 +17,10 @@ const DefaultPageWrapper: React.FC<Props> = ({ children }) => {
 
 	useEffect(() => {
 		dispatch(loadTypes());
+		dispatch(loadProjects());
 		dispatch(loadPriorities());
 		dispatch(fetchFilterDefs());
+		dispatch(requestAllUsers());
 	}, [dispatch]);
 
 	return (
