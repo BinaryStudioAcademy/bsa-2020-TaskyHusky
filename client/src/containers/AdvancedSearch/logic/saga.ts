@@ -1,10 +1,12 @@
-import { fetchFilterDefs, updateFilterPart } from 'services/filter.service';
-import { all, put, takeEvery, call } from 'redux-saga/effects';
+import { fetchFilterDefs } from 'services/filter.service';
+import { loadIssues } from 'services/issue.service';
+import { all, put, takeEvery, call, select } from 'redux-saga/effects';
 import { v4 as uuidv4 } from 'uuid';
 import * as actionTypes from './actionTypes';
 import * as actions from './actions';
 import { FilterPartState } from './state';
 import { AnyAction } from 'redux';
+import { getFilterOptionsFromFilterParts } from './helpers';
 
 export function* fetchFilterPartsSaga(action: ReturnType<typeof actions.fetchFilterParts>) {
 	const filterDefs: WebApi.Entities.FilterDefinition[] = yield call(fetchFilterDefs);
@@ -14,13 +16,25 @@ export function* fetchFilterPartsSaga(action: ReturnType<typeof actions.fetchFil
 	};
 
 	const filterParts = filterDefs.map(getInitialFilterPart);
+
 	yield put(actions.updateSearchSuccess({ partialState: { filterParts } }));
 }
 
 export function* updateFilterPartSaga(action: AnyAction) {
-	const filterPart = yield call(updateFilterPart, action.filterPart);
+	yield put(actions.updateFilterPartSuccess({ filterPart: action.filterPart }));
+	const {
+		advancedSearch: { filterParts },
+	} = yield select();
 
-	yield put(actions.updateFilterPartSuccess({ filterPart }));
+	const filterOption = getFilterOptionsFromFilterParts(filterParts);
+	const issues = yield call(loadIssues, filterOption);
+
+	yield put(actions.loadIssuesSuccess({ issues }));
+}
+
+export function* loadIssuesSaga(action: AnyAction) {
+	const issues = yield call(loadIssues, undefined);
+	yield put(actions.loadIssuesSuccess({ issues }));
 }
 
 export function* watchFetchFilterParts() {
@@ -31,6 +45,10 @@ export function* watchUpdateFilterPart() {
 	yield takeEvery(actionTypes.UPDATE_FILTER_PART, updateFilterPartSaga);
 }
 
+export function* watchLoadIssues() {
+	yield takeEvery(actionTypes.LOAD_ISSUES, loadIssuesSaga);
+}
+
 export default function* advancedSearchSaga() {
-	yield all([watchFetchFilterParts()]);
+	yield all([watchFetchFilterParts(), watchUpdateFilterPart(), watchLoadIssues()]);
 }

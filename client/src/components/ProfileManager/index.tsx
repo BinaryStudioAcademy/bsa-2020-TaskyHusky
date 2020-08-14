@@ -1,80 +1,109 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from 'typings/rootState';
+import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import styles from './styles.module.scss';
-import { Header, Segment } from 'semantic-ui-react';
-import ContentInput from 'components/ContentInput';
+import { Header, Segment, Form, Button } from 'semantic-ui-react';
+import SubmitedInput from 'components/SubmitedInput';
+import { requestUpdateUser } from 'containers/ProfilePage/logiс/actions';
+import { UserProfileState } from 'containers/ProfilePage/logiс/state';
+import { useDispatch } from 'react-redux';
 
-const ProfileManager = () => {
-	const user = useSelector((state: RootState) => state.user);
+interface Props {
+	showManager: (modeToShow: string) => void;
+	updateUser: (changedUser: Partial<UserProfileState>) => void;
+	user: UserProfileState;
+}
 
+const ProfileManager: React.FC<Props> = (props: Props) => {
+	const { t } = useTranslation();
+	const { showManager, updateUser, user: userData } = props;
+	const dispatch = useDispatch();
+	const [user, setUser] = useState(userData);
+	const { firstName, lastName, username, jobTitle, department, location, organization } = user;
+	const handleChange = (event: any) => {
+		setUser({
+			...user,
+			[(event.target as HTMLInputElement).name]: (event.target as HTMLInputElement).value,
+		});
+	};
+	const onSubmit = () => {
+		const { editMode, isLoading, ...rest } = user;
+		updateUser(user);
+		dispatch(requestUpdateUser({ ...rest } as Partial<UserProfileState>));
+	};
+
+	const onCancel = () => {
+		showManager('');
+	};
 	return (
 		<section className={styles.container}>
-			<Header as="h3">About you</Header>
+			<Header as="h3">{t('about_you')}</Header>
 			<Segment className={styles.card}>
-				<ContentInput
-					isCurrentUser={true}
-					contentData={{
-						text: user.firstName,
-						name: 'firstname',
-						placeholder: 'Your firstname',
-						title: 'First name',
-					}}
-				/>
-				<ContentInput
-					isCurrentUser={true}
-					contentData={{
-						text: user.lastName,
-						name: 'lastname',
-						placeholder: 'Your lastname',
-						title: 'Last name',
-					}}
-				/>
-				<ContentInput
-					isCurrentUser={true}
-					contentData={{
-						text: user.username,
-						name: 'username',
-						placeholder: 'Your username',
-						title: 'Public name',
-					}}
-				/>
-				<ContentInput
-					isCurrentUser={true}
-					contentData={{
-						text: user.jobTitle,
-						name: 'jobtitle',
-						placeholder: 'Your jobtitle',
-						title: 'Job title',
-					}}
-				/>
-				<ContentInput
-					isCurrentUser={true}
-					contentData={{
-						text: user.department,
-						name: 'department',
-						placeholder: 'Your department',
-						title: 'Department',
-					}}
-				/>
-				<ContentInput
-					isCurrentUser={true}
-					contentData={{
-						text: user.organization,
-						name: 'organization',
-						placeholder: 'Your organization',
-						title: 'Organization',
-					}}
-				/>
-				<ContentInput
-					isCurrentUser={true}
-					contentData={{
-						text: user.location,
-						name: 'location',
-						placeholder: 'Your location',
-						title: 'Based in',
-					}}
-				/>
+				<Form onSubmit={onSubmit}>
+					<SubmitedInput
+						handleChange={handleChange}
+						text={firstName}
+						propKey="firstName"
+						placeholder={t('placeholder_lastname')}
+						title={t('first_name')}
+						type="text"
+					/>
+					<SubmitedInput
+						handleChange={handleChange}
+						text={lastName}
+						propKey={t('last_name')}
+						placeholder={t('placeholder_firstname')}
+						title="Last name"
+						type="text"
+					/>
+					<SubmitedInput
+						handleChange={handleChange}
+						text={username}
+						propKey="username"
+						placeholder={t('placeholder_username')}
+						title={t('public_name')}
+						type="text"
+					/>
+					<SubmitedInput
+						handleChange={handleChange}
+						text={jobTitle}
+						propKey="jobTitle"
+						placeholder={t('placeholder_job')}
+						title={t('job_title')}
+						type="text"
+					/>
+					<SubmitedInput
+						handleChange={handleChange}
+						text={department}
+						propKey="department"
+						placeholder={t('placeholder_department')}
+						title={t('department')}
+						type="text"
+					/>
+					<SubmitedInput
+						handleChange={handleChange}
+						text={organization}
+						propKey="organization"
+						placeholder={t('placeholder_organization')}
+						title={t('organization')}
+						type="text"
+					/>
+					<SubmitedInput
+						handleChange={handleChange}
+						text={location}
+						propKey="location"
+						placeholder={t('placeholder_location')}
+						title={t('based_in')}
+						type="text"
+					/>
+					<Form.Field className={styles.formFooter}>
+						<Button className={styles.submitButton} type="submit">
+							{t('save_changes')}
+						</Button>
+						<Button type="text" onClick={onCancel}>
+							{t('cancel')}
+						</Button>
+					</Form.Field>
+				</Form>
 			</Segment>
 		</section>
 	);

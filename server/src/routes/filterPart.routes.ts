@@ -10,7 +10,7 @@ router.get('/:id', filterPartController.getById);
 
 router.post('/', filterPartController.create);
 
-router.put('/:id', filterPartController.updateById);
+router.put('/', filterPartController.update);
 
 router.delete('/:id', filterPartController.deleteById);
 

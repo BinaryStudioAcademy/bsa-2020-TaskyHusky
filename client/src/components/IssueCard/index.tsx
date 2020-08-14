@@ -3,6 +3,7 @@ import { Segment, Header, Icon } from 'semantic-ui-react';
 import { Draggable } from 'react-beautiful-dnd';
 import styles from './styles.module.scss';
 import { Redirect } from 'react-router-dom';
+import { getUsername } from 'helpers/getUsername.helper';
 
 interface BaseEvent {
 	id: string;
@@ -61,19 +62,19 @@ const IssueCard: React.FC<Props> = ({ issue, index, noDrag, noRedirect, selectab
 			<Header>{issue.summary}</Header>
 			<div className={styles.inlineContainer}>
 				<Icon
-					className={styles.left}
+					className={styles.right}
 					name={issue.type.icon as any}
 					color={issue.type.color as any}
 					title={issue.type.title}
 				/>
 				<Icon
-					className={styles.left}
+					className={styles.right}
 					name={issue.priority.icon as any}
 					color={issue.priority.color as any}
 					title={issue.priority.title}
 				/>
-				<div className={styles.right}>
-					<span className={styles.meta}>{issue.issueKey}</span>
+				<div className={styles.left}>
+					<span className={styles.meta}>{getUsername(issue.creator)}</span>
 				</div>
 			</div>
 		</Segment>

@@ -23,6 +23,8 @@ const BoardModalFinal = (props: Props) => {
 
 	const [selectedName, setSelectedName] = useState('');
 	const [selectedProjects, setSelectedProjects] = useState<Array<string>>([]);
+	const authData = useSelector((rootState: RootState) => rootState.auth);
+
 	useEffect(() => {
 		const isCreateButtonHidden = selectedProjects.length === 0 || selectedName === '';
 
@@ -36,9 +38,8 @@ const BoardModalFinal = (props: Props) => {
 		}
 
 		setCreateButtonDisabled(isCreateButtonHidden);
-	}, [selectedProjects, selectedName]);
+	}, [selectedProjects, selectedName, authData.user, board, setBoard, setCreateButtonDisabled]);
 
-	const authData = useSelector((rootState: RootState) => rootState.auth);
 	const projectData = useSelector((rootState: RootState) => rootState.projects.projects);
 
 	const projects = projectData.map((project) => ({
@@ -61,7 +62,9 @@ const BoardModalFinal = (props: Props) => {
 			<Form.Field width={7} className={styles.formField}>
 				<label>Project</label>
 				<Dropdown
-					search
+					search={(options, query) =>
+						options.filter((option) => (option.text as string).toLowerCase().includes(query.toLowerCase()))
+					}
 					header="Projects"
 					multiple
 					fluid

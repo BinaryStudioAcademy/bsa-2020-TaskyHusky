@@ -1,4 +1,4 @@
-import AssigneeFilter from './AssigneeFilter';
+import AssignedFilter from './AssignedFilter';
 import CommentFilter from './CommentFilter';
 import CreatorFilter from './CreatorFilter';
 import DescriptionFilter from './DescriptionFilter';
@@ -9,7 +9,7 @@ import ProjectsFilter from './ProjectsFilter';
 import SummaryFilter from './SummaryFilter';
 
 export {
-	AssigneeFilter,
+	AssignedFilter,
 	CommentFilter,
 	CreatorFilter,
 	DescriptionFilter,
