@@ -66,7 +66,7 @@ export class UserProfile {
 	leadedProjects?: Projects[];
 
 	@OneToMany((type) => Projects, (projects) => projects.creator)
-	createdProjects!: Projects[];
+	createdProjects?: Projects[];
 
 	@OneToMany((type) => Team, (teams) => teams.createdBy)
 	teamsOwner?: Team[];
