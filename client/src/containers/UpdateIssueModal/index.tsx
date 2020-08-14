@@ -6,12 +6,14 @@ import TagsInput from 'components/common/TagsInput';
 import { useCreateIssueModalContext } from 'containers/CreateIssueModal/logic/context';
 import { updateIssue } from 'pages/IssuePage/logic/actions';
 import { useTranslation } from 'react-i18next';
+import { getUsername } from 'helpers/getUsername.helper';
 
 interface Props {
 	current: WebApi.Result.IssueResult;
 	getOpenFunc: (open: () => void) => void;
 	issueTypes: WebApi.Entities.IssueType[];
 	priorities: WebApi.Entities.Priority[];
+	users: WebApi.Entities.UserProfile[];
 	onSubmit: () => void;
 }
 
@@ -22,7 +24,7 @@ interface SelectOption {
 	style?: any;
 }
 
-const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, priorities, onSubmit }) => {
+const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, priorities, users, onSubmit }) => {
 	const context = useCreateIssueModalContext();
 	const [opened, setOpened] = useState<boolean>(false);
 	const dispatch = useDispatch();
@@ -61,6 +63,12 @@ const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, p
 		key: i,
 		value: label,
 		text: label,
+	}));
+
+	const usersOpts: SelectOption[] = users.map((user) => ({
+		key: user.id,
+		value: user.id,
+		text: getUsername(user),
 	}));
 
 	const submit = async () => {
@@ -142,11 +150,22 @@ const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, p
 								multiple
 								placeholder={t('labels')}
 								options={labelOpts}
-								defaultValue={current.labels as any}
+								value={current.labels}
 								onChange={(event, data) => context.set('labels', data.value)}
 							/>
 						</Form.Field>
 						<Divider />
+						<Form.Field>
+							<label>{t('assignee')}</label>
+							<Form.Dropdown
+								clearable
+								selection
+								defaultValue={current.assigned ? current.assigned.id : undefined}
+								placeholder={t('assignee')}
+								options={usersOpts}
+								onChange={(event, data) => context.set('assigned', data.value)}
+							/>
+						</Form.Field>
 						<Form.Field>
 							<label>{t('links')}</label>
 							<TagsInput
@@ -193,6 +212,7 @@ const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, p
 const mapStateToProps = (state: RootState) => ({
 	issueTypes: state.issues.types,
 	priorities: state.issues.priorities,
+	users: state.users.users,
 });
 
 const labels: string[] = ['label1', 'label2'];

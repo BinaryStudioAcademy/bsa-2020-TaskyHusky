@@ -4,6 +4,7 @@ import CreateIssueModal from 'containers/CreateIssueModal';
 import { useTranslation } from 'react-i18next';
 import { ContextProvider } from 'containers/CreateIssueModal/logic/context';
 import UpdateIssueModal from 'containers/UpdateIssueModal';
+import { getUsername } from 'helpers/getUsername.helper';
 
 interface Props {
 	issue: WebApi.Result.IssueResult;
@@ -37,11 +38,11 @@ const IssuePageContent: React.FC<Props> = ({ issue }) => {
 				<Table.Body>
 					<Table.Row>
 						<Table.Cell>{t('reported_by')}</Table.Cell>
-						<Table.Cell>Reporter will be here</Table.Cell>
+						<Table.Cell>{getUsername(issue.creator)}</Table.Cell>
 					</Table.Row>
 					<Table.Row>
 						<Table.Cell>{t('assigned_by')}</Table.Cell>
-						<Table.Cell>Assignee will be here</Table.Cell>
+						<Table.Cell>{issue.assigned ? getUsername(issue.assigned) : t('no')}</Table.Cell>
 					</Table.Row>
 					<Table.Row>
 						<Table.Cell>{t('sprint')}</Table.Cell>

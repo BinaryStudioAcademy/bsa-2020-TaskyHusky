@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import { Modal, Form, Button, Grid, Header, Icon, Divider } from 'semantic-ui-react';
 import { useCreateIssueModalContext } from './logic/context';
 import TagsInput from 'components/common/TagsInput';
-import { connect, useDispatch } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'typings/rootState';
 import { createIssue } from 'pages/IssuePage/logic/actions';
 import { generateRandomString } from 'helpers/randomString.helper';
 import { KeyGenerate } from 'constants/KeyGenerate';
 import { useTranslation } from 'react-i18next';
+import { getUsername } from 'helpers/getUsername.helper';
 
 interface Props {
 	children: JSX.Element;
@@ -18,6 +19,7 @@ interface Props {
 	onClose?: (data: WebApi.Issue.PartialIssue) => void;
 	projects: WebApi.Entities.Projects[];
 	projectsLoading: boolean;
+	users: WebApi.Entities.UserProfile[];
 }
 
 interface SelectOption {
@@ -36,13 +38,15 @@ const CreateIssueModalBody: React.FC<Props> = ({
 	boardColumnID,
 	onClose,
 	projectID,
+	users,
 }) => {
 	const { t } = useTranslation();
 	const [isOpened, setIsOpened] = useState<boolean>(false);
 	const dispatch = useDispatch();
 	const context = useCreateIssueModalContext();
+	const user = useSelector((state: RootState) => state.auth.user);
 
-	if (projectsLoading) {
+	if (projectsLoading || !user) {
 		return null;
 	}
 
@@ -86,6 +90,12 @@ const CreateIssueModalBody: React.FC<Props> = ({
 		text: project.name,
 	}));
 
+	const usersOpts: SelectOption[] = users.map((user) => ({
+		key: user.id,
+		value: user.id,
+		text: getUsername(user),
+	}));
+
 	const getSetOpenFunc = (value: boolean) => () => setIsOpened(value);
 
 	const submit = async () => {
@@ -107,8 +117,7 @@ const CreateIssueModalBody: React.FC<Props> = ({
 			},
 			project: projectID ?? context.data.project,
 			issueKey: generateRandomString(KeyGenerate.LENGTH),
-			assignedID: '98601c2c-a103-489b-b89f-ea5ae568b582',
-			creatorID: 'f2235a1c-dfbc-47b7-bdb2-726d159c19a0',
+			assigned: context.data.assigned,
 		};
 
 		dispatch(createIssue({ data }));
@@ -203,6 +212,16 @@ const CreateIssueModalBody: React.FC<Props> = ({
 								</Form.Field>
 								<Divider />
 								<Form.Field>
+									<label>{t('assignee')}</label>
+									<Form.Dropdown
+										clearable
+										selection
+										placeholder={t('assignee')}
+										options={usersOpts}
+										onChange={(event, data) => context.set('assigned', data.value)}
+									/>
+								</Form.Field>
+								<Form.Field>
 									<label>{t('links')}</label>
 									<TagsInput
 										placeholder={t('add_link')}
@@ -252,6 +271,7 @@ const mapStateToProps = (state: RootState) => ({
 	priorities: state.issues.priorities,
 	projects: state.projects.projects,
 	projectsLoading: state.projects.isLoading,
+	users: state.users.users,
 });
 
 const labels: string[] = ['label1', 'label2'];

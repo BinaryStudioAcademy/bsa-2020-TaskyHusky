@@ -6,11 +6,17 @@ import { getFullUserName } from './helpers';
 import DeleteIssueModal from 'containers/DeleteIssueModal';
 
 interface Props {
-	issue: WebApi.Entities.Issue;
+	issue: WebApi.Result.IssueResult;
+}
+interface PriorityIconProps {
+	priority: WebApi.Entities.Priority;
+}
+interface IssueTypeIconProps {
+	type: WebApi.Entities.IssueType;
 }
 
-const renderIssueType = (issueType: WebApi.Entities.IssueType) => {
-	const { icon, color, title, id } = issueType;
+const IssueTypeIcon = ({ type }: IssueTypeIconProps) => {
+	const { icon, color, title, id } = type;
 
 	return (
 		<Popup
@@ -28,7 +34,7 @@ const renderIssueType = (issueType: WebApi.Entities.IssueType) => {
 	);
 };
 
-const renderPriority = (priority: WebApi.Entities.Priority) => {
+const PriorityIcon = ({ priority }: PriorityIconProps) => {
 	const { icon, color, title, id } = priority;
 
 	return (
@@ -81,7 +87,9 @@ const IssueItem = ({ issue }: Props) => {
 
 	return (
 		<Table.Row key={id}>
-			<Table.Cell>{renderIssueType(type as WebApi.Entities.IssueType)}</Table.Cell>
+			<Table.Cell>
+				<IssueTypeIcon type={type} />
+			</Table.Cell>
 			<Table.Cell>
 				<a href={`/issue/${id}`} className={styles.underlinedLink}>
 					{issueKey}
@@ -104,9 +112,11 @@ const IssueItem = ({ issue }: Props) => {
 					{getFullUserName(creator.firstName, creator.lastName)}
 				</a>
 			</Table.Cell>
-			<Table.Cell>{renderPriority(priority)}</Table.Cell>
+			<Table.Cell>
+				<PriorityIcon priority={priority} />
+			</Table.Cell>
 			<Table.Cell>{renderStatus(status)}</Table.Cell>
-			<Table.Cell>Unresolved{/* resolution.title */}</Table.Cell>
+			<Table.Cell>Unresolved</Table.Cell>
 			<Table.Cell>03/серп./20</Table.Cell>
 			<Table.Cell>10/серп./20</Table.Cell>
 			<Table.Cell className={styles.editCell}>
@@ -126,7 +136,7 @@ const IssueItem = ({ issue }: Props) => {
 									open={open}
 									onOpen={() => setOpen(true)}
 									onDelete={() => window.location.reload()}
-									currentIssueId={issue.id}
+									currentIssueId={issue.id as string}
 								/>
 							}
 						/>

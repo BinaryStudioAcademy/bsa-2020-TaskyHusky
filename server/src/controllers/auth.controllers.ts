@@ -1,4 +1,6 @@
 import { Request, Response } from 'express';
+import { getCustomRepository } from 'typeorm';
+import { UserRepository } from '../repositories/user.repository';
 import { generateToken } from '../helpers/jwt.helper';
 
 class AuthController {
@@ -13,10 +15,19 @@ class AuthController {
 		res.send(user);
 	};
 
-	checkEmail = (req: Request, res: Response) => {
-		const { email } = req.user;
+	checkEmail = async (req: Request, res: Response) => {
+		const { email } = req.body;
 
-		res.send({ email });
+		const userRepository = getCustomRepository(UserRepository);
+		const user = await userRepository.getByEmail(email);
+
+		if (user) {
+			res.send({ email });
+		}
+
+		if (!user) {
+			res.send({ email: '' });
+		}
 	};
 }
 

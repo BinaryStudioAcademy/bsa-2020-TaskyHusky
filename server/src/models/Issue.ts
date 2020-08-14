@@ -14,6 +14,10 @@ interface PartialIssue {
 	sprint?: Sprint;
 	project?: Projects;
 	issueKey?: string;
-	assignedID?: string;
-	creatorID?: string;
+	assigned?: string;
+	creator: string;
+}
+
+export interface PartialIssueComment {
+	text?: string;
 }

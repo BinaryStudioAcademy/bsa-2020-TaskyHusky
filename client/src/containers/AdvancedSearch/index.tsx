@@ -9,19 +9,20 @@ import MoreFilterPartsDropdown from 'components/MoreFilters';
 import { fetchFilterParts } from './logic/actions';
 import { FilterPartState } from './logic/state';
 import SaveFilterModal from 'containers/SaveFilterModal';
+import { filterDefsIDS } from 'constants/FilterDef';
 
 const QUICK_FILTER_IDS = [
-	'c96b69bd-4285-4cf0-81d9-d81316a4c234',
-	'89104794-fc1b-466e-92a8-bc759b98b8e4',
-	'ecf71215-3c72-4aa5-afac-fa55588d51b6',
-	'88a10c4b-bf0c-42fb-8f4b-63107dc0f10f',
+	filterDefsIDS.PROJECTS,
+	filterDefsIDS.STATUS,
+	filterDefsIDS.ISSUE_TYPE,
+	filterDefsIDS.ASSIGNEE,
 ];
 
 const AdvancedSearch: React.FC = () => {
 	const dispatch = useDispatch();
 	const [stared, setStared] = useState(false);
 	const { filterParts } = useSelector((rootState: RootState) => rootState.advancedSearch);
-	const [addedFilterParts, setAddedFilterParts] = useState([] as FilterPartState[]);
+	const [addedFilterParts, setAddedFilterParts] = useState<FilterPartState[]>([]);
 
 	useEffect(() => {
 		dispatch(fetchFilterParts());
@@ -36,16 +37,16 @@ const AdvancedSearch: React.FC = () => {
 				icon: 'string',
 			},
 			summary: 'Very summary',
-			boardColumnID: '6d1',
-			labels: 'done',
-			attachments: 'attachments',
-			links: 'link1',
+			boardColumn: '6d1',
+			labels: ['done'],
+			attachments: ['attachments'],
+			links: ['link1'],
 			description: 'Very description',
 			sprintID: '52ce',
-			projectID: '9fc89a01-f610-48f7-b0ac-f11ef4db4532', //real
+			project: '9fc89a01-f610-48f7-b0ac-f11ef4db4532', //real
 			issueKey: 'TH-1',
-			assignedID: 'a01dcb1e-73d6-4a23-a3a3-ebc36206f551',
-			creatorID: 'a01dcb1e-73d6-4a23-a3a3-ebc36206f551', //real
+			assigned: 'a01dcb1e-73d6-4a23-a3a3-ebc36206f551',
+			creator: 'a01dcb1e-73d6-4a23-a3a3-ebc36206f551', //real
 			type: {
 				id: 'type-id-12',
 				icon: 'check',
@@ -62,16 +63,16 @@ const AdvancedSearch: React.FC = () => {
 				icon: 'string',
 			},
 			summary: 'Interface implemented',
-			boardColumnID: '6d1',
-			labels: 'done',
-			attachments: 'attachments',
-			links: 'link1',
+			boardColumn: '6d1',
+			labels: ['done'],
+			attachments: ['attachments'],
+			links: ['link1'],
 			description: 'Very description',
 			sprintID: '52ce',
-			projectID: '47ab4c46-e506-4dcb-a4d3-79b47cdc16a5', //real
+			project: '47ab4c46-e506-4dcb-a4d3-79b47cdc16a5', //real
 			issueKey: 'TH-1',
-			assignedID: 'e89a7a50-68f2-4a43-a043-80eec52e0ac8',
-			creatorID: 'e89a7a50-68f2-4a43-a043-80eec52e0ac8', // real
+			assigned: 'e89a7a50-68f2-4a43-a043-80eec52e0ac8',
+			creator: 'e89a7a50-68f2-4a43-a043-80eec52e0ac8', // real
 			type: {
 				id: 'id-212',
 				icon: 'close',
