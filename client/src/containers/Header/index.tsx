@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Menu, Image, Input, Dropdown, Button, Icon } from 'semantic-ui-react';
+import { Menu, Image, Dropdown, Button, Icon } from 'semantic-ui-react';
 import logo from 'assets/logo192.png'; // TODO: replace with logo once it is ready
 import styles from './styles.module.scss';
 import { Redirect } from 'react-router-dom';
 import ProjectsMenu from 'components/ProjectsMenu';
 import FiltersMenu from 'components/FiltersMenu';
+import BoardsMenu from '../../components/BoardsMenu';
 import DashboardsMenu from 'components/DashboardsMenu';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'typings/rootState';
@@ -13,6 +14,11 @@ import * as actions from 'containers/LoginPage/logic/actions';
 import { User } from 'containers/LoginPage/logic/state';
 import { useTranslation } from 'react-i18next';
 import CreateIssueModal from 'containers/CreateIssueModal';
+import { getUsername } from 'helpers/getUsername.helper';
+
+const getInitials = (user: User) => {
+	return (user.firstName as string)[0] + (user.lastName ? user.lastName[0] : '');
+};
 
 export const HeaderMenu = () => {
 	const authStore = useSelector((rootStore: RootState) => rootStore.auth);
@@ -21,7 +27,6 @@ export const HeaderMenu = () => {
 
 	const user: User | null = authStore.user;
 
-	const [searchValue, setSearchValue] = useState<string>('');
 	const [activeItem, setActiveItem] = useState<string>('');
 	const [redirectToDashboards, setRedirectToDashboards] = useState<boolean>(false);
 
@@ -58,6 +63,7 @@ export const HeaderMenu = () => {
 					<ProjectsMenu />
 					<FiltersMenu />
 					<DashboardsMenu />
+					<BoardsMenu />
 					<Menu.Item
 						name="people"
 						active={activeItem === 'people'}
@@ -73,18 +79,11 @@ export const HeaderMenu = () => {
 							active={activeItem === 'create'}
 						>
 							{t('create')}
-							<Icon name="plus" style={{ marginLeft: 5, marginRight: -5 }} />
+							<Icon name="plus" style={{ marginLeft: 5, marginRight: 1 }} />
 						</Menu.Item>
 					</CreateIssueModal>
 					<Menu.Item position="right" className={styles.rightMenu}>
-						<Input
-							className="icon"
-							icon="search"
-							placeholder={t('search')}
-							value={searchValue}
-							onChange={(event) => setSearchValue(event.target.value)}
-						/>
-						<Dropdown icon="bell" className={styles.circularIcon} direction="left">
+						<Dropdown icon="bell outline" className={styles.circularIcon} direction="left">
 							<Dropdown.Menu className={styles.circularDropdownMenu}>
 								<Dropdown.Header>{t('notifications')}</Dropdown.Header>
 								<Dropdown.Item>Notification item #1</Dropdown.Item>
@@ -93,36 +92,32 @@ export const HeaderMenu = () => {
 								<Dropdown.Item>Notification item #4</Dropdown.Item>
 							</Dropdown.Menu>
 						</Dropdown>
-						<Dropdown icon="question circle" className={styles.circularIcon} direction="left">
-							<Dropdown.Menu className={styles.circularDropdownMenu}>
-								<Dropdown.Header>{t('help')}</Dropdown.Header>
-								<Dropdown.Item>{t('docs')}</Dropdown.Item>
-								<Dropdown.Item>{t('community')}</Dropdown.Item>
-								<Dropdown.Item>{t('get_mobile')}</Dropdown.Item>
-								<Dropdown.Item>{t('about_tasky')}</Dropdown.Item>
-								<Dropdown.Header>{t('legal')}</Dropdown.Header>
-								<Dropdown.Item>{t('term_of_use')}</Dropdown.Item>
-								<Dropdown.Item>{t('privacy_policy')}</Dropdown.Item>
-							</Dropdown.Menu>
-						</Dropdown>
-						<Dropdown icon="setting" className={styles.circularIcon} direction="left">
-							<Dropdown.Menu className={styles.circularDropdownMenu}>
-								<Dropdown.Header>Header</Dropdown.Header>
-								<Dropdown.Item>Settings item #1</Dropdown.Item>
-								<Dropdown.Item>Settings item #1</Dropdown.Item>
-							</Dropdown.Menu>
-						</Dropdown>
-						<Dropdown icon="user" className={styles.circularIcon} direction="left" id="userProfileMenuItem">
-							<Dropdown.Menu className={styles.circularDropdownMenu}>
-								<Dropdown.Header>{`${user?.firstName} ${user?.lastName}`}</Dropdown.Header>
-								<Dropdown.Item as="a" href={`/profile/${user?.id}`}>
-									{t('profile')}
-								</Dropdown.Item>
-								<Dropdown.Item>{t('acc_settings')}</Dropdown.Item>
-								<Dropdown.Divider />
-								<Dropdown.Item onClick={logOutHandler}>{t('log_out')}</Dropdown.Item>
-							</Dropdown.Menu>
-						</Dropdown>
+						{user ? (
+							<div className={styles.userBlock}>
+								{user.avatar ? (
+									<Image src={user.avatar} className={styles.avatarImage} circular />
+								) : (
+									<div className={styles.avatar}>{getInitials(user)}</div>
+								)}
+								<Dropdown
+									text={getUsername(user as WebApi.Entities.UserProfile)}
+									direction="left"
+									id="userProfileMenuItem"
+								>
+									<Dropdown.Menu className={styles.circularDropdownMenu}>
+										<Dropdown.Header>{`${user?.firstName} ${user?.lastName}`}</Dropdown.Header>
+										<Dropdown.Item as="a" href={`/profile/${user?.id}`}>
+											{t('profile')}
+										</Dropdown.Item>
+										<Dropdown.Item>{t('acc_settings')}</Dropdown.Item>
+										<Dropdown.Divider />
+										<Dropdown.Item onClick={logOutHandler}>{t('log_out')}</Dropdown.Item>
+									</Dropdown.Menu>
+								</Dropdown>
+							</div>
+						) : (
+							''
+						)}
 					</Menu.Item>
 				</Menu>
 			</div>
