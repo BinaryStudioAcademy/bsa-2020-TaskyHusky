@@ -1,4 +1,4 @@
-import { EntityRepository, getCustomRepository, Repository } from 'typeorm';
+import { EntityRepository, getCustomRepository, Repository, getRepository } from 'typeorm';
 import { Board } from '../entity/Board';
 import { UserRepository } from './user.repository';
 import { IBoardModel, IReducedBoard } from '../models/Board';
@@ -11,10 +11,10 @@ export class BoardRepository extends Repository<Board> {
 	}
 
 	getAll = async (): Promise<IBoardModel[]> => {
-		const extendedBoards = <IBoardModel[]>await this
+		const extendedBoards = <IBoardModel[]><unknown>await this
 			.createQueryBuilder('board')
 			.innerJoin('board.createdBy', 'user')
-			.addSelect(['user.id', 'user.firstName','user.lastName','user.avatar'])
+			.addSelect(['user.id', 'user.firstName', 'user.lastName', 'user.avatar'])
 			.getMany();
 
 		return extendedBoards;
@@ -31,11 +31,11 @@ export class BoardRepository extends Repository<Board> {
 	};
 
 	async getOne(id: string) {
-		const board = <IBoardModel>await this
+		const board = <IBoardModel><unknown>await this
 			.createQueryBuilder('board')
 			.where('board.id = :id', { id })
 			.innerJoin('board.createdBy', 'user')
-			.addSelect(['user.id', 'user.firstName','user.lastName','user.avatar'])
+			.addSelect(['user.id', 'user.firstName', 'user.lastName', 'user.avatar'])
 			.getOne();
 
 		if (!board) {
@@ -61,8 +61,7 @@ export class BoardRepository extends Repository<Board> {
 	async put(id: string, data: any) {
 		const userRepository = getCustomRepository(UserRepository);
 
-		let board = await this.getOne(id);
-		const { createdBy: user, ...dataToCreate } = data;
+		let board = <Board><unknown>await this.getOne(id);
 		const { createdBy: user, projects, ...dataToCreate } = data;
 
 		if (user) {
@@ -119,7 +118,7 @@ export class BoardRepository extends Repository<Board> {
 	}
 
 	async deleteBoard(id: string) {
-		const board = await this.getOne(id);
+		const board:Board = <Board><unknown>await this.getOne(id);
 
 		return this.remove([board]);
 	}

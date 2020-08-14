@@ -52,7 +52,7 @@ export class UserProfile {
 
 	@Column()
 	@MinLength(6)
-	password!: string;
+	password?: string;
 
 	@OneToMany((type) => Board, (board) => board.createdBy)
 	boards?: Board[];
@@ -76,7 +76,7 @@ export class UserProfile {
 	assignedIssues?: Issue[];
 
 	@OneToMany((type) => Issue, (issue) => issue.creator)
-	createdIssues?: Issue[];  
+	createdIssues?: Issue[];
 
 	@ManyToMany((type) => Team, (team) => team.users, {
 		cascade: true,

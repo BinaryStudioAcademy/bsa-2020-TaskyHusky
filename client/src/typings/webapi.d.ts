@@ -3,6 +3,25 @@ namespace WebApi.Board {
 		Scrum = 'Scrum',
 		Kanban = 'Kanban',
 	}
+
+	export interface IBoardModel {
+		id: string;
+		boardType: BoardType;
+		name: string;
+		location: string;
+		createdAt: Date;
+		createdBy: {
+			id: string;
+			firstName: string;
+			lastName: string;
+			avatar: string;
+		};
+	}
+
+	export interface IReducedBoard {
+		id: string;
+		name: string;
+	}
 }
 
 namespace WebApi.Issue {
@@ -129,6 +148,7 @@ namespace WebApi.Entities {
 		columns?: BoardColumn[];
 		sprints?: Sprint[];
 		createdBy: UserProfile;
+		createdAt: Date;
 		projects?: Projects[];
 	}
 
@@ -253,8 +273,8 @@ namespace WebApi.Entities {
 
 	interface UserProfile {
 		id: string;
-		firstName: string;
-		lastName: string;
+		firstName?: string;
+		lastName?: string;
 		username?: string;
 		avatar?: string;
 		department?: string;
