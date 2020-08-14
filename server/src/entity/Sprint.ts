@@ -13,11 +13,11 @@ export class Sprint {
 	@IsString()
 	sprintName?: string;
 
-	@ManyToOne((type) => Projects, (projects) => projects.sprints, { onDelete: 'CASCADE' })
+	@ManyToOne((type) => Projects, (projects) => projects.sprints, { onDelete: 'CASCADE', eager: true })
 	@IsUUID()
 	project?: Projects;
 
-	@ManyToOne((type) => Board, (board) => board.sprints, { onDelete: 'CASCADE' })
+	@ManyToOne((type) => Board, (board) => board.sprints, { onDelete: 'CASCADE', eager: true })
 	@IsUUID()
 	board?: Board;
 
@@ -29,6 +29,6 @@ export class Sprint {
 	@IsBoolean()
 	isCompleted?: boolean;
 
-	@OneToMany((type) => Issue, (issue) => issue.sprint, { onDelete: 'CASCADE' })
+	@OneToMany((type) => Issue, (issue) => issue.sprint, { onDelete: 'CASCADE', eager: true })
 	issues?: Issue[];
 }

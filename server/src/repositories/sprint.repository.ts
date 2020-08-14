@@ -3,12 +3,12 @@ import { Sprint } from '../entity/Sprint';
 
 @EntityRepository(Sprint)
 export class SprintRepository extends Repository<Sprint> {
-	async findAll(): Promise<Sprint[]> {
-		return this.find();
+	findAll(): Promise<Sprint[]> {
+		return this.find({ loadRelationIds: true });
 	}
 
-	async findOneById(id: string): Promise<Sprint | undefined> {
-		return this.findOneOrFail(id);
+	async findOneById(id: string): Promise<Sprint> {
+		return this.findOneOrFail(id, { loadRelationIds: true });
 	}
 
 	async createOne(data: Sprint): Promise<Sprint> {
