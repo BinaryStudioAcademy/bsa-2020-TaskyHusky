@@ -57,7 +57,7 @@ const DropdownSearch = ({ filterPart, data }: DropdownSearchProps) => {
 		);
 	};
 
-	const getInputPlaceholder = ({ title }: WebApi.Entities.FilterDefinition) => {
+	const getInputPlaceholder = (title: string) => {
 		return `Find ${title}`;
 	};
 
@@ -80,7 +80,7 @@ const DropdownSearch = ({ filterPart, data }: DropdownSearchProps) => {
 		>
 			<Dropdown.Menu className={styles.dropdownMenu} onClick={(e: Event) => e.stopPropagation()}>
 				<Input
-					placeholder={getInputPlaceholder(filterDef)}
+					placeholder={getInputPlaceholder(filterDef.title)}
 					icon="search"
 					value={searchText}
 					iconPosition="left"
