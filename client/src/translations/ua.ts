@@ -210,4 +210,8 @@ export const ua = {
 	go_to_board: 'Перейти до дошки',
 	assignee: 'Відповідає',
 	no: 'Нема',
+	text: 'Текст',
+	enter_comment_text: 'Введіть текст вашего коментаря...',
+	comments: 'Коментарі',
+	post_comment: 'Відправити коментар',
 };

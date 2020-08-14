@@ -65,7 +65,7 @@ const ProjectIssuesPage: React.FC<Props> = ({ projectId }) => {
 					/>
 				</Form.Group>
 			</Form>
-			<div className="fill" style={{ display: 'flex', marginTop: 20 }}>
+			<div className="fill" style={{ display: 'flex', marginTop: 20, overflowY: 'hidden' }}>
 				<ProjectIssuesColumn
 					onChangeSelectedCard={(key) => {
 						setSelectedIssueKey(key);
@@ -74,13 +74,15 @@ const ProjectIssuesPage: React.FC<Props> = ({ projectId }) => {
 					search={search}
 					projectId={projectId}
 				/>
-				{selectedIssue ? (
-					<div style={{ minWidth: 600, marginLeft: 30 }}>
-						<IssuePageContent issue={selectedIssue} />
-					</div>
-				) : (
-					''
-				)}
+				<div style={{ position: 'absolute', top: 70, right: 10, width: '80%' }}>
+					{selectedIssue ? (
+						<div style={{ width: '80%', marginLeft: 30 }}>
+							<IssuePageContent issue={selectedIssue} />
+						</div>
+					) : (
+						''
+					)}
+				</div>
 			</div>
 		</>
 	);

@@ -210,4 +210,8 @@ export const ru = {
 	go_to_board: 'Перейти к доске',
 	assignee: 'Ответственный',
 	no: 'Нет',
+	text: 'Текст',
+	enter_comment_text: 'Введите текст вашего комментария...',
+	comments: 'Комментарии',
+	post_comment: 'Отправить комментарий',
 };

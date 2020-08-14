@@ -1,24 +1,24 @@
 namespace WebApi.Board {
 	export enum BoardType {
 		Scrum = 'Scrum',
-		Kanban = 'Kanban'
+		Kanban = 'Kanban',
 	}
 	export interface IBoardModel {
-		id: string,
-		boardType: BoardType,
-		name: string,
-		location: string,
-		createdAt: Date,
+		id: string;
+		boardType: BoardType;
+		name: string;
+		location: string;
+		createdAt: Date;
 		createdBy: {
-			id: string,
-			firstName: string,
-			lastName: string,
-			avatar: string
-		}
+			id: string;
+			firstName: string;
+			lastName: string;
+			avatar: string;
+		};
 	}
 	export interface IReducedBoard {
-		id: string,
-		name: string
+		id: string;
+		name: string;
 	}
 }
 
@@ -75,6 +75,14 @@ namespace WebApi.Result {
 		assigned?: UserModel;
 		creator: UserModel;
 	}
+	interface IssueCommentResult {
+		id: string;
+		creator: UserModel;
+		createdAt: Date;
+		updatedAt?: Date;
+		text: string;
+		issue: string;
+	}
 	interface BoardResult {
 		id: string;
 		boardType: 'Kanban' | 'Scrum';
@@ -101,11 +109,11 @@ namespace WebApi.Result {
 
 namespace WebApi.Team {
 	export interface TeamModel {
-	  id?: string;
-	  name?: string;
-	  description?: string;
-	  links?: string[];
-	  users?: [];
+		id?: string;
+		name?: string;
+		description?: string;
+		links?: string[];
+		users?: [];
 	}
 }
 
@@ -123,7 +131,7 @@ namespace WebApi.User {
 		organization?: string;
 		jobTitle?: string;
 		userSettingsId?: string;
-		teams: [],
+		teams: [];
 		filtres?: string[];
 	}
 }
@@ -250,13 +258,13 @@ namespace WebApi.Entities {
 	}
 
 	interface Teams {
-	  id: string;
-	  users?: UserProfile[];
-	  createdBy?: UserProfile;
-	  name?: string;
-	  color?: string;
-	  description?: string;
-	  links?: string[];
+		id: string;
+		users?: UserProfile[];
+		createdBy?: UserProfile;
+		name?: string;
+		color?: string;
+		description?: string;
+		links?: string[];
 	}
 
 	interface UserProfile {
