@@ -6,9 +6,10 @@ import { IssueRepository } from '../repositories/issue.repository';
 class IssueController {
 	async getAll(req: Request, res: Response) {
 		const repository = getCustomRepository(IssueRepository);
+		const { filter } = req.body;
 
 		try {
-			const result = await repository.findAll();
+			const result = await repository.findAll(filter);
 			res.send(result);
 		} catch (err) {
 			res.status(500).send(getWebError(err, 500));
