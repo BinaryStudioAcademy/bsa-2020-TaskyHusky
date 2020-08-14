@@ -12,6 +12,7 @@ import { filterDefsReducer } from 'commonLogic/filterDefs/reducer';
 import { saveFilterReducer } from './../containers/SaveFilterModal/logic/reducer';
 import { usersReducer } from 'commonLogic/users/reducer';
 import { advancedSearchReducer } from 'containers/AdvancedSearch/logic/reducer';
+import { peoplePageReducer } from '../containers/People/logic/reducer';
 
 const rootReducer: Reducer<RootState> = combineReducers({
 	user: userProfileReducer,
@@ -26,6 +27,7 @@ const rootReducer: Reducer<RootState> = combineReducers({
 	saveFilter: saveFilterReducer,
 	users: usersReducer,
 	advancedSearch: advancedSearchReducer,
+	peoplePage: peoplePageReducer,
 });
 
 export default rootReducer;
