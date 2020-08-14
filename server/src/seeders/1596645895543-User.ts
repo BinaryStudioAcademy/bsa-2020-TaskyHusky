@@ -1,4 +1,4 @@
-import { getRepository, getCustomRepository, MigrationInterface, QueryRunner } from 'typeorm';
+import { getRepository, MigrationInterface, QueryRunner } from 'typeorm';
 
 export class User1596645895543 implements MigrationInterface {
 	public async up(queryRunner: QueryRunner): Promise<void> {

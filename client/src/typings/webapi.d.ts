@@ -25,6 +25,10 @@ namespace WebApi.Issue {
 		assigned?: string;
 		creator: string;
 	}
+
+	export interface PartialIssueComment {
+		text?: string;
+	}
 }
 
 namespace WebApi.Result {
@@ -175,6 +179,15 @@ namespace WebApi.Entities {
 		project?: Projects;
 		issueKey?: string;
 		assigned?: UserProfile;
+		creator: UserProfile;
+	}
+
+	interface IssueComment {
+		id: string;
+		text: string;
+		createdAt: Date;
+		editedAt?: Date;
+		issue: Issue;
 		creator: UserProfile;
 	}
 

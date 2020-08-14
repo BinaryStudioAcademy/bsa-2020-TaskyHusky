@@ -104,7 +104,7 @@ const TeamPage = ({ match: { params }, currentTeam: { team } }: { match: Match; 
 					{notification && <TeamNotification toggleNotification={toggleNotification} />}
 					<TeamWorkedProjects />
 					<TeamLinks
-						currentLinks={team.links || []}
+						currentLinks={team.links ?? []}
 						edit={editLink}
 						deleteLink={onDeleteLink}
 						addLinks={toggleAddLinks}
