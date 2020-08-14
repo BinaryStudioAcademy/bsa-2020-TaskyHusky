@@ -11,6 +11,7 @@ import { SaveFilterState } from 'containers/SaveFilterModal/logic/state';
 import { UsersState } from 'commonLogic/users/state';
 import { AdvancedSearch } from 'containers/AdvancedSearch/logic/state';
 import { PeoplePageState } from '../containers/People/logic/state';
+import { PeoplePagesSearchState } from '../containers/SearchPeopleAndTeamField/logic/state';
 
 export interface RootState {
 	projects: ProjectsState;
@@ -26,4 +27,5 @@ export interface RootState {
 	users: UsersState;
 	advancedSearch: AdvancedSearch;
 	peoplePage: PeoplePageState;
+	peoplePageSearch: PeoplePagesSearchState;
 }

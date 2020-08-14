@@ -1,34 +1,22 @@
-import React, { ReactElement, MouseEvent, useState } from 'react';
+import React, { ReactElement, MouseEvent } from 'react';
 import { Search, SearchProps } from 'semantic-ui-react';
 import style from './style.module.scss';
 import debounce from 'lodash-es/debounce';
-import { fetchTeamsByNameFilter } from '../../services/team.service';
-import { fetchPeopleByFullNameFilter } from '../../services/people.service';
 import ResultPeople from './ResultPeople';
 import ResultTeams from './ResultTeams';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../typings/rootState';
+import * as actions from './logic/actions';
 
 const SearchField: React.FC = (): ReactElement => {
-	const [isLoading, setIsLoading] = useState<boolean>(false);
-	const [results, setResults] = useState<any | null>(null);
+	const dispatch = useDispatch();
+	const { isLoading, results } = useSelector((state: RootState) => state.peoplePageSearch);
 
 	const handlerChange = (e: MouseEvent<HTMLElement>, { value }: SearchProps): void => {
-		setIsLoading(true);
-
-		Promise.all([fetchTeamsByNameFilter(value), fetchPeopleByFullNameFilter(value)])
-			.then((response) => {
-				const [teams, users] = response;
-
-				const userResult = users.map((user) => ({ data: user, title: '', key: user.id }));
-				const teamResult = teams.map((team: any) => ({ data: team, title: '', key: team.id }));
-
-				setResults({
-					users: { name: 'users', results: userResult },
-					teams: { name: 'teams', results: teamResult },
-				});
-			})
-			.finally(() => {
-				setIsLoading(false);
-			});
+		if (value) {
+			dispatch(actions.startLoading({ name: value }));
+		}
+		console.log(results);
 	};
 
 	const resultRender = (value: any): React.ReactElement => {
