@@ -96,3 +96,16 @@ export const loadIssues = async (filter: IssueFilter | undefined): Promise<WebAp
 
 	return (await res.json()) as WebApi.Result.IssueResult[];
 };
+
+export const addComment = async (id: string, text: string): Promise<WebApi.Entities.IssueComment> => {
+	const res: Response = await callWebApi({
+		method: 'POST',
+		endpoint: 'issue/comment',
+		body: {
+			issue: id,
+			text,
+		},
+	});
+
+	return (await res.json()) as WebApi.Entities.IssueComment;
+};

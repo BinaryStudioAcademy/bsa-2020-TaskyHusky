@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { ContextProvider } from 'containers/CreateIssueModal/logic/context';
 import UpdateIssueModal from 'containers/UpdateIssueModal';
 import { getUsername } from 'helpers/getUsername.helper';
+import IssueCommentForm from 'components/IssueCommentForm';
 
 interface Props {
 	issue: WebApi.Result.IssueResult;
@@ -87,6 +88,9 @@ const IssuePageContent: React.FC<Props> = ({ issue }) => {
 								{issue.priority.title}
 							</Label>
 						</Sticky>
+					</Rail>
+					<Rail position="right" internal style={{ transform: 'translateX(-400px)' }}>
+						<IssueCommentForm issueId={issue.id} onSubmit={() => window.location.reload() /**/} />
 					</Rail>
 					<ContextProvider customInitalState={initalIssue}>
 						<UpdateIssueModal
