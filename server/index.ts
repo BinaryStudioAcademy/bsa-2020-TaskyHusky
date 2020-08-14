@@ -17,7 +17,7 @@ createConnection()
 		const app = express();
 		app.use(
 			cors({
-				origin: 'https://stage.taskyhusky.xyz',
+				origin: '*',
 				allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept',
 			}),
 		);
