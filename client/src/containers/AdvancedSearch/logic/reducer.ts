@@ -17,4 +17,11 @@ export const advancedSearchReducer = createReducer<AdvancedSearch>(initialState,
 			filterParts: updatedFilterParts,
 		};
 	},
+	[actionTypes.LOAD_ISSUES_SUCCESS](state, action: actionTypes.LoadIssuesSuccessArgs) {
+		const { issues } = action;
+		return {
+			...state,
+			issues,
+		};
+	},
 });
