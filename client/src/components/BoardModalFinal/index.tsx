@@ -61,7 +61,9 @@ const BoardModalFinal = (props: Props) => {
 			<Form.Field width={7} className={styles.formField}>
 				<label>Project</label>
 				<Dropdown
-					search
+					search={(options, query) =>
+						options.filter((option) => (option.text as string).toLowerCase().includes(query.toLowerCase()))
+					}
 					header="Projects"
 					multiple
 					fluid
