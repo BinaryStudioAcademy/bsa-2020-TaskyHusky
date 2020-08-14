@@ -75,7 +75,7 @@ export const teamMembers = () => {
 export const fetchTeams = async () => {
 	const res = await callWebApi({
 		method: 'GET',
-		endpoint: 'fake/teams',
+		endpoint: 'team',
 	});
 
 	return (await res.json()) as Team[];
@@ -84,7 +84,7 @@ export const fetchTeams = async () => {
 export const fetchTeamsByNameFilter = async (name: string | undefined) => {
 	const res = await callWebApi({
 		method: 'GET',
-		endpoint: 'fake/teams',
+		endpoint: 'team',
 		query: {
 			name,
 		},
@@ -96,7 +96,7 @@ export const fetchTeamsByNameFilter = async (name: string | undefined) => {
 export const addTeam = async (name: string) => {
 	const res = await callWebApi({
 		method: 'POST',
-		endpoint: 'fake/teams',
+		endpoint: 'team',
 		body: {
 			name,
 		},

@@ -4,6 +4,10 @@ import { UserModel } from '../models/User';
 
 @EntityRepository(UserProfile)
 export class UserRepository extends Repository<UserProfile> {
+	getAll(){
+		return this.findAll();
+	}
+
 	getById(id: string): Promise<any> {
 		return this.findOne({ where: { id } });
 	}

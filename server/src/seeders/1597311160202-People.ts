@@ -1,4 +1,5 @@
 import {MigrationInterface, QueryRunner, getRepository} from 'typeorm';
+import {hashPassword} from '../helpers/password.helper';
 
 export class People1597311160202 implements MigrationInterface {
 
@@ -167,7 +168,7 @@ export class People1597311160202 implements MigrationInterface {
         ].map(user=>{
             const {id, ...userData}=user;
 
-            return {...userData, password:'1234567'}
+            return {...userData, password:hashPassword('1234567')}
         });
 
         await getRepository('UserProfile').save(users);

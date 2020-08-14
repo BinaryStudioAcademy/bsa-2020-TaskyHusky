@@ -1,4 +1,5 @@
 import { v4 } from 'uuid';
+import querystring from 'querystring'
 import { Request, Response } from 'express';
 import { getCustomRepository } from 'typeorm';
 import { TeamRepository } from '../repositories/teams.repository';
@@ -11,7 +12,15 @@ class TeamsController {
 		const teamRepository = getCustomRepository(TeamRepository);
 		try {
 			const teams = await teamRepository.findAll();
-			res.send(teams);
+			const { name: nameFilter } = req.query;
+
+			if (nameFilter && typeof nameFilter === 'string') {
+				res.send(teams.filter((team) =>
+					team.name && team.name.toLowerCase().indexOf(nameFilter.toLowerCase()) !== -1)
+				);
+			} else {
+				res.send(teams);
+			}
 		} catch (error) {
 			res.status(400).send(getWebError(error, 400));
 		}
@@ -66,8 +75,10 @@ class TeamsController {
 				links = updatedTeam.links.map((el: string) => {
 					const item = JSON.parse(el);
 					return (item.id === data.id) ? JSON.stringify({ ...data }) : el;
-				})
+				});
 			}
+			// TODO: remove ts-ignore
+			// @ts-ignore
 			const result: any = await teamRepository.updateOneById(id, { links });
 			res.status(200).send(linksParse(result));
 		} catch (error) {
@@ -81,10 +92,12 @@ class TeamsController {
 		const { data } = req.body;
 		try {
 			const updatedTeam: any = await teamRepository.findOne(id);
-			const links: any = updatedTeam.links.filter((el: string) => {
+			const links: string[] = updatedTeam.links.filter((el: string) => {
 				const item = JSON.parse(el);
-				return item.id !== data.id
-			})
+				return item.id !== data.id;
+			});
+			// TODO: remove ts-ignore
+			// @ts-ignore
 			const result: any = await teamRepository.updateOneById(id, { links });
 			res.status(200).send(linksParse(result));
 		} catch (error) {

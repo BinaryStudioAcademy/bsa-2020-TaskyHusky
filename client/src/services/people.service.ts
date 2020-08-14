@@ -3,7 +3,7 @@ import callWebApi from '../helpers/callApi.helper';
 export const fetchPeople = async () => {
 	const res = await callWebApi({
 		method: 'GET',
-		endpoint: 'fake/people',
+		endpoint: 'user',
 	});
 
 	return (await res.json()) as WebApi.Entities.UserProfile[];
@@ -12,7 +12,7 @@ export const fetchPeople = async () => {
 export const fetchPeopleByFullNameFilter = async (name: string | undefined) => {
 	const res = await callWebApi({
 		method: 'GET',
-		endpoint: 'fake/people',
+		endpoint: 'user',
 		query: {
 			name,
 		},
