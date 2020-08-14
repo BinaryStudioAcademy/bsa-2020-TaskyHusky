@@ -1,11 +1,15 @@
-import { MigrationInterface, QueryRunner, getRepository } from 'typeorm';
+import { MigrationInterface, QueryRunner, getCustomRepository } from 'typeorm';
+import { UserRepository } from '../repositories/user.repository';
+import { UserProfile } from '../entity/UserProfile';
+import { TeamRepository } from '../repositories/teams.repository';
 
 export class Team1597345244377 implements MigrationInterface {
 
 	public async up(queryRunner: QueryRunner): Promise<void> {
-		const userRepository = getRepository('UserProfile');
+		const userRepository = getCustomRepository(UserRepository);
+		const teamRepository = getCustomRepository(TeamRepository);
 
-		const teamPromises = [
+		const teamPromises = await [
 			{
 				id: 'Quality Engineer',
 				color: 'Red',
@@ -14,7 +18,7 @@ export class Team1597345244377 implements MigrationInterface {
 					id: '48e60f10-9498-4870-9e7b-11681e213454',
 					firstName: 'Mel',
 					lastName: 'McCullock',
-					email: 'mmccullock0@cnn.com',
+					email: 'efodden1@webnode.com',
 					avatar: 'https://robohash.org/harumrepellendusdolorum.bmp?size=200x200&set=set1',
 					jobTitle: 'Staff Scientist',
 				},
@@ -27,7 +31,7 @@ export class Team1597345244377 implements MigrationInterface {
 					id: '474d2249-4d17-4f88-88ab-08ed22fe8723',
 					firstName: 'Glynnis',
 					lastName: 'Foxley',
-					email: 'gfoxley1@macromedia.com',
+					email: 'bhussy2@deliciousdays.com',
 					avatar: 'https://robohash.org/voluptatibussolutaveritatis.png?size=200x200&set=set1',
 					jobTitle: 'Assistant Media Planner',
 				},
@@ -40,7 +44,7 @@ export class Team1597345244377 implements MigrationInterface {
 					id: '9ee76267-a351-470b-a656-c386a2e4a6a2',
 					firstName: 'Hagan',
 					lastName: 'McGarrell',
-					email: 'hmcgarrell2@friendfeed.com',
+					email: 'pwetherill3@sun.com',
 					avatar: 'https://robohash.org/eumidvoluptas.jpg?size=200x200&set=set1',
 					jobTitle: 'Editor',
 				},
@@ -53,7 +57,7 @@ export class Team1597345244377 implements MigrationInterface {
 					id: '7496217e-1784-4eba-90cd-36fb184cc09c',
 					firstName: 'Tammie',
 					lastName: 'Blackborough',
-					email: 'tblackborough3@pcworld.com',
+					email: 'dkerry4@paypal.com',
 					avatar: 'https://robohash.org/veroporroexpedita.jpg?size=200x200&set=set1',
 					jobTitle: 'Editor',
 				},
@@ -66,7 +70,7 @@ export class Team1597345244377 implements MigrationInterface {
 					id: '28a57e06-9937-4994-94cf-f8902ca65352',
 					firstName: 'April',
 					lastName: 'MacDonell',
-					email: 'amacdonell4@multiply.com',
+					email: 'gdunthorn5@hibu.com',
 					avatar: 'https://robohash.org/voluptatumvoluptasvelit.jpg?size=200x200&set=set1',
 					jobTitle: 'Clinical Specialist',
 				},
@@ -79,7 +83,7 @@ export class Team1597345244377 implements MigrationInterface {
 					id: '96814653-192a-4c3c-acf8-018c84e2c8a7',
 					firstName: 'Payton',
 					lastName: 'MacPake',
-					email: 'pmacpake5@google.co.jp',
+					email: 'iclabburn6@hibu.com',
 					avatar: 'https://robohash.org/temporepossimusrerum.jpg?size=200x200&set=set1',
 					jobTitle: 'Assistant Professor',
 				},
@@ -92,7 +96,7 @@ export class Team1597345244377 implements MigrationInterface {
 					id: 'c9976328-4208-46b3-9360-04d9f93408a0',
 					firstName: 'Elsworth',
 					lastName: 'Muggeridge',
-					email: 'emuggeridge6@booking.com',
+					email: 'dcanada7@dedecms.com',
 					avatar: 'https://robohash.org/quiaautqui.bmp?size=200x200&set=set1',
 					jobTitle: 'Professor',
 				},
@@ -105,7 +109,7 @@ export class Team1597345244377 implements MigrationInterface {
 					id: 'c1996545-543f-4b94-98cf-e60253d6d822',
 					firstName: 'Hale',
 					lastName: 'Corain',
-					email: 'hcorain7@baidu.com',
+					email: 'rliver8@mozilla.com',
 					avatar: 'https://robohash.org/quialaborelaborum.jpg?size=200x200&set=set1',
 					jobTitle: 'Graphic Designer',
 				},
@@ -118,7 +122,7 @@ export class Team1597345244377 implements MigrationInterface {
 					id: '08294ce2-d63c-4854-aacb-8397f8bd4a8d',
 					firstName: 'Ellsworth',
 					lastName: 'Lawland',
-					email: 'elawland8@hexun.com',
+					email: 'psinyard9@alibaba.com',
 					avatar: 'https://robohash.org/aspernaturvoluptasvoluptas.bmp?size=200x200&set=set1',
 					jobTitle: 'Budget/Accounting Analyst III',
 				},
@@ -131,7 +135,7 @@ export class Team1597345244377 implements MigrationInterface {
 					id: '2e6365e8-dbbe-4a27-9b52-dbf7036001f0',
 					firstName: 'Orv',
 					lastName: 'Snellman',
-					email: 'osnellman9@furl.net',
+					email: 'kmecozzia@vimeo.com',
 					avatar: 'https://robohash.org/nihilporroet.jpg?size=200x200&set=set1',
 					jobTitle: 'VP Product Management',
 				},
@@ -144,7 +148,7 @@ export class Team1597345244377 implements MigrationInterface {
 					id: 'bbe06261-1ae7-4e7b-b625-95de2f42dfac',
 					firstName: 'Mendie',
 					lastName: 'Robuchon',
-					email: 'mrobuchona@guardian.co.uk',
+					email: 'pvotierb@upenn.edu',
 					avatar: 'https://robohash.org/ipsamconsequaturducimus.png?size=200x200&set=set1',
 					jobTitle: 'Engineer II',
 				},
@@ -157,7 +161,7 @@ export class Team1597345244377 implements MigrationInterface {
 					id: 'a8824a14-0044-4a6f-87cf-e5e7ba72e152',
 					firstName: 'Alleyn',
 					lastName: 'Stritton',
-					email: 'astrittonb@tiny.cc',
+					email: 'ashawlc@photobucket.com',
 					avatar: 'https://robohash.org/autfugaomnis.jpg?size=200x200&set=set1',
 					jobTitle: 'Junior Executive',
 				},
@@ -170,7 +174,7 @@ export class Team1597345244377 implements MigrationInterface {
 					id: '4f19d28a-ec9d-4c2e-92d9-01378e13b3f5',
 					firstName: 'Harrison',
 					lastName: 'Brankley',
-					email: 'hbrankleyc@netscape.com',
+					email: 'fgoddertsfd@ezinearticles.com',
 					avatar: 'https://robohash.org/namautut.jpg?size=200x200&set=set1',
 					jobTitle: 'Desktop Support Technician',
 				},
@@ -196,7 +200,7 @@ export class Team1597345244377 implements MigrationInterface {
 					id: '2f3c5cdc-d443-4a66-bf25-7447b8d28e90',
 					firstName: 'Joyous',
 					lastName: 'Lamplugh',
-					email: 'jlamplughe@stumbleupon.com',
+					email: 'cgostagee@ucla.edu',
 					avatar: 'https://robohash.org/eumprovidentexplicabo.png?size=200x200&set=set1',
 					jobTitle: 'Human Resources Manager',
 				},
@@ -209,7 +213,7 @@ export class Team1597345244377 implements MigrationInterface {
 					id: '4c8a68b8-a66e-42b0-b01c-c83059ee0657',
 					firstName: 'Darius',
 					lastName: 'de Cullip',
-					email: 'ddecullipf@blogspot.com',
+					email: 'ltolworthyf@va.gov',
 					avatar: 'https://robohash.org/placeatquasqui.bmp?size=200x200&set=set1',
 					jobTitle: 'Account Representative II',
 				},
@@ -222,7 +226,7 @@ export class Team1597345244377 implements MigrationInterface {
 					id: '48a474ef-5a97-4ccb-8541-ee4bb40d23ed',
 					firstName: 'Rani',
 					lastName: 'Dumbrall',
-					email: 'rdumbrallg@eventbrite.com',
+					email: 'hmccahillg@mashable.com',
 					avatar: 'https://robohash.org/vitaeuteveniet.png?size=200x200&set=set1',
 					jobTitle: 'Database Administrator II',
 				},
@@ -235,7 +239,7 @@ export class Team1597345244377 implements MigrationInterface {
 					id: '59dcfe4e-058e-4743-af4d-ef084d1417ad',
 					firstName: 'Tomaso',
 					lastName: 'Flucker',
-					email: 'tfluckerh@paypal.com',
+					email: 'prichardssonh@merriam-webster.com',
 					avatar: 'https://robohash.org/estsitquibusdam.png?size=200x200&set=set1',
 					jobTitle: 'Nurse Practicioner',
 				},
@@ -248,7 +252,7 @@ export class Team1597345244377 implements MigrationInterface {
 					id: '2df3feec-cc7c-4896-aba3-b2fdbf90e097',
 					firstName: 'Vidovik',
 					lastName: 'Etuck',
-					email: 'vetucki@slashdot.org',
+					email: 'lkauscheri@sciencedirect.com',
 					avatar: 'https://robohash.org/molestiaesimiliquelabore.jpg?size=200x200&set=set1',
 					jobTitle: 'Human Resources Manager',
 				},
@@ -261,26 +265,25 @@ export class Team1597345244377 implements MigrationInterface {
 					id: 'bbdfc1ab-a970-491a-8005-05d336f0eaf0',
 					firstName: 'Kissie',
 					lastName: 'Sadat',
-					email: 'ksadatj@photobucket.com',
+					email: 'jkneelandj@addtoany.com',
 					avatar: 'https://robohash.org/voluptatemabut.png?size=200x200&set=set1',
 					jobTitle: 'Quality Engineer',
 				},
 			},
 		].map(async (team) => {
-			const { creator, ...teamDataToAdd } = team;
+			const { creator, id, ...teamDataToAdd } = team;
 
-			const user = userRepository.findOne({
-				where: {
-					email: creator.email,
-				},
-			});
+			const user = <UserProfile>await userRepository.getByEmail(creator.email);
+			const teamToCreate = { ...teamDataToAdd, createdBy: user, links: [] };
 
-			return { ...teamDataToAdd, createdBy: user };
+			// @ts-ignore
+			const createdTeam = await teamRepository.createOne(teamToCreate);
+
+			return createdTeam;
+
 		});
 
-		const teams=Promise.all(teamPromises);
-
-		console.log(teams);
+		const teams = await Promise.all(teamPromises);
 	}
 
 	public async down(queryRunner: QueryRunner): Promise<void> {
