@@ -1,4 +1,5 @@
 import { fetchFilterDefs } from 'services/filter.service';
+import { loadIssues } from 'services/issue.service';
 import { all, put, takeEvery, call } from 'redux-saga/effects';
 import { v4 as uuidv4 } from 'uuid';
 import * as actionTypes from './actionTypes';
@@ -23,12 +24,21 @@ export function* updateFilterPartSaga(action: AnyAction) {
 	// every time when update filterPart we should load issues
 }
 
+export function* loadIssuesSaga(action: AnyAction) {
+	const { filter } = action;
+	yield call(loadIssues, filter ? filter : {});
+}
+
 export function* watchFetchFilterParts() {
 	yield takeEvery(actionTypes.FETCH_FILTER_PARTS, fetchFilterPartsSaga);
 }
 
 export function* watchUpdateFilterPart() {
 	yield takeEvery(actionTypes.UPDATE_FILTER_PART, updateFilterPartSaga);
+}
+
+export function* watchLoadIssues() {
+	yield takeEvery(actionTypes.LOAD_ISSUES, loadIssuesSaga);
 }
 
 export default function* advancedSearchSaga() {

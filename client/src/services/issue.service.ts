@@ -1,4 +1,5 @@
 import callWebApi from 'helpers/callApi.helper';
+import { IssueFilter } from 'containers/AdvancedSearch/logic/actionTypes';
 
 export const createIssue = async (params: WebApi.Entities.Issue): Promise<WebApi.Entities.Issue> => {
 	const res: Response = await callWebApi({
@@ -82,4 +83,16 @@ export const getByColumnId = async (id: string): Promise<WebApi.Result.IssueResu
 	});
 
 	return (await res.json()) as WebApi.Result.IssueResult[];
+};
+
+export const loadIssues = async (filter: IssueFilter): Promise<WebApi.Result.IssueResult> => {
+	const res: Response = await callWebApi({
+		method: 'GET',
+		endpoint: `issue`,
+		body: {
+			filter,
+		},
+	});
+
+	return (await res.json()) as WebApi.Result.IssueResult;
 };

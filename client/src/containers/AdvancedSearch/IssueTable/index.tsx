@@ -1,15 +1,18 @@
 import React, { useEffect } from 'react';
 import { Table } from 'semantic-ui-react';
 import IssueItem from 'components/IssueItem';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'typings/rootState';
-
+import { loadIssues } from '../logic/actions';
 const IssueTable: React.FC = () => {
 	// get filtered issues from state
 	// issue state updates with updating filter parts. So, on updateFilterPart we update issues.
 	// here we will have filtered issues from state
+	const dispatch = useDispatch();
 	const { issues } = useSelector((rootState: RootState) => rootState.advancedSearch);
-	useEffect(() => {});
+	useEffect(() => {
+		dispatch(loadIssues({}));
+	});
 	// const issues = [
 	// 	{
 	// 		priority: {
