@@ -1,5 +1,6 @@
+
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToMany } from 'typeorm';
-import { MinLength, IsEmail, IsString, IsNotEmpty, IsUUID } from 'class-validator';
+import { MinLength, IsEmail, IsString, IsNotEmpty, IsUUID, Length, IsLowercase } from 'class-validator';
 import { Issue } from './Issue';
 import { Board } from './Board';
 import { Filter } from './Filter';
@@ -9,46 +10,41 @@ import { Team } from './Team';
 @Entity()
 export class UserProfile {
 	@PrimaryGeneratedColumn('uuid')
-	@IsUUID()
 	id!: string;
 
 	@Column()
 	@IsString()
 	@IsNotEmpty()
-	firstName!: string;
+	firstName?: string;
 
 	@Column()
 	@IsString()
 	@IsNotEmpty()
-	lastName!: string;
+	lastName?: string;
 
 	@Column({ nullable: true })
-	@IsString()
 	username?: string;
 
 	@Column({ nullable: true })
-	@IsString()
 	avatar?: string;
 
 	@Column({ nullable: true })
-	@IsString()
 	department?: string;
 
 	@Column({ nullable: true })
-	@IsString()
 	location?: string;
 
 	@Column({ nullable: true })
-	@IsString()
 	organization?: string;
 
 	@Column({ unique: true })
 	@IsEmail()
+	@Length(6, 30)
+	@IsLowercase()
 	@IsNotEmpty()
 	email?: string;
 
 	@Column({ nullable: true })
-	@IsString()
 	jobTitle?: string;
 
 	@Column({ nullable: true })
@@ -56,7 +52,7 @@ export class UserProfile {
 
 	@Column()
 	@MinLength(6)
-	password?: string;
+	password!: string;
 
 	@OneToMany((type) => Board, (board) => board.createdBy)
 	boards?: Board[];
@@ -73,11 +69,14 @@ export class UserProfile {
 	@OneToMany((type) => Projects, (projects) => projects.creator)
 	createdProjects!: Projects[];
 
+	@OneToMany((type) => Team, (teams) => teams.createdBy)
+	teamsOwner?: Team[];
+
 	@OneToMany((type) => Issue, (issue) => issue.assigned)
 	assignedIssues?: Issue[];
 
 	@OneToMany((type) => Issue, (issue) => issue.creator)
-	createdIssues?: Issue[];
+	createdIssues?: Issue[];  
 
 	@ManyToMany((type) => Team, (team) => team.users, {
 		cascade: true,
@@ -86,4 +85,15 @@ export class UserProfile {
 
 	@ManyToMany((type) => Projects, (projects) => projects.users)
 	projects?: Projects[];
+
+	constructor(userData: Partial<UserProfile>) {
+		if (userData) {
+			const { email, password, firstName, lastName } = userData;
+
+			this.firstName = firstName;
+			this.lastName = lastName;
+			this.email = email;
+			this.password = password;
+		}
+	}
 }

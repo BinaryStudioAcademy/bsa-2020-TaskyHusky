@@ -8,6 +8,7 @@ export class Team1606645895543 implements MigrationInterface {
 				description: 'New team for cool projects',
 				links: [
 					{
+						id: '1fff45fd094',
 						http: 'http://localhost:3000',
 						name: 'BSA Jira',
 						description: 'Our cool project',
@@ -18,5 +19,5 @@ export class Team1606645895543 implements MigrationInterface {
 		await getRepository('Team').save(exampleData);
 	}
 
-	public async down(queryRunner: QueryRunner): Promise<void> {}
+	public async down(queryRunner: QueryRunner): Promise<void> { }
 }

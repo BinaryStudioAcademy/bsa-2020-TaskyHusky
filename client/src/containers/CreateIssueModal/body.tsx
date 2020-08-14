@@ -8,6 +8,7 @@ import { createIssue } from 'pages/IssuePage/logic/actions';
 import { generateRandomString } from 'helpers/randomString.helper';
 import { KeyGenerate } from 'constants/KeyGenerate';
 import { useTranslation } from 'react-i18next';
+import { getUsername } from 'helpers/getUsername.helper';
 
 interface Props {
 	children: JSX.Element;
@@ -18,6 +19,7 @@ interface Props {
 	onClose?: (data: WebApi.Issue.PartialIssue) => void;
 	projects: WebApi.Entities.Projects[];
 	projectsLoading: boolean;
+	users: WebApi.Entities.UserProfile[];
 }
 
 interface SelectOption {
@@ -36,6 +38,7 @@ const CreateIssueModalBody: React.FC<Props> = ({
 	boardColumnID,
 	onClose,
 	projectID,
+	users,
 }) => {
 	const { t } = useTranslation();
 	const [isOpened, setIsOpened] = useState<boolean>(false);
@@ -87,6 +90,12 @@ const CreateIssueModalBody: React.FC<Props> = ({
 		text: project.name,
 	}));
 
+	const usersOpts: SelectOption[] = users.map((user) => ({
+		key: user.id,
+		value: user.id,
+		text: getUsername(user),
+	}));
+
 	const getSetOpenFunc = (value: boolean) => () => setIsOpened(value);
 
 	const submit = async () => {
@@ -109,7 +118,6 @@ const CreateIssueModalBody: React.FC<Props> = ({
 			project: projectID ?? context.data.project,
 			issueKey: generateRandomString(KeyGenerate.LENGTH),
 			assigned: context.data.assigned,
-			creator: user.id as string,
 		};
 
 		dispatch(createIssue({ data }));
@@ -204,6 +212,16 @@ const CreateIssueModalBody: React.FC<Props> = ({
 								</Form.Field>
 								<Divider />
 								<Form.Field>
+									<label>{t('assignee')}</label>
+									<Form.Dropdown
+										clearable
+										selection
+										placeholder={t('assignee')}
+										options={usersOpts}
+										onChange={(event, data) => context.set('assigned', data.value)}
+									/>
+								</Form.Field>
+								<Form.Field>
 									<label>{t('links')}</label>
 									<TagsInput
 										placeholder={t('add_link')}
@@ -253,6 +271,7 @@ const mapStateToProps = (state: RootState) => ({
 	priorities: state.issues.priorities,
 	projects: state.projects.projects,
 	projectsLoading: state.projects.isLoading,
+	users: state.users.users,
 });
 
 const labels: string[] = ['label1', 'label2'];

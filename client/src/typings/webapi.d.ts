@@ -25,6 +25,10 @@ namespace WebApi.Issue {
 		assigned?: string;
 		creator: string;
 	}
+
+	export interface PartialIssueComment {
+		text?: string;
+	}
 }
 
 namespace WebApi.Result {
@@ -91,8 +95,10 @@ namespace WebApi.Result {
 namespace WebApi.Team {
 	export interface TeamModel {
 		id?: string;
+		name?: string;
 		description?: string;
 		links?: string[];
+		users?: [];
 	}
 }
 
@@ -110,7 +116,8 @@ namespace WebApi.User {
 		organization?: string;
 		jobTitle?: string;
 		userSettingsId?: string;
-		filters?: string[];
+		teams: [];
+		filtres?: string[];
 	}
 }
 
@@ -175,6 +182,15 @@ namespace WebApi.Entities {
 		creator: UserProfile;
 	}
 
+	interface IssueComment {
+		id: string;
+		text: string;
+		createdAt: Date;
+		editedAt?: Date;
+		issue: Issue;
+		creator: UserProfile;
+	}
+
 	interface IssueType {
 		id: string;
 		icon?: string;
@@ -218,8 +234,21 @@ namespace WebApi.Entities {
 	interface Team {
 		id: string;
 		description?: string;
-		links?: string;
+		links?: string[];
 		users?: UserProfile[];
+		createdBy?: UserProfile;
+		name?: string;
+		color?: string;
+	}
+
+	interface Teams {
+		id: string;
+		users?: UserProfile[];
+		createdBy?: UserProfile;
+		name?: string;
+		color?: string;
+		description?: string;
+		links?: string[];
 	}
 
 	interface UserProfile {
@@ -234,12 +263,13 @@ namespace WebApi.Entities {
 		email?: string;
 		jobTitle?: string;
 		userSettingsId?: string;
-		password?: string;
+		password: string;
 		boards?: Board[];
 		filters?: Filter[];
 		assignedProjects?: Projects[];
 		leadedProjects?: Projects[];
 		createdProjects: Projects[];
+		teamsOwner?: Team[];
 		assignedIssues?: Issue[];
 		createdIssues?: Issue[];
 		teams?: Team[];
