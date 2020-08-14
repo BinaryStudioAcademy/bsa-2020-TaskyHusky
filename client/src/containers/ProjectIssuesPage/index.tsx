@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { getProjectById } from 'services/projects.service';
-import { Breadcrumb, Header, Form, Button } from 'semantic-ui-react';
+import { Breadcrumb, Header, Form } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 import ProjectIssuesColumn from 'components/ProjectIssuesColumn';
 import IssuePageContent from 'containers/IssuePageContent';
 import { getByKey } from 'services/issue.service';
 import Board from 'containers/Board';
+import styles from './styles.module.scss';
 
 interface Props {
 	projectId: string;
@@ -45,8 +46,10 @@ const ProjectIssuesPage: React.FC<Props> = ({ projectId }) => {
 				{t('issues')}
 			</Header>
 			<Breadcrumb style={{ ...leftPadded, marginBottom: 20 }}>
-				<Breadcrumb.Section href="/projects">{t('projects')}</Breadcrumb.Section>
-				<Breadcrumb.Divider icon="right arrow" />
+				<Breadcrumb.Section href="/projects">
+					<span className={styles.link}>{t('projects')}</span>
+				</Breadcrumb.Section>
+				<Breadcrumb.Divider />
 				<Breadcrumb.Section active>{project.name}</Breadcrumb.Section>
 			</Breadcrumb>
 			<Form>
@@ -58,9 +61,6 @@ const ProjectIssuesPage: React.FC<Props> = ({ projectId }) => {
 						onChange={(event, data) => setSearch(data.value)}
 						style={{ ...leftPadded, marginRight: 60, maxWidth: 250 }}
 					/>
-					<Button onClick={() => setSearch('')} secondary>
-						{t('clear')}
-					</Button>
 				</Form.Group>
 			</Form>
 			<div className="fill" style={{ display: 'flex', marginTop: 20 }}>
