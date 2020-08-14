@@ -223,7 +223,7 @@ namespace WebApi.Entities {
 		description?: string;
 		links?: string[];
 		users?: UserProfile[];
-		createdBy?: UserProfile;
+		createdBy: UserProfile;
 		name?: string;
 		color?: string;
 	}

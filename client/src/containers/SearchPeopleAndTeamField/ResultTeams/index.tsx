@@ -1,8 +1,7 @@
 import React from 'react';
 import style from './style.module.scss';
-import { Team } from '../../../fakeServer/mockData/teams';
 
-const ResultTeams: React.FC<Team> = ({ color, name, id }) => (
+const ResultTeams: React.FC<WebApi.Entities.Team> = ({ color, name }) => (
 	<div className={style.team}>
 		<b>{name}</b>
 		<div style={{ background: color, width: 20, height: 20 }} />

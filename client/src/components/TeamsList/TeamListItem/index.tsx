@@ -1,10 +1,9 @@
 import React, { ReactElement } from 'react';
 import { Card, Image } from 'semantic-ui-react';
-import { Team } from '../../../fakeServer/mockData/teams';
 import style from './style.module.scss';
 
 interface TeamListItem {
-	team: Team;
+	team: WebApi.Entities.Team;
 	handlerClick?: () => void;
 }
 
@@ -12,7 +11,7 @@ const TeamListItem: React.FC<TeamListItem> = ({ team, handlerClick }): ReactElem
 	const {
 		color,
 		name,
-		creator: { avatar },
+		createdBy: { avatar },
 	} = team;
 
 	return (

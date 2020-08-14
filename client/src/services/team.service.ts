@@ -1,5 +1,3 @@
-import { Team } from '../fakeServer/mockData/teams';
-
 import callWebApi from 'helpers/callApi.helper';
 
 export const getTeam = async (id: string): Promise<WebApi.Entities.Team[] | undefined> => {
@@ -78,7 +76,7 @@ export const fetchTeams = async () => {
 		endpoint: 'team',
 	});
 
-	return (await res.json()) as Team[];
+	return (await res.json()) as WebApi.Entities.Team[];
 };
 
 export const fetchTeamsByNameFilter = async (name: string | undefined) => {

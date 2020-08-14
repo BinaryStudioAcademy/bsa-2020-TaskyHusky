@@ -9,14 +9,13 @@ import { fetchPeople } from '../../services/people.service';
 import { fetchTeams } from '../../services/team.service';
 import style from './style.module.scss';
 import SearchField from '../../containers/SearchPeopleAndTeamField';
-import { Team } from '../../fakeServer/mockData/teams';
 
 const People: React.FC = (): ReactElement => {
 	const history = useHistory();
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const [error, setIsError] = useState<null | string>(null);
 	const [people, setPeople] = useState<WebApi.Entities.UserProfile[]>([]);
-	const [teams, setTeams] = useState<Team[]>([]);
+	const [teams, setTeams] = useState<WebApi.Entities.Team[]>([]);
 	const [isOpenAddNewTeamPopup, setIsOpenAddNewTeamPopup] = useState(false);
 
 	useEffect((): void => {
