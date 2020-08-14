@@ -15,7 +15,13 @@ createConnection()
 	.then(async (connection) => {
 		await connection.runMigrations();
 		const app = express();
-		app.use(cors());
+		app.use(
+			cors({
+				origin: 'https://stage.taskyhusky.xyz',
+				allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept',
+			}),
+		);
+
 		app.use(bodyParser.json());
 		app.use(passport.initialize());
 
