@@ -17,6 +17,7 @@ const SecurityManager = () => {
 	});
 	const [isRepeatedPassValid, setIsRepeatedPassValid] = useState(true);
 	const [isPasswordValid, setIsPasswordValid] = useState(true);
+	const aceptLength = 6;
 	const handleChange = (event: any) => {
 		setPasswords({
 			...passwords,
@@ -25,7 +26,7 @@ const SecurityManager = () => {
 	};
 
 	const onBlurPass = () => {
-		setIsPasswordValid(passwords.newPassword.length >= 6);
+		setIsPasswordValid(passwords.newPassword.length >= aceptLength);
 	};
 
 	const onBlurRepeated = () => {
@@ -74,7 +75,7 @@ const SecurityManager = () => {
 					}
 				/>
 
-				<PasswordCheck passLength={passwords.newPassword.length} />
+				<PasswordCheck passLength={passwords.newPassword.length} aceptLength={aceptLength} />
 				<Popup
 					className={styles.errorPopup}
 					open={!isRepeatedPassValid}
