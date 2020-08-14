@@ -13,6 +13,6 @@ export interface UserModel {
 	userSettingsId?: string;
 	resetPasswordToken:string|null;
 	resetPasswordExpires:Date|null;
-	teams: [],
+	teams?: [],
 	filtres?: string[];
 }

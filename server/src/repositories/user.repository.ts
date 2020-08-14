@@ -1,5 +1,6 @@
 import { EntityRepository, Repository, Between } from 'typeorm';
 import { UserProfile } from '../entity/UserProfile';
+import { UserModel } from '../models/User';
 
 const expirationTime = 1000 * 60 * 60 * 24;
 @EntityRepository(UserProfile)
@@ -24,8 +25,8 @@ export class UserRepository extends Repository<UserProfile> {
 		return this.save(user);
 	}
 
-	async updateById(id: string, user: UserProfile): Promise<any> {
-		this.update(id, user);
+	async updateById(id: string, user: UserModel): Promise<any> {
+		this.update(id, <UserProfile><unknown>user);
 
 		return this.findOne(id);
 	}
