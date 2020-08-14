@@ -9,8 +9,12 @@ export class ProjectsRepository extends Repository<Projects> {
 		return this.find({ relations: RELS });
 	}
 
-	findOneById(id: string) {
-		return this.findOneOrFail({ where: { id }, relations: RELS });
+	getOne(id: string) {
+		return this.findOneOrFail(id, { relations: ['creator', 'lead', 'boards'] });
+	}
+
+	getOneProject(id: string, prop: string) {
+		return this.findOne({ [prop]: id });
 	}
 
 	createOne(data: Projects) {
