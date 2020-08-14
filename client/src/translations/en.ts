@@ -215,4 +215,7 @@ export const en = {
 	enter_comment_text: 'Enter your comment text...',
 	comments: 'Comments',
 	post_comment: 'Post comment',
+	boards: 'Boards',
+	create_board: 'Create board',
+	view_all_boards: 'View all boards',
 };
