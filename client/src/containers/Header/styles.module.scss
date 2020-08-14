@@ -1,7 +1,7 @@
 @import '../../styles/variables.scss';
 
 :global(#root) {
-	.menuWrapper > * {
+	.menuWrapper>* {
 		color: $header-text !important;
 		padding: 7px 13px;
 	}
@@ -82,61 +82,67 @@
 		right: 4px !important;
 	}
 
-	.circularDropdownMenu > * {
+	.circularDropdownMenu>* {
 		color: rgba(80, 80, 80, 0.9) !important;
 	}
+}
 
-	.avatar {
-		width: 50px;
-		height: 50px;
-		background-color: #ddd;
-		color: #555;
-		text-transform: uppercase;
-		border-radius: 50%;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		margin-right: 10px;
+.avatar {
+	width: 50px;
+	height: 50px;
+	background-color: #ddd;
+	color: #555;
+	text-transform: uppercase;
+	border-radius: 50%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-right: 10px;
+}
+
+.avatarImage {
+	width: 50px;
+	height: 50px;
+	margin-right: 10px;
+}
+
+.userBlock {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-left: 20px;
+}
+
+@media screen and (max-width: $medium-screen) {
+	.logoText {
+		display: none;
 	}
 
-	.avatarImage {
-		width: 50px;
-		height: 50px;
-		margin-right: 10px;
+	.menuWrapper>* {
+		margin-left: -1px;
+		padding: 5px;
 	}
 
-	.userBlock {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		margin-left: 20px;
+	.menuWrapper>* {
+		margin-left: -1px;
+		padding: 5px;
 	}
 
-	@media screen and (max-width: $medium-screen) {
-		.logoText {
-			display: none;
-		}
-
-		.menuWrapper > * {
-			margin-left: -1px;
-			padding: 5px;
-		}
-
-		.menuWrapper input {
-			padding: 5px;
-			width: 150px;
-			margin-right: 2px;
-		}
-
-		.menuWrapper .circularIcon {
-			margin-left: -2px;
-		}
+	.menuWrapper input {
+		padding: 5px;
+		width: 150px;
+		margin-right: 2px;
 	}
 
-	@media screen and (max-width: $less-than-medium-screen) {
-		.menuWrapper > .rightMenu input,
-		.menuWrapper > .rightMenu input ~ i {
-			display: none;
-		}
+	.menuWrapper .circularIcon {
+		margin-left: -2px;
+	}
+}
+
+@media screen and (max-width: $less-than-medium-screen) {
+
+	.menuWrapper>.rightMenu input,
+	.menuWrapper>.rightMenu input~i {
+		display: none;
 	}
 }

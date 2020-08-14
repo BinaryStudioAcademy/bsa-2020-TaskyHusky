@@ -1,4 +1,3 @@
-
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToMany } from 'typeorm';
 import { MinLength, IsEmail, IsString, IsNotEmpty, IsUUID, Length, IsLowercase } from 'class-validator';
 import { Issue } from './Issue';

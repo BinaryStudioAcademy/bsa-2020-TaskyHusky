@@ -15,8 +15,13 @@
 
 .submitButton {
   margin-top: 20px !important;
+  background-color: #76ef8a !important;
 }
 
 .select {
   margin: 20px 0 !important;
+}
+
+.errorPopup {
+  @include error-popup;
 }
