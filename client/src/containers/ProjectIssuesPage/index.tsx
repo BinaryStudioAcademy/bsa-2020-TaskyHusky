@@ -50,7 +50,9 @@ const ProjectIssuesPage: React.FC<Props> = ({ projectId }) => {
 					<span className={styles.link}>{t('projects')}</span>
 				</Breadcrumb.Section>
 				<Breadcrumb.Divider />
-				<Breadcrumb.Section active>{project.name}</Breadcrumb.Section>
+				<Breadcrumb.Section link>
+					<span className={styles.link}>{project.name}</span>
+				</Breadcrumb.Section>
 			</Breadcrumb>
 			<Form>
 				<Form.Group>
@@ -59,7 +61,7 @@ const ProjectIssuesPage: React.FC<Props> = ({ projectId }) => {
 						icon="search"
 						value={search}
 						onChange={(event, data) => setSearch(data.value)}
-						style={{ ...leftPadded, marginRight: 60, maxWidth: 250 }}
+						style={{ ...leftPadded, marginRight: 60, width: 300 }}
 					/>
 				</Form.Group>
 			</Form>
