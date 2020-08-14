@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 import { EntityRepository, Repository, FindOperator, Any, Raw } from 'typeorm';
-=======
-import { EntityRepository, Repository } from 'typeorm';
->>>>>>> dev
 import { Issue } from '../entity/Issue';
 
 const RELS = ['priority', 'type', 'creator', 'assigned'];
