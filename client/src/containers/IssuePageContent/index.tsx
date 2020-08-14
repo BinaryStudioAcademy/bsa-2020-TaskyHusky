@@ -1,5 +1,5 @@
-import React from 'react';
-import { Button, Header, Table, Label, Icon } from 'semantic-ui-react';
+import React, { createRef } from 'react';
+import { Button, Label, Icon, Ref, Rail, Sticky, Grid } from 'semantic-ui-react';
 import CreateIssueModal from 'containers/CreateIssueModal';
 import { useTranslation } from 'react-i18next';
 import { ContextProvider } from 'containers/CreateIssueModal/logic/context';
@@ -13,6 +13,7 @@ interface Props {
 const IssuePageContent: React.FC<Props> = ({ issue }) => {
 	const { t } = useTranslation();
 	let openEditModal: () => void = () => {};
+	const ref = createRef<HTMLElement>();
 
 	const initalIssue = {
 		...issue,
@@ -21,89 +22,82 @@ const IssuePageContent: React.FC<Props> = ({ issue }) => {
 	};
 
 	return (
-		<>
-			<Button.Group>
-				<CreateIssueModal>
-					<Button primary>{t('create_issue')}</Button>
-				</CreateIssueModal>
-				<Button secondary inverted onClick={() => openEditModal()}>
-					{t('edit_issue')}
-				</Button>
-			</Button.Group>
-			<Header as="h1">
-				{issue.summary} #{issue.issueKey}
-			</Header>
-			{issue.description}
-			<Table definition>
-				<Table.Body>
-					<Table.Row>
-						<Table.Cell>{t('reported_by')}</Table.Cell>
-						<Table.Cell>{getUsername(issue.creator)}</Table.Cell>
-					</Table.Row>
-					<Table.Row>
-						<Table.Cell>{t('assigned_by')}</Table.Cell>
-						<Table.Cell>{issue.assigned ? getUsername(issue.assigned) : t('no')}</Table.Cell>
-					</Table.Row>
-					<Table.Row>
-						<Table.Cell>{t('sprint')}</Table.Cell>
-						<Table.Cell>Sprint will be here</Table.Cell>
-					</Table.Row>
-					<Table.Row>
-						<Table.Cell>{t('links')}</Table.Cell>
-						<Table.Cell>
+		<Ref innerRef={ref}>
+			<Grid columns="1" style={{ marginTop: 20 }}>
+				<Grid.Column>
+					<div style={{ marginLeft: 20, maxWidth: 700 }}>
+						<h1>
+							{issue.summary} <span style={{ fontWeight: 200 }}>#{issue.issueKey}</span>
+						</h1>
+						<h4>{t('description')}</h4>
+						<p>{issue.description}</p>
+					</div>
+					<Rail position="right" internal style={{ transform: 'translateY(20px)' }}>
+						<Sticky context={ref}>
+							<CreateIssueModal>
+								<Button primary fluid>
+									{t('create_issue')}
+								</Button>
+							</CreateIssueModal>
+							<Button secondary inverted onClick={() => openEditModal()} style={{ marginTop: 10 }} fluid>
+								{t('edit_issue')}
+							</Button>
+							<h4>{t('assigned_by')}</h4>
+							{issue.assigned ? getUsername(issue.assigned) : t('no')}
+							<h4>{t('reported_by')}</h4>
+							{getUsername(issue.creator)}
+							<h4>{t('sprint')}</h4>
+							Sprint will be here
+							<h4>{t('links')}</h4>
 							{(issue.links ?? []).map((l, i) => (
-								<a href={l} key={i} style={{ marginRight: 10 }}>
+								<a
+									rel="noopener noreferrer"
+									target="_blank"
+									href={l}
+									key={i}
+									style={{ marginRight: 10 }}
+								>
 									{l}
 								</a>
 							))}
-						</Table.Cell>
-					</Table.Row>
-					<Table.Row>
-						<Table.Cell>{t('attachments')}</Table.Cell>
-						<Table.Cell>
+							<h4>{t('attachments')}</h4>
 							{(issue.attachments ?? []).map((a, i) => (
-								<a href={a} key={i} style={{ marginRight: 10 }}>
+								<a
+									rel="noopener noreferrer"
+									target="_blank"
+									href={a}
+									key={i}
+									style={{ marginRight: 10 }}
+								>
 									{a}
 								</a>
 							))}
-						</Table.Cell>
-					</Table.Row>
-					<Table.Row>
-						<Table.Cell>{t('labels')}</Table.Cell>
-						<Table.Cell>
+							<h4>{t('labels')}</h4>
 							{(issue.labels || []).map((label, index) => (
 								<Label key={index}>{label}</Label>
 							))}
-						</Table.Cell>
-					</Table.Row>
-					<Table.Row>
-						<Table.Cell>{t('type')}</Table.Cell>
-						<Table.Cell>
+							<h4>{t('type')}</h4>
 							<Label color={issue.type.color as any}>
 								<Icon name={issue.type.icon as any} />
 								{issue.type.title}
 							</Label>
-						</Table.Cell>
-					</Table.Row>
-					<Table.Row>
-						<Table.Cell>{t('priority')}</Table.Cell>
-						<Table.Cell>
+							<h4>{t('priority')}</h4>
 							<Label color={issue.priority.color as any}>
 								<Icon name={issue.priority.icon as any} />
 								{issue.priority.title}
 							</Label>
-						</Table.Cell>
-					</Table.Row>
-				</Table.Body>
-			</Table>
-			<ContextProvider customInitalState={initalIssue}>
-				<UpdateIssueModal
-					onSubmit={() => window.location.reload()}
-					current={issue}
-					getOpenFunc={(open) => (openEditModal = open)}
-				/>
-			</ContextProvider>
-		</>
+						</Sticky>
+					</Rail>
+					<ContextProvider customInitalState={initalIssue}>
+						<UpdateIssueModal
+							onSubmit={() => window.location.reload()}
+							current={issue}
+							getOpenFunc={(open) => (openEditModal = open)}
+						/>
+					</ContextProvider>
+				</Grid.Column>
+			</Grid>
+		</Ref>
 	);
 };
 
