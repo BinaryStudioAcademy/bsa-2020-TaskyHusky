@@ -14,6 +14,7 @@ import ProjectSettings from 'pages/ProjectSettings';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadProfileTrigger } from 'containers/LoginPage/logic/actions';
 import { RootState } from 'typings/rootState';
+import BoardsPage from '../../pages/Boards';
 import BoardPage from 'pages/BoardPage';
 import ProjectIssues from 'pages/ProjectIssues';
 import NotFound from 'pages/404';
@@ -49,6 +50,7 @@ const Routing: React.FC = () => {
 			<PrivateRoute path="/project/:id/issues" component={ProjectIssues} />
 			<PrivateRoute exact path="/advancedSearch" component={Search} />
 			<PublicRoute restricted={false} path="*" component={NotFound} />
+			<PrivateRoute exact path="/boards" component={BoardsPage} />
 		</Switch>
 	);
 };

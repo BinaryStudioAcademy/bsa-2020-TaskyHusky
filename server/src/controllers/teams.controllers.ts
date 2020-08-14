@@ -68,6 +68,8 @@ class TeamsController {
 					return (item.id === data.id) ? JSON.stringify({ ...data }) : el;
 				})
 			}
+			// TODO remove ts-ignore then possible
+			// @ts-ignore
 			const result: any = await teamRepository.updateOneById(id, { links });
 			res.status(200).send(linksParse(result));
 		} catch (error) {
@@ -85,6 +87,8 @@ class TeamsController {
 				const item = JSON.parse(el);
 				return item.id !== data.id
 			})
+			// TODO remove ts-ignore then possible
+			// @ts-ignore
 			const result: any = await teamRepository.updateOneById(id, { links });
 			res.status(200).send(linksParse(result));
 		} catch (error) {
