@@ -12,6 +12,9 @@ class UserController {
 		const name = `${firstName}_${lastName}_${id}`;
 		try {
 			const avatar = await uploadS3(avatarFolder, req.file, name);
+			if (!avatar) {
+				throw new Error('Could not update avatar');
+			}
 			const user = await userRepository.updateById(id, { avatar });
 			res.send(user);
 		} catch (error) {
@@ -42,9 +45,12 @@ class UserController {
 
 		try {
 			const user = await userRepository.getById(id);
+			if (!user) {
+				throw new Error('User was not found');
+			}
 			res.send(user);
 		} catch (error) {
-			res.status(404).send();
+			res.status(404).send(error.message);
 		}
 	};
 
@@ -86,9 +92,9 @@ class UserController {
 
 		try {
 			await userRepository.deleteById(id);
-			res.status(200).send();
+			res.status(200).send({ message: 'User was deleted' });
 		} catch (error) {
-			res.status(400).send();
+			res.status(400).send('User was not deleted');
 		}
 	};
 }

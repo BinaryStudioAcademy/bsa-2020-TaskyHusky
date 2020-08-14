@@ -5,30 +5,51 @@ import {
 	requestChangePassword,
 	requestUdateAvatar,
 } from 'services/user.service';
-
+import { NotificationManager } from 'react-notifications';
 import { all, put, call, takeEvery } from 'redux-saga/effects';
 import * as actionTypes from './actionTypes';
 import * as actions from './actions';
 
 function* updateUser(action: ReturnType<typeof actions.requestUpdateUser>) {
 	const { type, ...rest } = action;
-	const user: WebApi.Entities.UserProfile = yield call(requestUpdateUser, rest);
-	yield put(actions.updateUser({ partialState: user }));
+	try {
+		const user: WebApi.Entities.UserProfile = yield call(requestUpdateUser, rest);
+		yield put(actions.updateUser({ partialState: user }));
+		NotificationManager.success('User was updated', 'Success', 4000);
+	} catch (error) {
+		NotificationManager.error('Could not update user', 'Error', 4000);
+	}
 }
 
 function* changePassword(action: ReturnType<typeof actions.requestChangePassword>) {
 	const { oldPassword, newPassword } = action;
-	yield call(requestChangePassword, oldPassword, newPassword);
+	try {
+		yield call(requestChangePassword, oldPassword, newPassword);
+		NotificationManager.success('Password was updated', 'Success', 4000);
+	} catch (error) {
+		console.log(error);
+		NotificationManager.error('Could not update password', 'Error', 4000);
+	}
 }
+
 function* getUser(action: ReturnType<typeof actions.requestGetUser>) {
 	const { id } = action;
-	const user: WebApi.Entities.UserProfile = yield call(requestGetUser, id);
-	yield put(actions.updateUser({ partialState: user }));
+	try {
+		const user: WebApi.Entities.UserProfile = yield call(requestGetUser, id);
+		yield put(actions.updateUser({ partialState: user }));
+	} catch (error) {
+		NotificationManager.error('Could not get user', 'Error', 4000);
+	}
 }
 
 function* updateAvatar(action: ReturnType<typeof actions.requestUpdateAvatar>) {
 	const { image } = action;
-	yield call(requestUdateAvatar, image);
+	try {
+		yield call(requestUdateAvatar, image);
+		NotificationManager.success('Avatar was updated', 'Success', 4000);
+	} catch (error) {
+		NotificationManager.error('Could not update avatar', 'Error', 4000);
+	}
 }
 
 function* deleteUser() {
