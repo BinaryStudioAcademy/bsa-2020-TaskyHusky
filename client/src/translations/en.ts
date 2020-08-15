@@ -211,4 +211,11 @@ export const en = {
 	go_to_board: 'Go to board',
 	assignee: 'Assignee',
 	no: 'No',
+	text: 'Text',
+	enter_comment_text: 'Enter your comment text...',
+	comments: 'Comments',
+	post_comment: 'Post comment',
+	boards: 'Boards',
+	create_board: 'Create board',
+	view_all_boards: 'View all boards',
 };

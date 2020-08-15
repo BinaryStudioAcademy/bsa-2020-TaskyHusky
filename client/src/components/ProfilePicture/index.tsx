@@ -4,6 +4,7 @@ import { requestUpdateAvatar } from 'containers/ProfilePage/logiс/actions';
 import { useTranslation } from 'react-i18next';
 import { Header, Button, Icon } from 'semantic-ui-react';
 import styles from './styles.module.scss';
+import { getInitials } from 'helpers/getInitials.helper';
 
 interface Props {
 	firstName: string;
@@ -33,8 +34,6 @@ const ProfilePicture: React.FC<Props> = (props: Props) => {
 		setFormData(e.target.files[0]);
 	};
 
-	const getInitials = () => firstName[0] + lastName[0];
-
 	if (formData) {
 		dispatch(requestUpdateAvatar({ image: formData }));
 		setFormData(null);
@@ -51,7 +50,9 @@ const ProfilePicture: React.FC<Props> = (props: Props) => {
 							) : avatar ? (
 								<img src={avatar} className={styles.mainInfo__avatar} alt="Avatar" />
 							) : (
-								<h1 className={styles.mainInfo__initials}>{getInitials()}</h1>
+								<h1 className={styles.mainInfo__initials}>
+									{getInitials({ id: '', firstName, lastName })}
+								</h1>
 							)}
 							<Icon name="photo" size="big" className={styles.mainInfo__editBtn} />
 							<input

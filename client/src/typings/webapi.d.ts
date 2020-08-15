@@ -75,6 +75,14 @@ namespace WebApi.Result {
 		assigned?: UserModel;
 		creator: UserModel;
 	}
+	interface IssueCommentResult {
+		id: string;
+		creator: UserModel;
+		createdAt: Date;
+		updatedAt?: Date;
+		text: string;
+		issue: string;
+	}
 	interface BoardResult {
 		id: string;
 		boardType: 'Kanban' | 'Scrum';
