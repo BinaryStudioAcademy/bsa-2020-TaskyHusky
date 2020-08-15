@@ -11,7 +11,7 @@ interface Props {
 
 const IssueComment: React.FC<Props> = ({ comment }) => {
 	return (
-		<Comment>
+		<Comment style={{ width: '100%' }}>
 			{comment.creator.avatar ? (
 				<Comment.Avatar src={comment.creator.avatar} />
 			) : (

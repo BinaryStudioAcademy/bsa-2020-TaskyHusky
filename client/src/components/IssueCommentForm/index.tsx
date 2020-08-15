@@ -45,8 +45,8 @@ const IssueCommentForm: React.FC<Props> = ({ onSubmit, issueId }) => {
 	}
 
 	return (
-		<Comment.Group>
-			<Comment>
+		<Comment.Group style={{ width: '100%', maxWidth: '100%' }}>
+			<Comment style={{ width: '100%' }}>
 				{authData.user.avatar ? (
 					<Comment.Avatar src={authData.user.avatar} />
 				) : (
