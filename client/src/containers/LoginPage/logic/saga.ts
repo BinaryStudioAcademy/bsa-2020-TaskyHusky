@@ -101,7 +101,7 @@ export function* watchCheckEmail() {
 	yield takeEvery(actionTypes.CHECK_EMAIL_TRIGGER, checkEmailRequest);
 }
 
-export function* googleAuth(action: any) {
+export function* googleAuth(action: { user: actionTypes.GoogleUser, type: string }) {
 	yield put(actions.loadingGoogleAuth({ loading: true }));
 	const response = yield call(googleAuthRequest, action.user);
 	const { user, jwtToken } = response;

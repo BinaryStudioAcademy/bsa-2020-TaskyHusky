@@ -13,6 +13,7 @@ import Spinner from 'components/common/Spinner';
 import { NotificationManager } from 'react-notifications';
 import iconGoogle from 'assets/images/icon-google.svg';
 import { normalizeEmail } from 'helpers/normalizeEmail.helper';
+import { googleId } from 'config/googleConfig';
 
 const SignUpForm: React.FC = () => {
 	const dispatch = useDispatch();
@@ -118,7 +119,7 @@ const SignUpForm: React.FC = () => {
 			</Button>
 			<Divider horizontal>{t('or')}</Divider>
 			<GoogleLogin
-				clientId="1004182396963-58h0qlvimlv07tepibt6m6t5omejn2h7.apps.googleusercontent.com"
+				clientId={googleId}
 				buttonText="Login"
 				render={(props) => googleBtn(props)}
 				onSuccess={googleAuth}

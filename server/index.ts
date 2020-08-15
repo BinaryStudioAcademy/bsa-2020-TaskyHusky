@@ -24,7 +24,6 @@ createConnection()
 
 		app.use(bodyParser.json());
 		app.use(passport.initialize());
-		app.use(passport.session());
 
 		app.use('/', (req, res, next) => (req.path === '/' ? res.sendStatus(200) : next())); // health check
 		app.use('/api', authenticateJwt(routesWhiteList), routes);
