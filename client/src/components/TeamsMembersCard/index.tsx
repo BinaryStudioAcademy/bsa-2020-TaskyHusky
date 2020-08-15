@@ -7,6 +7,9 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { getBgColor } from './helper';
 
+type Props = {
+	teammates?: User[];
+};
 export interface User {
 	id: string;
 	email?: string;
@@ -17,7 +20,7 @@ export interface User {
 	jobTitle?: string;
 }
 
-const TeamsMembersCard = () => {
+const TeamsMembersCard = ({ teammates }: Props) => {
 	const [bgColor, setBgColor] = useState({});
 	const [modal, setModal] = useState<boolean>(false);
 	const [viewUser, setViewUser] = useState<User | undefined>();
@@ -60,11 +63,10 @@ const TeamsMembersCard = () => {
 			<Card.Content header={t('members')} />
 			<Card.Meta>
 				<span className={styles.meta_header}>
-					{' '}
-					{data.length} {t('members')}
+					{teammates ? `${teammates?.length}  ${t('members')}` : t('no team yet')}
 				</span>
 			</Card.Meta>
-			{data.map((el) => {
+			{teammates?.map((el) => {
 				return (
 					<Card.Content key={el.id}>
 						<div
@@ -73,7 +75,7 @@ const TeamsMembersCard = () => {
 							onMouseLeave={(e) => hideModal(e)}
 						>
 							<div className={styles.icon}>
-								<Link to={`/people/${el.id}`}>
+								<Link to={`/profile/${el.id}`}>
 									<Avatar fullName={el.firstName} imgSrc={el.avatar} />
 								</Link>
 							</div>

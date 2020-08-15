@@ -7,10 +7,22 @@ export class TeamRepository extends Repository<Team> {
 		return this.find();
 	}
 
-	findOneById(id: string) {
-		return this.findOne({
-			where: { id }
-		});
+	async findOneById(id: string) {
+		const team = await this.createQueryBuilder('Team')
+			.where('Team.id = :id', { id })
+			.innerJoin('Team.users', 'User')
+			.addSelect([
+				'User.id',
+				'User.firstName',
+				'User.lastName',
+				'User.avatar',
+				'User.email',
+				'User.jobTitle',
+				'User.location',
+			])
+			.getOne();
+
+		return team;
 	}
 
 	findByName(name: string) {

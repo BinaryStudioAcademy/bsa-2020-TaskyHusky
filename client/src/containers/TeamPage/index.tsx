@@ -100,7 +100,7 @@ const TeamPage = ({ match: { params }, currentTeam: { team } }: { match: Match; 
 						name={team.name}
 						showAddPeopleModal={showAddPeopleModal}
 					/>
-					<TeamsMembersCard />
+					<TeamsMembersCard teammates={team.users}/>
 				</Grid.Column>
 				<Grid.Column width="8" className={styles.col_media}>
 					{notification && <TeamNotification toggleNotification={toggleNotification} />}

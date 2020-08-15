@@ -1,23 +1,30 @@
-import { getRepository, MigrationInterface, QueryRunner } from 'typeorm';
+import { getRepository, getCustomRepository, MigrationInterface, QueryRunner } from 'typeorm';
+import { UserRepository } from '../repositories/user.repository';
+import { Team } from '../entity/Team';
 
 export class Team1606645895543 implements MigrationInterface {
 	public async up(queryRunner: QueryRunner): Promise<void> {
-		const exampleData = [
-			{
-				name: 'Avengers',
-				description: 'New team for cool projects',
-				links: [
-					{
-						id: '1fff45fd094',
-						http: 'http://localhost:3000',
-						name: 'BSA Jira',
-						description: 'Our cool project',
-					},
-				],
-			},
+		const userRepository = getCustomRepository(UserRepository);
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+		const user2 = (await userRepository.getByEmail('test1@test.com'))!;
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+		const user1 = (await userRepository.getByEmail('test@test.com'))!;
+
+		const team = new Team();
+		team.name = 'Avengers';
+		team.description = 'New team for cool projects';
+		team.links = [
+			JSON.stringify({
+				id: '1fff45fd094',
+				http: 'http://localhost:3000',
+				name: 'BSA Jira',
+				description: 'Our cool project',
+			}),
 		];
-		await getRepository('Team').save(exampleData);
+		team.users = [user2, user1];
+
+		await getRepository('Team').save(team);
 	}
 
-	public async down(queryRunner: QueryRunner): Promise<void> { }
+	public async down(queryRunner: QueryRunner): Promise<void> {}
 }
