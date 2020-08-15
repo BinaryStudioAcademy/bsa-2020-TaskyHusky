@@ -150,7 +150,11 @@ const CreateIssueModalBody: React.FC<Props> = ({
 								marginLeft: 20,
 							}}
 						>
-							<Header floated="left" as="h1" style={{ marginBottom: 20 }}>
+							<Header
+								floated="left"
+								as="h1"
+								style={{ marginBottom: 20, position: 'sticky', top: 0, left: 0, zIndex: 2 }}
+							>
 								{t('create_issue')}
 							</Header>
 							<Form onSubmit={submit}>
@@ -249,7 +253,10 @@ const CreateIssueModalBody: React.FC<Props> = ({
 										rows={10}
 									/>
 								</Form.Field>
-								<Button.Group floated="right">
+								<Button.Group
+									floated="right"
+									style={{ position: 'sticky', bottom: 0, right: 0, zIndex: 2 }}
+								>
 									<Button primary type="submit">
 										{t('submit')}
 									</Button>
