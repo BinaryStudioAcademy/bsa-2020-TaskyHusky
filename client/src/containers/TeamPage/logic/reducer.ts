@@ -6,7 +6,28 @@ export const teamReducer = createReducer<TeamState>(initialState, {
 	[actionTypes.SUCCESS_LOADING](state: TeamState, action: actionTypes.SuccessLoading) {
 		return {
 			...state,
-			team: action.team,
+			team: {
+				...action.team,
+				loading: false
+			}
+		};
+	},
+	[actionTypes.LOADING](state: TeamState) {
+		return {
+			...state,
+			team: {
+				...state.team,
+				loading: true
+			}
+		};
+	},
+	[actionTypes.FAIL_LOADING](state: TeamState) {
+		return {
+			...state,
+			team: {
+				...state.team,
+				loading: false
+			}
 		};
 	},
 });
