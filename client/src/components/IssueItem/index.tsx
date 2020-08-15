@@ -8,9 +8,15 @@ import DeleteIssueModal from 'containers/DeleteIssueModal';
 interface Props {
 	issue: WebApi.Result.IssueResult;
 }
+interface PriorityIconProps {
+	priority: WebApi.Entities.Priority;
+}
+interface IssueTypeIconProps {
+	type: WebApi.Entities.IssueType;
+}
 
-const renderIssueType = (issueType: WebApi.Entities.IssueType) => {
-	const { icon, color, title, id } = issueType;
+const IssueTypeIcon = ({ type }: IssueTypeIconProps) => {
+	const { icon, color, title, id } = type;
 
 	return (
 		<Popup
@@ -28,7 +34,7 @@ const renderIssueType = (issueType: WebApi.Entities.IssueType) => {
 	);
 };
 
-const renderPriority = (priority: WebApi.Entities.Priority) => {
+const PriorityIcon = ({ priority }: PriorityIconProps) => {
 	const { icon, color, title, id } = priority;
 
 	return (
@@ -51,37 +57,14 @@ const renderStatus = (status: { title: string; color: string }) => {
 const IssueItem = ({ issue }: Props) => {
 	const [open, setOpen] = React.useState(false);
 	const { t } = useTranslation();
-	const mockedIssue = {
-		summary: 'Very summary',
-		issueKey: 'TH-1',
-		assigned: {
-			id: 'id-2',
-			firstName: 'Ivan',
-			lastName: 'Ivanov',
-		},
-		creator: {
-			id: 'id-2',
-			firstName: 'Danylo',
-			lastName: 'Karpenko',
-		},
-		type: {
-			id: 'type-id-12',
-			icon: 'check',
-			color: 'teal',
-			title: 'Task',
-		},
-		status: {
-			title: 'In Progress',
-			color: 'blue',
-		},
-		priority: { title: 'Hight', color: 'orange', icon: 'arrow up', id: '1' },
-		id: 'a269d9f4-1c10-40ad-81e0-7ac333804d91',
-	};
-	const { id, creator, type, issueKey, summary, assigned, priority, status } = mockedIssue; /*issue*/
+
+	const { id, creator, type, issueKey, summary, assigned, priority } = issue;
 
 	return (
 		<Table.Row key={id}>
-			<Table.Cell>{renderIssueType(type as WebApi.Entities.IssueType)}</Table.Cell>
+			<Table.Cell>
+				<IssueTypeIcon type={type} />
+			</Table.Cell>
 			<Table.Cell>
 				<a href={`/issue/${id}`} className={styles.underlinedLink}>
 					{issueKey}
@@ -104,9 +87,11 @@ const IssueItem = ({ issue }: Props) => {
 					{getFullUserName(creator.firstName, creator.lastName)}
 				</a>
 			</Table.Cell>
-			<Table.Cell>{renderPriority(priority)}</Table.Cell>
-			<Table.Cell>{renderStatus(status)}</Table.Cell>
-			<Table.Cell>Unresolved{/* resolution.title */}</Table.Cell>
+			<Table.Cell>
+				<PriorityIcon priority={priority} />
+			</Table.Cell>
+			<Table.Cell>{renderStatus({ color: 'blue', title: 'In progress' })}</Table.Cell>
+			<Table.Cell>Unresolved</Table.Cell>
 			<Table.Cell>03/серп./20</Table.Cell>
 			<Table.Cell>10/серп./20</Table.Cell>
 			<Table.Cell className={styles.editCell}>

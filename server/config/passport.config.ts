@@ -2,9 +2,10 @@ import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
 import { getCustomRepository } from 'typeorm';
-import { jwtSecret } from './jwt.config';
+import { validateUserProfile } from '../validators/validateUserProfile.validator';
 import { authErrorMessages, EMAIL_FIELD } from '../src/constants/auth.constants';
-import { hashPassword, passwordValid } from '../src/helpers/password.helper';
+import { passwordValid, hashPassword } from '../src/helpers/password.helper';
+import { jwtSecret } from './jwt.config';
 import { UserRepository } from '../src/repositories/user.repository';
 import { UserModel } from '../src/models/User';
 import { ErrorResponse } from '../src/helpers/errorHandler.helper';
@@ -19,6 +20,7 @@ passport.use(
 		async (email: string, password: string, next): Promise<void> => {
 			const userRepository = getCustomRepository(UserRepository);
 			const user = await userRepository.getByEmail(email);
+
 			if (!user) {
 				return next(
 					new ErrorResponse(HttpStatusCode.UNAUTHORIZED, authErrorMessages.INCORRECT_CREDENTIALS),
@@ -45,6 +47,7 @@ passport.use(
 			usernameField: EMAIL_FIELD,
 			passReqToCallback: true,
 		},
+		// eslint-disable-next-line consistent-return
 		async (req, email: string, password: string, next): Promise<void> => {
 			const userRepository = getCustomRepository(UserRepository);
 			const checkingUser = await userRepository.getByEmail(email);
@@ -53,31 +56,19 @@ passport.use(
 				return next(new ErrorResponse(HttpStatusCode.UNAUTHORIZED, authErrorMessages.TAKEN_EMAIL), null);
 			}
 
-			const encodedPassword = hashPassword(password);
-			const newUserObject = await userRepository.createNew({ ...req.body, email, password: encodedPassword });
+			const { firstName, lastName } = req.body;
 
-			return next(null, newUserObject);
-		},
-	),
-);
+			const isValidEntity = await validateUserProfile({ email, password, firstName, lastName }, next);
 
-passport.use(
-	'check_email',
-	new LocalStrategy(
-		{
-			usernameField: EMAIL_FIELD,
-			passwordField: EMAIL_FIELD, // DO NOT DELETE: LocalStrategy by default expects two arguments, in /check_email we send only email, this is a workaround
-			passReqToCallback: true,
-		},
-		async (req, email: string, password: string, next): Promise<void> => {
-			const userRepository = getCustomRepository(UserRepository);
-			const user = await userRepository.getByEmail(email);
-
-			if (!user) {
-				return next(null, { email: '' });
+			if (isValidEntity) {
+				const encodedPassword = hashPassword(password);
+				const newUserObject = await userRepository.createNew({
+					...req.body,
+					email,
+					password: encodedPassword,
+				});
+				return next(null, newUserObject);
 			}
-
-			return next(null, user);
 		},
 	),
 );

@@ -11,6 +11,7 @@ interface RequestArgs {
 	skipAuthorization?: boolean;
 	query?: Record<string, any>;
 	body?: any;
+	attachment?: File;
 }
 
 type Body =
@@ -68,6 +69,15 @@ const getArgs = (args: RequestArgs): RequestInit => {
 		body = JSON.stringify(args.body);
 		headers['Content-Type'] = 'application/json';
 		headers.Accept = 'application/json';
+	}
+
+	if (args.attachment) {
+		if (args.method === 'GET') {
+			throw new Error('GET request does not support attachments.');
+		}
+		const formData = new FormData();
+		formData.append('image', args.attachment);
+		body = formData;
 	}
 
 	return {

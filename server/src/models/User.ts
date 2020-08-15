@@ -15,5 +15,7 @@ export interface UserModel {
 	jobTitle?: string;
 	userSettingsId?: string;
 	teams?: Team[];
+	resetPasswordToken: string | null;
+	resetPasswordExpires: Date | null;
 	filtres?: string[];
 }

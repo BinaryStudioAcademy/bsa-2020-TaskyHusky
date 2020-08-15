@@ -19,10 +19,19 @@ class AuthController {
 		res.send(user);
 	};
 
-	checkEmail = (req: Request, res: Response) => {
-		const { email } = req.user;
+	checkEmail = async (req: Request, res: Response) => {
+		const { email } = req.body;
 
-		res.send({ email });
+		const userRepository = getCustomRepository(UserRepository);
+		const user = await userRepository.getByEmail(email);
+
+		if (user) {
+			res.send({ email });
+		}
+
+		if (!user) {
+			res.send({ email: '' });
+		}
 	};
 
 	googleAuth = async (req: Request, res: Response) => {

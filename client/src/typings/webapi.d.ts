@@ -3,12 +3,26 @@ namespace WebApi.Board {
 		Scrum = 'Scrum',
 		Kanban = 'Kanban',
 	}
+	export interface IBoardModel {
+		id: string;
+		boardType: BoardType;
+		name: string;
+		location: string;
+		createdAt: Date;
+		createdBy: {
+			id: string;
+			firstName: string;
+			lastName: string;
+			avatar: string;
+		};
+	}
+	export interface IReducedBoard {
+		id: string;
+		name: string;
+	}
 }
 
 namespace WebApi.Issue {
-	import { Sprint } from '../entity/Sprint';
-	import { Projects } from '../entity/Projects';
-
 	interface PartialIssue {
 		id?: string;
 		type: string;
@@ -25,16 +39,16 @@ namespace WebApi.Issue {
 		assigned?: string;
 		creator: string;
 	}
+	export interface PartialIssueComment {
+		text?: string;
+	}
 }
 
 namespace WebApi.Result {
-	import { UserModel } from './User';
-
 	interface UserAuthResult {
 		user: UserModel;
 		jwtToken: string;
 	}
-
 	interface IssueResult {
 		id: string;
 		type: {
@@ -61,7 +75,14 @@ namespace WebApi.Result {
 		assigned?: UserModel;
 		creator: UserModel;
 	}
-
+	interface IssueCommentResult {
+		id: string;
+		creator: UserModel;
+		createdAt: Date;
+		updatedAt?: Date;
+		text: string;
+		issue: string;
+	}
 	interface BoardResult {
 		id: string;
 		boardType: 'Kanban' | 'Scrum';
@@ -74,7 +95,6 @@ namespace WebApi.Result {
 			avatar: string | null;
 		};
 	}
-
 	interface BoardColumnResult {
 		id: string;
 		columnName: string;
@@ -82,7 +102,6 @@ namespace WebApi.Result {
 		isResolutionSet: boolean;
 		board: BoardResult;
 	}
-
 	interface ComposedBoardResult extends BoardResult {
 		columns: BoardColumnResult[];
 	}
@@ -93,23 +112,15 @@ namespace WebApi.Team {
 		id?: string;
 		name?: string;
 		description?: string;
-		links: string[];
-	}
-}
-
-namespace WebApi.Team {
-	export interface TeamModel {
-		id?: string;
-		name?: string;
-		description?: string;
 		links?: string[];
+		users?: [];
 	}
 }
 
 namespace WebApi.User {
 	export interface UserModel {
 		id?: string;
-		email: string;
+		email?: string;
 		password?: string;
 		lastName?: string;
 		firstName?: string;
@@ -120,7 +131,8 @@ namespace WebApi.User {
 		organization?: string;
 		jobTitle?: string;
 		userSettingsId?: string;
-		filters?: string[];
+		teams: [];
+		filtres?: string[];
 	}
 }
 
@@ -132,6 +144,7 @@ namespace WebApi.Entities {
 		columns?: BoardColumn[];
 		sprints?: Sprint[];
 		createdBy: UserProfile;
+		createdAt: Date;
 		projects?: Projects[];
 	}
 
@@ -153,7 +166,7 @@ namespace WebApi.Entities {
 	}
 
 	interface FilterDefinition {
-		id: string;
+		id: number;
 		filterParts?: FilterPart[];
 		filterType: string;
 		dataType: string;
@@ -182,6 +195,15 @@ namespace WebApi.Entities {
 		project?: Projects;
 		issueKey?: string;
 		assigned?: UserProfile;
+		creator: UserProfile;
+	}
+
+	interface IssueComment {
+		id: string;
+		text: string;
+		createdAt: Date;
+		editedAt?: Date;
+		issue: Issue;
 		creator: UserProfile;
 	}
 
@@ -226,21 +248,29 @@ namespace WebApi.Entities {
 	}
 
 	interface Team {
-		id?: string;
-		name: string;
+		id: string;
 		description?: string;
-		links?: string[{
-			http?: string;
-			name?: string;
-			description?: string;
-			color?: string;
-		}];
+		links?: string[];
+		users?: UserProfile[];
+		createdBy?: UserProfile;
+		name?: string;
+		color?: string;
+	}
+
+	interface Teams {
+		id: string;
+		users?: UserProfile[];
+		createdBy?: UserProfile;
+		name?: string;
+		color?: string;
+		description?: string;
+		links?: string[];
 	}
 
 	interface UserProfile {
 		id: string;
-		firstName: string;
-		lastName: string;
+		firstName?: string;
+		lastName?: string;
 		username?: string;
 		avatar?: string;
 		department?: string;
@@ -255,6 +285,7 @@ namespace WebApi.Entities {
 		assignedProjects?: Projects[];
 		leadedProjects?: Projects[];
 		createdProjects: Projects[];
+		teamsOwner?: Team[];
 		assignedIssues?: Issue[];
 		createdIssues?: Issue[];
 		teams?: Team[];

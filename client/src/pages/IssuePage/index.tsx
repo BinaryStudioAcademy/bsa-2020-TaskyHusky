@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { Grid } from 'semantic-ui-react';
 import { getByKey } from 'services/issue.service';
 import DefaultPageWrapper from 'containers/DefaultPageWrapper';
 import IssuePageContent from 'containers/IssuePageContent';
@@ -25,13 +24,7 @@ const IssuePage: React.FC<Props> = ({ match }) => {
 
 	return (
 		<DefaultPageWrapper>
-			<main className="fill">
-				<Grid columns="1" textAlign="center" className="fluid" style={{ marginTop: 50 }}>
-					<Grid.Column style={{ maxWidth: 700 }}>
-						<IssuePageContent issue={issue} />
-					</Grid.Column>
-				</Grid>
-			</main>
+			<IssuePageContent issue={issue} />
 		</DefaultPageWrapper>
 	);
 };

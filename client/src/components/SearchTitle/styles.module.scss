@@ -1,0 +1,26 @@
+.titleWrapper {
+	display: flex;
+	flex-direction: row;
+	margin-bottom: 5px;
+	padding: 0 24px 24px 0;
+	.titleContainer {
+		margin-bottom: 10px;
+		display: flex;
+		flex-direction: row;
+		flex: 1 1 auto;
+		.title {
+			margin: 0;
+		}
+	}
+	.actionWrapper {
+		margin-left: 10px;
+		flex: 0 0 auto;
+		.actionItem {
+			display: flex !important;
+			flex-direction: row;
+			.star {
+				padding: 5px 0 5px 10px;
+			}
+		}
+	}
+}

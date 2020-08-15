@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToMany } from 'typeorm';
-import { MinLength, IsEmail, IsString, IsNotEmpty, IsUUID } from 'class-validator';
+import { MinLength, IsEmail, IsString, IsNotEmpty, IsUUID, Length, IsLowercase } from 'class-validator';
 import { Issue } from './Issue';
 import { Board } from './Board';
 import { Filter } from './Filter';
@@ -9,7 +9,6 @@ import { Team } from './Team';
 @Entity()
 export class UserProfile {
 	@PrimaryGeneratedColumn('uuid')
-	@IsUUID()
 	id!: string;
 
 	@Column({ nullable: true })
@@ -19,40 +18,36 @@ export class UserProfile {
 	@Column()
 	@IsString()
 	@IsNotEmpty()
-	firstName!: string;
+	firstName?: string;
 
 	@Column()
 	@IsString()
 	@IsNotEmpty()
-	lastName!: string;
+	lastName?: string;
 
 	@Column({ nullable: true })
-	@IsString()
 	username?: string;
 
 	@Column({ nullable: true })
-	@IsString()
 	avatar?: string;
 
 	@Column({ nullable: true })
-	@IsString()
 	department?: string;
 
 	@Column({ nullable: true })
-	@IsString()
 	location?: string;
 
 	@Column({ nullable: true })
-	@IsString()
 	organization?: string;
 
 	@Column({ unique: true })
 	@IsEmail()
+	@Length(6, 30)
+	@IsLowercase()
 	@IsNotEmpty()
 	email!: string;
 
 	@Column({ nullable: true })
-	@IsString()
 	jobTitle?: string;
 
 	@Column({ nullable: true })
@@ -64,6 +59,12 @@ export class UserProfile {
 
 	@OneToMany((type) => Board, (board) => board.createdBy)
 	boards?: Board[];
+
+	@Column({ type: 'character varying', name: 'resetPasswordToken', nullable: true })
+	public resetPasswordToken?: string | null;
+
+	@Column({ type: 'timestamp without time zone', name: 'resetPasswordExpires', nullable: true })
+	public resetPasswordExpires?: Date | null;
 
 	@OneToMany((type) => Filter, (filter) => filter.owner)
 	filters?: Filter[];
@@ -93,4 +94,15 @@ export class UserProfile {
 
 	@ManyToMany((type) => Projects, (projects) => projects.users)
 	projects?: Projects[];
+
+	constructor(userData: Partial<UserProfile>) {
+		if (userData) {
+			const { email, password, firstName, lastName } = userData;
+
+			this.firstName = firstName;
+			this.lastName = lastName;
+			this.email = email;
+			this.password = password;
+		}
+	}
 }

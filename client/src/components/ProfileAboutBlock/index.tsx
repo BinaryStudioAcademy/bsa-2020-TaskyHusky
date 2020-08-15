@@ -1,50 +1,37 @@
 import React from 'react';
 import { Container, Header } from 'semantic-ui-react';
+import { useTranslation } from 'react-i18next';
 import styles from 'components/ProfileAside/styles.module.scss';
-import { PropsUserData } from 'containers/ProfilePage';
 import ProfileAboutItem from 'components/ProfileAboutItem';
 
-const ProfileAboutBlock: React.FC<PropsUserData> = (props: PropsUserData) => {
-	const { user, isCurrentUser } = props;
+interface Props {
+	isCurrentUser: boolean;
+	mockData?: any;
+	jobTitle: string;
+	organization: string;
+	department: string;
+	location: string;
+}
+
+const ProfileAboutBlock: React.FC<Props> = (props: Props) => {
+	const { t } = useTranslation();
+	const { jobTitle, organization, department, location, isCurrentUser } = props;
 	return (
 		<Container className={styles.infoBlock}>
 			<Header as="h3" className={styles.infoBlock__header}>
-				About
+				{t('about')}
 			</Header>
-			{(user.jobTitle || isCurrentUser) && (
-				<ProfileAboutItem
-					data={{ text: user.jobTitle || '', placeholder: 'Your job title', name: 'jobTitle', isCurrentUser }}
-				/>
+			{(jobTitle || isCurrentUser) && (
+				<ProfileAboutItem text={jobTitle} placeholder={t('placeholder_job')} icon="briefcase" />
 			)}
-			{(user.department || isCurrentUser) && (
-				<ProfileAboutItem
-					data={{
-						text: user.department || '',
-						placeholder: 'Your department',
-						name: 'department',
-						isCurrentUser,
-					}}
-				/>
+			{(department || isCurrentUser) && (
+				<ProfileAboutItem text={department} placeholder={t('placeholder_department')} icon="code branch" />
 			)}
-			{(user.organization || isCurrentUser) && (
-				<ProfileAboutItem
-					data={{
-						text: user.organization || '',
-						placeholder: 'Your organization',
-						name: 'organization',
-						isCurrentUser,
-					}}
-				/>
+			{(organization || isCurrentUser) && (
+				<ProfileAboutItem text={organization} placeholder={t('placeholder_organization')} icon="fax" />
 			)}
-			{(user.location || isCurrentUser) && (
-				<ProfileAboutItem
-					data={{
-						text: user.location || '',
-						placeholder: 'Your organization',
-						name: 'location',
-						isCurrentUser,
-					}}
-				/>
+			{(location || isCurrentUser) && (
+				<ProfileAboutItem text={location} placeholder={t('placeholder_location')} icon="map marker alternate" />
 			)}
 		</Container>
 	);

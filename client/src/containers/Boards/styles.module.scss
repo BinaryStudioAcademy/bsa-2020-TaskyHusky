@@ -1,0 +1,33 @@
+.wrapper {
+  padding: 30px 40px;
+  :global(.ui.celled.fixed.table){
+    td:last-child{
+      overflow: visible;
+      padding: 2px 11px;
+    }
+  }
+
+}
+
+.wrapper__title {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.title {
+  margin: 0;
+  font-size: 24px;
+}
+
+.wrapper__filters {
+  margin-bottom: 20px;
+  div{
+    margin-right: 10px;
+  }
+}
+
+.filters {
+  display: flex;
+}
+

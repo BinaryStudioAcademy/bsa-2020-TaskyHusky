@@ -12,6 +12,7 @@ import { useTranslation } from 'react-i18next';
 import Spinner from 'components/common/Spinner';
 import { NotificationManager } from 'react-notifications';
 import iconGoogle from 'assets/images/icon-google.svg';
+import { normalizeEmail } from 'helpers/normalizeEmail.helper';
 
 const SignUpForm: React.FC = () => {
 	const dispatch = useDispatch();
@@ -91,11 +92,12 @@ const SignUpForm: React.FC = () => {
 				content={t('invalid_email')}
 				trigger={
 					<Form.Input
-						type="email"
+						type="text"
 						icon="at"
 						placeholder={t('email')}
-						onChange={(event, data: { value: string }) => {
-							setEmail(data.value);
+						value={email}
+						onChange={(event) => {
+							setEmail(normalizeEmail(event.target.value));
 							setEmailValid(true);
 						}}
 						onBlur={() => setEmailValid(validator.isEmail(email))}

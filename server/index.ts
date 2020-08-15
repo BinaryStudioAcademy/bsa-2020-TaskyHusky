@@ -15,7 +15,13 @@ createConnection()
 	.then(async (connection) => {
 		await connection.runMigrations();
 		const app = express();
-		app.use(cors());
+		app.use(
+			cors({
+				origin: '*',
+				allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization'],
+			}),
+		);
+
 		app.use(bodyParser.json());
 		app.use(passport.initialize());
 		app.use(passport.session());

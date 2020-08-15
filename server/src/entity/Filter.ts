@@ -5,10 +5,11 @@ import { FilterPart } from './FilterPart';
 @Entity()
 export class Filter {
 	@PrimaryGeneratedColumn('uuid')
-	@IsUUID()
 	id!: string;
 
-	@ManyToOne((type) => UserProfile, (user) => user.filters)
+	@ManyToOne((type) => UserProfile, (user) => user.filters, {
+		onDelete: 'CASCADE',
+	})
 	owner?: UserProfile;
 
 	@OneToMany((type) => FilterPart, (filterPart) => filterPart.filter)

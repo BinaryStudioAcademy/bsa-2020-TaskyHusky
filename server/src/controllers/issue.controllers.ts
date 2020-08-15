@@ -15,6 +15,18 @@ class IssueController {
 		}
 	}
 
+	async getFilteredIssues(req: Request, res: Response) {
+		const repository = getCustomRepository(IssueRepository);
+		const { filter } = req.body;
+
+		try {
+			const result = await repository.getFilteredIssues(filter);
+			res.send(result);
+		} catch (err) {
+			res.status(500).send(getWebError(err, 500));
+		}
+	}
+
 	async getById(req: Request, res: Response) {
 		const { id } = req.params;
 		const repository = getCustomRepository(IssueRepository);
@@ -68,7 +80,11 @@ class IssueController {
 		const repository = getCustomRepository(IssueRepository);
 
 		try {
-			const result = await repository.createOne(data);
+			const result = await repository.createOne({
+				...data,
+				creator: req.user.id,
+			});
+
 			res.status(201).send(result);
 		} catch (err) {
 			res.status(422).send(getWebError(err, 422));
@@ -91,7 +107,7 @@ class IssueController {
 	async updateByKey(req: Request, res: Response) {
 		const { key } = req.params;
 		const { body: data } = req;
-		console.log(key);
+
 		const repository = getCustomRepository(IssueRepository);
 
 		try {

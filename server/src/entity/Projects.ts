@@ -8,7 +8,6 @@ import { UserProfile } from './UserProfile';
 @Entity()
 export class Projects {
 	@PrimaryGeneratedColumn('uuid')
-	@IsUUID()
 	id!: string;
 
 	@Column()
