@@ -1,5 +1,5 @@
 import React, { createRef, useState, useEffect } from 'react';
-import { Button, Label, Icon, Ref, Rail, Sticky, Grid, Comment } from 'semantic-ui-react';
+import { Button, Label, Icon, Ref, Rail, Sticky, Grid, Comment, Divider } from 'semantic-ui-react';
 import CreateIssueModal from 'containers/CreateIssueModal';
 import { useTranslation } from 'react-i18next';
 import { ContextProvider } from 'containers/CreateIssueModal/logic/context';
@@ -46,35 +46,37 @@ const IssuePageContent: React.FC<Props> = ({ issue }) => {
 			<Grid columns="1" style={{ marginTop: 20 }}>
 				<Grid.Column>
 					<div style={{ marginLeft: 20, maxWidth: 700 }}>
-						<h1>
-							{issue.summary} <span style={{ fontWeight: 200 }}>#{issue.issueKey}</span>
-						</h1>
+						<h4>
+							<span style={{ fontWeight: 400 }}>#{issue.issueKey}</span>
+						</h4>
+						<h1>{issue.summary}</h1>
 						<h4>{t('description')}</h4>
 						<p>{issue.description}</p>
 						<h3>{t('comments')}</h3>
-						<Comment.Group style={{ maxHeight: '65vh', overflowY: 'auto' }}>
+						<Comment.Group style={{ maxHeight: '50vh', overflowY: 'auto' }}>
 							{comments.map((comment) => (
 								<IssueComment comment={comment} key={comment.id} />
 							))}
 						</Comment.Group>
+						<Divider horizontal>{t('post_comment')}</Divider>
+						<IssueCommentForm
+							issueId={issue.id}
+							onSubmit={(text) => {
+								setComments([
+									...comments,
+									{
+										id: generateRandomString(6),
+										creator: authData.user,
+										createdAt: new Date(),
+										text,
+										issue: issue.id,
+									},
+								]);
+							}}
+						/>
 					</div>
 					<Rail position="right" internal style={{ transform: 'translateY(20px)' }}>
 						<Sticky context={ref}>
-							<IssueCommentForm
-								issueId={issue.id}
-								onSubmit={(text) => {
-									setComments([
-										...comments,
-										{
-											id: generateRandomString(6),
-											creator: authData.user,
-											createdAt: new Date(),
-											text,
-											issue: issue.id,
-										},
-									]);
-								}}
-							/>
 							<CreateIssueModal>
 								<Button primary fluid>
 									{t('create_issue')}

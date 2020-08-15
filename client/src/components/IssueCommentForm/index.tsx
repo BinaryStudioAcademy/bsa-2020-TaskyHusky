@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
-import { Form, Button } from 'semantic-ui-react';
-import { useDispatch } from 'react-redux';
+import { Form, Comment } from 'semantic-ui-react';
+import { useDispatch, useSelector } from 'react-redux';
 import { addComment } from './logic/actions';
 import { useTranslation } from 'react-i18next';
+import { RootState } from 'typings/rootState';
+import { getUsername } from 'helpers/getUsername.helper';
+import styles from './styles.module.scss';
+import { getInitials } from 'helpers/getInitials.helper';
 
 interface Props {
 	onSubmit?: (text: string) => void;
@@ -11,10 +15,13 @@ interface Props {
 
 const IssueCommentForm: React.FC<Props> = ({ onSubmit, issueId }) => {
 	const [text, setText] = useState<string>('');
+	const authData = useSelector((state: RootState) => state.auth);
 	const dispatch = useDispatch();
 	const { t } = useTranslation();
 
-	const submit = () => {
+	const submit = (event: React.FormEvent) => {
+		event.preventDefault();
+
 		if (!text) {
 			return;
 		}
@@ -33,20 +40,40 @@ const IssueCommentForm: React.FC<Props> = ({ onSubmit, issueId }) => {
 		}
 	};
 
+	if (!authData.user) {
+		return null;
+	}
+
 	return (
-		<Form onSubmit={submit}>
-			<Form.Field>
-				<label className="required">{t('text')}</label>
-				<Form.TextArea
-					placeholder={t('enter_comment_text')}
-					onChange={(event, data) => setText(data.value ? (data.value as string) : '')}
-					value={text}
-				/>
-			</Form.Field>
-			<Button fluid style={{ marginBottom: 10 }}>
-				{t('post_comment')}
-			</Button>
-		</Form>
+		<Comment.Group>
+			<Comment>
+				{authData.user.avatar ? (
+					<Comment.Avatar src={authData.user.avatar} />
+				) : (
+					<div className={`${styles.avatar} avatar`}>{getInitials(authData.user)}</div>
+				)}
+				<Comment.Content>
+					<Comment.Author
+						as="a"
+						rel="noopener noreferrer"
+						target="_blank"
+						href={`/profile/${authData.user.id}`}
+					>
+						{getUsername(authData.user as WebApi.Entities.UserProfile)}
+					</Comment.Author>
+					<Comment.Text>
+						<form onSubmit={submit}>
+							<Form.Input
+								fluid
+								placeholder={t('enter_comment_text')}
+								onChange={(event, data) => setText(data.value)}
+								value={text}
+							/>
+						</form>
+					</Comment.Text>
+				</Comment.Content>
+			</Comment>
+		</Comment.Group>
 	);
 };
 
