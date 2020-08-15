@@ -56,6 +56,12 @@ export class UserProfile {
 	@OneToMany((type) => Board, (board) => board.createdBy)
 	boards?: Board[];
 
+	@Column({ type: 'character varying', name: 'resetPasswordToken', nullable: true })
+	public resetPasswordToken?: string | null;
+
+	@Column({ type: 'timestamp without time zone', name: 'resetPasswordExpires', nullable: true })
+	public resetPasswordExpires?: Date | null;
+
 	@OneToMany((type) => Filter, (filter) => filter.owner)
 	filters?: Filter[];
 
