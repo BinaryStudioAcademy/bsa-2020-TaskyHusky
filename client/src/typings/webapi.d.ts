@@ -114,9 +114,9 @@ namespace WebApi.Team {
 		description?: string;
 		links?: string[];
 		users?: [];
+		loading: boolean
 	}
 }
-
 namespace WebApi.User {
 	export interface UserModel {
 		id?: string;

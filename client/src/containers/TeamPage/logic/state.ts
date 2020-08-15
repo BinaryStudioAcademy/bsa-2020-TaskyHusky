@@ -4,6 +4,7 @@ export type Team = {
 	description: string;
 	links: string[];
 	members: [];
+	loading: boolean
 };
 
 export interface TeamState {
@@ -17,5 +18,6 @@ export const initialState: TeamState = {
 		description: '',
 		links: [],
 		members: [],
+		loading: false
 	},
 };

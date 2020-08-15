@@ -9,4 +9,18 @@ export const teamReducer = createReducer<TeamState>(initialState, {
 			team: action.team,
 		};
 	},
+	[actionTypes.LOADING](state: TeamState) {
+		return {
+			...state,
+			team: {
+				...state.team,
+				loading: true
+			}
+		};
+	},
+	[actionTypes.FAIL_LOADING](state: TeamState) {
+		return {
+			...state
+		};
+	},
 });

@@ -85,7 +85,9 @@ const TeamPage = ({ match: { params }, currentTeam: { team } }: { match: Match; 
 		setEditedLink(undefined);
 	};
 
-	return team.id ? (
+	return team.loading ? (
+		<Spinner />
+	) : (
 		<Grid columns="equal" centered>
 			<Grid.Row className={styles.header_z}>
 				<div className={[styles.header, styles.team_header].join(' ')}></div>
@@ -117,8 +119,6 @@ const TeamPage = ({ match: { params }, currentTeam: { team } }: { match: Match; 
 				<DeleteLink onClose={toggleDeleteLinkModal} link={linkToDelete} onDelete={onDeleteLinkAccept} />
 			)}
 		</Grid>
-	) : (
-		<Spinner />
 	);
 };
 
