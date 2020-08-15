@@ -8,8 +8,8 @@ import { hashPassword } from '../helpers/password.helper';
 import HttpStatusCode from '../constants/httpStattusCode.constants';
 import { transporter, email as nodeMailerEmail } from '../../config/nodeMailer.config';
 import { appPort, appHost } from '../../config/app.config';
-
-const expirationTime = 1000 * 60 * 60 * 24;
+import {expirationTime} from '../constants/resetPassword.constants';
+import { sendToken } from '../services/email.service';
 
 class ResetPasswordController {
 	forgotPassword = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -32,21 +32,8 @@ class ResetPasswordController {
 				resetPasswordExpires,
 			});
 
-			const mailOptions = {
-				from: nodeMailerEmail,
-				to: user.email,
-				subject: 'Please, confirm your email',
-				text: `http://${appHost}:${appPort}/api/auth/reset_password/${resetPasswordToken} your token will expire in 1 day`,
-			};
-
-			transporter.sendMail(mailOptions, (err) => {
-				if (!err) {
-					res.status(200).send(savedUser);
-				} else {
-					throw err;
-				}
-			});
-
+			sendToken(user.email, resetPasswordToken);
+			res.status(200).send(savedUser);
 		} catch (e) {
 			next(new ErrorResponse(HttpStatusCode.NOT_FOUND, e.message));
 		}

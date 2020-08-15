@@ -1,8 +1,7 @@
 import { EntityRepository, Repository, Between } from 'typeorm';
 import { UserProfile } from '../entity/UserProfile';
-import { UserModel } from '../models/User';
+import {expirationTime} from '../constants/resetPassword.constants';
 
-const expirationTime = 1000 * 60 * 60 * 24;
 @EntityRepository(UserProfile)
 export class UserRepository extends Repository<UserProfile> {
 	async getById(id: string): Promise<any> {
