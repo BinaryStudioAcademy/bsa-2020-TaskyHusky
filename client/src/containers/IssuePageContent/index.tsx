@@ -1,6 +1,5 @@
 import React, { createRef, useState, useEffect } from 'react';
-import { Button, Label, Icon, Ref, Rail, Sticky, Comment, Divider } from 'semantic-ui-react';
-import CreateIssueModal from 'containers/CreateIssueModal';
+import { Button, Label, Icon, Ref, Rail, Sticky, Comment } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 import { ContextProvider } from 'containers/CreateIssueModal/logic/context';
 import UpdateIssueModal from 'containers/UpdateIssueModal';
@@ -53,12 +52,19 @@ const IssuePageContent: React.FC<Props> = ({ issue }) => {
 					<h4>{t('description')}</h4>
 					<p>{issue.description}</p>
 					<h3>{t('comments')}</h3>
-					<Comment.Group style={{ maxHeight: '50vh', overflowY: 'auto', width: '100%', maxWidth: '100%' }}>
+					<Comment.Group
+						style={{
+							maxHeight: '50vh',
+							overflowY: 'auto',
+							width: '100%',
+							maxWidth: '100%',
+							marginBottom: 20,
+						}}
+					>
 						{comments.map((comment) => (
 							<IssueComment comment={comment} key={comment.id} />
 						))}
 					</Comment.Group>
-					<Divider horizontal>{t('post_comment')}</Divider>
 					<IssueCommentForm
 						issueId={issue.id}
 						onSubmit={(text) => {
@@ -77,12 +83,7 @@ const IssuePageContent: React.FC<Props> = ({ issue }) => {
 				</div>
 				<Rail position="right" internal style={{ transform: 'translateY(100px)' }}>
 					<Sticky context={ref}>
-						<CreateIssueModal>
-							<Button primary fluid>
-								{t('create_issue')}
-							</Button>
-						</CreateIssueModal>
-						<Button secondary inverted onClick={() => openEditModal()} style={{ marginTop: 10 }} fluid>
+						<Button secondary onClick={() => openEditModal()} style={{ marginTop: 10 }} fluid>
 							{t('edit_issue')}
 						</Button>
 						<h4>{t('assigned_by')}</h4>
