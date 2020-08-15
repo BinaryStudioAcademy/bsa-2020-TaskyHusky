@@ -1,4 +1,3 @@
-
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToMany } from 'typeorm';
 import { MinLength, IsEmail, IsString, IsNotEmpty, IsUUID } from 'class-validator';
 import { Issue } from './Issue';
@@ -12,6 +11,10 @@ export class UserProfile {
 	@PrimaryGeneratedColumn('uuid')
 	@IsUUID()
 	id!: string;
+
+	@Column({ nullable: true })
+	@IsString()
+	googleId?: string;
 
 	@Column()
 	@IsString()
@@ -46,7 +49,7 @@ export class UserProfile {
 	@Column({ unique: true })
 	@IsEmail()
 	@IsNotEmpty()
-	email?: string;
+	email!: string;
 
 	@Column({ nullable: true })
 	@IsString()
@@ -72,7 +75,7 @@ export class UserProfile {
 	leadedProjects?: Projects[];
 
 	@OneToMany((type) => Projects, (projects) => projects.creator)
-	createdProjects!: Projects[];
+	createdProjects?: Projects[];
 
 	@OneToMany((type) => Team, (teams) => teams.createdBy)
 	teamsOwner?: Team[];
@@ -81,7 +84,7 @@ export class UserProfile {
 	assignedIssues?: Issue[];
 
 	@OneToMany((type) => Issue, (issue) => issue.creator)
-	createdIssues?: Issue[];  
+	createdIssues?: Issue[];
 
 	@ManyToMany((type) => Team, (team) => team.users, {
 		cascade: true,

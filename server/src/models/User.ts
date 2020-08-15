@@ -1,9 +1,12 @@
+import { Team } from '../entity/Team';
+
 export interface UserModel {
-	id?: string;
+	googleId?: string;
+	id: string;
 	email: string;
 	password?: string;
-	lastName?: string;
-	firstName?: string;
+	lastName: string;
+	firstName: string;
 	username?: string;
 	avatar?: string;
 	location?: string;
@@ -11,6 +14,6 @@ export interface UserModel {
 	organization?: string;
 	jobTitle?: string;
 	userSettingsId?: string;
-	teams: [],
+	teams?: Team[];
 	filtres?: string[];
 }

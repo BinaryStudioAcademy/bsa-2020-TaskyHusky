@@ -4,7 +4,6 @@ import cors from 'cors';
 import * as bodyParser from 'body-parser';
 import { createConnection } from 'typeorm';
 import 'reflect-metadata';
-import cookieSession from 'cookie-session';
 import { appPort } from './config/app.config';
 import routes from './src/routes';
 import passport from './config/passport.config';
@@ -20,11 +19,6 @@ createConnection()
 		app.use(bodyParser.json());
 		app.use(passport.initialize());
 		app.use(passport.session());
-
-		app.use(cookieSession({
-			name: 'session',
-			keys: ['key1', 'key2']
-		}))
 
 		app.use('/', (req, res, next) => (req.path === '/' ? res.sendStatus(200) : next())); // health check
 		app.use('/api', authenticateJwt(routesWhiteList), routes);

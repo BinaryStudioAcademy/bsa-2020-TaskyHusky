@@ -1,5 +1,5 @@
 import { getRepository, getCustomRepository, MigrationInterface, QueryRunner } from 'typeorm';
-import { TeamsRepository } from '../repositories/teams.repository';
+import { TeamRepository } from '../repositories/teams.repository';
 
 export class User1596645895543 implements MigrationInterface {
 	public async up(queryRunner: QueryRunner): Promise<void> {

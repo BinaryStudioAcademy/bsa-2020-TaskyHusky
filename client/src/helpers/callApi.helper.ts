@@ -45,7 +45,7 @@ export async function throwIfResponseFailed(res: Response) {
 
 		try {
 			exception.clientException = await res.json();
-		} catch {}
+		} catch { }
 		throw exception;
 	}
 }

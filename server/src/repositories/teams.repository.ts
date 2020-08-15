@@ -9,7 +9,7 @@ export class TeamRepository extends Repository<Team> {
 
 	findOneById(id: string) {
 		return this.findOne({
-			where: { id }
+			where: { id },
 		});
 	}
 
@@ -22,7 +22,7 @@ export class TeamRepository extends Repository<Team> {
 		return this.save(entity);
 	}
 
-	async updateOneById(id: string, data: Team) {
+	async updateOneById(id: string, data: Team | { [key: string]: string[] }) {
 		await this.update(id, data);
 		return this.findOne(id);
 	}

@@ -1,4 +1,4 @@
-import { loginUser, registerUser, getProfile, checkEmail } from 'services/auth.service';
+import { loginUser, registerUser, getProfile, checkEmail, googleAuthRequest } from 'services/auth.service';
 import { all, put, takeEvery, call } from 'redux-saga/effects';
 import * as actionTypes from './actionTypes';
 import * as actions from './actions';
@@ -101,6 +101,18 @@ export function* watchCheckEmail() {
 	yield takeEvery(actionTypes.CHECK_EMAIL_TRIGGER, checkEmailRequest);
 }
 
+export function* googleAuth(action: any) {
+	yield put(actions.loadingGoogleAuth({ loading: true }));
+	const response = yield call(googleAuthRequest, action.user);
+	const { user, jwtToken } = response;
+	setToken(jwtToken);
+	yield put(actions.logInUserSuccess({ user, jwtToken }));
+}
+
+export function* watchGoogleAuth() {
+	yield takeEvery(actionTypes.GOOGLE_AUTH_REQUEST, googleAuth);
+}
+
 export default function* authSaga() {
-	yield all([watchUserLogin(), watchUserLogOut(), watchRegisterUser(), watchLoadProfile(), watchCheckEmail()]);
+	yield all([watchUserLogin(), watchUserLogOut(), watchRegisterUser(), watchLoadProfile(), watchCheckEmail(), watchGoogleAuth()]);
 }

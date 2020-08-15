@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Button, Divider, Icon, Popup } from 'semantic-ui-react';
+import { Form, Button, Divider, Popup, Segment, Image } from 'semantic-ui-react';
 import PasswordInput from 'components/common/PasswordInput';
 import validator from 'validator';
 import { Redirect } from 'react-router-dom';
@@ -7,7 +7,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as actions from 'containers/LoginPage/logic/actions';
 import { RootState } from 'typings/rootState';
 import styles from './styles.module.scss';
+import GoogleLogin, { GoogleLoginResponse, GoogleLoginResponseOffline } from 'react-google-login';
 import { useTranslation } from 'react-i18next';
+import Spinner from 'components/common/Spinner';
+import { NotificationManager } from 'react-notifications';
+import iconGoogle from 'assets/images/icon-google.svg';
 
 const SignUpForm: React.FC = () => {
 	const dispatch = useDispatch();
@@ -22,7 +26,6 @@ const SignUpForm: React.FC = () => {
 	const [firstNameValid, setFirstNameValid] = useState<boolean>(true);
 	const [lastName, setLastName] = useState<string>('');
 	const [redirecting, setRedirecting] = useState<boolean>(false);
-
 	const buttonDisabled = !(password && passwordValid && email && emailValid && firstName && firstNameValid);
 
 	useEffect(() => {
@@ -39,7 +42,26 @@ const SignUpForm: React.FC = () => {
 		dispatch(actions.registerUserTrigger({ email, password, firstName, lastName }));
 	};
 
-	return (
+	const googleAuth = (user: GoogleLoginResponse | GoogleLoginResponseOffline) => {
+		dispatch(actions.sendGoogleAuth({ user }));
+	};
+
+	const googleAuthFailed = () => {
+		NotificationManager.error('Error google authentication', 'Error', 4000);
+	};
+
+	const googleBtn = (props: { onClick: () => void; disabled?: boolean }) => (
+		<button onClick={props.onClick} className={styles.google_btn}>
+			<Image src={iconGoogle} className={styles.google_logo} />
+			<span className={styles.google_title}> Login</span>
+		</button>
+	);
+
+	return authState.loading ? (
+		<Segment className={styles.loading_wrapper}>
+			<Spinner />
+		</Segment>
+	) : (
 		<Form onSubmit={submit}>
 			{redirecting ? <Redirect to="/" /> : ''}
 			<Popup
@@ -93,10 +115,14 @@ const SignUpForm: React.FC = () => {
 				{t('sign_up')}
 			</Button>
 			<Divider horizontal>{t('or')}</Divider>
-			<Button type="button" fluid>
-				<Icon name="google" />
-				{t('google_log_in')}
-			</Button>
+			<GoogleLogin
+				clientId="1004182396963-58h0qlvimlv07tepibt6m6t5omejn2h7.apps.googleusercontent.com"
+				buttonText="Login"
+				render={(props) => googleBtn(props)}
+				onSuccess={googleAuth}
+				onFailure={googleAuthFailed}
+				cookiePolicy={'single_host_origin'}
+			/>
 		</Form>
 	);
 };

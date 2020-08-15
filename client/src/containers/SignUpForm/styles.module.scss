@@ -3,3 +3,36 @@
 	border: 1px solid #e0b4b4 !important;
 	color: #9f3a38 !important;
 }
+.loading_wrapper {
+	position: fixed !important;
+	z-index: 100;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+.google_btn {
+	display: flex;
+	width: 100%;
+	justify-content: center;
+	background-color: transparent;
+	border: 1px solid #ccc;
+	outline: none;
+	font-size: 1.3rem;
+	align-items: center;
+	border-radius: 5px;
+	cursor: pointer;
+	animation: all 1s;
+	&:hover {
+		transition: background-color 0.5s;
+		background-color: rgb(247, 247, 247);
+		box-shadow: 0 0 2px #ccc, 0 0 13px inset #ffff;
+	}
+	.google_title {
+		font-weight: 600;
+		padding-left: 10px;
+	}
+	.google_logo {
+		width: 40px;
+	}
+}
