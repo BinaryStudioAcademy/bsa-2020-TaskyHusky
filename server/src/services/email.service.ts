@@ -9,5 +9,7 @@ export const sendToken=(email:string, resetPasswordToken:string)=>{
 		text: `http://${appHost}:${appPort}/api/auth/reset-password/${resetPasswordToken} your token will expire in 1 day`,
 	};
 
-	return transporter.sendMail(mailOptions, (err) => {});
+	return transporter.sendMail(mailOptions, (err) => {
+		if(err) throw err;
+	});
 }
