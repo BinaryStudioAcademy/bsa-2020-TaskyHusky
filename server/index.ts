@@ -11,6 +11,8 @@ import { routesWhiteList } from './config/jwt.config';
 import { authenticateJwt } from './src/middleware/jwt.middleware';
 import errorHandlerMiddleware from './src/middleware/errorHandler.middleware';
 
+let a;
+
 createConnection()
 	.then(async (connection) => {
 		await connection.runMigrations();
