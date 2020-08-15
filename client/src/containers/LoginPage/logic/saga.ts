@@ -103,10 +103,15 @@ export function* watchCheckEmail() {
 
 export function* googleAuth(action: { user: actionTypes.GoogleUser, type: string }) {
 	yield put(actions.loadingGoogleAuth({ loading: true }));
-	const response = yield call(googleAuthRequest, action.user);
-	const { user, jwtToken } = response;
-	setToken(jwtToken);
-	yield put(actions.logInUserSuccess({ user, jwtToken }));
+	try {
+		const response = yield call(googleAuthRequest, action.user);
+		const { user, jwtToken } = response;
+		setToken(jwtToken);
+		yield put(actions.logInUserSuccess({ user, jwtToken }));
+	} catch (error) {
+		yield put(actions.loadingGoogleAuth({ loading: false }));
+		NotificationManager.error(error.clientException.message, 'Error');
+	}
 }
 
 export function* watchGoogleAuth() {

@@ -12,7 +12,6 @@ export class UserProfile {
 	id!: string;
 
 	@Column({ nullable: true })
-	@IsString()
 	googleId?: string;
 
 	@Column()
@@ -45,7 +44,7 @@ export class UserProfile {
 	@Length(6, 30)
 	@IsLowercase()
 	@IsNotEmpty()
-	email!: string;
+	email?: string;
 
 	@Column({ nullable: true })
 	jobTitle?: string;

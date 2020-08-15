@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Button, Divider, Popup, Segment, Image } from 'semantic-ui-react';
+import { Form, Button, Popup } from 'semantic-ui-react';
 import PasswordInput from 'components/common/PasswordInput';
 import validator from 'validator';
 import { Redirect } from 'react-router-dom';
@@ -7,13 +7,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as actions from 'containers/LoginPage/logic/actions';
 import { RootState } from 'typings/rootState';
 import styles from './styles.module.scss';
-import GoogleLogin, { GoogleLoginResponse, GoogleLoginResponseOffline } from 'react-google-login';
 import { useTranslation } from 'react-i18next';
-import Spinner from 'components/common/Spinner';
-import { NotificationManager } from 'react-notifications';
-import iconGoogle from 'assets/images/icon-google.svg';
 import { normalizeEmail } from 'helpers/normalizeEmail.helper';
-import { googleId } from 'config/googleConfig';
 
 const SignUpForm: React.FC = () => {
 	const dispatch = useDispatch();
@@ -44,26 +39,7 @@ const SignUpForm: React.FC = () => {
 		dispatch(actions.registerUserTrigger({ email, password, firstName, lastName }));
 	};
 
-	const googleAuth = (user: GoogleLoginResponse | GoogleLoginResponseOffline) => {
-		dispatch(actions.sendGoogleAuth({ user }));
-	};
-
-	const googleAuthFailed = () => {
-		NotificationManager.error('Error google authentication', 'Error', 4000);
-	};
-
-	const googleBtn = (props: { onClick: () => void; disabled?: boolean }) => (
-		<button onClick={props.onClick} className={styles.google_btn}>
-			<Image src={iconGoogle} className={styles.google_logo} />
-			<span className={styles.google_title}> Login</span>
-		</button>
-	);
-
-	return authState.loading ? (
-		<Segment className={styles.loading_wrapper}>
-			<Spinner />
-		</Segment>
-	) : (
+	return (
 		<Form onSubmit={submit}>
 			{redirecting ? <Redirect to="/" /> : ''}
 			<Popup
@@ -117,15 +93,6 @@ const SignUpForm: React.FC = () => {
 			<Button disabled={buttonDisabled} fluid positive type="submit">
 				{t('sign_up')}
 			</Button>
-			<Divider horizontal>{t('or')}</Divider>
-			<GoogleLogin
-				clientId={googleId}
-				buttonText="Login"
-				render={(props) => googleBtn(props)}
-				onSuccess={googleAuth}
-				onFailure={googleAuthFailed}
-				cookiePolicy={'single_host_origin'}
-			/>
 		</Form>
 	);
 };
