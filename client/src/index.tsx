@@ -8,6 +8,7 @@ import 'react-notifications/lib/notifications.css';
 import 'styles/index.scss';
 
 configureLanguages();
+let a;
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
