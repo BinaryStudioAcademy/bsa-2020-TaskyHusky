@@ -10,12 +10,9 @@ export default class CustomValidator {
 	}
 
 	checkMinLength(minLength: number) {
-		console.log('ydytt', minLength);
 		if (this.value.length >= minLength) {
-			console.log('vjhhj', this.value);
 			return this;
 		} else {
-			console.log('bl');
 			this.errors.push(`${this.field} mast be longer than ${minLength} symbols.`);
 			return this;
 		}
@@ -40,6 +37,7 @@ export default class CustomValidator {
 			return this;
 		}
 	}
+
 	checkEmailField() {
 		if (this.value.match(/^[a-z0-9][a-z0-9-_.]{1,64}@[a-z0-9-]{1,253}.[a-z]{2,6}$/i)) {
 			return this;
@@ -48,6 +46,7 @@ export default class CustomValidator {
 			return this;
 		}
 	}
+
 	checkPasswordField() {
 		if (
 			this.value.match(/^(?=.*[0-9]+.*)(?=.*[A-Z]+.*)(?=.*[@$!%*#?&]+.*)(?=.*[a-z]+.*)[0-9a-zA-Z\d@$!%*#?&]*$/g)
@@ -60,6 +59,7 @@ export default class CustomValidator {
 			return this;
 		}
 	}
+
 	validate() {
 		return this.errors.join(' ');
 	}
