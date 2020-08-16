@@ -7,6 +7,7 @@ export const userProfileReducer = createReducer<UserProfileState>(initialState, 
 		return {
 			...state,
 			...action.partialState,
+			isLoading: false,
 		};
 	},
 	[actionTypes.DELETE_USER](state) {

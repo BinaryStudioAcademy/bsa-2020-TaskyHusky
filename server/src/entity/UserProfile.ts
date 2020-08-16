@@ -1,4 +1,3 @@
-
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToMany } from 'typeorm';
 import { MinLength, IsEmail, IsString, IsNotEmpty, IsUUID, Length, IsLowercase } from 'class-validator';
 import { Issue } from './Issue';
@@ -56,6 +55,12 @@ export class UserProfile {
 
 	@OneToMany((type) => Board, (board) => board.createdBy)
 	boards?: Board[];
+
+	@Column({ type: 'character varying', name: 'resetPasswordToken', nullable: true })
+	public resetPasswordToken?: string | null;
+
+	@Column({ type: 'timestamp without time zone', name: 'resetPasswordExpires', nullable: true })
+	public resetPasswordExpires?: Date | null;
 
 	@OneToMany((type) => Filter, (filter) => filter.owner)
 	filters?: Filter[];

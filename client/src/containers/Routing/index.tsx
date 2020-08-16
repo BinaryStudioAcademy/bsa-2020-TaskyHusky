@@ -3,8 +3,8 @@ import { Switch } from 'react-router-dom';
 import PrivateRoute from 'components/PrivateRoute';
 import Login from 'pages/LogIn';
 import Team from 'pages/Team';
+import Profile from 'pages/Profile';
 import CreateTeamModal from 'components/CreateTeamModal';
-import ProfilePage from 'containers/ProfilePage';
 import PublicRoute from 'components/PublicRoute';
 import SignUp from 'pages/SignUp';
 import Filters from 'pages/Filters';
@@ -43,8 +43,8 @@ const Routing: React.FC = () => {
 			<PrivateRoute exact path="/projects" component={ProjectsPage} />
 			<PrivateRoute exact path="/projects/projectSettings/:id" component={ProjectSettings} />
 			<PrivateRoute exact path="/team/:id" component={Team} />
+			<PrivateRoute exact path="/profile/:id" component={Profile} />
 			<PrivateRoute exact path="/team" component={CreateTeamModal} />
-			<PublicRoute exact restricted={false} path="/profile/:id" component={ProfilePage} />
 			<PrivateRoute exact path="/filters" component={Filters} />
 			<PrivateRoute path="/board/:id" component={BoardPage} />
 			<PrivateRoute path="/project/:id/issues" component={ProjectIssues} />

@@ -15,10 +15,7 @@ import { User } from 'containers/LoginPage/logic/state';
 import { useTranslation } from 'react-i18next';
 import CreateIssueModal from 'containers/CreateIssueModal';
 import { getUsername } from 'helpers/getUsername.helper';
-
-const getInitials = (user: User) => {
-	return (user.firstName as string)[0] + (user.lastName ? user.lastName[0] : '');
-};
+import { getInitials } from 'helpers/getInitials.helper';
 
 export const HeaderMenu = () => {
 	const authStore = useSelector((rootStore: RootState) => rootStore.auth);

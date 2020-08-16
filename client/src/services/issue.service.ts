@@ -1,4 +1,5 @@
 import callWebApi from 'helpers/callApi.helper';
+import { IssueFilter } from 'containers/AdvancedSearch/logic/actionTypes';
 
 export const createIssue = async (params: WebApi.Entities.Issue): Promise<WebApi.Entities.Issue> => {
 	const res: Response = await callWebApi({
@@ -82,4 +83,38 @@ export const getByColumnId = async (id: string): Promise<WebApi.Result.IssueResu
 	});
 
 	return (await res.json()) as WebApi.Result.IssueResult[];
+};
+
+export const loadIssues = async (filter: IssueFilter | undefined): Promise<WebApi.Result.IssueResult[]> => {
+	const res: Response = await callWebApi({
+		method: 'POST',
+		endpoint: `issue/filtered`,
+		body: {
+			filter,
+		},
+	});
+
+	return (await res.json()) as WebApi.Result.IssueResult[];
+};
+
+export const addComment = async (id: string, text: string): Promise<WebApi.Result.IssueCommentResult> => {
+	const res: Response = await callWebApi({
+		method: 'POST',
+		endpoint: 'issue/comment',
+		body: {
+			issue: id,
+			text,
+		},
+	});
+
+	return (await res.json()) as WebApi.Result.IssueCommentResult;
+};
+
+export const getComments = async (id: string): Promise<WebApi.Result.IssueCommentResult[]> => {
+	const res: Response = await callWebApi({
+		method: 'GET',
+		endpoint: `issue/comment/byIssue/${id}`,
+	});
+
+	return (await res.json()) as WebApi.Result.IssueCommentResult[];
 };

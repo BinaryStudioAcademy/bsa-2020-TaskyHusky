@@ -6,29 +6,19 @@ import ProfileHeader from 'components/ProfileHeader';
 import { RootState } from 'typings/rootState';
 import ProfileAside from 'components/ProfileAside';
 import ProfileSection from 'components/ProfileSection';
-import { UserProfileState, initialState } from 'containers/ProfilePage/logiс/state';
 import ProfileManagerSection from 'components/ProfileManagerSection';
-import HeaderMenu from 'containers/Header';
+import Spinner from 'components/common/Spinner';
+import { UserProfileState, initialState } from './logiс/state';
 
-export interface PropsExtendedData {
-	isCurrentUser: boolean;
-	mockData?: any;
-	user: Partial<UserProfileState>;
-	showManager: (modeToShow: string) => void;
-}
-
-export interface PropsUserData {
-	isCurrentUser: boolean;
-	mockData?: any;
-	user: Partial<UserProfileState>;
-}
-
-const ProfilePage = ({ match: { params } }: { match: any }) => {
+const ProfilePage = ({ id }: { id: string }) => {
 	const dispatch = useDispatch();
-	const userData = useSelector((state: RootState) => state.user);
 	const [user, setUser] = useState(initialState);
+	const { editMode, isLoading } = user;
+	const currentUser = useSelector((state: RootState) => state.auth.user);
+	const userData = useSelector((state: RootState) => state.user);
 
-	const isCurrentUser = user.id === userData.id;
+	const isCurrentUser = currentUser ? id === currentUser.id : false;
+
 	const showManager = (modeToShow: string) => {
 		setUser({
 			...user,
@@ -54,41 +44,47 @@ const ProfilePage = ({ match: { params } }: { match: any }) => {
 		project: 'Example project1',
 	};
 
-	useEffect(() => {
-		if (!user.id) {
-			dispatch(actions.requestGetUser({ id: params.id }));
-		}
-	}, [dispatch, params.id, user.id]);
-
-	useEffect(() => {
-		if (!user.id) {
+	const getUser = async () => {
+		if (isCurrentUser) {
+			setUser({ ...user, ...currentUser, isLoading: false });
+			dispatch(actions.updateUser({ partialState: { ...currentUser, isLoading: false } }));
+		} else {
+			dispatch(actions.requestGetUser({ id }));
 			setUser({ ...user, ...userData });
 		}
-	}, [userData, user]);
+	};
 
-	if (!user.id) {
-		return null;
-	}
+	const updateUser = (changedUser: Partial<UserProfileState>) => {
+		setUser({ ...user, ...changedUser });
+	};
+
+	useEffect(() => {
+		getUser();
+		//eslint-disable-next-line
+	}, [id]);
 
 	return (
 		<>
-			<HeaderMenu />
-			<div className={styles.wrapper}>
-				<ProfileHeader />
-				<div className={styles.container}>
-					<ProfileAside
-						user={user}
-						isCurrentUser={isCurrentUser}
-						mockData={mockData}
-						showManager={showManager}
-					/>
-					{user.editMode ? (
-						<ProfileManagerSection user={user} showManager={showManager} />
-					) : (
-						<ProfileSection user={user} isCurrentUser={isCurrentUser} mockData={mockData} />
-					)}
+			{isLoading ? (
+				<Spinner />
+			) : (
+				<div className={styles.wrapper}>
+					<ProfileHeader />
+					<div className={styles.container}>
+						<ProfileAside
+							user={user}
+							isCurrentUser={isCurrentUser}
+							mockData={mockData}
+							showManager={showManager}
+						/>
+						{editMode ? (
+							<ProfileManagerSection user={user} showManager={showManager} updateUser={updateUser} />
+						) : (
+							<ProfileSection isCurrentUser={isCurrentUser} mockData={mockData} />
+						)}
+					</div>
 				</div>
-			</div>
+			)}
 		</>
 	);
 };
