@@ -112,7 +112,7 @@ export class BoardRepository extends Repository<Board> {
 		const projectsToAdd = await Promise.all(projectPromises);
 
 		let board = new Board();
-		board = { ...board, ...dataToCreate, createdBy: userToAdd };
+		board = { ...board, ...dataToCreate, createdBy: userToAdd, projects:projectsToAdd };
 
 		return this.save([board]);
 	}
