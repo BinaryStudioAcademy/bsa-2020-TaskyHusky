@@ -1,4 +1,3 @@
-
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToMany } from 'typeorm';
 import { MinLength, IsEmail, IsString, IsNotEmpty, IsUUID, Length, IsLowercase } from 'class-validator';
 import { Issue } from './Issue';
@@ -76,7 +75,7 @@ export class UserProfile {
 	assignedIssues?: Issue[];
 
 	@OneToMany((type) => Issue, (issue) => issue.creator)
-	createdIssues?: Issue[];  
+	createdIssues?: Issue[];
 
 	@ManyToMany((type) => Team, (team) => team.users, {
 		cascade: true,
@@ -86,7 +85,7 @@ export class UserProfile {
 	@ManyToMany((type) => Projects, (projects) => projects.users)
 	projects?: Projects[];
 
-	constructor(userData: Partial<UserProfile>) {
+	constructor(userData?: Partial<UserProfile>) {
 		if (userData) {
 			const { email, password, firstName, lastName } = userData;
 

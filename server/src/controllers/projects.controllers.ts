@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { getCustomRepository } from 'typeorm';
-import { projectsErrorMessages } from '../constants/projects.contants';
+import { validateProject } from '../../validators/validateProjects.validator';
+import { projectsErrorMessages } from '../constants/projects.constants';
 import { UserProfile } from '../entity/UserProfile';
 import { Projects } from '../entity/Projects';
 import { ProjectsRepository } from '../repositories/projects.repository';
@@ -12,7 +13,6 @@ class ProjectsController {
 		const projectsRepository = getCustomRepository(ProjectsRepository);
 
 		try {
-			const allProjects = await projectsRepository.findAll();
 			res.send(allProjects);
 		} catch (err) {
 			next(new ErrorResponse(HttpStatusCode.INTERNAL_SERVER_ERROR, err.message));
@@ -36,12 +36,20 @@ class ProjectsController {
 
 		try {
 			const projectData = req.body.project as Projects;
-			const { key } = projectData;
 
+			const validationErrors = await validateProject(projectData);
+
+			if (validationErrors.length > 0) {
+				next(new ErrorResponse(HttpStatusCode.UNPROCESSABLE_ENTITY, projectsErrorMessages.INVALID_DATA));
+				return;
+			}
+
+			const { key } = projectData;
 			const isKeyExists = await this.getOneProject(key, 'key');
 
 			if (isKeyExists) {
-				return next(new ErrorResponse(HttpStatusCode.CONFLICT, projectsErrorMessages.PROJECT_EXISTS));
+				next(new ErrorResponse(HttpStatusCode.UNPROCESSABLE_ENTITY, projectsErrorMessages.PROJECT_EXISTS));
+				return;
 			}
 
 			const { id: creatorId } = req.user as UserProfile;
@@ -72,7 +80,8 @@ class ProjectsController {
 			const isProjectExists = await this.getOneProject(id, 'id');
 
 			if (!isProjectExists) {
-				return next(new ErrorResponse(HttpStatusCode.NOT_FOUND, projectsErrorMessages.PROJECT_NOT_FOUND));
+				next(new ErrorResponse(HttpStatusCode.NOT_FOUND, projectsErrorMessages.PROJECT_NOT_FOUND));
+				return;
 			}
 
 			const updatedProject = await projectsRepository.updateOne(project);
@@ -90,7 +99,8 @@ class ProjectsController {
 			const isProjectExists = await this.getOneProject(id, 'id');
 
 			if (!isProjectExists) {
-				return next(new ErrorResponse(HttpStatusCode.NOT_FOUND, projectsErrorMessages.PROJECT_NOT_FOUND));
+				next(new ErrorResponse(HttpStatusCode.NOT_FOUND, projectsErrorMessages.PROJECT_NOT_FOUND));
+				return;
 			}
 
 			const deletedProject = await projectsRepository.deleteOneById(id);
@@ -100,7 +110,7 @@ class ProjectsController {
 		}
 	};
 
-	protected getOneProject = async (value: string, prop: string) => {
+	protected getOneProject = async (value: string, prop: string): Promise<Projects | undefined> => {
 		const projectsRepository = getCustomRepository(ProjectsRepository);
 		const project = await projectsRepository.getOneProject(value, prop);
 		return project;
