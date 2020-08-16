@@ -17,7 +17,7 @@ const ProjectsFilter = ({ filterPart }: FilterProps) => {
 	const projectsToDropdownData = (project: { name: string; id: string }): DropdownOption => {
 		const { id, name } = project;
 		const data = {
-			value: name,
+			value: id,
 			key: id,
 			text: name,
 		};

@@ -1,6 +1,6 @@
-import { EntityRepository, Repository } from 'typeorm';
+import { EntityRepository, Repository, Between } from 'typeorm';
 import { UserProfile } from '../entity/UserProfile';
-import { UserModel } from '../models/User';
+import {expirationTime} from '../constants/resetPassword.constants';
 
 @EntityRepository(UserProfile)
 export class UserRepository extends Repository<UserProfile> {
@@ -15,6 +15,13 @@ export class UserRepository extends Repository<UserProfile> {
 
 	getByEmail(email: string): Promise<any> {
 		return this.findOne({ where: { email } });
+	}
+
+	getByToken(token: string): Promise<any> {
+		return this.findOne({where:{
+				resetPasswordToken:token,
+				resetPasswordExpires:Between(new Date(), new Date(Date.now()+expirationTime))
+			}})
 	}
 
 	async createNew(data: UserProfile): Promise<any> {

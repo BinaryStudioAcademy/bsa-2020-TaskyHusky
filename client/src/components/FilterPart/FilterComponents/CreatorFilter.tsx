@@ -18,7 +18,7 @@ const CreatorFilter = ({ filterPart }: FilterProps) => {
 		const { id, firstName, lastName } = user;
 		const fullName = `${firstName} ${lastName}`;
 		const data = {
-			value: fullName,
+			value: id,
 			key: id,
 			text: fullName,
 		};

@@ -11,6 +11,8 @@ export interface UserModel {
 	organization?: string;
 	jobTitle?: string;
 	userSettingsId?: string;
-	teams: [],
+	resetPasswordToken:string|null;
+	resetPasswordExpires:Date|null;
+	teams?: [],
 	filtres?: string[];
 }

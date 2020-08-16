@@ -213,4 +213,11 @@ export const en = {
 	my_profile: 'My Profile',
 	view_all: 'view all',
 	hide: 'hide',
+	text: 'Text',
+	enter_comment_text: 'Enter your comment text...',
+	comments: 'Comments',
+	post_comment: 'Post comment',
+	boards: 'Boards',
+	create_board: 'Create board',
+	view_all_boards: 'View all boards',
 };

@@ -13,9 +13,9 @@ interface DropdownSearchProps {
 
 const DropdownSearch = ({ filterPart, data }: DropdownSearchProps) => {
 	const dispatch = useDispatch();
-	const { filterDef } = filterPart;
+	const { filterDef, members } = filterPart;
 	const { title } = filterDef;
-	const [selection, setSelection] = useState<string[]>([]);
+	const [selection, setSelection] = useState<string[]>(members);
 	const [searchText, setSearchText] = useState('');
 
 	const toggleSelection = (e: React.SyntheticEvent, { value: checkedValue }: DropdownItemProps) => {
@@ -57,7 +57,7 @@ const DropdownSearch = ({ filterPart, data }: DropdownSearchProps) => {
 		);
 	};
 
-	const getInputPlaceholder = ({ title }: WebApi.Entities.FilterDefinition) => {
+	const getInputPlaceholder = (title: string) => {
 		return `Find ${title}`;
 	};
 
@@ -80,7 +80,7 @@ const DropdownSearch = ({ filterPart, data }: DropdownSearchProps) => {
 		>
 			<Dropdown.Menu className={styles.dropdownMenu} onClick={(e: Event) => e.stopPropagation()}>
 				<Input
-					placeholder={getInputPlaceholder(filterDef)}
+					placeholder={getInputPlaceholder(filterDef.title)}
 					icon="search"
 					value={searchText}
 					iconPosition="left"

@@ -12,8 +12,10 @@ import { filterDefsReducer } from 'commonLogic/filterDefs/reducer';
 import { saveFilterReducer } from './../containers/SaveFilterModal/logic/reducer';
 import { usersReducer } from 'commonLogic/users/reducer';
 import { advancedSearchReducer } from 'containers/AdvancedSearch/logic/reducer';
+import { boardReducer } from '../containers/Boards/logic/reducer';
 
 const rootReducer: Reducer<RootState> = combineReducers({
+	boards: boardReducer,
 	user: userProfileReducer,
 	projects: projectsReducer,
 	project: projectReducer,

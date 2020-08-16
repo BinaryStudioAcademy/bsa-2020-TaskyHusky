@@ -3,23 +3,22 @@ import styles from './styles.module.scss';
 
 interface Props {
 	passLength: number;
+	aceptLength: number;
 }
 
 const PasswordCheck: React.FC<Props> = (props: Props) => {
-	const { passLength } = props;
+	const { passLength, aceptLength } = props;
+	const superLength = 9;
+	const firstIndicator = () =>
+		passLength < aceptLength ? styles.red : passLength < superLength ? styles.yellow : styles.green;
+	const secondIndicator = () =>
+		passLength < aceptLength ? styles.grey : passLength < superLength ? styles.yellow : styles.green;
+	const thirdIndicator = () => (passLength < superLength ? styles.grey : styles.green);
 	return (
 		<div className={passLength ? styles.progress : styles.hidden}>
-			<div
-				className={`${passLength < 6 ? styles.red : passLength < 9 ? styles.yellow : styles.green} ${
-					styles.progress__line
-				}`}
-			></div>
-			<div
-				className={`${passLength < 6 ? styles.grey : passLength < 9 ? styles.yellow : styles.green} ${
-					styles.progress__line
-				}`}
-			></div>
-			<div className={`${passLength < 9 ? styles.grey : styles.green} ${styles.progress__line}`}></div>
+			<div className={`${firstIndicator()} ${styles.progress__line}`}></div>
+			<div className={`${secondIndicator()} ${styles.progress__line}`}></div>
+			<div className={`${thirdIndicator()} ${styles.progress__line}`}></div>
 		</div>
 	);
 };
