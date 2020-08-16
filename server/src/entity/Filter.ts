@@ -10,7 +10,7 @@ export class Filter {
 	@ManyToOne((type) => UserProfile, (user) => user.filters)
 	owner?: UserProfile;
 
-	@OneToMany((type) => FilterPart, (filterPart) => filterPart.filter)
+	@OneToMany((type) => FilterPart, (filterPart) => filterPart.filter, { cascade: true, onDelete: 'CASCADE' })
 	filterParts?: FilterPart[];
 
 	@Column()
