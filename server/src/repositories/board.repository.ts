@@ -11,18 +11,20 @@ export class BoardRepository extends Repository<Board> {
 	}
 
 	getAll = async (): Promise<IBoardModel[]> => {
-		const extendedBoards = <IBoardModel[]><unknown>await this
-			.createQueryBuilder('board')
-			.innerJoin('board.createdBy', 'user')
-			.addSelect(['user.id', 'user.firstName', 'user.lastName', 'user.avatar'])
-			.getMany();
+		const extendedBoards = <IBoardModel[]>(
+			(<unknown>(
+				await this.createQueryBuilder('board')
+					.innerJoin('board.createdBy', 'user')
+					.addSelect(['user.id', 'user.firstName', 'user.lastName', 'user.avatar'])
+					.getMany()
+			))
+		);
 
 		return extendedBoards;
 	};
 
 	getRecent = (): Promise<IReducedBoard[]> => {
-		const boards = this
-			.createQueryBuilder('board')
+		const boards = this.createQueryBuilder('board')
 			.select(['board.id', 'board.name'])
 			.orderBy('board.createdAt', 'DESC')
 			.getMany();
@@ -31,12 +33,15 @@ export class BoardRepository extends Repository<Board> {
 	};
 
 	async getOne(id: string) {
-		const board = <IBoardModel><unknown>await this
-			.createQueryBuilder('board')
-			.where('board.id = :id', { id })
-			.innerJoin('board.createdBy', 'user')
-			.addSelect(['user.id', 'user.firstName', 'user.lastName', 'user.avatar'])
-			.getOne();
+		const board = <IBoardModel>(
+			(<unknown>(
+				await this.createQueryBuilder('board')
+					.where('board.id = :id', { id })
+					.innerJoin('board.createdBy', 'user')
+					.addSelect(['user.id', 'user.firstName', 'user.lastName', 'user.avatar'])
+					.getOne()
+			))
+		);
 
 		if (!board) {
 			throw new Error('Board with this ID does not exist');
@@ -58,10 +63,16 @@ export class BoardRepository extends Repository<Board> {
 		return board.projects;
 	}
 
+	async getSprints(id: string) {
+		const { sprints } = await this.findOneOrFail(id, { loadRelationIds: true });
+
+		return sprints;
+	}
+
 	async put(id: string, data: any) {
 		const userRepository = getCustomRepository(UserRepository);
 
-		let board = <Board><unknown>await this.getOne(id);
+		let board = <Board>(<unknown>await this.getOne(id));
 		const { createdBy: user, projects, ...dataToCreate } = data;
 
 		if (user) {
@@ -97,7 +108,7 @@ export class BoardRepository extends Repository<Board> {
 		const { createdBy: user, projects, ...dataToCreate } = data;
 
 		const userToAdd = await userRepository.getById(user.id);
-		if(!userToAdd) throw new Error('User with current ID not found');
+		if (!userToAdd) throw new Error('User with current ID not found');
 
 		const projectPromises: Array<Promise<Projects>> = projects.map(
 			(projectId: string): Promise<Projects> => {
@@ -112,13 +123,13 @@ export class BoardRepository extends Repository<Board> {
 		const projectsToAdd = await Promise.all(projectPromises);
 
 		let board = new Board();
-		board = { ...board, ...dataToCreate, createdBy: userToAdd };
+		board = { ...board, ...dataToCreate, createdBy: userToAdd, projects: projectsToAdd };
 
 		return this.save([board]);
 	}
 
 	async deleteBoard(id: string) {
-		const board:Board = <Board><unknown>await this.getOne(id);
+		const board: Board = <Board>(<unknown>await this.getOne(id));
 
 		return this.remove([board]);
 	}

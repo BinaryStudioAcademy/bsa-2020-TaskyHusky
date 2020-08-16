@@ -8,7 +8,7 @@ export class SprintRepository extends Repository<Sprint> {
 	}
 
 	async findOneById(id: string): Promise<Sprint> {
-		return this.findOneOrFail(id, { loadRelationIds: true });
+		return this.findOneOrFail(id, { loadEagerRelations: true });
 	}
 
 	async createOne(data: Sprint): Promise<Sprint> {

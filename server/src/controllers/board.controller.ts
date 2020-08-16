@@ -1,9 +1,11 @@
 import { NextFunction, Request, Response } from 'express';
 import { getCustomRepository } from 'typeorm';
+import { SprintRepository } from '../repositories/sprint.repository';
 import { BoardRepository } from '../repositories/board.repository';
 import { BoardColumnRepository } from '../repositories/boardColumn.repository';
 import { ErrorResponse } from '../helpers/errorHandler.helper';
 import HttpStatusCode from '../constants/httpStattusCode.constants';
+import { Sprint } from '../entity/Sprint';
 
 class BoardController {
 	getAll = async (req: Request, res: Response): Promise<void> => {
@@ -50,11 +52,37 @@ class BoardController {
 		const boardRepository = getCustomRepository(BoardRepository);
 		const { id } = req.params;
 		try {
-			const projects=await boardRepository.getProjects(id);
+			const projects = await boardRepository.getProjects(id);
 
 			res.status(200).send(projects);
 		} catch (e) {
 			next(new ErrorResponse(HttpStatusCode.NOT_FOUND, e.message));
+		}
+	};
+
+	getBoardSprints = async (req: Request, res: Response, next: NextFunction) => {
+		const boardRepository = getCustomRepository(BoardRepository);
+		const sprintRepository = getCustomRepository(SprintRepository);
+
+		try {
+			const { id } = req.params;
+			const boardSprintsIds = (await boardRepository.getSprints(id)) as Sprint[];
+
+			const sprints = await Promise.all(
+				boardSprintsIds.map(async (sprintId) => {
+					let sprintData;
+
+					if (typeof sprintId === 'string') {
+						sprintData = await sprintRepository.findOneById(sprintId);
+					}
+
+					return sprintData;
+				}),
+			);
+
+			res.status(200).send(sprints);
+		} catch (error) {
+			next(new ErrorResponse(HttpStatusCode.NOT_FOUND, error.message));
 		}
 	};
 
@@ -76,10 +104,8 @@ class BoardController {
 		const boardRepository = getCustomRepository(BoardRepository);
 		const { body } = req;
 
-		const { projects, ...bodyData } = body;
 		try {
-			console.log(projects);
-			const board = await boardRepository.post(bodyData);
+			const board = await boardRepository.post(body);
 
 			res.status(200).send(board);
 		} catch (e) {
