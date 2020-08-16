@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Header, Container, Form, Button, Breadcrumb, List, Image, Divider, Icon } from 'semantic-ui-react';
+import { Header, Container, Form, Button, Breadcrumb, List, Divider } from 'semantic-ui-react';
 import { BoardComponent } from '../';
 import { useTranslation } from 'react-i18next';
 import styles from './style.module.scss';
@@ -15,7 +15,7 @@ const Scrum: BoardComponent = (props) => {
 
 	useEffect(() => {
 		dispatch(actions.loadSprintsTrigger({ boardId: board.id }));
-	}, []);
+	}, [dispatch, board.id]);
 
 	return (
 		<Container>

@@ -4,7 +4,6 @@ import { ScrumBoardState, initialState } from './state';
 
 export const scrumBoardReducer = createReducer<ScrumBoardState>(initialState, {
 	[actionTypes.LOAD_SPRINTS_SUCCESS](state, action: actionTypes.loadSprintsSuccess) {
-		console.log('scrumBoardReducer', action);
 		const { sprints } = action;
 
 		return {
