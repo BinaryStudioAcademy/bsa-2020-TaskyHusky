@@ -13,6 +13,7 @@ import { saveFilterReducer } from './../containers/SaveFilterModal/logic/reducer
 import { usersReducer } from 'commonLogic/users/reducer';
 import { advancedSearchReducer } from 'containers/AdvancedSearch/logic/reducer';
 import { boardReducer } from '../containers/Boards/logic/reducer';
+import { scrumBoardReducer } from 'containers/Board/Scrum/logic/reducer';
 
 const rootReducer: Reducer<RootState> = combineReducers({
 	boards: boardReducer,
@@ -28,6 +29,7 @@ const rootReducer: Reducer<RootState> = combineReducers({
 	saveFilter: saveFilterReducer,
 	users: usersReducer,
 	advancedSearch: advancedSearchReducer,
+	scrumBoard: scrumBoardReducer,
 });
 
 export default rootReducer;
