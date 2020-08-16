@@ -1,10 +1,18 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import styles from './styles.module.scss';
 
-const ProfileHeader = () => (
-	<div className={styles.header}>
-		<h1 className={styles.header__content}>My Profile</h1>
-	</div>
-);
+interface Props {
+	isCurrentUser: boolean;
+}
+const ProfileHeader = (props: Props) => {
+	const { isCurrentUser } = props;
+	const { t } = useTranslation();
+	return (
+		<div className={styles.header}>
+			<h1 className={styles.header__content}>{isCurrentUser ? t('my_profile') : t('profile')}</h1>
+		</div>
+	);
+};
 
 export default ProfileHeader;

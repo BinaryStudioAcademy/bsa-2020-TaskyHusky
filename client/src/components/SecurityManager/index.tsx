@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import styles from './styles.module.scss';
 import { useTranslation } from 'react-i18next';
 import { requestChangePassword } from 'containers/ProfilePage/logiс/actions';
-import { Header, Button, Form, Popup } from 'semantic-ui-react';
+import { Button, Form, Popup } from 'semantic-ui-react';
 import SubmitedInput from 'components/SubmitedInput';
 import PasswordCheck from 'components/PasswordCheck';
 
@@ -44,9 +44,9 @@ const SecurityManager = () => {
 	};
 	return (
 		<section className={styles.container}>
-			<Header as="h3">{t('security')}</Header>
+			<h3 className={styles.header}>{t('security')}</h3>
 			<div className={styles.card}>
-				<Header as="h4">{t('change_pass')}</Header>
+				<h4 className={styles.card__header}>{t('change_pass')}</h4>
 				<Form onSubmit={onSubmit}>
 					<SubmitedInput
 						text={passwords.oldPassword}

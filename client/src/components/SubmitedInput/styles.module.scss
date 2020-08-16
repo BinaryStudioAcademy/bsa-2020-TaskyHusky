@@ -8,12 +8,7 @@
   cursor: text;
 
   & input {
-    font-family: Poppins, sans-serif !important;
-    font-style: normal !important;
-    font-weight: 500 !important;
-    font-size: 13px !important;
-    line-height: 19px !important;
-    color: $dark-black !important;
+    @include text-data;
   }
 
   &:hover {

@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import validator from 'validator';
 import { useTranslation } from 'react-i18next';
 import styles from './styles.module.scss';
-import { Header, Button, Checkbox, Select, Form, Popup } from 'semantic-ui-react';
+import { Button, Checkbox, Select, Form, Popup } from 'semantic-ui-react';
 import { requestUpdateUser } from 'containers/ProfilePage/logiс/actions';
 import { UserProfileState } from 'containers/ProfilePage/logiс/state';
 import SubmitedInput from 'components/SubmitedInput';
@@ -32,16 +32,16 @@ const EmailManager: React.FC<Props> = (props: Props) => {
 	};
 
 	const notifaictionsOptions = [
-		{ key: 'send', value: true, text: 'Send me email notifications' },
-		{ key: 'notSend', value: false, text: 'Do not send me email notifications' },
+		{ key: 'send', value: true, text: t('send_email_notif') },
+		{ key: 'notSend', value: false, text: t('dont_send_email_notif') },
 	];
 
 	return (
 		<section className={styles.container}>
-			<Header as="h3">{t('email')}</Header>
+			<h3 className={styles.header}>{t('email')}</h3>
 			<div className={styles.card}>
-				<Header as="h4">{t('change_email')}</Header>
-				<p>
+				<h4 className={styles.card__header}>{t('change_email')}</h4>
+				<p className={styles.card__textData}>
 					{t('current_email')}
 					{email}
 				</p>
@@ -68,14 +68,14 @@ const EmailManager: React.FC<Props> = (props: Props) => {
 						{t('save_changes')}
 					</Button>
 				</Form>
-				<Header as="h4">{t('email_notif')}</Header>
-				<p>{t('content_notif')}</p>
+				<h4 className={styles.card__header}>{t('email_notif')}</h4>
+				<p className={styles.card__textData}>{t('content_notif')}</p>
 				<Select
 					placeholder={t('choose_option_notif')}
 					className={styles.select}
 					options={notifaictionsOptions}
 				/>
-				<p>{t('get_email_when')}</p>
+				<p className={styles.card__textData}>{t('get_email_when')}</p>
 				<Checkbox className={styles.checkbox} label={t('watching_issue')} />
 				<Checkbox className={styles.checkbox} label={t('you_reporter')} />
 				<Checkbox className={styles.checkbox} label={t('you_asignee')} />

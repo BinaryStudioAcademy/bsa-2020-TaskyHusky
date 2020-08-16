@@ -80,18 +80,22 @@
   word-break: break-word;
 }
 
-@mixin content-btn {
-  border: 1px solid $dark-black !important;
-  box-sizing: border-box;
-  border-radius: 5px !important;
+@mixin text-data {
   font-family: Poppins, sans-serif !important;
   font-style: normal !important;
   font-weight: 500 !important;
   font-size: 13px !important;
   line-height: 19px !important;
   color: $dark-black !important;
-  background-color: #FFFFFF !important;
   word-break: break-word;
+}
+
+@mixin content-btn {
+  border: 1px solid $dark-black !important;
+  box-sizing: border-box;
+  border-radius: 5px !important;
+  @include text-data;
+  background-color: #FFFFFF !important;
 }
 
 @mixin info-block-header {

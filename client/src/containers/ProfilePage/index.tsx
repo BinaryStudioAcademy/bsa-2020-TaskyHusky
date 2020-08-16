@@ -70,7 +70,7 @@ const ProfilePage = ({ id }: { id: string }) => {
 	useEffect(() => {
 		getUser();
 		//eslint-disable-next-line
-	}, [id]);
+	}, [userData.id]);
 
 	return (
 		<>
@@ -78,7 +78,7 @@ const ProfilePage = ({ id }: { id: string }) => {
 				<Spinner />
 			) : (
 				<div className={styles.wrapper}>
-					<ProfileHeader />
+					<ProfileHeader isCurrentUser={isCurrentUser} />
 					<div className={styles.container}>
 						<ProfileAside
 							user={user}

@@ -43,7 +43,7 @@ const ProfileProjectBlock: React.FC<Props> = (props: Props) => {
 								<Accordion.Title active={activeIndex === 0} index={0} onClick={handleClick}>
 									<input
 										type="button"
-										value={!showHidden ? 'view all' : 'hide'}
+										value={showHidden ? (t('hide') as string) : (t('view_all') as string)}
 										className={styles.showBtn}
 									/>
 								</Accordion.Title>

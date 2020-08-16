@@ -4,8 +4,17 @@
   @include profile-container;
 }
 
+.header {
+  @include manager-header;
+}
+
 .card {
   @include card-container;
+
+  &__header {
+    @include info-block-header;
+    font-size: 14px;
+  }
 }
 
 .submitButton {
