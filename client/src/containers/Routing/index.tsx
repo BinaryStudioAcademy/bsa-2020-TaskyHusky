@@ -18,6 +18,7 @@ import BoardPage from 'pages/BoardPage';
 import ProjectIssues from 'pages/ProjectIssues';
 import NotFound from 'pages/404';
 import Search from 'pages/AdvancedSearch';
+import { fetchFilterDefs } from 'commonLogic/filterDefs/actions';
 
 const Routing: React.FC = () => {
 	const dispatch = useDispatch();
@@ -27,6 +28,7 @@ const Routing: React.FC = () => {
 	useEffect(() => {
 		if (!profileLoaded) {
 			dispatch(loadProfileTrigger()); // Must be called before all Routes
+			dispatch(fetchFilterDefs());
 		}
 	}, [dispatch, profileLoaded, token]);
 

@@ -1,4 +1,4 @@
-import { fetchFilterDefs } from 'services/filter.service';
+import { RootState } from 'typings/rootState';
 import { loadIssues } from 'services/issue.service';
 import { all, put, takeEvery, call, select } from 'redux-saga/effects';
 import { v4 as uuidv4 } from 'uuid';
@@ -9,7 +9,9 @@ import { AnyAction } from 'redux';
 import { getFilterOptionsFromFilterParts } from './helpers';
 
 export function* fetchFilterPartsSaga(action: ReturnType<typeof actions.fetchFilterParts>) {
-	const filterDefs: WebApi.Entities.FilterDefinition[] = yield call(fetchFilterDefs);
+	const {
+		filterDefs: { filterDefs },
+	}: RootState = yield select();
 
 	const getInitialFilterPart = (filterDef: WebApi.Entities.FilterDefinition): FilterPartState => {
 		return { id: `${uuidv4()}`, filterDef, searchText: '', members: [] };
@@ -24,7 +26,7 @@ export function* updateFilterPartSaga(action: AnyAction) {
 	yield put(actions.updateFilterPartSuccess({ filterPart: action.filterPart }));
 	const {
 		advancedSearch: { filterParts },
-	} = yield select();
+	}: RootState = yield select();
 
 	const filterOption = getFilterOptionsFromFilterParts(filterParts);
 	const issues = yield call(loadIssues, filterOption);
