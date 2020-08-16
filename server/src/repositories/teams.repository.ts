@@ -9,17 +9,32 @@ export class TeamRepository extends Repository<Team> {
 
 	async findOneById(id: string) {
 		const team = await this.createQueryBuilder('Team')
-			.where('Team.id = :id', { id })
-			.innerJoin('Team.users', 'User')
-			.addSelect([
+			.leftJoinAndSelect('Team.createdBy', 'User')
+			.leftJoinAndSelect('Team.users', 'Users')
+			.select([
+				'Team.id',
+				'Team.name',
+				'Team.color',
+				'Team.description',
+				'Team.links',
 				'User.id',
 				'User.firstName',
 				'User.lastName',
-				'User.avatar',
 				'User.email',
 				'User.jobTitle',
 				'User.location',
+				'User.avatar',
+				'User.department',
+				'Users.id',
+				'Users.firstName',
+				'Users.lastName',
+				'Users.email',
+				'Users.jobTitle',
+				'Users.location',
+				'Users.avatar',
+				'Users.department',
 			])
+			.where('Team.id = :id', { id })
 			.getOne();
 
 		return team;
@@ -36,7 +51,7 @@ export class TeamRepository extends Repository<Team> {
 
 	async updateOneById(id: string, data: Team) {
 		await this.update(id, data);
-		return this.findOne(id);
+		return this.findOneById(id);
 	}
 
 	deleteOneById(id: string) {

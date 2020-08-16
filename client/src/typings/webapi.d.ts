@@ -113,8 +113,10 @@ namespace WebApi.Team {
 		name?: string;
 		description?: string;
 		links?: string[];
-		users?: [];
-		loading: boolean
+		users?: UserProfile[];
+		loading: boolean;
+		color?: string;
+		createdBy?: UserProfile
 	}
 }
 namespace WebApi.User {

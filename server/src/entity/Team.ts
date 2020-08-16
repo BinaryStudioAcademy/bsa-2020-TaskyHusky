@@ -18,7 +18,7 @@ export class Team {
 	@JoinTable({ name: 'teams_people' })
 	users?: UserProfile[];
 
-	@ManyToOne(() => UserProfile, (user: UserProfile) => user.teamsOwner)
+	@ManyToOne(() => UserProfile, (user: UserProfile) => user.teamsOwner, { cascade: true })
 	createdBy?: UserProfile;
 
 	@Column()
