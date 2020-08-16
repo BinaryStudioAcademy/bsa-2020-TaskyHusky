@@ -76,10 +76,8 @@ class BoardController {
 		const boardRepository = getCustomRepository(BoardRepository);
 		const { body } = req;
 
-		const { projects, ...bodyData } = body;
 		try {
-			console.log(projects);
-			const board = await boardRepository.post(bodyData);
+			const board = await boardRepository.post(body);
 
 			res.status(200).send(board);
 		} catch (e) {
