@@ -38,10 +38,6 @@
   @include text-data;
 }
 
-.errorPopup {
-  @include error-popup;
-}
-
 @media screen and (max-width: $less-than-medium-screen) {
   .container {
     margin-top: 50px;
