@@ -61,7 +61,7 @@ const ProfilePage = ({ id }: { id: string }) => {
 	useEffect(() => {
 		getUser();
 		//eslint-disable-next-line
-	}, [id]);
+	}, [userData.id]);
 
 	return (
 		<>

@@ -9,8 +9,8 @@ const TeamWorkedProjects = () => {
 
 	return (
 		<>
+			<Header as="h3">{t('worked_on')}</Header>
 			<div className={styles.worked_block_wrapper}>
-				<Header as="h3">{t('worked_on')}</Header>
 				<div className={styles.flex_row}>
 					<Image src={worksImg} size="small" />
 					<div className={styles.worked_block}>

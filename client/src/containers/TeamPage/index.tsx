@@ -31,7 +31,6 @@ export interface Link {
 }
 
 const TeamPage = ({ match: { params }, currentTeam: { team } }: { match: Match; currentTeam: Team }) => {
-	const [notification, setNotification] = useState<boolean>(true);
 	const [addPeopleModal, setAddPeopleModal] = useState<boolean>(false);
 	const [editedLink, setEditedLink] = useState<Link | undefined>();
 	const [addLinks, setAddLinks] = useState<boolean>(false);
@@ -47,7 +46,6 @@ const TeamPage = ({ match: { params }, currentTeam: { team } }: { match: Match; 
 	useEffect(() => {
 		dispatch(actions.startLoading({ id: params.id }));
 	}, [dispatch, params.id]);
-	const toggleNotification = (): void => setNotification(false);
 	const showAddPeopleModal = (): void => setAddPeopleModal(true);
 
 	const toggleAddLinks = (): void => {
@@ -104,7 +102,6 @@ const TeamPage = ({ match: { params }, currentTeam: { team } }: { match: Match; 
 					<TeamsMembersCard teammates={team.users} title={'Members'} />
 				</Grid.Column>
 				<Grid.Column width="8" className={styles.col_media}>
-					{notification && <TeamNotification toggleNotification={toggleNotification} />}
 					<TeamWorkedProjects />
 					<TeamLinks
 						currentLinks={team.links ?? []}
