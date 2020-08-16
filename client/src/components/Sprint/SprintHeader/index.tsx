@@ -1,19 +1,44 @@
 import React from 'react';
 import { List } from 'semantic-ui-react';
+import Options, { ItemProps } from 'components/common/Options';
+import styles from './styles.module.scss';
 
-export const SprintHeader: React.FC = () => {
+type Props = {
+	id: string;
+	isActive: boolean;
+	name: string;
+};
+
+export const SprintHeader: React.FC<Props> = ({ id, isActive, name }) => {
+	console.log(id, isActive, name);
+
+	const config: ItemProps[] = [
+		{
+			id,
+			text: 'Edit sprint',
+			onClickAction: () => {},
+		},
+		{
+			id,
+			text: 'Delete sprint',
+			onClickAction: () => {},
+		},
+	];
+
 	return (
-		<List horizontal>
+		<List horizontal className={styles.sprintHeader}>
 			<List.Item>
 				<List.Content>
-					<List.Header>Sprint Name</List.Header>
-					Sprint Status
+					<List.Header>{name}</List.Header>
+					{isActive ? `ACTIVE` : null}
 				</List.Content>
 			</List.Item>
 
 			<List.Item>
 				<List.Content>
-					<List.Header>Edit Button</List.Header>
+					<List.Header>
+						<Options config={config} />
+					</List.Header>
 				</List.Content>
 			</List.Item>
 		</List>
