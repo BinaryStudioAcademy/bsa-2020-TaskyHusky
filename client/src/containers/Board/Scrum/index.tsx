@@ -4,14 +4,30 @@ import { BoardComponent } from '../';
 import { useTranslation } from 'react-i18next';
 import styles from './style.module.scss';
 import * as actions from './logic/actions';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from 'typings/rootState';
+import Breadcrumbs from 'components/common/Breadcrumbs';
+import { setBreadcrumbs } from './config/breadcrumbs';
+import { useHistory } from 'react-router-dom';
 
 const Scrum: BoardComponent = (props) => {
 	const dispatch = useDispatch();
+	const scrumBoardState = useSelector((rootState: RootState) => rootState.scrumBoard);
 
+	const history = useHistory();
 	const { board } = props;
 	const { t } = useTranslation();
 	const [search, setSearch] = useState<string>('');
+
+	const projectDetails: Partial<WebApi.Entities.Projects> = { id: '', name: '' };
+
+	const boardDetails: Partial<WebApi.Entities.Board> = { id: board.id, name: board.name };
+
+	if (scrumBoardState.sprints.length > 0 && scrumBoardState.sprints[0].project) {
+		const { id, name } = scrumBoardState.sprints[0].project;
+		projectDetails.id = id;
+		projectDetails.name = name;
+	}
 
 	useEffect(() => {
 		dispatch(actions.loadSprintsTrigger({ boardId: board.id }));
@@ -20,13 +36,7 @@ const Scrum: BoardComponent = (props) => {
 	return (
 		<Container>
 			<Container className={styles.breadcrumb}>
-				<Breadcrumb>
-					<Breadcrumb.Section href="/projects">{t('projects')}</Breadcrumb.Section>
-					<Breadcrumb.Divider icon="right chevron" />
-					<Breadcrumb.Section link>Test project name</Breadcrumb.Section>
-					<Breadcrumb.Divider icon="right arrow" />
-					<Breadcrumb.Section active>{board.name}</Breadcrumb.Section>
-				</Breadcrumb>
+				<Breadcrumbs sections={setBreadcrumbs({ history, projectDetails, boardDetails })} />
 			</Container>
 			<Container className={styles.inlineContainer}>
 				<Header as="h2">{board.name}</Header>
