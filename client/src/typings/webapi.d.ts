@@ -114,7 +114,6 @@ namespace WebApi.Team {
 		description?: string;
 		links?: string[];
 		users?: [];
-		loading: boolean
 	}
 }
 namespace WebApi.User {

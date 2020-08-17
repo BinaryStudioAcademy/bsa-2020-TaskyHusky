@@ -37,6 +37,10 @@
 				display: none;
 			}
 		}
+		@media (max-width: 940px) {
+			display: none;
+		}
+
 		&:hover {
 			background: none;
 		}
@@ -48,7 +52,13 @@
 		height: 100%;
 		border-radius: 5px;
 		border: 1px solid $header-text;
-
+		@media (max-width: 940px) {
+			font-size: 0;
+			padding: 10px;
+			i {
+				margin: 0 !important;
+			}
+		}
 		* {
 			font-size: 12px;
 		}
