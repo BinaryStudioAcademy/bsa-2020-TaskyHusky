@@ -21,7 +21,7 @@ export class ProjectsRepository extends Repository<Projects> {
 		return this.findOne({ key }, { withDeleted: true });
 	}
 
-	getAll(id: string): Promise<Projects[]> {
+	getAllByUserId(id: string): Promise<Projects[]> {
 		return getRepository(Projects)
 			.createQueryBuilder('project')
 			.leftJoinAndSelect('project.users', 'users')
