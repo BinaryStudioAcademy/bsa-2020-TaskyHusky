@@ -1,5 +1,5 @@
 import React, { useState, useEffect, SyntheticEvent } from 'react';
-import { Header, Container, Form, Button } from 'semantic-ui-react';
+import { Header, Container, Form, Button, InputOnChangeData } from 'semantic-ui-react';
 import { BoardComponent } from '../';
 import { useTranslation } from 'react-i18next';
 import styles from './style.module.scss';
@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'typings/rootState';
 import Breadcrumbs from 'components/common/Breadcrumbs';
 import { setBreadcrumbs, BreadCrumbData } from './config/breadcrumbs';
-import { useHistory, useRouteMatch, useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import Sprint from 'components/Sprint';
 import { startGettingProject } from 'containers/ProjectSettings/logic/actions';
 
@@ -16,7 +16,6 @@ const Scrum: BoardComponent = (props) => {
 	const dispatch = useDispatch();
 	const scrumBoardState = useSelector((rootState: RootState) => rootState.scrumBoard);
 	const projectState = useSelector((rootState: RootState) => rootState.project.project);
-	console.log(projectState);
 	const { sprints } = scrumBoardState;
 	const { id: projectId } = useParams();
 	const history = useHistory();
@@ -31,7 +30,7 @@ const Scrum: BoardComponent = (props) => {
 	useEffect(() => {
 		dispatch(actions.loadSprintsTrigger({ boardId: board.id }));
 		dispatch(startGettingProject({ id: projectId }));
-	}, [dispatch, board.id]);
+	}, [dispatch, board.id, projectId]);
 
 	const sprintList =
 		sprints.length > 0 ? (
@@ -51,7 +50,7 @@ const Scrum: BoardComponent = (props) => {
 					placeholder={t('search')}
 					icon="search"
 					value={search}
-					onChange={(event, data) => setSearch(data.value)}
+					onChange={(event: SyntheticEvent, data: InputOnChangeData) => setSearch(data.value)}
 					style={{ marginLeft: 20, marginRight: 60, maxWidth: 250 }}
 				/>
 				<Button onClick={() => setSearch('')} secondary>
