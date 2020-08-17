@@ -8,15 +8,8 @@ import MoreFilterPartsDropdown from 'components/MoreFilters';
 import { fetchFilterParts, setAddedFilterParts } from '../logic/actions';
 import { FilterPartState } from '../logic/state';
 import { useTranslation } from 'react-i18next';
-import { filterDefsIDS } from 'constants/FilterDef';
 import { useParams } from 'react-router';
-
-const QUICK_FILTER_IDS = [
-	filterDefsIDS.PROJECTS,
-	filterDefsIDS.STATUS,
-	filterDefsIDS.ISSUE_TYPE,
-	filterDefsIDS.ASSIGNEE,
-];
+import { getDefaultFilterParts, getAdditionalFilterParts } from '../logic/helpers';
 
 const AdvancedFilters: React.FC = () => {
 	const dispatch = useDispatch();
@@ -31,28 +24,19 @@ const AdvancedFilters: React.FC = () => {
 		}
 	}, [dispatch, isFilterDefLoading, filterId]);
 
-	const getAdditionalFilterParts = () => {
-		return filterParts.filter(
-			({ filterDef }) => !QUICK_FILTER_IDS.some((quickFilterID) => filterDef.id === quickFilterID),
-		);
-	};
-	const getDefaultFilterParts = () => {
-		return filterParts.filter(({ filterDef }) =>
-			QUICK_FILTER_IDS.some((quickFilterID) => filterDef.id === quickFilterID),
-		);
-	};
 	const setAddedFilterPartsHandler = (addedFilterParts: FilterPartState[]) => {
 		dispatch(setAddedFilterParts({ addedFilterParts }));
 	};
+
 	return (
 		<div className={styles.bottomBarWrapper}>
 			<Form>
 				<Form.Group className={styles.searchContentContainer}>
-					{getDefaultFilterParts().map((part) => (
+					{getDefaultFilterParts(filterParts).map((part) => (
 						<FilterPart key={part.id} filterPart={part} />
 					))}
 					<MoreFilterPartsDropdown
-						additionalFilterParts={getAdditionalFilterParts()}
+						additionalFilterParts={getAdditionalFilterParts(filterParts)}
 						addedFilterParts={addedFilterParts}
 						setAddedFilterParts={(data) => setAddedFilterPartsHandler(data)}
 					/>
