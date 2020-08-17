@@ -56,17 +56,16 @@ const CreateProjectModal: React.FC = () => {
 	};
 
 	const onCreateProject = (): void => {
-		if (!isKeyTouched) {
-			const isGeneratedKeyValid = validator.isLength(key, { min: 2 });
-			if (isGeneratedKeyValid && isNameValid) {
-				startCreatingProject();
-			}
+		if (!isKeyTouched && !isNameValid) {
+			setIsValidErrorShown(true);
+			return;
 		}
 
 		if (!isNameValid || !isKeyValid) {
 			setIsValidErrorShown(true);
 			return;
 		}
+
 		startCreatingProject();
 	};
 
