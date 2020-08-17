@@ -18,6 +18,23 @@ const SprintModal = (props: Props) => {
 	const scrumBoardState = useSelector((rootState: RootState) => rootState.scrumBoard);
 	const { sprintName, sprintId, sprintIssues } = props;
 
+	const handleNoButtonClick = () => {
+		props.clickAction();
+	};
+
+	const handleYesButtonClick = () => {
+		if (sprintIssues.length > 0) {
+			NotificationManager.error('Sprint cannot be deleted', 'Error');
+		}
+
+		if (sprintIssues.length === 0) {
+			dispatch(actions.deleteSprintTrigger({ sprintId }));
+			dispatch(actions.loadSprintsTrigger({ boardId: scrumBoardState.sprints[0].board?.id as string })); // WILL BE REFACTORED
+		}
+
+		props.clickAction();
+	};
+
 	return (
 		<Modal basic onClose={props.clickAction} open={props.isOpen} size="small">
 			<Header icon>
@@ -28,28 +45,10 @@ const SprintModal = (props: Props) => {
 				<p>Are you sure you want to delete this sprint? This action cannot be undone.</p>
 			</Modal.Content>
 			<Modal.Actions>
-				<Button color="red" inverted onClick={props.clickAction}>
+				<Button color="red" inverted onClick={handleNoButtonClick}>
 					<Icon name="remove" /> No
 				</Button>
-				<Button
-					basic
-					color="green"
-					inverted
-					onClick={() => {
-						if (sprintIssues.length > 0) {
-							NotificationManager.error('Sprint cannot be deleted', 'Error');
-						}
-
-						if (sprintIssues.length === 0) {
-							dispatch(actions.deleteSprintTrigger({ sprintId }));
-							dispatch(
-								actions.loadSprintsTrigger({ boardId: scrumBoardState.sprints[0].board?.id as string }),
-							); // WILL BE REFACTORED
-						}
-
-						props.clickAction();
-					}}
-				>
+				<Button basic color="green" inverted onClick={handleYesButtonClick}>
 					<Icon name="checkmark" /> Yes
 				</Button>
 			</Modal.Actions>
