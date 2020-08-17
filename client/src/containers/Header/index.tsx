@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Menu, Image, Dropdown, Button, Icon } from 'semantic-ui-react';
 import logo from 'assets/logo192.png'; // TODO: replace with logo once it is ready
 import styles from './styles.module.scss';
-import { Redirect } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import ProjectsMenu from 'components/ProjectsMenu';
 import FiltersMenu from 'components/FiltersMenu';
 import BoardsMenu from '../../components/BoardsMenu';
@@ -11,6 +11,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'typings/rootState';
 import { removeToken } from 'helpers/setToken.helper';
 import * as actions from 'containers/LoginPage/logic/actions';
+import * as boardAction from 'containers/Boards/logic/actions';
+import { createBoard } from 'containers/Boards/logic/actionTypes';
 import { User } from 'containers/LoginPage/logic/state';
 import { useTranslation } from 'react-i18next';
 import CreateIssueModal from 'containers/CreateIssueModal';
@@ -30,6 +32,9 @@ export const HeaderMenu = () => {
 	const logOutHandler = () => {
 		dispatch(actions.logOutUserTrigger());
 		removeToken();
+	};
+	const onCreateBoard = (board: createBoard) => {
+		dispatch(boardAction.createBoard({ ...board }));
 	};
 
 	const toggleActiveItem: (name: string) => void = (name) => {
@@ -55,18 +60,18 @@ export const HeaderMenu = () => {
 						active={activeItem === 'your-work'}
 						onClick={() => toggleActiveItem('your-work')}
 					>
-						{t('your_work')}
+						<Link to="#">{t('your_work')}</Link>
 					</Menu.Item>
 					<ProjectsMenu />
 					<FiltersMenu />
 					<DashboardsMenu />
-					<BoardsMenu />
+					<BoardsMenu onCreateBoard={onCreateBoard} />
 					<Menu.Item
 						name="people"
 						active={activeItem === 'people'}
 						onClick={() => toggleActiveItem('people')}
 					>
-						{t('people')}
+						<Link to="/people"> {t('people')} </Link>
 					</Menu.Item>
 					<CreateIssueModal>
 						<Menu.Item
@@ -103,10 +108,12 @@ export const HeaderMenu = () => {
 								>
 									<Dropdown.Menu className={styles.circularDropdownMenu}>
 										<Dropdown.Header>{`${user?.firstName} ${user?.lastName}`}</Dropdown.Header>
-										<Dropdown.Item as="a" href={`/profile/${user?.id}`}>
-											{t('profile')}
+										<Dropdown.Item>
+											<Link to={`/profile/${user?.id}`}>{t('profile')}</Link>
 										</Dropdown.Item>
-										<Dropdown.Item>{t('acc_settings')}</Dropdown.Item>
+										<Dropdown.Item>
+											<Link to={`/profile/${user?.id}`}>{t('acc_settings')}</Link>
+										</Dropdown.Item>
 										<Dropdown.Divider />
 										<Dropdown.Item onClick={logOutHandler}>{t('log_out')}</Dropdown.Item>
 									</Dropdown.Menu>

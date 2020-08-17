@@ -121,7 +121,12 @@
 	height: 50px;
 	margin-right: 10px;
 }
-
+a {
+	color: inherit !important;
+	&:hover {
+		color: inherit !important;
+	}
+}
 .userBlock {
 	display: flex;
 	justify-content: center;

@@ -4,7 +4,6 @@ import PrivateRoute from 'components/PrivateRoute';
 import Login from 'pages/LogIn';
 import Team from 'pages/Team';
 import Profile from 'pages/Profile';
-import CreateTeamModal from 'components/CreateTeamModal';
 import PublicRoute from 'components/PublicRoute';
 import SignUp from 'pages/SignUp';
 import Filters from 'pages/Filters';
@@ -45,14 +44,13 @@ const Routing: React.FC = () => {
 			<PrivateRoute exact path="/projects/projectSettings/:id" component={ProjectSettings} />
 			<PrivateRoute exact path="/team/:id" component={Team} />
 			<PrivateRoute exact path="/profile/:id" component={Profile} />
-			<PrivateRoute exact path="/team" component={CreateTeamModal} />
 			<PrivateRoute exact path="/filters" component={Filters} />
 			<PrivateRoute path="/board/:id" component={BoardPage} />
 			<PrivateRoute path="/project/:id/issues" component={ProjectIssues} />
 			<PrivateRoute exact path="/people" component={PeoplePage} />
 			<PrivateRoute exact path="/advancedSearch" component={Search} />
-			<PublicRoute restricted={false} path="*" component={NotFound} />
 			<PrivateRoute exact path="/boards" component={BoardsPage} />
+			<PublicRoute restricted={false} path="*" component={NotFound} />
 		</Switch>
 	);
 };

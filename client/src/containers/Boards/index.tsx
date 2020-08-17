@@ -6,6 +6,7 @@ import * as actions from './logic/actions';
 import { createBoard } from './logic/actionTypes';
 import Options, { ItemProps } from '../../components/common/Options';
 import CreateBoardModal from '../../components/CreateBoardModal';
+import { Link } from 'react-router-dom';
 
 import styles from './styles.module.scss';
 
@@ -111,9 +112,13 @@ const Boards: React.FC = () => {
 						{filteredData.map(({ name, id, boardType, createdBy: user }) => {
 							return (
 								<Table.Row key={id}>
-									<Table.Cell>{name}</Table.Cell>
+									<Table.Cell>
+										<Link to={`/board/${id}`}>{name}</Link>
+									</Table.Cell>
 									<Table.Cell>{boardType}</Table.Cell>
-									<Table.Cell>{`${user.firstName} ${user.lastName}`}</Table.Cell>
+									<Table.Cell>
+										<Link to={`/profile/${user.id}`}>{`${user.firstName} ${user.lastName}`}</Link>
+									</Table.Cell>
 									<Table.Cell>
 										<Options config={getBoardMenuActions(id)} />
 									</Table.Cell>
