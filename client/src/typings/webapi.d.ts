@@ -179,7 +179,7 @@ namespace WebApi.Entities {
 		id: string;
 		filter?: Filter;
 		filterDef?: FilterDefinition;
-		members?: UserProfile[];
+		members?: string[];
 		searchText?: string;
 	}
 
