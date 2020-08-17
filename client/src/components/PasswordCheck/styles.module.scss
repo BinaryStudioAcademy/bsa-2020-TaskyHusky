@@ -20,14 +20,14 @@
   display: flex;
   justify-content: space-between;
   margin: 15px 0 20px;
-
-  &__line {
-    border-radius: 6px;
-    height: 8px;
-    width: 30%;
-  }
 }
 
 .hidden {
   display: none;
+}
+
+.line {
+  border-radius: 6px;
+  height: 8px;
+  width: 30%;
 }

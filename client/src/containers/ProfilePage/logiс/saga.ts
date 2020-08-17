@@ -27,7 +27,6 @@ function* changePassword(action: ReturnType<typeof actions.requestChangePassword
 		yield call(requestChangePassword, oldPassword, newPassword);
 		NotificationManager.success('Password was updated', 'Success', 4000);
 	} catch (error) {
-		console.log(error);
 		NotificationManager.error('Could not update password', 'Error', 4000);
 	}
 }

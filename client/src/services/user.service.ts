@@ -12,7 +12,6 @@ export const requestGetUser = async (id: string): Promise<WebApi.Entities.UserPr
 };
 
 export const requestUdateAvatar = async (image: File): Promise<WebApi.Entities.UserProfile> => {
-	console.log(image);
 	const res = await callWebApi({
 		method: 'POST',
 		endpoint: `user/avatar`,

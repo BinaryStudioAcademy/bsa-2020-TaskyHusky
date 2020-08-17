@@ -1,24 +1,21 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, JoinTable, ManyToOne } from 'typeorm';
-import { IsString, IsUUID } from 'class-validator';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import { IsString } from 'class-validator';
 import { FilterDefinition } from './FilterDefinition';
 import { Filter } from './Filter';
-import { UserProfile } from './UserProfile';
 
 @Entity()
 export class FilterPart {
 	@PrimaryGeneratedColumn('uuid')
 	id!: string;
 
-	@ManyToOne((type) => Filter, (filter) => filter.filterParts)
+	@ManyToOne((type) => Filter, (filter) => filter.id, { onDelete: 'CASCADE' })
 	filter?: Filter;
 
 	@ManyToOne((type) => FilterDefinition, (filterDefinition) => filterDefinition.filterParts)
 	filterDef?: FilterDefinition;
 
-	// TODO: can be any of existing entity - you filter tasks by userID or taskType, or some string etc... (or empty);
-	@ManyToMany((type) => UserProfile)
-	@JoinTable()
-	members?: UserProfile[];
+	@Column({ type: 'simple-array' })
+	members?: string[];
 
 	@Column()
 	@IsString()

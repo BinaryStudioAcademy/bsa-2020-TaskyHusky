@@ -12,6 +12,8 @@ import { filterDefsReducer } from 'commonLogic/filterDefs/reducer';
 import { saveFilterReducer } from './../containers/SaveFilterModal/logic/reducer';
 import { usersReducer } from 'commonLogic/users/reducer';
 import { advancedSearchReducer } from 'containers/AdvancedSearch/logic/reducer';
+import { peoplePageReducer } from '../containers/People/logic/reducer';
+import { peoplePageSearchReducer } from '../containers/SearchPeopleAndTeamField/logic/reducer';
 import { boardReducer } from '../containers/Boards/logic/reducer';
 
 const rootReducer: Reducer<RootState> = combineReducers({
@@ -28,6 +30,8 @@ const rootReducer: Reducer<RootState> = combineReducers({
 	saveFilter: saveFilterReducer,
 	users: usersReducer,
 	advancedSearch: advancedSearchReducer,
+	peoplePage: peoplePageReducer,
+	peoplePageSearch: peoplePageSearchReducer,
 });
 
 export default rootReducer;

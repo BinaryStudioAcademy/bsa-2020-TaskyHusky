@@ -19,7 +19,7 @@ export class Team {
 	users?: UserProfile[];
 
 	@ManyToOne(() => UserProfile, (user: UserProfile) => user.teamsOwner)
-	createdBy?: UserProfile;
+	createdBy!: UserProfile;
 
 	@Column()
 	name?: string;

@@ -6,6 +6,10 @@ import { TeamRepository } from './teams.repository';
 
 @EntityRepository(UserProfile)
 export class UserRepository extends Repository<UserProfile> {
+	getAll() {
+		return this.findAll();
+	}
+
 	async getById(id: string): Promise<any> {
 		const user = await this.findOne({ where: { id } });
 		if (!user) {
