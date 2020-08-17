@@ -30,12 +30,12 @@ export const ForgotPassword: React.FC = () => {
 			<Grid verticalAlign="middle" className={styles.grid}>
 				<Grid.Column className={styles.column}>
 					<Header as="h1" color="blue" className={styles.mainHeader}>
-						{t('reset_password_header')}
+						{t('forgot_password_header')}
 					</Header>
 					<Segment>
 						{!isEmailSent && (
 							<Form onSubmit={handleSubmit}>
-								<p>{t('reset_password_email_link')}</p>
+								<p>{t('forgot_password_email_link')}</p>
 								<Form.Input
 									placeholder={t('email')}
 									type="text"
@@ -46,7 +46,7 @@ export const ForgotPassword: React.FC = () => {
 									}}
 								/>
 								<Button positive className={styles.continueButton}>
-									{t('reset_password_button')}
+									{t('forgot_password_button')}
 								</Button>
 							</Form>
 						)}
@@ -54,7 +54,7 @@ export const ForgotPassword: React.FC = () => {
 							<Container>
 								<Image size="small" src={emailSent} centered />
 								<div className={styles.textBlock}>
-									<p>{t('reset_password_email_sent_message')}</p>
+									<p>{t('forgot_password_email_sent_message')}</p>
 									<p>{email}</p>
 								</div>
 							</Container>
@@ -62,14 +62,14 @@ export const ForgotPassword: React.FC = () => {
 						<Divider />
 						<List bulleted horizontal link className={styles.list}>
 							<List.Item className={styles.listItem}>
-								<Link to="/login" children={t('reset_password_return_button')} />
+								<Link to="/login" children={t('forgot_password_return_button')} />
 							</List.Item>
 							{isEmailSent && (
 								<List.Item className={styles.listItem}>
 									<Link
 										to="/"
 										onClick={returnToRecovery}
-										children={t('reset_password_resend_email')}
+										children={t('forgot_password_resend_email')}
 									/>
 								</List.Item>
 							)}
