@@ -1,17 +1,17 @@
-@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap');
-@import './variables.scss';
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap");
+@import "./variables.scss";
 
 body {
 	margin: 0;
-	font-family: 'Lato', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell',
-		'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+	font-family: "Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
+		"Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	background-color: $body-bg;
 }
 
 code {
-	font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+	font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
 label {
@@ -20,7 +20,7 @@ label {
 	left: 5px;
 }
 
-.site-header>.menu>.item:not(.createMenuItem):not(.right):not(.site-logo) {
+.site-header > .menu > .item:not(.createMenuItem):not(.right):not(.site-logo) {
 	border-radius: 1px !important;
 	background-color: #ffffff !important;
 	box-sizing: border-box;
@@ -49,13 +49,13 @@ label {
 	}
 }
 
-.site-header>.menu>.item.site-logo {
+.site-header > .menu > .item.site-logo {
 	.site-logo-text {
 		padding: 5px 10px;
 		border-radius: 2px;
 	}
 
-	&:hover>.site-logo-text {
+	&:hover > .site-logo-text {
 		background-color: rgba(0, 0, 0, 0.05) !important;
 	}
 }
@@ -70,7 +70,7 @@ label {
 
 .required:after {
 	color: red;
-	content: '*';
+	content: "*";
 }
 
 * {
@@ -81,4 +81,11 @@ label {
 .fill {
 	width: 100%;
 	height: 100%;
+}
+
+@media only screen and (max-width: 767px) {
+	.ui.container {
+		margin-left: 0 !important;
+		margin-right: 0 !important;
+	}
 }
