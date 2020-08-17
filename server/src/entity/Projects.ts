@@ -4,6 +4,7 @@ import { Issue } from './Issue';
 import { Sprint } from './Sprint';
 import { Board } from './Board';
 import { UserProfile } from './UserProfile';
+import { Team } from './Team';
 
 @Entity()
 export class Projects {
@@ -39,6 +40,9 @@ export class Projects {
 	@ManyToOne((type) => UserProfile, (userProfile) => userProfile.createdProjects, { cascade: true })
 	@IsNotEmpty()
 	creator!: UserProfile;
+
+	@ManyToOne((type) => Team, (team) => team.projects)
+	team?: Team;
 
 	@OneToMany((type) => Issue, (issue) => issue.project)
 	issues?: Issue[];

@@ -116,7 +116,8 @@ namespace WebApi.Team {
 		users?: UserProfile[];
 		loading: boolean;
 		color?: string;
-		createdBy?: UserProfile
+		createdBy?: UserProfile;
+		projects?: Projects[];
 	}
 }
 namespace WebApi.User {

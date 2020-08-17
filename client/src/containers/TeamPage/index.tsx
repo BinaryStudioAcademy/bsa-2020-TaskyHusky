@@ -5,7 +5,6 @@ import validator from 'validator';
 import styles from './styles.module.scss';
 import TeamDevsCard from 'components/TeamDevsCard';
 import TeamsMembersCard from 'components/TeamsMembersCard';
-import TeamNotification from 'components/TeamNotification';
 import TeamWorkedProjects from 'components/TeamWorkedProjects';
 import TeamLinks from 'components/TeamLinks';
 import * as actions from './logic/actions';
@@ -102,7 +101,7 @@ const TeamPage = ({ match: { params }, currentTeam: { team } }: { match: Match; 
 					<TeamsMembersCard teammates={team.users} title={'Members'} />
 				</Grid.Column>
 				<Grid.Column width="8" className={styles.col_media}>
-					<TeamWorkedProjects />
+					<TeamWorkedProjects projects={team.projects} />
 					<TeamLinks
 						currentLinks={team.links ?? []}
 						edit={editLink}

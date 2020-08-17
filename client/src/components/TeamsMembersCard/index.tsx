@@ -48,30 +48,32 @@ const TeamsMembersCard = ({ teammates, title }: Props) => {
 					{title === 'Members' && ` ${teammates?.length}  ${t('members')}`}
 				</span>
 			</Card.Meta>
-			{teammates?.map((el) => {
-				return (
-					<Card.Content key={el.id}>
-						<div
-							className={styles.card_body}
-							onMouseEnter={() => onHover(el)}
-							onMouseLeave={(e) => hideModal(e)}
-						>
-							<div className={styles.icon}>
-								<Link to={`/profile/${el.id}`}>
-									<Avatar fullName={fullUserName(el.firstName, el.lastName)} imgSrc={el.avatar} />
-								</Link>
-							</div>
-							<div className={styles.user_info}>
-								<p> {fullUserName(el.firstName, el.lastName)}</p>
-								<p className={styles.metainfo}>{el.jobTitle}</p>
-							</div>
-							{modal && viewUser?.id === el.id && (
-								<ModalViewProfile user={viewUser} onClose={hideModal} color={bgColor} />
-							)}
+			{teammates?.map((el) => (
+				<Card.Content key={el.id}>
+					<div
+						className={styles.card_body}
+						onMouseEnter={() => onHover(el)}
+						onMouseLeave={(e) => hideModal(e)}
+					>
+						<div className={styles.icon}>
+							<Link to={`/profile/${el.id}`}>
+								<Avatar
+									key={el.id}
+									fullName={fullUserName(el.firstName, el.lastName)}
+									imgSrc={el.avatar}
+								/>
+							</Link>
 						</div>
-					</Card.Content>
-				);
-			})}
+						<div className={styles.user_info}>
+							<p> {fullUserName(el.firstName, el.lastName)}</p>
+							<p className={styles.metainfo}>{el.jobTitle}</p>
+						</div>
+						{modal && viewUser?.id === el.id && (
+							<ModalViewProfile key={el.id} user={viewUser} onClose={hideModal} color={bgColor} />
+						)}
+					</div>
+				</Card.Content>
+			))}
 		</Card>
 	);
 };

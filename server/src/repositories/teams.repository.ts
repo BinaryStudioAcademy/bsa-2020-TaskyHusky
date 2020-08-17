@@ -11,6 +11,7 @@ export class TeamRepository extends Repository<Team> {
 		const team = await this.createQueryBuilder('Team')
 			.leftJoinAndSelect('Team.createdBy', 'User')
 			.leftJoinAndSelect('Team.users', 'Users')
+			.leftJoinAndSelect('Team.projects', 'Projects')
 			.select([
 				'Team.id',
 				'Team.name',
@@ -33,6 +34,10 @@ export class TeamRepository extends Repository<Team> {
 				'Users.location',
 				'Users.avatar',
 				'Users.department',
+				'Projects.id',
+				'Projects.name',
+				'Projects.category',
+				'Projects.key',
 			])
 			.where('Team.id = :id', { id })
 			.getOne();
