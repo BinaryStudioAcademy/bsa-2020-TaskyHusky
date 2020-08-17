@@ -8,7 +8,7 @@ export class FilterRepository extends Repository<Filter> {
 	}
 
 	getAll(): Promise<Filter[]> {
-		return this.find({ relations: ['staredBy', 'owner'] });
+		return this.find({ relations: ['owner', 'staredBy', 'filterParts'] });
 	}
 
 	getById(id: string) {

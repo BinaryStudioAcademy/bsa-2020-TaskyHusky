@@ -1,9 +1,6 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 import styles from './styles.module.scss';
 import ProfilePicture from 'components/ProfilePicture';
-import { Segment } from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
 import ProfileAboutBlock from 'components/ProfileAboutBlock';
 import ProfileContacntBlock from 'components/ProfileContactBlock';
 import ProfileTeamBlock from 'components/ProfileTeamBlock';
@@ -18,7 +15,6 @@ interface Props {
 }
 
 const ProfileAside: React.FC<Props> = (props: Props) => {
-	const { t } = useTranslation();
 	const { user, isCurrentUser, mockData, showManager } = props;
 	const {
 		avatar = '',
@@ -43,7 +39,7 @@ const ProfileAside: React.FC<Props> = (props: Props) => {
 				isCurrentUser={isCurrentUser}
 				showManager={showManager}
 			/>
-			<Segment>
+			<div>
 				{editMode ? (
 					<ManagerAsideBlock showManager={showManager} />
 				) : (
@@ -55,14 +51,11 @@ const ProfileAside: React.FC<Props> = (props: Props) => {
 							location={location}
 							isCurrentUser={isCurrentUser}
 						/>
-						<ProfileContacntBlock email={email} isCurrentUser={isCurrentUser} />
-						<ProfileTeamBlock isCurrentUser={isCurrentUser} mockData={mockData} />
-						<Link to="#" className={styles.policyLink}>
-							{t('view_privacy_policy')}
-						</Link>
+						<ProfileContacntBlock email={email} />
+						<ProfileTeamBlock mockData={mockData} />
 					</>
 				)}
-			</Segment>
+			</div>
 		</aside>
 	);
 };
