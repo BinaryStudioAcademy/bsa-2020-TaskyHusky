@@ -43,18 +43,16 @@ const ProfilePicture: React.FC<Props> = (props: Props) => {
 		<>
 			<div className={styles.container}>
 				<div className={styles.mainInfo}>
-					<div className={styles.mainInfo__avatarContainer}>
-						<div className={styles.mainInfo__borderHelper}>
+					<div className={styles.avatarContainer}>
+						<div className={styles.borderHelper}>
 							{uploadUrl ? (
-								<img src={uploadUrl as string} className={styles.mainInfo__avatar} alt="Avatar" />
+								<img src={uploadUrl as string} className={styles.avatar} alt="Avatar" />
 							) : avatar ? (
-								<img src={avatar} className={styles.mainInfo__avatar} alt="Avatar" />
+								<img src={avatar} className={styles.avatar} alt="Avatar" />
 							) : (
-								<h1 className={styles.mainInfo__initials}>
-									{getInitials({ id: '', firstName, lastName })}
-								</h1>
+								<h1 className={styles.initials}>{getInitials({ id: '', firstName, lastName })}</h1>
 							)}
-							<Icon name="photo" size="big" className={styles.mainInfo__editBtn} />
+							<Icon name="photo" size="big" className={styles.editBtn} />
 							<input
 								accept="image/*"
 								id="contained-button-file"
@@ -65,10 +63,10 @@ const ProfilePicture: React.FC<Props> = (props: Props) => {
 							/>
 						</div>
 					</div>
-					<Header as="h2" className={styles.mainInfo__fullName}>
+					<Header as="h2" className={styles.fullName}>
 						{firstName} {lastName}
 					</Header>
-					{username && <p className={styles.mainInfo__username}>{username}</p>}
+					{username && <p className={styles.username}>{username}</p>}
 				</div>
 				{isCurrentUser && showManager && (
 					<Button

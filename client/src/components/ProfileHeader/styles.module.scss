@@ -5,8 +5,8 @@
   height: 90px;
   border-bottom: 1px solid $ligth-gray;
   padding: 34px 13% 21px;
+}
 
-  &__content {
-    @include primary-header;
-  }
+.content {
+  @include primary-header;
 }
