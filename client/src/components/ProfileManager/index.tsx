@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './styles.module.scss';
-import { Header, Segment, Form, Button } from 'semantic-ui-react';
+import { Form, Button } from 'semantic-ui-react';
 import SubmitedInput from 'components/SubmitedInput';
 import { requestUpdateUser } from 'containers/ProfilePage/logiс/actions';
 import { UserProfileState } from 'containers/ProfilePage/logiс/state';
@@ -36,8 +36,8 @@ const ProfileManager: React.FC<Props> = (props: Props) => {
 	};
 	return (
 		<section className={styles.container}>
-			<Header as="h3">{t('about_you')}</Header>
-			<Segment className={styles.card}>
+			<h3 className={styles.header}>{t('about_you')}</h3>
+			<div className={styles.card}>
 				<Form onSubmit={onSubmit}>
 					<SubmitedInput
 						handleChange={handleChange}
@@ -99,12 +99,12 @@ const ProfileManager: React.FC<Props> = (props: Props) => {
 						<Button className={styles.submitButton} type="submit">
 							{t('save_changes')}
 						</Button>
-						<Button type="text" onClick={onCancel}>
+						<Button type="text" onClick={onCancel} className={styles.secondaryButton}>
 							{t('cancel')}
 						</Button>
 					</Form.Field>
 				</Form>
-			</Segment>
+			</div>
 		</section>
 	);
 };

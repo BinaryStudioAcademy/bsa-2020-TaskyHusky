@@ -4,24 +4,48 @@
   @include profile-container;
 }
 
+.header {
+  @include manager-header;
+}
+
 .card {
-  @include profile-card;
+  @include card-container;
+
+  &__header {
+    @include info-block-header;
+    font-size: 14px;
+  }
+
+  &__textData {
+    @include text-data;
+  }
 }
 
 .checkbox {
   display: block !important;
   margin: 15px 0;
+  @include text-data;
 }
 
 .submitButton {
   margin-top: 20px !important;
+  @include content-btn;
   background-color: #76ef8a !important;
 }
 
 .select {
   margin: 20px 0 !important;
+  @include text-data;
 }
 
 .errorPopup {
   @include error-popup;
+}
+
+@media screen and (max-width: $less-than-medium-screen) {
+  .container {
+    margin-top: 50px;
+    width: 100%;
+    padding: 0;
+  }
 }

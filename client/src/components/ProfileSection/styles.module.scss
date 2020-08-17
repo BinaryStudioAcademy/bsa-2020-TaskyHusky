@@ -1,10 +1,8 @@
+@import 'styles/mixins.scss';
+
 .mainInfo {
   width: 70%;
-  padding: 0 0 0 50px;
-}
-
-.card {
-  margin: 40px 0 !important;
+  padding: 0 0 0 40px;
 }
 
 .emptyCard {
@@ -15,5 +13,26 @@
 
   &__image {
     margin-right: 40px;
+  }
+}
+
+.header {
+  // display: flex;
+  // align-items: center;
+  @include manager-header;
+  margin: 0;
+
+  &__secondary {
+    @include secondary-content;
+    color: $private-message;
+    margin-bottom: 18px;
+  }
+}
+
+@media screen and (max-width: $less-than-medium-screen) {
+  .mainInfo {
+    margin-top: 50px;
+    width: 100%;
+    padding: 0;
   }
 }

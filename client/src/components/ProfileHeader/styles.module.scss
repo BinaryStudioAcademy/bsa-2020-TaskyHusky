@@ -1,5 +1,12 @@
+@import 'styles/mixins.scss';
+
 .header {
-  background: linear-gradient(to right, rgba(255, 75, 0, 0.31) 0px, rgba(255, 75, 0, 0.23) 35%, rgba(255, 75, 0, 0.14) 70%, rgba(0, 0, 0, 0) 100%);
-  height: 190px;
-  color: rgb(255, 255, 255);
+  background: $body-bg;
+  height: 90px;
+  border-bottom: 1px solid $ligth-gray;
+  padding: 34px 13% 21px;
+
+  &__content {
+    @include primary-header;
+  }
 }
