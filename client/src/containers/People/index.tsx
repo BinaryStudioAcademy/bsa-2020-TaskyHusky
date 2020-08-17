@@ -19,7 +19,7 @@ const People: React.FC = (): ReactElement => {
 
 	useEffect((): void => {
 		dispatch(actions.startLoading());
-	}, []);
+	}, [dispatch]);
 
 	const redirectToPersonProfile = (id: string) => {
 		history.push(`/profile/${id}`);

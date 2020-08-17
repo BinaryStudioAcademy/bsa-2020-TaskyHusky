@@ -5,12 +5,12 @@ import { addTeam } from '../../services/team.service';
 import style from './style.module.scss';
 import linksImg from 'assets/images/create-new-team.svg';
 
-interface AddTeamPopup {
+interface Props {
 	isOpen: boolean;
 	closeClb: () => void;
 }
 
-const AddTeamPopup: React.FC<AddTeamPopup> = ({ isOpen = false, closeClb }): ReactElement => {
+const AddTeamPopup: React.FC<Props> = ({ isOpen = false, closeClb }): ReactElement => {
 	const [teamName, setTeamName] = useState<string>('');
 	const [commonError, setCommonError] = useState<string | null>(null);
 	const [errorTeamName, setErrorTeamName] = useState<null | string>(null);

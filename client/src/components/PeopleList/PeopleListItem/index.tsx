@@ -2,12 +2,12 @@ import React, { ReactElement } from 'react';
 import { Card, Image } from 'semantic-ui-react';
 import style from './style.module.scss';
 
-interface PeopleListItem {
+interface Props {
 	person: WebApi.Entities.UserProfile;
 	handlerClick?: () => void;
 }
 
-const PeopleListItem: React.FC<PeopleListItem> = ({ person, handlerClick }): ReactElement => {
+const PeopleListItem: React.FC<Props> = ({ person, handlerClick }): ReactElement => {
 	const { firstName, lastName, avatar, jobTitle } = person;
 
 	return (

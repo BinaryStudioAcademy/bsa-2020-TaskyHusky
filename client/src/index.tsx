@@ -6,7 +6,6 @@ import configureLanguages from './config/i18n.config';
 import 'semantic-ui-css/semantic.min.css';
 import 'react-notifications/lib/notifications.css';
 import 'styles/index.scss';
-// import './fakeServer/index.js'; //uncomment for work with fake server
 
 configureLanguages();
 

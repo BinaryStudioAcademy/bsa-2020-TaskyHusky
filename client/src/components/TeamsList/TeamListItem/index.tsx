@@ -2,12 +2,12 @@ import React, { ReactElement } from 'react';
 import { Card, Image } from 'semantic-ui-react';
 import style from './style.module.scss';
 
-interface TeamListItem {
+interface Props {
 	team: WebApi.Entities.Team;
 	handlerClick?: () => void;
 }
 
-const TeamListItem: React.FC<TeamListItem> = ({ team, handlerClick }): ReactElement => {
+const TeamListItem: React.FC<Props> = ({ team, handlerClick }): ReactElement => {
 	const {
 		color,
 		name,
