@@ -8,15 +8,7 @@
 
 @mixin profile-container {
   width: 70%;
-  padding: 0 0 0 50px;
-}
-
-@mixin profile-card {
-  padding: 40px !important;
-}
-
-@mixin info-block-header {
-  margin: 25px 0 !important;
+  padding: 0 0 0 40px;
 }
 
 @mixin info-block-item {
@@ -31,17 +23,11 @@
   display: flex;
   justify-content: center;
   border-radius: 50%;
-  background-color: #5b3232;
   align-items: center;
-}
-
-@mixin info-block-group-icon-item {
-  color: $body-bg;
 }
 
 
 @mixin info-block-content {
-  font-size: 16px;
   margin: 0 0 0 16px;
 }
 
@@ -56,4 +42,84 @@
 
 @mixin never-point {
   cursor: not-allowed;
+}
+
+@mixin primary-box {
+  background-color: $primary-bg;
+  box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.25);
+}
+
+@mixin primary-header {
+  color: $header-text !important;
+  font-style: normal;
+  font-weight: 600 !important;
+  font-size: 24px !important;
+  line-height: 36px !important;
+  font-family: "Poppins", sans-serif !important;
+  word-break: break-word;
+}
+
+@mixin primary-content {
+  font-family: Poppins, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 24px;
+  color: $primary-text;
+  word-break: break-word;
+}
+
+@mixin secondary-content {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 24px;
+  letter-spacing: 0.44px;
+  color: $medium-gray;
+  font-family: "Inter", sans-serif !important;
+  word-break: break-word;
+}
+
+@mixin text-data {
+  font-family: Poppins, sans-serif !important;
+  font-style: normal !important;
+  font-weight: 500 !important;
+  font-size: 13px !important;
+  line-height: 19px !important;
+  color: $dark-black !important;
+  word-break: break-word;
+}
+
+@mixin content-btn {
+  border: 1px solid $dark-black !important;
+  box-sizing: border-box;
+  border-radius: 5px !important;
+  @include text-data;
+  background-color: #FFFFFF !important;
+}
+
+@mixin info-block-header {
+  margin: 25px 0 !important;
+  font-family: Inter, sans-serif !important;
+  font-style: normal !important;
+  font-weight: bold !important;
+  font-size: 16px !important;
+  line-height: 32px !important;
+  letter-spacing: 0.15px !important;
+  color: $primary-text !important;
+}
+
+@mixin manager-header {
+  font-family: Poppins, sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 36px;
+  color: $header-text;
+}
+
+@mixin card-container {
+  background: $primary-bg;
+  box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.25);
+  padding: 40px;
 }
