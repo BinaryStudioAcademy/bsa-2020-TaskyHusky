@@ -5,8 +5,12 @@ import * as actionTypes from './actionTypes';
 import * as actions from './actions';
 
 export function* fetchProject({ id }: ReturnType<typeof actions.startGettingProject>) {
-	const project = yield call(getProjectById, id);
-	yield put(actions.successGettingProject({ project }));
+	try {
+		const project = yield call(getProjectById, id);
+		yield put(actions.successGettingProject({ project }));
+	} catch (error) {
+		yield put(actions.failGettingProject());
+	}
 }
 
 function* watchGetProject() {
