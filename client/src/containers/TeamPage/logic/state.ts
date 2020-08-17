@@ -9,6 +9,7 @@ export type Team = {
 
 export interface TeamState {
 	team: Team;
+	loading: boolean
 }
 
 export const initialState: TeamState = {
@@ -20,4 +21,5 @@ export const initialState: TeamState = {
 		members: [],
 		loading: false
 	},
+	loading: false
 };

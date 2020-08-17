@@ -29,8 +29,13 @@ export interface Link {
 	name: string;
 	description: string;
 }
+type Props = {
+	match: Match;
+	currentTeam: Team;
+	loading: boolean;
+};
 
-const TeamPage = ({ match: { params }, currentTeam: { team } }: { match: Match; currentTeam: Team }) => {
+const TeamPage = ({ match: { params }, currentTeam: { team }, loading }: Props) => {
 	const [notification, setNotification] = useState<boolean>(true);
 	const [addPeopleModal, setAddPeopleModal] = useState<boolean>(false);
 	const [editedLink, setEditedLink] = useState<Link | undefined>();
@@ -85,7 +90,7 @@ const TeamPage = ({ match: { params }, currentTeam: { team } }: { match: Match; 
 		setEditedLink(undefined);
 	};
 
-	return team.loading ? (
+	return loading ? (
 		<Spinner />
 	) : (
 		<Grid columns="equal" centered>
@@ -124,6 +129,7 @@ const TeamPage = ({ match: { params }, currentTeam: { team } }: { match: Match; 
 
 const mapStateToProps = (state: RootState) => ({
 	currentTeam: state.team,
+	loading: state.team.loading,
 });
 
 export default connect(mapStateToProps)(TeamPage);
