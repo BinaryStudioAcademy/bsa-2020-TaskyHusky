@@ -27,6 +27,31 @@ class TeammatesController {
 		}
 	};
 
+	getTeammates = async (req: Request, res: Response): Promise<void> => {
+		const teammatesRepository = getCustomRepository(TeammatesRepository);
+		const { id } = req.params;
+
+		try {
+			const teammates = await teammatesRepository.getTeammates(id);
+			res.send(teammates);
+		} catch (error) {
+			res.status(404).send(error.message);
+		}
+	};
+
+	changeInviteStatus = async (req: Request, res: Response): Promise<void> => {
+		const teammatesRepository = getCustomRepository(TeammatesRepository);
+		const { id } = req.params;
+		const {id:teamMateId, status}=req.body
+
+		try {
+			await teammatesRepository.changeInviteStatus(id, teamMateId, status==='accept');
+			res.send({status:'Status was successfully sent.'});
+		} catch (error) {
+			res.status(404).send(error.message);
+		}
+	};
+
 	createInvite = async (req: Request, res: Response): Promise<void> => {
 		const teammatesRepository = getCustomRepository(TeammatesRepository);
 		const { id } = req.params;

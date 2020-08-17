@@ -99,6 +99,10 @@ export class UserProfile {
 	@JoinTable()
 	pendingInvites?: UserProfile[];
 
+	@ManyToMany((type) => UserProfile, (userProfile) => userProfile.teammates)
+	@JoinTable()
+	teammates?: UserProfile[];
+
 	constructor(userData: Partial<UserProfile>) {
 		if (userData) {
 			const { email, password, firstName, lastName } = userData;
