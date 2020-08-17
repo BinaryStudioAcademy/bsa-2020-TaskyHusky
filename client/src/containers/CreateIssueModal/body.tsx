@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Modal, Form, Button, Grid, Header, Icon, Divider } from 'semantic-ui-react';
+import { Modal, Form, Button, Header, Icon, Divider } from 'semantic-ui-react';
 import { useCreateIssueModalContext } from './logic/context';
 import TagsInput from 'components/common/TagsInput';
 import { connect, useDispatch, useSelector } from 'react-redux';
@@ -55,8 +55,8 @@ const CreateIssueModalBody: React.FC<Props> = ({
 		value: type.id,
 		text: (
 			<>
-				{type.icon ? <Icon name={type.icon as any} /> : ''}
-				{type.title ?? 'untitled'}
+				{type.icon ? <Icon name={type.icon as any} color={type.color as any} /> : ''}
+				<span style={{ color: type.color }}>{type.title ?? 'untitled'}</span>
 			</>
 		),
 		style: {
@@ -69,8 +69,8 @@ const CreateIssueModalBody: React.FC<Props> = ({
 		value: priority.id,
 		text: (
 			<>
-				{priority.icon ? <Icon name={priority.icon as any} /> : ''}
-				{priority.title ?? 'untitled'}
+				{priority.icon ? <Icon name={priority.icon as any} color={priority.color as any} /> : ''}
+				<span style={{ color: priority.color }}>{priority.title ?? 'untitled'}</span>
 			</>
 		),
 		style: {
@@ -98,7 +98,8 @@ const CreateIssueModalBody: React.FC<Props> = ({
 
 	const getSetOpenFunc = (value: boolean) => () => setIsOpened(value);
 
-	const submit = async () => {
+	const submit = async (event: React.FormEvent) => {
+		event.preventDefault();
 		const projectCond = !projectID && !boardColumnID ? context.data.project : true;
 		const allFields = context.data.type && context.data.summary && context.data.priority && projectCond;
 
@@ -130,139 +131,127 @@ const CreateIssueModalBody: React.FC<Props> = ({
 	};
 
 	return (
-		<>
-			<Modal
-				open={isOpened}
-				closeIcon
-				closeOnEscape
-				closeOnDimmerClick
-				onClose={getSetOpenFunc(false)}
-				openOnTriggerClick
-				trigger={<div onClick={getSetOpenFunc(true)}>{children}</div>}
-				style={{ maxWidth: 700, height: '95%' }}
-			>
-				<Modal.Content>
-					<Grid className="fill" verticalAlign="middle">
-						<Grid.Column
-							style={{
-								marginTop: 20,
-								marginBottom: 20,
-								marginLeft: 20,
-							}}
-						>
-							<Header as="h1">{t('create_issue')}</Header>
-							<Form onSubmit={submit}>
-								<div style={{ height: '80vh', overflowX: 'hidden', overflowY: 'auto' }}>
-									<Form.Field>
-										<label className="required">{t('type')}</label>
-										<Form.Dropdown
-											clearable
-											selection
-											style={{ maxWidth: 200 }}
-											options={typeOpts}
-											placeholder={t('type')}
-											onChange={(event, data) => context.set('type', data.value)}
-										/>
-									</Form.Field>
-									<Form.Field>
-										<Form.Field>
-											<label className="required">{t('priority')}</label>
-										</Form.Field>
-										<Form.Dropdown
-											clearable
-											selection
-											style={{ maxWidth: 200 }}
-											options={priorityOpts}
-											placeholder={t('priority')}
-											onChange={(event, data) => context.set('priority', data.value)}
-										/>
-									</Form.Field>
-									<Form.Field>
-										<label className="required">{t('summary')}</label>
-										<Form.Input
-											placeholder={t('summary')}
-											fluid
-											onChange={(event, data) => context.set('summary', data.value)}
-										/>
-									</Form.Field>
-									{!projectID && !boardColumnID ? (
-										<Form.Field>
-											<label className="required">{t('project')}</label>
-											<Form.Dropdown
-												selection
-												placeholder={t('project')}
-												options={projectsOpts}
-												onChange={(event, data) => context.set('project', data.value)}
-											/>
-										</Form.Field>
-									) : (
-										''
-									)}
-									<Form.Field>
-										<label>{t('labels')}</label>
-										<Form.Dropdown
-											clearable
-											selection
-											multiple
-											placeholder={t('labels')}
-											options={labelOpts}
-											onChange={(event, data) => context.set('labels', data.value)}
-										/>
-									</Form.Field>
-									<Divider />
-									<Form.Field>
-										<label>{t('assignee')}</label>
-										<Form.Dropdown
-											clearable
-											selection
-											placeholder={t('assignee')}
-											options={usersOpts}
-											onChange={(event, data) => context.set('assigned', data.value)}
-										/>
-									</Form.Field>
-									<Form.Field>
-										<label>{t('links')}</label>
-										<TagsInput
-											placeholder={t('add_link')}
-											tags={context.data.links ?? []}
-											onChange={(tags) => context.set('links', [...tags])}
-										/>
-									</Form.Field>
-									<Form.Field>
-										<label>{t('attachments')}</label>
-										<TagsInput
-											placeholder={t('add_attachment')}
-											tags={context.data.attachments ?? []}
-											onChange={(tags) => context.set('attachments', [...tags])}
-										/>
-									</Form.Field>
-									<Form.Field>
-										<label>{t('description')}</label>
-										<Form.TextArea
-											placeholder={t('description')}
-											onChange={(event, data) =>
-												data
-													? context.set('description', data.value as string)
-													: context.set('description', '')
-											}
-											rows={10}
-										/>
-									</Form.Field>
-								</div>
-								<Button.Group floated="right" style={{ marginTop: 10 }}>
-									<Button primary type="submit">
-										{t('submit')}
-									</Button>
-									<Button onClick={getSetOpenFunc(false)} basic>
-										<span>{t('cancel')}</span>
-									</Button>
-								</Button.Group>
-							</Form>
-						</Grid.Column>
-					</Grid>
-				</Modal.Content>
-			</Modal>
-		</>
+		<Modal
+			as="form"
+			onSubmit={submit}
+			open={isOpened}
+			closeIcon
+			closeOnEscape
+			closeOnDimmerClick
+			onClose={getSetOpenFunc(false)}
+			openOnTriggerClick
+			trigger={<div onClick={getSetOpenFunc(true)}>{children}</div>}
+			style={{ maxWidth: 700, height: '70%' }}
+		>
+			<Modal.Header>
+				<Header as="h1">{t('create_issue')}</Header>
+			</Modal.Header>
+			<Modal.Content scrolling style={{ maxHeight: '90%', height: '90%' }}>
+				<Form as="div">
+					<Form.Field>
+						<label className="required">{t('type')}</label>
+						<Form.Dropdown
+							clearable
+							selection
+							style={{ maxWidth: 200 }}
+							options={typeOpts}
+							placeholder={t('type')}
+							onChange={(event, data) => context.set('type', data.value)}
+						/>
+					</Form.Field>
+					<Form.Field>
+						<label className="required">{t('priority')}</label>
+						<Form.Dropdown
+							clearable
+							selection
+							style={{ maxWidth: 200 }}
+							options={priorityOpts}
+							placeholder={t('priority')}
+							onChange={(event, data) => context.set('priority', data.value)}
+						/>
+					</Form.Field>
+					<Form.Field>
+						<label className="required">{t('summary')}</label>
+						<Form.Input
+							placeholder={t('summary')}
+							fluid
+							onChange={(event, data) => context.set('summary', data.value)}
+						/>
+					</Form.Field>
+					{!projectID && !boardColumnID ? (
+						<Form.Field>
+							<label className="required">{t('project')}</label>
+							<Form.Dropdown
+								selection
+								placeholder={t('project')}
+								options={projectsOpts}
+								onChange={(event, data) => context.set('project', data.value)}
+							/>
+						</Form.Field>
+					) : (
+						''
+					)}
+					<Form.Field>
+						<label>{t('labels')}</label>
+						<Form.Dropdown
+							clearable
+							selection
+							multiple
+							placeholder={t('labels')}
+							options={labelOpts}
+							onChange={(event, data) => context.set('labels', data.value)}
+						/>
+					</Form.Field>
+					<Divider />
+					<Form.Field>
+						<label>{t('assignee')}</label>
+						<Form.Dropdown
+							clearable
+							selection
+							placeholder={t('assignee')}
+							options={usersOpts}
+							onChange={(event, data) => context.set('assigned', data.value)}
+						/>
+					</Form.Field>
+					<Form.Field>
+						<label>{t('links')}</label>
+						<TagsInput
+							placeholder={t('add_link')}
+							tags={context.data.links ?? []}
+							onChange={(tags) => context.set('links', [...tags])}
+						/>
+					</Form.Field>
+					<Form.Field>
+						<label>{t('attachments')}</label>
+						<TagsInput
+							placeholder={t('add_attachment')}
+							tags={context.data.attachments ?? []}
+							onChange={(tags) => context.set('attachments', [...tags])}
+						/>
+					</Form.Field>
+					<Form.Field>
+						<label>{t('description')}</label>
+						<Form.TextArea
+							placeholder={t('description')}
+							onChange={(event, data) =>
+								data ? context.set('description', data.value as string) : context.set('description', '')
+							}
+							rows={10}
+						/>
+					</Form.Field>
+				</Form>
+			</Modal.Content>
+			<Modal.Actions style={{ height: 67 }}>
+				<Button.Group floated="right">
+					<Button primary type="submit">
+						{t('submit')}
+					</Button>
+					<Button onClick={getSetOpenFunc(false)} basic>
+						<span>{t('cancel')}</span>
+					</Button>
+				</Button.Group>
+			</Modal.Actions>
+		</Modal>
 	);
 };
 

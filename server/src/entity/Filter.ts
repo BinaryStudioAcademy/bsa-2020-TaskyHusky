@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, ManyToMany, JoinTable, OneToMany } from 'typeorm';
-import { IsString, IsNotEmpty, IsUUID } from 'class-validator';
+import { IsString, IsNotEmpty } from 'class-validator';
 import { UserProfile } from './UserProfile';
 import { FilterPart } from './FilterPart';
 @Entity()
@@ -12,7 +12,7 @@ export class Filter {
 	})
 	owner?: UserProfile;
 
-	@OneToMany((type) => FilterPart, (filterPart) => filterPart.filter)
+	@OneToMany((type) => FilterPart, (filterPart) => filterPart.filter, { cascade: true })
 	filterParts?: FilterPart[];
 
 	@Column()
