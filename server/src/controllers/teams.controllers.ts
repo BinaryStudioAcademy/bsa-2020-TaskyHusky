@@ -14,8 +14,10 @@ class TeamsController {
 			const { name: nameFilter } = req.query;
 
 			if (nameFilter && typeof nameFilter === 'string') {
-				res.send(teams.filter((team) =>
-					team.name && team.name.toLowerCase().indexOf(nameFilter.toLowerCase()) !== -1)
+				res.send(
+					teams.filter(
+						(team) => team.name && team.name.toLowerCase().indexOf(nameFilter.toLowerCase()) !== -1,
+					),
 				);
 			} else {
 				res.send(teams);
@@ -73,7 +75,7 @@ class TeamsController {
 			} else {
 				links = updatedTeam.links.map((el: string) => {
 					const item = JSON.parse(el);
-					return (item.id === data.id) ? JSON.stringify({ ...data }) : el;
+					return item.id === data.id ? JSON.stringify({ ...data }) : el;
 				});
 			}
 			// TODO: remove ts-ignore

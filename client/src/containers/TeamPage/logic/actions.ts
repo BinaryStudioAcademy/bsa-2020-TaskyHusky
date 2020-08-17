@@ -1,6 +1,7 @@
 import { createAction } from 'helpers/createAction.helper';
 import * as actionTypes from './actionTypes';
 
+export const spinner = createAction(actionTypes.LOADING);
 export const startLoading = createAction<actionTypes.StartLoadingArgs>(actionTypes.START_LOADING);
 export const update = createAction<actionTypes.SuccessLoading>(actionTypes.SUCCESS_LOADING);
 export const failLoading = createAction(actionTypes.FAIL_LOADING);
