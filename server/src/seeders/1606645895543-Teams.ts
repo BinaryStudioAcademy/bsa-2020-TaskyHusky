@@ -19,13 +19,12 @@ export class Team1606645895543 implements MigrationInterface {
 						description: 'Our cool project',
 					},
 				],
-				createdBy:user,
-				color:'red',
-
+				createdBy: user,
+				color: 'red',
 			},
 		];
 		await getRepository('Team').save(exampleData);
 	}
 
-	public async down(queryRunner: QueryRunner): Promise<void> { }
+	public async down(queryRunner: QueryRunner): Promise<void> {}
 }

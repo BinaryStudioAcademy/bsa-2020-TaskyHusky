@@ -9,7 +9,7 @@ export const getTeam = async (id: string): Promise<WebApi.Entities.Team[] | unde
 		});
 		return (await res.json()) as WebApi.Entities.Team[];
 	} catch (error) {
-		console.log(error);
+		window.location.replace('/not-found-404');
 	}
 };
 

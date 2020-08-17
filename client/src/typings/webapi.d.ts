@@ -131,7 +131,9 @@ namespace WebApi.User {
 		organization?: string;
 		jobTitle?: string;
 		userSettingsId?: string;
-		teams: [];
+		resetPasswordToken: string | null;
+		resetPasswordExpires: Date | null;
+		teams?: [];
 		filtres?: string[];
 	}
 }
@@ -177,7 +179,7 @@ namespace WebApi.Entities {
 		id: string;
 		filter?: Filter;
 		filterDef?: FilterDefinition;
-		members?: UserProfile[];
+		members?: string[];
 		searchText?: string;
 	}
 
@@ -239,12 +241,12 @@ namespace WebApi.Entities {
 
 	interface Sprint {
 		id: string;
-		sprintName?: string;
+		sprintName: string;
 		project?: Projects;
 		board?: Board;
-		isActive?: boolean;
-		isCompleted?: boolean;
-		issues?: Issue[];
+		isActive: boolean;
+		isCompleted: boolean;
+		issues: Issue[];
 	}
 
 	interface Team {
@@ -255,16 +257,6 @@ namespace WebApi.Entities {
 		createdBy: UserProfile;
 		name?: string;
 		color?: string;
-	}
-
-	interface Teams {
-		id: string;
-		users?: UserProfile[];
-		createdBy?: UserProfile;
-		name?: string;
-		color?: string;
-		description?: string;
-		links?: string[];
 	}
 
 	interface UserProfile {
@@ -281,6 +273,8 @@ namespace WebApi.Entities {
 		userSettingsId?: string;
 		password?: string;
 		boards?: Board[];
+		public resetPasswordToken?: string | null;
+		public resetPasswordExpires?: Date | null;
 		filters?: Filter[];
 		assignedProjects?: Projects[];
 		leadedProjects?: Projects[];

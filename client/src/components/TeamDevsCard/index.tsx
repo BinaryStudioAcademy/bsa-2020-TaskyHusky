@@ -23,7 +23,7 @@ const TeamDevsCard = ({ changeMainFields, description = '', name = '', showAddPe
 				<Icon name="group" size="large" />
 				<input
 					value={title}
-					onBlur={() => changeMainFields({ name: title })}
+					onBlur={() => name !== title.trim() && changeMainFields({ name: title })}
 					type="text"
 					onChange={(e) => setTitle(e.target.value)}
 					className={styles.input_focus}
@@ -31,7 +31,9 @@ const TeamDevsCard = ({ changeMainFields, description = '', name = '', showAddPe
 			</Card.Content>
 			<Card.Content>
 				<textarea
-					onBlur={() => changeMainFields({ description: teamDescription })}
+					onBlur={() =>
+						description !== teamDescription.trim() && changeMainFields({ description: teamDescription })
+					}
 					onChange={(e) => setTeamDescription(e.target.value)}
 					defaultValue={teamDescription}
 					rows={4}

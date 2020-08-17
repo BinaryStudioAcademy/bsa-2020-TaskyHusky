@@ -15,6 +15,7 @@ import { advancedSearchReducer } from 'containers/AdvancedSearch/logic/reducer';
 import { peoplePageReducer } from '../containers/People/logic/reducer';
 import { peoplePageSearchReducer } from '../containers/SearchPeopleAndTeamField/logic/reducer';
 import { boardReducer } from '../containers/Boards/logic/reducer';
+import { scrumBoardReducer } from 'containers/Board/Scrum/logic/reducer';
 
 const rootReducer: Reducer<RootState> = combineReducers({
 	boards: boardReducer,
@@ -30,6 +31,7 @@ const rootReducer: Reducer<RootState> = combineReducers({
 	saveFilter: saveFilterReducer,
 	users: usersReducer,
 	advancedSearch: advancedSearchReducer,
+	scrumBoard: scrumBoardReducer,
 	peoplePage: peoplePageReducer,
 	peoplePageSearch: peoplePageSearchReducer,
 });
