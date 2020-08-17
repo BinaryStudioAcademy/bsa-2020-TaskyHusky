@@ -4,6 +4,7 @@ import { Flag, FlagNameValues, Dropdown } from 'semantic-ui-react';
 import i18next from 'i18next';
 import { setLng } from 'helpers/setLng.helper';
 import { getLanguage } from 'helpers/getLanguage.helper';
+import styles from './styles.module.scss';
 
 const LanguageSelect: React.FC = () => {
 	const language = getLanguage();
@@ -19,7 +20,7 @@ const LanguageSelect: React.FC = () => {
 	return (
 		<Dropdown
 			placeholder="Language"
-			style={{ marginRight: 20, width: 100 }}
+			className={styles.select}
 			onChange={(event, data) => selectLanguage(data.value as string)}
 			selection
 			defaultValue={language}

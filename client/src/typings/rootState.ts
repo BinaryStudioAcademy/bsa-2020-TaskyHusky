@@ -12,8 +12,10 @@ import { UsersState } from 'commonLogic/users/state';
 import { AdvancedSearch } from 'containers/AdvancedSearch/logic/state';
 import { PeoplePageState } from '../containers/People/logic/state';
 import { PeoplePagesSearchState } from '../containers/SearchPeopleAndTeamField/logic/state';
+import { BoardsState } from '../containers/Boards/logic/state';
 
 export interface RootState {
+	boards: BoardsState;
 	projects: ProjectsState;
 	project: ProjectState;
 	createProject: CreateProjectsState;

@@ -1,6 +1,6 @@
 export interface UserModel {
 	id?: string;
-	email: string;
+	email?: string;
 	password?: string;
 	lastName?: string;
 	firstName?: string;
@@ -11,6 +11,8 @@ export interface UserModel {
 	organization?: string;
 	jobTitle?: string;
 	userSettingsId?: string;
-	teams: [],
+	resetPasswordToken:string|null;
+	resetPasswordExpires:Date|null;
+	teams?: [],
 	filtres?: string[];
 }

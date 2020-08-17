@@ -1,6 +1,6 @@
-import { EntityRepository, Repository } from 'typeorm';
+import { EntityRepository, Repository, Between } from 'typeorm';
 import { UserProfile } from '../entity/UserProfile';
-import { UserModel } from '../models/User';
+import {expirationTime} from '../constants/resetPassword.constants';
 
 @EntityRepository(UserProfile)
 export class UserRepository extends Repository<UserProfile> {
@@ -8,23 +8,44 @@ export class UserRepository extends Repository<UserProfile> {
 		return this.findAll();
 	}
 
-	getById(id: string): Promise<any> {
-		return this.findOne({ where: { id } });
+	async getById(id: string): Promise<any> {
+		const user = await this.findOne({ where: { id } });
+		if (!user) {
+			throw new Error('Can not find user');
+		}
+		const { password, ...rest } = user;
+		return rest;
 	}
 
 	getByEmail(email: string): Promise<any> {
 		return this.findOne({ where: { email } });
 	}
 
-	createNew(data: UserProfile) {
-		const user = this.create(data);
-		return this.save(user);
+	getByToken(token: string): Promise<any> {
+		return this.findOne({where:{
+				resetPasswordToken:token,
+				resetPasswordExpires:Between(new Date(), new Date(Date.now()+expirationTime))
+			}})
 	}
 
-	async updateById(id: string, user: UserProfile): Promise<any> {
-		this.update(id, user);
+	async createNew(data: UserProfile): Promise<any> {
+		const user = this.create(data);
+		const newUser = await this.save(user);
+		if (!newUser) {
+			throw new Error('Can not save user');
+		}
+		const { password, ...rest } = newUser;
+		return rest;
+	}
 
-		return this.findOne(id);
+	async updateById(id: string, user: Partial<UserProfile>): Promise<any> {
+		this.update(id, user);
+		const updatedUser = await this.findOne(id);
+		if (!updatedUser) {
+			throw new Error('Can not find user');
+		}
+		const { password, ...rest } = updatedUser;
+		return rest;
 	}
 
 	deleteById(id: string) {

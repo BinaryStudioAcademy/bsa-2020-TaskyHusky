@@ -14,8 +14,10 @@ import { usersReducer } from 'commonLogic/users/reducer';
 import { advancedSearchReducer } from 'containers/AdvancedSearch/logic/reducer';
 import { peoplePageReducer } from '../containers/People/logic/reducer';
 import { peoplePageSearchReducer } from '../containers/SearchPeopleAndTeamField/logic/reducer';
+import { boardReducer } from '../containers/Boards/logic/reducer';
 
 const rootReducer: Reducer<RootState> = combineReducers({
+	boards: boardReducer,
 	user: userProfileReducer,
 	projects: projectsReducer,
 	project: projectReducer,

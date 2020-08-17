@@ -6,7 +6,7 @@ import { requestAllUsers } from 'commonLogic/users/actions';
 import { FilterProps } from './types';
 import { DropdownOption } from '../types';
 
-const AssigneeFilter = ({ filterPart }: FilterProps) => {
+const AssignedFilter = ({ filterPart }: FilterProps) => {
 	const { users } = useSelector((rootState: RootState) => rootState.users);
 	const dispatch = useDispatch();
 
@@ -18,7 +18,7 @@ const AssigneeFilter = ({ filterPart }: FilterProps) => {
 		const { id, firstName, lastName } = user;
 		const fullName = `${firstName} ${lastName}`;
 		const data = {
-			value: fullName,
+			value: id,
 			key: id,
 			text: fullName,
 		};
@@ -30,4 +30,4 @@ const AssigneeFilter = ({ filterPart }: FilterProps) => {
 	return <DropdownCheckboxSearch data={data} filterPart={filterPart} />;
 };
 
-export default AssigneeFilter;
+export default AssignedFilter;

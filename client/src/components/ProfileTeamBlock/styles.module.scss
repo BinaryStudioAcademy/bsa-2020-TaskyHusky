@@ -10,22 +10,29 @@
 }
 
 .content {
-  @include info-block-content;
+  display: flex;
+  flex-direction: column;
+
+  &__primary {
+    font-family: Poppins, sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    color: $primary-text;
+  }
 
   &__secondary {
-    @include info-block-content-secondary;
+    font-family: Poppins, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    letter-spacing: 0.44px;
+    color: $private-message;
   }
 }
 
 .groupIcon {
   @include info-block-group-icon;
-
-  & i {
-    @include info-block-group-icon-item;
-  }
-
-  &__secondary {
-    @include info-block-group-icon;
-    background-color: #955a5a;
-  }
+  background-color: $ligth-gray;
+  margin-right: 8px;
 }

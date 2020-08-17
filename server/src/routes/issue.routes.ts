@@ -12,6 +12,7 @@ router
 	.use('/priority', priority)
 	.use('/comment', comment)
 	.get('/', controller.getAll)
+	.post('/filtered', controller.getFilteredIssues)
 	.get('/:id', controller.getById)
 	.get('/byKey/:key', controller.getByKey)
 	.post('/', controller.create)

@@ -5,9 +5,10 @@ import * as actions from './actions';
 import { fetchFilters } from './../../Filters/logic/actions';
 
 export function* saveNewFilter(action: ReturnType<typeof actions.startSavingFilter>) {
-	const { name, ownerId } = action;
+	const { name, owner, filterParts } = action;
+
 	try {
-		yield call(saveFilter, { name, ownerId });
+		yield call(saveFilter, { name, owner, filterParts });
 		yield put(actions.successSavingFilter());
 		yield put(fetchFilters());
 	} catch (error) {

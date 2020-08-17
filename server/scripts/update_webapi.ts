@@ -19,6 +19,7 @@ function getModelsTypes(files: string[]): string {
 			const modifiedContent = fileContent
 				.trim()
 				.split('\n')
+				.filter((it) => it.indexOf('import') !== 0 && !!it.trim())
 				.map((it: string) => (it ? `\t${it}` : it))
 				.join('\n');
 

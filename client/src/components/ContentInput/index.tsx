@@ -1,31 +1,29 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useState, useEffect } from 'react';
 import styles from './styles.module.scss';
-import * as actions from 'containers/ProfilePage/logiс/actions';
-import { UserProfileState } from 'containers/ProfilePage/logiс/state';
 
 interface Props {
-	contentData: { text: string; name: string; placeholder: string; title?: string };
+	text: string;
+	name: string;
+	placeholder: string;
+	title?: string;
 	isCurrentUser: boolean;
 }
 
 const ContentInput: React.FC<Props> = (props: Props) => {
-	const {
-		contentData: { text, name, placeholder, title },
-		isCurrentUser,
-	} = props;
+	const { text, name, placeholder, title, isCurrentUser } = props;
 
 	const [textData, setTextData] = useState(text);
-	const dispatch = useDispatch();
 
 	const handleChange = (event: any) => {
 		setTextData((event.target as HTMLInputElement).value);
 	};
 	const updateUserField = () => {
-		if (textData !== text) {
-			dispatch(actions.requestUpdateUser({ userData: { [name]: textData.trim() } } as Partial<UserProfileState>));
-		}
+		//dispatch your action here
 	};
+
+	useEffect(() => {
+		setTextData(text);
+	}, [text]);
 
 	return (
 		<>

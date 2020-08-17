@@ -1,5 +1,4 @@
 import { v4 } from 'uuid';
-import querystring from 'querystring'
 import { Request, Response } from 'express';
 import { getCustomRepository } from 'typeorm';
 import { TeamRepository } from '../repositories/teams.repository';
