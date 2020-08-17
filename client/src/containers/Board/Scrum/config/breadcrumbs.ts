@@ -2,15 +2,19 @@ import { History } from 'history';
 import i18n from 'i18next';
 import { BreadcrumbItem } from 'components/common/Breadcrumbs/index';
 
+export type BreadCrumbData = {
+	id: string;
+	name: string;
+};
 interface Params {
-	projectDetails: Partial<WebApi.Entities.Projects>;
-	boardDetails: Partial<WebApi.Entities.Board>;
+	projectDetails: BreadCrumbData;
+	boardDetails: BreadCrumbData;
 	history: History;
 }
 
 export const setBreadcrumbs = ({ projectDetails, boardDetails, history }: Params): BreadcrumbItem[] => {
-	const { id: projectId, name: projectName } = projectDetails as { id: string; name: string };
-	const { id: boardId, name: boardName } = boardDetails as { id: string; name: string };
+	const { id: projectId, name: projectName } = projectDetails;
+	const { id: boardId, name: boardName } = boardDetails;
 
 	return [
 		{
