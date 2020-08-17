@@ -1,81 +1,165 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from 'typings/rootState';
+import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import styles from './styles.module.scss';
-import { Header, Segment } from 'semantic-ui-react';
-import ContentInput from 'components/ContentInput';
+import { Form, Button } from 'semantic-ui-react';
+import SubmitedInput from 'components/SubmitedInput';
+import { requestUpdateUser } from 'containers/ProfilePage/logiс/actions';
+import { UserProfileState } from 'containers/ProfilePage/logiс/state';
+import { useDispatch } from 'react-redux';
+import CustomValidator from 'helpers/validation.helper';
 
-const ProfileManager = () => {
-	const user = useSelector((state: RootState) => state.user);
+interface Props {
+	showManager: (modeToShow: string) => void;
+	updateUser: (changedUser: Partial<UserProfileState>) => void;
+	user: UserProfileState;
+}
 
+const ProfileManager: React.FC<Props> = (props: Props) => {
+	const { t } = useTranslation();
+	const { showManager, updateUser, user: userData } = props;
+	const dispatch = useDispatch();
+	const [user, setUser] = useState(userData);
+	const { firstName, lastName, username, jobTitle, department, location, organization } = user;
+	const [userValidation, setUserValidation] = useState({
+		firstName: true,
+		lastName: true,
+		username: true,
+		jobTitle: true,
+		department: true,
+		location: true,
+		organization: true,
+	});
+	const [errorMessage, setErrorMessage] = useState({
+		firstName: '',
+		lastName: '',
+		username: '',
+		jobTitle: '',
+		department: '',
+		location: '',
+		organization: '',
+	});
+	const handleChange = (event: any) => {
+		setUser({
+			...user,
+			[(event.target as HTMLInputElement).name]: (event.target as HTMLInputElement).value,
+		});
+	};
+	const onBlur = (event: any) => {
+		const customValidator = new CustomValidator(
+			(event.target as HTMLInputElement).value,
+			(event.target as HTMLInputElement).name,
+		);
+		const isntValid = customValidator.checkMinLength(2).checkMaxLength(40).checkSimpleField().validate();
+		if (isntValid) {
+			setErrorMessage({ ...errorMessage, [(event.target as HTMLInputElement).name]: isntValid });
+			setUserValidation({ ...userValidation, [(event.target as HTMLInputElement).name]: false });
+		} else {
+			setUserValidation({ ...userValidation, [(event.target as HTMLInputElement).name]: true });
+		}
+	};
+	const onSubmit = () => {
+		if (Object.values(userValidation).every((item) => item)) {
+			const { editMode, isLoading, ...rest } = user;
+			updateUser(user);
+			dispatch(requestUpdateUser({ ...rest } as Partial<UserProfileState>));
+		}
+	};
+
+	const onCancel = () => {
+		showManager('');
+	};
 	return (
 		<section className={styles.container}>
-			<Header as="h3">About you</Header>
-			<Segment className={styles.card}>
-				<ContentInput
-					isCurrentUser={true}
-					contentData={{
-						text: user.firstName,
-						name: 'firstname',
-						placeholder: 'Your firstname',
-						title: 'First name',
-					}}
-				/>
-				<ContentInput
-					isCurrentUser={true}
-					contentData={{
-						text: user.lastName,
-						name: 'lastname',
-						placeholder: 'Your lastname',
-						title: 'Last name',
-					}}
-				/>
-				<ContentInput
-					isCurrentUser={true}
-					contentData={{
-						text: user.username,
-						name: 'username',
-						placeholder: 'Your username',
-						title: 'Public name',
-					}}
-				/>
-				<ContentInput
-					isCurrentUser={true}
-					contentData={{
-						text: user.jobTitle,
-						name: 'jobtitle',
-						placeholder: 'Your jobtitle',
-						title: 'Job title',
-					}}
-				/>
-				<ContentInput
-					isCurrentUser={true}
-					contentData={{
-						text: user.department,
-						name: 'department',
-						placeholder: 'Your department',
-						title: 'Department',
-					}}
-				/>
-				<ContentInput
-					isCurrentUser={true}
-					contentData={{
-						text: user.organization,
-						name: 'organization',
-						placeholder: 'Your organization',
-						title: 'Organization',
-					}}
-				/>
-				<ContentInput
-					isCurrentUser={true}
-					contentData={{
-						text: user.location,
-						name: 'location',
-						placeholder: 'Your location',
-						title: 'Based in',
-					}}
-				/>
-			</Segment>
+			<h3 className={styles.header}>{t('about_you')}</h3>
+			<div className={styles.card}>
+				<Form onSubmit={onSubmit}>
+					<SubmitedInput
+						handleChange={handleChange}
+						text={firstName}
+						propKey="firstName"
+						placeholder={t('placeholder_firstname')}
+						title={t('first_name')}
+						type="text"
+						errorText={errorMessage.firstName}
+						isValid={userValidation.firstName}
+						onBlur={onBlur}
+					/>
+					<SubmitedInput
+						handleChange={handleChange}
+						text={lastName}
+						propKey="lastName"
+						placeholder={t('placeholder_lastname')}
+						title={t('last_name')}
+						type="text"
+						errorText={errorMessage.lastName}
+						isValid={userValidation.lastName}
+						onBlur={onBlur}
+					/>
+					<SubmitedInput
+						handleChange={handleChange}
+						text={username}
+						propKey="username"
+						placeholder={t('placeholder_username')}
+						title={t('public_name')}
+						type="text"
+						errorText={errorMessage.username}
+						isValid={userValidation.username}
+						onBlur={onBlur}
+					/>
+					<SubmitedInput
+						handleChange={handleChange}
+						text={jobTitle}
+						propKey="jobTitle"
+						placeholder={t('placeholder_job')}
+						title={t('job_title')}
+						type="text"
+						errorText={errorMessage.jobTitle}
+						isValid={userValidation.jobTitle}
+						onBlur={onBlur}
+					/>
+					<SubmitedInput
+						handleChange={handleChange}
+						text={department}
+						propKey="department"
+						placeholder={t('placeholder_department')}
+						title={t('department')}
+						type="text"
+						errorText={errorMessage.department}
+						isValid={userValidation.department}
+						onBlur={onBlur}
+					/>
+					<SubmitedInput
+						handleChange={handleChange}
+						text={organization}
+						propKey="organization"
+						placeholder={t('placeholder_organization')}
+						title={t('organization')}
+						type="text"
+						errorText={errorMessage.organization}
+						isValid={userValidation.organization}
+						onBlur={onBlur}
+					/>
+					<SubmitedInput
+						handleChange={handleChange}
+						text={location}
+						propKey="location"
+						placeholder={t('placeholder_location')}
+						title={t('based_in')}
+						type="text"
+						errorText={errorMessage.location}
+						isValid={userValidation.location}
+						onBlur={onBlur}
+					/>
+					<Form.Field className={styles.formFooter}>
+						<Button className={styles.submitButton} type="submit">
+							{t('save_changes')}
+						</Button>
+						<Button type="text" onClick={onCancel} className={styles.secondaryButton}>
+							{t('cancel')}
+						</Button>
+					</Form.Field>
+				</Form>
+			</div>
 		</section>
 	);
 };

@@ -11,6 +11,7 @@ export interface UserProfileState {
 	jobTitle: string;
 	userSettingsId?: string;
 	editMode: string;
+	isLoading: boolean;
 }
 
 export const initialState: UserProfileState = {
@@ -26,4 +27,5 @@ export const initialState: UserProfileState = {
 	jobTitle: '',
 	userSettingsId: '',
 	editMode: '',
+	isLoading: true,
 };

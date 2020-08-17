@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner, getRepository } from 'typeorm';
 import { IssueStatus } from '../entity/IssueStatus';
 
-export class IssueStatus1597693968673 implements MigrationInterface {
+export class IssueStatus1597334747592 implements MigrationInterface {
 	public async up(queryRunner: QueryRunner): Promise<void> {
 		const statuses = [
 			{

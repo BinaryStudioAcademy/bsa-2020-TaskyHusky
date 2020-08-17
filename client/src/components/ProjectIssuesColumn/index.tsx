@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Segment, Button, Icon } from 'semantic-ui-react';
+import { Segment } from 'semantic-ui-react';
 import IssueCard from 'components/IssueCard';
-import CreateIssueModal from 'containers/CreateIssueModal';
 import { useTranslation } from 'react-i18next';
 import { getProjectIssues } from 'services/projects.service';
 
@@ -36,12 +35,6 @@ const ProjectIssuesColumn: React.FC<Props> = ({ projectId, onChangeSelectedCard,
 
 	return (
 		<Segment style={{ backgroundColor: '#EEE', height: '95%', width: 300, marginLeft: 20 }}>
-			<CreateIssueModal projectID={projectId} onClose={() => setIssues(null)}>
-				<Button floated="right" positive compact>
-					<Icon name="plus circle" />
-					{t('create_issue')}
-				</Button>
-			</CreateIssueModal>
 			<div style={{ clear: 'both' }} />
 			<div style={{ marginTop: 10, overflowY: 'auto', height: '71vh' }}>
 				{displayIssues.length > 0

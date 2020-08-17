@@ -1,0 +1,32 @@
+.red {
+	background-color: #ef7676;
+}
+
+.yellow {
+	background-color: #e2ef10;
+}
+
+.green {
+	background-color: #76ef8a;
+}
+
+.grey {
+	background-color: #d4d7db;
+}
+
+.progress {
+	display: flex;
+	width: 30%;
+	justify-content: space-between;
+	margin: 15px 0 20px;
+}
+
+.hidden {
+	display: none;
+}
+
+.line {
+	border-radius: 6px;
+	height: 8px;
+	width: 30%;
+}

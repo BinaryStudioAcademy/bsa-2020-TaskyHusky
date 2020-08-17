@@ -1,24 +1,17 @@
 import React from 'react';
 import styles from './styles.module.scss';
-import { Icon } from 'semantic-ui-react';
-import ContentInput from 'components/ContentInput';
 
 interface Props {
-	data: {
-		text: string;
-		name: string;
-		isCurrentUser: boolean;
-		placeholder: string;
-	};
+	text: string;
+	placeholder: string;
+	icon: string;
 }
 const ProfileAboutItem: React.FC<Props> = (props: Props) => {
-	const {
-		data: { text, isCurrentUser, name, placeholder },
-	} = props;
+	const { text = '', placeholder, icon } = props;
 	return (
 		<div className={styles.container}>
-			<Icon disabled name="briefcase" size="large" />
-			<ContentInput isCurrentUser={isCurrentUser} contentData={{ text, placeholder, name }}></ContentInput>
+			<img src={icon} alt="icon" className={styles.icon} />
+			{text ? <p className={styles.textData}>{text}</p> : <p className={styles.textData}>{placeholder}</p>}
 		</div>
 	);
 };

@@ -2,18 +2,16 @@ import React, { useEffect } from 'react';
 import styles from './styles.module.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'typings/rootState';
-import { Button, Input, Form } from 'semantic-ui-react';
+import { Form } from 'semantic-ui-react';
 import FilterPart from 'components/FilterPart';
 import MoreFilterPartsDropdown from 'components/MoreFilters';
 import { fetchFilterParts, setAddedFilterParts } from '../logic/actions';
 import { FilterPartState } from '../logic/state';
-import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
 import { getDefaultFilterParts, getAdditionalFilterParts } from '../logic/helpers';
 
 const AdvancedFilters: React.FC = () => {
 	const dispatch = useDispatch();
-	const { t } = useTranslation();
 	const { filterParts, addedFilterParts } = useSelector((rootState: RootState) => rootState.advancedSearch);
 	const isFilterDefLoading = useSelector((state: RootState) => state.filterDefs.isLoading);
 	const { filterId } = useParams();
