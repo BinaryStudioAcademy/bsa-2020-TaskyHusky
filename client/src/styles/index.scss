@@ -73,6 +73,15 @@ label {
 	content: "*";
 }
 
+.modal i.close.icon::before {
+	cursor: pointer;
+	position: absolute;
+	font-size: 18px;
+	color: #333;
+	left: -40px;
+	top: 55px;
+}
+
 * {
 	box-sizing: border-box;
 }

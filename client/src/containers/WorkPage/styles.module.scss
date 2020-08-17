@@ -1,0 +1,17 @@
+@import 'styles/mixins.scss';
+
+.wrapper {
+  width: 100%;
+  background-color: $body-bg;
+}
+
+.container {
+  margin: 22px 13%;
+  display: flex;
+}
+
+@media screen and (max-width: $less-than-medium-screen) {
+  .container {
+    display: block;
+  }
+}

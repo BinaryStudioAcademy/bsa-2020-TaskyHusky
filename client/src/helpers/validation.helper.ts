@@ -28,7 +28,7 @@ export default class CustomValidator {
 	}
 
 	checkSimpleField() {
-		if (this.value.match(/^[a-zа-яёї][a-zа-яёї0-9-_]+$/i)) {
+		if (this.value.match(/^[a-zа-яёї][a-zа-яёї0-9- _]+$/i)) {
 			return this;
 		} else {
 			this.errors.push(
