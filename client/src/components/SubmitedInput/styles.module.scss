@@ -22,3 +22,7 @@
   display: block;
   left: 0 !important;
 }
+
+.errorPopup {
+  @include error-popup;
+}
