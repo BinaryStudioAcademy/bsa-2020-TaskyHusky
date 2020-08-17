@@ -1,14 +1,21 @@
 import React from 'react';
 import { SprintHeader } from './SprintHeader/index';
-import { SprintIssue } from './SprintIssues/index';
+import { SprintIssues } from './SprintIssues/index';
 
 type Props = WebApi.Entities.Sprint;
 
-export const Sprint: React.FC<Props> = ({ id, isActive, sprintName }: Props) => {
+export const Sprint: React.FC<Props> = (props: Props) => {
+	const { id, isActive, sprintName, issues } = props as {
+		id: string;
+		sprintName: string;
+		isActive: boolean;
+		issues: WebApi.Entities.Issue[];
+	};
+
 	return (
 		<>
-			<SprintHeader id={id} isActive={isActive as boolean} name={sprintName as string} />
-			<SprintIssue />
+			<SprintHeader id={id} isActive={isActive} name={sprintName} />
+			<SprintIssues issues={issues} />
 		</>
 	);
 };

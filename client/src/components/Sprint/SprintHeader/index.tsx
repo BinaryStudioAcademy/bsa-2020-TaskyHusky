@@ -1,5 +1,5 @@
 import React from 'react';
-import { List } from 'semantic-ui-react';
+import { List, Item } from 'semantic-ui-react';
 import Options, { ItemProps } from 'components/common/Options';
 import styles from './styles.module.scss';
 
@@ -10,9 +10,12 @@ type Props = {
 };
 
 export const SprintHeader: React.FC<Props> = ({ id, isActive, name }) => {
-	console.log(id, isActive, name);
-
 	const config: ItemProps[] = [
+		{
+			id,
+			text: 'Create issue',
+			onClickAction: () => {},
+		},
 		{
 			id,
 			text: 'Edit sprint',
@@ -29,8 +32,8 @@ export const SprintHeader: React.FC<Props> = ({ id, isActive, name }) => {
 		<List horizontal className={styles.sprintHeader}>
 			<List.Item>
 				<List.Content>
-					<List.Header>{name}</List.Header>
-					{isActive ? `ACTIVE` : null}
+					<List.Header className={styles.sprintHeaderTitle}>{name}</List.Header>
+					{isActive ? <Item className={styles.sprintHeaderStatus}>ACTIVE</Item> : null}
 				</List.Content>
 			</List.Item>
 
