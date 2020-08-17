@@ -30,7 +30,7 @@ const CreateProjectModal: React.FC = () => {
 	const [template, setTemplate] = useState<Template>('Scrum');
 
 	const [isNameValid, setIsNameValid] = useState<boolean>(false);
-	const [isKeyValid, setIsKeyValid] = useState<boolean>(false);
+	const [isKeyValid, setIsKeyValid] = useState<boolean>(true);
 	const [isValidErrorShown, setIsValidErrorShown] = useState<boolean>(false);
 
 	const { description, image } = templatesInformation[template];
@@ -41,7 +41,7 @@ const CreateProjectModal: React.FC = () => {
 		setKey('');
 		setTemplate('Scrum');
 		setIsNameValid(false);
-		setIsKeyValid(false);
+		setIsKeyValid(true);
 		setIsValidErrorShown(false);
 	}
 
@@ -73,11 +73,17 @@ const CreateProjectModal: React.FC = () => {
 	const generateKey = (name: string): string => {
 		let result = key;
 		if (!isKeyTouched) {
-			result = name
-				.split(' ')
-				.filter(Boolean)
-				.map((word) => word[0].toUpperCase())
-				.join('');
+			const isSpace = name.trimEnd().search(' ');
+
+			if (isSpace !== -1) {
+				result = name
+					.split(' ')
+					.filter(Boolean)
+					.map((word) => word[0].toUpperCase())
+					.join('');
+			} else {
+				result = name.substr(0, 2).padStart(2, name[0]).toUpperCase();
+			}
 		}
 		return result;
 	};
@@ -93,12 +99,14 @@ const CreateProjectModal: React.FC = () => {
 
 	const onNameChanged = (name: string): void => {
 		const key = generateKey(name);
-		setName(name);
+		const regexp = new RegExp('\\s{1,}', 'g');
+		const removeSpaces = name.replace(regexp, ' ').trimStart();
+		setName(removeSpaces);
 		setKey(key);
 	};
 
 	const onKeyChanged = (key: string): void => {
-		const newKey = key.toUpperCase();
+		const newKey = key.trim().toUpperCase();
 		if (!isKeyTouched) {
 			setIsKeyTouched(true);
 		}
@@ -116,7 +124,7 @@ const CreateProjectModal: React.FC = () => {
 			onClose={onModalClose}
 			onOpen={onModalOpen}
 			open={isModalOpened}
-			size={!isTemplatesView ? 'tiny' : undefined}
+			size={'tiny'}
 			dimmer="inverted"
 			trigger={<Button primary>{t('create_project')}</Button>}
 		>
@@ -136,7 +144,7 @@ const CreateProjectModal: React.FC = () => {
 									setData={onNameChanged}
 									placeholder="Enter project name"
 									popUpContent="Project name should contain at least 5 symbols long"
-									validation={(key) => validator.isLength(key, { min: 5 })}
+									validation={(name) => validator.isLength(name, { min: 5 })}
 								/>
 							</Form.Field>
 							<Form.Field>
