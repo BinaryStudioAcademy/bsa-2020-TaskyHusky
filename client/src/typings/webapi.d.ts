@@ -131,7 +131,9 @@ namespace WebApi.User {
 		organization?: string;
 		jobTitle?: string;
 		userSettingsId?: string;
-		teams: [];
+		resetPasswordToken: string | null;
+		resetPasswordExpires: Date | null;
+		teams?: [];
 		filtres?: string[];
 	}
 }
@@ -281,6 +283,8 @@ namespace WebApi.Entities {
 		userSettingsId?: string;
 		password?: string;
 		boards?: Board[];
+		public resetPasswordToken?: string | null;
+		public resetPasswordExpires?: Date | null;
 		filters?: Filter[];
 		assignedProjects?: Projects[];
 		leadedProjects?: Projects[];
@@ -290,5 +294,8 @@ namespace WebApi.Entities {
 		createdIssues?: Issue[];
 		teams?: Team[];
 		projects?: Projects[];
+		incomingInvites?: UserProfile[];
+		pendingInvites?: UserProfile[];
+		teammates?: UserProfile[];
 	}
 }

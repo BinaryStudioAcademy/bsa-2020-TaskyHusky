@@ -80,6 +80,7 @@ export const HeaderMenu = () => {
 						</Menu.Item>
 					</CreateIssueModal>
 					<Menu.Item position="right" className={styles.rightMenu}>
+						<Dropdown icon="users" className={styles.circularIcon} direction="left"></Dropdown>
 						<Dropdown icon="bell outline" className={styles.circularIcon} direction="left">
 							<Dropdown.Menu className={styles.circularDropdownMenu}>
 								<Dropdown.Header>{t('notifications')}</Dropdown.Header>
