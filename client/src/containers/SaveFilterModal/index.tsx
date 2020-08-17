@@ -9,23 +9,26 @@ import styles from './styles.module.scss';
 const SaveFilterModal = () => {
 	const dispatch = useDispatch();
 	const { t } = useTranslation();
+	const [isFilterCreatedByCurrentUser] = useState(false);
+	const [name, setName] = useState('');
 
 	const { isLoading, isModalOpened, isFilterSaved } = useSelector((rootState: RootState) => rootState.saveFilter);
 	const { id } = useSelector((rootState: RootState) => rootState.auth.user) as WebApi.Entities.UserProfile;
+	const { filterParts } = useSelector((rootState: RootState) => rootState.advancedSearch);
 
 	if (isFilterSaved) {
 		dispatch(actions.resetState());
+		setName('');
 	}
 
-	const [isFilterCreatedByCurrentUser] = useState(false);
-
-	const [name, setName] = useState<string>('');
-
 	const onSaveFilter = (): void => {
+		const notEmptyFilterParts = filterParts.filter(({ members, searchText }) => members.length > 0 || !!searchText);
+
 		dispatch(
 			actions.startSavingFilter({
 				name,
-				ownerId: id,
+				owner: id,
+				filterParts: notEmptyFilterParts,
 			}),
 		);
 	};

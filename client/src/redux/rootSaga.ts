@@ -13,6 +13,8 @@ import usersSaga from 'commonLogic/users/saga';
 import issueSaga from 'pages/IssuePage/logic/saga';
 import projectSaga from 'containers/ProjectSettings/logic/saga';
 import scrumBoardSaga from 'containers/Board/Scrum/logic/saga';
+import peoplePageSaga from 'containers/People/logic/saga';
+import peoplePageSearchSaga from 'containers/SearchPeopleAndTeamField/logic/saga';
 import issueCommentSaga from 'components/IssueCommentForm/logic/saga';
 
 export default function* rootSaga() {
@@ -32,5 +34,7 @@ export default function* rootSaga() {
 		usersSaga(),
 		scrumBoardSaga(),
 		issueCommentSaga(),
+		peoplePageSaga(),
+		peoplePageSearchSaga(),
 	]);
 }

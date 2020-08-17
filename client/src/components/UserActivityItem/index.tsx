@@ -1,17 +1,35 @@
 import React from 'react';
-import { Icon } from 'semantic-ui-react';
 import styles from './styles.module.scss';
 
-const UserActivityItem = (
-	{ item }: { item: any }, //any will be replaced when activity model is got
-) => (
-	<div className={styles.activityItem}>
-		<Icon name="bookmark" size="large" className={styles.activityItem__icon} />
-		<div className={styles.activityItem__block}>
-			<p className={styles.activityItem__content}>{item.name}</p>
-			<p className={styles.activityItem__content__secondary}>{item.project} - You updates this on</p>
+interface Props {
+	icon?: string;
+	item: {
+		name: string;
+		project: string;
+	};
+}
+
+const UserActivityItem: React.FC<Props> = (props: Props) => {
+	const {
+		icon,
+		item: { name, project },
+	} = props;
+	return (
+		<div className={styles.activityItem}>
+			{icon ? (
+				<img src={icon} alt="icon" className={styles.activityItem__icon} />
+			) : (
+				<div className={styles.avatar}>
+					<p className={styles.avatarTitle}>{name[0]}</p>
+				</div>
+			)}
+
+			<div className={styles.block}>
+				<p className={styles.content}>{name}</p>
+				<p className={styles.contentSecondary}>{project}</p>
+			</div>
 		</div>
-	</div>
-);
+	);
+};
 
 export default UserActivityItem;

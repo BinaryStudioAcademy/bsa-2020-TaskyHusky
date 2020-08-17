@@ -254,7 +254,7 @@ namespace WebApi.Entities {
 		description?: string;
 		links?: string[];
 		users?: UserProfile[];
-		createdBy?: UserProfile;
+		createdBy: UserProfile;
 		name?: string;
 		color?: string;
 	}
@@ -288,7 +288,7 @@ namespace WebApi.Entities {
 		filters?: Filter[];
 		assignedProjects?: Projects[];
 		leadedProjects?: Projects[];
-		createdProjects: Projects[];
+		createdProjects?: Projects[];
 		teamsOwner?: Team[];
 		assignedIssues?: Issue[];
 		createdIssues?: Issue[];

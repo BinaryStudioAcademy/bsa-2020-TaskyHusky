@@ -10,6 +10,8 @@ import { UserProfileState } from 'containers/ProfilePage/logiс/state';
 import { SaveFilterState } from 'containers/SaveFilterModal/logic/state';
 import { UsersState } from 'commonLogic/users/state';
 import { AdvancedSearch } from 'containers/AdvancedSearch/logic/state';
+import { PeoplePageState } from '../containers/People/logic/state';
+import { PeoplePagesSearchState } from '../containers/SearchPeopleAndTeamField/logic/state';
 import { BoardsState } from '../containers/Boards/logic/state';
 import { ScrumBoardState } from 'containers/Board/Scrum/logic/state';
 
@@ -28,4 +30,6 @@ export interface RootState {
 	users: UsersState;
 	advancedSearch: AdvancedSearch;
 	scrumBoard: ScrumBoardState;
+	peoplePage: PeoplePageState;
+	peoplePageSearch: PeoplePagesSearchState;
 }
