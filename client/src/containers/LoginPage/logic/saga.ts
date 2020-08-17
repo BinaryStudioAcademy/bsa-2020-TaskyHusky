@@ -124,7 +124,8 @@ export function* watchForgotPassword() {
 export function* resetPassword(action: ReturnType<typeof actions.resetPassword>) {
 	try {
 		const { password, id } = action;
-		yield call(resetPasswordQuery, password, id);
+		const user = yield call(resetPasswordQuery, password, id);
+		yield put(actions.logInUserTrigger({ email: user.email, password }));
 	} catch (error) {
 		NotificationManager.error(error.clientException.message, 'Error');
 	}
