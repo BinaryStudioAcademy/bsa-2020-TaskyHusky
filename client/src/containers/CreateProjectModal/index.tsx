@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 import { Modal, Button, Form, Checkbox, Image, Card } from 'semantic-ui-react';
 import validator from 'validator';
 import { Link } from 'react-router-dom';
@@ -10,6 +10,7 @@ import * as actions from './logic/actions';
 import getTemplatesInformation, { MethodologyInfo } from './config/templatesInformation';
 import styles from './styles.module.scss';
 import CustomInput from 'components/common/Input/CustomInput';
+import { generateKey } from 'commonLogic/keyGenerator';
 
 type Template = keyof typeof WebApi.Board.BoardType;
 
@@ -18,7 +19,7 @@ const CreateProjectModal: React.FC = () => {
 	const dispatch = useDispatch();
 	const { t } = useTranslation();
 
-	const { isLoading, isModalOpened, isProjectCreated } = useSelector(
+	const { isLoading, isModalOpened, isProjectCreated, keys, isError } = useSelector(
 		(rootState: RootState) => rootState.createProject,
 	);
 
@@ -70,39 +71,27 @@ const CreateProjectModal: React.FC = () => {
 		startCreatingProject();
 	};
 
-	const generateKey = (name: string): string => {
-		let result = key;
-		if (!isKeyTouched) {
-			const isSpace = name.trimEnd().search(' ');
-
-			if (isSpace !== -1) {
-				result = name
-					.split(' ')
-					.filter(Boolean)
-					.map((word) => word[0].toUpperCase())
-					.join('');
-			} else {
-				result = name.substr(0, 2).padStart(2, name[0]).toUpperCase();
-			}
-		}
-		return result;
-	};
-
 	const onModalClose = () => {
-		dispatch(actions.closeModal());
 		setIsTemplatesView(false);
+		if (isError) {
+			dispatch(actions.resetState());
+			return;
+		}
+
+		dispatch(actions.closeModal());
 	};
 
 	const onModalOpen = () => {
 		dispatch(actions.openModal());
+		dispatch(actions.startGettingKeys());
 	};
 
 	const onNameChanged = (name: string): void => {
-		const key = generateKey(name);
+		const generatedKey = generateKey({ name, key, isKeyTouched, keys });
 		const regexp = new RegExp('\\s{1,}', 'g');
 		const removeSpaces = name.replace(regexp, ' ').trimStart();
 		setName(removeSpaces);
-		setKey(key);
+		setKey(generatedKey);
 	};
 
 	const onKeyChanged = (key: string): void => {
@@ -229,4 +218,4 @@ const CreateProjectModal: React.FC = () => {
 	);
 };
 
-export default CreateProjectModal;
+export default memo(CreateProjectModal);
