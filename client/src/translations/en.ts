@@ -226,4 +226,6 @@ export const en = {
 	forgot_password_return_button: 'Return to log in',
 	forgot_password_resend_email: 'Resend recovery link',
 	forgot_password_email_sent_message: 'We sent a recovery link to you at',
+	reset_password_header: 'Choose a new password',
+	reset_password_problem: 'Still having trouble logging in?',
 };
