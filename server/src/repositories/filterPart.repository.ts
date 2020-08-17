@@ -8,7 +8,7 @@ export class FilterPartRepository extends Repository<FilterPart> {
 	}
 
 	getAll(): Promise<FilterPart[]> {
-		return this.find({ relations: ['members'] });
+		return this.find({ relations: ['filter', 'filterDef'] });
 	}
 
 	getById(id: string) {
@@ -19,8 +19,8 @@ export class FilterPartRepository extends Repository<FilterPart> {
 		});
 	}
 
-	createItem(data: FilterPart): Promise<FilterPart> {
-		return this.save(data);
+	createItem(data: FilterPart | FilterPart[]): Promise<InsertResult> {
+		return this.insert(data);
 	}
 
 	updateById(id: string, data: FilterPart): Promise<UpdateResult> {
