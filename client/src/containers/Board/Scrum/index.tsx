@@ -11,6 +11,7 @@ import { setBreadcrumbs, BreadCrumbData } from './config/breadcrumbs';
 import { useHistory, useParams } from 'react-router-dom';
 import Sprint from 'components/Sprint';
 import { startGettingProject } from 'containers/ProjectSettings/logic/actions';
+import { extractUUIDFromArrayOfObjects } from 'helpers/extractUUIDFromArrayOfObjects.helper';
 
 const Scrum: BoardComponent = (props) => {
 	const dispatch = useDispatch();
@@ -31,6 +32,15 @@ const Scrum: BoardComponent = (props) => {
 		dispatch(actions.loadSprintsTrigger({ boardId: board.id }));
 		dispatch(startGettingProject({ id: projectId }));
 	}, [dispatch, board.id, projectId]);
+
+	useEffect(() => {
+		if (scrumBoardState.sprints.length > 0) {
+			const arrayOfIds = extractUUIDFromArrayOfObjects(scrumBoardState.sprints);
+			arrayOfIds.forEach((id) => {
+				dispatch(actions.loadIssuesTrigger({ sprintId: id }));
+			});
+		}
+	}, [scrumBoardState.sprints.length]);
 
 	const sprintList =
 		sprints.length > 0 ? (
