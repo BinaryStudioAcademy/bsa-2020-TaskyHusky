@@ -1,4 +1,10 @@
-import { loginUser, registerUser, getProfile, checkEmail } from 'services/auth.service';
+import {
+	loginUser,
+	registerUser,
+	getProfile,
+	checkEmail,
+	forgotPassword as forgotPasswordQuery,
+} from 'services/auth.service';
 import { all, put, takeEvery, call } from 'redux-saga/effects';
 import * as actionTypes from './actionTypes';
 import * as actions from './actions';
@@ -101,6 +107,26 @@ export function* watchCheckEmail() {
 	yield takeEvery(actionTypes.CHECK_EMAIL_TRIGGER, checkEmailRequest);
 }
 
+export function* forgotPassword(action: ReturnType<typeof actions.checkEmailTrigger>) {
+	try {
+		const { email } = action;
+		yield call(forgotPasswordQuery, email);
+	} catch (error) {
+		NotificationManager.error(error.clientException.message, 'Error');
+	}
+}
+
+export function* watchForgotPassword() {
+	yield takeEvery(actionTypes.FORGOT_PASSWORD, forgotPassword);
+}
+
 export default function* authSaga() {
-	yield all([watchUserLogin(), watchUserLogOut(), watchRegisterUser(), watchLoadProfile(), watchCheckEmail()]);
+	yield all([
+		watchUserLogin(),
+		watchUserLogOut(),
+		watchRegisterUser(),
+		watchLoadProfile(),
+		watchCheckEmail(),
+		watchForgotPassword(),
+	]);
 }

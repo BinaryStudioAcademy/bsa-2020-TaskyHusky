@@ -220,4 +220,10 @@ export const en = {
 	boards: 'Boards',
 	create_board: 'Create board',
 	view_all_boards: 'View all boards',
+	reset_password_header: "Can't log in?",
+	reset_password_email_link: "We'll send a recovery link to",
+	reset_password_button: 'Send recovery link',
+	reset_password_return_button: 'Return to log in',
+	reset_password_resend_email: 'Resend recovery link',
+	reset_password_email_sent_message: 'We sent a recovery link to you at',
 };

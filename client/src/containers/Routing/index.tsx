@@ -20,6 +20,7 @@ import BoardPage from 'pages/BoardPage';
 import ProjectIssues from 'pages/ProjectIssues';
 import NotFound from 'pages/404';
 import Search from 'pages/AdvancedSearch';
+import ForgotPassword from '../ForgotPassword';
 
 const Routing: React.FC = () => {
 	const dispatch = useDispatch();
@@ -39,6 +40,7 @@ const Routing: React.FC = () => {
 	return (
 		<Switch>
 			<PublicRoute exact restricted path="/login" component={Login} />
+			<PublicRoute exact restricted path="/forgot-password" component={ForgotPassword} />
 			<PublicRoute exact restricted path="/signup" component={SignUp} />
 			<PrivateRoute path="/issue/:key" component={IssuePage} />
 			<PrivateRoute exact path="/projects" component={ProjectsPage} />
@@ -51,8 +53,8 @@ const Routing: React.FC = () => {
 			<PrivateRoute path="/project/:id/issues" component={ProjectIssues} />
 			<PrivateRoute exact path="/people" component={PeoplePage} />
 			<PrivateRoute exact path="/advancedSearch" component={Search} />
-			<PublicRoute restricted={false} path="*" component={NotFound} />
 			<PrivateRoute exact path="/boards" component={BoardsPage} />
+			<PublicRoute restricted={false} path="*" component={NotFound} />
 		</Switch>
 	);
 };

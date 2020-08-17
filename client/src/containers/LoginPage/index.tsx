@@ -100,7 +100,7 @@ export const LoginPage: React.FC = () => {
 						<Divider />
 						<List bulleted horizontal link className={styles.list}>
 							<List.Item className={styles.listItem}>
-								<Link to="/reset/password" children={t('cant_login')} />
+								<Link to="/forgot-password" children={t('cant_login')} />
 							</List.Item>
 							<List.Item className={styles.listItem}>
 								<Link to="/signup" children={t('sign_up_for_an_account')} />
