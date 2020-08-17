@@ -38,6 +38,7 @@ export const advancedSearchReducer = createReducer<AdvancedSearch>(initialState,
 			filter,
 			addedFilterParts,
 			filterParts: updatedFilterParts,
+			isFilterEdited: false,
 		};
 	},
 	[actionTypes.UPDATE_FILTER_PART_SUCCESS](state, action: actionTypes.UpdateFilterPartArgs) {

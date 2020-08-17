@@ -40,14 +40,6 @@ const AdvancedFilters: React.FC = () => {
 						addedFilterParts={addedFilterParts}
 						setAddedFilterParts={(data) => setAddedFilterPartsHandler(data)}
 					/>
-					<Form.Field
-						control={() => (
-							<div className={styles.searchInputContainer}>
-								<Input placeholder={t('containText')} className={styles.containTextInput} />
-								<Button className={styles.searchBtn} primary content={t('searchIssue')} />
-							</div>
-						)}
-					/>
 				</Form.Group>
 				<Form.Group>
 					{addedFilterParts.map((part) => (
