@@ -7,6 +7,9 @@ export const UPDATE_FILTER_PART_SUCCESS = 'SEARCH:UPDATE_FILTER_PART_SUCCESS';
 export const LOAD_ISSUES = 'SEARCH:LOAD_ISSUES';
 export const LOAD_ISSUES_SUCCESS = 'SEARCH:LOAD_ISSUES_SUCCESS';
 export const GET_FILTER_PARTS_FROM_STATE = 'SEARCH:GET_FILTER_PARTS_FROM_STATE';
+export const LOAD_FILTER = 'SEARCH:LOAD_FILTER';
+export const LOAD_FILTER_SUCCESS = 'SEARCH:LOAD_FILTER_SUCCESS';
+export const SET_ADDED_FILTER_PARTS = 'SEARCH:SET_ADDED_FILTER_PARTS';
 
 export type IssueFilter = {
 	projects?: string[];
@@ -19,6 +22,19 @@ export type UpdateSearchArgs = {
 export type UpdateFilterPartArgs = {
 	filterPart: FilterPartState;
 };
+
 export type LoadIssuesSuccessArgs = {
 	issues: WebApi.Result.IssueResult[];
+};
+
+export type LoadFilterByIdArgs = {
+	id: string;
+};
+
+export type LoadFilterSuccessArgs = {
+	filter: WebApi.Entities.Filter;
+};
+
+export type SetAddedFilterPartsArgs = {
+	addedFilterParts: FilterPartState[];
 };

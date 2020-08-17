@@ -2,14 +2,19 @@ import React, { useState } from 'react';
 import styles from './styles.module.scss';
 import { List, Icon } from 'semantic-ui-react';
 import SaveFilterModal from 'containers/SaveFilterModal';
+import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import { RootState } from 'typings/rootState';
 
 const SearchTitle: React.FC = () => {
 	const [stared, setStared] = useState(false);
+	const { t } = useTranslation();
+	const { filter } = useSelector((rootState: RootState) => rootState.advancedSearch);
 
 	return (
 		<div className={styles.titleWrapper}>
 			<div className={styles.titleContainer}>
-				<h1 className={styles.title}>Search</h1>
+				<h1 className={styles.filterName}>{filter ? filter.name : t('searchIssue')}</h1>
 				<SaveFilterModal />
 			</div>
 			<div className={styles.actionWrapper}>

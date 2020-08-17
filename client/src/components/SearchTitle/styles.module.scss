@@ -8,8 +8,12 @@
 		display: flex;
 		flex-direction: row;
 		flex: 1 1 auto;
-		.title {
-			margin: 0;
+		.filterName {
+			margin-right: 12px;
+			max-width: 18em;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
 		}
 	}
 	.actionWrapper {

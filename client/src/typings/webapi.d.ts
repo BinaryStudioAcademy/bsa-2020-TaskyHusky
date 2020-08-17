@@ -160,8 +160,8 @@ namespace WebApi.Entities {
 	interface FilterPart {
 		id: string;
 		filter?: Filter;
-		filterDef?: FilterDefinition;
-		members?: UserProfile[];
+		filterDef: FilterDefinition;
+		members?: string[];
 		searchText?: string;
 	}
 
@@ -253,8 +253,8 @@ namespace WebApi.Entities {
 
 	interface UserProfile {
 		id: string;
-		firstName: string;
-		lastName: string;
+		firstName?: string;
+		lastName?: string;
 		username?: string;
 		avatar?: string;
 		department?: string;

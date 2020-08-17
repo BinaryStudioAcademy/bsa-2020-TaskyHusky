@@ -26,6 +26,7 @@ const MoreFilterDefsDropdown = ({
 		const filterPart = addedFilterParts.find(({ id }) => id === filterPartId);
 		return Boolean(filterPart);
 	};
+
 	return (
 		<Dropdown
 			trigger={

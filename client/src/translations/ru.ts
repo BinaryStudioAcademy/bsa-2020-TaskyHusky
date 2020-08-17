@@ -144,4 +144,8 @@ export const ru = {
 	go_to_board: 'Перейти к доске',
 	assignee: 'Ответственный',
 	no: 'Нет',
+	searchIssue: 'Поиск',
+	containText: 'Включает текст',
+	reporter: 'Репортер',
+	status: 'Статус',
 };

@@ -50,6 +50,7 @@ const Routing: React.FC = () => {
 			<PrivateRoute path="/board/:id" component={BoardPage} />
 			<PrivateRoute path="/project/:id/issues" component={ProjectIssues} />
 			<PrivateRoute exact path="/advancedSearch" component={Search} />
+			<PrivateRoute path="/advancedSearch/:filterId" component={Search} />
 			<PublicRoute restricted={false} path="*" component={NotFound} />
 		</Switch>
 	);

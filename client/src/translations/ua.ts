@@ -144,4 +144,8 @@ export const ua = {
 	go_to_board: 'Перейти до дошки',
 	assignee: 'Відповідає',
 	no: 'Нема',
+	searchIssue: 'Пошук',
+	containText: 'Включає текст',
+	reporter: 'Репортер',
+	status: 'Статус',
 };

@@ -145,4 +145,8 @@ export const en = {
 	go_to_board: 'Go to board',
 	assignee: 'Assignee',
 	no: 'No',
+	searchIssue: 'Search',
+	containText: 'Contains text',
+	reporter: 'Reporter',
+	status: 'Status',
 };

@@ -14,11 +14,12 @@ const DropdownTextSearch = ({ filterPart }: DropdownTextSearchProps) => {
 	const { filterDef, searchText: text } = filterPart;
 	const { title } = filterDef;
 
+	const [searchText, setSearchText] = useState(text);
+
 	const formDropdownTitle = (): string => {
 		return !!searchText ? `${title}: ${searchText}` : title;
 	};
 
-	const [searchText, setSearchText] = useState(text);
 	const [dropdownTitle, setDropdownTitle] = useState(formDropdownTitle());
 
 	const onUpdate = (e: React.SyntheticEvent) => {

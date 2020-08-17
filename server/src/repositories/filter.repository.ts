@@ -1,4 +1,4 @@
-import { EntityRepository, Repository, DeleteResult } from 'typeorm';
+import { EntityRepository, Repository, DeleteResult, getRepository } from 'typeorm';
 import { Filter } from '../entity/Filter';
 
 @EntityRepository(Filter)
@@ -11,16 +11,23 @@ export class FilterRepository extends Repository<Filter> {
 		return this.find({ relations: ['owner', 'staredBy', 'filterParts'] });
 	}
 
-	getById(id: string) {
+	async getById(id: string) {
 		return this.findOne({
+			relations: ['owner', 'filterParts', 'filterParts.filterDef'],
 			where: {
 				id,
 			},
 		});
 	}
 
-	createItem(data: Filter): Promise<Filter> {
-		return this.save(data);
+	async createItem(data: Filter): Promise<Filter> {
+		const { name, filterParts } = data;
+
+		const filter = await this.save({ name });
+		if (filterParts) {
+			filter.filterParts = filterParts;
+		}
+		return this.save(filter);
 	}
 
 	updateItem(data: Filter): Promise<Filter> {

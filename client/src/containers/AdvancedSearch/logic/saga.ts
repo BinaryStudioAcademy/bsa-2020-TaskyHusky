@@ -1,5 +1,6 @@
 import { RootState } from 'typings/rootState';
 import { loadIssues } from 'services/issue.service';
+import { loadFilterById } from 'services/filter.service';
 import { all, put, takeEvery, call, select } from 'redux-saga/effects';
 import { v4 as uuidv4 } from 'uuid';
 import * as actionTypes from './actionTypes';
@@ -8,7 +9,7 @@ import { FilterPartState } from './state';
 import { AnyAction } from 'redux';
 import { getFilterOptionsFromFilterParts } from './helpers';
 
-export function* fetchFilterPartsSaga(action: ReturnType<typeof actions.fetchFilterParts>) {
+export function* fetchFilterPartsSaga(action: AnyAction) {
 	const {
 		filterDefs: { filterDefs },
 	}: RootState = yield select();
@@ -20,10 +21,20 @@ export function* fetchFilterPartsSaga(action: ReturnType<typeof actions.fetchFil
 	const filterParts = filterDefs.map(getInitialFilterPart);
 
 	yield put(actions.updateSearchSuccess({ partialState: { filterParts } }));
+	if (action.id) {
+		const filter: WebApi.Entities.Filter = yield call(loadFilterById, action.id);
+
+		yield put(actions.loadFilterByIdSuccess({ filter }));
+	}
+	yield put(actions.loadIssues());
 }
 
 export function* updateFilterPartSaga(action: AnyAction) {
 	yield put(actions.updateFilterPartSuccess({ filterPart: action.filterPart }));
+	yield put(actions.loadIssues());
+}
+
+export function* loadIssuesSaga(action: AnyAction) {
 	const {
 		advancedSearch: { filterParts },
 	}: RootState = yield select();
@@ -34,9 +45,16 @@ export function* updateFilterPartSaga(action: AnyAction) {
 	yield put(actions.loadIssuesSuccess({ issues }));
 }
 
-export function* loadIssuesSaga(action: AnyAction) {
-	const issues = yield call(loadIssues, undefined);
-	yield put(actions.loadIssuesSuccess({ issues }));
+export function* loadFilterByIdSaga(action: AnyAction) {
+	const filter: WebApi.Entities.Filter = yield call(loadFilterById, action.id);
+
+	yield put(actions.loadFilterByIdSuccess({ filter }));
+	yield put(actions.loadIssues());
+}
+
+export function* setAddedFilterPartsSaga(action: AnyAction) {
+	const { addedFilterParts } = action;
+	yield put(actions.updateSearchSuccess({ partialState: { addedFilterParts } }));
 }
 
 export function* watchFetchFilterParts() {
@@ -51,6 +69,20 @@ export function* watchLoadIssues() {
 	yield takeEvery(actionTypes.LOAD_ISSUES, loadIssuesSaga);
 }
 
+export function* watchLoadFilterById() {
+	yield takeEvery(actionTypes.LOAD_FILTER, loadFilterByIdSaga);
+}
+
+export function* watchSetAddedFilterParts() {
+	yield takeEvery(actionTypes.SET_ADDED_FILTER_PARTS, setAddedFilterPartsSaga);
+}
+
 export default function* advancedSearchSaga() {
-	yield all([watchFetchFilterParts(), watchUpdateFilterPart(), watchLoadIssues()]);
+	yield all([
+		watchFetchFilterParts(),
+		watchUpdateFilterPart(),
+		watchLoadIssues(),
+		// watchLoadFilterById(),
+		watchSetAddedFilterParts(),
+	]);
 }
