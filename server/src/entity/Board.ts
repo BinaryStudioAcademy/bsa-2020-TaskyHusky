@@ -1,5 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToOne, JoinTable, ManyToMany } from 'typeorm';
-import { IsDefined, IsString, MinLength } from 'class-validator';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToOne, CreateDateColumn, ManyToMany } from 'typeorm';
+import { IsDefined, IsString, IsNotEmpty, IsUUID } from 'class-validator';
 import { BoardColumn } from './BoardColumn';
 import { Sprint } from './Sprint';
 import { UserProfile } from './UserProfile';
@@ -16,13 +16,13 @@ export class Board {
 
 	@Column()
 	@IsString()
-	@MinLength(1)
+	@IsNotEmpty()
 	name!: string;
 
 	@OneToMany((type) => BoardColumn, (boardColumn) => boardColumn.board)
 	columns?: BoardColumn[];
 
-	@OneToMany((type) => Sprint, (sprint) => sprint.id)
+	@OneToMany((type) => Sprint, (sprint) => sprint.board)
 	sprints?: Sprint[];
 
 	@ManyToOne((type) => UserProfile, (user) => user.boards, {
@@ -31,9 +31,11 @@ export class Board {
 	@IsDefined()
 	createdBy!: UserProfile;
 
-	@ManyToMany((type) => Projects, project => project.boards,{
-		cascade:true
+	@CreateDateColumn({type:'timestamp', default:()=>'CURRENT_TIMESTAMP(6)'})
+	createdAt!: Date;
+
+	@ManyToMany((type) => Projects, (project) => project.boards, {
+		cascade: true,
 	})
-	@JoinTable()
 	projects?: Projects[];
 }

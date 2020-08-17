@@ -1,12 +1,32 @@
-import { EntityRepository, Repository, Like } from 'typeorm';
+import { EntityRepository, Repository, FindOperator, Any, Raw } from 'typeorm';
 import { Issue } from '../entity/Issue';
+import { getConditions } from '../helpers/issue.helper';
 
-const RELS = ['priority', 'type'];
+const RELS = ['priority', 'type', 'creator', 'assigned'];
+
+export type Filter = {
+	issueType?: string[];
+	priority?: string[];
+	sprint?: string[];
+	projects?: string[];
+	issueStatus?: string[];
+	assigned?: string[];
+	creator?: string[];
+	summary?: string;
+	description?: string;
+	comment?: string;
+};
 
 @EntityRepository(Issue)
 export class IssueRepository extends Repository<Issue> {
 	findAll() {
 		return this.find({ relations: RELS });
+	}
+
+	getFilteredIssues(filter: Filter | undefined) {
+		const where = filter ? getConditions(filter) : {};
+
+		return this.find({ relations: RELS, where });
 	}
 
 	findAllByColumnId(id: string) {

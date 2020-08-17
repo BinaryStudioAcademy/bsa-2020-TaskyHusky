@@ -28,8 +28,17 @@ interface IssueResult {
 	sprintID?: string;
 	projectID?: string;
 	issueKey?: string;
-	assignedID?: string;
-	creatorID?: string;
+	assigned?: UserModel;
+	creator: UserModel;
+}
+
+interface IssueCommentResult {
+	id: string;
+	creator: UserModel;
+	createdAt: Date;
+	updatedAt?: Date;
+	text: string;
+	issue: string;
 }
 
 interface BoardResult {

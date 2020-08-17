@@ -12,7 +12,7 @@ export class IssueType1596717562603 implements MigrationInterface {
 			{
 				title: 'Bug',
 				color: 'red',
-				icon: 'close',
+				icon: 'bug',
 			},
 			{
 				title: 'Story',

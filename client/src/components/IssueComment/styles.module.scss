@@ -1,0 +1,13 @@
+:local(.avatar) {
+	width: 40px !important;
+	height: 40px !important;
+	margin-right: 10px;
+	margin-top: 0 !important;
+	background-color: #ddd;
+	color: #555;
+	border-radius: 50%;
+	text-transform: uppercase;
+	display: flex !important;
+	justify-content: center;
+	align-items: center;
+}

@@ -1,19 +1,24 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
-import { MinLength, IsEmail } from 'class-validator';
-import { TeamsPeople } from './TeamsPeople';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToMany } from 'typeorm';
+import { MinLength, IsEmail, IsString, IsNotEmpty, IsUUID, Length, IsLowercase } from 'class-validator';
+import { Issue } from './Issue';
 import { Board } from './Board';
 import { Filter } from './Filter';
 import { Projects } from './Projects';
+import { Team } from './Team';
 
 @Entity()
 export class UserProfile {
 	@PrimaryGeneratedColumn('uuid')
 	id!: string;
 
-	@Column({ nullable: true })
+	@Column()
+	@IsString()
+	@IsNotEmpty()
 	firstName?: string;
 
-	@Column({ nullable: true })
+	@Column()
+	@IsString()
+	@IsNotEmpty()
 	lastName?: string;
 
 	@Column({ nullable: true })
@@ -33,6 +38,9 @@ export class UserProfile {
 
 	@Column({ unique: true })
 	@IsEmail()
+	@Length(6, 30)
+	@IsLowercase()
+	@IsNotEmpty()
 	email?: string;
 
 	@Column({ nullable: true })
@@ -45,11 +53,14 @@ export class UserProfile {
 	@MinLength(6)
 	password?: string;
 
-	@OneToMany((type) => TeamsPeople, (teams) => teams.userId)
-	teams?: TeamsPeople[];
-
 	@OneToMany((type) => Board, (board) => board.createdBy)
 	boards?: Board[];
+
+	@Column({ type: 'character varying', name: 'resetPasswordToken', nullable: true })
+	public resetPasswordToken?: string | null;
+
+	@Column({ type: 'timestamp without time zone', name: 'resetPasswordExpires', nullable: true })
+	public resetPasswordExpires?: Date | null;
 
 	@OneToMany((type) => Filter, (filter) => filter.owner)
 	filters?: Filter[];
@@ -62,4 +73,32 @@ export class UserProfile {
 
 	@OneToMany((type) => Projects, (projects) => projects.creator)
 	createdProjects!: Projects[];
+
+	@OneToMany((type) => Team, (teams) => teams.createdBy)
+	teamsOwner?: Team[];
+
+	@OneToMany((type) => Issue, (issue) => issue.assigned)
+	assignedIssues?: Issue[];
+
+	@OneToMany((type) => Issue, (issue) => issue.creator)
+	createdIssues?: Issue[];
+
+	@ManyToMany((type) => Team, (team) => team.users, {
+		cascade: true,
+	})
+	teams?: Team[];
+
+	@ManyToMany((type) => Projects, (projects) => projects.users)
+	projects?: Projects[];
+
+	constructor(userData?: Partial<UserProfile>) {
+		if (userData) {
+			const { email, password, firstName, lastName } = userData;
+
+			this.firstName = firstName;
+			this.lastName = lastName;
+			this.email = email;
+			this.password = password;
+		}
+	}
 }

@@ -15,8 +15,13 @@ export class FilterDef1597050485179 implements MigrationInterface {
 			},
 			{
 				dataType: 'dropdown',
-				filterType: 'issueTypes',
+				filterType: 'issueType',
 				title: 'Type',
+			},
+			{
+				dataType: 'dropdown',
+				filterType: 'assigned',
+				title: 'Assignee',
 			},
 			{
 				dataType: 'dropdown',
@@ -37,6 +42,11 @@ export class FilterDef1597050485179 implements MigrationInterface {
 				dataType: 'searchText',
 				filterType: 'comment',
 				title: 'Comment',
+			},
+			{
+				dataType: 'searchText',
+				filterType: 'summary',
+				title: 'Summary',
 			},
 		];
 		await getRepository('FilterDefinition').save(filterDefs);
