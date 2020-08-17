@@ -20,3 +20,4 @@ export const checkEmailSuccess = createAction<actionTypes.CheckEmail>(actionType
 export const checkEmailReset = createAction(actionTypes.CHECK_EMAIL_RESET);
 
 export const forgotPassword = createAction<actionTypes.ForgotPassword>(actionTypes.FORGOT_PASSWORD);
+export const resetPassword = createAction<actionTypes.ResetPassword>(actionTypes.RESET_PASSWORD);
