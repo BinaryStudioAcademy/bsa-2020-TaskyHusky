@@ -1,3 +1,5 @@
+@import 'styles/mixins.scss';
+
 .container {
   display: flex;
   flex-direction: column;
@@ -5,4 +7,21 @@
 
 .button {
   margin: 10px 0 !important;
+  @include content-btn;
+}
+
+.profileBtn {
+  background-color: $red !important;
+}
+
+.emailBtn {
+  background-color: $yellow !important;
+}
+
+.securityBtn {
+  background-color: $green !important;
+}
+
+.accountBtn {
+  background-color: $blue !important;
 }

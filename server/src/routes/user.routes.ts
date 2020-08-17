@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import UserController from '../controllers/user.controllers';
+import imageMiddleware from '../middleware/imageMiddleware';
 
 const router = Router();
 const userController = new UserController();
@@ -7,7 +8,8 @@ const userController = new UserController();
 router.get('/', userController.getAllUser);
 router.get('/:id', userController.getUser);
 router.put('/', userController.updateUser);
-router.post('/', userController.createUser);
+router.put('/password', userController.changePassword);
 router.delete('/', userController.deleteUser);
+router.post('/avatar', imageMiddleware, userController.uploadAvatar);
 
 export default router;

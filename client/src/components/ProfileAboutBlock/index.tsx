@@ -1,52 +1,45 @@
 import React from 'react';
-import { Container, Header } from 'semantic-ui-react';
-import styles from 'components/ProfileAside/styles.module.scss';
-import { PropsUserData } from 'containers/ProfilePage';
+import { useTranslation } from 'react-i18next';
+import styles from './styles.module.scss';
 import ProfileAboutItem from 'components/ProfileAboutItem';
+import geo from 'icons/profile/geo.svg';
+import toolbox from 'icons/profile/toolbox.svg';
+import union from 'icons/profile/Union.svg';
+import reorder from 'icons/profile/reorder.svg';
+import clock from 'icons/profile/clock.svg';
 
-const ProfileAboutBlock: React.FC<PropsUserData> = (props: PropsUserData) => {
-	const { user, isCurrentUser } = props;
+interface Props {
+	isCurrentUser: boolean;
+	mockData?: any;
+	jobTitle: string;
+	organization: string;
+	department: string;
+	location: string;
+}
+
+const ProfileAboutBlock: React.FC<Props> = (props: Props) => {
+	const { t } = useTranslation();
+	const { jobTitle, organization, department, location, isCurrentUser } = props;
+	const currentTime = '5:07pm';
 	return (
-		<Container className={styles.infoBlock}>
-			<Header as="h3" className={styles.infoBlock__header}>
-				About
-			</Header>
-			{(user.jobTitle || isCurrentUser) && (
-				<ProfileAboutItem
-					data={{ text: user.jobTitle || '', placeholder: 'Your job title', name: 'jobTitle', isCurrentUser }}
-				/>
+		<div>
+			<h3 className={styles.header}>{t('about')}</h3>
+			{(jobTitle || isCurrentUser) && (
+				<ProfileAboutItem text={jobTitle} placeholder={t('placeholder_job')} icon={toolbox} />
 			)}
-			{(user.department || isCurrentUser) && (
-				<ProfileAboutItem
-					data={{
-						text: user.department || '',
-						placeholder: 'Your department',
-						name: 'department',
-						isCurrentUser,
-					}}
-				/>
+			{(department || isCurrentUser) && (
+				<ProfileAboutItem text={department} placeholder={t('placeholder_department')} icon={reorder} />
 			)}
-			{(user.organization || isCurrentUser) && (
-				<ProfileAboutItem
-					data={{
-						text: user.organization || '',
-						placeholder: 'Your organization',
-						name: 'organization',
-						isCurrentUser,
-					}}
-				/>
+			{(organization || isCurrentUser) && (
+				<ProfileAboutItem text={organization} placeholder={t('placeholder_organization')} icon={union} />
 			)}
-			{(user.location || isCurrentUser) && (
-				<ProfileAboutItem
-					data={{
-						text: user.location || '',
-						placeholder: 'Your organization',
-						name: 'location',
-						isCurrentUser,
-					}}
-				/>
+			{(location || isCurrentUser) && (
+				<ProfileAboutItem text={location} placeholder={t('placeholder_location')} icon={geo} />
 			)}
-		</Container>
+			{(currentTime || isCurrentUser) && (
+				<ProfileAboutItem text={currentTime} placeholder={t('placeholder_location')} icon={clock} />
+			)}
+		</div>
 	);
 };
 

@@ -1,0 +1,16 @@
+:global(#root) {
+	.breadcrumb {
+		margin-top: 25px;
+		margin-bottom: 25px;
+	}
+
+	.inlineContainer {
+		display: flex;
+		align-items: center;
+		margin: 20px 0 10px 15px;
+
+		* {
+			margin: 0 5px !important;
+		}
+	}
+}

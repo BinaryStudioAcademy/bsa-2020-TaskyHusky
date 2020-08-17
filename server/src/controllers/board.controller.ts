@@ -1,9 +1,11 @@
 import { NextFunction, Request, Response } from 'express';
 import { getCustomRepository } from 'typeorm';
+import { SprintRepository } from '../repositories/sprint.repository';
 import { BoardRepository } from '../repositories/board.repository';
 import { BoardColumnRepository } from '../repositories/boardColumn.repository';
 import { ErrorResponse } from '../helpers/errorHandler.helper';
 import HttpStatusCode from '../constants/httpStattusCode.constants';
+import { Sprint } from '../entity/Sprint';
 
 class BoardController {
 	getAll = async (req: Request, res: Response): Promise<void> => {
@@ -25,6 +27,13 @@ class BoardController {
 		}
 	};
 
+	getRecent = async (req: Request, res: Response): Promise<void> => {
+		const boardRepository = getCustomRepository(BoardRepository);
+		const boards = await boardRepository.getRecent();
+
+		res.status(200).send(boards.slice(0, 5));
+	};
+
 	getBoardColumns = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
 		const boardRepository = getCustomRepository(BoardRepository);
 		const columnsRepository = getCustomRepository(BoardColumnRepository);
@@ -43,11 +52,23 @@ class BoardController {
 		const boardRepository = getCustomRepository(BoardRepository);
 		const { id } = req.params;
 		try {
-			const projects=await boardRepository.getProjects(id);
+			const projects = await boardRepository.getProjects(id);
 
 			res.status(200).send(projects);
 		} catch (e) {
 			next(new ErrorResponse(HttpStatusCode.NOT_FOUND, e.message));
+		}
+	};
+
+	getBoardSprints = async (req: Request, res: Response, next: NextFunction) => {
+		const boardRepository = getCustomRepository(BoardRepository);
+
+		try {
+			const { id } = req.params;
+			const sprints = await boardRepository.getSprints(id);
+			res.status(200).send(sprints);
+		} catch (error) {
+			next(new ErrorResponse(HttpStatusCode.NOT_FOUND, error.message));
 		}
 	};
 

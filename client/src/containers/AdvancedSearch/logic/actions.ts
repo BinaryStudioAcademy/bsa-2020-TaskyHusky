@@ -9,3 +9,6 @@ export const updateFilterPart = createAction<actionTypes.UpdateFilterPartArgs>(a
 export const updateFilterPartSuccess = createAction<actionTypes.UpdateFilterPartArgs>(
 	actionTypes.UPDATE_FILTER_PART_SUCCESS,
 );
+
+export const loadIssues = createAction(actionTypes.LOAD_ISSUES);
+export const loadIssuesSuccess = createAction<actionTypes.LoadIssuesSuccessArgs>(actionTypes.LOAD_ISSUES_SUCCESS);
