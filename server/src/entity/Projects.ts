@@ -67,7 +67,7 @@ export class Projects {
 
 	@ManyToMany((type) => UserProfile, (userProfile) => userProfile.projects, { cascade: true })
 	@JoinTable({ name: 'projects_people' })
-	users?: UserProfile[];
+	users!: UserProfile[];
 
 	@CreateDateColumn()
 	createdDate?: Date;
