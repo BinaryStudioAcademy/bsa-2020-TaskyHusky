@@ -40,7 +40,7 @@ const Scrum: BoardComponent = (props) => {
 				dispatch(actions.loadIssuesTrigger({ sprintId: id }));
 			});
 		}
-	}, [scrumBoardState.sprints.length]);
+	}, [scrumBoardState.sprints.length, scrumBoardState.sprints, dispatch]);
 
 	const sprintList =
 		sprints.length > 0 ? (

@@ -1,6 +1,7 @@
 import React from 'react';
 import { List, Image, Item } from 'semantic-ui-react';
 import styles from './styles.module.scss';
+import { getUsername } from 'helpers/getUsername.helper';
 
 type Props = { issues: WebApi.Entities.Issue[] };
 
@@ -21,7 +22,7 @@ export const SprintIssues: React.FC<Props> = ({ issues }: Props) => {
 								<Image
 									avatar
 									src={issue.assigned?.avatar}
-									title={`Assignee: ${issue.assigned?.firstName} ${issue.assigned?.lastName}`}
+									title={`Assignee: ${getUsername(issue.assigned)}`}
 								/>
 							) : null}
 							<Item className={styles.issueKeyItem}>{issue.issueKey}</Item>
@@ -40,6 +41,7 @@ export const SprintIssues: React.FC<Props> = ({ issues }: Props) => {
 				<span>Plan a sprint by creating some issues.</span>
 			</List.Item>
 		);
+
 	return (
 		<List celled selection={issues?.length > 0 ? true : false} verticalAlign="middle">
 			{issuesList}
