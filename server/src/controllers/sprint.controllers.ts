@@ -2,9 +2,6 @@ import { Request, Response, NextFunction } from 'express';
 import { getCustomRepository } from 'typeorm';
 import { SprintRepository } from '../repositories/sprint.repository';
 import { ErrorResponse } from '../helpers/errorHandler.helper';
-import { ProjectsRepository } from '../repositories/projects.repository';
-import { BoardRepository } from '../repositories/board.repository';
-import { IssueRepository } from '../repositories/issue.repository';
 import HttpStatusCode from '../constants/httpStattusCode.constants';
 
 enum ErrorMessage {
@@ -76,15 +73,13 @@ class SprintController {
 
 	async getProjectById(req: Request, res: Response, next: NextFunction) {
 		const sprintRepository = getCustomRepository(SprintRepository);
-		const projectsRepository = getCustomRepository(ProjectsRepository);
 
 		try {
 			const { id } = req.params;
 			const sprint = await sprintRepository.findOneById(id);
 
 			if (sprint.project) {
-				const project = await projectsRepository.findOneOrFail(sprint.project);
-				res.send(project);
+				res.send(sprint.project);
 			}
 
 			if (!sprint.project) {
@@ -97,15 +92,13 @@ class SprintController {
 
 	async getBoardById(req: Request, res: Response, next: NextFunction) {
 		const sprintRepository = getCustomRepository(SprintRepository);
-		const boardRepository = getCustomRepository(BoardRepository);
 
 		try {
 			const { id } = req.params;
 			const sprint = await sprintRepository.findOneById(id);
 
 			if (sprint.board) {
-				const board = await boardRepository.findOneOrFail(sprint.board);
-				res.send(board);
+				res.send(sprint.board);
 			}
 
 			if (!sprint.board) {
@@ -118,15 +111,13 @@ class SprintController {
 
 	async getIssuesById(req: Request, res: Response, next: NextFunction) {
 		const sprintRepository = getCustomRepository(SprintRepository);
-		const issueRepository = getCustomRepository(IssueRepository);
 
 		try {
 			const { id } = req.params;
 			const sprint = await sprintRepository.findOneById(id);
 
 			if (sprint.issues) {
-				const issues = await issueRepository.findByIds(sprint.issues);
-				res.send(issues);
+				res.send(sprint.issues);
 			}
 
 			// ACTUALLY SHOULD NEVER HAPPEN, IF THIS TRIGGER - SOMETHING CAN BE WRONG ON ENTITY SIDE
