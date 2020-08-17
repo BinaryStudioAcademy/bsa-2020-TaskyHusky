@@ -1,4 +1,4 @@
-import { EntityRepository, Repository } from 'typeorm';
+import { EntityRepository, Repository, In, getRepository } from 'typeorm';
 import { Projects } from '../entity/Projects';
 
 const RELS = ['boards'];
@@ -13,12 +13,25 @@ export class ProjectsRepository extends Repository<Projects> {
 		return this.findOneOrFail({ where: { id }, relations: RELS });
 	}
 
-	getOne(id: string) {
-		return this.findOneOrFail(id, { relations: ['creator', 'lead', 'boards'] });
+	getOne(id: string): Promise<Projects | undefined> {
+		return this.findOne(id, { relations: ['creator', 'lead', 'boards'] });
 	}
 
-	getOneProject(id: string, prop: string) {
-		return this.findOne({ [prop]: id });
+	getOneByIdWithLead(id: string): Promise<Projects | undefined> {
+		return this.findOne({ id }, { relations: ['lead', 'users'] });
+	}
+
+	getOneByKey(key: string): Promise<Projects | undefined> {
+		return this.findOne({ key }, { withDeleted: true });
+	}
+
+	findAllProjectsWithCreatorsId(id: string) {
+		return getRepository(Projects)
+			.createQueryBuilder('project')
+			.leftJoinAndSelect('project.users', 'users')
+			.where('users.id = :id', { id })
+			.loadAllRelationIds()
+			.getMany();
 	}
 
 	createOne(data: Projects) {
@@ -31,6 +44,6 @@ export class ProjectsRepository extends Repository<Projects> {
 	}
 
 	deleteOneById(id: string) {
-		return this.delete(id);
+		return this.softDelete(id);
 	}
 }
