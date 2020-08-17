@@ -1,32 +1,22 @@
 import React from 'react';
-import { Header, Icon } from 'semantic-ui-react';
 import styles from './styles.module.scss';
 import { useTranslation } from 'react-i18next';
+import mail from 'icons/profile/mail.svg';
 
 interface Props {
 	email: string;
-	isCurrentUser: boolean;
 }
 const ProfileContacntBlock: React.FC<Props> = (props: Props) => {
 	const { t } = useTranslation();
-	const { email, isCurrentUser } = props;
+	const { email } = props;
 	return (
 		<>
-			<Header as="h3" className={styles.header}>
-				{t('contact')}
-			</Header>
-			{email ? (
+			<h3 className={styles.header}>{t('contact')}</h3>
+			{email && (
 				<div className={`${styles.email} ${styles.neverPoint}`}>
-					<Icon disabled name="envelope outline" size="large" />
-					<p className={styles.infoBlock__content}>{email}</p>
+					<img src={mail} alt="icon" className={styles.icon} />
+					<p className={styles.textData}>{email}</p>
 				</div>
-			) : isCurrentUser ? (
-				<div className={styles.item}>
-					<Icon disabled name="envelope outline" size="large" />
-					<p>{t('your_location')}</p>
-				</div>
-			) : (
-				''
 			)}
 		</>
 	);

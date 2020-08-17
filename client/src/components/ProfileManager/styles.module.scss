@@ -7,11 +7,11 @@
 }
 
 .card {
-  @include profile-card;
+  @include card-container;
 }
 
 .header {
-  margin: 19px 0 0 19px;
+  @include manager-header;
 }
 
 .formFooter {
@@ -19,6 +19,19 @@
 }
 
 .submitButton {
+  @include content-btn;
   margin-right: 20px !important;
-  background-color: #76ef8a !important;
+  background-color: $green !important;
+}
+
+.secondaryButton {
+  @include content-btn;
+}
+
+@media screen and (max-width: $less-than-medium-screen) {
+  .container {
+    margin-top: 50px;
+    width: 100%;
+    padding: 0;
+  }
 }

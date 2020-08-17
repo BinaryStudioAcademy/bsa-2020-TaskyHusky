@@ -20,7 +20,7 @@ label {
 	left: 5px;
 }
 
-.site-header > .menu > .item:not(.createMenuItem):not(.right):not(.site-logo) {
+.site-header>.menu>.item:not(.createMenuItem):not(.right):not(.site-logo) {
 	border-radius: 1px !important;
 	background-color: #ffffff !important;
 	box-sizing: border-box;
@@ -49,13 +49,13 @@ label {
 	}
 }
 
-.site-header > .menu > .item.site-logo {
+.site-header>.menu>.item.site-logo {
 	.site-logo-text {
 		padding: 5px 10px;
 		border-radius: 2px;
 	}
 
-	&:hover > .site-logo-text {
+	&:hover>.site-logo-text {
 		background-color: rgba(0, 0, 0, 0.05) !important;
 	}
 }
