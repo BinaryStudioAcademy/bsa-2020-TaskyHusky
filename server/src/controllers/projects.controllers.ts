@@ -60,10 +60,9 @@ class ProjectsController {
 			}
 
 			const { key } = project;
-			const isKeyExists = await projectsRepository.getOneByKey(key);
+			const isKeyAllowedResult = await this.isKeyAllowed(key, next);
 
-			if (isKeyExists) {
-				next(new ErrorResponse(HttpStatusCode.UNPROCESSABLE_ENTITY, projectsErrorMessages.PROJECT_EXISTS));
+			if (!isKeyAllowedResult) {
 				return;
 			}
 
@@ -79,23 +78,38 @@ class ProjectsController {
 
 		try {
 			const { project } = req.body;
-			const { id: projectId } = project;
-			const prevProject = await projectsRepository.getOneByIdWithLead(projectId);
-			const projectToUpdate = { ...prevProject, ...project };
-			const validationErrors = await validateProject(projectToUpdate);
+			const { id: projectId, key } = project;
+			const validationErrors = await validateProject(project);
 
 			if (validationErrors.length > 0) {
 				next(new ErrorResponse(HttpStatusCode.UNPROCESSABLE_ENTITY, projectsErrorMessages.INVALID_DATA));
 				return;
 			}
 
-			if (!prevProject) {
+			const prevProject = await projectsRepository.getOne(projectId);
+
+			if (prevProject === undefined) {
 				next(new ErrorResponse(HttpStatusCode.NOT_FOUND, projectsErrorMessages.PROJECT_NOT_FOUND));
 				return;
 			}
 
-			const { id: userId } = req.user;
+			const isKeyAllowedResult = await this.isKeyAllowed(key, next, projectId);
+
+			if (!isKeyAllowedResult) {
+				return;
+			}
+
 			const { id: prevProjectLeadId } = prevProject.lead;
+			const { users: prevProjectUsers } = prevProject;
+
+			const isLeadInUsers = prevProjectUsers.find((user) => user.id === prevProjectLeadId);
+
+			if (!isLeadInUsers) {
+				next(new ErrorResponse(HttpStatusCode.UNPROCESSABLE_ENTITY, projectsErrorMessages.INVALID_DATA));
+				return;
+			}
+
+			const { id: userId } = req.user;
 
 			const isForbiddenResult = this.isForbidden(userId, prevProjectLeadId, next);
 
@@ -115,7 +129,7 @@ class ProjectsController {
 
 		try {
 			const { id } = req.body;
-			const project = await projectsRepository.getOneByIdWithLead(id);
+			const project = await projectsRepository.getOne(id);
 
 			if (!project) {
 				next(new ErrorResponse(HttpStatusCode.NOT_FOUND, projectsErrorMessages.PROJECT_NOT_FOUND));
@@ -136,6 +150,23 @@ class ProjectsController {
 		} catch (err) {
 			next(new ErrorResponse(HttpStatusCode.INTERNAL_SERVER_ERROR, err.message));
 		}
+	};
+
+	protected isKeyAllowed = async (key: string, next: NextFunction, projectId?: string): Promise<boolean> => {
+		let isAllowed = true;
+		const projectsRepository = getCustomRepository(ProjectsRepository);
+		const projectByKey = await projectsRepository.getOneByKey(key);
+
+		if (projectId && projectByKey?.id !== projectId) {
+			next(new ErrorResponse(HttpStatusCode.UNPROCESSABLE_ENTITY, projectsErrorMessages.PROJECT_EXISTS));
+			isAllowed = false;
+		}
+
+		if (!projectId && projectByKey) {
+			next(new ErrorResponse(HttpStatusCode.UNPROCESSABLE_ENTITY, projectsErrorMessages.PROJECT_EXISTS));
+			isAllowed = false;
+		}
+		return isAllowed;
 	};
 
 	protected isForbidden = (userId: string, leadId: string, next: NextFunction): boolean => {
