@@ -19,10 +19,10 @@ export class Team {
 	@JoinTable({ name: 'teams_people' })
 	users?: UserProfile[];
 
-	@ManyToOne(() => UserProfile, (user: UserProfile) => user.teamsOwner, { cascade: true })
-	createdBy?: UserProfile;
+	@ManyToOne(() => UserProfile, (user: UserProfile) => user.teamsOwner)
+	createdBy!: UserProfile;
 
-	@OneToMany(() => Projects, (project: Projects) => project.team)
+	@OneToMany(() => Projects, (project: Projects) => project.team, { cascade: true })
 	projects?: Projects[];
 
 	@Column()

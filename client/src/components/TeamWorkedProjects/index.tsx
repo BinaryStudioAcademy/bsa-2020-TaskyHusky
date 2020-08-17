@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 type Props = {
-	projects: WebApi.Entities.Projects[] | undefined;
+	projects?: WebApi.Entities.Projects[];
 };
 
 const TeamWorkedProjects = ({ projects }: Props) => {
@@ -17,7 +17,7 @@ const TeamWorkedProjects = ({ projects }: Props) => {
 			<Header as="h3">{t('worked_on')}</Header>
 			<div className={styles.worked_block_wrapper}>
 				<div className={styles.flex_row}>
-					{projects ? (
+					{projects?.length ? (
 						projects.map((project): JSX.Element | null => (
 							<Link
 								target="_blank"

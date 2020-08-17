@@ -29,6 +29,7 @@ export class Team1606645895543 implements MigrationInterface {
 		team.users = [user2, user1];
 		team.createdBy = user1;
 		team.projects = [project1];
+		team.color = 'blue';
 
 		await getRepository('Team').save(team);
 	}

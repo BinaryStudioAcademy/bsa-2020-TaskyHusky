@@ -117,7 +117,7 @@ namespace WebApi.Team {
 		loading: boolean;
 		color?: string;
 		createdBy?: UserProfile;
-		projects?: Projects[];
+		projects: Projects[] | [];
 	}
 }
 namespace WebApi.User {
@@ -255,7 +255,7 @@ namespace WebApi.Entities {
 		description?: string;
 		links?: string[];
 		users?: UserProfile[];
-		createdBy?: UserProfile;
+		createdBy: UserProfile;
 		name?: string;
 		color?: string;
 	}
@@ -287,7 +287,7 @@ namespace WebApi.Entities {
 		filters?: Filter[];
 		assignedProjects?: Projects[];
 		leadedProjects?: Projects[];
-		createdProjects: Projects[];
+		createdProjects?: Projects[];
 		teamsOwner?: Team[];
 		assignedIssues?: Issue[];
 		createdIssues?: Issue[];
