@@ -9,8 +9,10 @@ import CreateBoardModal from '../../components/CreateBoardModal';
 
 import styles from './styles.module.scss';
 import DeleteBoardModal from '../../components/deleteBoardModal';
+import { useTranslation } from 'react-i18next';
 
 const Boards: React.FC = () => {
+	const { t } = useTranslation();
 	const boardTypes = ['Kanban', 'Scrum'];
 	const [searchName, setSearchName] = useState('');
 	const [selectedTypes, setSelectedType] = useState<WebApi.Board.BoardType[]>([]);
@@ -47,10 +49,6 @@ const Boards: React.FC = () => {
 		setSelectedType([...(data.value as WebApi.Board.BoardType[])]);
 	};
 
-	const handleDelete = (id: string) => {
-		dispatch(actions.deleteBoard({ id }));
-	};
-
 	const onCreateBoard = (board: createBoard) => {
 		dispatch(actions.createBoard({ ...board }));
 	};
@@ -59,22 +57,22 @@ const Boards: React.FC = () => {
 		{
 			onClickAction: () => {},
 			id: board.id,
-			text: 'Edit settings',
+			text: t('edit_settings'),
 		},
 		{
 			onClickAction: () => {},
 			id: board.id,
-			text: 'Copy',
+			text: t('copy'),
 		},
 		{
 			onClickAction: () => {},
 			id: board.id,
-			text: 'Move',
+			text: t('move'),
 		},
 		{
 			onClickAction: getDeleteAction(board),
 			id: board.id,
-			text: 'Delete',
+			text: t('delete'),
 		},
 	];
 
@@ -89,13 +87,13 @@ const Boards: React.FC = () => {
 			{isModalShown ? <CreateBoardModal setIsModalShown={setIsModalShown} onCreateBoard={onCreateBoard} /> : ''}
 			{boardToDelete && <DeleteBoardModal board={boardToDelete} onClose={() => setBoardToDelete(null)} />}
 			<div className={styles.wrapper__title}>
-				<h1 className={styles.title}>Boards</h1>
+				<h1 className={styles.title}>{t('boards')}</h1>
 				<Button primary onClick={() => setIsModalShown(true)}>
-					Create board
+					{t('create_board')}
 				</Button>
 			</div>
 			<div className={[styles.wrapper__filters, styles.filters].join(' ')}>
-				<Input icon="search" placeholder="Search..." onChange={onSearch} value={searchName} />
+				<Input icon="search" placeholder={t('search')} onChange={onSearch} value={searchName} />
 				<Dropdown
 					placeholder="All boards"
 					options={selectOptions}

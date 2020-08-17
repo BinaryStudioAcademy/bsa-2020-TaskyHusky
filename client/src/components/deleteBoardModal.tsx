@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, Modal } from 'semantic-ui-react';
 import { useDispatch } from 'react-redux';
 import * as actions from '../containers/Boards/logic/actions';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
 	board: WebApi.Board.IBoardModel;
@@ -11,6 +12,7 @@ interface Props {
 const DeleteBoardModal: React.FC<Props> = (props) => {
 	const { board, onClose } = props;
 	const dispatch = useDispatch();
+	const { t } = useTranslation();
 
 	const handleDelete = () => {
 		dispatch(actions.deleteBoard({ id: board.id }));
@@ -19,17 +21,14 @@ const DeleteBoardModal: React.FC<Props> = (props) => {
 
 	return (
 		<Modal closeIcon onClose={() => onClose()} open={true} size={'tiny'} dimmer="inverted">
-			<Modal.Header>{`Delete ${board.name}`}</Modal.Header>
-			<Modal.Content>
-				{"Deleting A1 board doesn't affect the issues on the board. And, it won't complete or delete any " +
-					'active sprints.'}
-			</Modal.Content>
+			<Modal.Header>{`${t('delete')} ${board.name}`}</Modal.Header>
+			<Modal.Content>{t('delete_board_modal_text')}</Modal.Content>
 			<Modal.Actions>
 				<Button negative onClick={handleDelete}>
-					Delete
+					{t('delete')}
 				</Button>
 				<Button color="blue" basic onClick={onClose}>
-					Cancel
+					{t('cancel')}
 				</Button>
 			</Modal.Actions>
 		</Modal>

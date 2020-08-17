@@ -220,4 +220,11 @@ export const en = {
 	boards: 'Boards',
 	create_board: 'Create board',
 	view_all_boards: 'View all boards',
+	delete_board_modal_text:
+		"Deleting A1 board doesn't affect the issues on the board. And, it won't complete or delete any active sprints.",
+	edit_settings: 'Edit settings',
+	copy: 'Copy',
+	move: 'Move',
+	board_name: 'Board name',
+	create_board_final_text: 'Select one or more projects to include in this board',
 };
