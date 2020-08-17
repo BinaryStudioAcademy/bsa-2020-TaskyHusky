@@ -2,15 +2,11 @@ import { validate, ValidationError } from 'class-validator';
 import { Projects } from '../src/entity/Projects';
 
 interface ProjectValidationTemplate {
-	name: string;
-	key: string;
 	description: string;
 	icon: string;
 }
 
 const projectValidationTemplate: ProjectValidationTemplate = {
-	name: '',
-	key: '',
 	description: '',
 	icon: '',
 };
