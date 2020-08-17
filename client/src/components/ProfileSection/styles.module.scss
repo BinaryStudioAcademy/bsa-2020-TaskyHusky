@@ -5,28 +5,16 @@
   padding: 0 0 0 40px;
 }
 
-.emptyCard {
-  margin: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  &__image {
-    margin-right: 40px;
-  }
-}
-
 .header {
-  // display: flex;
-  // align-items: center;
   @include manager-header;
   margin: 0;
+}
 
-  &__secondary {
-    @include secondary-content;
-    color: $private-message;
-    margin-bottom: 18px;
-  }
+
+.headerSecondary {
+  @include secondary-content;
+  color: $private-message;
+  margin-bottom: 18px;
 }
 
 @media screen and (max-width: $less-than-medium-screen) {

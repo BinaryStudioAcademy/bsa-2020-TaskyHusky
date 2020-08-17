@@ -7,30 +7,6 @@
   display: flex;
   align-items: center;
   padding: 24px;
-
-  &__icon {
-    margin-right: 14px;
-  }
-
-  &__content {
-    font-family: Poppins;
-    font-style: normal;
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 24px;
-    color: #2C2C2C;
-    margin: 0;
-
-    &__secondary {
-      font-family: Poppins;
-      font-style: normal;
-      font-weight: normal;
-      font-size: 14px;
-      line-height: 24px;
-      letter-spacing: 0.44px;
-      color: #858585;
-    }
-  }
 }
 
 .avatar {
@@ -42,14 +18,38 @@
   align-items: center;
   margin-right: 12px;
   border-radius: 50%;
+}
 
-  &__title {
-    font-family: Inter;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 25.6px;
-    line-height: 51px;
-    letter-spacing: 0.24px;
-    color: #FFFFFF;
-  }
+.avatarTitle {
+  font-family: Inter;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 25.6px;
+  line-height: 51px;
+  letter-spacing: 0.24px;
+  color: #FFFFFF;
+}
+
+.icon {
+  margin-right: 14px;
+}
+
+.content {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  color: #2C2C2C;
+  margin: 0;
+}
+
+.contentSecondary {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 24px;
+  letter-spacing: 0.44px;
+  color: #858585;
 }
