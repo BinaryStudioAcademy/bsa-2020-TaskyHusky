@@ -25,6 +25,7 @@ export type AddLinkSuccess = {
 
 export type SuccessLoading = {
 	team: Team;
+	loading?: boolean
 };
 
 export type StartLoadingArgs = {
