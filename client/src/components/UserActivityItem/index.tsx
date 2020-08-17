@@ -17,7 +17,7 @@ const UserActivityItem: React.FC<Props> = (props: Props) => {
 	return (
 		<div className={styles.activityItem}>
 			{icon ? (
-				<img src={icon} alt="icon" className={styles.activityItem__icon} />
+				<img src={icon} alt="icon" className={styles.icon} />
 			) : (
 				<div className={styles.avatar}>
 					<p className={styles.avatarTitle}>{name[0]}</p>
