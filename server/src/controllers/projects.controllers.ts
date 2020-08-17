@@ -14,7 +14,7 @@ class ProjectsController {
 		const { id: userId } = req.user;
 
 		try {
-			const allProjects = await projectsRepository.getAll(userId);
+			const allProjects = await projectsRepository.getAllByUserId(userId);
 			res.send(allProjects);
 		} catch (err) {
 			next(new ErrorResponse(HttpStatusCode.INTERNAL_SERVER_ERROR, err.message));
