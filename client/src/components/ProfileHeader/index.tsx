@@ -10,7 +10,7 @@ const ProfileHeader = (props: Props) => {
 	const { t } = useTranslation();
 	return (
 		<div className={styles.header}>
-			<h1 className={styles.header__content}>{isCurrentUser ? t('my_profile') : t('profile')}</h1>
+			<h1 className={styles.content}>{isCurrentUser ? t('my_profile') : t('profile')}</h1>
 		</div>
 	);
 };

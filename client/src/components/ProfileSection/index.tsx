@@ -31,7 +31,7 @@ const ProfileSection: React.FC<Props> = (props: Props) => {
 	return (
 		<section className={styles.mainInfo}>
 			<h3 className={styles.header}>{t('worked_on')}</h3>
-			{isCurrentUser && <p className={styles.header__secondary}>{t('content_privat_message')}</p>}
+			{isCurrentUser && <p className={styles.headerSecondary}>{t('content_privat_message')}</p>}
 			<ProfileActivityBlock
 				mockData={mockData.activity}
 				countItem={countActivity}
