@@ -62,24 +62,10 @@ class BoardController {
 
 	getBoardSprints = async (req: Request, res: Response, next: NextFunction) => {
 		const boardRepository = getCustomRepository(BoardRepository);
-		const sprintRepository = getCustomRepository(SprintRepository);
 
 		try {
 			const { id } = req.params;
-			const boardSprintsIds = (await boardRepository.getSprints(id)) as Sprint[];
-
-			const sprints = await Promise.all(
-				boardSprintsIds.map(async (sprintId) => {
-					let sprintData;
-
-					if (typeof sprintId === 'string') {
-						sprintData = await sprintRepository.findOneById(sprintId);
-					}
-
-					return sprintData;
-				}),
-			);
-
+			const sprints = await boardRepository.getSprints(id);
 			res.status(200).send(sprints);
 		} catch (error) {
 			next(new ErrorResponse(HttpStatusCode.NOT_FOUND, error.message));

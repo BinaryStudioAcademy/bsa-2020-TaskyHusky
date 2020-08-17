@@ -6,7 +6,7 @@ type Props = { issues: WebApi.Entities.Issue[] };
 
 export const SprintIssues: React.FC<Props> = ({ issues }: Props) => {
 	const issuesList =
-		issues.length > 0 ? (
+		issues?.length > 0 ? (
 			issues.map((issue) => {
 				const { type, priority } = issue;
 				return (
@@ -41,7 +41,7 @@ export const SprintIssues: React.FC<Props> = ({ issues }: Props) => {
 			</List.Item>
 		);
 	return (
-		<List celled selection={issues.length > 0 ? true : false} verticalAlign="middle">
+		<List celled selection={issues?.length > 0 ? true : false} verticalAlign="middle">
 			{issuesList}
 		</List>
 	);
