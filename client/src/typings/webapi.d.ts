@@ -114,9 +114,9 @@ namespace WebApi.Team {
 		description?: string;
 		links?: string[];
 		users?: [];
-		loading: boolean
 	}
 }
+
 namespace WebApi.User {
 	export interface UserModel {
 		id?: string;
@@ -257,16 +257,6 @@ namespace WebApi.Entities {
 		createdBy: UserProfile;
 		name?: string;
 		color?: string;
-	}
-
-	interface Teams {
-		id: string;
-		users?: UserProfile[];
-		createdBy?: UserProfile;
-		name?: string;
-		color?: string;
-		description?: string;
-		links?: string[];
 	}
 
 	interface UserProfile {
