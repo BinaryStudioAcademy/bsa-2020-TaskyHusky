@@ -15,6 +15,18 @@ class IssueController {
 		}
 	}
 
+	async getFilteredIssues(req: Request, res: Response) {
+		const repository = getCustomRepository(IssueRepository);
+		const { filter } = req.body;
+
+		try {
+			const result = await repository.getFilteredIssues(filter);
+			res.send(result);
+		} catch (err) {
+			res.status(500).send(getWebError(err, 500));
+		}
+	}
+
 	async getById(req: Request, res: Response) {
 		const { id } = req.params;
 		const repository = getCustomRepository(IssueRepository);

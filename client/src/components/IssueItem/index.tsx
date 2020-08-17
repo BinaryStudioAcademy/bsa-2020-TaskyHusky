@@ -57,33 +57,8 @@ const renderStatus = (status: { title: string; color: string }) => {
 const IssueItem = ({ issue }: Props) => {
 	const [open, setOpen] = React.useState(false);
 	const { t } = useTranslation();
-	const mockedIssue = {
-		summary: 'Very summary',
-		issueKey: 'TH-1',
-		assigned: {
-			id: 'id-2',
-			firstName: 'Ivan',
-			lastName: 'Ivanov',
-		},
-		creator: {
-			id: 'id-2',
-			firstName: 'Danylo',
-			lastName: 'Karpenko',
-		},
-		type: {
-			id: 'type-id-12',
-			icon: 'check',
-			color: 'teal',
-			title: 'Task',
-		},
-		status: {
-			title: 'In Progress',
-			color: 'blue',
-		},
-		priority: { title: 'Hight', color: 'orange', icon: 'arrow up', id: '1' },
-		id: 'a269d9f4-1c10-40ad-81e0-7ac333804d91',
-	};
-	const { id, creator, type, issueKey, summary, assigned, priority, status } = mockedIssue; /*issue*/
+
+	const { id, creator, type, issueKey, summary, assigned, priority } = issue;
 
 	return (
 		<Table.Row key={id}>
@@ -115,7 +90,7 @@ const IssueItem = ({ issue }: Props) => {
 			<Table.Cell>
 				<PriorityIcon priority={priority} />
 			</Table.Cell>
-			<Table.Cell>{renderStatus(status)}</Table.Cell>
+			<Table.Cell>{renderStatus({ color: 'blue', title: 'In progress' })}</Table.Cell>
 			<Table.Cell>Unresolved</Table.Cell>
 			<Table.Cell>03/серп./20</Table.Cell>
 			<Table.Cell>10/серп./20</Table.Cell>

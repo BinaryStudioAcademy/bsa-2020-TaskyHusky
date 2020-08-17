@@ -1,0 +1,25 @@
+@import '../../styles/variables.scss';
+$screen-offset: 100;
+
+:local(.container) {
+	display: flex;
+	justify-content: center;
+	margin-top: 30px;
+}
+
+:local(.innerContainer) {
+	margin-left: 20px;
+	max-width: 700px;
+}
+
+@media screen and (max-width: $medium-screen + $screen-offset * 2.2) {
+	.container {
+		justify-content: flex-start;
+	}
+}
+
+@media screen and (max-width: $less-than-medium-screen + $screen-offset) {
+	.innerContainer {
+		max-width: 500px;
+	}
+}

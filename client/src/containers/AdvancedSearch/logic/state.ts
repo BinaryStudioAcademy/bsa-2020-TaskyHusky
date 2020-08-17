@@ -7,8 +7,10 @@ export interface FilterPartState {
 
 export interface AdvancedSearch {
 	filterParts: FilterPartState[];
+	issues: WebApi.Result.IssueResult[];
 }
 
 export const initialState: AdvancedSearch = {
 	filterParts: [],
+	issues: [],
 };

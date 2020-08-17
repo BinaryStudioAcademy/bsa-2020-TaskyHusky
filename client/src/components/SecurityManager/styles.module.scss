@@ -4,6 +4,33 @@
   @include profile-container;
 }
 
+.header {
+  @include manager-header;
+}
+
+.card {
+  @include card-container;
+}
+
+.cardHeader {
+  @include info-block-header;
+  font-size: 14px;
+}
+
 .submitButton {
   margin-top: 20px !important;
+  @include content-btn;
+  background-color: #76ef8a !important;
+}
+
+.errorPopup {
+  @include error-popup;
+}
+
+@media screen and (max-width: $less-than-medium-screen) {
+  .container {
+    margin-top: 50px;
+    width: 100%;
+    padding: 0;
+  }
 }
