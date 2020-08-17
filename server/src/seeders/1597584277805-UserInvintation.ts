@@ -15,8 +15,8 @@ export class UserInvintation1597584277805 implements MigrationInterface {
 
         const teammatesRepository=getCustomRepository(TeammatesRepository);
 
-        await teammatesRepository.createInvitation(user1.id, user2.id);
-        await teammatesRepository.createInvitation(user1.id, user3.id);
+        await teammatesRepository.createInvitation(user1.id, user2.email);
+        await teammatesRepository.createInvitation(user1.id, user3.email);
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {

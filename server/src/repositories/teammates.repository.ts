@@ -73,10 +73,17 @@ export class TeammatesRepository extends Repository<UserProfile> {
 			throw new Error('Please, accept incoming invite');
 		}
 
-		creator.pendingInvites = [...creatorPendingInvites, teammate];
-		teammate.incomingInvites = [...teamMateIncomingInvites, creator];
+		await this
+			.createQueryBuilder('UserProfile')
+			.relation(UserProfile,'pendingInvites')
+			.of(creator)
+			.add(teammate);
 
-		await this.save([creator, teammate]);
+		await this
+			.createQueryBuilder('UserProfile')
+			.relation(UserProfile,'incomingInvites')
+			.of(teammate)
+			.add(creator)
 	}
 
 
@@ -96,17 +103,30 @@ export class TeammatesRepository extends Repository<UserProfile> {
 			throw new Error('This invite is broken');
 		}
 
-		const senderTeammates = <UserProfile[]>await this.getTeammates(sender.id);
-		const receiverTeammates = <UserProfile[]>await this.getTeammates(receiver.id);
-
 		if(isAcceptance){
-			sender.teammates = [...senderTeammates, receiver];
-			receiver.teammates = [...receiverTeammates, sender];
+			await this
+				.createQueryBuilder('UserProfile')
+				.relation(UserProfile,'teammates')
+				.of(receiver)
+				.add(sender);
+
+			await this
+				.createQueryBuilder('UserProfile')
+				.relation(UserProfile,'teammates')
+				.of(sender)
+				.add(receiver);
 		}
 
-		sender.incomingInvites = senderIncomingInvites.filter((user) => user.id !== receiver.id);
-		receiver.pendingInvites = receiverPendingInvites.filter((user) => user.id !== sender.id);
+		await this
+			.createQueryBuilder('UserProfile')
+			.relation(UserProfile,'pendingInvites')
+			.of(receiver)
+			.remove(sender);
 
-		await this.save([sender, receiver]);
+		await this
+			.createQueryBuilder('UserProfile')
+			.relation(UserProfile,'incomingInvites')
+			.of(sender)
+			.remove(receiver)
 	}
 }
