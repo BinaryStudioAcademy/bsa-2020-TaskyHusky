@@ -61,8 +61,8 @@ const ProfileProjectBlock: React.FC<Props> = (props: Props) => {
 				) : (
 					emptyContent && (
 						<div className={styles.emptyCard}>
-							<img className={styles.emptyCard__image} src={emptyContent.img} alt="icon" />
-							<div className={styles.emptyCard__content}>
+							<img className={styles.image} src={emptyContent.img} alt="icon" />
+							<div>
 								<h3>{t(emptyContent.title)}</h3>
 								<p>{t(emptyContent.content)}</p>
 							</div>
