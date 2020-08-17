@@ -44,7 +44,9 @@ const Scrum: BoardComponent = (props) => {
 
 	const sprintList =
 		sprints.length > 0 ? (
-			sprints.map((sprint) => <Sprint key={sprint.id} {...sprint} />)
+			sprints.map((sprint) => {
+				return <Sprint key={sprint.id} {...sprint} issues={scrumBoardState.matchIssueToSprint[sprint.id]} />;
+			})
 		) : (
 			<span>Create Sprint Button</span>
 		);
