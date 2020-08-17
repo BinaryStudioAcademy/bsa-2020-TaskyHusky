@@ -7,7 +7,7 @@ const RELS = ['creator'];
 @EntityRepository(IssueComment)
 export class IssueCommentRepository extends Repository<IssueComment> {
 	findAllByIssueId(id: string) {
-		return this.find({ where: { issue: { id } }, relations: RELS });
+		return this.find({ where: { issue: { id } }, relations: RELS, order: { createdAt: 'ASC' } });
 	}
 
 	findOneById(id: string) {

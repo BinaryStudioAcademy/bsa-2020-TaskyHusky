@@ -15,12 +15,12 @@ export class FilterDef1597050485179 implements MigrationInterface {
 			},
 			{
 				dataType: 'dropdown',
-				filterType: 'issueTypes',
+				filterType: 'issueType',
 				title: 'Type',
 			},
 			{
 				dataType: 'dropdown',
-				filterType: 'assignee',
+				filterType: 'assigned',
 				title: 'Assignee',
 			},
 			{

@@ -1,0 +1,14 @@
+.buttonContainer{
+  :global(.ui.button){
+    margin-bottom: 10px;
+  }
+}
+
+.buttonContainer{
+  :global(.ui.button){
+    background: #f4f5f7;
+    color: #505f79;
+    font-size: 14px;
+  }
+}
+

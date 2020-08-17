@@ -3,7 +3,7 @@ import {
 	ProjectsFilter,
 	IssueTypeFilter,
 	IssueStatusFilter,
-	AssigneeFilter,
+	AssignedFilter,
 	CreatorFilter,
 	DescriptionFilter,
 	SummaryFilter,
@@ -14,10 +14,10 @@ export const getByFilterType = (filterType: string) => {
 	switch (filterType) {
 		case 'projects':
 			return ProjectsFilter;
-		case 'issueTypes':
+		case 'issueType':
 			return IssueTypeFilter;
-		case 'assignee':
-			return AssigneeFilter;
+		case 'assigned':
+			return AssignedFilter;
 		case 'priority':
 			return PriorityFilter;
 		case 'issueStatus':
