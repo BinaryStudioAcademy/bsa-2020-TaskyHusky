@@ -5,12 +5,7 @@ import { SprintIssues } from './SprintIssues/index';
 type Props = WebApi.Entities.Sprint;
 
 export const Sprint: React.FC<Props> = (props: Props) => {
-	const { id, isActive, sprintName, issues } = props as {
-		id: string;
-		sprintName: string;
-		isActive: boolean;
-		issues: WebApi.Entities.Issue[];
-	};
+	const { id, isActive, sprintName, issues } = props;
 
 	return (
 		<>

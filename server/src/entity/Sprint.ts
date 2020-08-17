@@ -11,7 +11,7 @@ export class Sprint {
 
 	@Column()
 	@IsString()
-	sprintName?: string;
+	sprintName!: string;
 
 	@ManyToOne((type) => Projects, (projects) => projects.sprints, { onDelete: 'CASCADE', eager: true })
 	@IsUUID()
@@ -23,12 +23,12 @@ export class Sprint {
 
 	@Column()
 	@IsBoolean()
-	isActive?: boolean;
+	isActive!: boolean;
 
 	@Column()
 	@IsBoolean()
-	isCompleted?: boolean;
+	isCompleted!: boolean;
 
 	@OneToMany((type) => Issue, (issue) => issue.sprint, { onDelete: 'CASCADE', eager: true })
-	issues?: Issue[];
+	issues!: Issue[];
 }

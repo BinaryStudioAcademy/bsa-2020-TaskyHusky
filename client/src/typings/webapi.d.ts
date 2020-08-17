@@ -241,12 +241,12 @@ namespace WebApi.Entities {
 
 	interface Sprint {
 		id: string;
-		sprintName?: string;
+		sprintName: string;
 		project?: Projects;
 		board?: Board;
-		isActive?: boolean;
-		isCompleted?: boolean;
-		issues?: Issue[];
+		isActive: boolean;
+		isCompleted: boolean;
+		issues: Issue[];
 	}
 
 	interface Team {
