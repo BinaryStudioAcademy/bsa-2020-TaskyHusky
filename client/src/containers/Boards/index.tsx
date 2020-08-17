@@ -8,12 +8,14 @@ import Options, { ItemProps } from '../../components/common/Options';
 import CreateBoardModal from '../../components/CreateBoardModal';
 
 import styles from './styles.module.scss';
+import DeleteBoardModal from '../../components/deleteBoardModal';
 
 const Boards: React.FC = () => {
 	const boardTypes = ['Kanban', 'Scrum'];
 	const [searchName, setSearchName] = useState('');
 	const [selectedTypes, setSelectedType] = useState<WebApi.Board.BoardType[]>([]);
 	const [isModalShown, setIsModalShown] = useState(false);
+	const [boardToDelete, setBoardToDelete] = useState<WebApi.Board.IBoardModel | null>(null);
 	const dispatch = useDispatch();
 	const boards = useSelector((rootState: RootState) => rootState.boards.boards);
 
@@ -53,32 +55,39 @@ const Boards: React.FC = () => {
 		dispatch(actions.createBoard({ ...board }));
 	};
 
-	const getBoardMenuActions = (id: string): ItemProps[] => [
+	const getBoardMenuActions = (board: WebApi.Board.IBoardModel): ItemProps[] => [
 		{
 			onClickAction: () => {},
-			id,
+			id: board.id,
 			text: 'Edit settings',
 		},
 		{
 			onClickAction: () => {},
-			id,
+			id: board.id,
 			text: 'Copy',
 		},
 		{
 			onClickAction: () => {},
-			id,
+			id: board.id,
 			text: 'Move',
 		},
 		{
-			onClickAction: (id) => handleDelete(id),
-			id,
+			onClickAction: getDeleteAction(board),
+			id: board.id,
 			text: 'Delete',
 		},
 	];
 
+	const getDeleteAction = (board: WebApi.Board.IBoardModel) => {
+		return () => {
+			setBoardToDelete(board);
+		};
+	};
+
 	return (
 		<div className={styles.wrapper}>
 			{isModalShown ? <CreateBoardModal setIsModalShown={setIsModalShown} onCreateBoard={onCreateBoard} /> : ''}
+			{boardToDelete && <DeleteBoardModal board={boardToDelete} onClose={() => setBoardToDelete(null)} />}
 			<div className={styles.wrapper__title}>
 				<h1 className={styles.title}>Boards</h1>
 				<Button primary onClick={() => setIsModalShown(true)}>
@@ -108,14 +117,15 @@ const Boards: React.FC = () => {
 					</Table.Header>
 
 					<Table.Body>
-						{filteredData.map(({ name, id, boardType, createdBy: user }) => {
+						{filteredData.map((board) => {
+							const { name, id, boardType, createdBy: user } = board;
 							return (
 								<Table.Row key={id}>
 									<Table.Cell>{name}</Table.Cell>
 									<Table.Cell>{boardType}</Table.Cell>
 									<Table.Cell>{`${user.firstName} ${user.lastName}`}</Table.Cell>
 									<Table.Cell>
-										<Options config={getBoardMenuActions(id)} />
+										<Options config={getBoardMenuActions(board)} />
 									</Table.Cell>
 								</Table.Row>
 							);
