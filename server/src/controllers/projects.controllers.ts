@@ -14,7 +14,7 @@ class ProjectsController {
 		const { id: userId } = req.user;
 
 		try {
-			const allProjects = await projectsRepository.findAllProjectsWithCreatorsId(userId);
+			const allProjects = await projectsRepository.getAll(userId);
 			res.send(allProjects);
 		} catch (err) {
 			next(new ErrorResponse(HttpStatusCode.INTERNAL_SERVER_ERROR, err.message));
@@ -53,7 +53,6 @@ class ProjectsController {
 			};
 
 			const validationErrors = await validateProject(project);
-			console.log('validationErrors', validationErrors);
 
 			if (validationErrors.length > 0) {
 				next(new ErrorResponse(HttpStatusCode.UNPROCESSABLE_ENTITY, projectsErrorMessages.INVALID_DATA));
@@ -84,7 +83,7 @@ class ProjectsController {
 			const prevProject = await projectsRepository.getOneByIdWithLead(projectId);
 			const projectToUpdate = { ...prevProject, ...project };
 			const validationErrors = await validateProject(projectToUpdate);
-			console.log('validationErrors', validationErrors);
+
 			if (validationErrors.length > 0) {
 				next(new ErrorResponse(HttpStatusCode.UNPROCESSABLE_ENTITY, projectsErrorMessages.INVALID_DATA));
 				return;

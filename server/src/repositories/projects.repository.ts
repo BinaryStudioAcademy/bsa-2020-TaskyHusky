@@ -14,18 +14,14 @@ export class ProjectsRepository extends Repository<Projects> {
 	}
 
 	getOne(id: string): Promise<Projects | undefined> {
-		return this.findOne(id, { relations: ['creator', 'lead', 'boards'] });
-	}
-
-	getOneByIdWithLead(id: string): Promise<Projects | undefined> {
-		return this.findOne({ id }, { relations: ['lead', 'users'] });
+		return this.findOne(id, { relations: ['users', 'lead'] });
 	}
 
 	getOneByKey(key: string): Promise<Projects | undefined> {
 		return this.findOne({ key }, { withDeleted: true });
 	}
 
-	findAllProjectsWithCreatorsId(id: string) {
+	getAll(id: string) {
 		return getRepository(Projects)
 			.createQueryBuilder('project')
 			.leftJoinAndSelect('project.users', 'users')
