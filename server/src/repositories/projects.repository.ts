@@ -25,4 +25,8 @@ export class ProjectsRepository extends Repository<Projects> {
 	deleteOneById(id: string) {
 		return this.delete(id);
 	}
+
+	getKeys() {
+		return this.find({ select: ['key'] });
+	}
 }
