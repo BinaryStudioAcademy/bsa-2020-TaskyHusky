@@ -22,7 +22,7 @@ label {
 
 .site-header>.menu>.item:not(.createMenuItem):not(.right):not(.site-logo) {
 	border-radius: 1px !important;
-	background-color: #ffffff !important;
+	background-color: inherit !important;
 	box-sizing: border-box;
 	font-weight: 700 !important;
 	font-size: 15px;
@@ -60,7 +60,7 @@ label {
 	}
 }
 
-.site-header > .menu .dropdown.icon {
+.site-header>.menu .dropdown.icon {
 	position: relative;
 	top: 1px;
 	left: 5px;

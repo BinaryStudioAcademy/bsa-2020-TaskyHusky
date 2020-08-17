@@ -1,0 +1,10 @@
+@import 'styles/mixins.scss';
+
+.wrapper {
+  width: 100%;
+  background-color: $body-bg;
+}
+
+.container {
+  margin: 22px 13%;
+}

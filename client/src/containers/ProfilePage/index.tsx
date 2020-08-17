@@ -9,9 +9,11 @@ import ProfileSection from 'components/ProfileSection';
 import ProfileManagerSection from 'components/ProfileManagerSection';
 import Spinner from 'components/common/Spinner';
 import { UserProfileState, initialState } from './logiс/state';
+import { useTranslation } from 'react-i18next';
 
 const ProfilePage = ({ id }: { id: string }) => {
 	const dispatch = useDispatch();
+	const { t } = useTranslation();
 	const [user, setUser] = useState(initialState);
 	const { editMode, isLoading } = user;
 	const currentUser = useSelector((state: RootState) => state.auth.user);
@@ -78,7 +80,7 @@ const ProfilePage = ({ id }: { id: string }) => {
 				<Spinner />
 			) : (
 				<div className={styles.wrapper}>
-					<ProfileHeader isCurrentUser={isCurrentUser} />
+					<ProfileHeader title={isCurrentUser ? t('my_profile') : t('profile')} />
 					<div className={styles.container}>
 						<ProfileAside
 							user={user}

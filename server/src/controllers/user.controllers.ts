@@ -22,6 +22,17 @@ class UserController {
 		}
 	};
 
+	getProjects = async (req: Request, res: Response): Promise<void> => {
+		const userRepository = getCustomRepository(UserRepository);
+		const { id } = req.params;
+		try {
+			const projects = await userRepository.getProjects(id);
+			res.send(projects);
+		} catch (error) {
+			res.status(404).send(error.message);
+		}
+	};
+
 	changePassword = async (req: Request, res: Response): Promise<void> => {
 		const userRepository = getCustomRepository(UserRepository);
 		const { oldPassword, newPassword } = req.body;
@@ -61,7 +72,8 @@ class UserController {
 			const users = await userRepository.findAll();
 			const { name: nameFilter } = req.query;
 			if (nameFilter && typeof nameFilter === 'string') {
-				res.send(users.filter((people) => {
+				res.send(
+					users.filter((people) => {
 						const fullName = `${people.firstName} ${people.lastName}`;
 						return fullName.toLowerCase().indexOf(nameFilter.toLowerCase()) !== -1;
 					}),

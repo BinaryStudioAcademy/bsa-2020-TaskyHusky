@@ -1,10 +1,10 @@
 import { EntityRepository, Repository, Between } from 'typeorm';
 import { UserProfile } from '../entity/UserProfile';
-import {expirationTime} from '../constants/resetPassword.constants';
+import { expirationTime } from '../constants/resetPassword.constants';
 
 @EntityRepository(UserProfile)
 export class UserRepository extends Repository<UserProfile> {
-	getAll(){
+	getAll() {
 		return this.findAll();
 	}
 
@@ -17,15 +17,30 @@ export class UserRepository extends Repository<UserProfile> {
 		return rest;
 	}
 
+	async getProjects(id: string): Promise<any> {
+		const user = await this.createQueryBuilder('user')
+			.where('user.id = :id', { id })
+			.leftJoinAndSelect('user.projects', 'project')
+			.getOne();
+
+		if (!user) {
+			throw new Error('User with such id does not exist');
+		}
+
+		return user.projects;
+	}
+
 	getByEmail(email: string): Promise<any> {
 		return this.findOne({ where: { email } });
 	}
 
 	getByToken(token: string): Promise<any> {
-		return this.findOne({where:{
-				resetPasswordToken:token,
-				resetPasswordExpires:Between(new Date(), new Date(Date.now()+expirationTime))
-			}})
+		return this.findOne({
+			where: {
+				resetPasswordToken: token,
+				resetPasswordExpires: Between(new Date(), new Date(Date.now() + expirationTime)),
+			},
+		});
 	}
 
 	async createNew(data: UserProfile): Promise<any> {

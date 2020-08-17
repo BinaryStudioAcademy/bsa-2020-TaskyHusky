@@ -14,6 +14,7 @@
 
 .cardHeader {
   @include info-block-header;
+  margin: 25px 0 !important;
   font-size: 14px;
 }
 

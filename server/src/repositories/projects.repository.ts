@@ -1,5 +1,6 @@
-import { EntityRepository, Repository } from 'typeorm';
+import { EntityRepository, Repository, getCustomRepository } from 'typeorm';
 import { Projects } from '../entity/Projects';
+import { UserRepository } from './user.repository';
 
 const RELS = ['boards'];
 
@@ -13,8 +14,13 @@ export class ProjectsRepository extends Repository<Projects> {
 		return this.findOneOrFail({ where: { id }, relations: RELS });
 	}
 
-	createOne(data: Projects) {
-		const entity = this.create(data);
+	async createOne(data: Projects, userId: string): Promise<any> {
+		const userRepository = getCustomRepository(UserRepository);
+
+		const userToAdd = await userRepository.getById(userId);
+		if (!userToAdd) throw new Error('User with current ID not found');
+
+		const entity = this.create({ ...data, creator: userToAdd });
 		return this.save(entity);
 	}
 

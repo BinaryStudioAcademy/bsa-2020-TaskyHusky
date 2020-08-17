@@ -34,8 +34,8 @@ class ProjectsController {
 		try {
 			const { id: userId } = req.user as UserProfile;
 			const { project } = req.body;
-			project.creatorID = userId;
-			const createdProject = await projectsRepository.createOne(project);
+			// project.creatorID = userId;
+			const createdProject = await projectsRepository.createOne(project, userId);
 			res.status(201).send(createdProject);
 		} catch (err) {
 			res.status(500).send(getWebError(err, 500));

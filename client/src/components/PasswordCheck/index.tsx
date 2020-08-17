@@ -13,7 +13,7 @@ const PasswordCheck: React.FC<Props> = (props: Props) => {
 		!isPasswordValid ? styles.red : passLength < superLength ? styles.yellow : styles.green;
 	const secondIndicator = () =>
 		!isPasswordValid ? styles.grey : passLength < superLength ? styles.yellow : styles.green;
-	const thirdIndicator = () => (passLength < superLength ? styles.grey : styles.green);
+	const thirdIndicator = () => (passLength < superLength || !isPasswordValid ? styles.grey : styles.green);
 	return (
 		<div className={passLength ? styles.progress : styles.hidden}>
 			<div className={`${firstIndicator()} ${styles.line}`}></div>
