@@ -55,10 +55,10 @@ class TeammatesController {
 	createInvite = async (req: Request, res: Response): Promise<void> => {
 		const teammatesRepository = getCustomRepository(TeammatesRepository);
 		const { id } = req.params;
-		const {id:teamMateId}=req.body
+		const {email:teammateEmail}=req.body
 
 		try {
-			await teammatesRepository.createInvitation(id, teamMateId);
+			await teammatesRepository.createInvitation(id, teammateEmail);
 			res.send({status:'The invitation was successfully sent.'});
 		} catch (error) {
 			res.status(404).send(error.message);

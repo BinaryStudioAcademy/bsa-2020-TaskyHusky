@@ -48,12 +48,12 @@ export class TeammatesRepository extends Repository<UserProfile> {
 		return user.teammates || [];
 	}
 
-	async createInvitation(creatorId: string, teammateId: string): Promise<void> {
+	async createInvitation(creatorId: string, teammateEmail: string): Promise<void> {
 		const creator = await this.findOne({ where: { id: creatorId } });
-		const teammate = await this.findOne({ where: { id: teammateId } });
+		const teammate = await this.findOne({ where: { email: teammateEmail } });
 
 		if (!creator || !teammate) {
-			throw new Error(`${creator ? 'teammateId' : 'creatorId'} is invalid`);
+			throw new Error(`${creator ? 'teammateEmail' : 'creatorId'} is invalid`);
 		}
 
 		const creatorPendingInvites = <UserProfile[]>await this.getPendingInvitations(creator.id);
