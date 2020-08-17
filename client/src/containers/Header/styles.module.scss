@@ -1,7 +1,7 @@
-@import '../../styles/variables.scss';
+@import "../../styles/variables.scss";
 
 :global(#root) {
-	.menuWrapper>* {
+	.menuWrapper > * {
 		color: $header-text !important;
 		padding: 7px 13px;
 	}
@@ -39,7 +39,7 @@
 	.createMenuItem {
 		font-weight: 400;
 		font-size: 12px;
-		height: 30px;
+		height: 100%;
 		border-radius: 5px;
 		border: 1px solid $header-text;
 
@@ -82,7 +82,7 @@
 		right: 4px !important;
 	}
 
-	.circularDropdownMenu>* {
+	.circularDropdownMenu > * {
 		color: rgba(80, 80, 80, 0.9) !important;
 	}
 }
@@ -118,12 +118,12 @@
 		display: none;
 	}
 
-	.menuWrapper>* {
+	.menuWrapper > * {
 		margin-left: -1px;
 		padding: 5px;
 	}
 
-	.menuWrapper>* {
+	.menuWrapper > * {
 		margin-left: -1px;
 		padding: 5px;
 	}
@@ -140,9 +140,8 @@
 }
 
 @media screen and (max-width: $less-than-medium-screen) {
-
-	.menuWrapper>.rightMenu input,
-	.menuWrapper>.rightMenu input~i {
+	.menuWrapper > .rightMenu input,
+	.menuWrapper > .rightMenu input ~ i {
 		display: none;
 	}
 }
