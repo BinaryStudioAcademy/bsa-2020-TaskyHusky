@@ -1,5 +1,5 @@
 import React, { createRef, useState, useEffect } from 'react';
-import { Button, Label, Icon, Ref, Rail, Sticky, Comment } from 'semantic-ui-react';
+import { Button, Label, Icon, Ref, Sticky, Comment } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 import { ContextProvider } from 'containers/CreateIssueModal/logic/context';
 import UpdateIssueModal from 'containers/UpdateIssueModal';
@@ -43,8 +43,8 @@ const IssuePageContent: React.FC<Props> = ({ issue }) => {
 
 	return (
 		<Ref innerRef={ref}>
-			<div className={`fill ${styles.container}`}>
-				<div style={{ marginLeft: 20, minWidth: 700 }}>
+			<div className={`fill ${styles.container}`} style={{ position: 'relative' }}>
+				<div className={styles.innerContainer}>
 					<h4>
 						<span style={{ fontWeight: 400 }}>#{issue.issueKey}</span>
 					</h4>
@@ -81,7 +81,7 @@ const IssuePageContent: React.FC<Props> = ({ issue }) => {
 						}}
 					/>
 				</div>
-				<Rail position="right" internal style={{ transform: 'translateY(100px)' }}>
+				<div style={{ position: 'absolute', top: 0, right: 10, width: 270 }}>
 					<Sticky context={ref}>
 						<Button secondary onClick={() => openEditModal()} style={{ marginTop: 10 }} fluid>
 							{t('edit_issue')}
@@ -119,7 +119,7 @@ const IssuePageContent: React.FC<Props> = ({ issue }) => {
 							{issue.priority.title}
 						</Label>
 					</Sticky>
-				</Rail>
+				</div>
 				<ContextProvider customInitalState={initalIssue}>
 					<UpdateIssueModal
 						onSubmit={() => window.location.reload()}
