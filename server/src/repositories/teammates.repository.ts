@@ -1,4 +1,4 @@
-import { EntityRepository, Repository, Between } from 'typeorm';
+import { EntityRepository, Repository } from 'typeorm';
 import { UserProfile } from '../entity/UserProfile';
 
 @EntityRepository(UserProfile)
@@ -7,17 +7,15 @@ export class TeammatesRepository extends Repository<UserProfile> {
 		const user = await this
 			.createQueryBuilder('UserProfile')
 			.where('UserProfile.id = :id', { id })
-			.leftJoinAndSelect('UserProfile.incomingInvites', 'user')
-			// .addSelect(['user.id', 'user.firstName', 'user.lastName', 'user.avatar'])
+			.leftJoin('UserProfile.incomingInvites', 'user')
+			.addSelect(['user.id', 'user.firstName', 'user.lastName', 'user.avatar'])
 			.getOne();
 
-		console.log(user);
-
-		if (!user || !user.incomingInvites) {
+		if (!user) {
 			throw new Error('User does not exist');
 		}
 
-		return user.incomingInvites;
+		return user.incomingInvites||[];
 	}
 
 	async getPendingInvitations(id: string): Promise<Partial<UserProfile[]>> {
@@ -28,11 +26,11 @@ export class TeammatesRepository extends Repository<UserProfile> {
 			.addSelect(['user.id', 'user.firstName', 'user.lastName', 'user.avatar'])
 			.getOne();
 
-		if (!user|| !user.pendingInvites) {
+		if (!user) {
 			throw new Error('User does not exist');
 		}
 
-		return user.pendingInvites;
+		return user.pendingInvites||[];
 	}
 
 	async createInvitation(creatorId: string, teammateId: string): Promise<void> {
@@ -43,8 +41,9 @@ export class TeammatesRepository extends Repository<UserProfile> {
 			throw new Error(`${creator ? 'teammateId' : 'creatorId'} is invalid`);
 		}
 
-		const creatorPendingInvites = await this.getPendingInvitations(creator.id);
+		const creatorPendingInvites = <UserProfile[]>await this.getPendingInvitations(creator.id);
 		const creatorIncomingInvites = await this.getIncomingInvitations(creator.id);
+		const teamMateIncomingInvites = <UserProfile[]>await this.getIncomingInvitations(teammate.id);
 
 		if (creatorPendingInvites.some(user => user && user.id === teammate.id)) {
 			throw new Error('The invitation was already sent.');
@@ -54,10 +53,10 @@ export class TeammatesRepository extends Repository<UserProfile> {
 			throw new Error('Please, accept incoming invite');
 		}
 
-		creator.pendingInvites = [...creator.pendingInvites||[], teammate];
-		teammate.incomingInvites = [...teammate.incomingInvites||[], creator];
+		creator.pendingInvites = [...creatorPendingInvites, teammate];
+		teammate.incomingInvites = [...teamMateIncomingInvites, creator];
 
-		this.save([creator, teammate]);
+		await this.save([creator, teammate]);
 	}
 
 }
