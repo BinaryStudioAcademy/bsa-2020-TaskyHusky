@@ -1,3 +1,4 @@
+import { v4 } from 'uuid';
 import { EntityRepository, Repository, DeleteResult, getRepository } from 'typeorm';
 import { Filter } from '../entity/Filter';
 
@@ -21,16 +22,23 @@ export class FilterRepository extends Repository<Filter> {
 	}
 
 	async createItem(data: Filter): Promise<Filter> {
-		const { name, filterParts } = data;
+		const { name, filterParts, owner } = data;
 
-		const filter = await this.save({ name });
+		const filter = await this.save({ name, owner });
 		if (filterParts) {
-			filter.filterParts = filterParts;
+			filter.filterParts = filterParts.map((filterPart) => ({ ...filterPart, id: v4() }));
 		}
+
 		return this.save(filter);
 	}
 
-	updateItem(data: Filter): Promise<Filter> {
+	async updateItem(data: Filter): Promise<Filter> {
+		// const { name, filterParts } = data;
+
+		// const filter = await this.save({ name });
+		// if (filterParts) {
+		// 	filter.filterParts = filterParts;
+		// }
 		return this.save(data);
 	}
 

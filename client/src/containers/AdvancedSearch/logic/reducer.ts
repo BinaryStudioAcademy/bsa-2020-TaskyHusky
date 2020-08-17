@@ -10,6 +10,12 @@ export const advancedSearchReducer = createReducer<AdvancedSearch>(initialState,
 			...action.partialState,
 		};
 	},
+	[actionTypes.RESET_STATE](state, action: actionTypes.UpdateSearchArgs) {
+		return {
+			...state,
+			isFilterEdited: false,
+		};
+	},
 	[actionTypes.LOAD_FILTER](state) {
 		return {
 			...state,
@@ -18,14 +24,14 @@ export const advancedSearchReducer = createReducer<AdvancedSearch>(initialState,
 	[actionTypes.LOAD_FILTER_SUCCESS](state, action: actionTypes.LoadFilterSuccessArgs) {
 		const { filter } = action;
 
-		const addedFilterParts = getAdditionalFilterParts(filter.filterParts as FilterPartState[]).filter(
-			({ members, searchText }) => members.length > 0 || searchText,
-		);
-
 		const updatedFilterParts = state.filterParts.map((filterPart) => {
 			const loaded = filter.filterParts?.find((el) => el.filterDef.id === filterPart.filterDef.id);
 			return loaded ? loaded : filterPart;
 		}) as FilterPartState[];
+
+		const addedFilterParts = getAdditionalFilterParts(updatedFilterParts).filter(
+			({ members, searchText }) => members.length > 0 || searchText,
+		);
 
 		return {
 			...state,
@@ -40,6 +46,7 @@ export const advancedSearchReducer = createReducer<AdvancedSearch>(initialState,
 		return {
 			...state,
 			filterParts: updatedFilterParts,
+			isFilterEdited: true,
 		};
 	},
 	[actionTypes.LOAD_ISSUES_SUCCESS](state, action: actionTypes.LoadIssuesSuccessArgs) {
@@ -47,6 +54,13 @@ export const advancedSearchReducer = createReducer<AdvancedSearch>(initialState,
 		return {
 			...state,
 			issues,
+		};
+	},
+	[actionTypes.SET_REDIRECT](state, action: actionTypes.RedirectId) {
+		const { redirectFilterId } = action;
+		return {
+			...state,
+			redirectFilterId,
 		};
 	},
 });

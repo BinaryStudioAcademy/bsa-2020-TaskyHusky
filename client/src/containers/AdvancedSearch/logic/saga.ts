@@ -1,6 +1,6 @@
 import { RootState } from 'typings/rootState';
 import { loadIssues } from 'services/issue.service';
-import { loadFilterById } from 'services/filter.service';
+import { loadFilterById, updateFilter } from 'services/filter.service';
 import { all, put, takeEvery, call, select } from 'redux-saga/effects';
 import { v4 as uuidv4 } from 'uuid';
 import * as actionTypes from './actionTypes';
@@ -57,6 +57,21 @@ export function* setAddedFilterPartsSaga(action: AnyAction) {
 	yield put(actions.updateSearchSuccess({ partialState: { addedFilterParts } }));
 }
 
+export function* resetStateSaga(action: AnyAction) {
+	const { id } = action;
+	yield put(actions.fetchFilterParts({ id }));
+}
+
+export function* updateFilterSaga(action: AnyAction) {
+	const {
+		advancedSearch: { filter, filterParts },
+	}: RootState = yield select();
+	if (filter) {
+		filter.filterParts = filterParts.filter(({ members, searchText }) => members.length > 0 || searchText);
+	}
+	yield call(updateFilter, filter as WebApi.Entities.Filter);
+}
+
 export function* watchFetchFilterParts() {
 	yield takeEvery(actionTypes.FETCH_FILTER_PARTS, fetchFilterPartsSaga);
 }
@@ -77,12 +92,22 @@ export function* watchSetAddedFilterParts() {
 	yield takeEvery(actionTypes.SET_ADDED_FILTER_PARTS, setAddedFilterPartsSaga);
 }
 
+export function* watchResetState() {
+	yield takeEvery(actionTypes.RESET_STATE, resetStateSaga);
+}
+
+export function* watchUpdateFilter() {
+	yield takeEvery(actionTypes.UPDATE_FILTER, updateFilterSaga);
+}
+
 export default function* advancedSearchSaga() {
 	yield all([
 		watchFetchFilterParts(),
 		watchUpdateFilterPart(),
 		watchLoadIssues(),
-		// watchLoadFilterById(),
+		watchLoadFilterById(),
 		watchSetAddedFilterParts(),
+		watchResetState(),
+		watchUpdateFilter(),
 	]);
 }

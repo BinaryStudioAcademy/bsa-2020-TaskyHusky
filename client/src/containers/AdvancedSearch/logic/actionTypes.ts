@@ -10,6 +10,9 @@ export const GET_FILTER_PARTS_FROM_STATE = 'SEARCH:GET_FILTER_PARTS_FROM_STATE';
 export const LOAD_FILTER = 'SEARCH:LOAD_FILTER';
 export const LOAD_FILTER_SUCCESS = 'SEARCH:LOAD_FILTER_SUCCESS';
 export const SET_ADDED_FILTER_PARTS = 'SEARCH:SET_ADDED_FILTER_PARTS';
+export const RESET_STATE = 'SEARCH:RESET_STATE';
+export const UPDATE_FILTER = 'SEARCH:UPDATE_FILTER';
+export const SET_REDIRECT = 'SEARCH:SET_REDIRECT';
 
 export type IssueFilter = {
 	projects?: string[];
@@ -37,4 +40,8 @@ export type LoadFilterSuccessArgs = {
 
 export type SetAddedFilterPartsArgs = {
 	addedFilterParts: FilterPartState[];
+};
+
+export type RedirectId = {
+	redirectFilterId: string;
 };

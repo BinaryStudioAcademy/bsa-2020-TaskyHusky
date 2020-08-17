@@ -15,7 +15,12 @@ export const loadIssuesSuccess = createAction<actionTypes.LoadIssuesSuccessArgs>
 
 export const loadFilterById = createAction<actionTypes.LoadFilterByIdArgs>(actionTypes.LOAD_FILTER);
 export const loadFilterByIdSuccess = createAction<actionTypes.LoadFilterSuccessArgs>(actionTypes.LOAD_FILTER_SUCCESS);
+export const updateFilter = createAction(actionTypes.UPDATE_FILTER);
 
 export const setAddedFilterParts = createAction<actionTypes.SetAddedFilterPartsArgs>(
 	actionTypes.SET_ADDED_FILTER_PARTS,
 );
+
+export const resetState = createAction<actionTypes.LoadFilterByIdArgs>(actionTypes.RESET_STATE);
+
+export const setRedirectFilterId = createAction<actionTypes.RedirectId>(actionTypes.SET_REDIRECT);

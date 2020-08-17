@@ -8,23 +8,34 @@
 		display: flex;
 		flex-direction: row;
 		flex: 1 1 auto;
+		.saveBtn {
+			margin: 5px 0 0 10px;
+			border: none !important;
+			box-shadow: none !important;
+			height: 40px;
+			background: rgb(245, 245, 245) !important;
+			&:hover,
+			&:focus {
+				background: #e0e1e2 !important;
+			}
+		}
+
 		.filterName {
-			margin-right: 12px;
+			margin: 0 10px 0 0;
 			max-width: 18em;
 			white-space: nowrap;
-			overflow: hidden;
 			text-overflow: ellipsis;
+		}
+	}
+	.actionItem {
+		display: flex !important;
+		flex-direction: row;
+		.star {
+			padding: 5px 0 5px 10px;
 		}
 	}
 	.actionWrapper {
 		margin-left: 10px;
 		flex: 0 0 auto;
-		.actionItem {
-			display: flex !important;
-			flex-direction: row;
-			.star {
-				padding: 5px 0 5px 10px;
-			}
-		}
 	}
 }
