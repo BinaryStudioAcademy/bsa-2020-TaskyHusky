@@ -8,3 +8,9 @@ export type loadSprintsTrigger = {
 export type loadSprintsSuccess = {
 	sprints: WebApi.Entities.Sprint[];
 };
+
+export const DELETE_SPRINT_TRIGGER = 'SCRUM_BOARD:DELETE_SPRINT_TRIGGER';
+
+export type deleteSprintTrigger = {
+	sprintId: string;
+};

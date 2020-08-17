@@ -10,9 +10,10 @@ type Props = {
 	id: string;
 	isActive: boolean;
 	name: string;
+	issues: WebApi.Entities.Issue[];
 };
 
-export const SprintHeader: React.FC<Props> = ({ id, isActive, name }) => {
+export const SprintHeader: React.FC<Props> = ({ id, isActive, name, issues }) => {
 	const [open, setOpen] = React.useState(false);
 
 	const config: ItemProps[] = [
@@ -51,7 +52,13 @@ export const SprintHeader: React.FC<Props> = ({ id, isActive, name }) => {
 					</List.Content>
 				</List.Item>
 			</List>
-			<SprintModal sprintName={name} isOpen={open} clickAction={() => setOpen(!open)} />
+			<SprintModal
+				sprintName={name}
+				sprintId={id}
+				sprintIssues={issues}
+				isOpen={open}
+				clickAction={() => setOpen(!open)}
+			/>
 		</>
 	);
 };

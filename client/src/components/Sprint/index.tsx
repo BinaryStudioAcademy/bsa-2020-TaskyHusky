@@ -14,7 +14,7 @@ export const Sprint: React.FC<Props> = (props: Props) => {
 
 	return (
 		<>
-			<SprintHeader id={id} isActive={isActive} name={sprintName} />
+			<SprintHeader id={id} isActive={isActive} name={sprintName} issues={issues} />
 			<SprintIssues issues={issues} />
 		</>
 	);

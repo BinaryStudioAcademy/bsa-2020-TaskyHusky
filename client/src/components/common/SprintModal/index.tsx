@@ -1,15 +1,22 @@
 import React from 'react';
 import { Button, Header, Icon, Modal } from 'semantic-ui-react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import * as actions from 'containers/Board/Scrum/logic/actions';
+import { RootState } from 'typings/rootState';
+import { NotificationManager } from 'react-notifications';
 
 type Props = {
 	sprintName: string;
+	sprintId: string;
 	isOpen: boolean;
 	clickAction: any;
+	sprintIssues: any;
 };
 
 const SprintModal = (props: Props) => {
-	const { sprintName } = props;
+	const dispatch = useDispatch();
+	const scrumBoardState = useSelector((rootState: RootState) => rootState.scrumBoard);
+	const { sprintName, sprintId, sprintIssues } = props;
 
 	return (
 		<Modal basic onClose={props.clickAction} open={props.isOpen} size="small">
@@ -24,7 +31,25 @@ const SprintModal = (props: Props) => {
 				<Button color="red" inverted onClick={props.clickAction}>
 					<Icon name="remove" /> No
 				</Button>
-				<Button basic color="green" inverted onClick={props.clickAction}>
+				<Button
+					basic
+					color="green"
+					inverted
+					onClick={() => {
+						if (sprintIssues.length > 0) {
+							NotificationManager.error('Sprint cannot be deleted', 'Error');
+						}
+
+						if (sprintIssues.length === 0) {
+							dispatch(actions.deleteSprintTrigger({ sprintId }));
+							dispatch(
+								actions.loadSprintsTrigger({ boardId: scrumBoardState.sprints[0].board?.id as string }),
+							); // WILL BE REFACTORED
+						}
+
+						props.clickAction();
+					}}
+				>
 					<Icon name="checkmark" /> Yes
 				</Button>
 			</Modal.Actions>
