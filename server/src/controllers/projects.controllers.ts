@@ -117,6 +117,13 @@ class ProjectsController {
 				return;
 			}
 
+			const projectToUpdate = { ...prevProject, ...project };
+			delete projectToUpdate.creator;
+			delete projectToUpdate.createdDate;
+			delete projectToUpdate.updatedDate;
+			delete projectToUpdate.deletedDate;
+			delete projectToUpdate.version;
+
 			const updatedProject = await projectsRepository.updateOne(projectToUpdate);
 			res.send(updatedProject);
 		} catch (err) {
