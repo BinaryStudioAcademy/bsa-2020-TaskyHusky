@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, SyntheticEvent } from 'react';
 import { Header, Container, Form, Button } from 'semantic-ui-react';
 import { BoardComponent } from '../';
 import { useTranslation } from 'react-i18next';
@@ -8,31 +8,29 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'typings/rootState';
 import Breadcrumbs from 'components/common/Breadcrumbs';
 import { setBreadcrumbs, BreadCrumbData } from './config/breadcrumbs';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useRouteMatch, useParams } from 'react-router-dom';
 import Sprint from 'components/Sprint';
+import { startGettingProject } from 'containers/ProjectSettings/logic/actions';
 
 const Scrum: BoardComponent = (props) => {
 	const dispatch = useDispatch();
 	const scrumBoardState = useSelector((rootState: RootState) => rootState.scrumBoard);
+	const projectState = useSelector((rootState: RootState) => rootState.project.project);
+	console.log(projectState);
 	const { sprints } = scrumBoardState;
-
+	const { id: projectId } = useParams();
 	const history = useHistory();
 	const { board } = props;
 	const { t } = useTranslation();
 	const [search, setSearch] = useState<string>('');
 
-	const projectDetails: BreadCrumbData = { id: '', name: '' };
+	const projectDetails: BreadCrumbData = { id: projectState.id, name: projectState.name };
 
 	const boardDetails: BreadCrumbData = { id: board.id, name: board.name };
 
-	if (scrumBoardState.sprints.length > 0 && scrumBoardState.sprints[0].project) {
-		const { id, name } = scrumBoardState.sprints[0].project;
-		projectDetails.id = id;
-		projectDetails.name = name;
-	}
-
 	useEffect(() => {
 		dispatch(actions.loadSprintsTrigger({ boardId: board.id }));
+		dispatch(startGettingProject({ id: projectId }));
 	}, [dispatch, board.id]);
 
 	const sprintList =
