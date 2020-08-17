@@ -41,4 +41,8 @@ export class ProjectsRepository extends Repository<Projects> {
 	deleteOneById(id: string) {
 		return this.softDelete(id);
 	}
+
+	getKeys() {
+		return this.find({ select: ['key'] });
+	}
 }
