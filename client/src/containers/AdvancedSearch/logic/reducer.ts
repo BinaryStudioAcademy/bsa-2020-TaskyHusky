@@ -10,7 +10,7 @@ export const advancedSearchReducer = createReducer<AdvancedSearch>(initialState,
 			...action.partialState,
 		};
 	},
-	[actionTypes.RESET_STATE](state, action: actionTypes.UpdateSearchArgs) {
+	[actionTypes.RESET_STATE](state) {
 		return {
 			...state,
 			isFilterEdited: false,
@@ -61,6 +61,12 @@ export const advancedSearchReducer = createReducer<AdvancedSearch>(initialState,
 		return {
 			...state,
 			redirectFilterId,
+		};
+	},
+	[actionTypes.UPDATE_FILTER_SUCCESS](state, action: actionTypes.RedirectId) {
+		return {
+			...state,
+			isFilterEdited: false,
 		};
 	},
 });

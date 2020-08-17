@@ -24,7 +24,6 @@ const IssueTable: React.FC = () => {
 						<Popup content={t('priority')} trigger={<div style={{ paddingLeft: '6px' }}>P</div>} />
 					</Table.HeaderCell>
 					<Table.HeaderCell>{t('status')}</Table.HeaderCell>
-					<Table.HeaderCell>Resolution</Table.HeaderCell>
 					<Table.HeaderCell>Created</Table.HeaderCell>
 					<Table.HeaderCell>Updated</Table.HeaderCell>
 					<Table.HeaderCell> </Table.HeaderCell>

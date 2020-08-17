@@ -168,6 +168,7 @@ namespace WebApi.Entities {
 	interface Issue {
 		id: string;
 		type?: IssueType;
+		status?: IssueStatus;
 		summary?: string;
 		boardColumn?: BoardColumn;
 		labels?: string;
@@ -180,6 +181,8 @@ namespace WebApi.Entities {
 		issueKey?: string;
 		assigned?: UserProfile;
 		creator: UserProfile;
+		createdAt?: Date;
+		updatedAt?: Date;
 	}
 
 	interface IssueComment {
@@ -189,6 +192,13 @@ namespace WebApi.Entities {
 		editedAt?: Date;
 		issue: Issue;
 		creator: UserProfile;
+	}
+
+	interface IssueStatus {
+		id: string;
+		color?: string;
+		title?: string;
+		issues?: Issue[];
 	}
 
 	interface IssueType {

@@ -70,6 +70,7 @@ export function* updateFilterSaga(action: AnyAction) {
 		filter.filterParts = filterParts.filter(({ members, searchText }) => members.length > 0 || searchText);
 	}
 	yield call(updateFilter, filter as WebApi.Entities.Filter);
+	yield put(actions.updateFilterSuccess());
 }
 
 export function* watchFetchFilterParts() {

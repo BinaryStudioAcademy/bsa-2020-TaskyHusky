@@ -16,6 +16,7 @@ export const loadIssuesSuccess = createAction<actionTypes.LoadIssuesSuccessArgs>
 export const loadFilterById = createAction<actionTypes.LoadFilterByIdArgs>(actionTypes.LOAD_FILTER);
 export const loadFilterByIdSuccess = createAction<actionTypes.LoadFilterSuccessArgs>(actionTypes.LOAD_FILTER_SUCCESS);
 export const updateFilter = createAction(actionTypes.UPDATE_FILTER);
+export const updateFilterSuccess = createAction(actionTypes.UPDATE_FILTER_SUCCESS);
 
 export const setAddedFilterParts = createAction<actionTypes.SetAddedFilterPartsArgs>(
 	actionTypes.SET_ADDED_FILTER_PARTS,

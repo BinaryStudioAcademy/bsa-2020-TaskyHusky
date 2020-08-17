@@ -21,7 +21,6 @@ const SearchTitle: React.FC = () => {
 	};
 
 	const onSave = () => {
-		console.log('SAve filter(Update)');
 		dispatch(updateFilter());
 	};
 
@@ -59,9 +58,6 @@ const SearchTitle: React.FC = () => {
 						</Button>
 					)}
 					<SaveFilterModal />
-					<List.Item>
-						<div className={styles.actionItem}>Details</div>
-					</List.Item>
 				</List>
 			</div>
 			<div className={styles.actionWrapper}>

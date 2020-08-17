@@ -12,6 +12,7 @@ export const LOAD_FILTER_SUCCESS = 'SEARCH:LOAD_FILTER_SUCCESS';
 export const SET_ADDED_FILTER_PARTS = 'SEARCH:SET_ADDED_FILTER_PARTS';
 export const RESET_STATE = 'SEARCH:RESET_STATE';
 export const UPDATE_FILTER = 'SEARCH:UPDATE_FILTER';
+export const UPDATE_FILTER_SUCCESS = 'SEARCH:UPDATE_FILTER_SUCCESS';
 export const SET_REDIRECT = 'SEARCH:SET_REDIRECT';
 
 export type IssueFilter = {
@@ -27,7 +28,7 @@ export type UpdateFilterPartArgs = {
 };
 
 export type LoadIssuesSuccessArgs = {
-	issues: WebApi.Result.IssueResult[];
+	issues: WebApi.Entities.Issue[];
 };
 
 export type LoadFilterByIdArgs = {

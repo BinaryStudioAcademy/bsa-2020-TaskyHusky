@@ -1,5 +1,6 @@
-import { Entity, Column, ManyToOne, PrimaryGeneratedColumn, OneToOne, JoinColumn } from 'typeorm';
-import { IsNotEmpty, IsString, IsArray, IsUUID } from 'class-validator';
+import { Entity, Column, ManyToOne, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { IsNotEmpty, IsString, IsArray } from 'class-validator';
+import { IssueStatus } from './IssueStatus';
 import { UserProfile } from './UserProfile';
 import { IssueType } from './IssueType';
 import { Priority } from './Priority';
@@ -14,6 +15,9 @@ export class Issue {
 
 	@ManyToOne((type) => IssueType, (issueType) => issueType.issues)
 	type?: IssueType;
+
+	@ManyToOne((type) => IssueStatus, (issueStatus) => issueStatus.issues)
+	status?: IssueStatus;
 
 	@Column()
 	@IsNotEmpty()
@@ -56,4 +60,10 @@ export class Issue {
 
 	@ManyToOne((type) => UserProfile, (userProfile) => userProfile.createdIssues)
 	creator!: UserProfile;
+
+	@CreateDateColumn({ type: 'date' })
+	createdAt?: Date;
+
+	@UpdateDateColumn({ type: 'date' })
+	updatedAt?: Date;
 }
