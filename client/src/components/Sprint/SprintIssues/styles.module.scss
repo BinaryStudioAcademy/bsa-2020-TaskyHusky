@@ -4,6 +4,10 @@
 		flex-direction: row;
 		align-items: stretch;
 		height: 45px;
+
+		&:hover {
+			background-color: #fff;
+		}
 	}
 
 	.emptyIssueItem {
