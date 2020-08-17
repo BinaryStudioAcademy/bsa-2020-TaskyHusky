@@ -27,7 +27,7 @@ const TagsInput: React.FC<Props> = (props: Props) => {
 	};
 
 	return (
-		<Segment style={{ marginTop: 10 }}>
+		<Segment style={{ marginTop: 0 }}>
 			<div style={{ marginBottom: 5 }}>
 				{t('tags_input_hint_1')} <Icon name="arrow up" />
 				{t('tags_input_hint_2')}

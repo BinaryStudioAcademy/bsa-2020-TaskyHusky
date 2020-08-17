@@ -4,7 +4,6 @@ import { UserProfile } from '../entity/UserProfile';
 import { TeamRepository } from '../repositories/teams.repository';
 
 export class Team1597345244377 implements MigrationInterface {
-
 	public async up(queryRunner: QueryRunner): Promise<void> {
 		const userRepository = getCustomRepository(UserRepository);
 		const teamRepository = getCustomRepository(TeamRepository);
@@ -280,13 +279,10 @@ export class Team1597345244377 implements MigrationInterface {
 			const createdTeam = await teamRepository.createOne(teamToCreate);
 
 			return createdTeam;
-
 		});
 
 		const teams = await Promise.all(teamPromises);
 	}
 
-	public async down(queryRunner: QueryRunner): Promise<void> {
-	}
-
+	public async down(queryRunner: QueryRunner): Promise<void> {}
 }
