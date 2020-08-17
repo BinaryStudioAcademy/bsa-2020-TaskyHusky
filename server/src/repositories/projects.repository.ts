@@ -7,6 +7,16 @@ export class ProjectsRepository extends Repository<Projects> {
 		return this.findOne(id, { relations: ['users', 'lead'] });
 	}
 
+	getOneProject(id: string, userId: string): Promise<Projects | undefined> {
+		return getRepository(Projects)
+			.createQueryBuilder('project')
+			.leftJoinAndSelect('project.lead', 'lead')
+			.leftJoinAndSelect('project.users', 'users')
+			.where('project.id = :id', { id })
+			.andWhere('users.id = :userId', { userId })
+			.getOne();
+	}
+
 	getOneByKey(key: string): Promise<Projects | undefined> {
 		return this.findOne({ key }, { withDeleted: true });
 	}

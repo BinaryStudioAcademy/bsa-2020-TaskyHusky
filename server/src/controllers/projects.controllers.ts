@@ -26,7 +26,13 @@ class ProjectsController {
 
 		try {
 			const { id } = req.params;
-			const project = await projectsRepository.getOne(id);
+			const { id: userId } = req.user;
+			const project = await projectsRepository.getOneProject(id, userId);
+
+			if (project === undefined) {
+				throw new Error();
+			}
+
 			res.send(project);
 		} catch (err) {
 			next(new ErrorResponse(HttpStatusCode.NOT_FOUND, projectsErrorMessages.PROJECT_NOT_FOUND));
