@@ -122,23 +122,23 @@ namespace WebApi.Sprint {
 namespace WebApi.Team {
 	export interface TeamModel {
 		id?: string;
-		name: string;
+		name?: string;
 		description?: string;
-		links?: string[];
-		users?: UserProfile[];
 		color?: string;
-		createdBy?: UserProfile;
-		projects?: Projects[];
+		createdBy: string;
+		links?: string[];
+		users?: [];
 	}
 }
 
 namespace WebApi.User {
 	export interface UserModel {
-		id?: string;
-		email?: string;
+		googleId?: string;
+		id: string;
+		email: string;
 		password?: string;
-		lastName?: string;
-		firstName?: string;
+		lastName: string;
+		firstName: string;
 		username?: string;
 		avatar?: string;
 		location?: string;
@@ -146,10 +146,11 @@ namespace WebApi.User {
 		organization?: string;
 		jobTitle?: string;
 		userSettingsId?: string;
-		resetPasswordToken: string | null;
-		resetPasswordExpires: Date | null;
-		teams?: [];
+		teams?: Team[];
+		resetPasswordToken?: string | null;
+		resetPasswordExpires?: Date | null;
 		filtres?: string[];
+		projects?: [];
 	}
 }
 
@@ -263,12 +264,12 @@ namespace WebApi.Entities {
 		defaultAssignee?: UserProfile;
 		lead: UserProfile;
 		creator: UserProfile;
+		team?: Team;
 		issues?: Issue[];
 		users: UserProfile[];
 		createdDate?: Date;
 		updatedDate?: Date;
 		deletedDate?: Date;
-		version?: number;
 	}
 
 	interface Sprint {
@@ -287,12 +288,14 @@ namespace WebApi.Entities {
 		links?: string[];
 		users?: UserProfile[];
 		createdBy: UserProfile;
+		projects?: Projects[];
 		name?: string;
 		color?: string;
 	}
 
 	interface UserProfile {
 		id: string;
+		googleId?: string;
 		firstName?: string;
 		lastName?: string;
 		username?: string;

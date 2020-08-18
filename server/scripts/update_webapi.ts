@@ -41,7 +41,7 @@ function getEntitiesTypes(fileNames: string[]): string {
 			const modifiedContent = fileContent
 				.trim()
 				.split('\n')
-				.filter((it) => it.match(/[a-zA-z]+(!|\?): [a-zA-z]+/g))
+				.filter((it) => it.match(/^\s*[a-zA-z\s]+(!|\?): [a-zA-z]+/g))
 				.map((it: string) => `\t${it.replace('!', '')}`)
 				.join('\n');
 
