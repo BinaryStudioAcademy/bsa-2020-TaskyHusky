@@ -4,12 +4,15 @@ import { getUsername } from 'helpers/getUsername.helper';
 import moment from 'moment';
 import styles from './styles.module.scss';
 import { getInitials } from 'helpers/getInitials.helper';
+import { getJSXText } from 'helpers/getDisplayCommentText.helper';
 
 interface Props {
 	comment: WebApi.Result.IssueCommentResult;
 }
 
 const IssueComment: React.FC<Props> = ({ comment }) => {
+	const displayText = getJSXText(comment);
+
 	return (
 		<Comment style={{ width: '100%', marginBottom: 20 }}>
 			{comment.creator.avatar ? (
@@ -27,7 +30,7 @@ const IssueComment: React.FC<Props> = ({ comment }) => {
 					{getUsername(comment.creator)}
 				</Comment.Author>
 				<Comment.Metadata>{moment(comment.createdAt).format('LLL')}</Comment.Metadata>
-				<Comment.Text>{comment.text}</Comment.Text>
+				<Comment.Text>{displayText}</Comment.Text>
 			</Comment.Content>
 		</Comment>
 	);
