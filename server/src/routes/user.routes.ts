@@ -12,6 +12,6 @@ router.put('/', userController.updateUser);
 router.put('/password', userController.changePassword);
 router.delete('/', userController.deleteUser);
 router.post('/avatar', imageMiddleware, userController.uploadAvatar);
-router.use('/',teamMates);
+router.use('/', teamMates);
 
 export default router;

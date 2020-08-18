@@ -4,6 +4,7 @@ import { passwordValid, hashPassword } from '../helpers/password.helper';
 import { UserRepository } from '../repositories/user.repository';
 import uploadS3 from '../helpers/image.helper';
 import { avatarFolder } from '../../config/aws.config';
+import { getWebError } from '../helpers/error.helper';
 
 class UserController {
 	uploadAvatar = async (req: Request, res: Response): Promise<void> => {
@@ -51,6 +52,18 @@ class UserController {
 			res.send(user);
 		} catch (error) {
 			res.status(404).send(error.message);
+		}
+	};
+
+	getTeammates = async (req: Request, res: Response): Promise<void> => {
+		const userRepository = getCustomRepository(UserRepository);
+		const { id } = req.params;
+
+		try {
+			const teammates = await userRepository.getTeammatesById(id);
+			res.send(teammates);
+		} catch (err) {
+			res.status(500).send(getWebError(err, 500));
 		}
 	};
 
