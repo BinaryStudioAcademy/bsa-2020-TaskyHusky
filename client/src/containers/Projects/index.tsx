@@ -52,12 +52,12 @@ const Projects: React.FC = () => {
 					</Table.Header>
 					{isLoading ? null : (
 						<Table.Body>
-							{filteredData.map(({ id, name, key }) => (
+							{filteredData.map(({ id, name, key, lead: { firstName, lastName } }) => (
 								<Table.Row key={id}>
 									<Table.Cell>{name}</Table.Cell>
 									<Table.Cell>{key}</Table.Cell>
-									<Table.Cell>Cell</Table.Cell>
-									<Table.Cell>Cell</Table.Cell>
+									<Table.Cell>Software</Table.Cell>
+									<Table.Cell>{`${firstName} ${lastName}`}</Table.Cell>
 									<Table.Cell>
 										<NavLink to={`/project/${id}/issues`}>{t('go_to_board')}</NavLink>
 									</Table.Cell>
