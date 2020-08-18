@@ -1,4 +1,4 @@
-import React, { JSXElementConstructor, ReactComponentElement } from 'react';
+import React from 'react';
 import { Header, Image } from 'semantic-ui-react';
 import worksImg from 'assets/images/team-page-works.svg';
 import styles from './styles.module.scss';
