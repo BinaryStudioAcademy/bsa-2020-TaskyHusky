@@ -1,4 +1,5 @@
 import { MigrationInterface, QueryRunner, getRepository, getCustomRepository } from 'typeorm';
+import { IssueStatusRepository } from '../repositories/issueStatus.repository';
 import { PriorityRepository } from '../repositories/priority.repository';
 import { UserRepository } from '../repositories/user.repository';
 import { ProjectsRepository } from '../repositories/projects.repository';
@@ -29,6 +30,12 @@ export class Issue1597334747593 implements MigrationInterface {
 		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 		const priority2 = (await priorityRepository.findAll())[1]!;
 
+		const issueStatusRepository = getCustomRepository(IssueStatusRepository);
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+		const issueStatus = (await issueStatusRepository.findAll())[0]!;
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+		const issueStatus2 = (await issueStatusRepository.findAll())[1]!;
+
 		const issue = new Issue();
 		issue.project = project;
 		issue.summary = 'Summary about issue';
@@ -41,6 +48,7 @@ export class Issue1597334747593 implements MigrationInterface {
 		issue.issueKey = 'IK-2';
 		issue.type = issueType;
 		issue.priority = priority;
+		issue.status = issueStatus;
 
 		const issue2 = new Issue();
 		issue2.project = project;
@@ -54,6 +62,7 @@ export class Issue1597334747593 implements MigrationInterface {
 		issue2.issueKey = 'IK-2';
 		issue2.type = issueType2;
 		issue2.priority = priority2;
+		issue2.status = issueStatus2;
 
 		await getRepository('Issue').save([issue, issue2]);
 	}
