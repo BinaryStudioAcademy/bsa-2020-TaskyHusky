@@ -8,7 +8,7 @@ export class TeammatesRepository extends Repository<UserProfile> {
 			.createQueryBuilder('UserProfile')
 			.where('UserProfile.id = :id', { id })
 			.leftJoin('UserProfile.incomingInvites', 'user')
-			.addSelect(['user.id', 'user.firstName', 'user.lastName', 'user.avatar'])
+			.addSelect(['user.id', 'user.firstName', 'user.lastName', 'user.avatar', 'user.jobTitle'])
 			.getOne();
 
 		if (!user) {

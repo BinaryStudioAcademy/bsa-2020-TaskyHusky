@@ -17,6 +17,7 @@ import { useTranslation } from 'react-i18next';
 import CreateIssueModal from 'containers/CreateIssueModal';
 import { getUsername } from 'helpers/getUsername.helper';
 import { getInitials } from 'helpers/getInitials.helper';
+import InviteNotification from '../../components/InviteNotification';
 
 export const HeaderMenu = () => {
 	const authStore = useSelector((rootStore: RootState) => rootStore.auth);
@@ -89,14 +90,15 @@ export const HeaderMenu = () => {
 					<Menu.Item position="right" className={styles.rightMenu}>
 						<Dropdown icon="users" className={styles.circularIcon} direction="left">
 							<Dropdown.Menu>
-								<Dropdown.Item>
-									<Button>Delete</Button>
-									<Button>Create</Button>
-								</Dropdown.Item>
-								<Dropdown.Item>
-									<Button>Create</Button>
-									<Button>Delete</Button>
-								</Dropdown.Item>
+								{incomingInvites.map((invite) => (
+									<InviteNotification
+										id={invite.id}
+										name={`${invite.firstName} ${invite.lastName}`}
+										avatar={invite.avatar || ''}
+										key={invite.id}
+										jobTitle={invite.jobTitle || ''}
+									/>
+								))}
 							</Dropdown.Menu>
 						</Dropdown>
 						<Dropdown icon="bell outline" className={styles.circularIcon} direction="left">

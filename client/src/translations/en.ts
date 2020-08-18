@@ -218,4 +218,7 @@ export const en = {
 	boards: 'Boards',
 	create_board: 'Create board',
 	view_all_boards: 'View all boards',
+	invite_notification_text: 'Wants to join to your team space',
+	approve: 'Approve',
+	decline: 'Decline',
 };
