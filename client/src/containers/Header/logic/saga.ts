@@ -12,6 +12,17 @@ export function* watchStartLoading() {
 	yield takeEvery(actionTypes.START_LOADING, fetchInvites);
 }
 
+export function* changeInviteStatus(action: ReturnType<typeof actions.changeInviteStatus>) {
+	const { userId, status, teammateId } = action;
+	console.log({ userId, status, teammateId });
+	yield call(service.changeStatus, { userId, status, teammateId });
+	yield put(actions.startLoading({ id: userId }));
+}
+
+export function* watchChangeInviteStatus() {
+	yield takeEvery(actionTypes.CHANGE_INVITE_STATUS, changeInviteStatus);
+}
+
 export default function* headerSaga() {
-	yield all([watchStartLoading()]);
+	yield all([watchStartLoading(), watchChangeInviteStatus()]);
 }

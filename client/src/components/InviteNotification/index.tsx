@@ -1,6 +1,9 @@
 import React from 'react';
 import { Card, Button, Image } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
+import * as actions from '../../containers/Header/logic/actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../typings/rootState';
 
 interface Props {
 	id: string;
@@ -11,7 +14,29 @@ interface Props {
 
 const InviteNotification: React.FC<Props> = (props: Props) => {
 	const { avatar, name, id, jobTitle } = props;
+	const authStore = useSelector((rootStore: RootState) => rootStore.auth);
 	const { t } = useTranslation();
+	const dispatch = useDispatch();
+
+	const handleApprove = () => {
+		dispatch(
+			actions.changeInviteStatus({
+				userId: authStore.user?.id || '',
+				teammateId: id,
+				status: 'accept',
+			}),
+		);
+	};
+
+	const handleDecline = () => {
+		dispatch(
+			actions.changeInviteStatus({
+				userId: authStore.user?.id || '',
+				teammateId: id,
+				status: 'decline',
+			}),
+		);
+	};
 
 	return (
 		<Card>
@@ -23,10 +48,10 @@ const InviteNotification: React.FC<Props> = (props: Props) => {
 			</Card.Content>
 			<Card.Content extra>
 				<div className="ui two buttons">
-					<Button basic color="green">
+					<Button basic color="green" onClick={handleApprove}>
 						{t('approve')}
 					</Button>
-					<Button basic color="red">
+					<Button basic color="red" onClick={handleDecline}>
 						{t('decline')}
 					</Button>
 				</div>

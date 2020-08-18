@@ -49,7 +49,6 @@ export const HeaderMenu = () => {
 
 	const renderDashboards = redirectToDashboards ? <Redirect to="/dashboards" /> : null;
 
-	console.log(incomingInvites);
 	return (
 		<>
 			<div className={`${styles.segmentWrapper} site-header`}>
