@@ -1,5 +1,5 @@
 import { getTeam, updateFieldById, updateLinks, deleteOneLink, getTeamsProjects, getTeamsUsers } from 'services/team.service';
-import { all, put, takeEvery, call, fork } from 'redux-saga/effects';
+import { all, put, takeEvery, call } from 'redux-saga/effects';
 import * as actionTypes from './actionTypes';
 import * as actions from './actions';
 import { Link } from '../index';
@@ -12,7 +12,7 @@ type Props = {
 	type: string;
 };
 
-export function* fetchTeam(props: Props): ReturnType<any> {
+export function* fetchTeam(props: Props) {
 	try {
 		yield put(actions.spinner());
 		const [team, users, projects] = yield all([
@@ -26,7 +26,6 @@ export function* fetchTeam(props: Props): ReturnType<any> {
 			put(actions.updateProjects({ projects: projects.projects }))]);
 	} catch (error) {
 		yield put(actions.failLoading());
-		console.log(error);
 		NotificationManager.error('Error load data', 'Error', 4000);
 	}
 }
