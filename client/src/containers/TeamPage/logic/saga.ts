@@ -1,4 +1,11 @@
-import { getTeam, updateFieldById, updateLinks, deleteOneLink, getTeamsProjects, getTeamsUsers } from 'services/team.service';
+import {
+	getTeam,
+	updateFieldById,
+	updateLinks,
+	deleteOneLink,
+	getTeamsProjects,
+	getTeamsUsers,
+} from 'services/team.service';
 import { all, put, takeEvery, call } from 'redux-saga/effects';
 import * as actionTypes from './actionTypes';
 import * as actions from './actions';
@@ -19,11 +26,12 @@ export function* fetchTeam(props: Props) {
 			yield call(getTeam, props.id),
 			yield call(getTeamsUsers, props.id),
 			yield call(getTeamsProjects, props.id),
-		])
+		]);
 		yield all([
 			put(actions.updateTeam({ team: team })),
 			put(actions.updateUsers({ users: users.users, createdBy: users.createdBy })),
-			put(actions.updateProjects({ projects: projects.projects }))]);
+			put(actions.updateProjects({ projects: projects.projects })),
+		]);
 	} catch (error) {
 		yield put(actions.failLoading());
 		NotificationManager.error('Error load data', 'Error', 4000);

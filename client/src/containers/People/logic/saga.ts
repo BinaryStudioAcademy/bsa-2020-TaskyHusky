@@ -5,9 +5,9 @@ import * as actionTypes from './actionTypes';
 import * as actions from './actions';
 import { NotificationManager } from 'react-notifications';
 
-export function* fetchPeoplePage() {
+export function* fetchPeoplePage(action: ReturnType<typeof actions.startLoading>) {
 	const teams = yield call(fetchTeams);
-	const people = yield call(fetchPeople);
+	const people = yield call(fetchPeople, action.id);
 
 	yield put(actions.SuccessLoading({ teams, people }));
 }

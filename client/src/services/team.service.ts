@@ -20,7 +20,7 @@ export const getTeamsUsers = async (id: string): Promise<WebApi.Entities.Team[] 
 		});
 		return (await res.json()) as WebApi.Entities.Team[];
 	} catch (error) {
-		console.log(error)
+		console.log(error);
 	}
 };
 export const getTeamsProjects = async (id: string): Promise<WebApi.Entities.Team[] | undefined> => {
@@ -31,7 +31,7 @@ export const getTeamsProjects = async (id: string): Promise<WebApi.Entities.Team
 		});
 		return (await res.json()) as WebApi.Entities.Team[];
 	} catch (error) {
-		console.log(error)
+		console.log(error);
 	}
 };
 

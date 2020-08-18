@@ -20,9 +20,10 @@ const People: React.FC = (): ReactElement => {
 	const { isLoading, people, teams } = useSelector((state: RootState) => state.peoplePage);
 	const [isOpenAddNewTeamPopup, setIsOpenAddNewTeamPopup] = useState(false);
 	const [isAddPeople, setIsAddPeople] = useState(false);
+	const authStore = useSelector((rootStore: RootState) => rootStore.auth);
 
 	useEffect((): void => {
-		dispatch(actions.startLoading());
+		dispatch(actions.startLoading({ id: authStore.user?.id || '' }));
 	}, [dispatch]);
 
 	const redirectToPersonProfile = (id: string) => {

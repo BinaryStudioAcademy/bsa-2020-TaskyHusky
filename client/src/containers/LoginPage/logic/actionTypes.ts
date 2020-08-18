@@ -21,12 +21,12 @@ export const GOOGLE_AUTH_REQUEST = 'GOOGLE_AUTH_REQUEST';
 export const GOOGLE_AUTH_LOADING = 'GOOGLE_AUTH_LOADING';
 
 export type GoogleUser = {
-	user: GoogleLoginResponse | GoogleLoginResponseOffline
+	user: GoogleLoginResponse | GoogleLoginResponseOffline;
 };
 
 export type Loading = {
-	loading: boolean
-}
+	loading: boolean;
+};
 export const FORGOT_PASSWORD = 'FORGOT_PASSWORD';
 
 export const RESET_PASSWORD = 'RESET_PASSWORD';

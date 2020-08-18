@@ -22,7 +22,7 @@ export interface User {
 	jobTitle?: string;
 }
 
-const TeamsMembersCard = ({ teammates=[], title }: Props) => {
+const TeamsMembersCard = ({ teammates = [], title }: Props) => {
 	const [bgColor, setBgColor] = useState<{ [key: string]: string }>({ backgroundColor: 'white' });
 	const [modal, setModal] = useState<boolean>(false);
 	const [viewUser, setViewUser] = useState<User | undefined>();

@@ -17,8 +17,8 @@ export const teamReducer = createReducer<TeamState>(initialState, {
 			team: {
 				...state.team,
 				createdBy: action.createdBy,
-				users: action.users
-			}
+				users: action.users,
+			},
 		};
 	},
 
@@ -27,8 +27,8 @@ export const teamReducer = createReducer<TeamState>(initialState, {
 			...state,
 			team: {
 				...state.team,
-				projects: action.projects
-			}
+				projects: action.projects,
+			},
 		};
 	},
 
@@ -37,8 +37,8 @@ export const teamReducer = createReducer<TeamState>(initialState, {
 			...state,
 			team: {
 				...state.team,
-				...action
-			}
+				...action,
+			},
 		};
 	},
 
@@ -47,8 +47,8 @@ export const teamReducer = createReducer<TeamState>(initialState, {
 			...state,
 			team: {
 				...state.team,
-				links: action.links
-			}
+				links: action.links,
+			},
 		};
 	},
 

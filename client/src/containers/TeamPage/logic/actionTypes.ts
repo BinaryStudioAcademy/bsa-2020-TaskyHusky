@@ -19,15 +19,15 @@ export const UPDATE_FIELD_SUCCESS = 'TEAM:UPDATE_FIELD_SUCCESS';
 
 export type AddLinkSuccess = {
 	links?: any;
-	id?: string
+	id?: string;
 };
 export type FetchLinksLoading = {
 	link?: {
-		id?: string,
-		name?: string,
-		description?: string,
+		id?: string;
+		name?: string;
+		description?: string;
 	};
-	id?: string
+	id?: string;
 };
 
 export type SuccessLoadingTeam = {
@@ -36,14 +36,14 @@ export type SuccessLoadingTeam = {
 };
 
 export type SuccessLoadingUsers = {
-	createdBy: WebApi.Entities.UserProfile,
-	users?: WebApi.Entities.UserProfile[],
-	loading?: boolean
+	createdBy: WebApi.Entities.UserProfile;
+	users?: WebApi.Entities.UserProfile[];
+	loading?: boolean;
 };
 
 export type SuccessLoadingProjects = {
-	projects?: WebApi.Entities.Projects[],
-	loading?: boolean
+	projects?: WebApi.Entities.Projects[];
+	loading?: boolean;
 };
 
 export type StartLoadingArgs = {
@@ -56,4 +56,4 @@ export type EditFieldLoadingArgs = {
 };
 export type EditFieldSuccess = {
 	field: { [key: string]: string | [] };
-}
+};
