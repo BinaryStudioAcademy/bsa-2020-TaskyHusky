@@ -8,7 +8,7 @@ export type Team = {
 
 export interface TeamState {
 	team: Team;
-	loading: boolean
+	loading: boolean;
 }
 
 export const initialState: TeamState = {
@@ -19,5 +19,5 @@ export const initialState: TeamState = {
 		links: [],
 		members: [],
 	},
-	loading: false
+	loading: false,
 };

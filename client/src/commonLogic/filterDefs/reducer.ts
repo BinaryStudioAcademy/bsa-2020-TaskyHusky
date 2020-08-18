@@ -7,6 +7,7 @@ export const filterDefsReducer = createReducer<FilterDefsState>(initialState, {
 		return {
 			...state,
 			...action.partialState,
+			isLoading: false,
 		};
 	},
 });
