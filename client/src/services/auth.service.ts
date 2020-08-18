@@ -45,6 +45,14 @@ export const checkEmail = async (email: string): Promise<Partial<WebApi.Entities
 	return (await res.json()) as Partial<WebApi.Entities.UserProfile>;
 };
 
+export const googleAuthRequest = async (data: any) => {
+	const res = await callWebApi({
+		endpoint: 'auth/google',
+		method: 'POST',
+		body: { data },
+	});
+	return (await res.json()) as Partial<WebApi.Entities.UserProfile>;
+}
 export const forgotPassword = async (email: string): Promise<Partial<WebApi.Entities.UserProfile>> => {
 	const res = await callWebApi({
 		endpoint: 'auth/forgot-password',

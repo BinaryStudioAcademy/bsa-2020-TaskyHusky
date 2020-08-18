@@ -5,6 +5,7 @@ import { TeamRepository } from '../repositories/teams.repository';
 import { getWebError } from '../helpers/error.helper';
 import HttpStatusCode from '../constants/httpStattusCode.constants';
 import { linksParse } from '../helpers/team.parser';
+import { Team } from '../entity/Team';
 
 class TeamsController {
 	getTeams = async (req: Request, res: Response): Promise<void> => {
@@ -89,7 +90,7 @@ class TeamsController {
 		const { data } = req.body;
 		try {
 			const updatedTeam: any = await teamRepository.findOne(id);
-			let links: any;
+			let links: string[];
 			if (!data.id) {
 				data.id = v4();
 				const newEl: string = JSON.stringify(data);
@@ -100,9 +101,7 @@ class TeamsController {
 					return item.id === data.id ? JSON.stringify({ ...data }) : el;
 				});
 			}
-			// TODO: remove ts-ignore
-			// @ts-ignore
-			const result: any = await teamRepository.updateOneById(id, { links });
+			const result = await teamRepository.updateOneById(id, { links });
 			res.status(200).send(linksParse(result));
 		} catch (error) {
 			res.status(HttpStatusCode.NOT_FOUND).send(getWebError(error, HttpStatusCode.NOT_FOUND));
@@ -119,8 +118,6 @@ class TeamsController {
 				const item = JSON.parse(el);
 				return item.id !== data.id;
 			});
-			// TODO: remove ts-ignore
-			// @ts-ignore
 			const result: any = await teamRepository.updateOneById(id, { links });
 			res.status(200).send(linksParse(result));
 		} catch (error) {

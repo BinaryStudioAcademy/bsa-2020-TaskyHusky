@@ -67,7 +67,7 @@ export class TeamRepository extends Repository<Team> {
 		return this.save(entity);
 	}
 
-	async updateOneById(id: string, data: Team) {
+	async updateOneById(id: string, data: Team | { [key: string]: string[] }) {
 		await this.update(id, data);
 		return this.findTeamById(id);
 	}

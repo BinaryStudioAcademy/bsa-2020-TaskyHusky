@@ -1,8 +1,10 @@
+
 import {
 	loginUser,
 	registerUser,
 	getProfile,
 	checkEmail,
+  googleAuthRequest
 	forgotPassword as forgotPasswordQuery,
 	resetPassword as resetPasswordQuery,
 } from 'services/auth.service';
@@ -108,6 +110,15 @@ export function* watchCheckEmail() {
 	yield takeEvery(actionTypes.CHECK_EMAIL_TRIGGER, checkEmailRequest);
 }
 
+export function* googleAuth(action: { user: actionTypes.GoogleUser, type: string }) {
+	yield put(actions.loadingGoogleAuth({ loading: true }));
+	try {
+		const response = yield call(googleAuthRequest, action.user);
+		const { user, jwtToken } = response;
+		setToken(jwtToken);
+		yield put(actions.logInUserSuccess({ user, jwtToken }));
+	} catch (error) {
+		yield put(actions.loadingGoogleAuth({ loading: false }));
 export function* forgotPassword(action: ReturnType<typeof actions.forgotPassword>) {
 	try {
 		const { email } = action;
@@ -115,6 +126,10 @@ export function* forgotPassword(action: ReturnType<typeof actions.forgotPassword
 	} catch (error) {
 		NotificationManager.error(error.clientException.message, 'Error');
 	}
+}
+
+export function* watchGoogleAuth() {
+	yield takeEvery(actionTypes.GOOGLE_AUTH_REQUEST, googleAuth);
 }
 
 export function* watchForgotPassword() {
@@ -144,5 +159,6 @@ export default function* authSaga() {
 		watchCheckEmail(),
 		watchForgotPassword(),
 		watchResetPassword(),
+    watchGoogleAuth()
 	]);
 }
