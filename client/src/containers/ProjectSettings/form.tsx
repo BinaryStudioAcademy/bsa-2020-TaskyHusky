@@ -1,15 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, TextArea, Button, Icon, Popup, Dropdown } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 import * as actions from './logic/actions';
 
 import styles from './styles.module.scss';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 import CustomInput from 'components/common/Input/CustomInput';
 import validator from 'validator';
 
 import SelectIcon from './selectIcon';
+import { RootState } from 'typings/rootState';
+import { startGettingKeys } from 'containers/CreateProjectModal/logic/actions';
 
 interface Props {
 	projectData: WebApi.Entities.Projects;
@@ -18,12 +20,17 @@ interface Props {
 const ProjectForm = ({ projectData }: Props) => {
 	const { t } = useTranslation();
 	const dispatch = useDispatch();
+	const { keys } = useSelector((rootState: RootState) => rootState.createProject);
 
 	const [project, setProject] = useState<WebApi.Entities.Projects>(projectData);
 
 	const [isNameValid, setIsNameValid] = useState<boolean>(true);
 	const [isKeyValid, setIsKeyValid] = useState<boolean>(true);
 	const [isValidErrorShown, setIsValidErrorShown] = useState<boolean>(false);
+
+	useEffect(() => {
+		dispatch(startGettingKeys());
+	}, [dispatch]);
 
 	const [currentIcon, setCurrentIcon] = useState('');
 
@@ -34,6 +41,16 @@ const ProjectForm = ({ projectData }: Props) => {
 	}));
 
 	const onProjectChange = (field: string, value: string) => {
+		if (field === 'key') {
+			value = value.trim().toUpperCase();
+			const keyIndex = keys.findIndex((item: any) => item.key === value);
+
+			if (keyIndex !== -1 && projectData.key !== value) {
+				setIsValidErrorShown(true);
+				setIsKeyValid(false);
+			}
+		}
+
 		setProject((state) => ({
 			...state,
 			[field]: value,
