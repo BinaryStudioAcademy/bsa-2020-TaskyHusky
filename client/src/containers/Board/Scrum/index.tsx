@@ -25,12 +25,13 @@ const Scrum: BoardComponent = (props) => {
 	const [search, setSearch] = useState<string>('');
 
 	const projectDetails: BreadCrumbData = { id: projectState.id, name: projectState.name };
-
 	const boardDetails: BreadCrumbData = { id: board.id, name: board.name };
 
 	useEffect(() => {
 		dispatch(actions.loadSprintsTrigger({ boardId: board.id }));
 		dispatch(startGettingProject({ id: projectId }));
+		dispatch(actions.saveProjectIdToState({ projectId }));
+		dispatch(actions.saveBoardIdToState({ boardId: board.id }));
 	}, [dispatch, board.id, projectId]);
 
 	useEffect(() => {

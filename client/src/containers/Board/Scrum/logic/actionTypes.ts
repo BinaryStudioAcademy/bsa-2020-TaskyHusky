@@ -26,3 +26,15 @@ export type LoadIssuesSuccess = {
 	issues: WebApi.Entities.Issue[];
 	sprintId: string;
 };
+
+export const SAVE_PROJECT_ID_TO_STATE = 'SCRUM_BOARD":SAVE_PROJECT_ID_TO_STATE';
+
+export type SaveProjectId = {
+	projectId: string;
+};
+
+export const SAVE_BOARD_ID_TO_STATE = 'SCRUM_BOARD":SAVE_BOARD_ID_TO_STATE';
+
+export type SaveBoardId = {
+	boardId: string;
+};

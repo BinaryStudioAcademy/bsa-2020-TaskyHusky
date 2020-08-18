@@ -21,4 +21,20 @@ export const scrumBoardReducer = createReducer<ScrumBoardState>(initialState, {
 			...stateCopy,
 		};
 	},
+	[actionTypes.SAVE_PROJECT_ID_TO_STATE](state, action: actionTypes.SaveProjectId) {
+		const { projectId } = action;
+
+		return {
+			...state,
+			projectId,
+		};
+	},
+	[actionTypes.SAVE_BOARD_ID_TO_STATE](state, action: actionTypes.SaveBoardId) {
+		const { boardId } = action;
+
+		return {
+			...state,
+			boardId,
+		};
+	},
 });

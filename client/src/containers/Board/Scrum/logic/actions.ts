@@ -8,3 +8,6 @@ export const deleteSprintTrigger = createAction<actionTypes.DeleteSprintTrigger>
 
 export const loadIssuesTrigger = createAction<actionTypes.LoadIssuesTrigger>(actionTypes.LOAD_ISSUES_TRIGGER);
 export const loadIssuesSuccess = createAction<actionTypes.LoadIssuesSuccess>(actionTypes.LOAD_ISSUES_SUCCESS);
+
+export const saveProjectIdToState = createAction<actionTypes.SaveProjectId>(actionTypes.SAVE_PROJECT_ID_TO_STATE);
+export const saveBoardIdToState = createAction<actionTypes.SaveBoardId>(actionTypes.SAVE_BOARD_ID_TO_STATE);
