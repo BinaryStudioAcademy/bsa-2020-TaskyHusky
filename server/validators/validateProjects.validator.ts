@@ -4,11 +4,13 @@ import { Projects } from '../src/entity/Projects';
 interface ProjectValidationTemplate {
 	description: string;
 	icon: string;
+	url: string;
 }
 
 const projectValidationTemplate: ProjectValidationTemplate = {
 	description: '',
 	icon: '',
+	url: '',
 };
 
 export const validateProject = async (data: Projects): Promise<ValidationError[]> => {
