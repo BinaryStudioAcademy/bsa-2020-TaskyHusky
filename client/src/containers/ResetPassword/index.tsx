@@ -47,7 +47,7 @@ const ResetPassword: React.FC<Props> = ({ match }: Props) => {
 								content={t('invalid_password')}
 								trigger={<PasswordInput onChange={setPassword} onChangeValid={setIsPasswordValid} />}
 							/>
-							<PasswordCheck passLength={password.length} isPasswordValid={true} />
+							<PasswordCheck passLength={password.length} acceptLength={6} />
 							<Button
 								positive
 								className={styles.continueButton}
