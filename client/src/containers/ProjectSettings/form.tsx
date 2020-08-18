@@ -120,7 +120,7 @@ const ProjectForm = ({ projectData }: Props) => {
 							type="text"
 							placeholder={'https://www...'}
 							onChange={(e) => onProjectChange('url', e.target.value)}
-							// value={project.url}
+							value={project.url}
 						/>
 						<Form.Field className={styles.form__input} required>
 							<label>{t('project_category')}</label>
@@ -145,7 +145,7 @@ const ProjectForm = ({ projectData }: Props) => {
 								placeholder={t('project_desc')}
 								rows={'7'}
 								onChange={(e, data) => onProjectChange('description', data.value?.toString() || '')}
-								// value={project.description}
+								value={project.description}
 							/>
 						</Form.Field>
 						<Form.Field className={styles.form__input}>
