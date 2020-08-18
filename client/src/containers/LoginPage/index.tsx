@@ -11,7 +11,6 @@ import { normalizeEmail } from 'helpers/normalizeEmail.helper';
 import { NotificationManager } from 'react-notifications';
 import iconGoogle from 'assets/images/icon-google.svg';
 import GoogleLogin, { GoogleLoginResponse, GoogleLoginResponseOffline } from 'react-google-login';
-
 import { RootState } from 'typings/rootState';
 
 export const LoginPage: React.FC = () => {
@@ -108,7 +107,6 @@ export const LoginPage: React.FC = () => {
 								/>
 							}
 						/>
-
 						{passwordInput}
 						<Button positive className={styles.continueButton} disabled={authState.loading}>
 							{isEmailValid ? t('log_in') : t('continue')}
@@ -116,7 +114,7 @@ export const LoginPage: React.FC = () => {
 						<Divider horizontal>{t('or')}</Divider>
 						<GoogleLogin
 							// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-							clientId={'1004182396963-58h0qlvimlv07tepibt6m6t5omejn2h7.apps.googleusercontent.com'}
+							clientId={process.env.REACT_APP_GOOGLE_ID!}
 							buttonText="Login"
 							render={(props) => googleBtn(props)}
 							onSuccess={googleAuth}
