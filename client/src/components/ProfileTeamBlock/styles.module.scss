@@ -6,6 +6,7 @@
 
 .header {
   @include info-block-header;
+  margin: 25px 0 !important;
 }
 
 .content {

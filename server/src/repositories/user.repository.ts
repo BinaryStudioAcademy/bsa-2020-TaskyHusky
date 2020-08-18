@@ -19,6 +19,19 @@ export class UserRepository extends Repository<UserProfile> {
 		return rest;
 	}
 
+	async getProjects(id: string): Promise<any> {
+		const user = await this.createQueryBuilder('user')
+			.where('user.id = :id', { id })
+			.leftJoinAndSelect('user.projects', 'project')
+			.getOne();
+
+		if (!user) {
+			throw new Error('User with such id does not exist');
+		}
+
+		return user.projects;
+	}
+
 	async getTeammatesById(id: string): Promise<any> {
 		const teamRepository = getCustomRepository(TeamRepository);
 		const user = await this.getById(id);

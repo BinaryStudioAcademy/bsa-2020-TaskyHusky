@@ -5,14 +5,14 @@ interface Props {
 	icon?: string;
 	item: {
 		name: string;
-		project: string;
+		category: string;
 	};
 }
 
 const UserActivityItem: React.FC<Props> = (props: Props) => {
 	const {
 		icon,
-		item: { name, project },
+		item: { name, category },
 	} = props;
 	return (
 		<div className={styles.activityItem}>
@@ -26,7 +26,7 @@ const UserActivityItem: React.FC<Props> = (props: Props) => {
 
 			<div className={styles.block}>
 				<p className={styles.content}>{name}</p>
-				<p className={styles.contentSecondary}>{project}</p>
+				<p className={styles.contentSecondary}>{category} project</p>
 			</div>
 		</div>
 	);

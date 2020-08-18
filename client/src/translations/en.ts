@@ -247,6 +247,7 @@ export const en = {
 		"Missing someone on gmail.com? Add their email below – if permissions allow we'll add them, or else send a request to your admin.",
 	send: 'Send',
 	add_people_email_placeholder: 'Add email address',
+	my_work: 'My work',
 	forgot_password_header: "Can't log in?",
 	forgot_password_email_link: "We'll send a recovery link to",
 	forgot_password_button: 'Send recovery link',
