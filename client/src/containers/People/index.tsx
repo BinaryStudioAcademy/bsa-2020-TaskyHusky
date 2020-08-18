@@ -24,6 +24,7 @@ const People: React.FC = (): ReactElement => {
 
 	useEffect((): void => {
 		dispatch(actions.startLoading({ id: authStore.user?.id || '' }));
+		//eslint-disable-next-line
 	}, [dispatch]);
 
 	const redirectToPersonProfile = (id: string) => {
