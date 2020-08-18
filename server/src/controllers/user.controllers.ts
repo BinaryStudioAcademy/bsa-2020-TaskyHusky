@@ -56,11 +56,20 @@ class UserController {
 
 	getAllUser = async (req: Request, res: Response): Promise<void> => {
 		const userRepository = getCustomRepository(UserRepository);
-		const { id } = req.params;
 
 		try {
-			const user = await userRepository.findAll();
-			res.send(user);
+			const users = await userRepository.findAll();
+			const { name: nameFilter } = req.query;
+			if (nameFilter && typeof nameFilter === 'string') {
+				res.send(
+					users.filter((people) => {
+						const fullName = `${people.firstName} ${people.lastName}`;
+						return fullName.toLowerCase().indexOf(nameFilter.toLowerCase()) !== -1;
+					}),
+				);
+			} else {
+				res.send(users);
+			}
 		} catch (error) {
 			res.status(404).send();
 		}

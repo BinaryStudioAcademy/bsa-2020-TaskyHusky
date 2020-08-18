@@ -30,6 +30,6 @@ export default function configureLanguages() {
 
 export const Languages = {
 	en: 'English',
-	ru: 'Russian',
-	ua: 'Ukrainian',
+	ru: 'Русский',
+	ua: 'Українська',
 };

@@ -12,7 +12,7 @@ export class Issue {
 	@PrimaryGeneratedColumn('uuid')
 	id!: string;
 
-	@ManyToOne((type) => IssueType, (issueType) => issueType.issues)
+	@ManyToOne((type) => IssueType, (issueType) => issueType.issues, { eager: true })
 	type?: IssueType;
 
 	@Column()
@@ -34,7 +34,7 @@ export class Issue {
 	@IsArray()
 	links?: string;
 
-	@ManyToOne((type) => Priority, (priority) => priority.issues)
+	@ManyToOne((type) => Priority, (priority) => priority.issues, { eager: true })
 	priority?: Priority;
 
 	@Column({ nullable: true })
@@ -51,7 +51,7 @@ export class Issue {
 	@IsString()
 	issueKey?: string;
 
-	@ManyToOne((type) => UserProfile, (userProfile) => userProfile.assignedIssues)
+	@ManyToOne((type) => UserProfile, (userProfile) => userProfile.assignedIssues, { eager: true })
 	assigned?: UserProfile;
 
 	@ManyToOne((type) => UserProfile, (userProfile) => userProfile.createdIssues)

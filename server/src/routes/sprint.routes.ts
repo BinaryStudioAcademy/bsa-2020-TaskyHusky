@@ -2,13 +2,25 @@ import { Router } from 'express';
 import SprintController from '../controllers/sprint.controllers';
 
 const router = Router();
-const controller = new SprintController();
+const {
+	getAll,
+	getById,
+	create,
+	updateById,
+	deleteById,
+	getProjectById,
+	getBoardById,
+	getIssuesById,
+} = new SprintController();
 
 router
-	.get('/', controller.getAll)
-	.get('/:id', controller.getById)
-	.post('/', controller.create)
-	.put('/:id', controller.update)
-	.delete('/:id', controller.delete);
+	.get('/', getAll)
+	.get('/:id', getById)
+	.post('/', create)
+	.put('/:id', updateById)
+	.delete('/:id', deleteById)
+	.get('/:id/project', getProjectById)
+	.get('/:id/board', getBoardById)
+	.get('/:id/issues', getIssuesById);
 
 export default router;
