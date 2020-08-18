@@ -28,6 +28,12 @@ export const projectReducer = createReducer<ProjectState>(initialState, {
 			isLoading: false,
 		};
 	},
+	[actionTypes.FAIL_GETTING_PROJECT](state) {
+		return {
+			...state,
+			is404Error: true,
+		};
+	},
 	[actionTypes.START_UPDATING_PROJECT](state) {
 		return {
 			...state,

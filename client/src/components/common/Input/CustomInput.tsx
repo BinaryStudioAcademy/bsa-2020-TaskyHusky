@@ -1,4 +1,4 @@
-import { Popup } from 'semantic-ui-react';
+import { Popup, PopupProps } from 'semantic-ui-react';
 import React, { ChangeEvent } from 'react';
 
 import styles from './styles.module.scss';
@@ -12,6 +12,7 @@ interface Props {
 	placeholder: string;
 	popUpContent: string;
 	validation: (data: string) => boolean;
+	popUpPosition?: PopupProps['position'];
 }
 
 const CustomInput = ({
@@ -23,6 +24,7 @@ const CustomInput = ({
 	placeholder,
 	popUpContent,
 	validation,
+	popUpPosition,
 }: Props) => {
 	const onInputChange = (event: ChangeEvent<HTMLInputElement>) => {
 		const value = event.target.value;
@@ -35,8 +37,9 @@ const CustomInput = ({
 		<Popup
 			className={isValidErrorShown && !isDataValid ? styles.error : ''}
 			open={isValidErrorShown && !isDataValid}
-			position="top center"
+			position={Boolean(popUpPosition) ? popUpPosition : 'top center'}
 			content={popUpContent}
+			wide="very"
 			trigger={
 				<input
 					placeholder={placeholder}

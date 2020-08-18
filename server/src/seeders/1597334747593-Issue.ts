@@ -16,7 +16,7 @@ export class Issue1597334747593 implements MigrationInterface {
 
 		const projectRepository = getCustomRepository(ProjectsRepository);
 		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-		const project = (await projectRepository.findAll())[0]!;
+		const project = (await projectRepository.find())[0]!;
 
 		const issueTypeRepository = getCustomRepository(IssueTypeRepository);
 		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
