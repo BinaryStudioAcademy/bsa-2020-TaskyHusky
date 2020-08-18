@@ -6,14 +6,19 @@ import * as actions from './logic/actions';
 import { createBoard } from './logic/actionTypes';
 import Options, { ItemProps } from '../../components/common/Options';
 import CreateBoardModal from '../../components/CreateBoardModal';
+import { Link } from 'react-router-dom';
 
 import styles from './styles.module.scss';
+import DeleteBoardModal from '../../components/deleteBoardModal';
+import { useTranslation } from 'react-i18next';
 
 const Boards: React.FC = () => {
+	const { t } = useTranslation();
 	const boardTypes = ['Kanban', 'Scrum'];
 	const [searchName, setSearchName] = useState('');
 	const [selectedTypes, setSelectedType] = useState<WebApi.Board.BoardType[]>([]);
 	const [isModalShown, setIsModalShown] = useState(false);
+	const [boardToDelete, setBoardToDelete] = useState<WebApi.Board.IBoardModel | null>(null);
 	const dispatch = useDispatch();
 	const boards = useSelector((rootState: RootState) => rootState.boards.boards);
 
@@ -45,48 +50,51 @@ const Boards: React.FC = () => {
 		setSelectedType([...(data.value as WebApi.Board.BoardType[])]);
 	};
 
-	const handleDelete = (id: string) => {
-		dispatch(actions.deleteBoard({ id }));
-	};
-
 	const onCreateBoard = (board: createBoard) => {
 		dispatch(actions.createBoard({ ...board }));
 	};
 
-	const getBoardMenuActions = (id: string): ItemProps[] => [
+	const getBoardMenuActions = (board: WebApi.Board.IBoardModel): ItemProps[] => [
 		{
 			onClickAction: () => {},
-			id,
-			text: 'Edit settings',
+			id: board.id,
+			text: t('edit_settings'),
 		},
 		{
 			onClickAction: () => {},
-			id,
-			text: 'Copy',
+			id: board.id,
+			text: t('copy'),
 		},
 		{
 			onClickAction: () => {},
-			id,
-			text: 'Move',
+			id: board.id,
+			text: t('move'),
 		},
 		{
-			onClickAction: (id) => handleDelete(id),
-			id,
-			text: 'Delete',
+			onClickAction: getDeleteAction(board),
+			id: board.id,
+			text: t('delete'),
 		},
 	];
+
+	const getDeleteAction = (board: WebApi.Board.IBoardModel) => {
+		return () => {
+			setBoardToDelete(board);
+		};
+	};
 
 	return (
 		<div className={styles.wrapper}>
 			{isModalShown ? <CreateBoardModal setIsModalShown={setIsModalShown} onCreateBoard={onCreateBoard} /> : ''}
+			{boardToDelete && <DeleteBoardModal board={boardToDelete} onClose={() => setBoardToDelete(null)} />}
 			<div className={styles.wrapper__title}>
-				<h1 className={styles.title}>Boards</h1>
+				<h1 className={styles.title}>{t('boards')}</h1>
 				<Button primary onClick={() => setIsModalShown(true)}>
-					Create board
+					{t('create_board')}
 				</Button>
 			</div>
 			<div className={[styles.wrapper__filters, styles.filters].join(' ')}>
-				<Input icon="search" placeholder="Search..." onChange={onSearch} value={searchName} />
+				<Input icon="search" placeholder={t('search')} onChange={onSearch} value={searchName} />
 				<Dropdown
 					placeholder="All boards"
 					options={selectOptions}
@@ -108,14 +116,19 @@ const Boards: React.FC = () => {
 					</Table.Header>
 
 					<Table.Body>
-						{filteredData.map(({ name, id, boardType, createdBy: user }) => {
+						{filteredData.map((board) => {
+							const { name, id, boardType, createdBy: user } = board;
 							return (
 								<Table.Row key={id}>
-									<Table.Cell>{name}</Table.Cell>
-									<Table.Cell>{boardType}</Table.Cell>
-									<Table.Cell>{`${user.firstName} ${user.lastName}`}</Table.Cell>
 									<Table.Cell>
-										<Options config={getBoardMenuActions(id)} />
+										<Link to={`/board/${id}`}>{name}</Link>
+									</Table.Cell>
+									<Table.Cell>{boardType}</Table.Cell>
+									<Table.Cell>
+										<Link to={`/profile/${user.id}`}>{`${user.firstName} ${user.lastName}`}</Link>
+									</Table.Cell>
+									<Table.Cell>
+										<Options config={getBoardMenuActions(board)} />
 									</Table.Cell>
 								</Table.Row>
 							);

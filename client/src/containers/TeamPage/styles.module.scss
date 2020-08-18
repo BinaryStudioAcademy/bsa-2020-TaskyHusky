@@ -79,10 +79,44 @@ $gradient: linear-gradient(90deg, rgba(52, 221, 255, 1) 0%, rgba(95, 221, 247, 1
 		border-radius: 6px;
 	}
 }
-
-@media (max-width: 1088px) {
+.main_row {
+	padding: 0 80px !important;
 	.col_media {
-		padding: 0 50px !important;
-		flex-grow: 1 !important;
+		flex-grow: 0 !important;
+		.ui.card {
+			width: 100% !important;
+		}
+	}
+	.col_left {
+		width: 35% !important;
+		min-width: 270px !important;
+	}
+	.col_right {
+		width: 60% !important;
+		max-width: 700px;
+	}
+}
+
+@media (max-width: 950px) {
+	.main_row {
+		padding: 0 20px !important;
+	}
+}
+@media (max-width: 710px) {
+	.main_row {
+		padding: 0 20px !important;
+		.col_left {
+			flex-wrap: wrap !important;
+			display: flex !important;
+			flex-direction: row !important;
+			justify-content: center !important;
+			width: 100% !important;
+			& > div {
+				margin: 0 10px 10px 0 !important;
+			}
+		}
+		.col_right {
+			width: 90% !important;
+		}
 	}
 }

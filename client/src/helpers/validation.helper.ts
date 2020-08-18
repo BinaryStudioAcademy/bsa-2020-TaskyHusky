@@ -32,7 +32,7 @@ export default class CustomValidator {
 			return this;
 		} else {
 			this.errors.push(
-				`${this.field} shouldn't be started with digits, blank spaces or special characters. Field can contain only Latin and Cyrillic symbols, digits, hyphen and underscore.`,
+				`${this.field} should started with alphabetic character. Field can contain digits, hyphen and underscore.`,
 			);
 			return this;
 		}
@@ -54,7 +54,7 @@ export default class CustomValidator {
 			return this;
 		} else {
 			this.errors.push(
-				`Password should contain only Latin letters and minimum 1 digit 1, capital letter, 1 small letter, 1 special character.`,
+				`Password should contain at least 1 digit, 1 capital letter, 1 small letter, 1 special character.`,
 			);
 			return this;
 		}

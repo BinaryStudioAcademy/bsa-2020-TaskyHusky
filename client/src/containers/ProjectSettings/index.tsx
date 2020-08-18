@@ -15,12 +15,16 @@ import Spinner from 'components/common/Spinner';
 import Form from './form';
 
 const ProjectSettings = () => {
-	const { isLoading, project: projectData } = useSelector((rootState: RootState) => rootState.project);
+	const { is404Error, isLoading, project: projectData } = useSelector((rootState: RootState) => rootState.project);
 	const { t } = useTranslation();
 	const dispatch = useDispatch();
 	const history = useHistory();
 	const { id } = useParams();
 	const { name } = projectData;
+
+	if (is404Error) {
+		throw new Error();
+	}
 
 	useEffect(() => {
 		dispatch(actions.startGettingProject({ id }));
@@ -29,7 +33,6 @@ const ProjectSettings = () => {
 	const onTrash = () => {
 		dispatch(actions.startDeletingProject({ id }));
 	};
-
 	return ProjectSidebar(
 		<section>
 			<div className={styles.header_inner__container}>

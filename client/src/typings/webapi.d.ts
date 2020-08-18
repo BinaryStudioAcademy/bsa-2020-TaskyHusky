@@ -242,14 +242,21 @@ namespace WebApi.Entities {
 		id: string;
 		name: string;
 		key: string;
+		description?: string;
+		icon?: string;
+		url?: string;
 		category?: string;
 		sprints?: Sprint[];
 		boards?: Board[];
 		defaultAssignee?: UserProfile;
-		lead?: UserProfile;
+		lead: UserProfile;
 		creator: UserProfile;
 		issues?: Issue[];
-		users?: UserProfile[];
+		users: UserProfile[];
+		createdDate?: Date;
+		updatedDate?: Date;
+		deletedDate?: Date;
+		version?: number;
 	}
 
 	interface Sprint {
@@ -297,5 +304,8 @@ namespace WebApi.Entities {
 		createdIssues?: Issue[];
 		teams?: Team[];
 		projects?: Projects[];
+		incomingInvites?: UserProfile[];
+		pendingInvites?: UserProfile[];
+		teammates?: UserProfile[];
 	}
 }

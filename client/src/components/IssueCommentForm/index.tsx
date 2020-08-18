@@ -1,23 +1,43 @@
-import React, { useState } from 'react';
-import { Form, Comment } from 'semantic-ui-react';
+import React, { useState, useEffect } from 'react';
+import { Comment } from 'semantic-ui-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addComment } from './logic/actions';
-import { useTranslation } from 'react-i18next';
 import { RootState } from 'typings/rootState';
 import { getUsername } from 'helpers/getUsername.helper';
 import styles from './styles.module.scss';
 import { getInitials } from 'helpers/getInitials.helper';
+import { requestTeammates } from 'services/user.service';
+import IssueCommentTextInput from '../IssueCommentTextInput';
+import { getXMLText } from 'helpers/getDisplayCommentText.helper';
 
 interface Props {
 	onSubmit?: (text: string) => void;
 	issueId: string;
 }
 
+interface Option {
+	key: string | number;
+	value: any;
+	text: string | JSX.Element | JSX.Element[];
+}
+
 const IssueCommentForm: React.FC<Props> = ({ onSubmit, issueId }) => {
+	const [users, setUsers] = useState<WebApi.Entities.UserProfile[]>([]);
+	const [mustFetchUsers, setMustFetchUsers] = useState<boolean>(true);
 	const [text, setText] = useState<string>('');
+	const [popupOpen, setPopupOpen] = useState<boolean>(false);
 	const authData = useSelector((state: RootState) => state.auth);
 	const dispatch = useDispatch();
-	const { t } = useTranslation();
+
+	useEffect(() => {
+		if (mustFetchUsers) {
+			if (authData.user) {
+				requestTeammates(authData.user.id).then(setUsers);
+			}
+
+			setMustFetchUsers(false);
+		}
+	}, [mustFetchUsers, authData.user]);
 
 	const submit = (event: React.FormEvent) => {
 		event.preventDefault();
@@ -26,23 +46,33 @@ const IssueCommentForm: React.FC<Props> = ({ onSubmit, issueId }) => {
 			return;
 		}
 
+		const displayText = getXMLText(text, users);
+
 		dispatch(
 			addComment({
 				issueId,
-				text,
+				text: displayText,
 			}),
 		);
 
-		setText('');
-
 		if (onSubmit) {
-			onSubmit(text);
+			onSubmit(displayText);
 		}
+
+		setText('');
 	};
 
-	if (!authData.user) {
+	if (!authData.user || mustFetchUsers) {
 		return null;
 	}
+
+	const userOptions: Option[] = ([{ key: 0, value: null, text: '' }] as Option[]).concat(
+		users.map((user) => ({
+			key: user.id,
+			value: getUsername(user),
+			text: getUsername(user),
+		})),
+	);
 
 	return (
 		<Comment.Group style={{ width: '100%', maxWidth: '100%' }}>
@@ -63,11 +93,12 @@ const IssueCommentForm: React.FC<Props> = ({ onSubmit, issueId }) => {
 					</Comment.Author>
 					<Comment.Text>
 						<form onSubmit={submit}>
-							<Form.Input
-								fluid
-								placeholder={t('enter_comment_text')}
-								onChange={(event, data) => setText(data.value)}
-								value={text}
+							<IssueCommentTextInput
+								text={text}
+								setText={setText}
+								popupOpen={popupOpen}
+								setPopupOpen={setPopupOpen}
+								userOptions={userOptions}
 							/>
 						</form>
 					</Comment.Text>

@@ -10,18 +10,8 @@
   @include content-btn;
 }
 
-.profileBtn {
-  background-color: $red !important;
-}
-
-.emailBtn {
-  background-color: $yellow !important;
-}
-
-.securityBtn {
-  background-color: $green !important;
-}
-
-.accountBtn {
-  background-color: $blue !important;
+.primaryBtn {
+  background-color: #2185d0 !important;
+  color: $primary-bg !important;
+  border: none !important;
 }

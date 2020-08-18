@@ -7,11 +7,12 @@ import projectIcon from 'icons/profile/projectIcon.svg';
 interface Props {
 	isCurrentUser: boolean;
 	mockData: any;
+	projects: Array<any>;
 }
 
 const ProfileSection: React.FC<Props> = (props: Props) => {
 	const { t } = useTranslation();
-	const { isCurrentUser, mockData } = props;
+	const { isCurrentUser, mockData, projects } = props;
 	const countActivity = 3;
 	const countProject = 2;
 	const countColleagues = 1;
@@ -41,7 +42,7 @@ const ProfileSection: React.FC<Props> = (props: Props) => {
 			{mockData.activity.length && (
 				<>
 					<h3 className={styles.header}>{t('work_places')}</h3>
-					<ProfileActivityBlock mockData={mockData.projects} countItem={countProject} />
+					<ProfileActivityBlock mockData={projects} countItem={countProject} />
 				</>
 			)}
 			<h3 className={styles.header}>{t('work_with')}</h3>

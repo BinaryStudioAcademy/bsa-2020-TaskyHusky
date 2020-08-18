@@ -33,12 +33,6 @@ export class FilterRepository extends Repository<Filter> {
 	}
 
 	async updateItem(data: Filter): Promise<Filter> {
-		// const { name, filterParts } = data;
-
-		// const filter = await this.save({ name });
-		// if (filterParts) {
-		// 	filter.filterParts = filterParts;
-		// }
 		return this.save(data);
 	}
 
