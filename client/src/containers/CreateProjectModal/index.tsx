@@ -95,6 +95,13 @@ const CreateProjectModal: React.FC = () => {
 
 	const onKeyChanged = (key: string): void => {
 		const newKey = key.trim().toUpperCase();
+		const keyIndex = keys.findIndex((item: any) => item.key === newKey);
+
+		if (keyIndex !== -1) {
+			setIsValidErrorShown(true);
+			setIsKeyValid(false);
+		}
+
 		if (!isKeyTouched) {
 			setIsKeyTouched(true);
 		}
@@ -144,15 +151,13 @@ const CreateProjectModal: React.FC = () => {
 									data={key}
 									setData={onKeyChanged}
 									placeholder="Enter your key"
-									popUpContent="Key should contain at least 2 symbols long"
+									popUpContent="Key should contain at least 2 symbols long and be unique"
 									validation={(key) => validator.isLength(key, { min: 2 })}
 								/>
 							</Form.Field>
-							<Form.Field>
-								<Checkbox label={t('share_settings_with_existing_project')} disabled={true} />
-							</Form.Field>
 						</Form>
-						<p>{t('template')}</p>
+
+						<p className={styles.template__title}>{t('template')}</p>
 						<div className={styles.flex_container}>
 							<Image src={image} className={styles.modal__image} />
 							<div>
