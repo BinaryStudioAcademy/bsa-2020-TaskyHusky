@@ -1,0 +1,22 @@
+.icon {
+	padding: 5px 10px !important;
+	border-radius: 3px !important;
+	width: auto !important;
+	height: auto !important;
+}
+
+.closed {
+	@extend .icon;
+	background-color: rgb(244, 245, 247) !important;
+}
+
+.opened {
+	@extend .icon;
+	background-color: rgb(80, 93, 121) !important;
+}
+.dropdownTrigger {
+	box-shadow: none !important;
+	border: none !important;
+	width: '30px' !important;
+	padding: 8px 0 8px 8px !important;
+}

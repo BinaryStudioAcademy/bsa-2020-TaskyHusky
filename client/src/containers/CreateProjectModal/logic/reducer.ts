@@ -35,6 +35,18 @@ export const createProjectReducer = createReducer<CreateProjectsState>(initialSt
 			isLoading: false,
 		};
 	},
+	[actionTypes.SUCCESS_GETTING_KEYS](state, { keys }) {
+		return {
+			...state,
+			keys,
+		};
+	},
+	[actionTypes.FAIL_GETTING_KEYS](state) {
+		return {
+			...state,
+			isError: true,
+		};
+	},
 	[actionTypes.RESET_STATE]() {
 		return {
 			...initialState,

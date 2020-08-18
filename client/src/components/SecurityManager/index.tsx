@@ -11,6 +11,7 @@ import CustomValidator from 'helpers/validation.helper';
 const SecurityManager = () => {
 	const { t } = useTranslation();
 	const dispatch = useDispatch();
+	const acceptLength = 6;
 	const [passwords, setPasswords] = useState({
 		oldPassword: '',
 		newPassword: '',
@@ -28,7 +29,11 @@ const SecurityManager = () => {
 
 	const onBlurPass = () => {
 		const customValidator = new CustomValidator(passwords.newPassword, 'Password');
-		const isntValid = customValidator.checkMinLength(6).checkMaxLength(128).checkPasswordField().validate();
+		const isntValid = customValidator
+			.checkMinLength(acceptLength)
+			.checkMaxLength(128)
+			.checkPasswordField()
+			.validate();
 		if (isntValid) {
 			setErrorMessage(isntValid);
 			setIsPasswordValid(false);
@@ -76,7 +81,7 @@ const SecurityManager = () => {
 						onBlur={onBlurPass}
 						errorText={errorMessage}
 					/>
-					<PasswordCheck passLength={passwords.newPassword.length} isPasswordValid={isPasswordValid} />
+					<PasswordCheck passLength={passwords.newPassword.length} acceptLength={acceptLength} />
 					<SubmitedInput
 						text={passwords.repeatedPassword}
 						propKey="repeatedPassword"

@@ -1,16 +1,22 @@
 .icon {
-    padding: 5px 10px !important;
-    border-radius: 3px !important;
-    width: auto !important;
-    height: auto !important;
+	padding: 5px 10px !important;
+	border-radius: 3px !important;
+	width: auto !important;
+	height: auto !important;
+	background-color: #f4f5f7 !important;
+
+	&:hover {
+		background-color: #e0e0e0 !important;
+	}
 }
 
 .closed {
-    @extend .icon;
-    background-color: rgb(244, 245, 247) !important;
+	@extend .icon;
+	background-color: #f4f5f7 !important;
 }
 
 .opened {
-    @extend .icon;
-    background-color: rgb(80, 93, 121) !important;
+	@extend .icon;
+	height: 100px;
+	background-color: #e0e0e0 !important;
 }

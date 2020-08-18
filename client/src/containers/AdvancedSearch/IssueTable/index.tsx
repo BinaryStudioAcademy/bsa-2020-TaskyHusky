@@ -1,30 +1,29 @@
-import React, { useEffect } from 'react';
-import { Table } from 'semantic-ui-react';
+import React from 'react';
+import { Table, Popup } from 'semantic-ui-react';
 import IssueItem from 'components/IssueItem';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { RootState } from 'typings/rootState';
-import { loadIssues } from 'containers/AdvancedSearch/logic/actions';
+import { useTranslation } from 'react-i18next';
 
 const IssueTable: React.FC = () => {
-	const dispatch = useDispatch();
+	const { t } = useTranslation();
 	const { issues } = useSelector((rootState: RootState) => rootState.advancedSearch);
-
-	useEffect(() => {
-		dispatch(loadIssues());
-	}, [dispatch]);
 
 	return (
 		<Table selectable compact>
 			<Table.Header>
 				<Table.Row>
-					<Table.HeaderCell>T</Table.HeaderCell>
-					<Table.HeaderCell>Key</Table.HeaderCell>
-					<Table.HeaderCell>Summary</Table.HeaderCell>
-					<Table.HeaderCell>Assignee</Table.HeaderCell>
-					<Table.HeaderCell>Reporter</Table.HeaderCell>
-					<Table.HeaderCell>P</Table.HeaderCell>
-					<Table.HeaderCell>Status</Table.HeaderCell>
-					<Table.HeaderCell>Resolution</Table.HeaderCell>
+					<Table.HeaderCell>
+						<Popup content={t('type')} trigger={<div style={{ paddingLeft: '6px' }}>T</div>} />
+					</Table.HeaderCell>
+					<Table.HeaderCell>{t('key')}</Table.HeaderCell>
+					<Table.HeaderCell>{t('summary')}</Table.HeaderCell>
+					<Table.HeaderCell>{t('assignee')}</Table.HeaderCell>
+					<Table.HeaderCell>{t('reporter')}</Table.HeaderCell>
+					<Table.HeaderCell>
+						<Popup content={t('priority')} trigger={<div style={{ paddingLeft: '6px' }}>P</div>} />
+					</Table.HeaderCell>
+					<Table.HeaderCell>{t('status')}</Table.HeaderCell>
 					<Table.HeaderCell>Created</Table.HeaderCell>
 					<Table.HeaderCell>Updated</Table.HeaderCell>
 					<Table.HeaderCell> </Table.HeaderCell>

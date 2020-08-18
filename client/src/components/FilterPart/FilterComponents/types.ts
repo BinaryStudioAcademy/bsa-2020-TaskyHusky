@@ -7,6 +7,6 @@ export type FilterProps = {
 export type DefinitionEntity = {
 	id: string;
 	title: string;
-	icon: string;
+	icon?: string;
 	color: string;
 };

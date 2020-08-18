@@ -114,9 +114,9 @@ namespace WebApi.Team {
 		description?: string;
 		links?: string[];
 		users?: [];
-		loading: boolean
 	}
 }
+
 namespace WebApi.User {
 	export interface UserModel {
 		id?: string;
@@ -131,7 +131,9 @@ namespace WebApi.User {
 		organization?: string;
 		jobTitle?: string;
 		userSettingsId?: string;
-		teams: [];
+		resetPasswordToken: string | null;
+		resetPasswordExpires: Date | null;
+		teams?: [];
 		filtres?: string[];
 	}
 }
@@ -176,14 +178,15 @@ namespace WebApi.Entities {
 	interface FilterPart {
 		id: string;
 		filter?: Filter;
-		filterDef?: FilterDefinition;
-		members?: UserProfile[];
+		filterDef: FilterDefinition;
+		members?: string[];
 		searchText?: string;
 	}
 
 	interface Issue {
 		id: string;
 		type?: IssueType;
+		status?: IssueStatus;
 		summary?: string;
 		boardColumn?: BoardColumn;
 		labels?: string;
@@ -196,6 +199,8 @@ namespace WebApi.Entities {
 		issueKey?: string;
 		assigned?: UserProfile;
 		creator: UserProfile;
+		createdAt?: Date;
+		updatedAt?: Date;
 	}
 
 	interface IssueComment {
@@ -205,6 +210,13 @@ namespace WebApi.Entities {
 		editedAt?: Date;
 		issue: Issue;
 		creator: UserProfile;
+	}
+
+	interface IssueStatus {
+		id: string;
+		color?: string;
+		title?: string;
+		issues?: Issue[];
 	}
 
 	interface IssueType {
@@ -239,12 +251,12 @@ namespace WebApi.Entities {
 
 	interface Sprint {
 		id: string;
-		sprintName?: string;
+		sprintName: string;
 		project?: Projects;
 		board?: Board;
-		isActive?: boolean;
-		isCompleted?: boolean;
-		issues?: Issue[];
+		isActive: boolean;
+		isCompleted: boolean;
+		issues: Issue[];
 	}
 
 	interface Team {
@@ -255,16 +267,6 @@ namespace WebApi.Entities {
 		createdBy: UserProfile;
 		name?: string;
 		color?: string;
-	}
-
-	interface Teams {
-		id: string;
-		users?: UserProfile[];
-		createdBy?: UserProfile;
-		name?: string;
-		color?: string;
-		description?: string;
-		links?: string[];
 	}
 
 	interface UserProfile {
@@ -281,6 +283,8 @@ namespace WebApi.Entities {
 		userSettingsId?: string;
 		password?: string;
 		boards?: Board[];
+		public resetPasswordToken?: string | null;
+		public resetPasswordExpires?: Date | null;
 		filters?: Filter[];
 		assignedProjects?: Projects[];
 		leadedProjects?: Projects[];
@@ -290,5 +294,8 @@ namespace WebApi.Entities {
 		createdIssues?: Issue[];
 		teams?: Team[];
 		projects?: Projects[];
+		incomingInvites?: UserProfile[];
+		pendingInvites?: UserProfile[];
+		teammates?: UserProfile[];
 	}
 }

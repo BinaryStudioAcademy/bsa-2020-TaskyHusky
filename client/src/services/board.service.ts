@@ -73,3 +73,12 @@ export const createBoard = async (board: createBoardType): Promise<any> => {
 
 	return await res.json();
 };
+
+export const getBoardSprints = async (id: string): Promise<WebApi.Entities.Sprint[]> => {
+	const res: Response = await callWebApi({
+		method: 'GET',
+		endpoint: `board/${id}/sprints`,
+	});
+
+	return (await res.json()) as WebApi.Entities.Sprint[];
+};

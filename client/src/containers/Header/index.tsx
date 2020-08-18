@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Menu, Image, Dropdown, Button, Icon } from 'semantic-ui-react';
 import logo from 'assets/logo192.png'; // TODO: replace with logo once it is ready
 import styles from './styles.module.scss';
@@ -11,14 +11,17 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'typings/rootState';
 import { removeToken } from 'helpers/setToken.helper';
 import * as actions from 'containers/LoginPage/logic/actions';
+import * as headerActions from './logic/actions';
 import { User } from 'containers/LoginPage/logic/state';
 import { useTranslation } from 'react-i18next';
 import CreateIssueModal from 'containers/CreateIssueModal';
 import { getUsername } from 'helpers/getUsername.helper';
 import { getInitials } from 'helpers/getInitials.helper';
+import InviteNotification from '../../components/InviteNotification';
 
 export const HeaderMenu = () => {
 	const authStore = useSelector((rootStore: RootState) => rootStore.auth);
+	const incomingInvites = useSelector((rootStore: RootState) => rootStore.header.invites);
 	const dispatch = useDispatch();
 	const { t } = useTranslation();
 
@@ -26,6 +29,10 @@ export const HeaderMenu = () => {
 
 	const [activeItem, setActiveItem] = useState<string>('');
 	const [redirectToDashboards, setRedirectToDashboards] = useState<boolean>(false);
+
+	useEffect(() => {
+		dispatch(headerActions.startLoading({ id: authStore.user?.id || '' }));
+	}, [dispatch, authStore.user]);
 
 	const logOutHandler = () => {
 		dispatch(actions.logOutUserTrigger());
@@ -80,6 +87,19 @@ export const HeaderMenu = () => {
 						</Menu.Item>
 					</CreateIssueModal>
 					<Menu.Item position="right" className={styles.rightMenu}>
+						<Dropdown icon="users" className={styles.circularIcon} direction="left">
+							<Dropdown.Menu>
+								{incomingInvites.map((invite) => (
+									<InviteNotification
+										id={invite.id}
+										name={`${invite.firstName} ${invite.lastName}`}
+										avatar={invite.avatar || ''}
+										key={invite.id}
+										jobTitle={invite.jobTitle || ''}
+									/>
+								))}
+							</Dropdown.Menu>
+						</Dropdown>
 						<Dropdown icon="bell outline" className={styles.circularIcon} direction="left">
 							<Dropdown.Menu className={styles.circularDropdownMenu}>
 								<Dropdown.Header>{t('notifications')}</Dropdown.Header>

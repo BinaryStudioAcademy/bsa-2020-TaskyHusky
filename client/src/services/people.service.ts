@@ -25,3 +25,15 @@ export const fetchPeopleByFullNameFilter = async (
 
 	return people.map((user) => ({ data: user, title: '', key: user.id }));
 };
+
+export const createInvite = async ({ userId, email }: { userId: string; email: string }) => {
+	await callWebApi({
+		method: 'POST',
+		endpoint: `user/${userId}/pending-invites`,
+		skipAuthorization: false,
+		body: {
+			id: userId,
+			email,
+		},
+	});
+};

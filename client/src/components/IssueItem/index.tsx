@@ -1,64 +1,74 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 import { Table, Dropdown, Icon, Popup, Label } from 'semantic-ui-react';
 import styles from './styles.module.scss';
 import { getFullUserName } from './helpers';
 import DeleteIssueModal from 'containers/DeleteIssueModal';
 
 interface Props {
-	issue: WebApi.Result.IssueResult;
+	issue: WebApi.Entities.Issue;
 }
 interface PriorityIconProps {
-	priority: WebApi.Entities.Priority;
+	priority: WebApi.Entities.Priority | undefined;
 }
 interface IssueTypeIconProps {
-	type: WebApi.Entities.IssueType;
+	type: WebApi.Entities.IssueType | undefined;
 }
 
 const IssueTypeIcon = ({ type }: IssueTypeIconProps) => {
-	const { icon, color, title, id } = type;
-
 	return (
-		<Popup
-			content={`Type: ${title}`}
-			trigger={
-				<Icon
-					size="small"
-					bordered
-					color={color as 'red'}
-					key={`issueTypeIc-${id}`}
-					name={`${icon}` as 'folder'}
+		<>
+			{type && (
+				<Popup
+					content={`Type: ${type.title}`}
+					trigger={
+						<Icon
+							size="small"
+							bordered
+							color={type.color as 'red'}
+							key={`issueTypeIc-${type.id}`}
+							name={`${type.icon}` as 'folder'}
+						/>
+					}
 				/>
-			}
-		/>
+			)}
+		</>
 	);
 };
 
 const PriorityIcon = ({ priority }: PriorityIconProps) => {
-	const { icon, color, title, id } = priority;
-
 	return (
-		<Popup
-			content={`Priority: ${title}`}
-			trigger={<Icon key={`priorityIc-${id}`} color={color as 'red'} name={icon as 'arrow up'} />}
-		/>
+		<>
+			{priority && (
+				<Popup
+					content={`Priority: ${priority.title}`}
+					trigger={
+						<Icon
+							key={`priorityIc-${priority.id}`}
+							color={priority.color as 'red'}
+							name={priority.icon as 'arrow up'}
+						/>
+					}
+				/>
+			)}
+		</>
 	);
 };
 
-const renderStatus = (status: { title: string; color: string }) => {
-	const { color, title } = status;
+const renderStatus = (status: WebApi.Entities.IssueStatus | undefined) => {
 	return (
-		<Label horizontal color={color as 'red'}>
-			{title}
-		</Label>
+		<>
+			{status && (
+				<Label horizontal color={status.color as 'red'}>
+					{status.title}
+				</Label>
+			)}
+		</>
 	);
 };
 
 const IssueItem = ({ issue }: Props) => {
 	const [open, setOpen] = React.useState(false);
-	const { t } = useTranslation();
-
-	const { id, creator, type, issueKey, summary, assigned, priority } = issue;
+	const { id, creator, type, issueKey, summary, assigned, priority, createdAt, updatedAt, status } = issue;
 
 	return (
 		<Table.Row key={id}>
@@ -78,9 +88,13 @@ const IssueItem = ({ issue }: Props) => {
 				</div>
 			</Table.Cell>
 			<Table.Cell>
-				<a href={`/profile/${assigned.id}`} className={styles.underlinedLink}>
-					{getFullUserName(assigned.firstName, assigned.lastName)}
-				</a>
+				{assigned ? (
+					<a href={`/profile/${assigned.id}`} className={styles.underlinedLink}>
+						{getFullUserName(assigned.firstName, assigned.lastName)}
+					</a>
+				) : (
+					'Unassigned'
+				)}
 			</Table.Cell>
 			<Table.Cell>
 				<a href={`/profile/${creator.id}`} className={styles.underlinedLink}>
@@ -90,17 +104,16 @@ const IssueItem = ({ issue }: Props) => {
 			<Table.Cell>
 				<PriorityIcon priority={priority} />
 			</Table.Cell>
-			<Table.Cell>{renderStatus({ color: 'blue', title: 'In progress' })}</Table.Cell>
-			<Table.Cell>Unresolved</Table.Cell>
-			<Table.Cell>03/серп./20</Table.Cell>
-			<Table.Cell>10/серп./20</Table.Cell>
+			<Table.Cell>{renderStatus(status)}</Table.Cell>
+			<Table.Cell>{createdAt}</Table.Cell>
+			<Table.Cell>{updatedAt}</Table.Cell>
 			<Table.Cell className={styles.editCell}>
 				<Dropdown className={styles.dropdown} compact fluid icon={<Icon name="ellipsis horizontal" />}>
 					<Dropdown.Menu direction="left">
 						<Dropdown.Item
 							content={
-								<a className={styles.issueAction} href={`/issue/${id}`}>
-									{t('Edit')}
+								<a className={styles.issueAction} href={`/issue/${issue.issueKey}`}>
+									{'View issue'}
 								</a>
 							}
 						/>

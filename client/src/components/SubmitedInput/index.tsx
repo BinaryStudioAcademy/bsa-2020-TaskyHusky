@@ -1,6 +1,6 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import styles from './styles.module.scss';
-import { Input, Popup } from 'semantic-ui-react';
+import { FormInput, Popup, Icon } from 'semantic-ui-react';
 
 interface Props {
 	text: string;
@@ -26,7 +26,17 @@ const SubmitedInput: React.FC<Props> = (props: Props) => {
 		onBlur = null,
 		errorText = '',
 	} = props;
-
+	const [shown, setShown] = useState<boolean>(false);
+	const [inputType, setInputType] = useState<string>(type);
+	const eyeIconName = shown ? 'eye' : 'eye slash';
+	const toggleShown = () => {
+		setShown(!shown);
+		if (!shown) {
+			setInputType('text');
+		} else {
+			setInputType('password');
+		}
+	};
 	return (
 		<Popup
 			className={styles.errorPopup}
@@ -36,9 +46,10 @@ const SubmitedInput: React.FC<Props> = (props: Props) => {
 			trigger={
 				<div>
 					<label className={styles.label}>{title}</label>
-					<Input
+					<FormInput
+						icon={type === 'password' ? <Icon name={eyeIconName} link onClick={toggleShown} /> : null}
 						className={styles.inputView}
-						type={type}
+						type={inputType}
 						name={propKey}
 						value={text}
 						placeholder={placeholder}
