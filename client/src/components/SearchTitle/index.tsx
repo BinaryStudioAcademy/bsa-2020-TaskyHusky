@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './styles.module.scss';
 import { List, Icon, Button } from 'semantic-ui-react';
 import SaveFilterModal from 'containers/SaveFilterModal';
@@ -11,10 +11,16 @@ import { openModal } from 'containers/SaveFilterModal/logic/actions';
 import { updateFilter } from 'containers/AdvancedSearch/logic/actions';
 
 const SearchTitle: React.FC = () => {
-	const [stared, setStared] = useState(false);
+	const dispatch = useDispatch();
 	const { t } = useTranslation();
 	const { filter, isFilterEdited } = useSelector((rootState: RootState) => rootState.advancedSearch);
-	const dispatch = useDispatch();
+	const { user } = useSelector((rootState: RootState) => rootState.auth);
+
+	const [stared, setStared] = useState(true);
+
+	useEffect(() => {
+		setStared(!!filter?.staredBy?.some(({ id }) => id === user?.id));
+	}, [user, filter]);
 
 	const onSaveAs = () => {
 		dispatch(openModal());
@@ -23,7 +29,9 @@ const SearchTitle: React.FC = () => {
 	const onSave = () => {
 		dispatch(updateFilter());
 	};
-
+	const handleSetFavorite = () => {
+		setStared(!stared);
+	};
 	return (
 		<div className={styles.titleWrapper}>
 			<div className={styles.titleContainer}>
@@ -62,13 +70,15 @@ const SearchTitle: React.FC = () => {
 			</div>
 			<div className={styles.actionWrapper}>
 				<List selection horizontal>
-					<List.Item>
-						<div onClick={() => setStared(!stared)} className={styles.actionItem}>
-							<div className={styles.star}>
-								{stared ? <Icon name="star" color="yellow" /> : <Icon name="star outline" />}
+					{filter && (
+						<List.Item>
+							<div onClick={handleSetFavorite} className={styles.actionItem}>
+								<div className={styles.star}>
+									{stared ? <Icon name="star" color="yellow" /> : <Icon name="star outline" />}
+								</div>
 							</div>
-						</div>
-					</List.Item>
+						</List.Item>
+					)}
 					<List.Item>
 						<div className={styles.actionItem}>
 							<Icon name="share alternate" />

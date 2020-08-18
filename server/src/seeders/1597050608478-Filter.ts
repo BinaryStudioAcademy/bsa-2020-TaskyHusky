@@ -1,6 +1,5 @@
 import { MigrationInterface, QueryRunner, getRepository, getCustomRepository } from 'typeorm';
 import { UserRepository } from '../repositories/user.repository';
-import { Projects } from '../entity/Projects';
 
 export class Filter1597050608478 implements MigrationInterface {
 	public async up(queryRunner: QueryRunner): Promise<void> {
