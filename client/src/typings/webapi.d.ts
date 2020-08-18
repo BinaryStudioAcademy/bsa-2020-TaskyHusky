@@ -107,6 +107,18 @@ namespace WebApi.Result {
 	}
 }
 
+namespace WebApi.Sprint {
+	interface SprintModel {
+		id: string;
+		sprintName: string;
+		isActive: boolean;
+		isCompleted: boolean;
+		project: string;
+		board: string;
+		issues: string[];
+	}
+}
+
 namespace WebApi.Team {
 	export interface TeamModel {
 		id?: string;
