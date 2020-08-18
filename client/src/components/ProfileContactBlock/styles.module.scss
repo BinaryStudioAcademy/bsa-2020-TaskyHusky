@@ -6,9 +6,18 @@
 
 .email {
   @include info-block-item;
-  @include never-point;
 }
 
 .header {
   @include info-block-header;
+}
+
+.textData {
+  @include primary-content;
+}
+
+.icon {
+  width: 22px;
+  margin-right: 12px;
+  height: 22px;
 }

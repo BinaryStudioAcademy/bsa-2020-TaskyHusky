@@ -4,7 +4,10 @@ import { Team } from '../entity/Team';
 @EntityRepository(Team)
 export class TeamRepository extends Repository<Team> {
 	findAll() {
-		return this.find();
+		return this.createQueryBuilder('teamRepository')
+			.innerJoin('teamRepository.createdBy', 'user')
+			.addSelect(['user.id', 'user.firstName', 'user.lastName', 'user.email', 'user.avatar', 'user.jobTitle'])
+			.getMany();
 	}
 
 	findOneById(id: string) {

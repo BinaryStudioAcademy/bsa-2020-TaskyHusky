@@ -1,18 +1,55 @@
 @import 'styles/variables.scss';
 
 .activityItem {
+  background: #FFFFFF;
+  box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.25);
+  margin-bottom: 10px;
   display: flex;
   align-items: center;
+  padding: 24px;
+}
 
-  &__icon {
-    margin: 20px !important;
-  }
+.avatar {
+  width: 50px;
+  height: 50px;
+  background: #FF4C60;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 12px;
+  border-radius: 50%;
+}
 
-  &__content {
-    margin: 0;
+.avatarTitle {
+  font-family: Inter;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 25.6px;
+  line-height: 51px;
+  letter-spacing: 0.24px;
+  color: #FFFFFF;
+}
 
-    &__secondary {
-      color: $secondary-content;
-    }
-  }
+.icon {
+  margin-right: 14px;
+}
+
+.content {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  color: #2C2C2C;
+  margin: 0;
+}
+
+.contentSecondary {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 24px;
+  letter-spacing: 0.44px;
+  color: #858585;
 }

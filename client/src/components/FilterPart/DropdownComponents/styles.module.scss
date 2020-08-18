@@ -6,6 +6,9 @@
 		border: none !important;
 	}
 }
+.dropdownBtns {
+	margin: 0 0 10px 10px;
+}
 .searchInput {
 	width: 90% !important;
 }
@@ -15,23 +18,7 @@
 
 .dropdown {
 	padding: 0 !important;
-	&:hover {
-		.dropdownMenu {
-			display: none !important;
-		}
-	}
-	&:focus {
-		.dropdownMenu {
-			display: block !important;
-		}
-	}
 	.dropdownMenu {
 		position: absolute !important;
-		&:focus {
-			display: block !important;
-		}
-		&:hover {
-			display: block !important;
-		}
 	}
 }

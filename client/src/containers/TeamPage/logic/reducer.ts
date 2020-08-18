@@ -7,6 +7,22 @@ export const teamReducer = createReducer<TeamState>(initialState, {
 		return {
 			...state,
 			team: action.team,
+			loading: false,
+		};
+	},
+	[actionTypes.LOADING](state: TeamState) {
+		return {
+			...state,
+			team: {
+				...state.team,
+			},
+			loading: true,
+		};
+	},
+	[actionTypes.FAIL_LOADING](state: TeamState) {
+		return {
+			...state,
+			loading: false,
 		};
 	},
 });

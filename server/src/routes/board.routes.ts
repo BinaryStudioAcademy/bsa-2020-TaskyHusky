@@ -11,6 +11,7 @@ router.get('/recent', boardController.getRecent);
 router.get('/:id', boardController.getOne);
 router.get('/:id/columns', boardController.getBoardColumns);
 router.get('/:id/projects', boardController.getBoardProjects);
+router.get('/:id/sprints', boardController.getBoardSprints);
 router.put('/:id', boardController.put);
 router.delete('/:id', boardController.delete);
 router.post('/', boardController.post);

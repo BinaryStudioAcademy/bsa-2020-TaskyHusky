@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import validator from 'validator';
 import { useTranslation } from 'react-i18next';
 import styles from './styles.module.scss';
-import { Header, Button, Checkbox, Select, Form, Popup } from 'semantic-ui-react';
+import { Button, Checkbox, Select, Form } from 'semantic-ui-react';
 import { requestUpdateUser } from 'containers/ProfilePage/logiс/actions';
 import { UserProfileState } from 'containers/ProfilePage/logiс/state';
 import SubmitedInput from 'components/SubmitedInput';
+import CustomValidator from 'helpers/validation.helper';
 
 interface Props {
 	updateUser: (changedUser: Partial<UserProfileState>) => void;
@@ -16,13 +16,21 @@ const EmailManager: React.FC<Props> = (props: Props) => {
 	const { updateUser, email } = props;
 	const dispatch = useDispatch();
 	const { t } = useTranslation();
-	const [emailData, setEmailData] = useState('');
-	const [isEmailValid, setIsEmailValid] = useState(true);
+	const [emailData, setEmailData] = useState<string>('');
+	const [isEmailValid, setIsEmailValid] = useState<boolean>(true);
+	const [errorMessage, setErrorMessage] = useState<string>('');
 	const handleChange = (event: any) => {
 		setEmailData((event.target as HTMLInputElement).value);
 	};
 	const onBlur = () => {
-		setIsEmailValid(validator.isEmail(emailData));
+		const customValidator = new CustomValidator(emailData, 'Email');
+		const isntValid = customValidator.checkMinLength(6).checkMaxLength(321).checkEmailField().validate();
+		if (isntValid) {
+			setErrorMessage(isntValid);
+			setIsEmailValid(false);
+		} else {
+			setIsEmailValid(true);
+		}
 	};
 	const updateUserField = () => {
 		if (emailData !== email && isEmailValid) {
@@ -32,50 +40,49 @@ const EmailManager: React.FC<Props> = (props: Props) => {
 	};
 
 	const notifaictionsOptions = [
-		{ key: 'send', value: true, text: 'Send me email notifications' },
-		{ key: 'notSend', value: false, text: 'Do not send me email notifications' },
+		{ key: 'send', value: true, text: t('send_email_notif') },
+		{ key: 'notSend', value: false, text: t('dont_send_email_notif') },
 	];
 
 	return (
 		<section className={styles.container}>
-			<Header as="h3">{t('email')}</Header>
-			<Header as="h4">{t('change_email')}</Header>
-			<p>
-				{t('current_email')}
-				{email}
-			</p>
-			<Form onSubmit={updateUserField}>
-				<Popup
-					className={styles.errorPopup}
-					open={!isEmailValid}
-					content={t('invalid_email')}
-					on={[]}
-					trigger={
-						<SubmitedInput
-							text={emailData}
-							propKey="email"
-							title={t('email_title')}
-							placeholder={t('email_placeholder')}
-							type="text"
-							handleChange={handleChange}
-							isValid={isEmailValid}
-							onBlur={onBlur}
-						/>
-					}
+			<h3 className={styles.header}>{t('email')}</h3>
+			<div className={styles.card}>
+				<h4 className={styles.cardHeader}>{t('change_email')}</h4>
+				<p className={styles.textData}>
+					{t('current_email')}
+					{email}
+				</p>
+				<Form onSubmit={updateUserField}>
+					<SubmitedInput
+						text={emailData}
+						propKey="email"
+						title={t('email_title')}
+						placeholder={t('email_placeholder')}
+						type="text"
+						handleChange={handleChange}
+						isValid={isEmailValid}
+						onBlur={onBlur}
+						errorText={errorMessage}
+					/>
+					<Button type="submit" className={styles.submitButton}>
+						{t('save_changes')}
+					</Button>
+				</Form>
+				<h4 className={styles.cardHeader}>{t('email_notif')}</h4>
+				<p className={styles.textData}>{t('content_notif')}</p>
+				<Select
+					placeholder={t('choose_option_notif')}
+					className={styles.select}
+					options={notifaictionsOptions}
 				/>
-				<Button type="submit" className={styles.submitButton}>
-					{t('save_changes')}
-				</Button>
-			</Form>
-			<Header as="h4">{t('email_notif')}</Header>
-			<p>{t('content_notif')}</p>
-			<Select placeholder={t('choose_option_notif')} className={styles.select} options={notifaictionsOptions} />
-			<p>{t('get_email_when')}</p>
-			<Checkbox className={styles.checkbox} label={t('watching_issue')} />
-			<Checkbox className={styles.checkbox} label={t('you_reporter')} />
-			<Checkbox className={styles.checkbox} label={t('you_asignee')} />
-			<Checkbox className={styles.checkbox} label={t('someone_mention')} />
-			<Checkbox className={styles.checkbox} label={t('make_changes')} />
+				<p className={styles.textData}>{t('get_email_when')}</p>
+				<Checkbox className={styles.checkbox} label={t('watching_issue')} />
+				<Checkbox className={styles.checkbox} label={t('you_reporter')} />
+				<Checkbox className={styles.checkbox} label={t('you_asignee')} />
+				<Checkbox className={styles.checkbox} label={t('someone_mention')} />
+				<Checkbox className={styles.checkbox} label={t('make_changes')} />
+			</div>
 		</section>
 	);
 };

@@ -1,9 +1,11 @@
 import { NextFunction, Request, Response } from 'express';
 import { getCustomRepository } from 'typeorm';
+import { SprintRepository } from '../repositories/sprint.repository';
 import { BoardRepository } from '../repositories/board.repository';
 import { BoardColumnRepository } from '../repositories/boardColumn.repository';
 import { ErrorResponse } from '../helpers/errorHandler.helper';
 import HttpStatusCode from '../constants/httpStattusCode.constants';
+import { Sprint } from '../entity/Sprint';
 
 class BoardController {
 	getAll = async (req: Request, res: Response): Promise<void> => {
@@ -58,6 +60,18 @@ class BoardController {
 		}
 	};
 
+	getBoardSprints = async (req: Request, res: Response, next: NextFunction) => {
+		const boardRepository = getCustomRepository(BoardRepository);
+
+		try {
+			const { id } = req.params;
+			const sprints = await boardRepository.getSprints(id);
+			res.status(200).send(sprints);
+		} catch (error) {
+			next(new ErrorResponse(HttpStatusCode.NOT_FOUND, error.message));
+		}
+	};
+
 	put = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
 		const boardRepository = getCustomRepository(BoardRepository);
 		const { id } = req.params;
@@ -76,10 +90,8 @@ class BoardController {
 		const boardRepository = getCustomRepository(BoardRepository);
 		const { body } = req;
 
-		const { projects, ...bodyData } = body;
 		try {
-			console.log(projects);
-			const board = await boardRepository.post(bodyData);
+			const board = await boardRepository.post(body);
 
 			res.status(200).send(board);
 		} catch (e) {
