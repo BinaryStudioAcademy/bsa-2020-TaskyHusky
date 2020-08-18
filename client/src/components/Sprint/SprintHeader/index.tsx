@@ -5,6 +5,7 @@ import Options, { ItemProps } from 'components/common/Options';
 import styles from './styles.module.scss';
 import CreateIssueModal from 'containers/CreateIssueModal';
 import SprintModal from 'components/common/SprintModal';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
 	id: string;
@@ -15,18 +16,19 @@ type Props = {
 
 export const SprintHeader: React.FC<Props> = ({ id, isActive, name, issues }) => {
 	const [open, setOpen] = React.useState(false);
+	const { t } = useTranslation();
 
 	const config: ItemProps[] = [
 		{
 			id,
-			text: 'Edit sprint',
+			text: t('edit_sprint'),
 			onClickAction: () => {
 				console.log('Edit sprint clicked');
 			},
 		},
 		{
 			id,
-			text: 'Delete sprint',
+			text: t('delete_sprint'),
 			onClickAction: () => {
 				setOpen(true);
 			},

@@ -11,8 +11,11 @@ export class FilterPart {
 	@ManyToOne((type) => Filter, (filter) => filter.id, { onDelete: 'CASCADE' })
 	filter?: Filter;
 
-	@ManyToOne((type) => FilterDefinition, (filterDefinition) => filterDefinition.filterParts)
-	filterDef?: FilterDefinition;
+	@ManyToOne((type) => FilterDefinition, (filterDefinition) => filterDefinition.filterParts, {
+		cascade: true,
+		nullable: false,
+	})
+	filterDef!: FilterDefinition;
 
 	@Column({ type: 'simple-array' })
 	members?: string[];

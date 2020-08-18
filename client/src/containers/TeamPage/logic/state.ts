@@ -4,12 +4,12 @@ export type Team = {
 	description: string;
 	links: string[];
 	members: [];
-	loading: boolean
+	loading: boolean;
 };
 
 export interface TeamState {
 	team: Team;
-	loading: boolean
+	loading: boolean;
 }
 
 export const initialState: TeamState = {
@@ -19,7 +19,7 @@ export const initialState: TeamState = {
 		description: '',
 		links: [],
 		members: [],
-		loading: false
+		loading: false,
 	},
-	loading: false
+	loading: false,
 };
