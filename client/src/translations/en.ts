@@ -230,4 +230,6 @@ export const en = {
 	no_issues_in_sprint: 'Plan a sprint by creating some issues.',
 	edit_sprint: 'Edit sprint',
 	delete_sprint: 'Delete sprint',
+	sprint_cannot_be_deleted: 'Sprint cannot be deleted',
+	delete_sprint_warning: 'Are you sure you want to delete this sprint? This action cannot be undone.',
 };
