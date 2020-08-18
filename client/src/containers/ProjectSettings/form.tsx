@@ -156,7 +156,6 @@ const ProjectForm = ({ projectData }: Props) => {
 								selection
 								options={projectUsers}
 								onChange={(e, data) => onProjectChange('lead', data.value?.toString() || '')}
-								defaultValue={true}
 							/>
 						</Form.Field>
 						<Form.Field className={styles.form__input}>
