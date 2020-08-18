@@ -22,8 +22,8 @@ export interface User {
 	jobTitle?: string;
 }
 
-const TeamsMembersCard = ({ teammates, title }: Props) => {
-	const [bgColor, setBgColor] = useState({});
+const TeamsMembersCard = ({ teammates=[], title }: Props) => {
+	const [bgColor, setBgColor] = useState<{ [key: string]: string }>({ backgroundColor: 'white' });
 	const [modal, setModal] = useState<boolean>(false);
 	const [viewUser, setViewUser] = useState<User | undefined>();
 	const onHover = (user: User) => {
@@ -45,10 +45,10 @@ const TeamsMembersCard = ({ teammates, title }: Props) => {
 			<Card.Content header={t(title)} />
 			<Card.Meta>
 				<span className={styles.meta_header}>
-					{title === 'Members' && ` ${teammates?.length}  ${t('members')}`}
+					{title === 'Members' && ` ${teammates.length}  ${t('members')}`}
 				</span>
 			</Card.Meta>
-			{teammates?.map((el) => (
+			{teammates.map((el) => (
 				<Card.Content key={el.id}>
 					<div
 						className={styles.card_body}

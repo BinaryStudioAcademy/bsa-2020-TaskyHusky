@@ -41,7 +41,7 @@ export class Projects {
 	@IsNotEmpty()
 	creator!: UserProfile;
 
-	@ManyToOne((type) => Team, (team) => team.projects)
+	@ManyToOne((type) => Team, (team) => team.projects, { cascade: true })
 	team?: Team;
 
 	@OneToMany((type) => Issue, (issue) => issue.project)

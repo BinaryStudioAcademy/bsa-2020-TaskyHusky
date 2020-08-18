@@ -29,11 +29,10 @@ const TeamWorkedProjects = ({ projects }: Props) => {
 									{project.name}
 								</Header>
 								<p>
-									Project key:
-									<span className={styles.team_key}> {project.key}</span>
+									{t('Project key')}:<span className={styles.team_key}> {project.key}</span>
 								</p>
 								<p>
-									Project category:
+									{t('Project category')}:
 									<span className={styles.team_category}>{project.category}</span>
 								</p>
 							</Link>
@@ -44,8 +43,9 @@ const TeamWorkedProjects = ({ projects }: Props) => {
 							<div className={styles.worked_block}>
 								<Header as="h4">{t('no_works')}</Header>
 								<p className={styles.p_descr}>
-									There are no projects which have been started yet. When it&apos;ll happen you can
-									get quick access to one you need
+									{t(
+										'There are no projects which have been started yet. When it&apos;ll happen you can get quick access to one you need',
+									)}
 								</p>
 							</div>
 						</>

@@ -110,14 +110,13 @@ namespace WebApi.Result {
 namespace WebApi.Team {
 	export interface TeamModel {
 		id?: string;
-		name?: string;
+		name: string;
 		description?: string;
 		links?: string[];
 		users?: UserProfile[];
-		loading: boolean;
 		color?: string;
 		createdBy?: UserProfile;
-		projects: Projects[] | [];
+		projects?: Projects[];
 	}
 }
 namespace WebApi.User {

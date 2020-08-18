@@ -1,5 +1,5 @@
-import { getTeam, updateFieldById, updateLinks, deleteOneLink } from 'services/team.service';
-import { all, put, takeEvery, call } from 'redux-saga/effects';
+import { getTeam, updateFieldById, updateLinks, deleteOneLink, getTeamsProjects, getTeamsUsers } from 'services/team.service';
+import { all, put, takeEvery, call, fork } from 'redux-saga/effects';
 import * as actionTypes from './actionTypes';
 import * as actions from './actions';
 import { Link } from '../index';
@@ -12,13 +12,21 @@ type Props = {
 	type: string;
 };
 
-export function* fetchTeam(props: Props) {
+export function* fetchTeam(props: Props): ReturnType<any> {
 	try {
 		yield put(actions.spinner());
-		const team = yield call(getTeam, props.id);
-		yield put(actions.update({ team }));
+		const [team, users, projects] = yield all([
+			yield call(getTeam, props.id),
+			yield call(getTeamsUsers, props.id),
+			yield call(getTeamsProjects, props.id),
+		])
+		yield all([
+			put(actions.updateTeam({ team: team })),
+			put(actions.updateUsers({ users: users.users, createdBy: users.createdBy })),
+			put(actions.updateProjects({ projects: projects.projects }))]);
 	} catch (error) {
 		yield put(actions.failLoading());
+		console.log(error);
 		NotificationManager.error('Error load data', 'Error', 4000);
 	}
 }
@@ -26,7 +34,7 @@ export function* fetchTeam(props: Props) {
 export function* fetchLinks(props: Props) {
 	try {
 		const team = yield call(updateLinks, props.id, props.link);
-		yield put(actions.update({ team }));
+		yield put(actions.updateLinkFieldsSuccess({ links: team.links }));
 		NotificationManager.success('Data updated succesful', 'Success', 4000);
 	} catch (error) {
 		NotificationManager.error('Error load team links', 'Error', 4000);
@@ -35,7 +43,7 @@ export function* fetchLinks(props: Props) {
 export function* deleteLink(props: Props) {
 	try {
 		const team = yield call(deleteOneLink, props.id, props.link);
-		yield put(actions.update({ team }));
+		yield put(actions.updateLinkFieldsSuccess({ links: team.links }));
 		NotificationManager.info('Link has been deleted', 'Info', 4000);
 	} catch (error) {
 		NotificationManager.error('Error update data', 'Error', 4000);
@@ -44,7 +52,7 @@ export function* deleteLink(props: Props) {
 export function* updateField(props: Props) {
 	try {
 		const team = yield call(updateFieldById, props.id, props.field);
-		yield put(actions.update({ team }));
+		yield put(actions.updateFieldsSuccess({ field: { name: team.name, description: team.description } }));
 		NotificationManager.success('Data updated succesful', 'Success', 4000);
 	} catch (error) {
 		NotificationManager.error('Error update data', 'Error', 4000);

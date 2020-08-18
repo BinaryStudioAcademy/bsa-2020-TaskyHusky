@@ -22,7 +22,7 @@ export class Team {
 	@ManyToOne(() => UserProfile, (user: UserProfile) => user.teamsOwner)
 	createdBy!: UserProfile;
 
-	@OneToMany(() => Projects, (project: Projects) => project.team, { cascade: true })
+	@OneToMany(() => Projects, (project: Projects) => project.team)
 	projects?: Projects[];
 
 	@Column()

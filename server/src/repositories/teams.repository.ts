@@ -10,17 +10,21 @@ export class TeamRepository extends Repository<Team> {
 			.getMany();
 	}
 
-	async findOneById(id: string) {
+	async findTeamById(id: string) {
+		const team = await this.createQueryBuilder('Team')
+			.select(['Team.id', 'Team.name', 'Team.color', 'Team.description', 'Team.links'])
+			.where('Team.id = :id', { id })
+			.getOne();
+
+		return team;
+	}
+
+	async findTeamUsersById(id: string) {
 		const team = await this.createQueryBuilder('Team')
 			.leftJoinAndSelect('Team.createdBy', 'User')
 			.leftJoinAndSelect('Team.users', 'Users')
-			.leftJoinAndSelect('Team.projects', 'Projects')
 			.select([
 				'Team.id',
-				'Team.name',
-				'Team.color',
-				'Team.description',
-				'Team.links',
 				'User.id',
 				'User.firstName',
 				'User.lastName',
@@ -37,11 +41,17 @@ export class TeamRepository extends Repository<Team> {
 				'Users.location',
 				'Users.avatar',
 				'Users.department',
-				'Projects.id',
-				'Projects.name',
-				'Projects.category',
-				'Projects.key',
 			])
+			.where('Team.id = :id', { id })
+			.getOne();
+
+		return team;
+	}
+
+	async findTeamProjectsById(id: string) {
+		const team = await this.createQueryBuilder('Team')
+			.leftJoinAndSelect('Team.projects', 'Projects')
+			.select(['Team.id', 'Projects.id', 'Projects.name', 'Projects.category', 'Projects.key'])
 			.where('Team.id = :id', { id })
 			.getOne();
 
@@ -59,7 +69,7 @@ export class TeamRepository extends Repository<Team> {
 
 	async updateOneById(id: string, data: Team) {
 		await this.update(id, data);
-		return this.findOneById(id);
+		return this.findTeamById(id);
 	}
 
 	deleteOneById(id: string) {
