@@ -27,6 +27,6 @@ export class ProjectsRepository extends Repository<Projects> {
 	}
 
 	getKeys() {
-		return this.find({ select: ['key'] });
+		return this.find({ select: ['key'], withDeleted: true });
 	}
 }
