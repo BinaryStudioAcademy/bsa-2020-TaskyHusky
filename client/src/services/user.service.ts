@@ -22,6 +22,16 @@ export const requestUdateAvatar = async (image: File): Promise<WebApi.Entities.U
 	return (await res.json()) as WebApi.Entities.UserProfile;
 };
 
+export const requestGetUserProjects = async (id: string): Promise<any> => {
+	const res = await callWebApi({
+		method: 'GET',
+		endpoint: `user/projects/${id}`,
+		skipAuthorization: false,
+	});
+
+	return (await res.json()) as WebApi.Entities.UserProfile;
+};
+
 export const requestUpdateUser = async (userData: Partial<UserProfileState>): Promise<WebApi.Entities.UserProfile> => {
 	const res = await callWebApi({
 		method: 'PUT',
