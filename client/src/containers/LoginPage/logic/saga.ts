@@ -162,5 +162,6 @@ export default function* authSaga() {
 		watchForgotPassword(),
 		watchResetPassword(),
 		watchGoogleAuth(),
+		watchGoogleAuth(),
 	]);
 }
