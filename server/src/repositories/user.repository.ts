@@ -29,7 +29,7 @@ export class UserRepository extends Repository<UserProfile> {
 		}
 
 		return teams
-			.filter((team) => (team.users ?? []).map((userToSerialize) => userToSerialize.id).includes(user.id))
+			.filter((team) => (team.users ?? []).some((userToSerialize) => userToSerialize.id === user.id))
 			.map((team) => team.users)
 			.reduce((u0, u1) => (u0 ?? []).concat(u1 ?? []), []);
 	}

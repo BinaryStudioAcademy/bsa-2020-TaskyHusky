@@ -6,7 +6,7 @@ import imageMiddleware from '../middleware/imageMiddleware';
 const router = Router();
 const userController = new UserController();
 
-router.get('/all/', userController.getAllUser);
+router.get('/', userController.getAllUser);
 router.get('/:id', userController.getUser);
 router.put('/', userController.updateUser);
 router.put('/password', userController.changePassword);
