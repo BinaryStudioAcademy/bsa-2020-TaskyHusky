@@ -16,8 +16,14 @@ export class SprintRepository extends Repository<Sprint> {
 		return this.save(entity);
 	}
 
-	async updateOneById(id: string, data: Sprint): Promise<UpdateResult> {
-		return this.update(id, data);
+	async updateOneById(id: string, data: Sprint): Promise<Sprint> {
+		const updateResult: UpdateResult = await this.update(id, data);
+
+		if (updateResult.affected === 0) {
+			throw new Error(`There is no sprint with such ID - ${id}`);
+		}
+
+		return this.findOneById(id);
 	}
 
 	async deleteOneById(id: string): Promise<Sprint[]> {
