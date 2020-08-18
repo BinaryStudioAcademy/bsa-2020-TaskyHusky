@@ -1,9 +1,13 @@
 import { EntityRepository, Repository, Between } from 'typeorm';
 import { UserProfile } from '../entity/UserProfile';
-import {expirationTime} from '../constants/resetPassword.constants';
+import { expirationTime } from '../constants/resetPassword.constants';
 
 @EntityRepository(UserProfile)
 export class UserRepository extends Repository<UserProfile> {
+	getAll() {
+		return this.findAll();
+	}
+
 	async getById(id: string): Promise<any> {
 		const user = await this.findOne({ where: { id } });
 		if (!user) {
@@ -18,10 +22,12 @@ export class UserRepository extends Repository<UserProfile> {
 	}
 
 	getByToken(token: string): Promise<any> {
-		return this.findOne({where:{
-				resetPasswordToken:token,
-				resetPasswordExpires:Between(new Date(), new Date(Date.now()+expirationTime))
-			}})
+		return this.findOne({
+			where: {
+				resetPasswordToken: token,
+				resetPasswordExpires: Between(new Date(), new Date(Date.now() + expirationTime)),
+			},
+		});
 	}
 
 	async createNew(data: UserProfile): Promise<any> {

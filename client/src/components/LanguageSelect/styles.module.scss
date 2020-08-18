@@ -1,0 +1,7 @@
+@import 'styles/mixins.scss';
+
+.select {
+  @include text-data;
+  margin-right: 20px;
+  width: 100px;
+}

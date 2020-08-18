@@ -1,65 +1,14 @@
-@import 'styles/variables.scss';
+@import 'styles/mixins.scss';
 
 .mainInfo {
-  margin-bottom: 35px;
-
-  &__avatarContainer {
-    background-color: $body-bg;
-    width: 150px;
-    height: 150px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%;
-  }
-
-  &__username {
-    font-size: 16px;
-  }
-
-  &__editBtn {
-    position: absolute !important;
-    display: none !important;
-    z-index: 2;
-    top: calc(50% - 16px);
-    left: calc(50% - 14px);
-    color: #d1c6c6;
-    z-index: 1;
-  }
-
-  &__borderHelper {
-    width: 144px;
-    height: 144px;
-    border-radius: 50%;
-    overflow: hidden;
-    background: rgba(9, 30, 66, 0.36);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-
-    &:hover .mainInfo__editBtn {
-      display: block !important;
-    }
-  }
-
-  &__initials {
-    color: white;
-    font-size: 4rem;
-  }
-
-  &__avatar {
-    object-fit: cover;
-    width: 100%;
-
-    &:hover {
-      opacity: 0.6;
-    }
-  }
+  margin-bottom: 32px;
+  text-align: center;
 }
 
 .managerButton {
   width: 100%;
+  @include content-btn;
+  margin-bottom: 40px !important;
 }
 
 .hidden {
@@ -70,4 +19,63 @@
   top: 50px;
   left: 50px;
   opacity: 0;
+}
+
+.fullName {
+  @include primary-header;
+}
+
+.avatarContainer {
+  background-color: $body-bg;
+  width: 150px;
+  height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  margin: 0 auto;
+}
+
+.username {
+  @include secondary-content;
+}
+
+.editBtn {
+  position: absolute !important;
+  display: none !important;
+  z-index: 2;
+  top: calc(50% - 16px);
+  left: calc(50% - 14px);
+  color: $ligth-gray;
+  z-index: 1;
+}
+
+.borderHelper {
+  width: 144px;
+  height: 144px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: rgba(9, 30, 66, 0.36);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+
+  &:hover .editBtn {
+    display: block !important;
+  }
+}
+
+.initials {
+  color: white;
+  font-size: 4rem;
+}
+
+.avatar {
+  object-fit: cover;
+  width: 100%;
+
+  &:hover {
+    opacity: 0.6;
+  }
 }
