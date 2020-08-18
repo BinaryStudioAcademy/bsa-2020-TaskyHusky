@@ -12,3 +12,7 @@ export type addPeople = {
 	email: string;
 	id: string;
 };
+
+export type startLoading = {
+	id: string;
+};
