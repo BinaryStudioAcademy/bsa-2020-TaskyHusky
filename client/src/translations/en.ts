@@ -223,4 +223,10 @@ export const en = {
 	invite_notification_text: 'Wants to join to your team space',
 	approve: 'Approve',
 	decline: 'Decline',
+	your_teams: 'Your teams',
+	create_team: 'Create new Team',
+	add_people_text:
+		"Missing someone on gmail.com? Add their email below – if permissions allow we'll add them, or else send a request to your admin.",
+	send: 'Send',
+	add_people_email_placeholder: 'Add email address',
 };
