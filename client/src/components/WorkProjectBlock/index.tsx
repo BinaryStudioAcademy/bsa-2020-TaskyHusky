@@ -15,7 +15,7 @@ const WorkProjectBlock: React.FC<Props> = (props: Props) => {
 	return (
 		<div className={styles.container}>
 			{projects.map((item) => (
-				<ProjectCard key={item.id} project={item} />
+				<ProjectCard key={item.id} name={item.name} category={item.category} />
 			))}
 		</div>
 	);

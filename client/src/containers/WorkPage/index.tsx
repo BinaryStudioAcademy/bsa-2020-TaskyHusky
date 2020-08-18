@@ -11,7 +11,6 @@ import ManagerWorkSection from 'components/ManagerWorkSection';
 const WorkPage = () => {
 	const { t } = useTranslation();
 	const { projects, isLoading } = useSelector((rootState: RootState) => rootState.projects);
-	console.log(projects);
 	const [modeToShow, setModeToShow] = useState<string>('projects');
 	const changeMode = (mode: string) => {
 		setModeToShow(mode);

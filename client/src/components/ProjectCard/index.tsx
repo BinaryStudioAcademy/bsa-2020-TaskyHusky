@@ -2,17 +2,12 @@ import React from 'react';
 import styles from './styles.module.scss';
 
 interface Props {
-	project: {
-		name: string;
-		id: string;
-		category?: string;
-	};
+	name: string;
+	category?: string;
 }
 
 const ProjectCard: React.FC<Props> = (props: Props) => {
-	const {
-		project: { name, category = '' },
-	} = props;
+	const { name, category = '' } = props;
 	return (
 		<div className={styles.card}>
 			<div className={styles.header}>
