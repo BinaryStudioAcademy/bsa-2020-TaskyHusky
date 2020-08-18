@@ -5,9 +5,18 @@ export const START_SAVING_FILTER = 'CREATE_FILTER:START_SAVING_FILTER';
 export const SUCCESS_SAVING_FILTER = 'CREATE_FILTER:SUCCESS_SAVING_FILTER';
 export const FAIL_SAVING_FILTER = 'CREATE_FILTER:FAIL_SAVING_FILTER';
 export const RESET_STATE = 'CREATE_FILTER:RESET_STATE';
+export const REDIRECTING = 'CREATE_FILTER:REDIRECTING';
 
 export type InitialFilter = {
 	name: string;
 	owner: string;
 	filterParts: FilterPartState[];
+};
+
+export type FilterSaveSuccessArgs = {
+	id: string;
+};
+
+export type RedirectingArgs = {
+	redirecting: boolean;
 };

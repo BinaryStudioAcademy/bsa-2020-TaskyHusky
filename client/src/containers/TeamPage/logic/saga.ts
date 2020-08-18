@@ -3,6 +3,7 @@ import { all, put, takeEvery, call } from 'redux-saga/effects';
 import * as actionTypes from './actionTypes';
 import * as actions from './actions';
 import { Link } from '../index';
+import { NotificationManager } from 'react-notifications';
 
 type Props = {
 	id: string;
@@ -10,22 +11,44 @@ type Props = {
 	field?: string;
 	type: string;
 };
+
 export function* fetchTeam(props: Props) {
-	const team = yield call(getTeam, props.id);
-	yield put(actions.update({ team }));
+	try {
+		yield put(actions.spinner());
+		const team = yield call(getTeam, props.id);
+		yield put(actions.update({ team }));
+	} catch (error) {
+		yield put(actions.failLoading());
+		NotificationManager.error('Error load data', 'Error', 4000);
+	}
 }
 
 export function* fetchLinks(props: Props) {
-	const team = yield call(updateLinks, props.id, props.link);
-	yield put(actions.update({ team }));
+	try {
+		const team = yield call(updateLinks, props.id, props.link);
+		yield put(actions.update({ team }));
+		NotificationManager.success('Data updated succesful', 'Success', 4000);
+	} catch (error) {
+		NotificationManager.error('Error load team links', 'Error', 4000);
+	}
 }
 export function* deleteLink(props: Props) {
-	const team = yield call(deleteOneLink, props.id, props.link);
-	yield put(actions.update({ team }));
+	try {
+		const team = yield call(deleteOneLink, props.id, props.link);
+		yield put(actions.update({ team }));
+		NotificationManager.info('Link has been deleted', 'Info', 4000);
+	} catch (error) {
+		NotificationManager.error('Error update data', 'Error', 4000);
+	}
 }
 export function* updateField(props: Props) {
-	const team = yield call(updateFieldById, props.id, props.field);
-	yield put(actions.update({ team }));
+	try {
+		const team = yield call(updateFieldById, props.id, props.field);
+		yield put(actions.update({ team }));
+		NotificationManager.success('Data updated succesful', 'Success', 4000);
+	} catch (error) {
+		NotificationManager.error('Error update data', 'Error', 4000);
+	}
 }
 
 export function* watchStartLoading() {

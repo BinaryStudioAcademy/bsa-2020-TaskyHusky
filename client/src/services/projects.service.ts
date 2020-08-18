@@ -1,6 +1,6 @@
 import { ProjectId } from './../containers/ProjectSettings/logic/actionTypes';
 import callWebApi from './../helpers/callApi.helper';
-import { InitialProject } from './../containers/CreateProjectModal/logic/actionTypes';
+import { InitialProject, Keys } from './../containers/CreateProjectModal/logic/actionTypes';
 
 export const getProjects = async (): Promise<WebApi.Entities.Projects[]> => {
 	const res: Response = await callWebApi({
@@ -63,4 +63,13 @@ export const deleteProject = async (id: ProjectId): Promise<WebApi.Entities.Proj
 	});
 
 	return (await res.json()) as WebApi.Entities.Projects;
+};
+
+export const getAllKeys = async (): Promise<Keys[]> => {
+	const res: Response = await callWebApi({
+		method: 'GET',
+		endpoint: 'projects/keys',
+	});
+
+	return (await res.json()) as Keys[];
 };

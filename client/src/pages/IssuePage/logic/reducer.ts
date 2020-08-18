@@ -16,4 +16,10 @@ export const issueReducer = createReducer<IssueState>(initialState, {
 			priorities: [...action.data],
 		};
 	},
+	[actionTypes.SET_STATUSES](state, action: actionTypes.SetStatuses): IssueState {
+		return {
+			...state,
+			statuses: [...action.data],
+		};
+	},
 });

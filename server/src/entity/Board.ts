@@ -31,7 +31,7 @@ export class Board {
 	@IsDefined()
 	createdBy!: UserProfile;
 
-	@CreateDateColumn({type:'timestamp', default:()=>'CURRENT_TIMESTAMP(6)'})
+	@CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP(6)' })
 	createdAt!: Date;
 
 	@ManyToMany((type) => Projects, (project) => project.boards, {
