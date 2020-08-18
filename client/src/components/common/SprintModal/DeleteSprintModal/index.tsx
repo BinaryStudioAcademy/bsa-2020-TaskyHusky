@@ -1,9 +1,9 @@
 import React from 'react';
 import { Button, Header, Icon, Modal } from 'semantic-ui-react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import * as actions from 'containers/Board/Scrum/logic/actions';
-import { RootState } from 'typings/rootState';
 import { NotificationManager } from 'react-notifications';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
 	sprintName: string;
@@ -14,8 +14,8 @@ type Props = {
 };
 
 const SprintModal = (props: Props) => {
+	const { t } = useTranslation();
 	const dispatch = useDispatch();
-	const scrumBoardState = useSelector((rootState: RootState) => rootState.scrumBoard);
 	const { sprintName, sprintId, sprintIssues } = props;
 
 	const handleNoButtonClick = () => {
@@ -24,12 +24,11 @@ const SprintModal = (props: Props) => {
 
 	const handleYesButtonClick = () => {
 		if (sprintIssues.length > 0) {
-			NotificationManager.error('Sprint cannot be deleted', 'Error');
+			NotificationManager.error(t('sprint_cannot_be_deleted'), 'Error');
 		}
 
 		if (sprintIssues.length === 0) {
 			dispatch(actions.deleteSprintTrigger({ sprintId }));
-			dispatch(actions.loadSprintsTrigger({ boardId: scrumBoardState.sprints[0].board?.id as string })); // WILL BE REFACTORED
 		}
 
 		props.clickAction();
@@ -39,17 +38,17 @@ const SprintModal = (props: Props) => {
 		<Modal basic onClose={props.clickAction} open={props.isOpen} size="small">
 			<Header icon>
 				<Icon name="trash alternate outline" />
-				{`Delete '${sprintName}' sprint`}
+				{`${t('delete_sprint')} - '${sprintName}'`}
 			</Header>
 			<Modal.Content>
-				<p>Are you sure you want to delete this sprint? This action cannot be undone.</p>
+				<p>{t('delete_sprint_warning')}</p>
 			</Modal.Content>
 			<Modal.Actions>
 				<Button color="red" inverted onClick={handleNoButtonClick}>
-					<Icon name="remove" /> No
+					<Icon name="remove" /> {t('cancel')}
 				</Button>
 				<Button basic color="green" inverted onClick={handleYesButtonClick}>
-					<Icon name="checkmark" /> Yes
+					<Icon name="checkmark" /> {t('delete')}
 				</Button>
 			</Modal.Actions>
 		</Modal>

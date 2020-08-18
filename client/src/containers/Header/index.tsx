@@ -63,6 +63,7 @@ export const HeaderMenu = () => {
 						<span className={`${styles.logoText} site-logo-text`}>TaskyHusky</span>
 					</Menu.Item>
 					<Menu.Item
+						as="span"
 						name="your-work"
 						active={activeItem === 'your-work'}
 						onClick={() => toggleActiveItem('your-work')}
@@ -74,6 +75,7 @@ export const HeaderMenu = () => {
 					<DashboardsMenu />
 					<BoardsMenu onCreateBoard={onCreateBoard} />
 					<Menu.Item
+						as="span"
 						name="people"
 						active={activeItem === 'people'}
 						onClick={() => toggleActiveItem('people')}

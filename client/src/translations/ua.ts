@@ -230,5 +230,13 @@ export const ua = {
 	no_issues_in_sprint: 'Сплануйте спринт, створивши декілька завдань.',
 	edit_sprint: 'Редагувати спринт',
 	delete_sprint: 'Видалити спринт',
+	sprint_cannot_be_deleted: 'Неможливо видалити спринт',
+	delete_sprint_warning: 'Ви впевнені, що хочете видалити цей спринт? Цю дію не можна скасувати.',
+	enter_sprint_name: 'Введіть назву спринту',
+	mark_sprint_as_active: 'Спринт буде позначено як активний',
+	mark_sprint_as_inactive: 'Спринт буде позначено як неактивний',
+	mark_sprint_as_completed: 'Спринт буде позначено як завершений',
+	mark_sprint_as_not_completed: 'Спринт буде позначено як незавершений',
+	sprint_name: 'Назва спринту',
 	my_work: 'Моя робота',
 };
