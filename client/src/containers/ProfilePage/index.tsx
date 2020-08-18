@@ -9,9 +9,12 @@ import ProfileSection from 'components/ProfileSection';
 import ProfileManagerSection from 'components/ProfileManagerSection';
 import Spinner from 'components/common/Spinner';
 import { UserProfileState, initialState } from './logiс/state';
+import { useTranslation } from 'react-i18next';
+import { requestGetUserProjects } from 'services/user.service';
 
 const ProfilePage = ({ id }: { id: string }) => {
 	const dispatch = useDispatch();
+	const { t } = useTranslation();
 	const [user, setUser] = useState(initialState);
 	const { editMode, isLoading } = user;
 	const currentUser = useSelector((state: RootState) => state.auth.user);
@@ -41,17 +44,13 @@ const ProfilePage = ({ id }: { id: string }) => {
 			{ id: 6, project: 'First scrum project', name: 'Homepage footer uses an inline style-should use a class' },
 			{ id: 7, project: 'First scrum project', name: 'Fsp-1 Implement dark somethin else very important' },
 		],
-		projects: [
-			{ id: 1, project: 'Software project', name: 'Project 1' },
-			{ id: 2, project: 'Software project', name: 'Project 2' },
-			{ id: 3, project: 'Software project', name: 'Project 3' },
-			{ id: 4, project: 'Software project', name: 'Project 4' },
-		],
 		colleagues: [
 			{ id: 1, project: 'Software project', name: 'Fan Angel' },
 			{ id: 2, project: 'Software project', name: 'Fan Angel' },
 		],
 	};
+
+	let projects = useSelector((state: RootState) => state.projects.projects);
 
 	const getUser = async () => {
 		if (isCurrentUser) {
@@ -60,6 +59,7 @@ const ProfilePage = ({ id }: { id: string }) => {
 		} else {
 			dispatch(actions.requestGetUser({ id }));
 			setUser({ ...user, ...userData });
+			projects = await requestGetUserProjects(id);
 		}
 	};
 
@@ -78,7 +78,7 @@ const ProfilePage = ({ id }: { id: string }) => {
 				<Spinner />
 			) : (
 				<div className={styles.wrapper}>
-					<ProfileHeader isCurrentUser={isCurrentUser} />
+					<ProfileHeader title={isCurrentUser ? t('my_profile') : t('profile')} />
 					<div className={styles.container}>
 						<ProfileAside
 							user={user}
@@ -89,7 +89,7 @@ const ProfilePage = ({ id }: { id: string }) => {
 						{editMode ? (
 							<ProfileManagerSection user={user} showManager={showManager} updateUser={updateUser} />
 						) : (
-							<ProfileSection isCurrentUser={isCurrentUser} mockData={mockData} />
+							<ProfileSection isCurrentUser={isCurrentUser} mockData={mockData} projects={projects} />
 						)}
 					</div>
 				</div>

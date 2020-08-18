@@ -2,6 +2,7 @@ import * as service from 'services/header.service';
 import { all, put, takeEvery, call } from 'redux-saga/effects';
 import * as actionTypes from './actionTypes';
 import * as actions from './actions';
+import * as peopleActions from '../../People/logic/actions';
 
 export function* fetchInvites(action: ReturnType<typeof actions.startLoading>) {
 	const invites = yield call(service.getInvites, action.id);
@@ -14,9 +15,11 @@ export function* watchStartLoading() {
 
 export function* changeInviteStatus(action: ReturnType<typeof actions.changeInviteStatus>) {
 	const { userId, status, teammateId } = action;
-	console.log({ userId, status, teammateId });
+
 	yield call(service.changeStatus, { userId, status, teammateId });
+
 	yield put(actions.startLoading({ id: userId }));
+	yield put(peopleActions.startLoading({ id: userId }));
 }
 
 export function* watchChangeInviteStatus() {

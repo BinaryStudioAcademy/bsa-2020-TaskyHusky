@@ -11,6 +11,9 @@ export class UserProfile {
 	@PrimaryGeneratedColumn('uuid')
 	id!: string;
 
+	@Column({ nullable: true })
+	googleId?: string;
+
 	@Column()
 	@IsString()
 	@IsNotEmpty()

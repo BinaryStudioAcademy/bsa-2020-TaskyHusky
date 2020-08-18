@@ -23,6 +23,17 @@ class UserController {
 		}
 	};
 
+	getProjects = async (req: Request, res: Response): Promise<void> => {
+		const userRepository = getCustomRepository(UserRepository);
+		const { id } = req.params;
+		try {
+			const projects = await userRepository.getProjects(id);
+			res.send(projects);
+		} catch (error) {
+			res.status(404).send(error.message);
+		}
+	};
+
 	changePassword = async (req: Request, res: Response): Promise<void> => {
 		const userRepository = getCustomRepository(UserRepository);
 		const { oldPassword, newPassword } = req.body;

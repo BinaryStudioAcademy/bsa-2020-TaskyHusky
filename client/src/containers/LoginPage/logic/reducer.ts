@@ -10,6 +10,7 @@ export const authReducer = createReducer<AuthState>(initialState, {
 			isAuthorized: !!action.user,
 			jwtToken: action.jwtToken,
 			profileLoaded: false,
+			loading: false,
 		};
 	},
 	[actionTypes.REGISTER_USER_SUCCESS](state, action: WebApi.Result.UserAuthResult) {
@@ -50,6 +51,12 @@ export const authReducer = createReducer<AuthState>(initialState, {
 		return {
 			...state,
 			isEmailInDB: null,
+		};
+	},
+	[actionTypes.GOOGLE_AUTH_LOADING](state, action: actionTypes.Loading) {
+		return {
+			...state,
+			loading: action.loading,
 		};
 	},
 });

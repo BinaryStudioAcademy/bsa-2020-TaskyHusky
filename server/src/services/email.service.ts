@@ -1,7 +1,7 @@
 import { email as nodeMailerEmail, transporter } from '../../config/nodeMailer.config';
 import { appHost, frontendPort } from '../../config/app.config';
 
-export const sendToken=(email:string, resetPasswordToken:string)=>{
+export const sendToken = (email: string, resetPasswordToken: string) => {
 	const mailOptions = {
 		from: nodeMailerEmail,
 		to: email,
@@ -10,6 +10,6 @@ export const sendToken=(email:string, resetPasswordToken:string)=>{
 	};
 
 	return transporter.sendMail(mailOptions, (err) => {
-		if(err) throw err;
+		if (err) throw err;
 	});
-}
+};
