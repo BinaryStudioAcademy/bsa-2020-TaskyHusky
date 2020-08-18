@@ -1,6 +1,8 @@
-import { EntityRepository, Repository, Between } from 'typeorm';
+import { EntityRepository, Repository, Between, getCustomRepository, ReplSet } from 'typeorm';
 import { UserProfile } from '../entity/UserProfile';
 import { expirationTime } from '../constants/resetPassword.constants';
+import { Team } from '../entity/Team';
+import { TeamRepository } from './teams.repository';
 
 @EntityRepository(UserProfile)
 export class UserRepository extends Repository<UserProfile> {
@@ -15,6 +17,21 @@ export class UserRepository extends Repository<UserProfile> {
 		}
 		const { password, ...rest } = user;
 		return rest;
+	}
+
+	async getTeammatesById(id: string): Promise<any> {
+		const teamRepository = getCustomRepository(TeamRepository);
+		const user = await this.getById(id);
+		const teams: Team[] = await teamRepository.find({ relations: ['users'] });
+
+		if (!teams) {
+			return [];
+		}
+
+		return teams
+			.filter((team) => (team.users ?? []).some((userToSerialize) => userToSerialize.id === user.id))
+			.map((team) => team.users)
+			.reduce((u0, u1) => (u0 ?? []).concat(u1 ?? []), []);
 	}
 
 	getByEmail(email: string): Promise<any> {

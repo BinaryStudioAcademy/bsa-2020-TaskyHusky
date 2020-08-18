@@ -27,10 +27,6 @@ const Projects: React.FC = () => {
 
 	const onOpenSettings = (id: string): void => {
 		history.push(history.location.pathname + '/projectSettings/' + id);
-		console.log('onOpenSettings');
-	};
-	const onTrash = (id: string): void => {
-		console.log('onTrash ' + id);
 	};
 
 	return (
@@ -66,7 +62,7 @@ const Projects: React.FC = () => {
 										<NavLink to={`/project/${id}/issues`}>{t('go_to_board')}</NavLink>
 									</Table.Cell>
 									<Table.Cell>
-										<Options config={setProjectActions({ id, onOpenSettings, onTrash })} />
+										<Options config={setProjectActions({ id, onOpenSettings })} />
 									</Table.Cell>
 								</Table.Row>
 							))}

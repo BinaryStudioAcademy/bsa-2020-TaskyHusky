@@ -14,6 +14,7 @@ export const RESET_STATE = 'SEARCH:RESET_STATE';
 export const UPDATE_FILTER = 'SEARCH:UPDATE_FILTER';
 export const UPDATE_FILTER_SUCCESS = 'SEARCH:UPDATE_FILTER_SUCCESS';
 export const SET_REDIRECT = 'SEARCH:SET_REDIRECT';
+export const UPDATE_FILTER_STARED_BY = 'SEARCH:UPDATE_FILTER_STARED_BY';
 
 export type IssueFilter = {
 	projects?: string[];
@@ -45,4 +46,8 @@ export type SetAddedFilterPartsArgs = {
 
 export type RedirectId = {
 	redirectFilterId: string;
+};
+
+export type UpdateFilterStaredBy = {
+	staredBy: string;
 };

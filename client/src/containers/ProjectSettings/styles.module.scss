@@ -84,3 +84,46 @@
 .form__input_select {
     width: 100% !important;
 }
+
+.icons__container {
+    padding: 5px 10px;
+}
+
+.icons__list {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.icons__icon {
+    height: 56px;
+    width: 56px;
+    padding: 2px;
+    margin: 3px;
+    border: 2px solid transparent;
+    background-color: transparent;
+
+    &:hover {
+        border: 2px solid black;
+    }
+}
+
+.icons__list {
+    list-style: none;
+}
+
+.icons__icon_btn {
+    padding: 0;
+    margin: 0;
+    border:none;
+    background-color: transparent;
+    cursor: pointer;
+
+    
+
+}
+
+.icons__list_item {
+
+}
