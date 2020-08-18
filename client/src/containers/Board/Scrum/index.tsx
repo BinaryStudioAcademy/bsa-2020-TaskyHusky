@@ -51,8 +51,8 @@ const Scrum: BoardComponent = (props) => {
 			<Container className={styles.noSprintsContainer}>
 				<Icon name="info circle" size="huge" />
 				<Header as="h2" className={styles.noSprintsHeader}>
-					<Header.Content>There are no active sprints</Header.Content>
-					<Header.Subheader>Plan your team&apos;s work. Create your first sprint.</Header.Subheader>
+					<Header.Content>{t('no_sprints_header')}</Header.Content>
+					<Header.Subheader>{t('no_sprints_header_subheader')}</Header.Subheader>
 				</Header>
 			</Container>
 		);
@@ -75,7 +75,7 @@ const Scrum: BoardComponent = (props) => {
 					{t('clear')}
 				</Button>
 				<Button onClick={() => {}} secondary className={styles.createSprintButton}>
-					Create sprint
+					{t('create_sprint')}
 				</Button>
 			</Container>
 
