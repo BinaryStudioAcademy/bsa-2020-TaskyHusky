@@ -77,7 +77,4 @@ export class Projects {
 
 	@DeleteDateColumn()
 	deletedDate?: Date;
-
-	@VersionColumn()
-	version?: number;
 }
