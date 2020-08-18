@@ -91,7 +91,7 @@ export class UserProfile {
 	@ManyToMany((type) => Projects, (projects) => projects.users)
 	projects?: Projects[];
 
-	constructor(userData: Partial<UserProfile>) {
+	constructor(userData?: Partial<UserProfile>) {
 		if (userData) {
 			const { email, password, firstName, lastName } = userData;
 
