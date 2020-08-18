@@ -93,12 +93,12 @@ const TeamPage = ({ match: { params }, currentTeam: { team }, loading }: Props) 
 	return loading ? (
 		<Spinner />
 	) : (
-		<Grid columns="equal" centered>
+		<Grid columns="equal" centered className={styles.page_main}>
 			<Grid.Row className={styles.header_z}>
 				<div className={[styles.header, styles.team_header].join(' ')}></div>
 			</Grid.Row>
-			<Grid.Row>
-				<Grid.Column width="4" className={styles.col_media}>
+			<Grid.Row className={styles.main_row}>
+				<Grid.Column className={[styles.col_media, styles.col_left].join(' ')}>
 					<TeamDevsCard
 						changeMainFields={changeMainFields}
 						description={team.description}
@@ -107,7 +107,7 @@ const TeamPage = ({ match: { params }, currentTeam: { team }, loading }: Props) 
 					/>
 					<TeamsMembersCard />
 				</Grid.Column>
-				<Grid.Column width="8" className={styles.col_media}>
+				<Grid.Column className={[styles.col_media, styles.col_right].join(' ')}>
 					{notification && <TeamNotification toggleNotification={toggleNotification} />}
 					<TeamWorkedProjects />
 					<TeamLinks
