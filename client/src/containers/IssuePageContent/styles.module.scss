@@ -10,6 +10,7 @@ $screen-offset: 100;
 :local(.innerContainer) {
 	margin-left: 20px;
 	max-width: 700px;
+	min-width: 500px;
 }
 
 @media screen and (max-width: $medium-screen + $screen-offset * 2.2) {

@@ -64,17 +64,23 @@ export class BoardRepository extends Repository<Board> {
 	}
 
 	async getSprints(id: string) {
-		const board = await this.createQueryBuilder('board')
+		const boardExist = await this.findOne(id);
+
+		if (!boardExist) {
+			throw new Error('Board with this ID does not exist');
+		}
+
+		const boardWithSprints = await this.createQueryBuilder('board')
 			.where('board.id = :id', { id })
 			.innerJoin('board.sprints', 'sprint')
 			.addSelect(['sprint.id', 'sprint.sprintName', 'sprint.isCompleted', 'sprint.isActive'])
 			.getOne();
 
-		if (!board) {
-			throw new Error('Board with this ID does not exist');
+		if (!boardWithSprints) {
+			return [];
 		}
 
-		return board.sprints;
+		return boardWithSprints.sprints;
 	}
 
 	async put(id: string, data: any) {

@@ -1,26 +1,38 @@
-import { EntityRepository, Repository, getCustomRepository } from 'typeorm';
+import { EntityRepository, Repository, In, getRepository } from 'typeorm';
 import { Projects } from '../entity/Projects';
 import { UserRepository } from './user.repository';
 
-const RELS = ['boards'];
-
 @EntityRepository(Projects)
 export class ProjectsRepository extends Repository<Projects> {
-	findAll() {
-		return this.find({ relations: RELS });
+	getOne(id: string): Promise<Projects | undefined> {
+		return this.findOne(id, { relations: ['users', 'lead'] });
 	}
 
-	findOneById(id: string) {
-		return this.findOneOrFail({ where: { id }, relations: RELS });
+	getOneProject(id: string, userId: string): Promise<Projects | undefined> {
+		return getRepository(Projects)
+			.createQueryBuilder('project')
+			.leftJoinAndSelect('project.lead', 'lead')
+			.leftJoinAndSelect('project.users', 'users')
+			.where('project.id = :id', { id })
+			.andWhere('users.id = :userId', { userId })
+			.getOne();
 	}
 
-	async createOne(data: Projects, userId: string): Promise<any> {
-		const userRepository = getCustomRepository(UserRepository);
+	getOneByKey(key: string): Promise<Projects | undefined> {
+		return this.findOne({ key }, { withDeleted: true });
+	}
 
-		const userToAdd = await userRepository.getById(userId);
-		if (!userToAdd) throw new Error('User with current ID not found');
+	getAllByUserId(id: string): Promise<Projects[]> {
+		return getRepository(Projects)
+			.createQueryBuilder('project')
+			.leftJoinAndSelect('project.lead', 'lead')
+			.leftJoin('project.users', 'users')
+			.where('users.id = :id', { id })
+			.getMany();
+	}
 
-		const entity = this.create({ ...data, creator: userToAdd });
+	createOne(data: Projects) {
+		const entity = this.create(data);
 		return this.save(entity);
 	}
 
@@ -29,6 +41,10 @@ export class ProjectsRepository extends Repository<Projects> {
 	}
 
 	deleteOneById(id: string) {
-		return this.delete(id);
+		return this.softDelete(id);
+	}
+
+	getKeys() {
+		return this.find({ select: ['key'], withDeleted: true });
 	}
 }

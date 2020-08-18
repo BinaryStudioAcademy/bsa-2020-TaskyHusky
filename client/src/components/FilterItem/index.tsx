@@ -31,7 +31,7 @@ const FilterItem: React.FC<Props> = (props: Props) => {
 				<Rating onRate={onSetFavorite} icon="star" defaultRating={isStared ? 1 : 0} maxRating={1} />
 			</Table.HeaderCell>
 			<Table.HeaderCell>
-				<a href={`/filter/${id}`} className={styles.underlinedLink}>
+				<a href={`/advancedSearch/${id}`} className={styles.underlinedLink}>
 					{name}
 				</a>
 			</Table.HeaderCell>
