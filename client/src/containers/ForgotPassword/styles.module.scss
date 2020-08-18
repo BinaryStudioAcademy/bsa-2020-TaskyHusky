@@ -1,0 +1,38 @@
+@import 'styles/mixins.scss';
+
+.grid {
+	height: 100vh;
+	justify-content: center;
+}
+
+.mainHeader{
+	text-align: center;
+}
+
+.column {
+	max-width: 450px;
+}
+
+.list {
+	display: flex !important;
+	justify-content: center;
+}
+
+.listItem {
+	font-size: 13px !important;
+}
+
+.continueButton {
+	width: 100%;
+}
+
+.textBlock{
+	margin: 24px 0 22px;
+	text-align: center;
+	p{
+		margin-bottom: 4px;
+	}
+	p:last-child{
+		font-weight: bold;
+	}
+}
