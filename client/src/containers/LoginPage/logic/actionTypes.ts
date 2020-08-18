@@ -16,6 +16,10 @@ export const CHECK_EMAIL_TRIGGER = 'CHECK_EMAIL_TRIGGER';
 export const CHECK_EMAIL_SUCCESS = 'CHECK_EMAIL_SUCCESS';
 export const CHECK_EMAIL_RESET = 'CHECK_EMAIL_RESET';
 
+export const FORGOT_PASSWORD = 'FORGOT_PASSWORD';
+
+export const RESET_PASSWORD = 'RESET_PASSWORD';
+
 export type LogInUserTrigger = {
 	email: string;
 	password: string;
@@ -35,4 +39,13 @@ export type LoadProfileSuccess = {
 
 export type CheckEmail = {
 	email: string;
+};
+
+export type ForgotPassword = {
+	email: string;
+};
+
+export type ResetPassword = {
+	password: string;
+	id: string;
 };
