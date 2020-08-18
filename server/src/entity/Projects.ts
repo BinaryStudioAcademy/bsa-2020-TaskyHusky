@@ -43,6 +43,9 @@ export class Projects {
 	@IsString()
 	icon?: string;
 
+	@IsString()
+	url?: string;
+
 	@Column({ type: 'text', default: '' })
 	category?: string;
 
