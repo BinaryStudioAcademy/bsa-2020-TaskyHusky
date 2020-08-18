@@ -21,7 +21,7 @@ const WorkPage = () => {
 				<Spinner />
 			) : (
 				<div className={styles.wrapper}>
-					<ProfileHeader title={t('work')} />
+					<ProfileHeader title={t('my-work')} />
 					<div className={styles.container}>
 						<ManagerWorkBlock changeMode={changeMode} modeToShow={modeToShow} />
 						<ManagerWorkSection projects={projects} modeToShow={modeToShow} />

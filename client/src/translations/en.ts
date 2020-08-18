@@ -246,4 +246,5 @@ export const en = {
 		"Missing someone on gmail.com? Add their email below – if permissions allow we'll add them, or else send a request to your admin.",
 	send: 'Send',
 	add_people_email_placeholder: 'Add email address',
+	my_work: 'My work',
 };

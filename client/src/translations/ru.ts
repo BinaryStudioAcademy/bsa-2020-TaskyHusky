@@ -229,4 +229,5 @@ export const ru = {
 	no_issues_in_sprint: 'Запланируйте спринт, создав несколько задач.',
 	edit_sprint: 'Редактировать спринт',
 	delete_sprint: 'Удалить спринт',
+	my_work: 'Моя работа',
 };

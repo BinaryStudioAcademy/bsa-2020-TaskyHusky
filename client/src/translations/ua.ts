@@ -229,4 +229,5 @@ export const ua = {
 	no_issues_in_sprint: 'Сплануйте спринт, створивши декілька завдань.',
 	edit_sprint: 'Редагувати спринт',
 	delete_sprint: 'Видалити спринт',
+	my_work: 'Моя робота',
 };
