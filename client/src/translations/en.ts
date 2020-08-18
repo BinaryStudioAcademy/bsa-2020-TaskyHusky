@@ -224,4 +224,5 @@ export const en = {
 	boards: 'Boards',
 	create_board: 'Create board',
 	view_all_boards: 'View all boards',
+	advanced_search: 'Advanced issue search',
 };

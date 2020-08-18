@@ -223,4 +223,5 @@ export const ru = {
 	boards: 'Доски',
 	create_board: 'Создать доску',
 	view_all_boards: 'Все доски',
+	advanced_search: 'Продвинутый поиск задач',
 };
