@@ -7,9 +7,9 @@ import * as actions from '../../containers/Boards/logic/actions';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import CreateBoardModal from 'components/CreateBoardModal';
-import { createBoard } from 'containers/Boards/logic/actionTypes';
+import * as actionTypes from 'containers/Boards/logic/actionTypes';
 
-export const BoardsMenu = ({ onCreateBoard }: { onCreateBoard(board: createBoard): void }) => {
+export const BoardsMenu = ({ onCreateBoard }: { onCreateBoard(board: actionTypes.createBoard): void }) => {
 	const dispatch = useDispatch();
 	const { t } = useTranslation();
 

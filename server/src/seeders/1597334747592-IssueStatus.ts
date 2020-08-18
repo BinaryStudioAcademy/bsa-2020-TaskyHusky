@@ -16,6 +16,14 @@ export class IssueStatus1597334747592 implements MigrationInterface {
 				title: 'To do',
 				color: 'teal',
 			},
+			{
+				title: 'Help',
+				color: 'yellow',
+			},
+			{
+				title: 'Stopped',
+				color: 'red',
+			},
 		];
 
 		const repo = getRepository(IssueStatus);
