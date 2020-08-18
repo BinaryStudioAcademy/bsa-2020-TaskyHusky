@@ -1,5 +1,5 @@
 import React, { useState, useEffect, SyntheticEvent } from 'react';
-import { Header, Container, Form, Button, InputOnChangeData } from 'semantic-ui-react';
+import { Header, Container, Form, Button, InputOnChangeData, Icon } from 'semantic-ui-react';
 import { BoardComponent } from '../';
 import { useTranslation } from 'react-i18next';
 import styles from './style.module.scss';
@@ -49,7 +49,13 @@ const Scrum: BoardComponent = (props) => {
 				return <Sprint key={sprint.id} {...sprint} issues={scrumBoardState.matchIssueToSprint[sprint.id]} />;
 			})
 		) : (
-			<span>Create Sprint Button</span>
+			<Container className={styles.noSprintsContainer}>
+				<Icon name="info circle" size="huge" />
+				<Header as="h2" className={styles.noSprintsHeader}>
+					<Header.Content>{t('no_sprints_header')}</Header.Content>
+					<Header.Subheader>{t('no_sprints_header_subheader')}</Header.Subheader>
+				</Header>
+			</Container>
 		);
 
 	return (
@@ -68,6 +74,9 @@ const Scrum: BoardComponent = (props) => {
 				/>
 				<Button onClick={() => setSearch('')} secondary>
 					{t('clear')}
+				</Button>
+				<Button onClick={() => {}} secondary className={styles.createSprintButton}>
+					{t('create_sprint')}
 				</Button>
 			</Container>
 

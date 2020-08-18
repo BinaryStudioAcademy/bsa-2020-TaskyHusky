@@ -223,4 +223,10 @@ export const ru = {
 	boards: 'Доски',
 	create_board: 'Создать доску',
 	view_all_boards: 'Все доски',
+	create_sprint: 'Создать спринт',
+	no_sprints_header: 'Активные спринты отсутствуют',
+	no_sprints_header_subheader: 'Спланируйте работу своей команды. Создайте свой первый спринт.',
+	no_issues_in_sprint: 'Запланируйте спринт, создав несколько задач.',
+	edit_sprint: 'Редактировать спринт',
+	delete_sprint: 'Удалить спринт',
 };
