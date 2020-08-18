@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
-import { Form, TextArea, Button, Icon, Popup } from 'semantic-ui-react';
+import { Form, TextArea, Button, Icon, Popup, Dropdown } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 import * as actions from './logic/actions';
 
 import styles from './styles.module.scss';
 import { useDispatch } from 'react-redux';
-import mockAvatar from 'assets/images/projectAvatars/viewavatar.svg';
 import { Link, Redirect } from 'react-router-dom';
 import CustomInput from 'components/common/Input/CustomInput';
 import validator from 'validator';
+
+import SelectIcon from './selectIcon';
 
 interface Props {
 	projectData: WebApi.Entities.Projects;
@@ -23,6 +24,14 @@ const ProjectForm = ({ projectData }: Props) => {
 	const [isNameValid, setIsNameValid] = useState<boolean>(true);
 	const [isKeyValid, setIsKeyValid] = useState<boolean>(true);
 	const [isValidErrorShown, setIsValidErrorShown] = useState<boolean>(false);
+
+	const [currentIcon, setCurrentIcon] = useState('');
+
+	const projectUsers = project.users?.map((user) => ({
+		key: user.id,
+		text: `${user.firstName} ${user.lastName}`,
+		value: user.id,
+	}));
 
 	const onProjectChange = (field: string, value: string) => {
 		setProject((state) => ({
@@ -93,6 +102,8 @@ const ProjectForm = ({ projectData }: Props) => {
 							label="URL"
 							type="text"
 							placeholder={'https://www...'}
+							onChange={(e) => onProjectChange('url', e.target.value)}
+							// value={project.url}
 						/>
 						<Form.Field className={styles.form__input} required>
 							<label>{t('project_category')}</label>
@@ -109,22 +120,28 @@ const ProjectForm = ({ projectData }: Props) => {
 						</Form.Field>
 						<Form.Field required className={styles.form__input}>
 							<label className={styles.avatar__label}>{t('avatar')}</label>
-							<button type="button" className={styles.form__avatar}>
-								<img className={styles.avatar__img} src={mockAvatar} alt="Project avatar" />
-								<span className={styles.avatar__text}>{t('select_image')}</span>
-							</button>
+							<SelectIcon currentIcon={currentIcon} setCurrentIcon={setCurrentIcon} />
 						</Form.Field>
 						<Form.Field className={styles.form__area}>
 							<label className={styles.avatar__label}>{t('description')}</label>
-							<TextArea placeholder={t('project_desc')} rows={'7'} />
+							<TextArea
+								placeholder={t('project_desc')}
+								rows={'7'}
+								onChange={(e, data) => onProjectChange('description', data.value?.toString() || '')}
+								// value={project.description}
+							/>
 						</Form.Field>
-						<Form.Input
-							className={styles.form__input}
-							label={t('project_lead')}
-							placeholder={t('project_lead_name')}
-							required
-							type="text"
-						/>
+						<Form.Field className={styles.form__input}>
+							<label className={styles.avatar__label}>{t('lead')}</label>
+							<Dropdown
+								placeholder={`${project.lead?.firstName} ${project.lead?.lastName}`}
+								search
+								selection
+								options={projectUsers}
+								onChange={(e, data) => onProjectChange('lead', data.value?.toString() || '')}
+								defaultValue={true}
+							/>
+						</Form.Field>
 						<Form.Field className={styles.form__input}>
 							<label className={styles.avatar__label}>{t('default_assignee')}</label>
 							<div className={styles.form__input_container}>
