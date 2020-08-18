@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useHistory, useParams, Redirect } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -15,12 +15,17 @@ import Spinner from 'components/common/Spinner';
 import Form from './form';
 
 const ProjectSettings = () => {
-	const { isLoading, project: projectData } = useSelector((rootState: RootState) => rootState.project);
+	const { is404Error, isLoading, project: projectData } = useSelector((rootState: RootState) => rootState.project);
 	const { t } = useTranslation();
 	const dispatch = useDispatch();
 	const history = useHistory();
 	const { id } = useParams();
 	const { name } = projectData;
+	const [isRedirected, setIsRedirected] = useState<boolean>(false);
+
+	if (is404Error) {
+		throw new Error();
+	}
 
 	useEffect(() => {
 		dispatch(actions.startGettingProject({ id }));
@@ -28,23 +33,33 @@ const ProjectSettings = () => {
 
 	const onTrash = () => {
 		dispatch(actions.startDeletingProject({ id }));
+		setIsRedirected(true);
 	};
-
-	return ProjectSidebar(
-		<section>
-			<div className={styles.header_inner__container}>
-				<div className={styles.header_inner__breadcrumbs}>
-					<Breadcrumbs sections={setBreadcrumbs({ history, name })} />
-				</div>
-				<h1 className={styles.header_inner__title}>{t('details')}</h1>
-				<div className={styles.header__options}>
-					<Options config={setProjectActions({ id, onTrash })} />
-				</div>
-			</div>
-			<div className={styles.body_inner__container}>
-				{isLoading ? <Spinner /> : <Form projectData={projectData} />}
-			</div>
-		</section>,
+	return (
+		<>
+			{isRedirected ? (
+				<Redirect to={'/projects'} />
+			) : (
+				<>
+					{ProjectSidebar(
+						<section>
+							<div className={styles.header_inner__container}>
+								<div className={styles.header_inner__breadcrumbs}>
+									<Breadcrumbs sections={setBreadcrumbs({ history, name })} />
+								</div>
+								<h1 className={styles.header_inner__title}>{t('details')}</h1>
+								<div className={styles.header__options}>
+									<Options config={setProjectActions({ id, onTrash })} />
+								</div>
+							</div>
+							<div className={styles.body_inner__container}>
+								{isLoading ? <Spinner /> : <Form projectData={projectData} />}
+							</div>
+						</section>,
+					)}
+				</>
+			)}
+		</>
 	);
 };
 

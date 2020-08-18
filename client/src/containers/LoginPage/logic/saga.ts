@@ -1,4 +1,12 @@
-import { loginUser, registerUser, getProfile, checkEmail } from 'services/auth.service';
+import {
+	loginUser,
+	registerUser,
+	getProfile,
+	checkEmail,
+	googleAuthRequest,
+	forgotPassword as forgotPasswordQuery,
+	resetPassword as resetPasswordQuery,
+} from 'services/auth.service';
 import { all, put, takeEvery, call } from 'redux-saga/effects';
 import * as actionTypes from './actionTypes';
 import * as actions from './actions';
@@ -101,6 +109,59 @@ export function* watchCheckEmail() {
 	yield takeEvery(actionTypes.CHECK_EMAIL_TRIGGER, checkEmailRequest);
 }
 
+export function* googleAuth(action: { user: actionTypes.GoogleUser; type: string }) {
+	yield put(actions.loadingGoogleAuth({ loading: true }));
+	try {
+		const response = yield call(googleAuthRequest, action.user);
+		const { user, jwtToken } = response;
+		setToken(jwtToken);
+		yield put(actions.logInUserSuccess({ user, jwtToken }));
+	} catch (error) {
+		yield put(actions.loadingGoogleAuth({ loading: false }));
+	}
+}
+
+export function* forgotPassword(action: ReturnType<typeof actions.forgotPassword>) {
+	try {
+		const { email } = action;
+		yield call(forgotPasswordQuery, email);
+	} catch (error) {
+		NotificationManager.error(error.clientException.message, 'Error');
+	}
+}
+
+export function* watchGoogleAuth() {
+	yield takeEvery(actionTypes.GOOGLE_AUTH_REQUEST, googleAuth);
+}
+
+export function* watchForgotPassword() {
+	yield takeEvery(actionTypes.FORGOT_PASSWORD, forgotPassword);
+}
+
+export function* resetPassword(action: ReturnType<typeof actions.resetPassword>) {
+	try {
+		const { password, id } = action;
+		const user = yield call(resetPasswordQuery, password, id);
+		yield put(actions.logInUserTrigger({ email: user.email, password }));
+	} catch (error) {
+		NotificationManager.error(error.clientException.message, 'Error');
+	}
+}
+
+export function* watchResetPassword() {
+	yield takeEvery(actionTypes.RESET_PASSWORD, resetPassword);
+}
+
 export default function* authSaga() {
-	yield all([watchUserLogin(), watchUserLogOut(), watchRegisterUser(), watchLoadProfile(), watchCheckEmail()]);
+	yield all([
+		watchUserLogin(),
+		watchUserLogOut(),
+		watchRegisterUser(),
+		watchLoadProfile(),
+		watchCheckEmail(),
+		watchForgotPassword(),
+		watchResetPassword(),
+		watchGoogleAuth(),
+		watchGoogleAuth(),
+	]);
 }

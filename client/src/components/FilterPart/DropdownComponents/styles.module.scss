@@ -17,7 +17,14 @@
 }
 
 .dropdown {
-	padding: 0 !important;
+	padding: 5px 8px 5px 10px !important;
+	&:focus {
+		box-shadow: none;
+		background: #505f79;
+		color: #f4f5f7;
+		border: none;
+		border-radius: 3px 3px;
+	}
 	.dropdownMenu {
 		position: absolute !important;
 	}

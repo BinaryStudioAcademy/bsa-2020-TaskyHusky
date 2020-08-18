@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Modal, Button, Form, Checkbox, Image, Card } from 'semantic-ui-react';
+import React, { useState, memo } from 'react';
+import { Modal, Button, Form, Image, Card } from 'semantic-ui-react';
 import validator from 'validator';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,6 +10,7 @@ import * as actions from './logic/actions';
 import getTemplatesInformation, { MethodologyInfo } from './config/templatesInformation';
 import styles from './styles.module.scss';
 import CustomInput from 'components/common/Input/CustomInput';
+import { generateKey } from 'commonLogic/keyGenerator';
 
 type Template = keyof typeof WebApi.Board.BoardType;
 
@@ -18,13 +19,9 @@ const CreateProjectModal: React.FC = () => {
 	const dispatch = useDispatch();
 	const { t } = useTranslation();
 
-	const { isLoading, isModalOpened, isProjectCreated } = useSelector(
+	const { isLoading, isModalOpened, isProjectCreated, keys, isError } = useSelector(
 		(rootState: RootState) => rootState.createProject,
 	);
-
-	if (isProjectCreated) {
-		dispatch(actions.resetState());
-	}
 
 	const [isKeyTouched, setIsKeyTouched] = useState(false);
 	const [isTemplatesView, setIsTemplatesView] = useState(false);
@@ -34,17 +31,22 @@ const CreateProjectModal: React.FC = () => {
 	const [template, setTemplate] = useState<Template>('Scrum');
 
 	const [isNameValid, setIsNameValid] = useState<boolean>(false);
-	const [isKeyValid, setIsKeyValid] = useState<boolean>(false);
+	const [isKeyValid, setIsKeyValid] = useState<boolean>(true);
 	const [isValidErrorShown, setIsValidErrorShown] = useState<boolean>(false);
 
 	const { description, image } = templatesInformation[template];
 
-	const onCreateProject = (): void => {
-		if (!isNameValid || !isKeyValid) {
-			setIsValidErrorShown(true);
-			return;
-		}
+	if (isProjectCreated) {
+		dispatch(actions.resetState());
+		setName('');
+		setKey('');
+		setTemplate('Scrum');
+		setIsNameValid(false);
+		setIsKeyValid(true);
+		setIsValidErrorShown(false);
+	}
 
+	const startCreatingProject = () => {
 		dispatch(
 			actions.startCreatingProject({
 				name,
@@ -54,35 +56,52 @@ const CreateProjectModal: React.FC = () => {
 		);
 	};
 
-	const generateKey = (name: string): string => {
-		let result = key;
-		if (!isKeyTouched) {
-			result = name
-				.split(' ')
-				.filter(Boolean)
-				.map((word) => word[0].toUpperCase())
-				.join('');
+	const onCreateProject = (): void => {
+		if (!isKeyTouched && !isNameValid) {
+			setIsValidErrorShown(true);
+			return;
 		}
-		return result;
+
+		if (!isNameValid || !isKeyValid) {
+			setIsValidErrorShown(true);
+			return;
+		}
+
+		startCreatingProject();
 	};
 
 	const onModalClose = () => {
-		dispatch(actions.closeModal());
 		setIsTemplatesView(false);
+		if (isError) {
+			dispatch(actions.resetState());
+			return;
+		}
+
+		dispatch(actions.closeModal());
 	};
 
 	const onModalOpen = () => {
 		dispatch(actions.openModal());
+		dispatch(actions.startGettingKeys());
 	};
 
 	const onNameChanged = (name: string): void => {
-		const key = generateKey(name);
-		setName(name);
-		setKey(key);
+		const generatedKey = generateKey({ name, key, isKeyTouched, keys });
+		const regexp = new RegExp('\\s{1,}', 'g');
+		const removeSpaces = name.replace(regexp, ' ').trimStart();
+		setName(removeSpaces);
+		setKey(generatedKey);
 	};
 
 	const onKeyChanged = (key: string): void => {
-		const newKey = key.toUpperCase();
+		const newKey = key.trim().toUpperCase();
+		const keyIndex = keys.findIndex((item: any) => item.key === newKey);
+
+		if (keyIndex !== -1) {
+			setIsValidErrorShown(true);
+			setIsKeyValid(false);
+		}
+
 		if (!isKeyTouched) {
 			setIsKeyTouched(true);
 		}
@@ -91,7 +110,7 @@ const CreateProjectModal: React.FC = () => {
 
 	const selectTemplate = (template: Template) => {
 		setIsTemplatesView(false);
-		setTemplate(WebApi.Board.BoardType[template]);
+		setTemplate(template);
 	};
 
 	return (
@@ -100,7 +119,7 @@ const CreateProjectModal: React.FC = () => {
 			onClose={onModalClose}
 			onOpen={onModalOpen}
 			open={isModalOpened}
-			size={!isTemplatesView ? 'tiny' : undefined}
+			size={'tiny'}
 			dimmer="inverted"
 			trigger={<Button primary>{t('create_project')}</Button>}
 		>
@@ -120,7 +139,7 @@ const CreateProjectModal: React.FC = () => {
 									setData={onNameChanged}
 									placeholder="Enter project name"
 									popUpContent="Project name should contain at least 5 symbols long"
-									validation={(key) => validator.isLength(key, { min: 5 })}
+									validation={(name) => validator.isLength(name, { min: 5 })}
 								/>
 							</Form.Field>
 							<Form.Field>
@@ -132,15 +151,13 @@ const CreateProjectModal: React.FC = () => {
 									data={key}
 									setData={onKeyChanged}
 									placeholder="Enter your key"
-									popUpContent="Key should contain at least 2 symbols long"
+									popUpContent="Key should contain at least 2 symbols long and be unique"
 									validation={(key) => validator.isLength(key, { min: 2 })}
 								/>
 							</Form.Field>
-							<Form.Field>
-								<Checkbox label={t('share_settings_with_existing_project')} disabled={true} />
-							</Form.Field>
 						</Form>
-						<p>{t('template')}</p>
+
+						<p className={styles.template__title}>{t('template')}</p>
 						<div className={styles.flex_container}>
 							<Image src={image} className={styles.modal__image} />
 							<div>
@@ -205,4 +222,4 @@ const CreateProjectModal: React.FC = () => {
 	);
 };
 
-export default CreateProjectModal;
+export default memo(CreateProjectModal);

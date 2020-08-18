@@ -1,12 +1,17 @@
-import React, { useState } from 'react';
-import { Form, TextArea, Button, Icon, Popup } from 'semantic-ui-react';
+import React, { useState, useEffect } from 'react';
+import { Form, TextArea, Button, Icon, Popup, Dropdown } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 import * as actions from './logic/actions';
 
 import styles from './styles.module.scss';
-import { useDispatch } from 'react-redux';
-import mockAvatar from 'assets/images/projectAvatars/viewavatar.svg';
-import { Link, Redirect } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import CustomInput from 'components/common/Input/CustomInput';
+import validator from 'validator';
+
+import SelectIcon from './selectIcon';
+import { RootState } from 'typings/rootState';
+import { startGettingKeys } from 'containers/CreateProjectModal/logic/actions';
 
 interface Props {
 	projectData: WebApi.Entities.Projects;
@@ -15,11 +20,37 @@ interface Props {
 const ProjectForm = ({ projectData }: Props) => {
 	const { t } = useTranslation();
 	const dispatch = useDispatch();
+	const { keys } = useSelector((rootState: RootState) => rootState.createProject);
 
 	const [project, setProject] = useState<WebApi.Entities.Projects>(projectData);
-	const { name, key } = project;
+
+	const [isNameValid, setIsNameValid] = useState<boolean>(true);
+	const [isKeyValid, setIsKeyValid] = useState<boolean>(true);
+	const [isValidErrorShown, setIsValidErrorShown] = useState<boolean>(false);
+
+	useEffect(() => {
+		dispatch(startGettingKeys());
+	}, [dispatch]);
+
+	const [currentIcon, setCurrentIcon] = useState('');
+
+	const projectUsers = project.users?.map((user) => ({
+		key: user.id,
+		text: `${user.firstName} ${user.lastName}`,
+		value: user.id,
+	}));
 
 	const onProjectChange = (field: string, value: string) => {
+		if (field === 'key') {
+			value = value.trim().toUpperCase();
+			const keyIndex = keys.findIndex((item: any) => item.key === value);
+
+			if (keyIndex !== -1 && projectData.key !== value) {
+				setIsValidErrorShown(true);
+				setIsKeyValid(false);
+			}
+		}
+
 		setProject((state) => ({
 			...state,
 			[field]: value,
@@ -27,6 +58,10 @@ const ProjectForm = ({ projectData }: Props) => {
 	};
 
 	const onSave = () => {
+		if (!isNameValid || !isKeyValid) {
+			setIsValidErrorShown(true);
+			return;
+		}
 		dispatch(actions.startUpdatingProject({ project }));
 	};
 
@@ -36,115 +71,108 @@ const ProjectForm = ({ projectData }: Props) => {
 	];
 
 	return (
-		<>
-			{!projectData.id ? (
-				<Redirect to={'/projects'} />
-			) : (
-				<div className={styles.form__container}>
-					<Form>
-						<Form.Input
-							className={styles.form__input}
-							label={t('name')}
-							required
-							type="text"
-							placeholder={t('project_name')}
-							value={name}
-							onChange={(e) => onProjectChange('name', e.target.value)}
+		<div className={styles.form__container}>
+			<Form>
+				<Form.Field className={styles.form__input_key} required>
+					<label className={styles.avatar__label}>{t('name')}</label>
+					<CustomInput
+						isValidErrorShown={isValidErrorShown}
+						isDataValid={isNameValid}
+						setIsDataValid={setIsNameValid}
+						data={project.name}
+						setData={(data) => onProjectChange('name', data)}
+						placeholder="Enter project name"
+						popUpContent="Project name should contain at least 5 symbols long"
+						validation={(name) => validator.isLength(name, { min: 5 })}
+						popUpPosition="bottom right"
+					/>
+				</Form.Field>
+				<Form.Field className={styles.form__input_key} required>
+					<label>{t('key')}</label>
+					<div className={styles.form__input_container}>
+						<CustomInput
+							isValidErrorShown={isValidErrorShown}
+							isDataValid={isKeyValid}
+							setIsDataValid={setIsKeyValid}
+							data={project.key}
+							setData={(data) => onProjectChange('key', data)}
+							placeholder={t('example') + ': QA'}
+							popUpContent="Key should contain at least 2 symbols long"
+							validation={(key) => validator.isLength(key, { min: 2 })}
+							popUpPosition="bottom left"
 						/>
-						<Form.Field className={styles.form__input_key} required>
-							<label>{t('key')}</label>
-							<div className={styles.form__input_container}>
-								<input
-									placeholder={t('example') + ': QA'}
-									value={key}
-									onChange={(e) => onProjectChange('key', e.target.value)}
-								/>
-								<Popup
-									trigger={
-										<Icon name="info circle" className={styles.information__icon} size={'large'} />
-									}
-									position="bottom center"
-									content={t('key_info')}
-								/>
-							</div>
-						</Form.Field>
-						<Form.Input
-							className={styles.form__input}
-							label="URL"
-							type="text"
-							placeholder={'https://www...'}
+						<Popup
+							trigger={<Icon name="info circle" className={styles.information__icon} size={'large'} />}
+							position="bottom center"
+							content={t('key_info')}
 						/>
-						<Form.Field className={styles.form__input} required>
-							<label>{t('project_type')}</label>
-							<div className={styles.form__input_container}>
-								<input placeholder={t('type')} />
-								<Popup
-									trigger={
-										<Icon name="info circle" className={styles.information__icon} size={'large'} />
-									}
-									position="bottom center"
-									content={t('project_type_info')}
-								/>
-							</div>
-						</Form.Field>
-						<Form.Field className={styles.form__input} required>
-							<label>{t('project_category')}</label>
-							<div className={styles.form__input_container}>
-								<input placeholder={t('category')} />
-								<Popup
-									trigger={
-										<Icon name="info circle" className={styles.information__icon} size={'large'} />
-									}
-									position="bottom center"
-									content={t('project_category_info')}
-								/>
-							</div>
-						</Form.Field>
-						<Form.Field required className={styles.form__input}>
-							<label className={styles.avatar__label}>{t('avatar')}</label>
-							<button type="button" className={styles.form__avatar}>
-								<img className={styles.avatar__img} src={mockAvatar} alt="Project avatar" />
-								<span className={styles.avatar__text}>{t('select_image')}</span>
-							</button>
-						</Form.Field>
-						<Form.Field className={styles.form__area}>
-							<label className={styles.avatar__label}>{t('description')}</label>
-							<TextArea placeholder={t('project_desc')} rows={'7'} />
-						</Form.Field>
-						<Form.Input
-							className={styles.form__input}
-							label={t('project_lead')}
-							placeholder={t('project_lead_name')}
-							required
-							type="text"
+					</div>
+				</Form.Field>
+				<Form.Input
+					className={styles.form__input}
+					label="URL"
+					type="text"
+					placeholder={'https://www...'}
+					onChange={(e) => onProjectChange('url', e.target.value)}
+					value={project.url}
+				/>
+				<Form.Field className={styles.form__input} required>
+					<label>{t('project_category')}</label>
+					<div className={styles.form__input_container}>
+						<input placeholder={t('category')} disabled />
+						<Popup
+							trigger={<Icon name="info circle" className={styles.information__icon} size={'large'} />}
+							position="bottom center"
+							content={t('project_category_info')}
 						/>
-						<Form.Field className={styles.form__input}>
-							<label className={styles.avatar__label}>{t('default_assignee')}</label>
-							<div className={styles.form__input_container}>
-								<Form.Select
-									options={options}
-									placeholder={t('unassigned')}
-									className={styles.form__input_select}
-								/>
-								<Popup
-									trigger={
-										<Icon name="info circle" className={styles.information__icon} size={'large'} />
-									}
-									position="top center"
-									content={t('default_assignee_desc')}
-								/>
-							</div>
-						</Form.Field>
-						<div>
-							<Button primary onClick={onSave}>
-								{t('save_details')}
-							</Button>
-							<Link to="/projects">{t('cancel')}</Link>
-						</div>
-					</Form>
+					</div>
+				</Form.Field>
+				<Form.Field required className={styles.form__input}>
+					<label className={styles.avatar__label}>{t('avatar')}</label>
+					<SelectIcon currentIcon={currentIcon} setCurrentIcon={setCurrentIcon} />
+				</Form.Field>
+				<Form.Field className={styles.form__area}>
+					<label className={styles.avatar__label}>{t('description')}</label>
+					<TextArea
+						placeholder={t('project_desc')}
+						rows={'7'}
+						onChange={(e, data) => onProjectChange('description', data.value?.toString() || '')}
+						value={project.description}
+					/>
+				</Form.Field>
+				<Form.Field className={styles.form__input}>
+					<label className={styles.avatar__label}>{t('lead')}</label>
+					<Dropdown
+						placeholder={`${project.lead?.firstName} ${project.lead?.lastName}`}
+						search
+						selection
+						options={projectUsers}
+						onChange={(e, data) => onProjectChange('lead', data.value?.toString() || '')}
+					/>
+				</Form.Field>
+				<Form.Field className={styles.form__input}>
+					<label className={styles.avatar__label}>{t('default_assignee')}</label>
+					<div className={styles.form__input_container}>
+						<Form.Select
+							options={options}
+							placeholder={t('unassigned')}
+							className={styles.form__input_select}
+						/>
+						<Popup
+							trigger={<Icon name="info circle" className={styles.information__icon} size={'large'} />}
+							position="top center"
+							content={t('default_assignee_desc')}
+						/>
+					</div>
+				</Form.Field>
+				<div>
+					<Button primary onClick={onSave}>
+						{t('save_details')}
+					</Button>
+					<Link to="/projects">{t('cancel')}</Link>
 				</div>
-			)}
-		</>
+			</Form>
+		</div>
 	);
 };
 

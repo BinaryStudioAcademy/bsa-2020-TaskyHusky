@@ -1,0 +1,21 @@
+@import 'styles/mixins.scss';
+
+.menu {
+  background-color: inherit !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.menu>.item {
+  &::before {
+    background: none !important;
+  }
+}
+
+@media screen and (max-width: $less-than-medium-screen) {
+  .menu {
+    display: flex;
+    flex-direction: column;
+    width: 160px;
+  }
+}

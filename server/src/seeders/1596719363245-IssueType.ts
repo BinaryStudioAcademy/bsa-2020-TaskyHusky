@@ -19,6 +19,11 @@ export class IssueType1596717562603 implements MigrationInterface {
 				color: 'teal',
 				icon: 'file text',
 			},
+			{
+				title: 'Fix',
+				color: 'orange',
+				icon: 'eraser',
+			},
 		];
 
 		const repo = getRepository(IssueType);

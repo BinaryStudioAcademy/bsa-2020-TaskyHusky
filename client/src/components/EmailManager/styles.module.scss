@@ -15,6 +15,7 @@
 
 .cardHeader {
   @include info-block-header;
+  margin: 25px 0 !important;
   font-size: 14px;
 }
 
@@ -31,7 +32,9 @@
 .submitButton {
   margin-top: 20px !important;
   @include content-btn;
-  background-color: #76ef8a !important;
+  background-color: #2185d0 !important;
+  color: $primary-bg !important;
+  border: none !important;
 }
 
 .select {

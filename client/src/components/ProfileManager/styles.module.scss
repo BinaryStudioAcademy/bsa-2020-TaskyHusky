@@ -22,7 +22,9 @@
 .submitButton {
   @include content-btn;
   margin-right: 20px !important;
-  background-color: $green !important;
+  background-color: #2185d0 !important;
+  color: $primary-bg !important;
+  border: none !important;
 }
 
 .secondaryButton {

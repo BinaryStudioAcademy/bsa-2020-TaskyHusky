@@ -18,6 +18,7 @@ export interface AuthState {
 	jwtToken: string;
 	profileLoaded?: boolean;
 	isEmailInDB: boolean | null;
+	loading: boolean;
 }
 
 export const initialState: AuthState = {
@@ -25,4 +26,5 @@ export const initialState: AuthState = {
 	isAuthorized: false,
 	jwtToken: '',
 	isEmailInDB: null,
+	loading: false,
 };

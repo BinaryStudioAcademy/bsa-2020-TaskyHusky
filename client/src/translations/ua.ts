@@ -223,6 +223,7 @@ export const ua = {
 	boards: 'Дошки',
 	create_board: 'Створити дошку',
 	view_all_boards: 'Усі дошки',
+	advanced_search: 'Розширений пошук задач',
 	create_sprint: 'Створити спринт',
 	no_sprints_header: 'Активні спринти відсутні',
 	no_sprints_header_subheader: 'Плануйте роботу своєї команди. Створіть свій перший спринт.',
@@ -237,4 +238,5 @@ export const ua = {
 	mark_sprint_as_completed: 'Спринт буде позначено як завершений',
 	mark_sprint_as_not_completed: 'Спринт буде позначено як незавершений',
 	sprint_name: 'Назва спринту',
+	my_work: 'Моя робота',
 };

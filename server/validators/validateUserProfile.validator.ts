@@ -17,7 +17,6 @@ export const validateUserProfile: ValidateUserProfile = async (data, next) => {
 
 	const errorsArray = await validate(userInstance);
 	const errors = errorsArray.length > 0;
-
 	if (errors) {
 		errorsArray.forEach((error) => {
 			switch (error.property) {
