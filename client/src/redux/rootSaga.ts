@@ -13,6 +13,7 @@ import usersSaga from 'commonLogic/users/saga';
 import issueSaga from 'pages/IssuePage/logic/saga';
 import projectSaga from 'containers/ProjectSettings/logic/saga';
 import issueCommentSaga from 'components/IssueCommentForm/logic/saga';
+import headerSaga from '../containers/Header/logic/saga';
 
 export default function* rootSaga() {
 	yield all([
@@ -30,5 +31,6 @@ export default function* rootSaga() {
 		saveFilterSaga(),
 		usersSaga(),
 		issueCommentSaga(),
+		headerSaga(),
 	]);
 }

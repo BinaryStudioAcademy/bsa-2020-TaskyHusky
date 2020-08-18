@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Menu, Image, Dropdown, Button, Icon } from 'semantic-ui-react';
 import logo from 'assets/logo192.png'; // TODO: replace with logo once it is ready
 import styles from './styles.module.scss';
@@ -11,6 +11,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'typings/rootState';
 import { removeToken } from 'helpers/setToken.helper';
 import * as actions from 'containers/LoginPage/logic/actions';
+import * as headerActions from './logic/actions';
 import { User } from 'containers/LoginPage/logic/state';
 import { useTranslation } from 'react-i18next';
 import CreateIssueModal from 'containers/CreateIssueModal';
@@ -19,6 +20,7 @@ import { getInitials } from 'helpers/getInitials.helper';
 
 export const HeaderMenu = () => {
 	const authStore = useSelector((rootStore: RootState) => rootStore.auth);
+	const incomingInvites = useSelector((rootStore: RootState) => rootStore.header.invites);
 	const dispatch = useDispatch();
 	const { t } = useTranslation();
 
@@ -26,6 +28,10 @@ export const HeaderMenu = () => {
 
 	const [activeItem, setActiveItem] = useState<string>('');
 	const [redirectToDashboards, setRedirectToDashboards] = useState<boolean>(false);
+
+	useEffect(() => {
+		dispatch(headerActions.startLoading({ id: authStore.user?.id || '' }));
+	}, [dispatch]);
 
 	const logOutHandler = () => {
 		dispatch(actions.logOutUserTrigger());
@@ -42,6 +48,7 @@ export const HeaderMenu = () => {
 
 	const renderDashboards = redirectToDashboards ? <Redirect to="/dashboards" /> : null;
 
+	console.log(incomingInvites);
 	return (
 		<>
 			<div className={`${styles.segmentWrapper} site-header`}>
@@ -80,7 +87,18 @@ export const HeaderMenu = () => {
 						</Menu.Item>
 					</CreateIssueModal>
 					<Menu.Item position="right" className={styles.rightMenu}>
-						<Dropdown icon="users" className={styles.circularIcon} direction="left"></Dropdown>
+						<Dropdown icon="users" className={styles.circularIcon} direction="left">
+							<Dropdown.Menu>
+								<Dropdown.Item>
+									<Button>Delete</Button>
+									<Button>Create</Button>
+								</Dropdown.Item>
+								<Dropdown.Item>
+									<Button>Create</Button>
+									<Button>Delete</Button>
+								</Dropdown.Item>
+							</Dropdown.Menu>
+						</Dropdown>
 						<Dropdown icon="bell outline" className={styles.circularIcon} direction="left">
 							<Dropdown.Menu className={styles.circularDropdownMenu}>
 								<Dropdown.Header>{t('notifications')}</Dropdown.Header>
