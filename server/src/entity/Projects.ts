@@ -43,7 +43,6 @@ export class Projects {
 	@IsString()
 	icon?: string;
 
-	@Column({ type: 'text', default: '' })
 	@IsString()
 	url?: string;
 
@@ -81,7 +80,4 @@ export class Projects {
 
 	@DeleteDateColumn()
 	deletedDate?: Date;
-
-	@VersionColumn()
-	version?: number;
 }

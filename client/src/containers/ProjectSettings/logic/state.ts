@@ -1,6 +1,7 @@
 export interface ProjectState {
 	project: WebApi.Entities.Projects;
 	isLoading: boolean;
+	is404Error: boolean;
 }
 
 export const initialState: ProjectState = {
@@ -55,4 +56,5 @@ export const initialState: ProjectState = {
 		users: [],
 	},
 	isLoading: true,
+	is404Error: false,
 };

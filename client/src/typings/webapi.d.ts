@@ -301,5 +301,8 @@ namespace WebApi.Entities {
 		createdIssues?: Issue[];
 		teams?: Team[];
 		projects?: Projects[];
+		incomingInvites?: UserProfile[];
+		pendingInvites?: UserProfile[];
+		teammates?: UserProfile[];
 	}
 }
