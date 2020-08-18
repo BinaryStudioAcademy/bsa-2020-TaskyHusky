@@ -39,7 +39,6 @@ export function* loadIssuesRequest(action: ReturnType<typeof actions.loadIssuesT
 export function* updateSprintRequest(action: ReturnType<typeof actions.updateSprintDataTrigger>) {
 	const { sprint } = action;
 	const response: any = yield call(updateSprint, sprint);
-	console.log('saga', response);
 	yield put(actions.updateSprintDataSuccess({ sprint: response }));
 }
 

@@ -1,5 +1,5 @@
-import React, { useState, SyntheticEvent } from 'react';
-import { Button, Header, Icon, Modal, Form, Checkbox, InputOnChangeData } from 'semantic-ui-react';
+import React, { useState } from 'react';
+import { Button, Header, Icon, Modal, Form, Checkbox } from 'semantic-ui-react';
 import { useDispatch } from 'react-redux';
 import * as actions from 'containers/Board/Scrum/logic/actions';
 import { useTranslation } from 'react-i18next';
@@ -18,36 +18,37 @@ const EditSprintModal = (props: Props) => {
 	const { t } = useTranslation();
 	const dispatch = useDispatch();
 	const { sprintName, sprintIsActive, sprintIsCompleted, sprintId } = props;
-	const [isActive, setIsActive] = useState(sprintIsActive);
-	const [isCompleted, setIsCompleted] = useState(sprintIsCompleted);
-	const [name, setName] = useState(sprintName);
+	const [isActive, setIsActive] = useState<boolean>(sprintIsActive);
+	const [isCompleted, setIsCompleted] = useState<boolean>(sprintIsCompleted);
+	const [name, setName] = useState<string>(sprintName);
 
 	const handleNoButtonClick = () => {
 		props.clickAction();
 	};
 
 	const handleYesButtonClick = () => {
-		const sprintData = {
+		const sprint = {
 			id: sprintId,
 			sprintName: name,
 			isActive,
 			isCompleted,
 		};
 
-		console.log(sprintData);
-		dispatch(actions.updateSprintDataTrigger({ sprint: sprintData }));
+		dispatch(actions.updateSprintDataTrigger({ sprint }));
 		props.clickAction();
 	};
 
 	return (
 		<Modal onClose={props.clickAction} open={props.isOpen} size="small">
-			<Header>Edit sprint: {sprintName}</Header>
+			<Header>
+				{t('edit_sprint')}: {sprintName}
+			</Header>
 			<Modal.Content>
 				<Form>
 					<Form.Field>
-						<label>Sprint Name</label>
+						<label>{t('sprint_name')}</label>
 						<input
-							placeholder="Enter sprint name"
+							placeholder={t('enter_sprint_name')}
 							value={name ? name : ''}
 							onChange={(event) => {
 								setName(event.target.value);
@@ -57,7 +58,7 @@ const EditSprintModal = (props: Props) => {
 					<Form.Field>
 						<Checkbox
 							toggle
-							label={isActive ? 'Sprint will be marked as active' : 'Sprint will be marked as inactive'}
+							label={isActive ? t('mark_sprint_as_active') : t('mark_sprint_as_inactive')}
 							checked={isActive}
 							onChange={() => {
 								setIsActive(!isActive);
@@ -67,11 +68,7 @@ const EditSprintModal = (props: Props) => {
 					<Form.Field>
 						<Checkbox
 							toggle
-							label={
-								isCompleted
-									? 'Sprint will be marked as completed'
-									: 'Sprint will be marked as not completed'
-							}
+							label={isCompleted ? t('mark_sprint_as_completed') : t('mark_sprint_as_not_completed')}
 							checked={isCompleted}
 							onChange={() => {
 								setIsCompleted(!isCompleted);
@@ -85,7 +82,7 @@ const EditSprintModal = (props: Props) => {
 					<Icon name="remove" /> {t('cancel')}
 				</Button>
 				<Button color="green" inverted onClick={handleYesButtonClick}>
-					<Icon name="checkmark" /> {t('delete')}
+					<Icon name="checkmark" /> {t('save_details')}
 				</Button>
 			</Modal.Actions>
 		</Modal>

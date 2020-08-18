@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { List, Item, Button } from 'semantic-ui-react';
 
 import Options, { ItemProps } from 'components/common/Options';
@@ -17,8 +17,8 @@ type Props = {
 };
 
 export const SprintHeader: React.FC<Props> = ({ id, isActive, name, issues, isCompleted }) => {
-	const [isDeleteModalOpen, setIsDeleteModalOpen] = React.useState(false);
-	const [isEditModalOpen, setIsEditModalOpen] = React.useState(false);
+	const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
+	const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false);
 	const { t } = useTranslation();
 
 	const config: ItemProps[] = [

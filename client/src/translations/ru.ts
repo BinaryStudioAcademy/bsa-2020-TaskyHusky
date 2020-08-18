@@ -231,4 +231,10 @@ export const ru = {
 	delete_sprint: 'Удалить спринт',
 	sprint_cannot_be_deleted: 'Спринт не может быть удален',
 	delete_sprint_warning: 'Вы уверены, что хотите удалить этот спринт? Это действие не может быть отменено.',
+	enter_sprint_name: 'Введите название спринта',
+	mark_sprint_as_active: 'Спринт будет отмечен как активный',
+	mark_sprint_as_inactive: 'Спринт будет отмечен как неактивный',
+	mark_sprint_as_completed: 'Спринт будет отмечен как завершенный',
+	mark_sprint_as_not_completed: 'Спринт будет отмечен как незавершенный',
+	sprint_name: 'Название спринта',
 };

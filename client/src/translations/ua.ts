@@ -231,4 +231,10 @@ export const ua = {
 	delete_sprint: 'Видалити спринт',
 	sprint_cannot_be_deleted: 'Неможливо видалити спринт',
 	delete_sprint_warning: 'Ви впевнені, що хочете видалити цей спринт? Цю дію не можна скасувати.',
+	enter_sprint_name: 'Введіть ім&apos;я спринту',
+	mark_sprint_as_active: 'Спринт буде позначено як активний',
+	mark_sprint_as_inactive: 'Спринт буде позначено як неактивний',
+	mark_sprint_as_completed: 'Спринт буде позначено як завершений',
+	mark_sprint_as_not_completed: 'Спринт буде позначено як незавершений',
+	sprint_name: 'Ім&apos;я спринту',
 };

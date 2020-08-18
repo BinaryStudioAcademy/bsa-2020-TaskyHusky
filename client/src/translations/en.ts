@@ -232,4 +232,10 @@ export const en = {
 	delete_sprint: 'Delete sprint',
 	sprint_cannot_be_deleted: 'Sprint cannot be deleted',
 	delete_sprint_warning: 'Are you sure you want to delete this sprint? This action cannot be undone.',
+	enter_sprint_name: 'Enter sprint name',
+	mark_sprint_as_active: 'Sprint will be marked as active',
+	mark_sprint_as_inactive: 'Sprint will be marked as inactive',
+	mark_sprint_as_completed: 'Sprint will be marked as completed',
+	mark_sprint_as_not_completed: 'Sprint will be marked as not completed',
+	sprint_name: 'Sprint name',
 };
