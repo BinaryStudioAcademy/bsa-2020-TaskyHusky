@@ -30,3 +30,15 @@ export const updateSprint = async (sprintData: Partial<WebApi.Entities.Sprint>):
 
 	return await res.json();
 };
+
+export const createSprint = async (sprintData: Partial<WebApi.Sprint.SprintModel>): Promise<WebApi.Entities.Sprint> => {
+	const res: Response = await callWebApi({
+		method: 'POST',
+		endpoint: `sprint/`,
+		body: {
+			...sprintData,
+		},
+	});
+
+	return await res.json();
+};

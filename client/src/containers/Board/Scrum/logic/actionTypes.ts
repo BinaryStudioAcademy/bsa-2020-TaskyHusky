@@ -49,3 +49,14 @@ export type UpdateSprintDataTrigger = {
 export type UpdateSprintDataSuccess = {
 	sprint: WebApi.Entities.Sprint;
 };
+
+export const CREATE_SPRINT_TRIGGER = 'SCRUM_BOARD":CREATE_SPRINT_TRIGGER';
+export const CREATE_SPRINT_SUCCESS = 'SCRUM_BOARD":CREATE_SPRINT_SUCCESS';
+
+export type CreateSprintTrigger = {
+	sprint: Partial<WebApi.Sprint.SprintModel>;
+};
+
+export type CreateSprintSuccess = {
+	sprint: WebApi.Entities.Sprint;
+};

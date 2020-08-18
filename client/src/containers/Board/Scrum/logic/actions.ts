@@ -18,3 +18,6 @@ export const updateSprintDataTrigger = createAction<actionTypes.UpdateSprintData
 export const updateSprintDataSuccess = createAction<actionTypes.UpdateSprintDataSuccess>(
 	actionTypes.UPDATE_SPRINT_DATA_SUCCESS,
 );
+
+export const createSprintTrigger = createAction<actionTypes.CreateSprintTrigger>(actionTypes.CREATE_SPRINT_TRIGGER);
+export const createSprintSuccess = createAction<actionTypes.CreateSprintSuccess>(actionTypes.CREATE_SPRINT_SUCCESS);

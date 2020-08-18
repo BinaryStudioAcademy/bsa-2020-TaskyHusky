@@ -51,4 +51,13 @@ export const scrumBoardReducer = createReducer<ScrumBoardState>(initialState, {
 			sprints: updatedSprints,
 		};
 	},
+	[actionTypes.CREATE_SPRINT_SUCCESS](state, action: actionTypes.CreateSprintSuccess) {
+		const { sprint } = action;
+		const updatedSprints = state.sprints.concat(sprint);
+
+		return {
+			...state,
+			sprints: updatedSprints,
+		};
+	},
 });
