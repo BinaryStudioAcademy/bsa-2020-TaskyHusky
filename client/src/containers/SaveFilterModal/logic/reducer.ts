@@ -21,12 +21,12 @@ export const saveFilterReducer = createReducer<SaveFilterState>(initialState, {
 			isLoading: true,
 		};
 	},
-	[actionTypes.SUCCESS_SAVING_FILTER](state) {
+	[actionTypes.SUCCESS_SAVING_FILTER](state, action) {
 		return {
 			...state,
 			isLoading: false,
 			isModalOpened: false,
-			isFilterSaved: true,
+			savedFilterId: action.id,
 		};
 	},
 	[actionTypes.FAIL_SAVING_FILTER](state) {
@@ -38,6 +38,12 @@ export const saveFilterReducer = createReducer<SaveFilterState>(initialState, {
 	[actionTypes.RESET_STATE]() {
 		return {
 			...initialState,
+		};
+	},
+	[actionTypes.REDIRECTING](state, { redirecting }) {
+		return {
+			...state,
+			redirecting,
 		};
 	},
 });

@@ -1,4 +1,12 @@
 import { FilterPartState } from './state';
+import { filterDefsIDS } from 'constants/FilterDef';
+
+const QUICK_FILTER_IDS = [
+	filterDefsIDS.PROJECTS,
+	filterDefsIDS.STATUS,
+	filterDefsIDS.ISSUE_TYPE,
+	filterDefsIDS.ASSIGNEE,
+];
 
 type Filter = {
 	issueType?: string[];
@@ -49,3 +57,12 @@ export const getFilterOptionsFromFilterParts = (filterParts: FilterPartState[]) 
 
 	return filter;
 };
+
+export const getDefaultFilterParts = (filterParts: FilterPartState[]) => {
+	return filterParts.filter(({ filterDef }) =>
+		QUICK_FILTER_IDS.some((quickFilterID) => filterDef.id === quickFilterID),
+	);
+};
+
+export const getAdditionalFilterParts = (filterParts: FilterPartState[]) =>
+	filterParts.filter(({ filterDef }) => !QUICK_FILTER_IDS.some((quickFilterID) => filterDef.id === quickFilterID));
