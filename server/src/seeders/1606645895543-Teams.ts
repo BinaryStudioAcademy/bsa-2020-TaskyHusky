@@ -12,7 +12,7 @@ export class Team1606645895543 implements MigrationInterface {
 		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 		const user1 = (await userRepository.getByEmail('test@test.com'))!;
 		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-		const project1 = (await projectRepository.findOneById('e040e267-3533-4579-93fa-e749ca93f72f'))!;
+		const project1 = (await projectRepository.getOne('e040e267-3533-4579-93fa-e749ca93f72f'))!;
 
 		const team = new Team();
 
