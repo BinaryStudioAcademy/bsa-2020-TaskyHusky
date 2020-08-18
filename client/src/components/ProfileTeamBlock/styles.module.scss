@@ -2,7 +2,6 @@
 
 .item {
   @include info-block-item;
-  @include point
 }
 
 .header {
@@ -12,23 +11,23 @@
 .content {
   display: flex;
   flex-direction: column;
+}
 
-  &__primary {
-    font-family: Poppins, sans-serif;
-    font-style: normal;
-    font-weight: 600;
-    font-size: 14px;
-    color: $primary-text;
-  }
+.contentPrimary {
+  font-family: Poppins, sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  color: $primary-text;
+}
 
-  &__secondary {
-    font-family: Poppins, sans-serif;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 14px;
-    letter-spacing: 0.44px;
-    color: $private-message;
-  }
+.contentSecondary {
+  font-family: Poppins, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  letter-spacing: 0.44px;
+  color: $private-message;
 }
 
 .groupIcon {

@@ -19,8 +19,8 @@ const ProfileTeamBlock: React.FC<Props> = (props: Props) => {
 						<img src={teamIcon} alt="icon" />
 					</div>
 					<div className={styles.content}>
-						<span className={styles.content__primary}>{item.name}</span>
-						<span className={styles.content__secondary}>
+						<span className={styles.contentPrimary}>{item.name}</span>
+						<span className={styles.contentSecondary}>
 							{item.members}
 							{item.members === 1 ? ' member' : ' members'}
 						</span>

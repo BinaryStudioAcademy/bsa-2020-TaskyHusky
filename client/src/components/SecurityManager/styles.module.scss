@@ -10,11 +10,11 @@
 
 .card {
   @include card-container;
+}
 
-  &__header {
-    @include info-block-header;
-    font-size: 14px;
-  }
+.cardHeader {
+  @include info-block-header;
+  font-size: 14px;
 }
 
 .submitButton {

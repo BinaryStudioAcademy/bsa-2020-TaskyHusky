@@ -11,34 +11,34 @@
 
 .card {
   @include card-container;
-
-  &__header {
-    @include info-block-header;
-    font-size: 14px;
-  }
-
-  &__textData {
-    @include text-data;
-  }
 }
 
-.footer {
-  &__button {
-    margin-right: 20px !important;
-    @include content-btn;
-  }
-
-  &__link {
-    position: relative;
-    font-family: "Poppins", sans-serif;
-  }
-
-  &__icon {
-    position: absolute;
-    right: -20px;
-    top: -2px;
-  }
+.cardHeader {
+  @include info-block-header;
+  font-size: 14px;
 }
+
+.textData {
+  @include text-data;
+}
+
+
+.footerButton {
+  margin-right: 20px !important;
+  @include content-btn;
+}
+
+.footerLink {
+  position: relative;
+  font-family: "Poppins", sans-serif;
+}
+
+.footerIcon {
+  position: absolute;
+  right: -20px;
+  top: -2px;
+}
+
 
 @media screen and (max-width: $less-than-medium-screen) {
   .container {

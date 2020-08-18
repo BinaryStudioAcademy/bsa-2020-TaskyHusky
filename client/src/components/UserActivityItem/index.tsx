@@ -17,16 +17,16 @@ const UserActivityItem: React.FC<Props> = (props: Props) => {
 	return (
 		<div className={styles.activityItem}>
 			{icon ? (
-				<img src={icon} alt="icon" className={styles.activityItem__icon} />
+				<img src={icon} alt="icon" className={styles.icon} />
 			) : (
 				<div className={styles.avatar}>
-					<p className={styles.avatar__title}>{name[0]}</p>
+					<p className={styles.avatarTitle}>{name[0]}</p>
 				</div>
 			)}
 
-			<div className={styles.activityItem__block}>
-				<p className={styles.activityItem__content}>{name}</p>
-				<p className={styles.activityItem__content__secondary}>{project}</p>
+			<div className={styles.block}>
+				<p className={styles.content}>{name}</p>
+				<p className={styles.contentSecondary}>{project}</p>
 			</div>
 		</div>
 	);
