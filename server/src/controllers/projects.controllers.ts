@@ -170,7 +170,7 @@ class ProjectsController {
 		const projectsRepository = getCustomRepository(ProjectsRepository);
 		const projectByKey = await projectsRepository.getOneByKey(key);
 
-		if (projectId && projectByKey?.id !== projectId) {
+		if (projectId && projectByKey?.id && projectByKey?.id !== projectId) {
 			next(new ErrorResponse(HttpStatusCode.UNPROCESSABLE_ENTITY, projectsErrorMessages.PROJECT_EXISTS));
 			isAllowed = false;
 		}
