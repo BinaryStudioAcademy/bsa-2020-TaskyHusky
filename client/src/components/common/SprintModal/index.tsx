@@ -29,7 +29,7 @@ const SprintModal = (props: Props) => {
 
 		if (sprintIssues.length === 0) {
 			dispatch(actions.deleteSprintTrigger({ sprintId }));
-			dispatch(actions.loadSprintsTrigger({ boardId: scrumBoardState.sprints[0].board?.id as string })); // WILL BE REFACTORED
+			// dispatch(actions.loadSprintsTrigger({ boardId: scrumBoardState.sprints[0].board?.id as string })); // WILL BE REFACTORED
 		}
 
 		props.clickAction();

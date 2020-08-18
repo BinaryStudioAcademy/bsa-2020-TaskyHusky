@@ -19,7 +19,8 @@ export function* loadSprintsRequest(action: ReturnType<typeof actions.loadSprint
 export function* deleteSprintRequest(action: any) {
 	try {
 		const { sprintId } = action;
-		yield call(deleteSprint, sprintId);
+		const response: WebApi.Entities.Sprint[] = yield call(deleteSprint, sprintId);
+		yield put(actions.loadSprintsSuccess({ sprints: response }));
 	} catch (error) {
 		NotificationManager.error(error.clientException.message, 'Error');
 	}
