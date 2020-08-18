@@ -2,10 +2,12 @@ import React from 'react';
 import { List, Image, Item } from 'semantic-ui-react';
 import styles from './styles.module.scss';
 import { getUsername } from 'helpers/getUsername.helper';
+import { useTranslation } from 'react-i18next';
 
 type Props = { issues: WebApi.Entities.Issue[] };
 
 export const SprintIssues: React.FC<Props> = ({ issues }: Props) => {
+	const { t } = useTranslation();
 	const issuesList =
 		issues?.length > 0 ? (
 			issues.map((issue) => {
@@ -38,7 +40,7 @@ export const SprintIssues: React.FC<Props> = ({ issues }: Props) => {
 			})
 		) : (
 			<List.Item className={styles.emptyIssueItem}>
-				<span>Plan a sprint by creating some issues.</span>
+				<span>{t('no_issues_in_sprint')}</span>
 			</List.Item>
 		);
 
