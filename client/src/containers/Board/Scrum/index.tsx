@@ -12,6 +12,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import Sprint from 'components/Sprint';
 import { startGettingProject } from 'containers/ProjectSettings/logic/actions';
 import { extractUUIDFromArrayOfObjects } from 'helpers/extractUUIDFromArrayOfObjects.helper';
+import CreateSprintModal from 'components/common/SprintModal/CreateSprintModal';
 
 const Scrum: BoardComponent = (props) => {
 	const dispatch = useDispatch();
@@ -23,6 +24,7 @@ const Scrum: BoardComponent = (props) => {
 	const { board } = props;
 	const { t } = useTranslation();
 	const [search, setSearch] = useState<string>('');
+	const [isCreateModalOpened, setIsCreateModalOpened] = useState<boolean>(false);
 
 	const projectDetails: BreadCrumbData = { id: projectState.id, name: projectState.name };
 	const boardDetails: BreadCrumbData = { id: board.id, name: board.name };
@@ -59,29 +61,41 @@ const Scrum: BoardComponent = (props) => {
 		);
 
 	return (
-		<Container>
-			<Container className={styles.breadcrumb}>
-				<Breadcrumbs sections={setBreadcrumbs({ history, projectDetails, boardDetails })} />
-			</Container>
-			<Container className={styles.inlineContainer}>
-				<Header as="h2">{board.name}</Header>
-				<Form.Input
-					placeholder={t('search')}
-					icon="search"
-					value={search}
-					onChange={(event: SyntheticEvent, data: InputOnChangeData) => setSearch(data.value)}
-					style={{ marginLeft: 20, marginRight: 60, maxWidth: 250 }}
-				/>
-				<Button onClick={() => setSearch('')} secondary>
-					{t('clear')}
-				</Button>
-				<Button onClick={() => {}} secondary className={styles.createSprintButton}>
-					{t('create_sprint')}
-				</Button>
-			</Container>
+		<>
+			<Container>
+				<Container className={styles.breadcrumb}>
+					<Breadcrumbs sections={setBreadcrumbs({ history, projectDetails, boardDetails })} />
+				</Container>
+				<Container className={styles.inlineContainer}>
+					<Header as="h2">{board.name}</Header>
+					<Form.Input
+						placeholder={t('search')}
+						icon="search"
+						value={search}
+						onChange={(event: SyntheticEvent, data: InputOnChangeData) => setSearch(data.value)}
+						style={{ marginLeft: 20, marginRight: 60, maxWidth: 250 }}
+					/>
+					<Button onClick={() => setSearch('')} secondary>
+						{t('clear')}
+					</Button>
+					<Button
+						onClick={() => {
+							setIsCreateModalOpened(!isCreateModalOpened);
+						}}
+						secondary
+						className={styles.createSprintButton}
+					>
+						{t('create_sprint')}
+					</Button>
+				</Container>
 
-			<Container>{sprintList}</Container>
-		</Container>
+				<Container>{sprintList}</Container>
+			</Container>
+			<CreateSprintModal
+				clickAction={() => setIsCreateModalOpened(!isCreateModalOpened)}
+				isOpen={isCreateModalOpened}
+			/>
+		</>
 	);
 };
 
