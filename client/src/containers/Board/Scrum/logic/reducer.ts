@@ -37,4 +37,18 @@ export const scrumBoardReducer = createReducer<ScrumBoardState>(initialState, {
 			boardId,
 		};
 	},
+	[actionTypes.UPDATE_SPRINT_DATA_SUCCESS](state, action: actionTypes.UpdateSprintDataSuccess) {
+		const updatedSprints = state.sprints.map((sprint) => {
+			if (sprint.id === action.sprint.id) {
+				return action.sprint;
+			}
+
+			return sprint;
+		});
+
+		return {
+			...state,
+			sprints: updatedSprints,
+		};
+	},
 });

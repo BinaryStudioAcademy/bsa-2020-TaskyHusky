@@ -1,5 +1,5 @@
 import { getBoardSprints } from 'services/board.service';
-import { getSprintIssues } from 'services/sprint.service';
+import { getSprintIssues, updateSprint } from 'services/sprint.service';
 import { deleteSprint } from 'services/sprint.service';
 import { all, put, takeEvery, call } from 'redux-saga/effects';
 import * as actionTypes from './actionTypes';
@@ -36,6 +36,13 @@ export function* loadIssuesRequest(action: ReturnType<typeof actions.loadIssuesT
 	}
 }
 
+export function* updateSprintRequest(action: ReturnType<typeof actions.updateSprintDataTrigger>) {
+	const { sprint } = action;
+	const response: any = yield call(updateSprint, sprint);
+	console.log('saga', response);
+	yield put(actions.updateSprintDataSuccess({ sprint: response }));
+}
+
 export function* watchLoadSprintsRequest() {
 	yield takeEvery(actionTypes.LOAD_SPRINTS_TRIGGER, loadSprintsRequest);
 }
@@ -48,6 +55,15 @@ export function* watchLoadIssueRequest() {
 	yield takeEvery(actionTypes.LOAD_ISSUES_TRIGGER, loadIssuesRequest);
 }
 
+export function* watchUpdateSprintRequest() {
+	yield takeEvery(actionTypes.UPDATE_SPRINT_DATA_TRIGGER, updateSprintRequest);
+}
+
 export default function* scrumBoardSaga() {
-	yield all([watchLoadSprintsRequest(), watchDeleteSprintRequest(), watchLoadIssueRequest()]);
+	yield all([
+		watchLoadSprintsRequest(),
+		watchDeleteSprintRequest(),
+		watchLoadIssueRequest(),
+		watchUpdateSprintRequest(),
+	]);
 }

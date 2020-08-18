@@ -38,3 +38,14 @@ export const SAVE_BOARD_ID_TO_STATE = 'SCRUM_BOARD":SAVE_BOARD_ID_TO_STATE';
 export type SaveBoardId = {
 	boardId: string;
 };
+
+export const UPDATE_SPRINT_DATA_TRIGGER = 'SCRUM_BOARD":UPDATE_SPRINT_DATA_TRIGGER';
+export const UPDATE_SPRINT_DATA_SUCCESS = 'SCRUM_BOARD":UPDATE_SPRINT_DATA_SUCCESS';
+
+export type UpdateSprintDataTrigger = {
+	sprint: Partial<WebApi.Entities.Sprint>;
+};
+
+export type UpdateSprintDataSuccess = {
+	sprint: WebApi.Entities.Sprint;
+};

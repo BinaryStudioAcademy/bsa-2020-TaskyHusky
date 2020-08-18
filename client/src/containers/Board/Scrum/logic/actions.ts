@@ -11,3 +11,10 @@ export const loadIssuesSuccess = createAction<actionTypes.LoadIssuesSuccess>(act
 
 export const saveProjectIdToState = createAction<actionTypes.SaveProjectId>(actionTypes.SAVE_PROJECT_ID_TO_STATE);
 export const saveBoardIdToState = createAction<actionTypes.SaveBoardId>(actionTypes.SAVE_BOARD_ID_TO_STATE);
+
+export const updateSprintDataTrigger = createAction<actionTypes.UpdateSprintDataTrigger>(
+	actionTypes.UPDATE_SPRINT_DATA_TRIGGER,
+);
+export const updateSprintDataSuccess = createAction<actionTypes.UpdateSprintDataSuccess>(
+	actionTypes.UPDATE_SPRINT_DATA_SUCCESS,
+);
