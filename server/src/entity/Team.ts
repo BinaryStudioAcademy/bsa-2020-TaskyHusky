@@ -1,6 +1,7 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, ManyToOne, JoinTable } from 'typeorm';
-import { IsArray } from 'class-validator';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, ManyToOne, JoinTable, OneToMany } from 'typeorm';
+import { IsString, IsArray, IsUUID } from 'class-validator';
 import { UserProfile } from './UserProfile';
+import { Projects } from './Projects';
 
 @Entity()
 export class Team {
@@ -20,6 +21,9 @@ export class Team {
 
 	@ManyToOne(() => UserProfile, (user: UserProfile) => user.teamsOwner)
 	createdBy!: UserProfile;
+
+	@OneToMany(() => Projects, (project: Projects) => project.team)
+	projects?: Projects[];
 
 	@Column()
 	name?: string;

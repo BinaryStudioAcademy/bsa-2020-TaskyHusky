@@ -18,28 +18,12 @@ $gradient: linear-gradient(90deg, rgba(52, 221, 255, 1) 0%, rgba(95, 221, 247, 1
 .margin_1 {
 	margin-right: 5px !important;
 }
-.worked_block_wrapper {
-	display: flex;
-	flex-direction: column;
-	padding: 20px 10px;
-	box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-	.worked_block {
-		align-self: center;
-		padding-left: 20px;
-		.p_descr {
-			font-size: 1.2rem;
-			color: #3a3939;
-			font-style: oblique;
-		}
-	}
-}
+
 .flex_row {
 	display: flex;
 	flex-direction: row;
 }
-.shadow_top {
-	box-shadow: 1px -1px 2px rgba(0, 0, 0, 0.5);
-}
+
 .link_header {
 	padding: 2rem 0 1rem 0;
 	display: flex;
@@ -49,7 +33,15 @@ $gradient: linear-gradient(90deg, rgba(52, 221, 255, 1) 0%, rgba(95, 221, 247, 1
 	border: none !important;
 	box-shadow: none !important;
 }
-
+.worked_block_wrapper {
+	display: flex;
+	flex-direction: column;
+	padding: 20px 10px;
+	box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+.shadow_top {
+	box-shadow: 1px -1px 2px rgba(0, 0, 0, 0.5);
+}
 .align_center {
 	align-items: center;
 	justify-content: center;
@@ -76,6 +68,7 @@ $gradient: linear-gradient(90deg, rgba(52, 221, 255, 1) 0%, rgba(95, 221, 247, 1
 .input_area {
 	width: 100%;
 	max-width: 100%;
+	min-width: 100%;
 	font-size: 1.2rem;
 	padding: 6px;
 	border: 1px solid transparent;
