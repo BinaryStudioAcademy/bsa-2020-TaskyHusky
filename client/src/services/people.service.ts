@@ -2,9 +2,10 @@ import callWebApi from '../helpers/callApi.helper';
 import { modifiedEntity } from '../containers/SearchPeopleAndTeamField/logic/state';
 
 export const fetchPeople = async (id: string) => {
+	console.log(`user/${id}/teammates`);
 	const res = await callWebApi({
 		method: 'GET',
-		endpoint: `user/${id}/teammates`,
+		endpoint: `user/${id}/teammatesTemp`,
 	});
 
 	return (await res.json()) as WebApi.Entities.UserProfile[];
