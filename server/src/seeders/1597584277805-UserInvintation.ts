@@ -9,14 +9,14 @@ export class UserInvintation1597584277805 implements MigrationInterface {
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         const user1 = (await userRepository.getByEmail('test@test.com'))!;
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        const user2 = (await userRepository.getByEmail('test1@test.com'))!;
+        const user2 = (await userRepository.getByEmail('ipavlov@i.ua'))!;
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         const user3 = (await userRepository.getByEmail('jobs_my@gmail.com'))!;
 
         const teammatesRepository=getCustomRepository(TeammatesRepository);
 
-        await teammatesRepository.createInvitation(user1.id, user2.email);
-        await teammatesRepository.createInvitation(user1.id, user3.email);
+        await teammatesRepository.createInvitation(user2.id, user1.email);
+        await teammatesRepository.createInvitation(user3.id, user1.email);
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
