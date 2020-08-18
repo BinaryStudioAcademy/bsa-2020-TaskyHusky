@@ -32,7 +32,7 @@ export type FetchLinksLoading = {
 
 export type SuccessLoadingTeam = {
 	team: Team;
-	loading?: boolean
+	loading?: boolean;
 };
 
 export type SuccessLoadingUsers = {

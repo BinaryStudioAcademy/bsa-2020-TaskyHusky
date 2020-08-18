@@ -90,6 +90,12 @@ class ProjectsController {
 			throw new Error('Project exists');
 		}
 	};
+
+	getAllKeys = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+		const projectsRepository = getCustomRepository(ProjectsRepository);
+		const keys = await projectsRepository.getKeys();
+		res.send(keys);
+	};
 }
 
 export default ProjectsController;

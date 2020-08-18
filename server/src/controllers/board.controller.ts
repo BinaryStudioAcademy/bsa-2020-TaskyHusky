@@ -1,9 +1,11 @@
 import { NextFunction, Request, Response } from 'express';
 import { getCustomRepository } from 'typeorm';
+import { SprintRepository } from '../repositories/sprint.repository';
 import { BoardRepository } from '../repositories/board.repository';
 import { BoardColumnRepository } from '../repositories/boardColumn.repository';
 import { ErrorResponse } from '../helpers/errorHandler.helper';
 import HttpStatusCode from '../constants/httpStattusCode.constants';
+import { Sprint } from '../entity/Sprint';
 
 class BoardController {
 	getAll = async (req: Request, res: Response): Promise<void> => {
@@ -55,6 +57,18 @@ class BoardController {
 			res.status(200).send(projects);
 		} catch (e) {
 			next(new ErrorResponse(HttpStatusCode.NOT_FOUND, e.message));
+		}
+	};
+
+	getBoardSprints = async (req: Request, res: Response, next: NextFunction) => {
+		const boardRepository = getCustomRepository(BoardRepository);
+
+		try {
+			const { id } = req.params;
+			const sprints = await boardRepository.getSprints(id);
+			res.status(200).send(sprints);
+		} catch (error) {
+			next(new ErrorResponse(HttpStatusCode.NOT_FOUND, error.message));
 		}
 	};
 

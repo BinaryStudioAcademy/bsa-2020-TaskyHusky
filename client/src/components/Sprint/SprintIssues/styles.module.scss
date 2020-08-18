@@ -1,0 +1,52 @@
+:global(#root) {
+	.issueItem {
+		display: flex;
+		flex-direction: row;
+		align-items: stretch;
+		height: 45px;
+
+		&:hover {
+			background-color: #fff;
+		}
+	}
+
+	.emptyIssueItem {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		height: 45px;
+		color: #00000069;
+	}
+
+	.leftContent {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: flex-start;
+		width: 50%;
+
+		& > * {
+			margin-left: 15px;
+		}
+	}
+
+	.rightContent {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: flex-end;
+		width: 50%;
+
+		& > * {
+			margin-right: 15px;
+		}
+	}
+
+	.issueKeyItem {
+		width: 60px;
+	}
+
+	.priorityItem {
+		width: 15px;
+	}
+}

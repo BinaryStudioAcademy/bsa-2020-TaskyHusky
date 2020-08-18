@@ -63,6 +63,26 @@ export class BoardRepository extends Repository<Board> {
 		return board.projects;
 	}
 
+	async getSprints(id: string) {
+		const boardExist = await this.findOne(id);
+
+		if (!boardExist) {
+			throw new Error('Board with this ID does not exist');
+		}
+
+		const boardWithSprints = await this.createQueryBuilder('board')
+			.where('board.id = :id', { id })
+			.innerJoin('board.sprints', 'sprint')
+			.addSelect(['sprint.id', 'sprint.sprintName', 'sprint.isCompleted', 'sprint.isActive'])
+			.getOne();
+
+		if (!boardWithSprints) {
+			return [];
+		}
+
+		return boardWithSprints.sprints;
+	}
+
 	async put(id: string, data: any) {
 		const userRepository = getCustomRepository(UserRepository);
 

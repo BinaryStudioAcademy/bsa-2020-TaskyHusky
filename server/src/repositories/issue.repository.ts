@@ -2,7 +2,7 @@ import { EntityRepository, Repository, FindOperator, Any, Raw } from 'typeorm';
 import { Issue } from '../entity/Issue';
 import { getConditions } from '../helpers/issue.helper';
 
-const RELS = ['priority', 'type', 'creator', 'assigned'];
+const RELS = ['priority', 'type', 'creator', 'assigned', 'status'];
 
 export type Filter = {
 	issueType?: string[];
