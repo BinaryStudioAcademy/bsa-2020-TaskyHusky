@@ -11,7 +11,7 @@ import getTemplatesInformation, { MethodologyInfo } from './config/templatesInfo
 import styles from './styles.module.scss';
 import CustomInput from 'components/common/Input/CustomInput';
 
-type Template = keyof typeof WebApi.Board.BoardType;
+export type Template = keyof typeof WebApi.Board.BoardType;
 
 const CreateProjectModal: React.FC = () => {
 	const templatesInformation = getTemplatesInformation();

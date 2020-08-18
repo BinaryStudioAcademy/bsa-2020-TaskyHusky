@@ -1,17 +1,17 @@
+import { Template } from './../index';
 import i18n from 'i18next';
 
 import kanbanImg from 'assets/images/kanban.svg';
 import scrumImg from 'assets/images/scrum.svg';
 
-export interface MethodologyInfo {
+export type MethodologyInfo = {
 	description: string;
 	image: string;
-}
+};
 
-export interface TemplatesInformation {
-	[WebApi.Board.BoardType.Kanban]: MethodologyInfo;
-	[WebApi.Board.BoardType.Scrum]: MethodologyInfo;
-}
+export type TemplatesInformation = {
+	[key in Template]: MethodologyInfo;
+};
 
 const getTemplatesInformation = (): TemplatesInformation => ({
 	Kanban: {
