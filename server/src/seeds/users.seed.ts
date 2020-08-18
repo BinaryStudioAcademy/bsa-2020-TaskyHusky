@@ -2,7 +2,7 @@ export const UsersSeed = [
 	{
 		firstName: 'Vladislav',
 		lastName: 'Pavlov',
-		email: 'vpavlov@i.ua',
+		email: 'ipavlov@i.ua',
 		jobTitle: 'web developer',
 		userSettingsId: '',
 		password: '$2a$08$Oc43T2.RcOJV/9s2nx6wLO0t0lQ/SGxwKYCvRaTDi3oGrFKnXINyS',
