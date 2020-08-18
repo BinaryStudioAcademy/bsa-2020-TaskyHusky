@@ -21,6 +21,8 @@ import ProjectIssues from 'pages/ProjectIssues';
 import NotFound from 'pages/404';
 import Search from 'pages/AdvancedSearch';
 import Work from 'pages/Work';
+import ResetPassword from '../ResetPassword';
+import ForgotPassword from '../ForgotPassword';
 
 const Routing: React.FC = () => {
 	const dispatch = useDispatch();
@@ -40,6 +42,8 @@ const Routing: React.FC = () => {
 	return (
 		<Switch>
 			<PublicRoute exact restricted path="/login" component={Login} />
+			<PublicRoute exact restricted path="/forgot-password" component={ForgotPassword} />
+			<PublicRoute exact restricted path="/reset-password/:token" component={ResetPassword} />
 			<PublicRoute exact restricted path="/signup" component={SignUp} />
 			<PrivateRoute path="/issue/:key" component={IssuePage} />
 			<PrivateRoute exact path="/projects" component={ProjectsPage} />

@@ -247,4 +247,12 @@ export const en = {
 	send: 'Send',
 	add_people_email_placeholder: 'Add email address',
 	my_work: 'My work',
+	forgot_password_header: "Can't log in?",
+	forgot_password_email_link: "We'll send a recovery link to",
+	forgot_password_button: 'Send recovery link',
+	forgot_password_return_button: 'Return to log in',
+	forgot_password_resend_email: 'Resend recovery link',
+	forgot_password_email_sent_message: 'We sent a recovery link to you at',
+	reset_password_header: 'Choose a new password',
+	reset_password_problem: 'Still having trouble logging in?',
 };
