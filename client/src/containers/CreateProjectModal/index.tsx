@@ -1,5 +1,5 @@
 import React, { useState, memo } from 'react';
-import { Modal, Button, Form, Checkbox, Image, Card } from 'semantic-ui-react';
+import { Modal, Button, Form, Image, Card } from 'semantic-ui-react';
 import validator from 'validator';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
