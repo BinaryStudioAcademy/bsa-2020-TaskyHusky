@@ -44,6 +44,10 @@ export class Projects {
 	icon?: string;
 
 	@Column({ type: 'text', default: '' })
+	@IsString()
+	url?: string;
+
+	@Column({ type: 'text', default: '' })
 	category?: string;
 
 	@OneToMany((type) => Sprint, (sprint) => sprint.project, { cascade: true })
