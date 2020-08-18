@@ -24,6 +24,7 @@ const AddPeopleModal: React.FC<Props> = ({ isOpen = false, closeClb }): ReactEle
 	const handlerSubmit = async () => {
 		dispatch(actions.addPeople({ id: authStore.user?.id || '', email }));
 
+		setEmail('');
 		closeClb();
 	};
 
