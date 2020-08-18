@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Header, Icon, Modal } from 'semantic-ui-react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import * as actions from 'containers/Board/Scrum/logic/actions';
 import { NotificationManager } from 'react-notifications';
 import { useTranslation } from 'react-i18next';
