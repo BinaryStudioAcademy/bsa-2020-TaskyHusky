@@ -3,7 +3,7 @@ import * as actionTypes from './actionTypes';
 import { ScrumBoardState, initialState } from './state';
 
 export const scrumBoardReducer = createReducer<ScrumBoardState>(initialState, {
-	[actionTypes.LOAD_SPRINTS_SUCCESS](state, action: actionTypes.loadSprintsSuccess) {
+	[actionTypes.LOAD_SPRINTS_SUCCESS](state, action: actionTypes.LoadSprintsSuccess) {
 		const { sprints } = action;
 
 		return {
@@ -11,7 +11,7 @@ export const scrumBoardReducer = createReducer<ScrumBoardState>(initialState, {
 			sprints,
 		};
 	},
-	[actionTypes.LOAD_ISSUES_SUCCESS](state, action: actionTypes.loadIssuesSuccess) {
+	[actionTypes.LOAD_ISSUES_SUCCESS](state, action: actionTypes.LoadIssuesSuccess) {
 		const { sprintId, issues } = action;
 
 		const stateCopy = { ...state };
