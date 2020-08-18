@@ -32,8 +32,30 @@ class TeamsController {
 		const teamRepository = getCustomRepository(TeamRepository);
 		const { id } = req.params;
 		try {
-			const team: any = await teamRepository.findOneById(id);
+			const team: any = await teamRepository.findTeamById(id);
 			res.send(linksParse(team));
+		} catch (error) {
+			res.status(404).send(getWebError(error, 404));
+		}
+	};
+
+	getTeamUsers = async (req: Request, res: Response): Promise<void> => {
+		const teamRepository = getCustomRepository(TeamRepository);
+		const { id } = req.params;
+		try {
+			const team: any = await teamRepository.findTeamUsersById(id);
+			res.send(team);
+		} catch (error) {
+			res.status(404).send(getWebError(error, 404));
+		}
+	};
+
+	getTeamProjects = async (req: Request, res: Response): Promise<void> => {
+		const teamRepository = getCustomRepository(TeamRepository);
+		const { id } = req.params;
+		try {
+			const team: any = await teamRepository.findTeamProjectsById(id);
+			res.send(team);
 		} catch (error) {
 			res.status(404).send(getWebError(error, 404));
 		}

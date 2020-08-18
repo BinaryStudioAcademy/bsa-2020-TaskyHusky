@@ -7,18 +7,23 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { getBgColor } from './helper';
 
+type Props = {
+	teammates?: User[];
+	title: string;
+};
 export interface User {
 	id: string;
 	email?: string;
 	firstName: string;
+	lastName: string;
 	avatar: string;
 	location?: string;
 	department?: string;
 	jobTitle?: string;
 }
 
-const TeamsMembersCard = () => {
-	const [bgColor, setBgColor] = useState({});
+const TeamsMembersCard = ({ teammates=[], title }: Props) => {
+	const [bgColor, setBgColor] = useState<{ [key: string]: string }>({ backgroundColor: 'white' });
 	const [modal, setModal] = useState<boolean>(false);
 	const [viewUser, setViewUser] = useState<User | undefined>();
 	const onHover = (user: User) => {
@@ -32,62 +37,43 @@ const TeamsMembersCard = () => {
 			setViewUser(undefined);
 		}
 	};
-	const data = [
-		{
-			id: '101',
-			avatar:
-				'https://i7.pngflow.com/pngimage/779/60/png-computer-icons-login-avatar-avatar-heroes-silhouette-user-symbol-clipart.png',
-			firstName: 'Vladimir Barkalov',
-			jobTitle: 'Java developer',
-			location: '12:00 AM',
-			email: 'vladimir@i.ua',
-			department: 'Kyiv, UA',
-		},
-		{
-			id: '102',
-			avatar: '',
-			firstName: 'Yaroslav Pryhoda',
-			jobTitle: 'Web developer',
-			location: '9:00 AM',
-			email: 'someemail@i.ua',
-			department: 'London, UK',
-		},
-	];
 	const { t } = useTranslation();
+	const fullUserName = (fn: string, ln: string): string => `${fn} ${ln}`;
 
 	return (
 		<Card>
-			<Card.Content header={t('members')} />
+			<Card.Content header={t(title)} />
 			<Card.Meta>
 				<span className={styles.meta_header}>
-					{' '}
-					{data.length} {t('members')}
+					{title === 'Members' && ` ${teammates.length}  ${t('members')}`}
 				</span>
 			</Card.Meta>
-			{data.map((el) => {
-				return (
-					<Card.Content key={el.id}>
-						<div
-							className={styles.card_body}
-							onMouseEnter={() => onHover(el)}
-							onMouseLeave={(e) => hideModal(e)}
-						>
-							<div className={styles.icon}>
-								<Link to={`/people/${el.id}`}>
-									<Avatar fullName={el.firstName} imgSrc={el.avatar} />
-								</Link>
-							</div>
-							<div className={styles.user_info}>
-								<p> {el.firstName}</p>
-								<p className={styles.metainfo}>{el.jobTitle}</p>
-							</div>
-							{modal && viewUser?.id === el.id && (
-								<ModalViewProfile user={viewUser} onClose={hideModal} color={bgColor} />
-							)}
+			{teammates.map((el) => (
+				<Card.Content key={el.id}>
+					<div
+						className={styles.card_body}
+						onMouseEnter={() => onHover(el)}
+						onMouseLeave={(e) => hideModal(e)}
+					>
+						<div className={styles.icon}>
+							<Link to={`/profile/${el.id}`}>
+								<Avatar
+									key={el.id}
+									fullName={fullUserName(el.firstName, el.lastName)}
+									imgSrc={el.avatar}
+								/>
+							</Link>
 						</div>
-					</Card.Content>
-				);
-			})}
+						<div className={styles.user_info}>
+							<p> {fullUserName(el.firstName, el.lastName)}</p>
+							<p className={styles.metainfo}>{el.jobTitle}</p>
+						</div>
+						{modal && viewUser?.id === el.id && (
+							<ModalViewProfile key={el.id} user={viewUser} onClose={hideModal} color={bgColor} />
+						)}
+					</div>
+				</Card.Content>
+			))}
 		</Card>
 	);
 };

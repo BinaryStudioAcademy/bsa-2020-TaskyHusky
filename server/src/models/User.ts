@@ -18,4 +18,5 @@ export interface UserModel {
 	resetPasswordToken?: string | null;
 	resetPasswordExpires?: Date | null;
 	filtres?: string[];
+	projects?: [];
 }

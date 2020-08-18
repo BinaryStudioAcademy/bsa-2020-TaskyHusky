@@ -16,6 +16,7 @@ import scrumBoardSaga from 'containers/Board/Scrum/logic/saga';
 import peoplePageSaga from 'containers/People/logic/saga';
 import peoplePageSearchSaga from 'containers/SearchPeopleAndTeamField/logic/saga';
 import issueCommentSaga from 'components/IssueCommentForm/logic/saga';
+import headerSaga from '../containers/Header/logic/saga';
 
 export default function* rootSaga() {
 	yield all([
@@ -34,6 +35,7 @@ export default function* rootSaga() {
 		usersSaga(),
 		scrumBoardSaga(),
 		issueCommentSaga(),
+		headerSaga(),
 		peoplePageSaga(),
 		peoplePageSearchSaga(),
 	]);

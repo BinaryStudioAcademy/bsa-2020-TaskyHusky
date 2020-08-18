@@ -13,6 +13,7 @@ export function* createNewProject(project: ReturnType<typeof actions.startCreati
 		yield put(startLoading());
 	} catch (error) {
 		NotificationManager.error(error.statusText, 'Create project', 3000);
+		yield put(actions.resetState());
 	}
 }
 

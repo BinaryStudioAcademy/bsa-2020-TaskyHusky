@@ -52,15 +52,19 @@ const ProfilePicture: React.FC<Props> = (props: Props) => {
 							) : (
 								<h1 className={styles.initials}>{getInitials({ id: '', firstName, lastName })}</h1>
 							)}
-							<Icon name="photo" size="big" className={styles.editBtn} />
-							<input
-								accept="image/*"
-								id="contained-button-file"
-								multiple
-								type="file"
-								onChange={uploadPhoto}
-								className={styles.hidden}
-							/>
+							{isCurrentUser && (
+								<>
+									<Icon name="photo" size="big" className={styles.editBtn} />
+									<input
+										accept="image/*"
+										id="contained-button-file"
+										multiple
+										type="file"
+										onChange={uploadPhoto}
+										className={styles.hidden}
+									/>
+								</>
+							)}
 						</div>
 					</div>
 					<Header as="h2" className={styles.fullName}>

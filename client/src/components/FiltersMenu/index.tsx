@@ -31,6 +31,9 @@ export const FiltersMenu = () => {
 				<Dropdown.Item as="a" href="/filters">
 					{t('view_all_filters')}
 				</Dropdown.Item>
+				<Dropdown.Item as="a" href="/advancedSearch">
+					{t('advanced_search')}
+				</Dropdown.Item>
 			</Dropdown.Menu>
 		</Dropdown>
 	);

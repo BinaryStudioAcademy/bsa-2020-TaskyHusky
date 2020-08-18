@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToMany } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToMany, JoinTable } from 'typeorm';
 import { MinLength, IsEmail, IsString, IsNotEmpty, IsUUID, Length, IsLowercase } from 'class-validator';
 import { Issue } from './Issue';
 import { Board } from './Board';
@@ -94,7 +94,19 @@ export class UserProfile {
 	@ManyToMany((type) => Projects, (projects) => projects.users)
 	projects?: Projects[];
 
-	constructor(userData: Partial<UserProfile>) {
+	@ManyToMany((type) => UserProfile, (userProfile) => userProfile.incomingInvites)
+	@JoinTable()
+	incomingInvites?: UserProfile[];
+
+	@ManyToMany((type) => UserProfile, (userProfile) => userProfile.pendingInvites)
+	@JoinTable()
+	pendingInvites?: UserProfile[];
+
+	@ManyToMany((type) => UserProfile, (userProfile) => userProfile.teammates)
+	@JoinTable()
+	teammates?: UserProfile[];
+
+	constructor(userData?: Partial<UserProfile>) {
 		if (userData) {
 			const { email, password, firstName, lastName } = userData;
 

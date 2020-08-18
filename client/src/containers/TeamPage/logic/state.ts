@@ -3,8 +3,9 @@ export type Team = {
 	name: string;
 	description: string;
 	links: string[];
-	members: [];
-	loading: boolean;
+	users?: WebApi.Entities.UserProfile[];
+	projects?: WebApi.Entities.Projects[],
+	createdBy: WebApi.Entities.UserProfile | undefined
 };
 
 export interface TeamState {
@@ -18,8 +19,9 @@ export const initialState: TeamState = {
 		name: '',
 		description: '',
 		links: [],
-		members: [],
-		loading: false,
+		users: [],
+		projects: [],
+		createdBy: undefined
 	},
 	loading: false,
 };

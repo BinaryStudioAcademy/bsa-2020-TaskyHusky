@@ -6,4 +6,5 @@ export interface TeamModel {
 	createdBy: string;
 	links?: string[];
 	users?: [];
+
 }

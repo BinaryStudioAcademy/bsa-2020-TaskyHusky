@@ -7,6 +7,8 @@ const teamsController = new TeamsController();
 
 router.get('/', teamsController.getTeams);
 router.get('/:id', teamsController.getTeam);
+router.get('/users/:id', teamsController.getTeamUsers);
+router.get('/projects/:id', teamsController.getTeamProjects);
 router.post('/', teamsController.createTeam);
 router.put('/:id', teamsController.updateTeam);
 router.put('/fields/:id', teamsController.updateTeamsFields);

@@ -53,3 +53,22 @@ export const googleAuthRequest = async (data: any) => {
 	});
 	return (await res.json()) as Partial<WebApi.Entities.UserProfile>;
 }
+export const forgotPassword = async (email: string): Promise<Partial<WebApi.Entities.UserProfile>> => {
+	const res = await callWebApi({
+		endpoint: 'auth/forgot-password',
+		method: 'POST',
+		body: { email },
+	});
+
+	return (await res.json()) as Partial<WebApi.Entities.UserProfile>;
+};
+
+export const resetPassword = async (password: string, token: string): Promise<Partial<WebApi.Entities.UserProfile>> => {
+	const res = await callWebApi({
+		endpoint: `auth/reset-password/${token}`,
+		method: 'POST',
+		body: { password },
+	});
+
+	return (await res.json()) as Partial<WebApi.Entities.UserProfile>;
+};

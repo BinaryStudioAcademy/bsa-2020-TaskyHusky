@@ -27,6 +27,9 @@ export type GoogleUser = {
 export type Loading = {
 	loading: boolean
 }
+export const FORGOT_PASSWORD = 'FORGOT_PASSWORD';
+
+export const RESET_PASSWORD = 'RESET_PASSWORD';
 
 export type LogInUserTrigger = {
 	email: string;
@@ -47,4 +50,13 @@ export type LoadProfileSuccess = {
 
 export type CheckEmail = {
 	email: string;
+};
+
+export type ForgotPassword = {
+	email: string;
+};
+
+export type ResetPassword = {
+	password: string;
+	id: string;
 };
