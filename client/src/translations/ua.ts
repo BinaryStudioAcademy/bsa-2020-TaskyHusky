@@ -223,6 +223,7 @@ export const ua = {
 	boards: 'Дошки',
 	create_board: 'Створити дошку',
 	view_all_boards: 'Усі дошки',
+	advanced_search: 'Розширений пошук задач',
 	create_sprint: 'Створити спринт',
 	no_sprints_header: 'Активні спринти відсутні',
 	no_sprints_header_subheader: 'Плануйте роботу своєї команди. Створіть свій перший спринт.',
