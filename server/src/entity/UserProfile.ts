@@ -103,7 +103,7 @@ export class UserProfile {
 	@JoinTable()
 	teammates?: UserProfile[];
 
-	constructor(userData: Partial<UserProfile>) {
+	constructor(userData?: Partial<UserProfile>) {
 		if (userData) {
 			const { email, password, firstName, lastName } = userData;
 
