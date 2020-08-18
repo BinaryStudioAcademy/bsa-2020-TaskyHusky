@@ -65,8 +65,17 @@ export const requestDeleteUser = async (): Promise<void> => {
 export const requestAllUsers = async (): Promise<WebApi.Entities.UserProfile[]> => {
 	const res = await callWebApi({
 		method: 'GET',
-		endpoint: `user/`,
+		endpoint: `user`,
 		skipAuthorization: false,
+	});
+
+	return (await res.json()) as WebApi.Entities.UserProfile[];
+};
+
+export const requestTeammates = async (id: string): Promise<WebApi.Entities.UserProfile[]> => {
+	const res = await callWebApi({
+		method: 'GET',
+		endpoint: `user/${id}/teammates`,
 	});
 
 	return (await res.json()) as WebApi.Entities.UserProfile[];

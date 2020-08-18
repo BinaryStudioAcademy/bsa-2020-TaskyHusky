@@ -69,11 +69,23 @@ const DropdownSearch = ({ filterPart, data }: DropdownSearchProps) => {
 	const searchString = new RegExp(searchText, 'i');
 	const filteredData = data.filter(({ text }) => searchString.test(text));
 
+	const getTitle = () => {
+		if (selection.length > 0) {
+			return data
+				.filter(({ value }) => selection.some((el) => el === value))
+				.slice(0, 3)
+				.map(({ text }, index) => (index === 2 ? '...' : text))
+				.join(', ');
+		} else {
+			return title;
+		}
+	};
+
 	return (
 		<Dropdown
 			multiple
 			className={styles.dropdown}
-			trigger={<span>{title}</span>}
+			trigger={<span>{getTitle()}</span>}
 			icon="angle down"
 			floating
 			labeled
@@ -92,7 +104,15 @@ const DropdownSearch = ({ filterPart, data }: DropdownSearchProps) => {
 				<Dropdown.Menu scrolling>
 					{filteredData.map((option) => (
 						<Dropdown.Item value={option.value} key={option.key} onClick={toggleSelection}>
-							<Checkbox label={LabelC(option)} checked={isSelected(option.value)} />
+							<Checkbox
+								onChange={undefined}
+								onClick={undefined}
+								onMouseDown={undefined}
+								onMouseUp={undefined}
+								readOnly
+								label={LabelC(option)}
+								checked={isSelected(option.value)}
+							/>
 						</Dropdown.Item>
 					))}
 				</Dropdown.Menu>
