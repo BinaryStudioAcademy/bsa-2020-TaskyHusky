@@ -12,3 +12,7 @@ export const successCreatingProject = createAction(actionTypes.SUCCESS_CREATING_
 export const failCreatingProject = createAction(actionTypes.FAIL_CREATING_PROJECT);
 
 export const resetState = createAction(actionTypes.RESET_STATE);
+
+export const startGettingKeys = createAction(actionTypes.START_GETTING_KEYS);
+export const successGettingKeys = createAction<actionTypes.Keys>(actionTypes.SUCCESS_GETTING_KEYS);
+export const failGettingKeys = createAction(actionTypes.FAIL_GETTING_KEYS);

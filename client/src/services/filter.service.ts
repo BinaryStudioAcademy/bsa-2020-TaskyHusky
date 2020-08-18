@@ -63,3 +63,12 @@ export const saveFilter = async (data: InitialFilter): Promise<WebApi.Entities.F
 
 	return (await res.json()) as WebApi.Entities.Filter;
 };
+
+export const loadFilterById = async (id: string): Promise<WebApi.Entities.Filter> => {
+	const res = await callWebApi({
+		method: 'GET',
+		endpoint: `filter/${id}`,
+	});
+
+	return (await res.json()) as WebApi.Entities.Filter;
+};

@@ -8,6 +8,7 @@ const projectsController = new ProjectsController();
 const issueController = new IssueController();
 
 router.get('/', projectsController.getAllProjects);
+router.get('/keys', projectsController.getAllKeys);
 router.get('/:id', projectsController.getProject);
 router.get('/:id/issues', issueController.getByProjectId);
 router.post('/', projectsController.createProject);
