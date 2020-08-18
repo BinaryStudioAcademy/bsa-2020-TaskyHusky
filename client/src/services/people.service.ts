@@ -27,7 +27,7 @@ export const fetchPeopleByFullNameFilter = async (
 };
 
 export const createInvite = async ({ userId, email }: { userId: string; email: string }) => {
-	const res: Response = await callWebApi({
+	await callWebApi({
 		method: 'POST',
 		endpoint: `user/${userId}/pending-invites`,
 		skipAuthorization: false,

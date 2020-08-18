@@ -32,7 +32,7 @@ export const HeaderMenu = () => {
 
 	useEffect(() => {
 		dispatch(headerActions.startLoading({ id: authStore.user?.id || '' }));
-	}, [dispatch]);
+	}, [dispatch, authStore.user]);
 
 	const logOutHandler = () => {
 		dispatch(actions.logOutUserTrigger());
