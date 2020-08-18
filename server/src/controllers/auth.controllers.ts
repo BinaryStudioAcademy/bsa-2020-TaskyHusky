@@ -37,11 +37,11 @@ class AuthController {
 		const { profileObj, tokenId } = req.body.data;
 		const userRepository = getCustomRepository(UserRepository);
 		try {
-			const isUserExist: UserProfile | undefined = await userRepository.findOne({
+			const localUser: UserProfile | undefined = await userRepository.findOne({
 				where: { email: profileObj.email },
 			});
 			let user: UserProfile;
-			if (!isUserExist) {
+			if (!localUser) {
 				const { googleId, imageUrl, email, givenName, familyName } = profileObj;
 				const newUser = new UserProfile({
 					googleId,
@@ -53,7 +53,7 @@ class AuthController {
 				});
 				user = await userRepository.createNew(newUser);
 			} else {
-				user = isUserExist;
+				user = localUser;
 			}
 			const jwtToken = generateToken(user.id);
 			res.send({ jwtToken, user });

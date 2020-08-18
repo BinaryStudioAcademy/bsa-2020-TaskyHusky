@@ -8,11 +8,9 @@ import PasswordInput from 'components/common/PasswordInput';
 import { useTranslation } from 'react-i18next';
 import validator from 'validator';
 import { normalizeEmail } from 'helpers/normalizeEmail.helper';
-import { googleId } from 'config/googleConfig';
 import { NotificationManager } from 'react-notifications';
 import iconGoogle from 'assets/images/icon-google.svg';
 import GoogleLogin, { GoogleLoginResponse, GoogleLoginResponseOffline } from 'react-google-login';
-import Spinner from 'components/common/Spinner';
 
 import { RootState } from 'typings/rootState';
 
@@ -80,11 +78,7 @@ export const LoginPage: React.FC = () => {
 		</button>
 	);
 
-	return authState.loading ? (
-		<Segment className={styles.loading_wrapper}>
-			<Spinner />
-		</Segment>
-	) : (
+	return (
 		<Grid verticalAlign="middle" className={styles.grid}>
 			<Grid.Column className={styles.column}>
 				<Header as="h1" color="blue" className={styles.mainHeader}>
@@ -116,12 +110,13 @@ export const LoginPage: React.FC = () => {
 						/>
 
 						{passwordInput}
-						<Button positive className={styles.continueButton}>
+						<Button positive className={styles.continueButton} disabled={authState.loading}>
 							{isEmailValid ? t('log_in') : t('continue')}
 						</Button>
 						<Divider horizontal>{t('or')}</Divider>
 						<GoogleLogin
-							clientId={googleId}
+							// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+							clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID!}
 							buttonText="Login"
 							render={(props) => googleBtn(props)}
 							onSuccess={googleAuth}
