@@ -1,6 +1,6 @@
 import nodemailer from 'nodemailer';
 
-export const email = process.env.GMAIL_USER;
+export const email = `Tasky Husky <${process.env.GMAIL_USER}>`;
 export const password = process.env.GMAIL_PASSWORD;
 
 export const transporter = nodemailer.createTransport({
