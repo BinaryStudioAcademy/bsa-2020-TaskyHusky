@@ -6,9 +6,10 @@ import { IssueRepository } from '../repositories/issue.repository';
 class IssueController {
 	async getAll(req: Request, res: Response) {
 		const repository = getCustomRepository(IssueRepository);
-
+		const { take } = req.body;
+		const { page } = req.query;
 		try {
-			const result = await repository.findAll();
+			const result = await repository.findAll(Number(page));
 			res.send(result);
 		} catch (err) {
 			res.status(500).send(getWebError(err, 500));
@@ -18,9 +19,9 @@ class IssueController {
 	async getFilteredIssues(req: Request, res: Response) {
 		const repository = getCustomRepository(IssueRepository);
 		const { filter } = req.body;
-
+		const { page } = req.query;
 		try {
-			const result = await repository.getFilteredIssues(filter);
+			const result = await repository.getFilteredIssues(filter, Number(page));
 			res.send(result);
 		} catch (err) {
 			res.status(500).send(getWebError(err, 500));

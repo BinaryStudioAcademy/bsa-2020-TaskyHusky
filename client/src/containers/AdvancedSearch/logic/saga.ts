@@ -1,5 +1,5 @@
 import { RootState } from 'typings/rootState';
-import { loadIssues } from 'services/issue.service';
+import { loadIssuesAndCount } from 'services/issue.service';
 import { loadFilterById, updateFilter } from 'services/filter.service';
 import { all, put, takeEvery, call, select } from 'redux-saga/effects';
 import { v4 as uuidv4 } from 'uuid';
@@ -26,30 +26,31 @@ export function* fetchFilterPartsSaga(action: AnyAction) {
 
 		yield put(actions.loadFilterByIdSuccess({ filter }));
 	}
-	yield put(actions.loadIssues());
+	yield put(actions.loadIssues({}));
 }
 
 export function* updateFilterPartSaga(action: AnyAction) {
 	yield put(actions.updateFilterPartSuccess({ filterPart: action.filterPart }));
-	yield put(actions.loadIssues());
+	yield put(actions.loadIssues({}));
 }
 
 export function* loadIssuesSaga(action: AnyAction) {
+	const { page } = action;
 	const {
 		advancedSearch: { filterParts },
 	}: RootState = yield select();
 
 	const filterOption = getFilterOptionsFromFilterParts(filterParts);
-	const issues = yield call(loadIssues, filterOption);
+	const result = yield call(loadIssuesAndCount, filterOption, page);
 
-	yield put(actions.loadIssuesSuccess({ issues }));
+	yield put(actions.loadIssuesSuccess({ issues: result[0], issuesCount: result[1] }));
 }
 
 export function* loadFilterByIdSaga(action: AnyAction) {
 	const filter: WebApi.Entities.Filter = yield call(loadFilterById, action.id);
 
 	yield put(actions.loadFilterByIdSuccess({ filter }));
-	yield put(actions.loadIssues());
+	yield put(actions.loadIssues({}));
 }
 
 export function* setAddedFilterPartsSaga(action: AnyAction) {

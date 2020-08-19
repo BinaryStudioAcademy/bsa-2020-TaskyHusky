@@ -30,6 +30,7 @@ export type UpdateFilterPartArgs = {
 
 export type LoadIssuesSuccessArgs = {
 	issues: WebApi.Entities.Issue[];
+	issuesCount: number;
 };
 
 export type LoadFilterByIdArgs = {
@@ -50,4 +51,8 @@ export type RedirectId = {
 
 export type UpdateFilterStaredBy = {
 	staredBy: string;
+};
+
+export type LoadIssues = {
+	page?: number | string;
 };

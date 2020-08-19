@@ -39,7 +39,7 @@ const AdvancedFilters: React.FC = () => {
 						setAddedFilterParts={(data) => setAddedFilterPartsHandler(data)}
 					/>
 				</Form.Group>
-				<Form.Group style={{ marginLeft: '3px' }}>
+				<Form.Group>
 					{addedFilterParts.map((part) => (
 						<FilterPart key={part.id} filterPart={part} />
 					))}

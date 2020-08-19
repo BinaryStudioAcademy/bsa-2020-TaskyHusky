@@ -19,14 +19,15 @@ export type Filter = {
 
 @EntityRepository(Issue)
 export class IssueRepository extends Repository<Issue> {
-	findAll() {
-		return this.find({ relations: RELS });
+	findAll(page = 1) {
+		const take = 25;
+		return this.find({ relations: RELS, take, skip: take * (page - 1) });
 	}
 
-	getFilteredIssues(filter: Filter | undefined) {
+	getFilteredIssues(filter: Filter | undefined, page = 1) {
 		const where = filter ? getConditions(filter) : {};
-
-		return this.find({ relations: RELS, where });
+		const take = 25;
+		return this.findAndCount({ relations: RELS, where, take, skip: take * (page - 1) });
 	}
 
 	findAllByColumnId(id: string) {

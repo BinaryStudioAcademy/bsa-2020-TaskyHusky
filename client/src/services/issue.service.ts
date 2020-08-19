@@ -94,10 +94,13 @@ export const getByColumnId = async (id: string): Promise<WebApi.Result.IssueResu
 	return (await res.json()) as WebApi.Result.IssueResult[];
 };
 
-export const loadIssues = async (filter: IssueFilter | undefined): Promise<WebApi.Result.IssueResult[]> => {
+export const loadIssuesAndCount = async (
+	filter: IssueFilter | undefined,
+	page: number | undefined,
+): Promise<WebApi.Result.IssueResult[]> => {
 	const res: Response = await callWebApi({
 		method: 'POST',
-		endpoint: `issue/filtered`,
+		endpoint: `issue/filtered?page=${page}`,
 		body: {
 			filter,
 		},
