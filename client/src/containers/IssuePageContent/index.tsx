@@ -87,9 +87,17 @@ const IssuePageContent: React.FC<Props> = ({ issue }) => {
 							{t('edit_issue')}
 						</Button>
 						<h4>{t('assigned_by')}</h4>
-						{issue.assigned ? getUsername(issue.assigned) : t('no')}
+						{issue.assigned ? (
+							<a href={`/profile/${issue.assigned.id}`} target="_blank" rel="noopener noreferrer">
+								{getUsername(issue.assigned)}
+							</a>
+						) : (
+							t('no')
+						)}
 						<h4>{t('reported_by')}</h4>
-						{getUsername(issue.creator)}
+						<a rel="noopener noreferrer" target="_blank" href={`/profile/${issue.creator.id}`}>
+							{getUsername(issue.creator)}
+						</a>
 						<h4>{t('sprint')}</h4>
 						Sprint will be here
 						<h4>{t('links')}</h4>
