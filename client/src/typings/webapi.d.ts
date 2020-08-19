@@ -105,6 +105,17 @@ namespace WebApi.Result {
 	interface ComposedBoardResult extends BoardResult {
 		columns: BoardColumnResult[];
 	}
+	interface BoardProjectsResult {
+		id: string;
+		name: string;
+		key: string;
+		description?: string;
+		icon?: string;
+		category?: string;
+		createdDate?: Date;
+		updatedDate?: Date;
+		deletedDate?: Date;
+	}
 }
 
 namespace WebApi.Sprint {
