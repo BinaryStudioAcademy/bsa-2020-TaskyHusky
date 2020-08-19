@@ -29,6 +29,7 @@
   border: 1px solid rgb(231, 231, 231);
   width: 100%;
   padding: 8px 10px;
+  font-size: 1.2rem;
   color: #2b2a2a;
   &::before {
     display: block;
@@ -48,13 +49,18 @@
   }
   p {
     margin: 0;
-    padding: 0;
+    padding: 5px 0 0 0;
+    &:nth-last-child(1) {
+      margin-bottom: 3px;
+    }
   }
   &:hover {
     color: inherit;
   }
   .project_title {
     margin-bottom: 5px !important;
+    font-size: 1.3rem !important;
+    margin-top: 3px !important;
   }
   .team_key {
     margin-left: 5px;

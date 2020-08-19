@@ -11,11 +11,13 @@ export class Board1596645901833 implements MigrationInterface {
 		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 		const user1 = (await userRepository.getByEmail('test@test.com'))!;
 		const board1 = new Board();
+		board1.id = '37614b5a-4682-43ab-96b2-0daa14548135';
 		board1.boardType = BoardType.Kanban;
 		board1.createdBy = user1;
 		board1.name = 'Table1';
 
 		const board2 = new Board();
+		board2.id = 'cd947d22-8efd-4b2f-8b6a-446dc542c8df';
 		board2.boardType = BoardType.Scrum;
 		board2.createdBy = user1;
 		board2.name = 'Table2';

@@ -58,6 +58,7 @@ $gradient: linear-gradient(90deg, rgba(52, 221, 255, 1) 0%, rgba(95, 221, 247, 1
 	font-size: 1.4rem;
 	font-weight: 700;
 	border: none;
+	border: 1px solid transparent;
 	&:hover,
 	&:focus {
 		outline: none;
@@ -79,6 +80,17 @@ $gradient: linear-gradient(90deg, rgba(52, 221, 255, 1) 0%, rgba(95, 221, 247, 1
 		border-radius: 6px;
 	}
 }
+
+.input_borders {
+	border-color: #333232;
+	border-radius: 6px;
+	background-color: #fffff6;
+	&:hover,
+	&:focus {
+		background-color: #ffffff;
+	}
+}
+
 .main_row {
 	padding: 0 80px !important;
 	.col_media {
@@ -95,6 +107,10 @@ $gradient: linear-gradient(90deg, rgba(52, 221, 255, 1) 0%, rgba(95, 221, 247, 1
 		width: 60% !important;
 		max-width: 700px;
 	}
+}
+
+.edit_field_btn {
+	border-top: none !important;
 }
 
 @media (max-width: 950px) {
