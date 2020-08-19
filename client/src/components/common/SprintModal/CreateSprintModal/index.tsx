@@ -33,7 +33,7 @@ const CreateSprintModal = (props: Props) => {
 		} = scrumBoardState;
 
 		const sprint = {
-			sprintName: name,
+			sprintName: name.trim(),
 			isActive,
 			isCompleted,
 			board: boardId,
