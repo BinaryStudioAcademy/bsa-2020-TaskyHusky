@@ -16,6 +16,12 @@ const CreateSprintModal = (props: Props) => {
 	const [isCompleted, setIsCompleted] = useState<boolean>(false);
 	const [name, setName] = useState<string>('');
 
+	const resetLocalState = () => {
+		setIsActive(false);
+		setIsCompleted(false);
+		setName('');
+	};
+
 	const handleNoButtonClick = () => {
 		props.clickAction();
 	};
@@ -34,10 +40,8 @@ const CreateSprintModal = (props: Props) => {
 			project: projectId,
 		};
 
-		console.log(sprint);
-
 		dispatch(actions.createSprintTrigger({ sprint: sprint }));
-
+		resetLocalState();
 		props.clickAction();
 	};
 
