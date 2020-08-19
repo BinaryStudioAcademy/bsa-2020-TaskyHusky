@@ -68,7 +68,9 @@ export const HeaderMenu = () => {
 						active={activeItem === 'your-work'}
 						onClick={() => toggleActiveItem('your-work')}
 					>
-						<Link to="#">{t('your_work')}</Link>
+						<Link to="#">
+							<span className={styles.blackLink}>{t('your_work')}</span>
+						</Link>
 					</Menu.Item>
 					<ProjectsMenu />
 					<FiltersMenu />
@@ -80,7 +82,9 @@ export const HeaderMenu = () => {
 						active={activeItem === 'people'}
 						onClick={() => toggleActiveItem('people')}
 					>
-						<Link to="/people"> {t('people')} </Link>
+						<Link to="/people">
+							<span className={styles.blackLink}>{t('people')}</span>
+						</Link>
 					</Menu.Item>
 					<CreateIssueModal>
 						<Menu.Item
