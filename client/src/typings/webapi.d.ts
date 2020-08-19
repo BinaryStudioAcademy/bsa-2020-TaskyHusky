@@ -3,7 +3,7 @@ namespace WebApi.Board {
 		Scrum = 'Scrum',
 		Kanban = 'Kanban',
 	}
-	export interface IBoardModel {
+	interface IBoardModel {
 		id: string;
 		boardType: BoardType;
 		name: string;
@@ -16,7 +16,7 @@ namespace WebApi.Board {
 			avatar: string;
 		};
 	}
-	export interface IReducedBoard {
+	interface IReducedBoard {
 		id: string;
 		name: string;
 	}
@@ -39,7 +39,7 @@ namespace WebApi.Issue {
 		assigned?: string;
 		creator: string;
 	}
-	export interface PartialIssueComment {
+	interface PartialIssueComment {
 		text?: string;
 	}
 }
@@ -131,7 +131,7 @@ namespace WebApi.Sprint {
 }
 
 namespace WebApi.Team {
-	export interface TeamModel {
+	interface TeamModel {
 		id?: string;
 		name?: string;
 		description?: string;
@@ -143,7 +143,7 @@ namespace WebApi.Team {
 }
 
 namespace WebApi.User {
-	export interface UserModel {
+	interface UserModel {
 		googleId?: string;
 		id: string;
 		email: string;
