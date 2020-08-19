@@ -7,7 +7,6 @@ import styles from './styles.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import CustomInput from 'components/common/Input/CustomInput';
-import validator from 'validator';
 
 import SelectIcon from './selectIcon';
 import { RootState } from 'typings/rootState';
