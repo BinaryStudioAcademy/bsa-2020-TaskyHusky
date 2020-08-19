@@ -13,6 +13,7 @@ import styles from './styles.module.scss';
 import ProjectSidebar from 'components/ProjectSidebar';
 import Spinner from 'components/common/Spinner';
 import Form from './form';
+import { ConfirmModal } from 'components/common/ConfirmModal';
 
 const ProjectSettings = () => {
 	const { is404Error, isLoading, project: projectData } = useSelector((rootState: RootState) => rootState.project);
@@ -22,6 +23,7 @@ const ProjectSettings = () => {
 	const { id } = useParams();
 	const { name } = projectData;
 	const [isRedirected, setIsRedirected] = useState<boolean>(false);
+	const [isConfirmModalOpen, setIsConfirmModalOpen] = useState<boolean>(false);
 
 	if (is404Error) {
 		throw new Error();
@@ -32,16 +34,29 @@ const ProjectSettings = () => {
 	}, [id, dispatch]);
 
 	const onTrash = () => {
+		setIsConfirmModalOpen(true);
+	};
+
+	const onConfirmTrash = () => {
 		dispatch(actions.startDeletingProject({ id }));
 		setIsRedirected(true);
 	};
+
 	return (
 		<>
+			<ConfirmModal
+				isOpened={isConfirmModalOpen}
+				setIsOpened={setIsConfirmModalOpen}
+				confirmAction={onConfirmTrash}
+				header="Move to trash?"
+				content="Only Tasky Husky admins can restore the project from the trash"
+			/>
 			{isRedirected ? (
 				<Redirect to={'/projects'} />
 			) : (
 				<>
 					{ProjectSidebar(
+						projectData,
 						<section>
 							<div className={styles.header_inner__container}>
 								<div className={styles.header_inner__breadcrumbs}>

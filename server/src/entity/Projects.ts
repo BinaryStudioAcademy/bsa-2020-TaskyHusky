@@ -42,7 +42,8 @@ export class Projects {
 
 	@Column({ type: 'text', default: '' })
 	@IsString()
-	icon?: string;
+	@IsNotEmpty()
+	icon!: string;
 
 	@IsString()
 	url?: string;
