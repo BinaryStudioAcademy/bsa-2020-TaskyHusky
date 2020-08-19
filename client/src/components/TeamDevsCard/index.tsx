@@ -13,32 +13,48 @@ type CardProps = {
 
 const TeamDevsCard = ({ changeMainFields, description = '', name = '', showAddPeopleModal }: CardProps) => {
 	const [showDelete, setShowDelete] = useState<boolean>(false);
+	const [lockEditFields, setEditFields] = useState<boolean>(true);
 	const [title, setTitle] = useState<string>(name);
 	const [teamDescription, setTeamDescription] = useState<string>(description);
 	const { t } = useTranslation();
-
+	const submitEditFields = () => {
+		setEditFields(!lockEditFields);
+		if (lockEditFields) {
+			return;
+		}
+		if (name === title.trim() && description === teamDescription.trim()) {
+			return;
+		}
+		changeMainFields({
+			name: title,
+			description: teamDescription,
+		});
+	};
 	return (
 		<Card>
 			<Card.Content className={styles.card_header}>
 				<Icon name="group" size="large" />
 				<input
+					disabled={lockEditFields}
 					value={title}
-					onBlur={() => name !== title.trim() && changeMainFields({ name: title })}
 					type="text"
 					onChange={(e) => setTitle(e.target.value)}
-					className={styles.input_focus}
+					className={lockEditFields ? styles.input_focus : `${styles.input_focus} ${styles.input_borders}`}
 				/>
 			</Card.Content>
 			<Card.Content>
 				<textarea
-					onBlur={() =>
-						description !== teamDescription.trim() && changeMainFields({ description: teamDescription })
-					}
+					disabled={lockEditFields}
 					onChange={(e) => setTeamDescription(e.target.value)}
 					defaultValue={teamDescription}
 					rows={4}
-					className={styles.input_area}
+					className={lockEditFields ? styles.input_area : `${styles.input_area} ${styles.input_borders}`}
 				></textarea>
+			</Card.Content>
+			<Card.Content className={styles.edit_field_btn}>
+				<Button compact color="blue" fluid onClick={() => submitEditFields()}>
+					{t(lockEditFields ? 'Edit fields' : 'Save changes')}
+				</Button>
 			</Card.Content>
 			<Card.Content extra>
 				<Button.Group fluid>

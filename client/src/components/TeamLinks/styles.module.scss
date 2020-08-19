@@ -9,12 +9,16 @@
 
   .link_header {
     color: #3d3c3c;
+    margin-bottom: 5px !important;
   }
 
   .link_href {
     color: #9b9999;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     cursor: pointer;
+    & > i {
+      font-size: 16px !important;
+    }
   }
 
   .btns_block {
@@ -31,5 +35,6 @@
 }
 .link_description {
   color: #888686;
-  font-size: 1.3rem;
+  font-size: 1.1rem;
+  margin-bottom: 8px;
 }

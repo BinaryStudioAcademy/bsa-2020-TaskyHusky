@@ -128,6 +128,7 @@ namespace WebApi.Team {
 		createdBy: UserProfile;
 		links?: string[];
 		users?: UserProfile[];
+		projects?: Projects[];
 	}
 }
 
