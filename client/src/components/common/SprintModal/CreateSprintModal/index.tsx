@@ -21,7 +21,11 @@ const CreateSprintModal = (props: Props) => {
 	};
 
 	const handleYesButtonClick = () => {
-		const { boardId, projectId } = scrumBoardState;
+		const {
+			board: { id: boardId },
+			project: { id: projectId },
+		} = scrumBoardState;
+
 		const sprint = {
 			sprintName: name,
 			isActive,
