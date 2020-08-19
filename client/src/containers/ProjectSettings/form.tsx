@@ -12,6 +12,8 @@ import validator from 'validator';
 import SelectIcon from './selectIcon';
 import { RootState } from 'typings/rootState';
 import { startGettingKeys } from 'containers/CreateProjectModal/logic/actions';
+import { validProjectKey, validProjectName } from 'helpers/validationRules';
+import * as validationMessage from 'constants/ValidationMessages';
 
 interface Props {
 	projectData: WebApi.Entities.Projects;
@@ -80,8 +82,8 @@ const ProjectForm = ({ projectData }: Props) => {
 						data={project.name}
 						setData={(data) => onProjectChange('name', data)}
 						placeholder="Enter project name"
-						popUpContent="Project name should contain at least 5 symbols long"
-						validation={(name) => validator.isLength(name, { min: 5 })}
+						popUpContent={validationMessage.VM_PROJECT_NAME}
+						validation={validProjectName}
 						popUpPosition="bottom right"
 					/>
 				</Form.Field>
@@ -95,8 +97,8 @@ const ProjectForm = ({ projectData }: Props) => {
 							data={project.key}
 							setData={(data) => onProjectChange('key', data)}
 							placeholder={t('example') + ': QA'}
-							popUpContent="Key should contain at least 2 symbols long"
-							validation={(key) => validator.isLength(key, { min: 2 })}
+							popUpContent={validationMessage.VM_PROJECT_KEY}
+							validation={validProjectKey}
 							popUpPosition="bottom left"
 						/>
 						<Popup

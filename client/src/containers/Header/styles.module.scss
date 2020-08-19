@@ -1,4 +1,4 @@
-@import "../../styles/variables.scss";
+@import '../../styles/variables.scss';
 :global(#root) {
 	.menuWrapper > * {
 		color: $header-text !important;
@@ -121,10 +121,10 @@
 	height: 50px;
 	margin-right: 10px;
 }
-a {
-	color: inherit !important;
+.blackLink {
+	color: #19191d !important;
 	&:hover {
-		color: inherit !important;
+		color: #19191d !important;
 	}
 }
 .userBlock {

@@ -125,9 +125,9 @@ namespace WebApi.Team {
 		name?: string;
 		description?: string;
 		color?: string;
-		createdBy: string;
+		createdBy: UserProfile;
 		links?: string[];
-		users?: [];
+		users?: UserProfile[];
 	}
 }
 
