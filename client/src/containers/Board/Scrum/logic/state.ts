@@ -2,16 +2,20 @@ type issuesToSprint = {
 	[sprintId: string]: WebApi.Entities.Issue[];
 };
 
+type EntityObject = {
+	[key: string]: any;
+};
+
 export interface ScrumBoardState {
 	sprints: WebApi.Entities.Sprint[];
 	matchIssueToSprint: issuesToSprint;
-	projectId: string;
-	boardId: string;
+	project: EntityObject;
+	board: EntityObject;
 }
 
 export const initialState: ScrumBoardState = {
 	sprints: [],
 	matchIssueToSprint: {},
-	projectId: '',
-	boardId: '',
+	project: {},
+	board: {},
 };
