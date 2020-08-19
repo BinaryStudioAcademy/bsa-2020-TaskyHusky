@@ -13,8 +13,9 @@ export class ProjectsRepository extends Repository<Projects> {
 			.createQueryBuilder('project')
 			.leftJoinAndSelect('project.lead', 'lead')
 			.leftJoinAndSelect('project.users', 'users')
+			.leftJoin('project.users', 'user')
 			.where('project.id = :id', { id })
-			.andWhere('users.id = :userId', { userId })
+			.andWhere('user.id = :userId', { userId })
 			.getOne();
 	}
 
