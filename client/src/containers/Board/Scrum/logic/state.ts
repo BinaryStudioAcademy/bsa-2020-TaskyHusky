@@ -25,7 +25,7 @@ export const initialState: ScrumBoardState = {
 	},
 	board: {
 		id: '',
-		boardType: 'Kanban',
+		boardType: WebApi.Board.BoardType.Kanban,
 		name: '',
 		location: '',
 		createdAt: {
