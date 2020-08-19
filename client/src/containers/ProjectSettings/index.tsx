@@ -42,6 +42,7 @@ const ProjectSettings = () => {
 			) : (
 				<>
 					{ProjectSidebar(
+						projectData,
 						<section>
 							<div className={styles.header_inner__container}>
 								<div className={styles.header_inner__breadcrumbs}>

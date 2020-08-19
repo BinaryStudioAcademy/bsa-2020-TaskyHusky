@@ -32,9 +32,7 @@ const ProjectForm = ({ projectData }: Props) => {
 		dispatch(startGettingKeys());
 	}, [dispatch]);
 
-	const [currentIcon, setCurrentIcon] = useState('');
-
-	const projectUsers = project.users?.map((user) => ({
+	const projectUsers = project.users.map((user) => ({
 		key: user.id,
 		text: `${user.firstName} ${user.lastName}`,
 		value: user.id,
@@ -129,7 +127,7 @@ const ProjectForm = ({ projectData }: Props) => {
 				</Form.Field>
 				<Form.Field required className={styles.form__input}>
 					<label className={styles.avatar__label}>{t('avatar')}</label>
-					<SelectIcon currentIcon={currentIcon} setCurrentIcon={setCurrentIcon} />
+					<SelectIcon currentIcon={project.icon} onIconChange={onProjectChange} />
 				</Form.Field>
 				<Form.Field className={styles.form__area}>
 					<label className={styles.avatar__label}>{t('description')}</label>
