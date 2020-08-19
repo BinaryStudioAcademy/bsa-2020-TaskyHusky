@@ -1,6 +1,5 @@
 import React, { useState, memo } from 'react';
 import { Modal, Button, Form, Image, Card } from 'semantic-ui-react';
-import validator from 'validator';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -11,6 +10,8 @@ import getTemplatesInformation, { MethodologyInfo } from './config/templatesInfo
 import styles from './styles.module.scss';
 import CustomInput from 'components/common/Input/CustomInput';
 import { generateKey } from 'commonLogic/keyGenerator';
+import * as validationMessage from 'constants/ValidationMessages';
+import { validProjectName, validProjectKey } from 'helpers/validationRules';
 
 type Template = keyof typeof WebApi.Board.BoardType;
 
@@ -138,8 +139,8 @@ const CreateProjectModal: React.FC = () => {
 									data={name}
 									setData={onNameChanged}
 									placeholder="Enter project name"
-									popUpContent="Project name should contain at least 5 symbols long"
-									validation={(name) => validator.isLength(name, { min: 5 })}
+									popUpContent={validationMessage.VM_PROJECT_NAME}
+									validation={validProjectName}
 								/>
 							</Form.Field>
 							<Form.Field>
@@ -151,8 +152,8 @@ const CreateProjectModal: React.FC = () => {
 									data={key}
 									setData={onKeyChanged}
 									placeholder="Enter your key"
-									popUpContent="Key should contain at least 2 symbols long and be unique"
-									validation={(key) => validator.isLength(key, { min: 2 })}
+									popUpContent={validationMessage.VM_PROJECT_KEY}
+									validation={validProjectKey}
 								/>
 							</Form.Field>
 						</Form>
