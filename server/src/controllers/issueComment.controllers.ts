@@ -2,6 +2,8 @@ import { Request, Response } from 'express';
 import { getCustomRepository } from 'typeorm';
 import { getWebError } from '../helpers/error.helper';
 import { IssueCommentRepository } from '../repositories/issueComment.repository';
+import { parseMentionsXMLAndSendEmails } from '../helpers/parseXML.helper';
+import { IssueRepository } from '../repositories/issue.repository';
 
 export class IssueCommentController {
 	async getAllByIssueId(req: Request, res: Response) {
@@ -30,7 +32,10 @@ export class IssueCommentController {
 
 	async createOne(req: Request, res: Response) {
 		const repository = getCustomRepository(IssueCommentRepository);
+		const issueRepository = getCustomRepository(IssueRepository);
 		const { body: data } = req;
+		const issue = await issueRepository.findOneById(data.issue);
+		parseMentionsXMLAndSendEmails(data.text, issue.issueKey as string);
 
 		try {
 			const result = await repository.createOne({
