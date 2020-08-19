@@ -22,6 +22,7 @@ const ProjectSettings = () => {
 	const { id } = useParams();
 	const { name } = projectData;
 	const [isRedirected, setIsRedirected] = useState<boolean>(false);
+	console.log('projectData', projectData.lead);
 
 	if (is404Error) {
 		throw new Error();
