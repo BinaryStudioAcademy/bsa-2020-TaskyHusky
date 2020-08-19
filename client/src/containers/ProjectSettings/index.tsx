@@ -13,7 +13,7 @@ import styles from './styles.module.scss';
 import ProjectSidebar from 'components/ProjectSidebar';
 import Spinner from 'components/common/Spinner';
 import Form from './form';
-import { ConfirmModal } from 'components/ConfirmModal';
+import { ConfirmModal } from 'components/common/ConfirmModal';
 
 const ProjectSettings = () => {
 	const { is404Error, isLoading, project: projectData } = useSelector((rootState: RootState) => rootState.project);
