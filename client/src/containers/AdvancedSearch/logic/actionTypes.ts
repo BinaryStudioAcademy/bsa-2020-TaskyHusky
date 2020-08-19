@@ -54,5 +54,5 @@ export type UpdateFilterStaredBy = {
 };
 
 export type LoadIssues = {
-	page?: number | string;
+	page?: number;
 };
