@@ -39,20 +39,26 @@ const ProjectForm = ({ projectData }: Props) => {
 		value: user.id,
 	}));
 
-	const onProjectChange = (field: string, value: string) => {
-		if (field === 'key') {
-			value = value.trim().toUpperCase();
-			const keyIndex = keys.findIndex((item: any) => item.key === value);
+	const onProjectChange = (field: string, value: string): void => {
+		let result: WebApi.Entities.UserProfile | string | undefined = value;
 
-			if (keyIndex !== -1 && projectData.key !== value) {
+		if (field === 'key') {
+			result = value.trim().toUpperCase();
+			const keyIndex = keys.findIndex((item: any) => item.key === result);
+
+			if (keyIndex !== -1 && projectData.key !== result) {
 				setIsValidErrorShown(true);
 				setIsKeyValid(false);
 			}
 		}
 
+		if (field === 'lead') {
+			result = project.users.find((user) => user.id === value);
+		}
+
 		setProject((state) => ({
 			...state,
-			[field]: value,
+			[field]: result,
 		}));
 	};
 
@@ -142,11 +148,12 @@ const ProjectForm = ({ projectData }: Props) => {
 				<Form.Field className={styles.form__input}>
 					<label className={styles.avatar__label}>{t('lead')}</label>
 					<Dropdown
-						placeholder={`${project.lead?.firstName} ${project.lead?.lastName}`}
+						placeholder={`${project.lead.firstName} ${project.lead.lastName}`}
 						search
 						selection
 						options={projectUsers}
 						onChange={(e, data) => onProjectChange('lead', data.value?.toString() || '')}
+						value={project.lead.id}
 					/>
 				</Form.Field>
 				<Form.Field className={styles.form__input}>
@@ -165,7 +172,7 @@ const ProjectForm = ({ projectData }: Props) => {
 					</div>
 				</Form.Field>
 				<div>
-					<Button primary onClick={onSave}>
+					<Button primary className={styles.action_button} onClick={onSave}>
 						{t('save_details')}
 					</Button>
 					<Link to="/projects">{t('cancel')}</Link>
