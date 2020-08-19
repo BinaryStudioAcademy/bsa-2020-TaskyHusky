@@ -13,3 +13,25 @@ export const sendToken = (email: string, resetPasswordToken: string) => {
 		if (err) throw err;
 	});
 };
+
+export interface CommentMentionEmailParams {
+	userName: string;
+	issueKey: string;
+	email: string;
+}
+
+export const sendMentionedInComment = (params: CommentMentionEmailParams) => {
+	const { email, issueKey, userName } = params;
+
+	const mailOptions = {
+		from: nodeMailerEmail,
+		to: email,
+		subject: 'Mention',
+		html: `Dear ${userName}, you have been mentioned in issue comment!<br />
+			Go <a rel="noopener noreferrer" href='http://${appHost}:${frontendPort}/issue/${issueKey}'>here</a> and check out!`,
+	};
+
+	return transporter.sendMail(mailOptions, (err) => {
+		if (err) throw err;
+	});
+};
