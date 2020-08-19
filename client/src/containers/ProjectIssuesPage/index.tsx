@@ -41,7 +41,7 @@ const ProjectIssuesPage: React.FC<Props> = ({ projectId }) => {
 	}
 
 	return (
-		<main style={{ paddingBottom: 10, paddingTop: 20, height: '80%' }}>
+		<main style={{ paddingTop: 20, height: '80%', marginBottom: 10 }}>
 			<Header style={leftPadded} as="h2">
 				{t('issues')}
 			</Header>
