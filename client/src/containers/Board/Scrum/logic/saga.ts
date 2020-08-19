@@ -1,4 +1,3 @@
-import { useTranslation } from 'react-i18next';
 import { getBoardSprints } from 'services/board.service';
 import { getSprintIssues, updateSprint } from 'services/sprint.service';
 import { deleteSprint, createSprint } from 'services/sprint.service';

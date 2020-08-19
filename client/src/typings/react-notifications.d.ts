@@ -49,11 +49,11 @@ declare module 'react-notifications' {
 
 	class Notification extends React.Component<NotificationProps> {}
 
-	class Notifications extends React.Component<NotificationsProps> {}
+	export class Notifications extends React.Component<NotificationsProps> {}
 
-	class NotificationContainer extends React.Component<NotificationContainerProps> {}
+	export class NotificationContainer extends React.Component<NotificationContainerProps> {}
 
-	class NotificationManager extends EventEmitter {
+	export class NotificationManager extends EventEmitter {
 		static create(INotificationManagerCreate): void;
 		static info(
 			message?: INotificationManagerCreate['message'],
