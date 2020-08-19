@@ -47,4 +47,10 @@ export const projectReducer = createReducer<ProjectState>(initialState, {
 			isLoading: false,
 		};
 	},
+	[actionTypes.FAIL_UPDATING_PROJECT](state) {
+		return {
+			...state,
+			isLoading: false,
+		};
+	},
 });

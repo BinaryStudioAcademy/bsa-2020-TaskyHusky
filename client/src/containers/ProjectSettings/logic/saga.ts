@@ -24,6 +24,7 @@ export function* updatingProject({ project }: ReturnType<typeof actions.startUpd
 		yield put(actions.successUpdatingProject({ project: updatedProject }));
 		NotificationManager.success('Project data has been updated', 'Notification', 5000);
 	} catch (error) {
+		yield put(actions.failUpdatingProject());
 		NotificationManager.error(error.statusText, 'Update project', 5000);
 	}
 }
