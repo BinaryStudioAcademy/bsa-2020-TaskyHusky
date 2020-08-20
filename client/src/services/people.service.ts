@@ -12,11 +12,12 @@ export const fetchPeople = async (id: string) => {
 };
 
 export const fetchPeopleByFullNameFilter = async (
+	id: string,
 	name: string | undefined,
 ): Promise<modifiedEntity<WebApi.Entities.UserProfile>[]> => {
 	const res = await callWebApi({
 		method: 'GET',
-		endpoint: 'user',
+		endpoint: `user/${id}/teammatesTemp`,
 		query: {
 			name,
 		},

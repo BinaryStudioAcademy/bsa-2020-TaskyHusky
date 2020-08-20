@@ -11,10 +11,11 @@ import * as actions from './logic/actions';
 const SearchField: React.FC = (): ReactElement => {
 	const dispatch = useDispatch();
 	const { isLoading, results } = useSelector((state: RootState) => state.peoplePageSearch);
+	const authState = useSelector((state: RootState) => state.auth);
 
 	const handlerChange = (e: MouseEvent<HTMLElement>, { value }: SearchProps): void => {
 		if (value) {
-			dispatch(actions.startLoading({ name: value }));
+			dispatch(actions.startLoading({ name: value, id: authState.user?.id || '' }));
 		}
 	};
 

@@ -5,10 +5,10 @@ import * as actionTypes from './actionTypes';
 import * as actions from './actions';
 
 export function* fetchPeopleSearchPage(action: ReturnType<typeof actions.startLoading>) {
-	const { name } = action;
+	const { name, id } = action;
 
 	const teams = yield call(fetchTeamsByNameFilter, name);
-	const people = yield call(fetchPeopleByFullNameFilter, name);
+	const people = yield call(fetchPeopleByFullNameFilter, id, name);
 
 	yield put(actions.SuccessLoading({ teams, people }));
 }

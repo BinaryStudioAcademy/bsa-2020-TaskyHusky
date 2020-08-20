@@ -10,4 +10,5 @@ export type SuccessLoading = {
 
 export type StartLoading = {
 	name: string;
+	id: string;
 };
