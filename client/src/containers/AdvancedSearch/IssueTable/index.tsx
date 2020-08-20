@@ -22,12 +22,23 @@ export type Sort = {
 	updatedAt?: 'DESC' | 'ASC' | undefined;
 };
 
+type SortByProp =
+	| 'summary'
+	| 'assigned'
+	| 'creator'
+	| 'type'
+	| 'priority'
+	| 'createdAt'
+	| 'updatedAt'
+	| 'issueKey'
+	| 'status';
+
 interface HandleSortI {
-	by: 'summary' | 'assigned' | 'creator' | 'type' | 'priority' | 'createdAt' | 'updatedAt' | 'issueKey' | 'status';
+	by: SortByProp;
 }
 
 interface HeaderCellCI {
-	name: 'summary' | 'assigned' | 'creator' | 'type' | 'priority' | 'createdAt' | 'updatedAt' | 'issueKey' | 'status';
+	name: SortByProp;
 	popup?: boolean;
 	text?: string;
 }
