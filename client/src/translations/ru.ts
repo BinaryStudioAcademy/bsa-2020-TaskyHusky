@@ -240,4 +240,7 @@ export const ru = {
 	sprint_name: 'Название спринта',
 	my_work: 'Моя работа',
 	creator: 'Создатель',
+	no_projects: 'Не найдено ни одного проекта',
+	createAt: 'Создано',
+	updatedAt: 'Изменен',
 };

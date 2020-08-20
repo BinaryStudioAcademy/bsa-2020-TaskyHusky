@@ -265,4 +265,7 @@ export const en = {
 	reset_password_header: 'Choose a new password',
 	reset_password_problem: 'Still having trouble logging in?',
 	enter_foreign_email: 'Please, enter foreign email',
+	no_projects: 'No projects',
+	createAt: 'Created at',
+	updatedAt: 'Updated at',
 };

@@ -240,4 +240,7 @@ export const ua = {
 	sprint_name: 'Назва спринту',
 	my_work: 'Моя робота',
 	creator: 'Творець',
+	no_projects: 'Не знайдено проектів',
+	createAt: 'Створений',
+	updatedAt: 'Оновлений',
 };
