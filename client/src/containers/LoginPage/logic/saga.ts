@@ -13,7 +13,7 @@ import * as actions from './actions';
 import { NotificationManager } from 'react-notifications';
 import { LocalStorageKeys } from 'constants/LocalStorageKeys';
 import { User } from './state';
-import { setToken } from 'helpers/setToken.helper';
+import { setToken, removeToken } from 'helpers/setToken.helper';
 
 export function* logInRequest({ email, password }: ReturnType<typeof actions.logInUserTrigger>) {
 	try {
@@ -79,6 +79,7 @@ export function* getProfileRequest() {
 			}),
 		);
 	} catch (err) {
+		removeToken();
 		yield put(
 			actions.loadProfileSuccess({
 				user: null,
