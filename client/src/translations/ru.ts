@@ -238,6 +238,7 @@ export const ru = {
 	mark_sprint_as_completed: 'Спринт будет отмечен как завершенный',
 	mark_sprint_as_not_completed: 'Спринт будет отмечен как незавершенный',
 	sprint_name: 'Название спринта',
+	sprint_name_cannot_be_empty: 'Название спринта не может быть пустым',
 	my_work: 'Моя работа',
 	creator: 'Создатель',
 	no_projects: 'Не найдено ни одного проекта',

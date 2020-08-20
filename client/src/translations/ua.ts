@@ -238,6 +238,7 @@ export const ua = {
 	mark_sprint_as_completed: 'Спринт буде позначено як завершений',
 	mark_sprint_as_not_completed: 'Спринт буде позначено як незавершений',
 	sprint_name: 'Назва спринту',
+	sprint_name_cannot_be_empty: 'Назва спринту не може бути порожнім',
 	my_work: 'Моя робота',
 	creator: 'Творець',
 	no_projects: 'Не знайдено проектів',

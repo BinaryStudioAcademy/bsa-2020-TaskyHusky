@@ -246,6 +246,7 @@ export const en = {
 	mark_sprint_as_completed: 'Sprint will be marked as completed',
 	mark_sprint_as_not_completed: 'Sprint will be marked as not completed',
 	sprint_name: 'Sprint name',
+	sprint_name_cannot_be_empty: 'Sprint name cannot be empty',
 	invite_notification_text: 'Wants to join to your team space',
 	approve: 'Approve',
 	decline: 'Decline',
