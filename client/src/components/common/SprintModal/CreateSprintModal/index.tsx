@@ -53,7 +53,7 @@ const CreateSprintModal = (props: Props) => {
 
 	return (
 		<Modal size="tiny" dimmer="inverted" onClose={props.clickAction} open={props.isOpen}>
-			<Header>Create sprint</Header>
+			<Header>{t('create_sprint')}</Header>
 			<Modal.Content>
 				<Form>
 					<Form.Field>
