@@ -1,5 +1,5 @@
 import React from 'react';
-import { Pagination, PaginationItemProps } from 'semantic-ui-react';
+import { Pagination as SemanticPagination, PaginationItemProps } from 'semantic-ui-react';
 
 interface PaginationCI {
 	totalPages: number;
@@ -7,12 +7,12 @@ interface PaginationCI {
 	setPage: (skip: number) => void;
 }
 
-const PaginationC = ({ totalPages, setPage, page }: PaginationCI) => {
+const Pagination = ({ totalPages, setPage, page }: PaginationCI) => {
 	const handlePaginationChange = (e: React.SyntheticEvent, { activePage }: PaginationItemProps) => {
 		setPage(activePage);
 	};
 	return (
-		<Pagination
+		<SemanticPagination
 			style={{ maxWidth: 'max-content' }}
 			defaultActivePage={1}
 			boundaryRange={1}
@@ -27,4 +27,4 @@ const PaginationC = ({ totalPages, setPage, page }: PaginationCI) => {
 	);
 };
 
-export default PaginationC;
+export default Pagination;
