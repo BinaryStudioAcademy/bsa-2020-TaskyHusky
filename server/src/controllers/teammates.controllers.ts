@@ -1,11 +1,11 @@
 import { Request, Response, NextFunction } from 'express';
 import { getCustomRepository } from 'typeorm';
-import {TeammatesRepository} from '../repositories/teammates.repository';
+import { TeammatesRepository } from '../repositories/teammates.repository';
 import { ErrorResponse } from '../helpers/errorHandler.helper';
 import HttpStatusCode from '../constants/httpStattusCode.constants';
 
 class TeammatesController {
-	getIncomingInvitation = async (req: Request, res: Response, next:NextFunction): Promise<void> => {
+	getIncomingInvitation = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
 		const teammatesRepository = getCustomRepository(TeammatesRepository);
 		const { id } = req.params;
 
@@ -17,7 +17,7 @@ class TeammatesController {
 		}
 	};
 
-	getPendingInvitation = async (req: Request, res: Response,next:NextFunction): Promise<void> => {
+	getPendingInvitation = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
 		const teammatesRepository = getCustomRepository(TeammatesRepository);
 		const { id } = req.params;
 
@@ -29,7 +29,7 @@ class TeammatesController {
 		}
 	};
 
-	getTeammates = async (req: Request, res: Response,next:NextFunction): Promise<void> => {
+	getTeammates = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
 		const teammatesRepository = getCustomRepository(TeammatesRepository);
 		const { id } = req.params;
 
@@ -41,32 +41,42 @@ class TeammatesController {
 		}
 	};
 
-	changeInviteStatus = async (req: Request, res: Response,next:NextFunction): Promise<void> => {
+	getOneTeammate = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
 		const teammatesRepository = getCustomRepository(TeammatesRepository);
-		const { id } = req.params;
-		const {id:teamMateId, status}=req.body
-
+		const { match, id } = req.body;
 		try {
-			await teammatesRepository.changeInviteStatus(id, teamMateId, status==='accept');
-			res.send({status:'Status was successfully sent.'});
+			const teammates = await teammatesRepository.getTeammate(id, match);
+			res.send(teammates);
 		} catch (error) {
 			next(new ErrorResponse(HttpStatusCode.NOT_FOUND, error.message));
 		}
 	};
 
-	createInvite = async (req: Request, res: Response,next:NextFunction): Promise<void> => {
+	changeInviteStatus = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
 		const teammatesRepository = getCustomRepository(TeammatesRepository);
 		const { id } = req.params;
-		const {email:teammateEmail}=req.body
+		const { id: teamMateId, status } = req.body;
+
+		try {
+			await teammatesRepository.changeInviteStatus(id, teamMateId, status === 'accept');
+			res.send({ status: 'Status was successfully sent.' });
+		} catch (error) {
+			next(new ErrorResponse(HttpStatusCode.NOT_FOUND, error.message));
+		}
+	};
+
+	createInvite = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+		const teammatesRepository = getCustomRepository(TeammatesRepository);
+		const { id } = req.params;
+		const { email: teammateEmail } = req.body;
 
 		try {
 			await teammatesRepository.createInvitation(id, teammateEmail);
-			res.send({status:'The invitation was successfully sent.'});
+			res.send({ status: 'The invitation was successfully sent.' });
 		} catch (error) {
 			next(new ErrorResponse(HttpStatusCode.NOT_FOUND, error.message));
 		}
 	};
-
 }
 
 export default TeammatesController;

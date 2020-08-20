@@ -17,10 +17,24 @@ export const UPDATE_LINK_FIELD_SUCCESS = 'TEAM:UPDATE_LINK_FIELD_SUCCESS';
 export const UPDATE_FIELD_LOADING = 'TEAM:UPDATE_FIELD_LOADING';
 export const UPDATE_FIELD_SUCCESS = 'TEAM:UPDATE_FIELD_SUCCESS';
 
+export const START_SEARCHING_PEOPLE = 'TEAM:START_SEARCHING_PEOPLE';
+export const SUCCESS_SEARCHING_PEOPLE = 'TEAM:SUCCESS_SEARCHING_PEOPLE';
+
+export type startsearchingPeople = {
+	id: string,
+	match: string
+}
+
+export type successSearchPeople = {
+	people: WebApi.Entities.UserProfile[],
+	loading?: boolean
+}
+
 export type AddLinkSuccess = {
 	links?: any;
 	id?: string;
 };
+
 export type FetchLinksLoading = {
 	link?: {
 		id?: string;

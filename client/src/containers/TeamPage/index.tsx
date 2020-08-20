@@ -32,9 +32,11 @@ type Props = {
 	match: Match;
 	currentTeam: Team;
 	loading: boolean;
+	searchPeople: WebApi.Entities.UserProfile[];
+	peopleLoading: boolean;
 };
 
-const TeamPage = ({ match: { params }, currentTeam: { team }, loading }: Props) => {
+const TeamPage = ({ match: { params }, currentTeam: { team }, loading, peopleLoading, searchPeople = [] }: Props) => {
 	const [addPeopleModal, setAddPeopleModal] = useState<boolean>(false);
 	const [editedLink, setEditedLink] = useState<Link | undefined>();
 	const [addLinks, setAddLinks] = useState<boolean>(false);
@@ -86,16 +88,19 @@ const TeamPage = ({ match: { params }, currentTeam: { team }, loading }: Props) 
 		setAddLinks(false);
 		setEditedLink(undefined);
 	};
+	const onSearchPeople = (match: string) => {
+		dispatch(actions.startSearchPeople({ id: params.id, match }));
+	};
 
 	return loading ? (
 		<Spinner />
 	) : (
 		<Grid columns="equal" centered className={styles.page_main}>
 			<Grid.Row className={styles.header_z}>
-				<div className={[styles.header, styles.team_header].join(' ')}></div>
+				<div className={`${styles.header} ${styles.team_header}`}></div>
 			</Grid.Row>
 			<Grid.Row className={styles.main_row}>
-				<Grid.Column className={[styles.col_media, styles.col_left].join(' ')}>
+				<Grid.Column className={`${styles.col_media} ${styles.col_left}`}>
 					<TeamDevsCard
 						changeMainFields={changeMainFields}
 						description={team.description}
@@ -115,7 +120,14 @@ const TeamPage = ({ match: { params }, currentTeam: { team }, loading }: Props) 
 					/>
 				</Grid.Column>
 			</Grid.Row>
-			{addPeopleModal && <TeamAddPeopleModal onClose={setAddPeopleModal} />}
+			{addPeopleModal && (
+				<TeamAddPeopleModal
+					searchLoading={peopleLoading}
+					people={searchPeople}
+					search={onSearchPeople}
+					onClose={setAddPeopleModal}
+				/>
+			)}
 			{addLinks && <CreateLink onConfirm={onEditLinkAccept} currentLink={editedLink} onClose={toggleAddLinks} />}
 			{deleteLink && (
 				<DeleteLink onClose={toggleDeleteLinkModal} link={linkToDelete} onDelete={onDeleteLinkAccept} />
@@ -127,6 +139,8 @@ const TeamPage = ({ match: { params }, currentTeam: { team }, loading }: Props) 
 const mapStateToProps = (state: RootState) => ({
 	currentTeam: state.team,
 	loading: state.team.loading,
+	searchPeople: state.team.teammates.people,
+	peopleLoading: state.team.teammates.loading,
 });
 
 export default connect(mapStateToProps)(TeamPage);

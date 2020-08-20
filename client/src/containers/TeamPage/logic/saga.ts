@@ -5,6 +5,7 @@ import {
 	deleteOneLink,
 	getTeamsProjects,
 	getTeamsUsers,
+	findUsersColleagues
 } from 'services/team.service';
 import { all, put, takeEvery, call } from 'redux-saga/effects';
 import * as actionTypes from './actionTypes';
@@ -18,6 +19,11 @@ type Props = {
 	field?: string;
 	type: string;
 };
+
+type PropsPost = {
+	id: string;
+	match: string
+}
 
 export function* fetchTeam(props: Props) {
 	try {
@@ -65,6 +71,15 @@ export function* updateField(props: Props) {
 		NotificationManager.error('Error update data', 'Error', 4000);
 	}
 }
+// TODO: define type
+export function* searchPeople(props: any) {
+	try {
+		const users = yield call(findUsersColleagues, props.id, props.match);
+		yield put(actions.successSearchPeople({ people: users }));
+	} catch (error) {
+		NotificationManager.error('No such user', 'Error', 4000);
+	}
+}
 
 export function* watchStartLoading() {
 	yield takeEvery(actionTypes.START_LOADING, fetchTeam);
@@ -81,6 +96,16 @@ export function* watchFieldUpdateLoading() {
 	yield takeEvery(actionTypes.UPDATE_FIELD_LOADING, updateField);
 }
 
+export function* watchSearchPeopleLoading() {
+	yield takeEvery(actionTypes.START_SEARCHING_PEOPLE, searchPeople);
+}
+
 export default function* teamSaga() {
-	yield all([watchStartLoading(), watchAddLinksLoading(), watchFieldUpdateLoading(), watchDeleteLinksLoading()]);
+	yield all([
+		watchStartLoading(),
+		watchAddLinksLoading(),
+		watchFieldUpdateLoading(),
+		watchDeleteLinksLoading(),
+		watchSearchPeopleLoading()
+	]);
 }

@@ -10,6 +10,10 @@ export type Team = {
 
 export interface TeamState {
 	team: Team;
+	teammates: {
+		people: WebApi.Entities.UserProfile[],
+		loading: boolean
+	},
 	loading: boolean;
 }
 
@@ -24,4 +28,8 @@ export const initialState: TeamState = {
 		createdBy: undefined,
 	},
 	loading: false,
+	teammates: {
+		people: [],
+		loading: true
+	}
 };

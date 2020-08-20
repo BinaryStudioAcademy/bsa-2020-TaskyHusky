@@ -59,7 +59,7 @@ const Projects: React.FC = () => {
 									<Table.Cell>Software</Table.Cell>
 									<Table.Cell>{`${firstName} ${lastName}`}</Table.Cell>
 									<Table.Cell>
-										<NavLink to={`/project/${id}/issues`}>{t('go_to_board')}</NavLink>
+										<NavLink to={`/board/${id}`}>{t('go_to_board')}</NavLink>
 									</Table.Cell>
 									<Table.Cell>
 										<Options config={setProjectActions({ id, onOpenSettings })} />
