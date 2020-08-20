@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Button, Header, Icon, Modal, Form, Checkbox } from 'semantic-ui-react';
+import styles from './styles.module.scss';
+import { Button, Header, Icon, Modal, Form, Checkbox, Popup } from 'semantic-ui-react';
 import { useDispatch, useSelector } from 'react-redux';
 import * as actions from 'containers/Board/Scrum/logic/actions';
 import { useTranslation } from 'react-i18next';
@@ -15,6 +16,7 @@ const CreateSprintModal = (props: Props) => {
 	const [isActive, setIsActive] = useState<boolean>(false);
 	const [isCompleted, setIsCompleted] = useState<boolean>(false);
 	const [name, setName] = useState<string>('');
+	const [isNameValid, setIsNameValid] = useState<boolean>(true);
 
 	const resetLocalState = () => {
 		setIsActive(false);
@@ -28,11 +30,15 @@ const CreateSprintModal = (props: Props) => {
 	};
 
 	const handleYesButtonClick = () => {
+		if (name.length === 0) {
+			setIsNameValid(false);
+			return;
+		}
+
 		const {
 			board: { id: boardId },
 			project: { id: projectId },
 		} = scrumBoardState;
-
 		const sprint = {
 			sprintName: name.trim(),
 			isActive,
@@ -40,10 +46,11 @@ const CreateSprintModal = (props: Props) => {
 			board: boardId,
 			project: projectId,
 		};
-
 		dispatch(actions.createSprintTrigger({ sprint: sprint }));
 		resetLocalState();
-		props.clickAction();
+
+		if (!isNameValid) {
+		}
 	};
 
 	return (
@@ -52,13 +59,25 @@ const CreateSprintModal = (props: Props) => {
 			<Modal.Content>
 				<Form>
 					<Form.Field>
-						<label>{t('sprint_name')}</label>
-						<input
-							placeholder={t('enter_sprint_name')}
-							value={name ? name : ''}
-							onChange={(event) => {
-								setName(event.target.value);
-							}}
+						<Popup
+							className={styles.errorPopup}
+							open={!isNameValid}
+							content={t('invalid_email')}
+							on={[]}
+							trigger={
+								<Form.Input
+									label={t('sprint_name')}
+									placeholder={t('enter_sprint_name')}
+									value={name}
+									error={!isNameValid}
+									onBlur={() => {
+										setIsNameValid(name.trim().length !== 0);
+									}}
+									onChange={(event) => {
+										setName(event.target.value);
+									}}
+								/>
+							}
 						/>
 					</Form.Field>
 					<Form.Field>
@@ -74,6 +93,7 @@ const CreateSprintModal = (props: Props) => {
 					<Form.Field>
 						<Checkbox
 							toggle
+							disabled
 							label={isCompleted ? t('mark_sprint_as_completed') : t('mark_sprint_as_not_completed')}
 							checked={isCompleted}
 							onChange={() => {
