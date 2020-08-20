@@ -3,6 +3,7 @@ import { getCustomRepository } from 'typeorm';
 import {TeammatesRepository} from '../repositories/teammates.repository';
 import { ErrorResponse } from '../helpers/errorHandler.helper';
 import HttpStatusCode from '../constants/httpStattusCode.constants';
+import { UserProfile } from '../entity/UserProfile';
 
 class TeammatesController {
 	getIncomingInvitation = async (req: Request, res: Response, next:NextFunction): Promise<void> => {
@@ -34,8 +35,19 @@ class TeammatesController {
 		const { id } = req.params;
 
 		try {
-			const teammates = await teammatesRepository.getTeammates(id);
-			res.send(teammates);
+			const { name: nameFilter } = req.query;
+			const teammates = <UserProfile[]>await teammatesRepository.getTeammates(id);
+
+			if (nameFilter && typeof nameFilter === 'string') {
+				res.send(
+					teammates.filter((people) => {
+						const fullName = `${people.firstName} ${people.lastName}`;
+						return fullName.toLowerCase().indexOf(nameFilter.toLowerCase()) !== -1;
+					}),
+				);
+			} else {
+				res.send(teammates);
+			}
 		} catch (error) {
 			next(new ErrorResponse(HttpStatusCode.NOT_FOUND, error.message));
 		}
