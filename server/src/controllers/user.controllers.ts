@@ -83,17 +83,7 @@ class UserController {
 
 		try {
 			const users = await userRepository.findAll();
-			const { name: nameFilter } = req.query;
-			if (nameFilter && typeof nameFilter === 'string') {
-				res.send(
-					users.filter((people) => {
-						const fullName = `${people.firstName} ${people.lastName}`;
-						return fullName.toLowerCase().indexOf(nameFilter.toLowerCase()) !== -1;
-					}),
-				);
-			} else {
-				res.send(users);
-			}
+			res.send(users);
 		} catch (error) {
 			res.status(404).send();
 		}
