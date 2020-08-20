@@ -22,7 +22,6 @@ type ResultsToRender =
 	| undefined;
 
 const SearchField: React.FC = (): ReactElement => {
-	const { isLoading } = useSelector((state: RootState) => state.peoplePageSearch);
 	const { people, teams } = useSelector((state: RootState) => state.peoplePage);
 
 	const [results, setResult] = useState<ResultsToRender>(undefined);
@@ -73,7 +72,6 @@ const SearchField: React.FC = (): ReactElement => {
 			<Search
 				category
 				onSearchChange={handlerChange}
-				loading={isLoading}
 				className={style.field}
 				size="large"
 				input={{ fluid: true, placeholder: 'Search for people and teams' }}
