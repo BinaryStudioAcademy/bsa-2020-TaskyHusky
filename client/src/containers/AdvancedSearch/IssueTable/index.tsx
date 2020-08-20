@@ -53,7 +53,6 @@ const IssueTable: React.FC = () => {
 		} else {
 			setSort({ [by]: sortBy === 'DESC' ? 'ASC' : 'DESC' });
 		}
-		console.log(sort);
 	};
 
 	const HeaderCellC = ({ name, popup, text }: HeaderCellCI) => {
