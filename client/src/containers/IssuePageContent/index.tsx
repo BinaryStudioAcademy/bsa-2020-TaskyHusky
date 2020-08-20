@@ -46,7 +46,10 @@ const IssuePageContent: React.FC<Props> = ({ issue, forceCommentsLeft }) => {
 		<Ref innerRef={ref}>
 			<div
 				className={`fill ${styles.container}`}
-				style={{ position: 'relative', ...(forceCommentsLeft ? { justifyContent: 'flex-start' } : {}) }}
+				style={{
+					position: 'relative',
+					...(forceCommentsLeft ? { justifyContent: 'flex-start' } : {}),
+				}}
 			>
 				<div className={styles.innerContainer}>
 					<h4>
@@ -85,7 +88,7 @@ const IssuePageContent: React.FC<Props> = ({ issue, forceCommentsLeft }) => {
 						}}
 					/>
 				</div>
-				<div style={{ position: 'absolute', top: 0, right: 10, width: 270 }}>
+				<div style={{ position: 'absolute', top: -5, right: 10, width: 270 }}>
 					<Sticky context={ref}>
 						<Button secondary onClick={() => openEditModal()} style={{ marginTop: 10 }} fluid>
 							{t('edit_issue')}

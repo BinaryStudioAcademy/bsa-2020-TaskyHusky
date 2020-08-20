@@ -17,7 +17,7 @@ const ProjectIssuesPage: React.FC<Props> = ({ projectId }) => {
 	const [selectedIssueKey, setSelectedIssueKey] = useState<string | null>(null);
 	const [selectedIssue, setSelectedIssue] = useState<WebApi.Result.IssueResult | null>(null);
 	const [search, setSearch] = useState<string>('');
-	const leftPadded = { marginLeft: 20 };
+	const leftPadded = { marginLeft: 60 };
 	const { t } = useTranslation();
 
 	useEffect(() => {
@@ -74,9 +74,9 @@ const ProjectIssuesPage: React.FC<Props> = ({ projectId }) => {
 					search={search}
 					projectId={projectId}
 				/>
-				<div style={{ position: 'absolute', top: 70, right: 10, width: '80%' }}>
+				<div style={{ position: 'absolute', top: 70, right: 40, width: '60%' }}>
 					{selectedIssue ? (
-						<div style={{ width: '80%', marginLeft: 30 }}>
+						<div style={{ marginLeft: 30 }}>
 							<IssuePageContent issue={selectedIssue} forceCommentsLeft />
 						</div>
 					) : (
