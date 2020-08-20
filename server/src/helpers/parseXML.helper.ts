@@ -1,6 +1,6 @@
+import { getCustomRepository } from 'typeorm';
 import { sendMentionedInComment } from '../services/email.service';
 import { parseDataFromXML } from './getMentionUsers.helper';
-import { getCustomRepository } from 'typeorm';
 import { UserRepository } from '../repositories/user.repository';
 
 export const parseMentionsXMLAndSendEmails = async (text: string, issueKey: string): Promise<void> => {

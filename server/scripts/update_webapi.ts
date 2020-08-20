@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import fs from 'fs';
 import glob from 'glob';
+import { runTimeFixGenerator } from './runTImeFixGenerator';
 
 function getFileName(match: string): string {
 	const start = match.lastIndexOf('/');
@@ -20,7 +21,7 @@ function getModelsTypes(files: string[]): string {
 				.trim()
 				.split('\n')
 				.filter((it) => it.indexOf('import') !== 0 && !!it.trim())
-				.map((it: string) => (it ? `\t${it}` : it))
+				.map((it: string) => (it ? `\t${it.replace('export interface', 'interface')}` : it))
 				.join('\n');
 
 			return namespaceDeclaration + modifiedContent + closingBracket;
@@ -61,7 +62,7 @@ glob('src/{entity,models}/**/*.ts', (err: Error | null, matches: string[]) => {
 	const entitiesTypes = getEntitiesTypes(entities);
 
 	const webApiTypes = `${`${modelsTypes}\n\n${entitiesTypes}`.trim()}\n`;
-
+	runTimeFixGenerator(webApiTypes);
 	fs.writeFileSync('../client/src/typings/webapi.d.ts', webApiTypes, 'utf8');
 	console.log('...Written to webapi.d.ts');
 });
