@@ -33,9 +33,7 @@ const EditSprintModal = (props: Props) => {
 			toggle(!currentValue);
 		}
 
-		if (currentValue && !dependentValue) {
-			toggle(!currentValue);
-		}
+		toggle(!currentValue);
 	};
 
 	const resetLocalState = () => {
