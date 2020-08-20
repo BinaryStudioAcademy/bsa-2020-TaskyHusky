@@ -6,7 +6,7 @@ import * as actions from '../../containers/People/logic/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../typings/rootState';
 import styles from '../../containers/SignUpForm/styles.module.scss';
-import { normalizeEmail } from '../../helpers/email.helper';
+import { normalizeEmail, areEmailsEqual } from '../../helpers/email.helper';
 import validator from 'validator';
 
 interface Props {
@@ -17,22 +17,19 @@ interface Props {
 const AddPeopleModal: React.FC<Props> = ({ isOpen = false, closeClb }): ReactElement => {
 	const [email, setEmail] = useState<string>('');
 	const [emailValid, setEmailValid] = useState<boolean>(true);
+
 	const { t } = useTranslation();
 	const dispatch = useDispatch();
+
 	const authStore = useSelector((rootStore: RootState) => rootStore.auth);
+	const currentUserEmail = authStore.user?.email ?? '';
+	const isSameUser = areEmailsEqual(currentUserEmail, email);
 
 	const handlerSubmit = async () => {
 		dispatch(actions.addPeople({ id: authStore.user?.id || '', email }));
 
 		setEmail('');
 		closeClb();
-	};
-
-	const areEmailsEqual = (email1: string | undefined, email2: string) => {
-		if (!email1) {
-			return false;
-		}
-		return email1.toLowerCase().trim() === email2.toLowerCase().trim();
 	};
 
 	return (
@@ -46,9 +43,7 @@ const AddPeopleModal: React.FC<Props> = ({ isOpen = false, closeClb }): ReactEle
 						on={[]}
 						open={!emailValid}
 						position="top center"
-						content={
-							areEmailsEqual(authStore.user?.email, email) ? t('enter_foreign_email') : t('invalid_email')
-						}
+						content={isSameUser ? t('enter_foreign_email') : t('invalid_email')}
 						trigger={
 							<Form.Input
 								type="text"
@@ -56,15 +51,10 @@ const AddPeopleModal: React.FC<Props> = ({ isOpen = false, closeClb }): ReactEle
 								placeholder={t('add_people_email_placeholder')}
 								value={email}
 								onChange={(event) => {
-									console.log(emailValid);
 									setEmail(normalizeEmail(event.target.value));
 									setEmailValid(true);
 								}}
-								onBlur={() =>
-									setEmailValid(
-										validator.isEmail(email) && !areEmailsEqual(authStore.user?.email, email),
-									)
-								}
+								onBlur={() => setEmailValid(validator.isEmail(email) && !isSameUser)}
 								error={!emailValid}
 							/>
 						}
