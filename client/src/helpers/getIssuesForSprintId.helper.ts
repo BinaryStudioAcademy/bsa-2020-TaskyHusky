@@ -1,27 +1,25 @@
 import { normalizeText } from './normalizeText.helper';
-import { issuesToSprint } from 'containers/Board/Scrum/logic/state';
+import { IssuesToSprint } from 'containers/Board/Scrum/logic/state';
+import memoizeOne from 'memoize-one';
 
 export type GetIssuesForSprintId = {
-	(searchString: string, matchIssueToSprint: issuesToSprint, sprintId: string): WebApi.Entities.Issue[];
+	(searchString: string, MatchIssuesToSprintIdObject: IssuesToSprint, sprintId: string): WebApi.Entities.Issue[];
 };
 
-/**
- * @param searchString string based on which the search will be performed
- * @param matchIssueToSprint object of matching Issue[] to sprint id
- * @param sprintId sprint id to search issues for
- * @returns Issue[] for sprint id
- */
-
-export const getIssuesForSprintId: GetIssuesForSprintId = (searchString, matchIssueToSprint, sprintId) => {
+const getIssuesForSprintId: GetIssuesForSprintId = (searchString, MatchIssuesToSprintIdObject, sprintId) => {
 	if (!normalizeText(searchString)) {
-		return matchIssueToSprint[sprintId];
+		return MatchIssuesToSprintIdObject[sprintId];
 	}
 
-	const entries = Object.entries(matchIssueToSprint);
+	const entries = Object.entries(MatchIssuesToSprintIdObject);
 	const filteredEntries = entries.map(([sprintId, issues]) => [
 		sprintId,
 		issues.filter((issue) => issue.summary?.toLowerCase().includes(normalizeText(searchString))),
 	]);
-	const newMatchIssuesToSprint = Object.fromEntries(filteredEntries);
-	return newMatchIssuesToSprint[sprintId];
+	const newMatchIssuesToSprintIdObject = Object.fromEntries(filteredEntries);
+	return newMatchIssuesToSprintIdObject[sprintId];
 };
+
+const memoizedGetIssuesForSprintId = memoizeOne(getIssuesForSprintId);
+
+export default memoizedGetIssuesForSprintId;

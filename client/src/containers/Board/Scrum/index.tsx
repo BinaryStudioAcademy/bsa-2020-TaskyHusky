@@ -12,7 +12,7 @@ import { useHistory } from 'react-router-dom';
 import Sprint from 'components/Sprint';
 import { extractUUIDFromArrayOfObjects } from 'helpers/extractUUIDFromArrayOfObjects.helper';
 import CreateSprintModal from 'components/common/SprintModal/CreateSprintModal';
-import { getIssuesForSprintId } from 'helpers/getIssuesForSprintId.helper';
+import getIssuesForSprintId from 'helpers/getIssuesForSprintId.helper';
 
 const Scrum: BoardComponent = (props) => {
 	const history = useHistory();
@@ -27,9 +27,7 @@ const Scrum: BoardComponent = (props) => {
 	const boardDetails: BreadCrumbData = { id: board.id, name: board.name };
 
 	const clearSearchInputValue = (): void => {
-		const searchValue = document.getElementById('searchIssuesField') as HTMLInputElement;
-		searchValue.value = '';
-		setSearch(searchValue.value);
+		setSearch('');
 	};
 
 	useEffect(() => {

@@ -19,7 +19,6 @@ export const scrumBoardReducer = createReducer<ScrumBoardState>(initialState, {
 
 		return {
 			...stateCopy,
-			matchIssueToSprintShallowCopy: stateCopy.matchIssueToSprint,
 		};
 	},
 	[actionTypes.UPDATE_SPRINT_DATA_SUCCESS](state, action: actionTypes.UpdateSprintDataSuccess) {
