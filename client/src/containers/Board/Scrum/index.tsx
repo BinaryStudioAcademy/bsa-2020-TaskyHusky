@@ -20,7 +20,7 @@ const Scrum: BoardComponent = (props) => {
 	const { t } = useTranslation();
 	const [search, setSearch] = useState<string>('');
 	const [isCreateModalOpened, setIsCreateModalOpened] = useState<boolean>(false);
-	const { sprints, project, matchIssueToSprint } = useSelector((rootState: RootState) => rootState.scrumBoard);
+	const { sprints, project, matchIssuesToSprint } = useSelector((rootState: RootState) => rootState.scrumBoard);
 	const { board } = props;
 
 	const projectDetails: BreadCrumbData = { id: project.id, name: project.name };
@@ -52,7 +52,7 @@ const Scrum: BoardComponent = (props) => {
 					<Sprint
 						key={sprint.id}
 						{...sprint}
-						issues={getIssuesForSprintId(search, matchIssueToSprint, sprint.id)}
+						issues={getIssuesForSprintId(search, matchIssuesToSprint, sprint.id)}
 					/>
 				);
 			})

@@ -3,15 +3,15 @@ import { IssuesToSprint } from 'containers/Board/Scrum/logic/state';
 import memoizeOne from 'memoize-one';
 
 export type GetIssuesForSprintId = {
-	(searchString: string, MatchIssuesToSprintIdObject: IssuesToSprint, sprintId: string): WebApi.Entities.Issue[];
+	(searchString: string, matchIssuesToSprintIdObject: IssuesToSprint, sprintId: string): WebApi.Entities.Issue[];
 };
 
-const getIssuesForSprintId: GetIssuesForSprintId = (searchString, MatchIssuesToSprintIdObject, sprintId) => {
+const getIssuesForSprintId: GetIssuesForSprintId = (searchString, matchIssuesToSprintIdObject, sprintId) => {
 	if (!normalizeText(searchString)) {
-		return MatchIssuesToSprintIdObject[sprintId];
+		return matchIssuesToSprintIdObject[sprintId];
 	}
 
-	const entries = Object.entries(MatchIssuesToSprintIdObject);
+	const entries = Object.entries(matchIssuesToSprintIdObject);
 	const filteredEntries = entries.map(([sprintId, issues]) => [
 		sprintId,
 		issues.filter((issue) => issue.summary?.toLowerCase().includes(normalizeText(searchString))),
