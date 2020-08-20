@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styles from './styles.module.scss';
-import { Button, Header, Icon, Modal, Form, Checkbox, Popup } from 'semantic-ui-react';
+import { Button, Header, Modal, Form, Checkbox, Popup } from 'semantic-ui-react';
 import { useDispatch, useSelector } from 'react-redux';
 import * as actions from 'containers/Board/Scrum/logic/actions';
 import { useTranslation } from 'react-i18next';
@@ -48,9 +48,7 @@ const CreateSprintModal = (props: Props) => {
 		};
 		dispatch(actions.createSprintTrigger({ sprint: sprint }));
 		resetLocalState();
-
-		if (!isNameValid) {
-		}
+		props.clickAction();
 	};
 
 	return (
@@ -70,6 +68,9 @@ const CreateSprintModal = (props: Props) => {
 									placeholder={t('enter_sprint_name')}
 									value={name}
 									error={!isNameValid}
+									onFocus={() => {
+										setIsNameValid(true);
+									}}
 									onBlur={() => {
 										setIsNameValid(name.trim().length !== 0);
 									}}
@@ -104,12 +105,15 @@ const CreateSprintModal = (props: Props) => {
 				</Form>
 			</Modal.Content>
 			<Modal.Actions>
-				<Button color="red" inverted onClick={handleNoButtonClick}>
-					<Icon name="remove" /> {t('cancel')}
-				</Button>
-				<Button color="green" inverted onClick={handleYesButtonClick}>
-					<Icon name="checkmark" /> {t('submit')}
-				</Button>
+				<Button color="grey" onClick={handleNoButtonClick} content={t('cancel')} />
+				<Button
+					color="green"
+					onClick={handleYesButtonClick}
+					content={t('submit')}
+					labelPosition="right"
+					icon="checkmark"
+					primary
+				/>
 			</Modal.Actions>
 		</Modal>
 	);
