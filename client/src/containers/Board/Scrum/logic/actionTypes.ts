@@ -54,13 +54,6 @@ export type CreateSprintSuccess = {
 	sprint: WebApi.Entities.Sprint;
 };
 
-export const SEARCH_ISSUES_TRIGGER = 'SCRUM_BOARD:SEARCH_ISSUES_TRIGGER';
-export const SEARCH_ISSUES_SUCCESS = 'SCRUM_BOARD:SEARCH_ISSUES_SUCCESS';
-
-export type SearchIssuesTrigger = {
-	searchString: string;
-};
-
 export const SAVE_BOARD_TO_STATE = 'SCRUM_BOARD:SAVE_BOARD_TO_STATE';
 
 export type SaveBoardToState = {

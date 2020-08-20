@@ -1,17 +1,6 @@
 import { createReducer } from 'helpers/createReducer.helper';
 import * as actionTypes from './actionTypes';
 import { ScrumBoardState, initialState } from './state';
-import { normalizeText } from 'helpers/normalizeText.helper';
-
-const searchIssues = (searchString: string, state: ScrumBoardState) => {
-	const entriesOfShallowCopy = Object.entries(state.matchIssueToSprintShallowCopy);
-	const filteredEntries = entriesOfShallowCopy.map(([sprintId, issues]) => [
-		sprintId,
-		issues.filter((issue) => issue.summary?.toLowerCase().includes(searchString)),
-	]);
-	const matchFilteredIssuesToSprint = Object.fromEntries(filteredEntries);
-	return matchFilteredIssuesToSprint;
-};
 
 export const scrumBoardReducer = createReducer<ScrumBoardState>(initialState, {
 	[actionTypes.LOAD_SPRINTS_SUCCESS](state, action: actionTypes.LoadSprintsSuccess) {
@@ -54,24 +43,6 @@ export const scrumBoardReducer = createReducer<ScrumBoardState>(initialState, {
 		return {
 			...state,
 			sprints: updatedSprints,
-		};
-	},
-	[actionTypes.SEARCH_ISSUES_TRIGGER](state, action: actionTypes.SearchIssuesTrigger) {
-		const { searchString } = action;
-		const normalizedString = normalizeText(searchString);
-
-		if (!normalizedString) {
-			return {
-				...state,
-				matchIssueToSprint: state.matchIssueToSprintShallowCopy,
-			};
-		}
-
-		const filteredIssuesToSprint = searchIssues(normalizedString, state);
-
-		return {
-			...state,
-			matchIssueToSprint: filteredIssuesToSprint,
 		};
 	},
 	[actionTypes.SAVE_BOARD_TO_STATE](state, action: actionTypes.SaveBoardToState) {

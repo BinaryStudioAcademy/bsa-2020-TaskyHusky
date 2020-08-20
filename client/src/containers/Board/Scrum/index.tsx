@@ -1,4 +1,4 @@
-import React, { useState, useEffect, ChangeEvent, useCallback } from 'react';
+import React, { useState, useEffect, ChangeEvent } from 'react';
 import { Header, Container, Form, Button, InputOnChangeData, Icon } from 'semantic-ui-react';
 import { BoardComponent } from '../';
 import { useTranslation } from 'react-i18next';
@@ -12,7 +12,7 @@ import { useHistory } from 'react-router-dom';
 import Sprint from 'components/Sprint';
 import { extractUUIDFromArrayOfObjects } from 'helpers/extractUUIDFromArrayOfObjects.helper';
 import CreateSprintModal from 'components/common/SprintModal/CreateSprintModal';
-import debounce from 'lodash-es/debounce';
+import { getIssuesForSprintId } from 'helpers/getIssuesForSprintId.helper';
 
 const Scrum: BoardComponent = (props) => {
 	const history = useHistory();
@@ -20,9 +20,7 @@ const Scrum: BoardComponent = (props) => {
 	const { t } = useTranslation();
 	const [search, setSearch] = useState<string>('');
 	const [isCreateModalOpened, setIsCreateModalOpened] = useState<boolean>(false);
-	const scrumBoardState = useSelector((rootState: RootState) => rootState.scrumBoard);
-
-	const { sprints, project } = scrumBoardState;
+	const { sprints, project, matchIssueToSprint } = useSelector((rootState: RootState) => rootState.scrumBoard);
 	const { board } = props;
 
 	const projectDetails: BreadCrumbData = { id: project.id, name: project.name };
@@ -32,15 +30,7 @@ const Scrum: BoardComponent = (props) => {
 		const searchValue = document.getElementById('searchIssuesField') as HTMLInputElement;
 		searchValue.value = '';
 		setSearch(searchValue.value);
-		dispatch(actions.searchIssuesTrigger({ searchString: searchValue.value }));
 	};
-
-	const debounceSearch = useCallback(
-		debounce((event: ChangeEvent<HTMLInputElement>) => {
-			dispatch(actions.searchIssuesTrigger({ searchString: event.target.value }));
-		}, 500),
-		[],
-	);
 
 	useEffect(() => {
 		dispatch(actions.loadSprintsTrigger({ boardId: board.id }));
@@ -49,18 +39,24 @@ const Scrum: BoardComponent = (props) => {
 	}, [dispatch, board]);
 
 	useEffect(() => {
-		if (scrumBoardState.sprints.length > 0) {
-			const arrayOfIds = extractUUIDFromArrayOfObjects(scrumBoardState.sprints);
+		if (sprints.length > 0) {
+			const arrayOfIds = extractUUIDFromArrayOfObjects(sprints);
 			arrayOfIds.forEach((id) => {
 				dispatch(actions.loadIssuesTrigger({ sprintId: id }));
 			});
 		}
-	}, [scrumBoardState.sprints.length, scrumBoardState.sprints, dispatch]);
+	}, [sprints.length, sprints, dispatch]);
 
 	const sprintList =
 		sprints.length > 0 ? (
 			sprints.map((sprint) => {
-				return <Sprint key={sprint.id} {...sprint} issues={scrumBoardState.matchIssueToSprint[sprint.id]} />;
+				return (
+					<Sprint
+						key={sprint.id}
+						{...sprint}
+						issues={getIssuesForSprintId(search, matchIssueToSprint, sprint.id)}
+					/>
+				);
 			})
 		) : (
 			<Container className={styles.noSprintsContainer}>
@@ -85,9 +81,7 @@ const Scrum: BoardComponent = (props) => {
 						icon="search"
 						value={search}
 						onChange={(event: ChangeEvent<HTMLInputElement>, data: InputOnChangeData) => {
-							event.persist();
-							setSearch(event.target.value);
-							debounceSearch(event);
+							setSearch(data.value);
 						}}
 						style={{ marginLeft: 20, marginRight: 60, maxWidth: 250 }}
 						id="searchIssuesField"

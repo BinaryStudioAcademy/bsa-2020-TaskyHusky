@@ -16,12 +16,10 @@ export const loadIssuesSuccess = createAction<actionTypes.LoadIssuesSuccess>(act
 export const updateSprintDataTrigger = createAction<actionTypes.UpdateSprintDataTrigger>(
 	actionTypes.UPDATE_SPRINT_DATA_TRIGGER,
 );
-
 export const updateSprintDataSuccess = createAction<actionTypes.UpdateSprintDataSuccess>(
 	actionTypes.UPDATE_SPRINT_DATA_SUCCESS,
 );
 
-export const searchIssuesTrigger = createAction<actionTypes.SearchIssuesTrigger>(actionTypes.SEARCH_ISSUES_TRIGGER);
 export const saveBoardToState = createAction<actionTypes.SaveBoardToState>(actionTypes.SAVE_BOARD_TO_STATE);
 
 export const loadProjectTrigger = createAction<actionTypes.LoadProjectTrigger>(actionTypes.LOAD_PROJECT_TRIGGER);

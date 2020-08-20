@@ -1,4 +1,4 @@
-type issuesToSprint = {
+export type issuesToSprint = {
 	[sprintId: string]: WebApi.Entities.Issue[];
 };
 
