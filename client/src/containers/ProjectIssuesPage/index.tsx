@@ -41,7 +41,7 @@ const ProjectIssuesPage: React.FC<Props> = ({ projectId }) => {
 	}
 
 	return (
-		<>
+		<main style={{ paddingTop: 20, height: '80%', marginBottom: 10 }}>
 			<Header style={leftPadded} as="h2">
 				{t('issues')}
 			</Header>
@@ -77,14 +77,14 @@ const ProjectIssuesPage: React.FC<Props> = ({ projectId }) => {
 				<div style={{ position: 'absolute', top: 70, right: 10, width: '80%' }}>
 					{selectedIssue ? (
 						<div style={{ width: '80%', marginLeft: 30 }}>
-							<IssuePageContent issue={selectedIssue} />
+							<IssuePageContent issue={selectedIssue} forceCommentsLeft />
 						</div>
 					) : (
 						''
 					)}
 				</div>
 			</div>
-		</>
+		</main>
 	);
 };
 

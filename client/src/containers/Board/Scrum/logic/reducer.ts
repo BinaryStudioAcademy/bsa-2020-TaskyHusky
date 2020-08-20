@@ -33,22 +33,6 @@ export const scrumBoardReducer = createReducer<ScrumBoardState>(initialState, {
 			matchIssueToSprintShallowCopy: stateCopy.matchIssueToSprint,
 		};
 	},
-	[actionTypes.SAVE_PROJECT_ID_TO_STATE](state, action: actionTypes.SaveProjectId) {
-		const { projectId } = action;
-
-		return {
-			...state,
-			projectId,
-		};
-	},
-	[actionTypes.SAVE_BOARD_ID_TO_STATE](state, action: actionTypes.SaveBoardId) {
-		const { boardId } = action;
-
-		return {
-			...state,
-			boardId,
-		};
-	},
 	[actionTypes.UPDATE_SPRINT_DATA_SUCCESS](state, action: actionTypes.UpdateSprintDataSuccess) {
 		const updatedSprints = state.sprints.map((sprint) => {
 			if (sprint.id === action.sprint.id) {
@@ -88,6 +72,34 @@ export const scrumBoardReducer = createReducer<ScrumBoardState>(initialState, {
 		return {
 			...state,
 			matchIssueToSprint: filteredIssuesToSprint,
+		};
+	},
+	[actionTypes.SAVE_BOARD_TO_STATE](state, action: actionTypes.SaveBoardToState) {
+		const { board } = action;
+
+		return {
+			...state,
+			board,
+		};
+	},
+	[actionTypes.LOAD_PROJECT_SUCCESS](state, action: actionTypes.LoadProjectSuccess) {
+		const { project } = action;
+
+		return {
+			...state,
+			project,
+		};
+	},
+	[actionTypes.DELETE_SPRINT_SUCCESS](state, action: actionTypes.DeleteSprintSuccess) {
+		const {
+			sprint: { id: deletedSprintId },
+		} = action;
+
+		const updatedSprints = state.sprints.filter((sprint) => sprint.id !== deletedSprintId);
+
+		return {
+			...state,
+			sprints: updatedSprints,
 		};
 	},
 });

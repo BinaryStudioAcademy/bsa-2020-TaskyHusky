@@ -17,6 +17,7 @@ interface Props {
 const BoardModalFinal = (props: Props) => {
 	const { t } = useTranslation();
 	const { board, setBoard, setCreateButtonDisabled } = props;
+	const { boardType, algorithm } = board;
 
 	const dispatch = useDispatch();
 	useEffect(() => {
@@ -32,7 +33,8 @@ const BoardModalFinal = (props: Props) => {
 
 		if (!isCreateButtonHidden) {
 			setBoard({
-				...board,
+				algorithm,
+				boardType,
 				projects: [...selectedProjects],
 				name: selectedName,
 				admin: authData.user?.id,
@@ -40,7 +42,7 @@ const BoardModalFinal = (props: Props) => {
 		}
 
 		setCreateButtonDisabled(isCreateButtonHidden);
-	}, [selectedProjects, selectedName, authData.user, board, setBoard, setCreateButtonDisabled]);
+	}, [selectedProjects, selectedName, authData.user, setBoard, setCreateButtonDisabled, algorithm, boardType]);
 
 	const projectData = useSelector((rootState: RootState) => rootState.projects.projects);
 

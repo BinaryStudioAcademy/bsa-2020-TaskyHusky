@@ -8,26 +8,24 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'typings/rootState';
 import Breadcrumbs from 'components/common/Breadcrumbs';
 import { setBreadcrumbs, BreadCrumbData } from './config/breadcrumbs';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import Sprint from 'components/Sprint';
-import { startGettingProject } from 'containers/ProjectSettings/logic/actions';
 import { extractUUIDFromArrayOfObjects } from 'helpers/extractUUIDFromArrayOfObjects.helper';
 import CreateSprintModal from 'components/common/SprintModal/CreateSprintModal';
 import debounce from 'lodash-es/debounce';
 
 const Scrum: BoardComponent = (props) => {
-	const dispatch = useDispatch();
-	const scrumBoardState = useSelector((rootState: RootState) => rootState.scrumBoard);
-	const projectState = useSelector((rootState: RootState) => rootState.project.project);
-	const { sprints } = scrumBoardState;
-	const { id: projectId } = useParams();
 	const history = useHistory();
-	const { board } = props;
+	const dispatch = useDispatch();
 	const { t } = useTranslation();
 	const [search, setSearch] = useState<string>('');
 	const [isCreateModalOpened, setIsCreateModalOpened] = useState<boolean>(false);
+	const scrumBoardState = useSelector((rootState: RootState) => rootState.scrumBoard);
 
-	const projectDetails: BreadCrumbData = { id: projectState.id, name: projectState.name };
+	const { sprints, project } = scrumBoardState;
+	const { board } = props;
+
+	const projectDetails: BreadCrumbData = { id: project.id, name: project.name };
 	const boardDetails: BreadCrumbData = { id: board.id, name: board.name };
 
 	const clearSearchInputValue = (): void => {
@@ -46,10 +44,9 @@ const Scrum: BoardComponent = (props) => {
 
 	useEffect(() => {
 		dispatch(actions.loadSprintsTrigger({ boardId: board.id }));
-		dispatch(startGettingProject({ id: projectId }));
-		dispatch(actions.saveProjectIdToState({ projectId }));
-		dispatch(actions.saveBoardIdToState({ boardId: board.id }));
-	}, [dispatch, board.id, projectId]);
+		dispatch(actions.loadProjectTrigger({ boardId: board.id }));
+		dispatch(actions.saveBoardToState({ board }));
+	}, [dispatch, board]);
 
 	useEffect(() => {
 		if (scrumBoardState.sprints.length > 0) {
@@ -112,7 +109,9 @@ const Scrum: BoardComponent = (props) => {
 				<Container>{sprintList}</Container>
 			</Container>
 			<CreateSprintModal
-				clickAction={() => setIsCreateModalOpened(!isCreateModalOpened)}
+				clickAction={() => {
+					setIsCreateModalOpened(!isCreateModalOpened);
+				}}
 				isOpen={isCreateModalOpened}
 			/>
 		</>
