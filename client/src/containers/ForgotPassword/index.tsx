@@ -4,7 +4,7 @@ import { Header, Form, Divider, Segment, Button, Grid, List, Image, Container } 
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { normalizeEmail } from 'helpers/normalizeEmail.helper';
+import { normalizeText } from 'helpers/normalizeText.helper';
 import * as actions from '../LoginPage/logic/actions';
 import emailSent from 'assets/images/email-sent.png';
 
@@ -42,7 +42,7 @@ export const ForgotPassword: React.FC = () => {
 									icon="at"
 									value={email}
 									onChange={(event) => {
-										setEmail(normalizeEmail(event.target.value));
+										setEmail(normalizeText(event.target.value));
 									}}
 								/>
 								<Button positive className={styles.continueButton}>

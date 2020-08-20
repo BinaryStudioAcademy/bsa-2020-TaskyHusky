@@ -7,7 +7,7 @@ import * as actions from './logic/actions';
 import PasswordInput from 'components/common/PasswordInput';
 import { useTranslation } from 'react-i18next';
 import validator from 'validator';
-import { normalizeEmail } from 'helpers/normalizeEmail.helper';
+import { normalizeText } from 'helpers/normalizeText.helper';
 import { NotificationManager } from 'react-notifications';
 import iconGoogle from 'assets/images/icon-google.svg';
 import GoogleLogin, { GoogleLoginResponse, GoogleLoginResponseOffline } from 'react-google-login';
@@ -99,8 +99,8 @@ export const LoginPage: React.FC = () => {
 									icon="at"
 									value={email}
 									onChange={(event) => {
-										setEmail(normalizeEmail(event.target.value));
-										if (normalizeEmail(event.target.value) !== email && isEmailSubmitted) {
+										setEmail(normalizeText(event.target.value));
+										if (normalizeText(event.target.value) !== email && isEmailSubmitted) {
 											setIsEmailSubmitted(false);
 											checkEmailReset();
 										}
