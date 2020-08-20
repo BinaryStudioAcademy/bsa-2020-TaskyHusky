@@ -5,6 +5,7 @@ export const loadSprintsTrigger = createAction<actionTypes.LoadSprintsTrigger>(a
 export const loadSprintsSuccess = createAction<actionTypes.LoadSprintsSuccess>(actionTypes.LOAD_SPRINTS_SUCCESS);
 
 export const deleteSprintTrigger = createAction<actionTypes.DeleteSprintTrigger>(actionTypes.DELETE_SPRINT_TRIGGER);
+export const deleteSprintSuccess = createAction<actionTypes.DeleteSprintSuccess>(actionTypes.DELETE_SPRINT_SUCCESS);
 
 export const createSprintTrigger = createAction<actionTypes.CreateSprintTrigger>(actionTypes.CREATE_SPRINT_TRIGGER);
 export const createSprintSuccess = createAction<actionTypes.CreateSprintSuccess>(actionTypes.CREATE_SPRINT_SUCCESS);

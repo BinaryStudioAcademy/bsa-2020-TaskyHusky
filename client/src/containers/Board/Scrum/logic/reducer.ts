@@ -60,4 +60,16 @@ export const scrumBoardReducer = createReducer<ScrumBoardState>(initialState, {
 			project,
 		};
 	},
+	[actionTypes.DELETE_SPRINT_SUCCESS](state, action: actionTypes.DeleteSprintSuccess) {
+		const {
+			sprint: { id: deletedSprintId },
+		} = action;
+
+		const updatedSprints = state.sprints.filter((sprint) => sprint.id !== deletedSprintId);
+
+		return {
+			...state,
+			sprints: updatedSprints,
+		};
+	},
 });
