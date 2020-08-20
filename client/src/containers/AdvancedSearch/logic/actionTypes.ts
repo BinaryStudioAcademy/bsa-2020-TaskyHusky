@@ -54,6 +54,6 @@ export type UpdateFilterStaredBy = {
 };
 
 export type LoadIssues = {
-	skip?: number;
-	take?: number;
+	from?: number;
+	to?: number;
 };

@@ -7,15 +7,17 @@ import { useTranslation } from 'react-i18next';
 import PaginationC from '../../../components/common/Pagination';
 import { loadIssues } from '../logic/actions';
 
+const PAGE_SIZE = 25;
 const IssueTable: React.FC = () => {
 	const dispatch = useDispatch();
 	const { t } = useTranslation();
 	const { issues, issuesCount } = useSelector((rootState: RootState) => rootState.advancedSearch);
-	const takeOption = 25;
 	const [page, setPage] = useState(1);
 
 	useEffect(() => {
-		dispatch(loadIssues({ skip: takeOption * (page - 1), take: takeOption }));
+		const from = PAGE_SIZE * (page - 1);
+		const to = PAGE_SIZE * page;
+		dispatch(loadIssues({ from, to }));
 	}, [dispatch, page]);
 
 	return (
@@ -47,7 +49,7 @@ const IssueTable: React.FC = () => {
 					))}
 				</Table.Body>
 			</Table>
-			<PaginationC totalPages={Math.ceil(issuesCount / takeOption)} page={page} setPage={setPage} />
+			<PaginationC totalPages={Math.ceil(issuesCount / PAGE_SIZE)} page={page} setPage={setPage} />
 		</>
 	);
 };

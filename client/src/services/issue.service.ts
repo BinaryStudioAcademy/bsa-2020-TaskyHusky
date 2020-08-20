@@ -96,16 +96,16 @@ export const getByColumnId = async (id: string): Promise<WebApi.Result.IssueResu
 
 export const loadIssuesAndCount = async (
 	filter: IssueFilter | undefined,
-	skip: number | undefined,
-	take: number | undefined,
+	from: number | undefined,
+	to: number | undefined,
 ): Promise<WebApi.Result.IssueResult[]> => {
 	const res: Response = await callWebApi({
 		method: 'POST',
 		endpoint: `issue/filtered`,
 		body: {
 			filter,
-			skip,
-			take,
+			from,
+			to,
 		},
 	});
 

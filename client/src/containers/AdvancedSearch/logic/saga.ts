@@ -8,7 +8,7 @@ import * as actions from './actions';
 import { FilterPartState } from './state';
 import { AnyAction } from 'redux';
 import { getFilterOptionsFromFilterParts } from './helpers';
-
+const PAGE_SIZE = 25;
 export function* fetchFilterPartsSaga(action: AnyAction) {
 	const {
 		filterDefs: { filterDefs },
@@ -34,16 +34,14 @@ export function* updateFilterPartSaga(action: AnyAction) {
 }
 
 export function* loadIssuesSaga(action: AnyAction) {
-	const defaultSkip = 0;
-	const defaultTake = 25;
-	const { skip = defaultSkip, take = defaultTake } = action;
+	const { from = 0, to = PAGE_SIZE } = action;
 
 	const {
 		advancedSearch: { filterParts },
 	}: RootState = yield select();
 
 	const filterOption = getFilterOptionsFromFilterParts(filterParts);
-	const result = yield call(loadIssuesAndCount, filterOption, skip, take);
+	const result = yield call(loadIssuesAndCount, filterOption, from, to);
 
 	yield put(actions.loadIssuesSuccess({ issues: result[0], issuesCount: result[1] }));
 }
