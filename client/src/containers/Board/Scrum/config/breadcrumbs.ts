@@ -24,7 +24,7 @@ export const setBreadcrumbs = ({ projectDetails, boardDetails, history }: Params
 			onClick: () => history.push('/projects'),
 		},
 		{
-			key: projectId,
+			key: String(projectId),
 			content: projectName,
 			link: true,
 			onClick: () => history.push(`/projects/${projectId}/`),

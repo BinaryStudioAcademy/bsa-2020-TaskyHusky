@@ -234,7 +234,7 @@ export const en = {
 	create_board_final_text: 'Select one or more projects to include in this board',
 	create_sprint: 'Create sprint',
 	no_sprints_header: 'There are no active sprints',
-	no_sprints_header_subheader: 'Plan your team&apos;s work. Create your first sprint.',
+	no_sprints_header_subheader: "Plan your team's work. Create your first sprint.",
 	no_issues_in_sprint: 'Plan a sprint by creating some issues.',
 	edit_sprint: 'Edit sprint',
 	delete_sprint: 'Delete sprint',
