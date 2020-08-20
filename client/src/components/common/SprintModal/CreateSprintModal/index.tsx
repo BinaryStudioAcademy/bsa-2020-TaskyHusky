@@ -30,7 +30,7 @@ const CreateSprintModal = (props: Props) => {
 	};
 
 	const handleYesButtonClick = () => {
-		if (name.length === 0) {
+		if (name.trim().length === 0) {
 			setIsNameValid(false);
 			return;
 		}
@@ -52,7 +52,7 @@ const CreateSprintModal = (props: Props) => {
 	};
 
 	return (
-		<Modal onClose={props.clickAction} open={props.isOpen} size="small">
+		<Modal size="tiny" dimmer="inverted" onClose={props.clickAction} open={props.isOpen}>
 			<Header>Create sprint</Header>
 			<Modal.Content>
 				<Form>
@@ -60,7 +60,7 @@ const CreateSprintModal = (props: Props) => {
 						<Popup
 							className={styles.errorPopup}
 							open={!isNameValid}
-							content={t('invalid_email')}
+							content={t('sprint_name_cannot_be_empty')}
 							on={[]}
 							trigger={
 								<Form.Input
@@ -107,7 +107,6 @@ const CreateSprintModal = (props: Props) => {
 			<Modal.Actions>
 				<Button color="grey" onClick={handleNoButtonClick} content={t('cancel')} />
 				<Button
-					color="green"
 					onClick={handleYesButtonClick}
 					content={t('submit')}
 					labelPosition="right"
