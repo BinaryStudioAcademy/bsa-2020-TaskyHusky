@@ -1,4 +1,5 @@
 import { UserProfile } from '../entity/UserProfile';
+import { Projects } from '../entity/Projects';
 
 export interface TeamModel {
 	id?: string;
@@ -8,4 +9,5 @@ export interface TeamModel {
 	createdBy: UserProfile;
 	links?: string[];
 	users?: UserProfile[];
+	projects?: Projects[];
 }
