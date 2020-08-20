@@ -3,10 +3,10 @@ import { getProjectById } from 'services/projects.service';
 import { Breadcrumb, Header, Form } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 import ProjectIssuesColumn from 'components/ProjectIssuesColumn';
-import IssuePageContent from 'containers/IssuePageContent';
 import { getByKey } from 'services/issue.service';
 import Board from 'containers/Board';
 import styles from './styles.module.scss';
+import IssuePageInfoColumn from 'components/IssuePageInfoColumn';
 
 interface Props {
 	projectId: string;
@@ -39,6 +39,21 @@ const ProjectIssuesPage: React.FC<Props> = ({ projectId }) => {
 	if (project.boards && project.boards.length > 0) {
 		return <Board boardId={project.boards[0].id} />;
 	}
+
+	const initialIssue = selectedIssue
+		? {
+				...selectedIssue,
+				type: selectedIssue.type.id,
+				priority: selectedIssue.priority.id,
+		  }
+		: {
+				id: '',
+				type: '',
+				priority: '',
+				creator: {
+					id: '',
+				},
+		  };
 
 	return (
 		<main style={{ paddingTop: 20, height: '80%', marginBottom: 10 }}>
@@ -74,10 +89,15 @@ const ProjectIssuesPage: React.FC<Props> = ({ projectId }) => {
 					search={search}
 					projectId={projectId}
 				/>
-				<div style={{ position: 'absolute', top: 70, right: 40, width: '60%' }}>
+				<div>
 					{selectedIssue ? (
 						<div style={{ marginLeft: 30 }}>
-							<IssuePageContent issue={selectedIssue} forceCommentsLeft />
+							<IssuePageInfoColumn
+								leftAligned
+								withDescrtiption
+								issue={selectedIssue}
+								initialIssue={initialIssue}
+							/>
 						</div>
 					) : (
 						''
