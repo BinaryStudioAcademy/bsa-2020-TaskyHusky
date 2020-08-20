@@ -24,18 +24,6 @@ const EditSprintModal = (props: Props) => {
 	const [name, setName] = useState<string>(sprintName);
 	const [isNameValid, setIsNameValid] = useState<boolean>(true);
 
-	const handleCheckboxChange = (
-		currentValue: boolean,
-		dependentValue: boolean,
-		toggle: React.Dispatch<React.SetStateAction<boolean>>,
-	): void => {
-		if (!currentValue && !dependentValue) {
-			toggle(!currentValue);
-		}
-
-		toggle(!currentValue);
-	};
-
 	const resetLocalState = () => {
 		setIsActive(sprintIsActive);
 		setIsCompleted(sprintIsCompleted);
@@ -103,7 +91,7 @@ const EditSprintModal = (props: Props) => {
 							label={isActive ? t('mark_sprint_as_active') : t('mark_sprint_as_inactive')}
 							checked={isActive}
 							onChange={() => {
-								handleCheckboxChange(isActive, isCompleted, setIsActive);
+								setIsActive(!isActive);
 							}}
 						/>
 					</Form.Field>
@@ -114,7 +102,7 @@ const EditSprintModal = (props: Props) => {
 							label={isCompleted ? t('mark_sprint_as_completed') : t('mark_sprint_as_not_completed')}
 							checked={isCompleted}
 							onChange={() => {
-								handleCheckboxChange(isCompleted, isActive, setIsCompleted);
+								setIsCompleted(!isCompleted);
 							}}
 						/>
 					</Form.Field>
