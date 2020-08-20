@@ -7,6 +7,7 @@ import board from './board.routes';
 import user from './user.routes';
 import issue from './issue.routes';
 import sprint from './sprint.routes';
+import git from './git.routes'
 import error404Middleware from '../middleware/error404';
 
 const routes = Router();
@@ -20,6 +21,7 @@ routes
 	.use('/projects', projects)
 	.use('/sprint', sprint)
 	.use('/team', team)
+	.use('/commits', git)
 	.use(error404Middleware);
 
 export default routes;
