@@ -5,22 +5,20 @@ import { useTranslation } from 'react-i18next';
 
 interface HeaderCellI {
 	name: SortByProp;
-	popup?: boolean;
-	text?: string;
 	sort: Sort;
 }
 
-const HeaderCell = ({ name, popup, text, sort }: HeaderCellI) => {
+const HeaderCell = ({ name, sort }: HeaderCellI) => {
 	const { t } = useTranslation();
 
 	return (
 		<>
-			{popup ? (
+			{name === 'type' || name === 'priority' ? (
 				<Popup
 					content={t(name)}
 					trigger={
 						<div style={{ paddingLeft: '6px' }}>
-							{text}
+							{name[0].toUpperCase()}
 							{sort[name] && (
 								<Icon size="small" name={sort[name] === 'DESC' ? 'arrow down' : 'arrow up'} />
 							)}

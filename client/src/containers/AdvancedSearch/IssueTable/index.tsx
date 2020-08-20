@@ -24,19 +24,31 @@ export type Sort = {
 };
 
 export type SortByProp =
+	| 'type'
+	| 'issueKey'
 	| 'summary'
 	| 'assigned'
 	| 'creator'
-	| 'type'
 	| 'priority'
+	| 'status'
 	| 'createdAt'
-	| 'updatedAt'
-	| 'issueKey'
-	| 'status';
+	| 'updatedAt';
 
 interface HandleSortI {
-	by: SortByProp;
+	field: SortByProp;
 }
+
+const columns: SortByProp[] = [
+	'type',
+	'issueKey',
+	'summary',
+	'assigned',
+	'creator',
+	'priority',
+	'status',
+	'createdAt',
+	'updatedAt',
+];
 
 const IssueTable: React.FC = () => {
 	const dispatch = useDispatch();
@@ -51,12 +63,12 @@ const IssueTable: React.FC = () => {
 		dispatch(loadIssues({ from, to, sort }));
 	}, [dispatch, page, sort]);
 
-	const handleSort = ({ by }: HandleSortI) => {
-		const sortBy = sort[by];
+	const handleSort = ({ field }: HandleSortI) => {
+		const sortBy = sort[field];
 		if (!sortBy) {
-			setSort({ [by]: 'DESC' });
+			setSort({ [field]: 'DESC' });
 		} else {
-			setSort({ [by]: sortBy === 'DESC' ? 'ASC' : 'DESC' });
+			setSort({ [field]: sortBy === 'DESC' ? 'ASC' : 'DESC' });
 		}
 	};
 
@@ -66,33 +78,15 @@ const IssueTable: React.FC = () => {
 			<Table selectable compact sortable>
 				<Table.Header>
 					<Table.Row>
-						<Table.HeaderCell onClick={() => handleSort({ by: 'type' })} className={styles.headerCell}>
-							<HeaderCell sort={sort} name={'type'} popup={true} text={'T'} />
-						</Table.HeaderCell>
-						<Table.HeaderCell onClick={() => handleSort({ by: 'issueKey' })} className={styles.headerCell}>
-							<HeaderCell sort={sort} name={'issueKey'} />
-						</Table.HeaderCell>
-						<Table.HeaderCell onClick={() => handleSort({ by: 'summary' })} className={styles.headerCell}>
-							<HeaderCell sort={sort} name={'summary'} />
-						</Table.HeaderCell>
-						<Table.HeaderCell onClick={() => handleSort({ by: 'assigned' })} className={styles.headerCell}>
-							<HeaderCell sort={sort} name={'assigned'} />
-						</Table.HeaderCell>
-						<Table.HeaderCell onClick={() => handleSort({ by: 'creator' })} className={styles.headerCell}>
-							<HeaderCell sort={sort} name={'creator'} />
-						</Table.HeaderCell>
-						<Table.HeaderCell onClick={() => handleSort({ by: 'priority' })} className={styles.headerCell}>
-							<HeaderCell sort={sort} name={'priority'} popup={true} text={'P'} />
-						</Table.HeaderCell>
-						<Table.HeaderCell onClick={() => handleSort({ by: 'status' })} className={styles.headerCell}>
-							<HeaderCell sort={sort} name={'status'} />
-						</Table.HeaderCell>
-						<Table.HeaderCell onClick={() => handleSort({ by: 'createdAt' })} className={styles.headerCell}>
-							<HeaderCell sort={sort} name={'createdAt'} />
-						</Table.HeaderCell>
-						<Table.HeaderCell onClick={() => handleSort({ by: 'updatedAt' })} className={styles.headerCell}>
-							<HeaderCell sort={sort} name={'updatedAt'} />
-						</Table.HeaderCell>
+						{columns.map((column) => (
+							<Table.HeaderCell
+								key={`${column}`}
+								onClick={() => handleSort({ field: column })}
+								className={styles.headerCell}
+							>
+								<HeaderCell sort={sort} name={column} />
+							</Table.HeaderCell>
+						))}
 						<Table.HeaderCell className={styles.headerCell}> </Table.HeaderCell>
 					</Table.Row>
 				</Table.Header>
