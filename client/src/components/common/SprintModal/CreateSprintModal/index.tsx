@@ -23,6 +23,7 @@ const CreateSprintModal = (props: Props) => {
 	};
 
 	const handleNoButtonClick = () => {
+		resetLocalState();
 		props.clickAction();
 	};
 

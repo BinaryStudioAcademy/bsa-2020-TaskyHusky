@@ -7,19 +7,20 @@ import { getInitials } from 'helpers/getInitials.helper';
 
 type Props = { issues: WebApi.Entities.Issue[] };
 
-const showAvatar = <T extends WebApi.Entities.UserProfile>(userData?: T): JSX.Element | null =>
-	userData ? (
-		userData.avatar ? (
-			<Image avatar src={userData?.avatar} title={`Assignee: ${getUsername(userData)}`} />
-		) : (
-			<Image avatar className={styles.avatar}>
-				{getInitials(userData)}
-			</Image>
-		)
-	) : null;
-
 export const SprintIssues: React.FC<Props> = ({ issues }: Props) => {
 	const { t } = useTranslation();
+
+	const showAvatarOrNull = <T extends WebApi.Entities.UserProfile>(userData?: T): JSX.Element | null =>
+		userData ? (
+			userData.avatar ? (
+				<Image avatar src={userData?.avatar} title={`Assignee: ${getUsername(userData)}`} />
+			) : (
+				<Image avatar className={styles.avatar}>
+					{getInitials(userData)}
+				</Image>
+			)
+		) : null;
+
 	const issuesList =
 		issues?.length > 0 ? (
 			issues.map((issue) => {
@@ -32,7 +33,7 @@ export const SprintIssues: React.FC<Props> = ({ issues }: Props) => {
 						</List.Content>
 
 						<List.Content className={styles.rightContent}>
-							{showAvatar(issue.assigned)}
+							{showAvatarOrNull(issue.assigned)}
 							<Item className={styles.issueKeyItem}>{issue.issueKey}</Item>
 							<List.Icon
 								title={priority?.title}

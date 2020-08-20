@@ -10,7 +10,6 @@ import Breadcrumbs from 'components/common/Breadcrumbs';
 import { setBreadcrumbs, BreadCrumbData } from './config/breadcrumbs';
 import { useHistory } from 'react-router-dom';
 import Sprint from 'components/Sprint';
-
 import { extractUUIDFromArrayOfObjects } from 'helpers/extractUUIDFromArrayOfObjects.helper';
 import CreateSprintModal from 'components/common/SprintModal/CreateSprintModal';
 
@@ -90,7 +89,9 @@ const Scrum: BoardComponent = (props) => {
 				<Container>{sprintList}</Container>
 			</Container>
 			<CreateSprintModal
-				clickAction={() => setIsCreateModalOpened(!isCreateModalOpened)}
+				clickAction={() => {
+					setIsCreateModalOpened(!isCreateModalOpened);
+				}}
 				isOpen={isCreateModalOpened}
 			/>
 		</>
