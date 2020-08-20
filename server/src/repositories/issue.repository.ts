@@ -3,7 +3,7 @@ import { Issue } from '../entity/Issue';
 import { getConditions } from '../helpers/issue.helper';
 
 const RELS = ['priority', 'type', 'creator', 'assigned', 'status'];
-
+const SKIP = 0;
 export type Filter = {
 	issueType?: string[];
 	priority?: string[];
@@ -19,15 +19,13 @@ export type Filter = {
 
 @EntityRepository(Issue)
 export class IssueRepository extends Repository<Issue> {
-	findAll(page = 1) {
-		const take = 25;
-		return this.find({ relations: RELS, take, skip: take * (page - 1) });
+	findAll(skip = SKIP, take = 25) {
+		return this.find({ relations: RELS, take, skip });
 	}
 
-	getFilteredIssues(filter: Filter | undefined, page = 1) {
+	getFilteredIssues(filter: Filter | undefined, skip = SKIP, take = 25) {
 		const where = filter ? getConditions(filter) : {};
-		const take = 25;
-		return this.findAndCount({ relations: RELS, where, take, skip: take * (page - 1) });
+		return this.findAndCount({ relations: RELS, where, take, skip });
 	}
 
 	findAllByColumnId(id: string) {

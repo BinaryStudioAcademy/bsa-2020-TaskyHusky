@@ -1,12 +1,10 @@
-import React, { useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Table, Popup } from 'semantic-ui-react';
 import IssueItem from 'components/IssueItem';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'typings/rootState';
 import { useTranslation } from 'react-i18next';
 import PaginationC from '../../../components/common/Pagination';
-import { useLocation } from 'react-router-dom';
-
 import { loadIssues } from '../logic/actions';
 
 const IssueTable: React.FC = () => {
@@ -14,13 +12,10 @@ const IssueTable: React.FC = () => {
 	const { t } = useTranslation();
 	const { issues, issuesCount } = useSelector((rootState: RootState) => rootState.advancedSearch);
 	const takeOption = 25;
+	const [page, setPage] = useState(1);
 
-	const query = new URLSearchParams(useLocation().search);
-	const queryPage = query.get('page');
-	const page = Number(queryPage === null ? 1 : queryPage);
-
-	const memoF = useCallback(() => {
-		dispatch(loadIssues({ page }));
+	useEffect(() => {
+		dispatch(loadIssues({ skip: takeOption * (page - 1), take: takeOption }));
 	}, [dispatch, page]);
 
 	return (
@@ -52,7 +47,7 @@ const IssueTable: React.FC = () => {
 					))}
 				</Table.Body>
 			</Table>
-			<PaginationC totalPages={Math.ceil(issuesCount / takeOption)} loadOnChangePage={memoF} />
+			<PaginationC totalPages={Math.ceil(issuesCount / takeOption)} page={page} setPage={setPage} />
 		</>
 	);
 };

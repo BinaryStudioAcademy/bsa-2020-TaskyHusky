@@ -26,7 +26,6 @@ export function* fetchFilterPartsSaga(action: AnyAction) {
 
 		yield put(actions.loadFilterByIdSuccess({ filter }));
 	}
-	yield put(actions.loadIssues({}));
 }
 
 export function* updateFilterPartSaga(action: AnyAction) {
@@ -35,13 +34,16 @@ export function* updateFilterPartSaga(action: AnyAction) {
 }
 
 export function* loadIssuesSaga(action: AnyAction) {
-	const { page } = action;
+	const defaultSkip = 0;
+	const defaultTake = 25;
+	const { skip = defaultSkip, take = defaultTake } = action;
+
 	const {
 		advancedSearch: { filterParts },
 	}: RootState = yield select();
 
 	const filterOption = getFilterOptionsFromFilterParts(filterParts);
-	const result = yield call(loadIssuesAndCount, filterOption, page);
+	const result = yield call(loadIssuesAndCount, filterOption, skip, take);
 
 	yield put(actions.loadIssuesSuccess({ issues: result[0], issuesCount: result[1] }));
 }
