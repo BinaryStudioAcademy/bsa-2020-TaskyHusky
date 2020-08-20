@@ -35,19 +35,9 @@ class TeammatesController {
 		const { id } = req.params;
 
 		try {
-			const { name: nameFilter } = req.query;
 			const teammates = <UserProfile[]>await teammatesRepository.getTeammates(id);
 
-			if (nameFilter && typeof nameFilter === 'string') {
-				res.send(
-					teammates.filter((people) => {
-						const fullName = `${people.firstName} ${people.lastName}`;
-						return fullName.toLowerCase().indexOf(nameFilter.toLowerCase()) !== -1;
-					}),
-				);
-			} else {
-				res.send(teammates);
-			}
+			res.send(teammates);
 		} catch (error) {
 			next(new ErrorResponse(HttpStatusCode.NOT_FOUND, error.message));
 		}
