@@ -44,12 +44,12 @@ const EditSprintModal = (props: Props) => {
 		setName(sprintName);
 	};
 
-	const handleNoButtonClick = () => {
+	const handleClose = () => {
 		resetLocalState();
 		props.clickAction();
 	};
 
-	const handleYesButtonClick = () => {
+	const handleSubmit = () => {
 		if (name.trim().length === 0) {
 			setIsNameValid(false);
 			return;
@@ -67,7 +67,7 @@ const EditSprintModal = (props: Props) => {
 	};
 
 	return (
-		<Modal onClose={props.clickAction} open={props.isOpen} size="tiny" dimmer="inverted">
+		<Modal onClose={handleClose} open={props.isOpen} size="tiny" dimmer="inverted">
 			<Header>
 				{t('edit_sprint')}: {sprintName}
 			</Header>
@@ -123,12 +123,12 @@ const EditSprintModal = (props: Props) => {
 				</Form>
 			</Modal.Content>
 			<Modal.Actions>
-				<Button color="grey" onClick={handleNoButtonClick} content={t('cancel')} />
+				<Button color="grey" onClick={handleClose} content={t('cancel')} />
 				<Button
 					labelPosition="right"
 					icon="checkmark"
 					primary
-					onClick={handleYesButtonClick}
+					onClick={handleSubmit}
 					content={t('save_details')}
 				/>
 			</Modal.Actions>

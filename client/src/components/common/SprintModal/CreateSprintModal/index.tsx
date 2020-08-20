@@ -21,15 +21,16 @@ const CreateSprintModal = (props: Props) => {
 	const resetLocalState = () => {
 		setIsActive(false);
 		setIsCompleted(false);
+		setIsNameValid(true);
 		setName('');
 	};
 
-	const handleNoButtonClick = () => {
+	const handleClose = () => {
 		resetLocalState();
 		props.clickAction();
 	};
 
-	const handleYesButtonClick = () => {
+	const handleSubmit = () => {
 		if (name.trim().length === 0) {
 			setIsNameValid(false);
 			return;
@@ -52,7 +53,7 @@ const CreateSprintModal = (props: Props) => {
 	};
 
 	return (
-		<Modal size="tiny" dimmer="inverted" onClose={props.clickAction} open={props.isOpen}>
+		<Modal size="tiny" dimmer="inverted" onClose={handleClose} open={props.isOpen}>
 			<Header>{t('create_sprint')}</Header>
 			<Modal.Content>
 				<Form>
@@ -105,14 +106,8 @@ const CreateSprintModal = (props: Props) => {
 				</Form>
 			</Modal.Content>
 			<Modal.Actions>
-				<Button color="grey" onClick={handleNoButtonClick} content={t('cancel')} />
-				<Button
-					onClick={handleYesButtonClick}
-					content={t('submit')}
-					labelPosition="right"
-					icon="checkmark"
-					primary
-				/>
+				<Button color="grey" onClick={handleClose} content={t('cancel')} />
+				<Button onClick={handleSubmit} content={t('submit')} labelPosition="right" icon="checkmark" primary />
 			</Modal.Actions>
 		</Modal>
 	);
