@@ -91,7 +91,7 @@ export const ru = {
 	choose_classic_template: 'Выбрать классический шаблон',
 	select: 'Выбрать',
 	whats_this: 'Что это?',
-	key: 'Ключ',
+	issueKey: 'Ключ',
 	create_filter: 'Создать фильтр',
 	owner: 'Владелец',
 	stared_by: 'Пометили',
@@ -206,7 +206,7 @@ export const ru = {
 		'Изменение ключа проекта запустит реиндексирование вашего проекта в фоновом режиме и может нарушить некоторые внешние интеграции.',
 	board: 'Доска',
 	go_to_board: 'Перейти к доске',
-	assignee: 'Ответственный',
+	assigned: 'Ответственный',
 	no: 'Нет',
 	searchIssue: 'Поиск',
 	containText: 'Включает текст',
@@ -239,4 +239,5 @@ export const ru = {
 	mark_sprint_as_not_completed: 'Спринт будет отмечен как незавершенный',
 	sprint_name: 'Название спринта',
 	my_work: 'Моя работа',
+	creator: 'Создатель',
 };
