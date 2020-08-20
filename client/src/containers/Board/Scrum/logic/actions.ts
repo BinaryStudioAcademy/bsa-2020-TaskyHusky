@@ -16,7 +16,6 @@ export const loadIssuesSuccess = createAction<actionTypes.LoadIssuesSuccess>(act
 export const updateSprintDataTrigger = createAction<actionTypes.UpdateSprintDataTrigger>(
 	actionTypes.UPDATE_SPRINT_DATA_TRIGGER,
 );
-
 export const updateSprintDataSuccess = createAction<actionTypes.UpdateSprintDataSuccess>(
 	actionTypes.UPDATE_SPRINT_DATA_SUCCESS,
 );
