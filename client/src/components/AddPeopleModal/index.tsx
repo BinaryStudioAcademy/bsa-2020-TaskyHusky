@@ -6,7 +6,7 @@ import * as actions from '../../containers/People/logic/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../typings/rootState';
 import styles from '../../containers/SignUpForm/styles.module.scss';
-import { normalizeEmail } from '../../helpers/normalizeEmail.helper';
+import { normalizeEmail } from '../../helpers/email.helper';
 import validator from 'validator';
 
 interface Props {
