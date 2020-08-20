@@ -65,11 +65,7 @@ const IssueTable: React.FC = () => {
 
 	const handleSort = ({ field }: HandleSortI) => {
 		const sortBy = sort[field];
-		if (!sortBy) {
-			setSort({ [field]: 'DESC' });
-		} else {
-			setSort({ [field]: sortBy === 'DESC' ? 'ASC' : 'DESC' });
-		}
+		setSort({ [field]: !!sortBy && sortBy === 'DESC' ? 'ASC' : 'DESC' });
 	};
 
 	return (

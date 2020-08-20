@@ -3,17 +3,18 @@ import { Issue } from '../entity/Issue';
 import { getConditions } from '../helpers/issue.helper';
 
 const RELS = ['priority', 'type', 'creator', 'assigned', 'status'];
+type SortDir = 'DESC' | 'ASC';
 
 type Sort = {
-	summary?: 'DESC' | 'ASC' | undefined;
-	assigned?: 'DESC' | 'ASC' | undefined;
-	creator?: 'DESC' | 'ASC' | undefined;
-	type?: 'DESC' | 'ASC' | undefined;
-	priority?: 'DESC' | 'ASC' | undefined;
-	status?: 'DESC' | 'ASC' | undefined;
-	issueKey?: 'DESC' | 'ASC' | undefined;
-	createdAt?: 'DESC' | 'ASC' | undefined;
-	updatedAt?: 'DESC' | 'ASC' | undefined;
+	summary?: SortDir;
+	assigned?: SortDir;
+	creator?: SortDir;
+	type?: SortDir;
+	priority?: SortDir;
+	status?: SortDir;
+	issueKey?: SortDir;
+	createdAt?: SortDir;
+	updatedAt?: SortDir;
 };
 
 export type Filter = {
