@@ -14,9 +14,10 @@ import styles from './styles.module.scss';
 
 interface Props {
 	issue: WebApi.Result.IssueResult;
+	forceCommentsLeft?: boolean;
 }
 
-const IssuePageContent: React.FC<Props> = ({ issue }) => {
+const IssuePageContent: React.FC<Props> = ({ issue, forceCommentsLeft }) => {
 	const [comments, setComments] = useState<WebApi.Result.IssueCommentResult[]>([]);
 	const [mustFetchComments, setMustFetchComments] = useState<boolean>(true);
 	const { t } = useTranslation();
@@ -43,7 +44,10 @@ const IssuePageContent: React.FC<Props> = ({ issue }) => {
 
 	return (
 		<Ref innerRef={ref}>
-			<div className={`fill ${styles.container}`} style={{ position: 'relative' }}>
+			<div
+				className={`fill ${styles.container}`}
+				style={{ position: 'relative', ...(forceCommentsLeft ? { justifyContent: 'flex-start' } : {}) }}
+			>
 				<div className={styles.innerContainer}>
 					<h4>
 						<span style={{ fontWeight: 400 }}>#{issue.issueKey}</span>
