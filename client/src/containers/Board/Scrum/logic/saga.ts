@@ -16,11 +16,11 @@ export function* loadSprintsRequest(action: ReturnType<typeof actions.loadSprint
 	}
 }
 
-export function* deleteSprintRequest(action: any) {
+export function* deleteSprintRequest(action: ReturnType<typeof actions.deleteSprintTrigger>) {
 	try {
 		const { sprintId } = action;
-		const response: WebApi.Entities.Sprint[] = yield call(deleteSprint, sprintId);
-		yield put(actions.loadSprintsSuccess({ sprints: response }));
+		const response: WebApi.Entities.Sprint = yield call(deleteSprint, sprintId);
+		yield put(actions.deleteSprintSuccess({ sprint: response }));
 		NotificationManager.success('Sprint was deleted', 'Success');
 	} catch (error) {
 		NotificationManager.error(error.clientException.message, 'Error');
@@ -52,7 +52,6 @@ export function* createSprintRequest(action: ReturnType<typeof actions.createSpr
 	try {
 		const { sprint } = action;
 		const response: WebApi.Entities.Sprint = yield call(createSprint, sprint);
-		console.log('saga response', response);
 		yield put(actions.createSprintSuccess({ sprint: response }));
 		NotificationManager.success('Sprint was successfully created', 'Success');
 	} catch (error) {
