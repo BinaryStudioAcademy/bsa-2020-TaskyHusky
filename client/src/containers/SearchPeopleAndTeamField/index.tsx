@@ -41,6 +41,7 @@ const SearchField: React.FC = (): ReactElement => {
 
 		if (teamsToRender.length === 0 && usersToRender.length === 0) {
 			setResult(undefined);
+			return;
 		}
 
 		setResult({
@@ -49,10 +50,7 @@ const SearchField: React.FC = (): ReactElement => {
 		});
 	};
 
-	console.log(results);
-
 	const resultRender = (value: any): React.ReactElement => {
-		console.log(123);
 		if ((value.data as WebApi.Entities.UserProfile).firstName) {
 			const { firstName, lastName, id, email, avatar } = value.data as WebApi.Entities.UserProfile;
 			return <ResultPeople id={id} firstName={firstName} lastName={lastName} email={email} avatar={avatar} />;
