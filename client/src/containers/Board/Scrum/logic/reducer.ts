@@ -19,6 +19,7 @@ export const scrumBoardReducer = createReducer<ScrumBoardState>(initialState, {
 
 		return {
 			...stateCopy,
+			matchIssueToSprintShallowCopy: stateCopy.matchIssueToSprint,
 		};
 	},
 	[actionTypes.SAVE_PROJECT_ID_TO_STATE](state, action: actionTypes.SaveProjectId) {
@@ -58,6 +59,32 @@ export const scrumBoardReducer = createReducer<ScrumBoardState>(initialState, {
 		return {
 			...state,
 			sprints: updatedSprints,
+		};
+	},
+	[actionTypes.SEARCH_ISSUES_TRIGGER](state, action: actionTypes.SearchIssuesTrigger) {
+		const { searchString } = action;
+		const trimmedSearchString = searchString.trim().toLowerCase();
+
+		if (!trimmedSearchString) {
+			return {
+				...state,
+				matchIssueToSprint: state.matchIssueToSprintShallowCopy,
+			};
+		}
+
+		const filterIssues = (text: string, state: ScrumBoardState) => {
+			const updatedSprints = Object.entries(state.matchIssueToSprintShallowCopy).map(([sprintId, issues]) => {
+				return [sprintId, issues.filter((issue) => issue.summary?.toLowerCase().includes(text))];
+			});
+
+			return Object.fromEntries(updatedSprints);
+		};
+
+		const newIssues = filterIssues(trimmedSearchString, state);
+
+		return {
+			...state,
+			matchIssueToSprint: newIssues,
 		};
 	},
 });

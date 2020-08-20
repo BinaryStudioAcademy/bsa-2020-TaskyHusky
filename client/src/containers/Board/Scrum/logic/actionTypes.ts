@@ -60,3 +60,10 @@ export type CreateSprintTrigger = {
 export type CreateSprintSuccess = {
 	sprint: WebApi.Entities.Sprint;
 };
+
+export const SEARCH_ISSUES_TRIGGER = 'SCRUM_BOARD:SEARCH_ISSUES_TRIGGER';
+export const SEARCH_ISSUES_SUCCESS = 'SCRUM_BOARD:SEARCH_ISSUES_SUCCESS';
+
+export type SearchIssuesTrigger = {
+	searchString: string;
+};

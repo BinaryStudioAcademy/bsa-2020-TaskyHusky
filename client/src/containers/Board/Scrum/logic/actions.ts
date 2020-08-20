@@ -21,3 +21,5 @@ export const updateSprintDataSuccess = createAction<actionTypes.UpdateSprintData
 
 export const createSprintTrigger = createAction<actionTypes.CreateSprintTrigger>(actionTypes.CREATE_SPRINT_TRIGGER);
 export const createSprintSuccess = createAction<actionTypes.CreateSprintSuccess>(actionTypes.CREATE_SPRINT_SUCCESS);
+
+export const searchIssuesTrigger = createAction<actionTypes.SearchIssuesTrigger>(actionTypes.SEARCH_ISSUES_TRIGGER);
