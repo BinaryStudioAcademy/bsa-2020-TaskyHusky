@@ -10,9 +10,10 @@ interface Props {
 	initialIssue: WebApi.Issue.PartialIssue;
 	leftAligned?: boolean;
 	withDescrtiption?: boolean;
+	toPageLink?: boolean;
 }
 
-const IssuePageInfoColumn: React.FC<Props> = ({ issue, initialIssue, leftAligned, withDescrtiption }) => {
+const IssuePageInfoColumn: React.FC<Props> = ({ issue, initialIssue, leftAligned, withDescrtiption, toPageLink }) => {
 	let openEditModal: () => void = () => {};
 	const { t } = useTranslation();
 
@@ -28,6 +29,15 @@ const IssuePageInfoColumn: React.FC<Props> = ({ issue, initialIssue, leftAligned
 				<Button secondary onClick={() => openEditModal()} style={{ marginTop: 10 }} fluid>
 					{t('edit_issue')}
 				</Button>
+				{toPageLink ? (
+					<h4>
+						<a rel="noopener noreferrer" target="_blank" href={`/issue/${issue.issueKey}`}>
+							Go to issue page
+						</a>
+					</h4>
+				) : (
+					''
+				)}
 				{withDescrtiption ? (
 					<>
 						<h4>{t('description')}</h4>

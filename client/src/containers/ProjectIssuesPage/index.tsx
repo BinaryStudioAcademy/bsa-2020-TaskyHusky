@@ -95,6 +95,7 @@ const ProjectIssuesPage: React.FC<Props> = ({ projectId }) => {
 							<IssuePageInfoColumn
 								leftAligned
 								withDescrtiption
+								toPageLink
 								issue={selectedIssue}
 								initialIssue={initialIssue}
 							/>
