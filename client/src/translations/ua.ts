@@ -239,4 +239,5 @@ export const ua = {
 	mark_sprint_as_not_completed: 'Спринт буде позначено як незавершений',
 	sprint_name: 'Назва спринту',
 	my_work: 'Моя робота',
+	creator: 'Творець',
 };

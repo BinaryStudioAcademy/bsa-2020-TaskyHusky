@@ -211,7 +211,7 @@ export const en = {
 	no: 'No',
 	searchIssue: 'Search',
 	containText: 'Contains text',
-	reporter: 'Reporter',
+	creator: 'Creator',
 	status: 'Status',
 	work_places: 'Projects',
 	my_profile: 'My Profile',

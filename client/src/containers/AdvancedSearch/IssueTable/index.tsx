@@ -8,17 +8,45 @@ import PaginationC from '../../../components/common/Pagination';
 import { loadIssues } from '../logic/actions';
 
 const PAGE_SIZE = 25;
+export type Sort = {
+	summary?: 'DESC' | 'ASC' | undefined;
+	assignee?: 'DESC' | 'ASC' | undefined;
+	creator?: 'DESC' | 'ASC' | undefined;
+	type?: 'DESC' | 'ASC' | undefined;
+	priority?: 'DESC' | 'ASC' | undefined;
+	status?: 'DESC' | 'ASC' | undefined;
+	issueKey?: 'DESC' | 'ASC' | undefined;
+	createdAt?: 'DESC' | 'ASC' | undefined;
+	updatedAt?: 'DESC' | 'ASC' | undefined;
+};
+
+interface HandleSortI {
+	by: 'summary' | 'assignee' | 'creator' | 'type' | 'priority' | 'createdAt' | 'updatedAt' | 'issueKey' | 'status';
+}
+
 const IssueTable: React.FC = () => {
 	const dispatch = useDispatch();
 	const { t } = useTranslation();
 	const { issues, issuesCount } = useSelector((rootState: RootState) => rootState.advancedSearch);
 	const [page, setPage] = useState(1);
 
+	const [sort, setSort] = useState<Sort>({});
+
 	useEffect(() => {
 		const from = PAGE_SIZE * (page - 1);
 		const to = PAGE_SIZE * page;
-		dispatch(loadIssues({ from, to }));
-	}, [dispatch, page]);
+		dispatch(loadIssues({ from, to, sort }));
+	}, [dispatch, page, sort]);
+
+	const handleSort = ({ by }: HandleSortI) => {
+		const sortBy = sort[by];
+		if (!sortBy) {
+			setSort({ [by]: 'ASC' });
+		} else {
+			setSort({ [by]: sortBy === 'DESC' ? 'ASC' : 'DESC' });
+		}
+		console.log(sort);
+	};
 
 	return (
 		<>
@@ -27,18 +55,46 @@ const IssueTable: React.FC = () => {
 				<Table.Header>
 					<Table.Row>
 						<Table.HeaderCell>
-							<Popup content={t('type')} trigger={<div style={{ paddingLeft: '6px' }}>T</div>} />
+							<Popup
+								content={t('type')}
+								trigger={
+									<div onClick={() => handleSort({ by: 'type' })} style={{ paddingLeft: '6px' }}>
+										T
+									</div>
+								}
+							/>
 						</Table.HeaderCell>
-						<Table.HeaderCell>{t('key')}</Table.HeaderCell>
-						<Table.HeaderCell>{t('summary')}</Table.HeaderCell>
-						<Table.HeaderCell>{t('assignee')}</Table.HeaderCell>
-						<Table.HeaderCell>{t('reporter')}</Table.HeaderCell>
 						<Table.HeaderCell>
-							<Popup content={t('priority')} trigger={<div style={{ paddingLeft: '6px' }}>P</div>} />
+							<div onClick={() => handleSort({ by: 'issueKey' })}>{t('key')}</div>
 						</Table.HeaderCell>
-						<Table.HeaderCell>{t('status')}</Table.HeaderCell>
-						<Table.HeaderCell>Created</Table.HeaderCell>
-						<Table.HeaderCell>Updated</Table.HeaderCell>
+						<Table.HeaderCell>
+							<div onClick={() => handleSort({ by: 'summary' })}>{t('summary')}</div>
+						</Table.HeaderCell>
+						<Table.HeaderCell>
+							<div onClick={() => handleSort({ by: 'assignee' })}>{t('assignee')}</div>
+						</Table.HeaderCell>
+						<Table.HeaderCell>
+							<div onClick={() => handleSort({ by: 'creator' })}>{t('creator')}</div>
+						</Table.HeaderCell>
+						<Table.HeaderCell>
+							<Popup
+								content={t('priority')}
+								trigger={
+									<div onClick={() => handleSort({ by: 'priority' })} style={{ paddingLeft: '6px' }}>
+										P
+									</div>
+								}
+							/>
+						</Table.HeaderCell>
+						<Table.HeaderCell>
+							<div onClick={() => handleSort({ by: 'status' })}>{t('status')}</div>
+						</Table.HeaderCell>
+						<Table.HeaderCell>
+							<div onClick={() => handleSort({ by: 'createdAt' })}>Created</div>
+						</Table.HeaderCell>
+						<Table.HeaderCell>
+							<div onClick={() => handleSort({ by: 'updatedAt' })}>Updated</div>
+						</Table.HeaderCell>
 						<Table.HeaderCell> </Table.HeaderCell>
 					</Table.Row>
 				</Table.Header>

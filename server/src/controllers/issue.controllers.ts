@@ -17,10 +17,10 @@ class IssueController {
 
 	async getFilteredIssues(req: Request, res: Response) {
 		const repository = getCustomRepository(IssueRepository);
-		const { filter, from, to } = req.body;
+		const { filter, from, to, sort } = req.body;
 
 		try {
-			const result = await repository.getFilteredIssues(filter, Number(from), Number(to));
+			const result = await repository.getFilteredIssues(filter, Number(from), Number(to), sort);
 			res.send(result);
 		} catch (err) {
 			res.status(500).send(getWebError(err, 500));

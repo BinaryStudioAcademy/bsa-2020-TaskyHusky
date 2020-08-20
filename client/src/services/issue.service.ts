@@ -1,3 +1,4 @@
+import { Sort } from 'containers/AdvancedSearch/IssueTable/index';
 import callWebApi from 'helpers/callApi.helper';
 import { IssueFilter } from 'containers/AdvancedSearch/logic/actionTypes';
 
@@ -98,6 +99,7 @@ export const loadIssuesAndCount = async (
 	filter: IssueFilter | undefined,
 	from: number | undefined,
 	to: number | undefined,
+	sort: Sort,
 ): Promise<WebApi.Result.IssueResult[]> => {
 	const res: Response = await callWebApi({
 		method: 'POST',
@@ -106,6 +108,7 @@ export const loadIssuesAndCount = async (
 			filter,
 			from,
 			to,
+			sort,
 		},
 	});
 

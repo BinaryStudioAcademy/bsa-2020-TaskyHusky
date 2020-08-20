@@ -1,10 +1,21 @@
-import { EntityRepository, Repository, FindOperator, Any, Raw } from 'typeorm';
+import { EntityRepository, Repository } from 'typeorm';
 import { Issue } from '../entity/Issue';
 import { getConditions } from '../helpers/issue.helper';
 
 const RELS = ['priority', 'type', 'creator', 'assigned', 'status'];
 
-const SKIP = 0;
+type Sort = {
+	summary?: 'DESC' | 'ASC' | undefined;
+	assigned?: 'DESC' | 'ASC' | undefined;
+	creator?: 'DESC' | 'ASC' | undefined;
+	type?: 'DESC' | 'ASC' | undefined;
+	priority?: 'DESC' | 'ASC' | undefined;
+	status?: 'DESC' | 'ASC' | undefined;
+	issueKey?: 'DESC' | 'ASC' | undefined;
+	createdAt?: 'DESC' | 'ASC' | undefined;
+	updatedAt?: 'DESC' | 'ASC' | undefined;
+};
+
 export type Filter = {
 	issueType?: string[];
 	priority?: string[];
@@ -24,11 +35,11 @@ export class IssueRepository extends Repository<Issue> {
 		return this.find({ relations: RELS, skip: from, take: to - from });
 	}
 
-	getFilteredIssues(filter: Filter | undefined, from: number, to: number) {
+	getFilteredIssues(filter: Filter | undefined, from: number, to: number, sort: Sort) {
 		const where = filter ? getConditions(filter) : {};
-		console.log('\n\n\n\n\n\n\n\n', from, to);
+		console.log('\n\n\n\n\n\n\n\n', from, to, sort);
 
-		return this.findAndCount({ relations: RELS, where, skip: from, take: to - from });
+		return this.findAndCount({ relations: RELS, where, skip: from, take: to - from, order: sort });
 	}
 
 	findAllByColumnId(id: string) {
