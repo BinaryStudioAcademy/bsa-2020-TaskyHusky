@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Popup } from 'semantic-ui-react';
+import { Table, Popup, Icon } from 'semantic-ui-react';
 import IssueItem from 'components/IssueItem';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'typings/rootState';
 import { useTranslation } from 'react-i18next';
 import PaginationC from '../../../components/common/Pagination';
 import { loadIssues } from '../logic/actions';
+import styles from './styles.module.scss';
 
 const PAGE_SIZE = 25;
+
 export type Sort = {
 	summary?: 'DESC' | 'ASC' | undefined;
-	assignee?: 'DESC' | 'ASC' | undefined;
+	assigned?: 'DESC' | 'ASC' | undefined;
 	creator?: 'DESC' | 'ASC' | undefined;
 	type?: 'DESC' | 'ASC' | undefined;
 	priority?: 'DESC' | 'ASC' | undefined;
@@ -21,7 +23,13 @@ export type Sort = {
 };
 
 interface HandleSortI {
-	by: 'summary' | 'assignee' | 'creator' | 'type' | 'priority' | 'createdAt' | 'updatedAt' | 'issueKey' | 'status';
+	by: 'summary' | 'assigned' | 'creator' | 'type' | 'priority' | 'createdAt' | 'updatedAt' | 'issueKey' | 'status';
+}
+
+interface HeaderCellCI {
+	name: 'summary' | 'assigned' | 'creator' | 'type' | 'priority' | 'createdAt' | 'updatedAt' | 'issueKey' | 'status';
+	popup?: boolean;
+	text?: string;
 }
 
 const IssueTable: React.FC = () => {
@@ -41,61 +49,71 @@ const IssueTable: React.FC = () => {
 	const handleSort = ({ by }: HandleSortI) => {
 		const sortBy = sort[by];
 		if (!sortBy) {
-			setSort({ [by]: 'ASC' });
+			setSort({ [by]: 'DESC' });
 		} else {
 			setSort({ [by]: sortBy === 'DESC' ? 'ASC' : 'DESC' });
 		}
 		console.log(sort);
 	};
 
+	const HeaderCellC = ({ name, popup, text }: HeaderCellCI) => {
+		return (
+			<>
+				{popup ? (
+					<Popup
+						content={t(name)}
+						trigger={
+							<div style={{ paddingLeft: '6px' }}>
+								{text}
+								{sort[name] && (
+									<Icon size="small" name={sort[name] === 'DESC' ? 'arrow down' : 'arrow up'} />
+								)}
+							</div>
+						}
+					/>
+				) : (
+					<div>
+						{t(name)}
+						{sort[name] && <Icon size="small" name={sort[name] === 'DESC' ? 'arrow down' : 'arrow up'} />}
+					</div>
+				)}
+			</>
+		);
+	};
 	return (
 		<>
 			<span>{`1-${issues.length} of ${issuesCount}`}</span>
-			<Table selectable compact>
+			<Table selectable compact sortable>
 				<Table.Header>
 					<Table.Row>
-						<Table.HeaderCell>
-							<Popup
-								content={t('type')}
-								trigger={
-									<div onClick={() => handleSort({ by: 'type' })} style={{ paddingLeft: '6px' }}>
-										T
-									</div>
-								}
-							/>
+						<Table.HeaderCell onClick={() => handleSort({ by: 'type' })} className={styles.headerCell}>
+							<HeaderCellC name={'type'} popup={true} text={'T'} />
 						</Table.HeaderCell>
-						<Table.HeaderCell>
-							<div onClick={() => handleSort({ by: 'issueKey' })}>{t('key')}</div>
+						<Table.HeaderCell onClick={() => handleSort({ by: 'issueKey' })} className={styles.headerCell}>
+							<HeaderCellC name={'issueKey'} />
 						</Table.HeaderCell>
-						<Table.HeaderCell>
-							<div onClick={() => handleSort({ by: 'summary' })}>{t('summary')}</div>
+						<Table.HeaderCell onClick={() => handleSort({ by: 'summary' })} className={styles.headerCell}>
+							<HeaderCellC name={'summary'} />
 						</Table.HeaderCell>
-						<Table.HeaderCell>
-							<div onClick={() => handleSort({ by: 'assignee' })}>{t('assignee')}</div>
+						<Table.HeaderCell onClick={() => handleSort({ by: 'assigned' })} className={styles.headerCell}>
+							<HeaderCellC name={'assigned'} />
 						</Table.HeaderCell>
-						<Table.HeaderCell>
-							<div onClick={() => handleSort({ by: 'creator' })}>{t('creator')}</div>
+						<Table.HeaderCell onClick={() => handleSort({ by: 'creator' })} className={styles.headerCell}>
+							<HeaderCellC name={'creator'} />
 						</Table.HeaderCell>
-						<Table.HeaderCell>
-							<Popup
-								content={t('priority')}
-								trigger={
-									<div onClick={() => handleSort({ by: 'priority' })} style={{ paddingLeft: '6px' }}>
-										P
-									</div>
-								}
-							/>
+						<Table.HeaderCell onClick={() => handleSort({ by: 'priority' })} className={styles.headerCell}>
+							<HeaderCellC name={'priority'} popup={true} text={'P'} />
 						</Table.HeaderCell>
-						<Table.HeaderCell>
-							<div onClick={() => handleSort({ by: 'status' })}>{t('status')}</div>
+						<Table.HeaderCell onClick={() => handleSort({ by: 'status' })} className={styles.headerCell}>
+							<HeaderCellC name={'status'} />
 						</Table.HeaderCell>
-						<Table.HeaderCell>
-							<div onClick={() => handleSort({ by: 'createdAt' })}>Created</div>
+						<Table.HeaderCell onClick={() => handleSort({ by: 'createdAt' })} className={styles.headerCell}>
+							<HeaderCellC name={'createdAt'} />
 						</Table.HeaderCell>
-						<Table.HeaderCell>
-							<div onClick={() => handleSort({ by: 'updatedAt' })}>Updated</div>
+						<Table.HeaderCell onClick={() => handleSort({ by: 'updatedAt' })} className={styles.headerCell}>
+							<HeaderCellC name={'updatedAt'} />
 						</Table.HeaderCell>
-						<Table.HeaderCell> </Table.HeaderCell>
+						<Table.HeaderCell className={styles.headerCell}> </Table.HeaderCell>
 					</Table.Row>
 				</Table.Header>
 
