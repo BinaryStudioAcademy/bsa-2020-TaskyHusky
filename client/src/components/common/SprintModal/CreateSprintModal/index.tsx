@@ -85,6 +85,7 @@ const CreateSprintModal = (props: Props) => {
 					<Form.Field>
 						<Checkbox
 							toggle
+							disabled
 							label={isActive ? t('mark_sprint_as_active') : t('mark_sprint_as_inactive')}
 							checked={isActive}
 							onChange={() => {
