@@ -14,7 +14,6 @@ export class ProjectsRepository extends Repository<Projects> {
 			.leftJoinAndSelect('project.lead', 'lead')
 			.leftJoinAndSelect('project.users', 'users')
 			.where('project.id = :id', { id })
-			.andWhere('users.id = :userId', { userId })
 			.getOne();
 	}
 

@@ -71,6 +71,10 @@ class TeammatesController {
 		const { email: teammateEmail } = req.body;
 
 		try {
+			if (req.user.email === teammateEmail) {
+				throw new Error('You can not send an invitation to yourself');
+			}
+
 			await teammatesRepository.createInvitation(id, teammateEmail);
 			res.send({ status: 'The invitation was successfully sent.' });
 		} catch (error) {

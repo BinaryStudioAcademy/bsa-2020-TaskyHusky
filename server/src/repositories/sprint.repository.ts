@@ -26,11 +26,12 @@ export class SprintRepository extends Repository<Sprint> {
 		return this.findOneById(id);
 	}
 
-	async deleteOneById(id: string): Promise<Sprint[]> {
+	async deleteOneById(id: string): Promise<Sprint> {
+		const deletedSprint = this.findOneById(id);
 		const deleteResult: DeleteResult = await this.delete(id);
 		if (deleteResult.affected === 0) {
 			throw new Error(`There is no sprint with such ID - ${id}`);
 		}
-		return this.find({ loadRelationIds: true });
+		return deletedSprint;
 	}
 }
