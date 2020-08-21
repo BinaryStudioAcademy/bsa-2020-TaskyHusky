@@ -80,15 +80,3 @@ export const fetchTeams = async () => {
 
 	return (await res.json()) as WebApi.Entities.Team[];
 };
-
-export const addTeam = async (name: string) => {
-	const res = await callWebApi({
-		method: 'POST',
-		endpoint: 'team',
-		body: {
-			name,
-		},
-	});
-
-	return await res.json();
-};

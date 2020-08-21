@@ -24,7 +24,7 @@ export const createInvite = async ({ userId, email }: { userId: string; email: s
 export const addTeam = async ({ userId, name }: { userId: string; name: string }) => {
 	await callWebApi({
 		method: 'POST',
-		endpoint: `user/${userId}/pending-invites`,
+		endpoint: 'team',
 		skipAuthorization: false,
 		body: {
 			createdBy: {

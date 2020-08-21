@@ -38,6 +38,7 @@ export function* createTeam(action: ReturnType<typeof actions.createTeam>) {
 		yield call(addTeam, { userId: id, name });
 
 		NotificationManager.success('Team created', 'Success');
+		yield put(actions.startLoading({ id }));
 	} catch (error) {
 		console.log(error);
 		NotificationManager.error(error.clientException.message, 'Error');
@@ -45,7 +46,7 @@ export function* createTeam(action: ReturnType<typeof actions.createTeam>) {
 }
 
 export function* watchCreateTeam() {
-	yield takeEvery(actionTypes.ADD_PEOPLE, createTeam);
+	yield takeEvery(actionTypes.CREATE_TEAM, createTeam);
 }
 
 export default function* projectsSaga() {
