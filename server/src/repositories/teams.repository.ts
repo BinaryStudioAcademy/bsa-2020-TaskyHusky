@@ -67,23 +67,12 @@ export class TeamRepository extends Repository<Team> {
 	async createOne(data: Team) {
 		const userRepository = getCustomRepository(UserRepository);
 
-		const { color,links, createdBy: user, ...restData } = data;
-		let team = new Team();
-
-		if (!color) {
-			team = { ...team, color: getRandomColor() };
-		}
-
-		if(!links){
-			team={...team, links:[]}
-		}
+		const { color = getRandomColor(), links = [], createdBy: user, ...restData } = data;
 
 		const userToAdd = await userRepository.getById(user.id);
 		if (!userToAdd) throw new Error('User with current ID not found');
 
-		team = { ...team, ...restData, createdBy: userToAdd };
-
-		return this.save(team);
+		return this.save({ ...restData, createdBy: userToAdd, color, links });
 	}
 
 	async updateOneById(id: string, data: Team | { [key: string]: string[] }) {
