@@ -13,6 +13,7 @@ import Sprint from 'components/Sprint';
 import { extractUUIDFromArrayOfObjects } from 'helpers/extractUUIDFromArrayOfObjects.helper';
 import CreateSprintModal from 'components/common/SprintModal/CreateSprintModal';
 import getIssuesForSprintId from 'helpers/getIssuesForSprintId.helper';
+import Backlog from 'components/Backlog';
 
 const Scrum: BoardComponent = (props) => {
 	const history = useHistory();
@@ -20,7 +21,9 @@ const Scrum: BoardComponent = (props) => {
 	const { t } = useTranslation();
 	const [search, setSearch] = useState<string>('');
 	const [isCreateModalOpened, setIsCreateModalOpened] = useState<boolean>(false);
-	const { sprints, project, matchIssuesToSprint } = useSelector((rootState: RootState) => rootState.scrumBoard);
+	const { sprints, project, matchIssuesToSprint, backlog } = useSelector(
+		(rootState: RootState) => rootState.scrumBoard,
+	);
 	const { board } = props;
 
 	const projectDetails: BreadCrumbData = { id: project.id, name: project.name };
@@ -31,9 +34,10 @@ const Scrum: BoardComponent = (props) => {
 	};
 
 	useEffect(() => {
+		dispatch(actions.saveBoardToState({ board }));
 		dispatch(actions.loadSprintsTrigger({ boardId: board.id }));
 		dispatch(actions.loadProjectTrigger({ boardId: board.id }));
-		dispatch(actions.saveBoardToState({ board }));
+		dispatch(actions.loadBacklogTrigger({ boardId: board.id }));
 	}, [dispatch, board]);
 
 	useEffect(() => {
@@ -99,6 +103,9 @@ const Scrum: BoardComponent = (props) => {
 				</Container>
 
 				<Container>{sprintList}</Container>
+				<Container>
+					<Backlog issues={backlog} />
+				</Container>
 			</Container>
 			<CreateSprintModal
 				clickAction={() => {
