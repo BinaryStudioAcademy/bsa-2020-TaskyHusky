@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { Button, Header, Modal, Form, Checkbox, Popup } from 'semantic-ui-react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import * as actions from 'containers/Board/Scrum/logic/actions';
 import { useTranslation } from 'react-i18next';
 import styles from './styles.module.scss';
+import { RootState } from 'typings/rootState';
+import { ScrumBoardState } from 'containers/Board/Scrum/logic/state';
 
 type Props = {
 	sprintName: string;
@@ -23,6 +25,25 @@ const EditSprintModal = (props: Props) => {
 	const [isCompleted, setIsCompleted] = useState<boolean>(sprintIsCompleted);
 	const [name, setName] = useState<string>(sprintName);
 	const [isNameValid, setIsNameValid] = useState<boolean>(true);
+	const scrumBoardState = useSelector((rootState: RootState) => rootState.scrumBoard);
+
+	const isActivationToggleDisabled = (scrumBoardState: ScrumBoardState): boolean => {
+		const currentActiveSprint = scrumBoardState.sprints.find((sprint) => sprint.isActive);
+		const currentActiveSprintId = currentActiveSprint ? currentActiveSprint.id : undefined;
+		const boardHasActiveSprint = !!currentActiveSprintId;
+		const sprintHasNoIssues = scrumBoardState.matchIssuesToSprint[sprintId]?.length === 0;
+		const isCurrentSprintActive = currentActiveSprintId === sprintId;
+
+		if (sprintHasNoIssues || isCompleted) {
+			return true;
+		}
+
+		if (boardHasActiveSprint) {
+			return !isCurrentSprintActive;
+		}
+
+		return false;
+	};
 
 	const resetLocalState = () => {
 		setIsActive(sprintIsActive);
@@ -48,12 +69,11 @@ const EditSprintModal = (props: Props) => {
 		};
 
 		dispatch(actions.updateSprintDataTrigger({ sprint }));
-		resetLocalState();
 		props.clickAction();
 	};
 
 	return (
-		<Modal onClose={handleClose} open={props.isOpen} size="tiny" dimmer="inverted">
+		<Modal closeIcon onClose={handleClose} open={props.isOpen} size="tiny" dimmer="inverted">
 			<Header>
 				{t('edit_sprint')}: {sprintName}
 			</Header>
@@ -87,7 +107,7 @@ const EditSprintModal = (props: Props) => {
 					<Form.Field>
 						<Checkbox
 							toggle
-							disabled={isCompleted}
+							disabled={isActivationToggleDisabled(scrumBoardState)}
 							label={isActive ? t('mark_sprint_as_active') : t('mark_sprint_as_inactive')}
 							checked={isActive}
 							onChange={() => {
