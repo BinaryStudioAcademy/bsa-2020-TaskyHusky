@@ -33,13 +33,16 @@ const EditSprintModal = (props: Props) => {
 		const boardHasActiveSprint = !!currentActiveSprintId;
 		const sprintHasNoIssues = scrumBoardState.matchIssuesToSprint[sprintId]?.length === 0;
 		const isCurrentSprintActive = currentActiveSprintId === sprintId;
-		return sprintHasNoIssues || isCompleted
-			? true
-			: boardHasActiveSprint
-			? isCurrentSprintActive
-				? false
-				: true
-			: false;
+
+		if (sprintHasNoIssues || isCompleted) {
+			return true;
+		}
+
+		if (boardHasActiveSprint) {
+			return !isCurrentSprintActive;
+		}
+
+		return false;
 	};
 
 	const resetLocalState = () => {
