@@ -21,15 +21,12 @@ export interface Params {
 const Options = ({ config, isBackgroundShown = true }: Params) => {
 	const [isOpened, setIsOpened] = useState(false);
 	const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
-	const [item, setItem] = useState<ConfigItem>(config[0]);
 
-	const addConfirmation = (item: ConfigItem) => {
-		setItem(item);
+	const addConfirmation = () => {
 		setIsConfirmModalOpen(true);
 	};
 
 	const confirmAction = () => {
-		item.onClickAction(item.id);
 		setIsConfirmModalOpen(false);
 	};
 
@@ -47,28 +44,30 @@ const Options = ({ config, isBackgroundShown = true }: Params) => {
 					/>
 				}
 			>
-				{isOpened ? (
+				{isOpened || isConfirmModalOpen ? (
 					<Dropdown.Menu as="span">
 						{config.map((it) => (
-							<Dropdown.Item
-								key={it.text}
-								as="span"
-								text={it.text}
-								onClick={
-									it.withConfirmation ? () => addConfirmation(it) : () => it.onClickAction(it.id)
-								}
-							/>
+							<>
+								<Dropdown.Item
+									key={it.text}
+									as="span"
+									text={it.text}
+									onClick={
+										it.withConfirmation ? () => addConfirmation() : () => it.onClickAction(it.id)
+									}
+								/>
+								<ConfirmModal
+									isOpened={isConfirmModalOpen}
+									setIsOpened={setIsConfirmModalOpen}
+									confirmAction={confirmAction}
+									header={it.confirmHeader || ''}
+									content={it.confirmText || ''}
+								/>
+							</>
 						))}
 					</Dropdown.Menu>
 				) : null}
 			</Dropdown>
-			<ConfirmModal
-				isOpened={isConfirmModalOpen}
-				setIsOpened={setIsConfirmModalOpen}
-				confirmAction={confirmAction}
-				header={item.confirmHeader || ''}
-				content={item.confirmText || ''}
-			/>
 		</>
 	);
 };
