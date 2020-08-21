@@ -55,12 +55,21 @@ export const teamReducer = createReducer<TeamState>(initialState, {
 	[actionTypes.SUCCESS_SEARCHING_PEOPLE](state: TeamState, action: actionTypes.successSearchPeople) {
 		return {
 			...state,
-			teammates: {
-				people: [
-					...state.teammates.people,
-					...action.people,
-				],
+			results: {
+				users: {
+					name: 'users',
+					results: [...action.results]
+				},
 				loading: false
+			}
+		};
+	},
+	[actionTypes.SEARCH_PEOPLE_LOADER](state: TeamState) {
+		return {
+			...state,
+			results: {
+				...state.results,
+				loading: true
 			}
 		};
 	},

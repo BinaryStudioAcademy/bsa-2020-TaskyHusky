@@ -9,7 +9,6 @@ export function* fetchPeopleSearchPage(action: ReturnType<typeof actions.startLo
 
 	const teams = yield call(fetchTeamsByNameFilter, name);
 	const people = yield call(fetchPeopleByFullNameFilter, name);
-
 	yield put(actions.SuccessLoading({ teams, people }));
 }
 

@@ -19,6 +19,7 @@ export const UPDATE_FIELD_SUCCESS = 'TEAM:UPDATE_FIELD_SUCCESS';
 
 export const START_SEARCHING_PEOPLE = 'TEAM:START_SEARCHING_PEOPLE';
 export const SUCCESS_SEARCHING_PEOPLE = 'TEAM:SUCCESS_SEARCHING_PEOPLE';
+export const SEARCH_PEOPLE_LOADER = 'TEAM:SEARCH_PEOPLE_LOADER';
 
 export type startsearchingPeople = {
 	id: string,
@@ -26,7 +27,7 @@ export type startsearchingPeople = {
 }
 
 export type successSearchPeople = {
-	people: WebApi.Entities.UserProfile[],
+	results: any
 	loading?: boolean
 }
 

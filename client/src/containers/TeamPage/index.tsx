@@ -32,11 +32,14 @@ type Props = {
 	match: Match;
 	currentTeam: Team;
 	loading: boolean;
-	searchPeople: WebApi.Entities.UserProfile[];
+	searchPeople: {
+		name?: string;
+		results: WebApi.Entities.UserProfile[];
+	};
 	peopleLoading: boolean;
 };
 
-const TeamPage = ({ match: { params }, currentTeam: { team }, loading, peopleLoading, searchPeople = [] }: Props) => {
+const TeamPage = ({ match: { params }, currentTeam: { team }, loading, peopleLoading, searchPeople }: Props) => {
 	const [addPeopleModal, setAddPeopleModal] = useState<boolean>(false);
 	const [editedLink, setEditedLink] = useState<Link | undefined>();
 	const [addLinks, setAddLinks] = useState<boolean>(false);
@@ -139,8 +142,8 @@ const TeamPage = ({ match: { params }, currentTeam: { team }, loading, peopleLoa
 const mapStateToProps = (state: RootState) => ({
 	currentTeam: state.team,
 	loading: state.team.loading,
-	searchPeople: state.team.teammates.people,
-	peopleLoading: state.team.teammates.loading,
+	searchPeople: state.team.results.users,
+	peopleLoading: state.team.results.loading,
 });
 
 export default connect(mapStateToProps)(TeamPage);

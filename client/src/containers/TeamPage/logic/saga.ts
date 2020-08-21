@@ -74,8 +74,17 @@ export function* updateField(props: Props) {
 // TODO: define type
 export function* searchPeople(props: any) {
 	try {
+		yield put(actions.searchPeopleLoader());
 		const users = yield call(findUsersColleagues, props.id, props.match);
-		yield put(actions.successSearchPeople({ people: users }));
+		const searchResult: { data: any; key: any; title: any; }[] = [];
+		users.filter((el: any) => {
+			searchResult.push({
+				data: el,
+				key: el.id,
+				title: el.firstName
+			})
+		})
+		yield put(actions.successSearchPeople({ results: searchResult }));
 	} catch (error) {
 		NotificationManager.error('No such user', 'Error', 4000);
 	}
