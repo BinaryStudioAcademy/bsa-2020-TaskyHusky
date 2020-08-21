@@ -12,6 +12,17 @@ class TeamsController {
 		const teamRepository = getCustomRepository(TeamRepository);
 		try {
 			const teams = await teamRepository.findAll();
+
+			res.send(teams);
+		} catch (error) {
+			res.status(400).send(getWebError(error, 400));
+		}
+	};
+
+	getTeamsByName = async (req: Request, res: Response): Promise<void> => {
+		const teamRepository = getCustomRepository(TeamRepository);
+		try {
+			const teams = await teamRepository.findAll();
 			const { name: nameFilter } = req.query;
 
 			if (nameFilter && typeof nameFilter === 'string') {

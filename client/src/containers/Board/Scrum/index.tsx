@@ -1,4 +1,4 @@
-import React, { useState, useEffect, SyntheticEvent } from 'react';
+import React, { useState, useEffect, ChangeEvent } from 'react';
 import { Header, Container, Form, Button, InputOnChangeData, Icon } from 'semantic-ui-react';
 import { BoardComponent } from '../';
 import { useTranslation } from 'react-i18next';
@@ -10,9 +10,9 @@ import Breadcrumbs from 'components/common/Breadcrumbs';
 import { setBreadcrumbs, BreadCrumbData } from './config/breadcrumbs';
 import { useHistory } from 'react-router-dom';
 import Sprint from 'components/Sprint';
-
 import { extractUUIDFromArrayOfObjects } from 'helpers/extractUUIDFromArrayOfObjects.helper';
 import CreateSprintModal from 'components/common/SprintModal/CreateSprintModal';
+import getIssuesForSprintId from 'helpers/getIssuesForSprintId.helper';
 
 const Scrum: BoardComponent = (props) => {
 	const history = useHistory();
@@ -20,13 +20,15 @@ const Scrum: BoardComponent = (props) => {
 	const { t } = useTranslation();
 	const [search, setSearch] = useState<string>('');
 	const [isCreateModalOpened, setIsCreateModalOpened] = useState<boolean>(false);
-	const scrumBoardState = useSelector((rootState: RootState) => rootState.scrumBoard);
-
-	const { sprints, project } = scrumBoardState;
+	const { sprints, project, matchIssuesToSprint } = useSelector((rootState: RootState) => rootState.scrumBoard);
 	const { board } = props;
 
 	const projectDetails: BreadCrumbData = { id: project.id, name: project.name };
 	const boardDetails: BreadCrumbData = { id: board.id, name: board.name };
+
+	const clearSearchInputValue = (): void => {
+		setSearch('');
+	};
 
 	useEffect(() => {
 		dispatch(actions.loadSprintsTrigger({ boardId: board.id }));
@@ -35,18 +37,24 @@ const Scrum: BoardComponent = (props) => {
 	}, [dispatch, board]);
 
 	useEffect(() => {
-		if (scrumBoardState.sprints.length > 0) {
-			const arrayOfIds = extractUUIDFromArrayOfObjects(scrumBoardState.sprints);
+		if (sprints.length > 0) {
+			const arrayOfIds = extractUUIDFromArrayOfObjects(sprints);
 			arrayOfIds.forEach((id) => {
 				dispatch(actions.loadIssuesTrigger({ sprintId: id }));
 			});
 		}
-	}, [scrumBoardState.sprints.length, scrumBoardState.sprints, dispatch]);
+	}, [sprints.length, sprints, dispatch]);
 
 	const sprintList =
 		sprints.length > 0 ? (
 			sprints.map((sprint) => {
-				return <Sprint key={sprint.id} {...sprint} issues={scrumBoardState.matchIssueToSprint[sprint.id]} />;
+				return (
+					<Sprint
+						key={sprint.id}
+						{...sprint}
+						issues={getIssuesForSprintId(search, matchIssuesToSprint, sprint.id)}
+					/>
+				);
 			})
 		) : (
 			<Container className={styles.noSprintsContainer}>
@@ -70,10 +78,13 @@ const Scrum: BoardComponent = (props) => {
 						placeholder={t('search')}
 						icon="search"
 						value={search}
-						onChange={(event: SyntheticEvent, data: InputOnChangeData) => setSearch(data.value)}
+						onChange={(event: ChangeEvent<HTMLInputElement>, data: InputOnChangeData) => {
+							setSearch(data.value);
+						}}
 						style={{ marginLeft: 20, marginRight: 60, maxWidth: 250 }}
+						id="searchIssuesField"
 					/>
-					<Button onClick={() => setSearch('')} secondary>
+					<Button onClick={clearSearchInputValue} secondary>
 						{t('clear')}
 					</Button>
 					<Button
@@ -90,7 +101,9 @@ const Scrum: BoardComponent = (props) => {
 				<Container>{sprintList}</Container>
 			</Container>
 			<CreateSprintModal
-				clickAction={() => setIsCreateModalOpened(!isCreateModalOpened)}
+				clickAction={() => {
+					setIsCreateModalOpened(!isCreateModalOpened);
+				}}
 				isOpen={isCreateModalOpened}
 			/>
 		</>

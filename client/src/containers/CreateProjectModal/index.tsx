@@ -118,7 +118,6 @@ const CreateProjectModal: React.FC = () => {
 
 	return (
 		<Modal
-			closeIcon
 			onClose={onModalClose}
 			onOpen={onModalOpen}
 			open={isModalOpened}

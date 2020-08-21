@@ -1,13 +1,14 @@
 import React from 'react';
-import { List, Image, Item } from 'semantic-ui-react';
+import { List, Item } from 'semantic-ui-react';
 import styles from './styles.module.scss';
-import { getUsername } from 'helpers/getUsername.helper';
 import { useTranslation } from 'react-i18next';
+import AssigneeAvatar from './AssigneeAvatar/index';
 
 type Props = { issues: WebApi.Entities.Issue[] };
 
 export const SprintIssues: React.FC<Props> = ({ issues }: Props) => {
 	const { t } = useTranslation();
+
 	const issuesList =
 		issues?.length > 0 ? (
 			issues.map((issue) => {
@@ -20,13 +21,7 @@ export const SprintIssues: React.FC<Props> = ({ issues }: Props) => {
 						</List.Content>
 
 						<List.Content className={styles.rightContent}>
-							{issue.assigned ? (
-								<Image
-									avatar
-									src={issue.assigned?.avatar}
-									title={`Assignee: ${getUsername(issue.assigned)}`}
-								/>
-							) : null}
+							<AssigneeAvatar user={issue.assigned} />
 							<Item className={styles.issueKeyItem}>{issue.issueKey}</Item>
 							<List.Icon
 								title={priority?.title}

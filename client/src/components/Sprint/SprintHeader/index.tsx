@@ -7,6 +7,8 @@ import CreateIssueModal from 'containers/CreateIssueModal';
 import DeleteSprintModal from 'components/common/SprintModal/DeleteSprintModal';
 import EditSprintModal from 'components/common/SprintModal/EditSprintModal';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
+import { RootState } from 'typings/rootState';
 
 type Props = {
 	id: string;
@@ -17,6 +19,9 @@ type Props = {
 };
 
 export const SprintHeader: React.FC<Props> = ({ id, isActive, name, issues, isCompleted }) => {
+	const {
+		project: { id: projectId },
+	} = useSelector((rootState: RootState) => rootState.scrumBoard);
 	const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
 	const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false);
 	const { t } = useTranslation();
@@ -50,7 +55,7 @@ export const SprintHeader: React.FC<Props> = ({ id, isActive, name, issues, isCo
 
 				<List.Item>
 					<List.Content className={styles.rightContent}>
-						<CreateIssueModal>
+						<CreateIssueModal projectID={projectId} sprintID={id}>
 							<Button icon="add" className={styles.createIssueButton} title="Create issue" />
 						</CreateIssueModal>
 						<Options config={config} />

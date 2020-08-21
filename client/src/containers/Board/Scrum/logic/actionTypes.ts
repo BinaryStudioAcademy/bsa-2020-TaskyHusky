@@ -10,9 +10,14 @@ export type LoadSprintsSuccess = {
 };
 
 export const DELETE_SPRINT_TRIGGER = 'SCRUM_BOARD:DELETE_SPRINT_TRIGGER';
+export const DELETE_SPRINT_SUCCESS = 'SCRUM_BOARD:DELETE_SPRINT_SUCCESS';
 
 export type DeleteSprintTrigger = {
 	sprintId: string;
+};
+
+export type DeleteSprintSuccess = {
+	sprint: WebApi.Entities.Sprint;
 };
 
 export const LOAD_ISSUES_TRIGGER = 'SCRUM_BOARD:LOAD_ISSUES_TRIGGER';

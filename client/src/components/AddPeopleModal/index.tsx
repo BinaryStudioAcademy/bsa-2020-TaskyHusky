@@ -1,10 +1,13 @@
-import React, { ReactElement, ChangeEvent, useState } from 'react';
+import React, { ReactElement, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Modal, Form, Button } from 'semantic-ui-react';
+import { Modal, Form, Button, Popup } from 'semantic-ui-react';
 
 import * as actions from '../../containers/People/logic/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../typings/rootState';
+import styles from '../../containers/SignUpForm/styles.module.scss';
+import { normalizeEmail, areEmailsEqual } from '../../helpers/email.helper';
+import validator from 'validator';
 
 interface Props {
 	isOpen: boolean;
@@ -12,14 +15,15 @@ interface Props {
 }
 
 const AddPeopleModal: React.FC<Props> = ({ isOpen = false, closeClb }): ReactElement => {
-	const [email, setEmail] = useState('');
+	const [email, setEmail] = useState<string>('');
+	const [emailValid, setEmailValid] = useState<boolean>(true);
+
 	const { t } = useTranslation();
 	const dispatch = useDispatch();
-	const authStore = useSelector((rootStore: RootState) => rootStore.auth);
 
-	const handlerChange = (e: ChangeEvent<HTMLInputElement>) => {
-		setEmail(e.target.value);
-	};
+	const authStore = useSelector((rootStore: RootState) => rootStore.auth);
+	const currentUserEmail = authStore.user?.email ?? '';
+	const isSameUser = areEmailsEqual(currentUserEmail, email);
 
 	const handlerSubmit = async () => {
 		dispatch(actions.addPeople({ id: authStore.user?.id || '', email }));
@@ -34,16 +38,40 @@ const AddPeopleModal: React.FC<Props> = ({ isOpen = false, closeClb }): ReactEle
 			<Modal.Content image scrolling>
 				<Form onSubmit={handlerSubmit}>
 					<p>{t('add_people_text')}</p>
-					<Form.Input
-						placeholder={t('add_people_email_placeholder')}
-						value={email}
-						onChange={handlerChange}
+					<Popup
+						className={styles.errorPopup}
+						on={[]}
+						open={!emailValid}
+						position="top center"
+						content={isSameUser ? t('enter_foreign_email') : t('invalid_email')}
+						trigger={
+							<Form.Input
+								type="text"
+								icon="at"
+								placeholder={t('add_people_email_placeholder')}
+								value={email}
+								onChange={(event) => {
+									setEmail(normalizeEmail(event.target.value));
+									setEmailValid(true);
+								}}
+								onBlur={() => setEmailValid(validator.isEmail(email) && !isSameUser)}
+								error={!emailValid}
+							/>
+						}
 					/>
 				</Form>
 			</Modal.Content>
 			<Modal.Actions>
-				<Button onClick={closeClb}>{t('cancel')}</Button>
-				<Button primary onClick={handlerSubmit} disabled={email === ''}>
+				<Button
+					onClick={() => {
+						setEmail('');
+						setEmailValid(true);
+						closeClb();
+					}}
+				>
+					{t('cancel')}
+				</Button>
+				<Button primary onClick={handlerSubmit} disabled={!(emailValid && !!email)}>
 					{t('send')}
 				</Button>
 			</Modal.Actions>

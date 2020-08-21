@@ -1,6 +1,6 @@
 import { all, call, put, takeEvery } from 'redux-saga/effects';
 import { getTypes, getPriorities, createIssue, updateIssue, deleteIssue, getStatuses } from 'services/issue.service';
-import { setTypes, setPriorities, setStatuses } from './actions';
+import { setTypes, setPriorities, setStatuses, createIssueSuccess } from './actions';
 import * as actionTypes from './actionTypes';
 import { AnyAction } from 'redux';
 
@@ -33,6 +33,7 @@ function* watchLoadStatuses() {
 
 function* fetchCreateIssue(action: AnyAction) {
 	yield call(createIssue, action.data);
+	yield put(createIssueSuccess({ data: action.data }));
 }
 
 function* watchCreateIssue() {

@@ -8,5 +8,6 @@ export const loadTypes = createAction(actionTypes.LOAD_TYPES);
 export const loadPriorities = createAction(actionTypes.LOAD_PRIORITIES);
 export const loadStatuses = createAction(actionTypes.LOAD_STATUSES);
 export const createIssue = createAction<actionTypes.CreateIssue>(actionTypes.CREATE_ISSUE);
+export const createIssueSuccess = createAction<actionTypes.CreateIssue>(actionTypes.CREATE_ISSUE_SUCCESS);
 export const updateIssue = createAction<actionTypes.UpdateIssue>(actionTypes.UPDATE_ISSUE);
 export const deleteIssue = createAction<actionTypes.DeleteIssue>(actionTypes.DELETE_ISSUE);
