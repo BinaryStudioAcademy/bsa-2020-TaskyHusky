@@ -7,6 +7,7 @@ import { Priority } from './Priority';
 import { BoardColumn } from './BoardColumn';
 import { Sprint } from './Sprint';
 import { Projects } from './Projects';
+import { Board } from './Board';
 
 @Entity()
 export class Issue {
@@ -26,6 +27,9 @@ export class Issue {
 
 	@ManyToOne((type) => BoardColumn, (boardColumn) => boardColumn.issues)
 	boardColumn?: BoardColumn;
+
+	@ManyToOne((type) => Board, (board) => board.issues)
+	board?: Board;
 
 	@Column({ array: true })
 	labels?: string;
