@@ -1,7 +1,7 @@
 import { createIssue } from 'pages/IssuePage/logic/actions';
 import { getBoardSprints, getBoardProjects } from 'services/board.service';
-import { getSprintIssues, updateSprint } from 'services/sprint.service';
-import { deleteSprint, createSprint } from 'services/sprint.service';
+import { getSprintIssues, updateSprint, deleteSprint, createSprint } from 'services/sprint.service';
+import { getBacklogByBoardId } from 'services/issue.service';
 import { all, put, takeEvery, call } from 'redux-saga/effects';
 import * as actionTypes from './actionTypes';
 import * as actions from './actions';
@@ -74,12 +74,26 @@ export function* loadProjectRequest(action: ReturnType<typeof actions.loadProjec
 export function* createIssueSuccess(action: ReturnType<typeof createIssue>) {
 	try {
 		const {
-			data: { sprint: sprintId },
-		}: { data: { sprint?: string } } = action;
+			data: { sprint: sprintId, board: boardId },
+		}: { data: { sprint?: string; board?: string } } = action;
 
 		if (sprintId) {
 			yield put(actions.loadIssuesTrigger({ sprintId }));
 		}
+
+		if (!sprintId && boardId) {
+			yield put(actions.loadBacklogTrigger({ boardId: boardId }));
+		}
+	} catch (error) {
+		NotificationManager.error(error.clientException.message, 'Error');
+	}
+}
+
+export function* loadBacklogRequest(action: ReturnType<typeof actions.loadBacklogTrigger>) {
+	try {
+		const { boardId } = action;
+		const response: WebApi.Entities.Issue[] = yield call(getBacklogByBoardId, boardId);
+		yield put(actions.loadBacklogSuccess({ backlog: response }));
 	} catch (error) {
 		NotificationManager.error(error.clientException.message, 'Error');
 	}
@@ -113,6 +127,10 @@ export function* watchCreateIssueSuccess() {
 	yield takeEvery(CREATE_ISSUE_SUCCESS, createIssueSuccess);
 }
 
+export function* watchLoadBacklogRequest() {
+	yield takeEvery(actionTypes.LOAD_BACKLOG_TRIGGER, loadBacklogRequest);
+}
+
 export default function* scrumBoardSaga() {
 	yield all([
 		watchLoadSprintsRequest(),
@@ -122,5 +140,6 @@ export default function* scrumBoardSaga() {
 		watchCreateSprintRequest(),
 		watchLoadProjectRequest(),
 		watchCreateIssueSuccess(),
+		watchLoadBacklogRequest(),
 	]);
 }
