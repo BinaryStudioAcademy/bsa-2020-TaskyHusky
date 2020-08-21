@@ -1,8 +1,8 @@
 import * as actionTypes from './actionTypes';
-import { ProjectGeneralState, initialState } from './state';
+import { projectCommonState, initialState } from './state';
 import { createReducer } from 'helpers/createReducer.helper';
 
-export const projectGeneralReducer = createReducer<ProjectGeneralState>(initialState, {
+export const projectCommonReducer = createReducer<projectCommonState>(initialState, {
 	[actionTypes.START_DELETING_PROJECT](state) {
 		return {
 			...state,

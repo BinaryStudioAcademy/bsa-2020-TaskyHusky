@@ -19,6 +19,6 @@ function* watchDeletingProject() {
 	yield takeEvery(actionTypes.START_DELETING_PROJECT, deletingProject);
 }
 
-export default function* projectGeneralSaga() {
+export default function* projectCommonSaga() {
 	yield all([watchDeletingProject()]);
 }

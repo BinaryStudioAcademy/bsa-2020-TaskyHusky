@@ -18,7 +18,7 @@ const Projects: React.FC = () => {
 	const dispatch = useDispatch();
 	const { projects, isLoading } = useSelector((rootState: RootState) => rootState.projects);
 	const { isDeleted: isProjectDeleted, isLoading: isDeleting } = useSelector(
-		(rootState: RootState) => rootState.projectGeneral,
+		(rootState: RootState) => rootState.projectCommon,
 	);
 	const [searchName, setSearchName] = useState<string>('');
 
