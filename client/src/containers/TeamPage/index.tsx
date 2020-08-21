@@ -13,6 +13,8 @@ import CreateLink from 'components/TeamLinks/createLink';
 import DeleteLink from 'components/TeamLinks/deleteLink';
 import Spinner from 'components/common/Spinner';
 import { RootState } from 'typings/rootState';
+import { User } from 'containers/LoginPage/logic/state';
+
 interface Match {
 	params: { [key: string]: string };
 	isExact: boolean;
@@ -37,9 +39,17 @@ type Props = {
 		results: WebApi.Entities.UserProfile[];
 	};
 	peopleLoading: boolean;
+	currentProfile: User | null;
 };
 
-const TeamPage = ({ match: { params }, currentTeam: { team }, loading, peopleLoading, searchPeople }: Props) => {
+const TeamPage = ({
+	match: { params },
+	currentTeam: { team },
+	loading,
+	peopleLoading,
+	searchPeople,
+	currentProfile,
+}: Props) => {
 	const [addPeopleModal, setAddPeopleModal] = useState<boolean>(false);
 	const [editedLink, setEditedLink] = useState<Link | undefined>();
 	const [addLinks, setAddLinks] = useState<boolean>(false);
@@ -94,7 +104,7 @@ const TeamPage = ({ match: { params }, currentTeam: { team }, loading, peopleLoa
 	const onSearchPeople = (match: string) => {
 		dispatch(actions.startSearchPeople({ id: params.id, match }));
 	};
-
+	const onSelectUserInAddUsers = () => dispatch(actions.clearResults());
 	return loading ? (
 		<Spinner />
 	) : (
@@ -105,6 +115,8 @@ const TeamPage = ({ match: { params }, currentTeam: { team }, loading, peopleLoa
 			<Grid.Row className={styles.main_row}>
 				<Grid.Column className={`${styles.col_media} ${styles.col_left}`}>
 					<TeamDevsCard
+						currentProfile={currentProfile}
+						teamOwner={team.createdBy}
 						changeMainFields={changeMainFields}
 						description={team.description}
 						name={team.name}
@@ -125,6 +137,7 @@ const TeamPage = ({ match: { params }, currentTeam: { team }, loading, peopleLoa
 			</Grid.Row>
 			{addPeopleModal && (
 				<TeamAddPeopleModal
+					clearStateAfterSelect={onSelectUserInAddUsers}
 					searchLoading={peopleLoading}
 					people={searchPeople}
 					search={onSearchPeople}
@@ -144,6 +157,7 @@ const mapStateToProps = (state: RootState) => ({
 	loading: state.team.loading,
 	searchPeople: state.team.results.users,
 	peopleLoading: state.team.results.loading,
+	currentProfile: state.auth.user,
 });
 
 export default connect(mapStateToProps)(TeamPage);

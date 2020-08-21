@@ -3,15 +3,26 @@ import { Card, Icon, Button } from 'semantic-ui-react';
 import styles from 'containers/TeamPage/styles.module.scss';
 import AditionalModal from 'components/TeamAddPeopleModal/aditionalModal';
 import { useTranslation } from 'react-i18next';
+import { User } from 'containers/LoginPage/logic/state';
 
 type CardProps = {
+	teamOwner: WebApi.Entities.UserProfile;
+	currentProfile: User | null;
 	description?: string;
 	name?: string;
 	showAddPeopleModal: () => void;
 	changeMainFields: (arg: { [key: string]: string }) => void;
 };
 
-const TeamDevsCard = ({ changeMainFields, description = '', name = '', showAddPeopleModal }: CardProps) => {
+const TeamDevsCard = ({
+	currentProfile,
+	showAddPeopleModal,
+	teamOwner,
+	changeMainFields,
+	description = '',
+	name = '',
+}: CardProps) => {
+	console.log(currentProfile, teamOwner);
 	const [showDelete, setShowDelete] = useState<boolean>(false);
 	const [lockEditFields, setEditFields] = useState<boolean>(true);
 	const [title, setTitle] = useState<string>(name);
@@ -58,7 +69,12 @@ const TeamDevsCard = ({ changeMainFields, description = '', name = '', showAddPe
 			</Card.Content>
 			<Card.Content extra>
 				<Button.Group fluid>
-					<Button compact className={styles.margin_1} onClick={showAddPeopleModal}>
+					<Button
+						compact
+						className={styles.margin_1}
+						onClick={showAddPeopleModal}
+						disabled={currentProfile?.id !== teamOwner?.id}
+					>
 						{t('Add people')}
 					</Button>
 					<Button compact color="red" onClick={() => setShowDelete(true)}>

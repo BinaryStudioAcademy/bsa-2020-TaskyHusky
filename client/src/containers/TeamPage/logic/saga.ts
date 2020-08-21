@@ -90,6 +90,10 @@ export function* searchPeople(props: any) {
 	}
 }
 
+function* clearResultField () {
+	yield put(actions.clearResultsDone());
+}
+
 export function* watchStartLoading() {
 	yield takeEvery(actionTypes.START_LOADING, fetchTeam);
 }
@@ -107,6 +111,10 @@ export function* watchFieldUpdateLoading() {
 
 export function* watchSearchPeopleLoading() {
 	yield takeEvery(actionTypes.START_SEARCHING_PEOPLE, searchPeople);
+}
+
+export function* watchClearSearchResults() {
+	yield takeEvery(actionTypes.CLEAR_FOUND_USERS, clearResultField);
 }
 
 export default function* teamSaga() {

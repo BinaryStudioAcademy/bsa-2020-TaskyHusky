@@ -12,12 +12,10 @@ export interface TeamState {
 	team: Team;
 	results: {
 		users: {
-			name: string,
 			results: WebApi.Entities.UserProfile[]
 		},
 		loading: boolean
 	},
-	
 	loading: boolean;
 }
 
@@ -34,7 +32,6 @@ export const initialState: TeamState = {
 	loading: false,
 	results: {
 		users: {
-			name: 'users',
 			results: [],
 		},
 		loading: false,

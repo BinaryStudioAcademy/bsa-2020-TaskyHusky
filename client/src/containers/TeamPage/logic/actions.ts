@@ -21,3 +21,5 @@ export const updateFieldsSuccess = createAction<actionTypes.EditFieldSuccess>(ac
 export const searchPeopleLoader = createAction(actionTypes.SEARCH_PEOPLE_LOADER);
 export const startSearchPeople = createAction<actionTypes.startsearchingPeople>(actionTypes.START_SEARCHING_PEOPLE);
 export const successSearchPeople = createAction<actionTypes.successSearchPeople>(actionTypes.SUCCESS_SEARCHING_PEOPLE);
+export const clearResults = createAction(actionTypes.CLEAR_FOUND_USERS);
+export const clearResultsDone = createAction(actionTypes.CLEAR_FOUND_USERS_DONE);
