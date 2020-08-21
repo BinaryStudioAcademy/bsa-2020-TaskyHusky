@@ -228,6 +228,8 @@ export const ua = {
 	no_sprints_header: 'Активні спринти відсутні',
 	no_sprints_header_subheader: 'Плануйте роботу своєї команди. Створіть свій перший спринт.',
 	no_issues_in_sprint: 'Сплануйте спринт, створивши декілька завдань.',
+	no_issues_in_backlog: 'Беклог - це список задач вашої команди',
+	backlog: 'Беклог',
 	edit_sprint: 'Редагувати спринт',
 	delete_sprint: 'Видалити спринт',
 	sprint_cannot_be_deleted: 'Неможливо видалити спринт',

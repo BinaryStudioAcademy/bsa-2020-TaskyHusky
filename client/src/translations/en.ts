@@ -236,6 +236,8 @@ export const en = {
 	no_sprints_header: 'There are no active sprints',
 	no_sprints_header_subheader: "Plan your team's work. Create your first sprint.",
 	no_issues_in_sprint: 'Plan a sprint by creating some issues.',
+	no_issues_in_backlog: "The backlog is your team's to-do list.",
+	backlog: 'Backlog',
 	edit_sprint: 'Edit sprint',
 	delete_sprint: 'Delete sprint',
 	sprint_cannot_be_deleted: 'Sprint cannot be deleted',

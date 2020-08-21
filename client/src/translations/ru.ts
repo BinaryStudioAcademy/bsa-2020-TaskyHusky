@@ -228,6 +228,8 @@ export const ru = {
 	no_sprints_header: 'Активные спринты отсутствуют',
 	no_sprints_header_subheader: 'Спланируйте работу своей команды. Создайте свой первый спринт.',
 	no_issues_in_sprint: 'Запланируйте спринт, создав несколько задач.',
+	no_issues_in_backlog: 'Бэклог - это список задач вашей команды',
+	backlog: 'Бэклог',
 	edit_sprint: 'Редактировать спринт',
 	delete_sprint: 'Удалить спринт',
 	sprint_cannot_be_deleted: 'Спринт не может быть удален',
