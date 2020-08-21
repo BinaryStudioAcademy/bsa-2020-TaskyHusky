@@ -26,7 +26,7 @@ const SearchField: React.FC = (): ReactElement => {
 
 	const [searchValue, setSearchValue] = useState('');
 
-	const results = React.useMemo(() => {
+	const results: ResultsToRender = React.useMemo(() => {
 		const teamsToRender = teams.filter(
 			(team) => team.name && team.name.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1,
 		);
