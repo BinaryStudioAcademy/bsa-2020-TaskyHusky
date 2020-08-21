@@ -74,7 +74,7 @@ const Projects: React.FC = () => {
 				) : (
 					<div className={styles.imgWrapper}>
 						<div className={styles.content}>
-							<img className={styles.img} src={searchResult} />
+							<img className={styles.img} src={searchResult} alt="search result" />
 							<span className={styles.text}>{t('no_projects')}</span>
 						</div>
 					</div>
