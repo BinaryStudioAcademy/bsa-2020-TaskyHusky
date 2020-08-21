@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'typings/rootState';
 import * as actions from './logic/actions';
 import { createBoard } from './logic/actionTypes';
-import Options, { ItemProps } from '../../components/common/Options';
+import Options, { ConfigItem } from '../../components/common/Options';
 import CreateBoardModal from '../../components/CreateBoardModal';
 import { Link } from 'react-router-dom';
 
@@ -55,7 +55,7 @@ const Boards: React.FC = () => {
 		dispatch(actions.createBoard({ ...board }));
 	};
 
-	const getBoardMenuActions = (board: WebApi.Board.IBoardModel): ItemProps[] => [
+	const getBoardMenuActions = (board: WebApi.Board.IBoardModel): ConfigItem[] => [
 		{
 			onClickAction: () => {},
 			id: board.id,
