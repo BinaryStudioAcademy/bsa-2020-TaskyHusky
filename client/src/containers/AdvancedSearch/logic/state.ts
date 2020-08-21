@@ -7,10 +7,17 @@ export interface FilterPartState {
 
 export interface AdvancedSearch {
 	filterParts: FilterPartState[];
-	issues: WebApi.Result.IssueResult[];
+	addedFilterParts: FilterPartState[];
+	issues: WebApi.Entities.Issue[];
+	filter?: WebApi.Entities.Filter;
+	isFilterEdited: boolean;
+	issuesCount: number;
 }
 
 export const initialState: AdvancedSearch = {
 	filterParts: [],
 	issues: [],
+	addedFilterParts: [],
+	isFilterEdited: false,
+	issuesCount: 0,
 };

@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../typings/rootState';
 import * as actions from '../../containers/Projects/logic/actions';
 import styles from './styles.module.scss';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
 	board: IBoard;
@@ -14,7 +15,9 @@ interface Props {
 }
 
 const BoardModalFinal = (props: Props) => {
+	const { t } = useTranslation();
 	const { board, setBoard, setCreateButtonDisabled } = props;
+	const { boardType, algorithm } = board;
 
 	const dispatch = useDispatch();
 	useEffect(() => {
@@ -30,7 +33,8 @@ const BoardModalFinal = (props: Props) => {
 
 		if (!isCreateButtonHidden) {
 			setBoard({
-				...board,
+				algorithm,
+				boardType,
 				projects: [...selectedProjects],
 				name: selectedName,
 				admin: authData.user?.id,
@@ -38,7 +42,7 @@ const BoardModalFinal = (props: Props) => {
 		}
 
 		setCreateButtonDisabled(isCreateButtonHidden);
-	}, [selectedProjects, selectedName, authData.user, board, setBoard, setCreateButtonDisabled]);
+	}, [selectedProjects, selectedName, authData.user, setBoard, setCreateButtonDisabled, algorithm, boardType]);
 
 	const projectData = useSelector((rootState: RootState) => rootState.projects.projects);
 
@@ -53,7 +57,7 @@ const BoardModalFinal = (props: Props) => {
 			<Form.Field width={5}>
 				<label>Board name</label>
 				<Input
-					placeholder="Board name"
+					placeholder={t('board_name')}
 					onChange={(e, data) => {
 						setSelectedName(data.value);
 					}}
@@ -65,7 +69,7 @@ const BoardModalFinal = (props: Props) => {
 					search={(options, query) =>
 						options.filter((option) => (option.text as string).toLowerCase().includes(query.toLowerCase()))
 					}
-					header="Projects"
+					header={t('projects')}
 					multiple
 					fluid
 					selection
@@ -74,7 +78,7 @@ const BoardModalFinal = (props: Props) => {
 						setSelectedProjects([...(data.value as string[])]);
 					}}
 				/>
-				<p>Select one or more projects to include in this board</p>
+				<p>{t('create_board_final_text')}</p>
 			</Form.Field>
 		</Form>
 	);

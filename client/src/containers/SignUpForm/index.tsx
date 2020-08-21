@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Button, Divider, Icon, Popup } from 'semantic-ui-react';
+import { Form, Button, Popup } from 'semantic-ui-react';
 import PasswordInput from 'components/common/PasswordInput';
 import validator from 'validator';
 import { Redirect } from 'react-router-dom';
@@ -8,7 +8,7 @@ import * as actions from 'containers/LoginPage/logic/actions';
 import { RootState } from 'typings/rootState';
 import styles from './styles.module.scss';
 import { useTranslation } from 'react-i18next';
-import { normalizeEmail } from 'helpers/normalizeEmail.helper';
+import { normalizeEmail } from 'helpers/email.helper';
 
 const SignUpForm: React.FC = () => {
 	const dispatch = useDispatch();
@@ -23,7 +23,6 @@ const SignUpForm: React.FC = () => {
 	const [firstNameValid, setFirstNameValid] = useState<boolean>(true);
 	const [lastName, setLastName] = useState<string>('');
 	const [redirecting, setRedirecting] = useState<boolean>(false);
-
 	const buttonDisabled = !(password && passwordValid && email && emailValid && firstName && firstNameValid);
 
 	useEffect(() => {
@@ -93,11 +92,6 @@ const SignUpForm: React.FC = () => {
 			/>
 			<Button disabled={buttonDisabled} fluid positive type="submit">
 				{t('sign_up')}
-			</Button>
-			<Divider horizontal>{t('or')}</Divider>
-			<Button type="button" fluid>
-				<Icon name="google" />
-				{t('google_log_in')}
 			</Button>
 		</Form>
 	);

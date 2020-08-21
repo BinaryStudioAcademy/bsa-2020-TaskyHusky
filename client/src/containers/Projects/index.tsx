@@ -9,6 +9,7 @@ import Spinner from 'components/common/Spinner';
 import { setProjectActions } from './config/projectActions';
 import { useHistory, NavLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import searchResult from 'assets/images/search-result.svg';
 
 const Projects: React.FC = () => {
 	const history = useHistory();
@@ -27,10 +28,6 @@ const Projects: React.FC = () => {
 
 	const onOpenSettings = (id: string): void => {
 		history.push(history.location.pathname + '/projectSettings/' + id);
-		console.log('onOpenSettings');
-	};
-	const onTrash = (id: string): void => {
-		console.log('onTrash ' + id);
 	};
 
 	return (
@@ -43,36 +40,45 @@ const Projects: React.FC = () => {
 				<Input icon="search" placeholder={t('search')} onChange={onSearch} value={searchName} />
 			</div>
 			<div className={styles.wrapper__table}>
-				<Table celled padded>
-					<Table.Header>
-						<Table.Row>
-							<Table.HeaderCell>{t('name')}</Table.HeaderCell>
-							<Table.HeaderCell>{t('key')}</Table.HeaderCell>
-							<Table.HeaderCell>{t('type')}</Table.HeaderCell>
-							<Table.HeaderCell>{t('lead')}</Table.HeaderCell>
-							<Table.HeaderCell>{t('board')}</Table.HeaderCell>
-							<Table.HeaderCell>{t('settings')}</Table.HeaderCell>
-						</Table.Row>
-					</Table.Header>
-					{isLoading ? null : (
-						<Table.Body>
-							{filteredData.map(({ id, name, key }) => (
-								<Table.Row key={id}>
-									<Table.Cell>{name}</Table.Cell>
-									<Table.Cell>{key}</Table.Cell>
-									<Table.Cell>Cell</Table.Cell>
-									<Table.Cell>Cell</Table.Cell>
-									<Table.Cell>
-										<NavLink to={`/project/${id}/issues`}>{t('go_to_board')}</NavLink>
-									</Table.Cell>
-									<Table.Cell>
-										<Options config={setProjectActions({ id, onOpenSettings, onTrash })} />
-									</Table.Cell>
-								</Table.Row>
-							))}
-						</Table.Body>
-					)}
-				</Table>
+				{filteredData.length > 0 ? (
+					<Table celled padded>
+						<Table.Header>
+							<Table.Row>
+								<Table.HeaderCell>{t('name')}</Table.HeaderCell>
+								<Table.HeaderCell>{t('key')}</Table.HeaderCell>
+								<Table.HeaderCell>{t('type')}</Table.HeaderCell>
+								<Table.HeaderCell>{t('lead')}</Table.HeaderCell>
+								<Table.HeaderCell>{t('board')}</Table.HeaderCell>
+								<Table.HeaderCell>{t('settings')}</Table.HeaderCell>
+							</Table.Row>
+						</Table.Header>
+						{isLoading ? null : (
+							<Table.Body>
+								{filteredData.map(({ id, name, key, lead: { firstName, lastName } }) => (
+									<Table.Row key={id}>
+										<Table.Cell>{name}</Table.Cell>
+										<Table.Cell>{key}</Table.Cell>
+										<Table.Cell>Software</Table.Cell>
+										<Table.Cell>{`${firstName} ${lastName}`}</Table.Cell>
+										<Table.Cell>
+											<NavLink to={`/project/${id}/issues`}>{t('go_to_board')}</NavLink>
+										</Table.Cell>
+										<Table.Cell>
+											<Options config={setProjectActions({ id, onOpenSettings })} />
+										</Table.Cell>
+									</Table.Row>
+								))}
+							</Table.Body>
+						)}
+					</Table>
+				) : (
+					<div className={styles.imgWrapper}>
+						<div className={styles.content}>
+							<img className={styles.img} src={searchResult} />
+							<span className={styles.text}>{t('no_projects')}</span>
+						</div>
+					</div>
+				)}
 				{isLoading ? <Spinner /> : ''}
 			</div>
 		</div>

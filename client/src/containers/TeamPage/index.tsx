@@ -5,7 +5,6 @@ import validator from 'validator';
 import styles from './styles.module.scss';
 import TeamDevsCard from 'components/TeamDevsCard';
 import TeamsMembersCard from 'components/TeamsMembersCard';
-import TeamNotification from 'components/TeamNotification';
 import TeamWorkedProjects from 'components/TeamWorkedProjects';
 import TeamLinks from 'components/TeamLinks';
 import * as actions from './logic/actions';
@@ -36,7 +35,6 @@ type Props = {
 };
 
 const TeamPage = ({ match: { params }, currentTeam: { team }, loading }: Props) => {
-	const [notification, setNotification] = useState<boolean>(true);
 	const [addPeopleModal, setAddPeopleModal] = useState<boolean>(false);
 	const [editedLink, setEditedLink] = useState<Link | undefined>();
 	const [addLinks, setAddLinks] = useState<boolean>(false);
@@ -52,7 +50,6 @@ const TeamPage = ({ match: { params }, currentTeam: { team }, loading }: Props) 
 	useEffect(() => {
 		dispatch(actions.startLoading({ id: params.id }));
 	}, [dispatch, params.id]);
-	const toggleNotification = (): void => setNotification(false);
 	const showAddPeopleModal = (): void => setAddPeopleModal(true);
 
 	const toggleAddLinks = (): void => {
@@ -93,23 +90,23 @@ const TeamPage = ({ match: { params }, currentTeam: { team }, loading }: Props) 
 	return loading ? (
 		<Spinner />
 	) : (
-		<Grid columns="equal" centered>
+		<Grid columns="equal" centered className={styles.page_main}>
 			<Grid.Row className={styles.header_z}>
 				<div className={[styles.header, styles.team_header].join(' ')}></div>
 			</Grid.Row>
-			<Grid.Row>
-				<Grid.Column width="4" className={styles.col_media}>
+			<Grid.Row className={styles.main_row}>
+				<Grid.Column className={[styles.col_media, styles.col_left].join(' ')}>
 					<TeamDevsCard
 						changeMainFields={changeMainFields}
 						description={team.description}
 						name={team.name}
 						showAddPeopleModal={showAddPeopleModal}
 					/>
-					<TeamsMembersCard />
+					<TeamsMembersCard teammates={[{ ...team.createdBy }]} title={'Team owner'} />
+					<TeamsMembersCard teammates={team.users} title={'Members'} />
 				</Grid.Column>
-				<Grid.Column width="8" className={styles.col_media}>
-					{notification && <TeamNotification toggleNotification={toggleNotification} />}
-					<TeamWorkedProjects />
+				<Grid.Column className={[styles.col_media, styles.col_right].join(' ')}>
+					<TeamWorkedProjects projects={team.projects} />
 					<TeamLinks
 						currentLinks={team.links ?? []}
 						edit={editLink}

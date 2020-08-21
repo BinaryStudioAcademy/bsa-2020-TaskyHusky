@@ -1,0 +1,31 @@
+.textSearch {
+	width: 90% !important;
+	border: none;
+	box-shadow: none;
+	:local(input) {
+		border: none !important;
+	}
+}
+.dropdownBtns {
+	margin: 0 0 10px 10px;
+}
+.searchInput {
+	width: 90% !important;
+}
+.checkbox {
+	cursor: pointer;
+}
+
+.dropdown {
+	padding: 5px 8px 5px 10px !important;
+	&:focus {
+		box-shadow: none;
+		background: #505f79;
+		color: #f4f5f7;
+		border: none;
+		border-radius: 3px 3px;
+	}
+	.dropdownMenu {
+		position: absolute !important;
+	}
+}

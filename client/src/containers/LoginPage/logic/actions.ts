@@ -18,3 +18,8 @@ export const loadProfileSuccess = createAction<actionTypes.LoadProfileSuccess>(a
 export const checkEmailTrigger = createAction<actionTypes.CheckEmail>(actionTypes.CHECK_EMAIL_TRIGGER);
 export const checkEmailSuccess = createAction<actionTypes.CheckEmail>(actionTypes.CHECK_EMAIL_SUCCESS);
 export const checkEmailReset = createAction(actionTypes.CHECK_EMAIL_RESET);
+
+export const sendGoogleAuth = createAction<actionTypes.GoogleUser>(actionTypes.GOOGLE_AUTH_REQUEST);
+export const loadingGoogleAuth = createAction<actionTypes.Loading>(actionTypes.GOOGLE_AUTH_LOADING);
+export const forgotPassword = createAction<actionTypes.ForgotPassword>(actionTypes.FORGOT_PASSWORD);
+export const resetPassword = createAction<actionTypes.ResetPassword>(actionTypes.RESET_PASSWORD);

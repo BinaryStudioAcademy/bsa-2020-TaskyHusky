@@ -1,6 +1,5 @@
 import React, { useState, memo } from 'react';
-import { Modal, Button, Form, Checkbox, Image, Card } from 'semantic-ui-react';
-import validator from 'validator';
+import { Modal, Button, Form, Image, Card } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -11,6 +10,8 @@ import getTemplatesInformation, { MethodologyInfo } from './config/templatesInfo
 import styles from './styles.module.scss';
 import CustomInput from 'components/common/Input/CustomInput';
 import { generateKey } from 'commonLogic/keyGenerator';
+import * as validationMessage from 'constants/ValidationMessages';
+import { validProjectName, validProjectKey } from 'helpers/validationRules';
 
 type Template = keyof typeof WebApi.Board.BoardType;
 
@@ -57,17 +58,16 @@ const CreateProjectModal: React.FC = () => {
 	};
 
 	const onCreateProject = (): void => {
-		if (!isKeyTouched) {
-			const isGeneratedKeyValid = validator.isLength(key, { min: 2 });
-			if (isGeneratedKeyValid && isNameValid) {
-				startCreatingProject();
-			}
+		if (!isKeyTouched && !isNameValid) {
+			setIsValidErrorShown(true);
+			return;
 		}
 
 		if (!isNameValid || !isKeyValid) {
 			setIsValidErrorShown(true);
 			return;
 		}
+
 		startCreatingProject();
 	};
 
@@ -96,6 +96,13 @@ const CreateProjectModal: React.FC = () => {
 
 	const onKeyChanged = (key: string): void => {
 		const newKey = key.trim().toUpperCase();
+		const keyIndex = keys.findIndex((item: any) => item.key === newKey);
+
+		if (keyIndex !== -1) {
+			setIsValidErrorShown(true);
+			setIsKeyValid(false);
+		}
+
 		if (!isKeyTouched) {
 			setIsKeyTouched(true);
 		}
@@ -132,8 +139,8 @@ const CreateProjectModal: React.FC = () => {
 									data={name}
 									setData={onNameChanged}
 									placeholder="Enter project name"
-									popUpContent="Project name should contain at least 5 symbols long"
-									validation={(name) => validator.isLength(name, { min: 5 })}
+									popUpContent={validationMessage.VM_PROJECT_NAME}
+									validation={validProjectName}
 								/>
 							</Form.Field>
 							<Form.Field>
@@ -145,15 +152,13 @@ const CreateProjectModal: React.FC = () => {
 									data={key}
 									setData={onKeyChanged}
 									placeholder="Enter your key"
-									popUpContent="Key should contain at least 2 symbols long"
-									validation={(key) => validator.isLength(key, { min: 2 })}
+									popUpContent={validationMessage.VM_PROJECT_KEY}
+									validation={validProjectKey}
 								/>
 							</Form.Field>
-							<Form.Field>
-								<Checkbox label={t('share_settings_with_existing_project')} disabled={true} />
-							</Form.Field>
 						</Form>
-						<p>{t('template')}</p>
+
+						<p className={styles.template__title}>{t('template')}</p>
 						<div className={styles.flex_container}>
 							<Image src={image} className={styles.modal__image} />
 							<div>

@@ -1,34 +1,39 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { List, Item, Button } from 'semantic-ui-react';
 
 import Options, { ItemProps } from 'components/common/Options';
 import styles from './styles.module.scss';
 import CreateIssueModal from 'containers/CreateIssueModal';
-import SprintModal from 'components/common/SprintModal';
+import DeleteSprintModal from 'components/common/SprintModal/DeleteSprintModal';
+import EditSprintModal from 'components/common/SprintModal/EditSprintModal';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
 	id: string;
 	isActive: boolean;
+	isCompleted: boolean;
 	name: string;
 	issues: WebApi.Entities.Issue[];
 };
 
-export const SprintHeader: React.FC<Props> = ({ id, isActive, name, issues }) => {
-	const [open, setOpen] = React.useState(false);
+export const SprintHeader: React.FC<Props> = ({ id, isActive, name, issues, isCompleted }) => {
+	const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
+	const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false);
+	const { t } = useTranslation();
 
 	const config: ItemProps[] = [
 		{
 			id,
-			text: 'Edit sprint',
+			text: t('edit_sprint'),
 			onClickAction: () => {
-				console.log('Edit sprint clicked');
+				setIsEditModalOpen(true);
 			},
 		},
 		{
 			id,
-			text: 'Delete sprint',
+			text: t('delete_sprint'),
 			onClickAction: () => {
-				setOpen(true);
+				setIsDeleteModalOpen(true);
 			},
 		},
 	];
@@ -52,12 +57,21 @@ export const SprintHeader: React.FC<Props> = ({ id, isActive, name, issues }) =>
 					</List.Content>
 				</List.Item>
 			</List>
-			<SprintModal
+			<DeleteSprintModal
 				sprintName={name}
 				sprintId={id}
 				sprintIssues={issues}
-				isOpen={open}
-				clickAction={() => setOpen(!open)}
+				isOpen={isDeleteModalOpen}
+				clickAction={() => setIsDeleteModalOpen(!isDeleteModalOpen)}
+			/>
+			<EditSprintModal
+				sprintName={name}
+				sprintId={id}
+				sprintIssues={issues}
+				sprintIsActive={isActive}
+				sprintIsCompleted={isCompleted}
+				isOpen={isEditModalOpen}
+				clickAction={() => setIsEditModalOpen(!isEditModalOpen)}
 			/>
 		</>
 	);

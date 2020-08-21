@@ -1,4 +1,5 @@
 import { User } from './state';
+import { GoogleLoginResponse, GoogleLoginResponseOffline } from 'react-google-login';
 
 export const LOGIN_USER_TRIGGER = 'LOGIN_USER_TRIGGER';
 export const LOGIN_USER_SUCCESS = 'LOGIN_USER_SUCCESS';
@@ -15,6 +16,20 @@ export const LOAD_PROFILE_SUCCESS = 'LOAD_PROFILE_SUCCESS';
 export const CHECK_EMAIL_TRIGGER = 'CHECK_EMAIL_TRIGGER';
 export const CHECK_EMAIL_SUCCESS = 'CHECK_EMAIL_SUCCESS';
 export const CHECK_EMAIL_RESET = 'CHECK_EMAIL_RESET';
+
+export const GOOGLE_AUTH_REQUEST = 'GOOGLE_AUTH_REQUEST';
+export const GOOGLE_AUTH_LOADING = 'GOOGLE_AUTH_LOADING';
+
+export type GoogleUser = {
+	user: GoogleLoginResponse | GoogleLoginResponseOffline;
+};
+
+export type Loading = {
+	loading: boolean;
+};
+export const FORGOT_PASSWORD = 'FORGOT_PASSWORD';
+
+export const RESET_PASSWORD = 'RESET_PASSWORD';
 
 export type LogInUserTrigger = {
 	email: string;
@@ -35,4 +50,13 @@ export type LoadProfileSuccess = {
 
 export type CheckEmail = {
 	email: string;
+};
+
+export type ForgotPassword = {
+	email: string;
+};
+
+export type ResetPassword = {
+	password: string;
+	id: string;
 };

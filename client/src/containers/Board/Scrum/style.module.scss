@@ -12,5 +12,23 @@
 		* {
 			margin: 0 5px !important;
 		}
+
+		.createSprintButton {
+			margin-left: auto !important;
+		}
+	}
+
+	.noSprintsContainer {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		height: 50vh;
+		text-align: center;
+		margin-top: 0px;
+	}
+
+	.noSprintsHeader {
+		margin-top: 16px;
 	}
 }

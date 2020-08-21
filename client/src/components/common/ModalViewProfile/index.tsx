@@ -8,6 +8,7 @@ type UserModel = {
 	id: string;
 	email?: string;
 	firstName: string;
+	lastName: string;
 	avatar: string;
 	location?: string;
 	department?: string;
@@ -31,13 +32,13 @@ const ModalViewProfile = ({ user, onClose, color }: Props) => {
 						<div className={styles.header} style={color}>
 							<div className={styles.left_margin}></div>
 							<div className={styles.name}>
-								<span>{user.firstName}</span>
+								<span>{`${user.firstName} ${user.lastName}`}</span>
 								<span>{user.jobTitle}</span>
 							</div>
 						</div>
 						<div className={styles.avatar}>
 							<Link to={`/profile/${user.id}`}>
-								<Avatar fullName={user.firstName} imgSrc={user.avatar} />
+								<Avatar fullName={`${user.firstName} ${user.lastName}`} imgSrc={user.avatar} />
 							</Link>
 						</div>
 						<div className={styles.main_info}>
@@ -47,14 +48,18 @@ const ModalViewProfile = ({ user, onClose, color }: Props) => {
 									<Icon name="at" size="small" color="grey" />
 									{user.email}
 								</span>
-								<span>
-									<Icon name="clock outline" size="small" color="grey" />
-									{user.location}
-								</span>
-								<span>
-									<Icon name="map signs" size="small" color="grey" />
-									{user.department}
-								</span>
+								{user.location && (
+									<span>
+										<Icon name="map signs" size="small" color="grey" />
+										{user.location}
+									</span>
+								)}
+								{user.department && (
+									<span>
+										<Icon name="building" size="small" color="grey" />
+										{user.department}
+									</span>
+								)}
 								<Link to={`/profile/${user.id}`}>
 									<Button primary className={styles.view}>
 										View profile

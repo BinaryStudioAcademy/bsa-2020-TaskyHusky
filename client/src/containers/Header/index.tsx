@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Menu, Image, Dropdown, Button, Icon } from 'semantic-ui-react';
 import logo from 'assets/logo192.png'; // TODO: replace with logo once it is ready
 import styles from './styles.module.scss';
-import { Redirect } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import ProjectsMenu from 'components/ProjectsMenu';
 import FiltersMenu from 'components/FiltersMenu';
 import BoardsMenu from '../../components/BoardsMenu';
@@ -11,14 +11,19 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'typings/rootState';
 import { removeToken } from 'helpers/setToken.helper';
 import * as actions from 'containers/LoginPage/logic/actions';
+import * as boardAction from 'containers/Boards/logic/actions';
+import { createBoard } from 'containers/Boards/logic/actionTypes';
+import * as headerActions from './logic/actions';
 import { User } from 'containers/LoginPage/logic/state';
 import { useTranslation } from 'react-i18next';
 import CreateIssueModal from 'containers/CreateIssueModal';
 import { getUsername } from 'helpers/getUsername.helper';
 import { getInitials } from 'helpers/getInitials.helper';
+import InviteNotification from '../../components/InviteNotification';
 
 export const HeaderMenu = () => {
 	const authStore = useSelector((rootStore: RootState) => rootStore.auth);
+	const incomingInvites = useSelector((rootStore: RootState) => rootStore.header.invites);
 	const dispatch = useDispatch();
 	const { t } = useTranslation();
 
@@ -27,9 +32,16 @@ export const HeaderMenu = () => {
 	const [activeItem, setActiveItem] = useState<string>('');
 	const [redirectToDashboards, setRedirectToDashboards] = useState<boolean>(false);
 
+	useEffect(() => {
+		dispatch(headerActions.startLoading({ id: authStore.user?.id || '' }));
+	}, [dispatch, authStore.user]);
+
 	const logOutHandler = () => {
 		dispatch(actions.logOutUserTrigger());
 		removeToken();
+	};
+	const onCreateBoard = (board: createBoard) => {
+		dispatch(boardAction.createBoard({ ...board }));
 	};
 
 	const toggleActiveItem: (name: string) => void = (name) => {
@@ -51,22 +63,28 @@ export const HeaderMenu = () => {
 						<span className={`${styles.logoText} site-logo-text`}>TaskyHusky</span>
 					</Menu.Item>
 					<Menu.Item
+						as="span"
 						name="your-work"
 						active={activeItem === 'your-work'}
 						onClick={() => toggleActiveItem('your-work')}
 					>
-						{t('your_work')}
+						<Link to="#">
+							<span className={styles.blackLink}>{t('your_work')}</span>
+						</Link>
 					</Menu.Item>
 					<ProjectsMenu />
 					<FiltersMenu />
 					<DashboardsMenu />
-					<BoardsMenu />
+					<BoardsMenu onCreateBoard={onCreateBoard} />
 					<Menu.Item
+						as="span"
 						name="people"
 						active={activeItem === 'people'}
 						onClick={() => toggleActiveItem('people')}
 					>
-						{t('people')}
+						<Link to="/people">
+							<span className={styles.blackLink}>{t('people')}</span>
+						</Link>
 					</Menu.Item>
 					<CreateIssueModal>
 						<Menu.Item
@@ -80,6 +98,19 @@ export const HeaderMenu = () => {
 						</Menu.Item>
 					</CreateIssueModal>
 					<Menu.Item position="right" className={styles.rightMenu}>
+						<Dropdown icon="users" className={styles.circularIcon} direction="left">
+							<Dropdown.Menu>
+								{incomingInvites.map((invite) => (
+									<InviteNotification
+										id={invite.id}
+										name={`${invite.firstName} ${invite.lastName}`}
+										avatar={invite.avatar || ''}
+										key={invite.id}
+										jobTitle={invite.jobTitle || ''}
+									/>
+								))}
+							</Dropdown.Menu>
+						</Dropdown>
 						<Dropdown icon="bell outline" className={styles.circularIcon} direction="left">
 							<Dropdown.Menu className={styles.circularDropdownMenu}>
 								<Dropdown.Header>{t('notifications')}</Dropdown.Header>
@@ -103,10 +134,12 @@ export const HeaderMenu = () => {
 								>
 									<Dropdown.Menu className={styles.circularDropdownMenu}>
 										<Dropdown.Header>{`${user?.firstName} ${user?.lastName}`}</Dropdown.Header>
-										<Dropdown.Item as="a" href={`/profile/${user?.id}`}>
-											{t('profile')}
+										<Dropdown.Item>
+											<Link to={`/profile/${user?.id}`}>{t('profile')}</Link>
 										</Dropdown.Item>
-										<Dropdown.Item>{t('acc_settings')}</Dropdown.Item>
+										<Dropdown.Item>
+											<Link to={`/profile/${user?.id}`}>{t('acc_settings')}</Link>
+										</Dropdown.Item>
 										<Dropdown.Divider />
 										<Dropdown.Item onClick={logOutHandler}>{t('log_out')}</Dropdown.Item>
 									</Dropdown.Menu>

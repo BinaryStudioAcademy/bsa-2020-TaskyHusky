@@ -1,3 +1,4 @@
+import { Sort } from 'containers/AdvancedSearch/IssueTable/index';
 import callWebApi from 'helpers/callApi.helper';
 import { IssueFilter } from 'containers/AdvancedSearch/logic/actionTypes';
 
@@ -24,6 +25,15 @@ export const getPriorities = async (): Promise<WebApi.Entities.Priority[]> => {
 	const res: Response = await callWebApi({
 		method: 'GET',
 		endpoint: 'issue/priority',
+	});
+
+	return (await res.json()) as WebApi.Entities.Priority[];
+};
+
+export const getStatuses = async (): Promise<WebApi.Entities.Priority[]> => {
+	const res: Response = await callWebApi({
+		method: 'GET',
+		endpoint: 'issue/status',
 	});
 
 	return (await res.json()) as WebApi.Entities.Priority[];
@@ -85,12 +95,20 @@ export const getByColumnId = async (id: string): Promise<WebApi.Result.IssueResu
 	return (await res.json()) as WebApi.Result.IssueResult[];
 };
 
-export const loadIssues = async (filter: IssueFilter | undefined): Promise<WebApi.Result.IssueResult[]> => {
+export const loadIssuesAndCount = async (
+	filter: IssueFilter | undefined,
+	from: number | undefined,
+	to: number | undefined,
+	sort: Sort,
+): Promise<WebApi.Result.IssueResult[]> => {
 	const res: Response = await callWebApi({
 		method: 'POST',
 		endpoint: `issue/filtered`,
 		body: {
 			filter,
+			from,
+			to,
+			sort,
 		},
 	});
 

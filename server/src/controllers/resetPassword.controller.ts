@@ -8,7 +8,7 @@ import { hashPassword } from '../helpers/password.helper';
 import HttpStatusCode from '../constants/httpStattusCode.constants';
 import { transporter, email as nodeMailerEmail } from '../../config/nodeMailer.config';
 import { appPort, appHost } from '../../config/app.config';
-import {expirationTime} from '../constants/resetPassword.constants';
+import { expirationTime } from '../constants/resetPassword.constants';
 import { sendToken } from '../services/email.service';
 
 class ResetPasswordController {

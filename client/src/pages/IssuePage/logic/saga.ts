@@ -1,6 +1,6 @@
 import { all, call, put, takeEvery } from 'redux-saga/effects';
-import { getTypes, getPriorities, createIssue, updateIssue, deleteIssue } from 'services/issue.service';
-import { setTypes, setPriorities } from './actions';
+import { getTypes, getPriorities, createIssue, updateIssue, deleteIssue, getStatuses } from 'services/issue.service';
+import { setTypes, setPriorities, setStatuses } from './actions';
 import * as actionTypes from './actionTypes';
 import { AnyAction } from 'redux';
 
@@ -18,8 +18,17 @@ function* fetchPriorities() {
 	yield put(setPriorities({ data: priorities }));
 }
 
+function* fetchStatuses() {
+	const statuses = yield call(getStatuses);
+	yield put(setStatuses({ data: statuses }));
+}
+
 function* watchLoadPriorities() {
 	yield takeEvery(actionTypes.LOAD_PRIORITIES, fetchPriorities);
+}
+
+function* watchLoadStatuses() {
+	yield takeEvery(actionTypes.LOAD_STATUSES, fetchStatuses);
 }
 
 function* fetchCreateIssue(action: AnyAction) {
@@ -34,7 +43,7 @@ function* fetchUpdateIssue(action: AnyAction) {
 	yield call(updateIssue, action.id, action.data);
 }
 
-function* fetchDeleteIssue(action: AnyAction) {
+function* deleteIssueSaga(action: AnyAction) {
 	yield call(deleteIssue, action.id);
 }
 
@@ -43,7 +52,7 @@ function* watchUpdateIssue() {
 }
 
 function* watchDeleteIssue() {
-	yield takeEvery(actionTypes.DELETE_ISSUE, fetchDeleteIssue);
+	yield takeEvery(actionTypes.DELETE_ISSUE, deleteIssueSaga);
 }
 
 export default function* issueSaga() {
@@ -53,5 +62,6 @@ export default function* issueSaga() {
 		watchCreateIssue(),
 		watchUpdateIssue(),
 		watchDeleteIssue(),
+		watchLoadStatuses(),
 	]);
 }

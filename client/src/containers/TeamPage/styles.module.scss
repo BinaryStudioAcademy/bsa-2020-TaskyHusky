@@ -18,28 +18,12 @@ $gradient: linear-gradient(90deg, rgba(52, 221, 255, 1) 0%, rgba(95, 221, 247, 1
 .margin_1 {
 	margin-right: 5px !important;
 }
-.worked_block_wrapper {
-	display: flex;
-	flex-direction: column;
-	padding: 20px 10px;
-	box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-	.worked_block {
-		align-self: center;
-		padding-left: 20px;
-		.p_descr {
-			font-size: 1.2rem;
-			color: #3a3939;
-			font-style: oblique;
-		}
-	}
-}
+
 .flex_row {
 	display: flex;
 	flex-direction: row;
 }
-.shadow_top {
-	box-shadow: 1px -1px 2px rgba(0, 0, 0, 0.5);
-}
+
 .link_header {
 	padding: 2rem 0 1rem 0;
 	display: flex;
@@ -49,7 +33,15 @@ $gradient: linear-gradient(90deg, rgba(52, 221, 255, 1) 0%, rgba(95, 221, 247, 1
 	border: none !important;
 	box-shadow: none !important;
 }
-
+.worked_block_wrapper {
+	display: flex;
+	flex-direction: column;
+	padding: 20px 10px;
+	box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+.shadow_top {
+	box-shadow: 1px -1px 2px rgba(0, 0, 0, 0.5);
+}
 .align_center {
 	align-items: center;
 	justify-content: center;
@@ -66,6 +58,7 @@ $gradient: linear-gradient(90deg, rgba(52, 221, 255, 1) 0%, rgba(95, 221, 247, 1
 	font-size: 1.4rem;
 	font-weight: 700;
 	border: none;
+	border: 1px solid transparent;
 	&:hover,
 	&:focus {
 		outline: none;
@@ -76,6 +69,7 @@ $gradient: linear-gradient(90deg, rgba(52, 221, 255, 1) 0%, rgba(95, 221, 247, 1
 .input_area {
 	width: 100%;
 	max-width: 100%;
+	min-width: 100%;
 	font-size: 1.2rem;
 	padding: 6px;
 	border: 1px solid transparent;
@@ -87,9 +81,58 @@ $gradient: linear-gradient(90deg, rgba(52, 221, 255, 1) 0%, rgba(95, 221, 247, 1
 	}
 }
 
-@media (max-width: 1088px) {
+.input_borders {
+	border-color: #333232;
+	border-radius: 6px;
+	background-color: #fffff6;
+	&:hover,
+	&:focus {
+		background-color: #ffffff;
+	}
+}
+
+.main_row {
+	padding: 0 80px !important;
 	.col_media {
-		padding: 0 50px !important;
-		flex-grow: 1 !important;
+		flex-grow: 0 !important;
+		.ui.card {
+			width: 100% !important;
+		}
+	}
+	.col_left {
+		width: 35% !important;
+		min-width: 270px !important;
+	}
+	.col_right {
+		width: 60% !important;
+		max-width: 700px;
+	}
+}
+
+.edit_field_btn {
+	border-top: none !important;
+}
+
+@media (max-width: 950px) {
+	.main_row {
+		padding: 0 20px !important;
+	}
+}
+@media (max-width: 710px) {
+	.main_row {
+		padding: 0 20px !important;
+		.col_left {
+			flex-wrap: wrap !important;
+			display: flex !important;
+			flex-direction: row !important;
+			justify-content: center !important;
+			width: 100% !important;
+			& > div {
+				margin: 0 10px 10px 0 !important;
+			}
+		}
+		.col_right {
+			width: 90% !important;
+		}
 	}
 }

@@ -1,6 +1,7 @@
 import nodemailer from 'nodemailer';
 
-export const email = process.env.GMAIL_USER;
+export const user = process.env.GMAIL_USER;
+export const email = `Tasky Husky <${user}>`;
 export const password = process.env.GMAIL_PASSWORD;
 
 export const transporter = nodemailer.createTransport({
@@ -9,7 +10,7 @@ export const transporter = nodemailer.createTransport({
 	port: 465,
 	secure: true,
 	auth: {
-		user:email,
-		pass:password
+		user,
+		pass: password,
 	},
 });
