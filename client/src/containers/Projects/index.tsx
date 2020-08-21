@@ -54,48 +54,58 @@ const Projects: React.FC = () => {
 				<Input icon="search" placeholder={t('search')} onChange={onSearch} value={searchName} />
 			</div>
 			<div className={styles.wrapper__table}>
-				{filteredData.length > 0 ? (
-					<Table celled padded>
-						<Table.Header>
-							<Table.Row>
-								<Table.HeaderCell>{t('name')}</Table.HeaderCell>
-								<Table.HeaderCell>{t('key')}</Table.HeaderCell>
-								<Table.HeaderCell>{t('type')}</Table.HeaderCell>
-								<Table.HeaderCell>{t('lead')}</Table.HeaderCell>
-								<Table.HeaderCell>{t('board')}</Table.HeaderCell>
-								<Table.HeaderCell>{t('settings')}</Table.HeaderCell>
-							</Table.Row>
-						</Table.Header>
-						{isLoading || isDeleting ? null : (
-							<Table.Body>
-								{filteredData.map(({ id, name, key, lead: { firstName, lastName } }) => (
-									<Table.Row key={id}>
-										<Table.Cell>{name}</Table.Cell>
-										<Table.Cell>{key}</Table.Cell>
-										<Table.Cell>Software</Table.Cell>
-										<Table.Cell>{`${firstName} ${lastName}`}</Table.Cell>
-										<Table.Cell>
-											<NavLink to={`/project/${id}/issues`}>{t('go_to_board')}</NavLink>
-										</Table.Cell>
-										<Table.Cell>
-											<OptionsWithConfirmation
-												config={setProjectActions({ id, onOpenSettings, onTrash })}
-											/>
-										</Table.Cell>
-									</Table.Row>
-								))}
-							</Table.Body>
-						)}
-					</Table>
+				{isDeleting ? (
+					<Spinner />
 				) : (
-					<div className={styles.imgWrapper}>
-						<div className={styles.content}>
-							<img className={styles.img} src={searchResult} />
-							<span className={styles.text}>{t('no_projects')}</span>
-						</div>
-					</div>
+					<>
+						{filteredData.length > 0 ? (
+							<Table celled padded>
+								<Table.Header>
+									<Table.Row>
+										<Table.HeaderCell>{t('name')}</Table.HeaderCell>
+										<Table.HeaderCell>{t('key')}</Table.HeaderCell>
+										<Table.HeaderCell>{t('type')}</Table.HeaderCell>
+										<Table.HeaderCell>{t('lead')}</Table.HeaderCell>
+										<Table.HeaderCell>{t('board')}</Table.HeaderCell>
+										<Table.HeaderCell>{t('settings')}</Table.HeaderCell>
+									</Table.Row>
+								</Table.Header>
+
+								<Table.Body>
+									{filteredData.map(({ id, name, key, lead: { firstName, lastName } }) => (
+										<Table.Row key={id}>
+											<Table.Cell>{name}</Table.Cell>
+											<Table.Cell>{key}</Table.Cell>
+											<Table.Cell>Software</Table.Cell>
+											<Table.Cell>{`${firstName} ${lastName}`}</Table.Cell>
+											<Table.Cell>
+												<NavLink to={`/project/${id}/issues`}>{t('go_to_board')}</NavLink>
+											</Table.Cell>
+											<Table.Cell>
+												<OptionsWithConfirmation
+													config={setProjectActions({ id, onOpenSettings, onTrash })}
+												/>
+											</Table.Cell>
+										</Table.Row>
+									))}
+								</Table.Body>
+							</Table>
+						) : (
+							<>
+								{isLoading ? (
+									<Spinner />
+								) : (
+									<div className={styles.imgWrapper}>
+										<div className={styles.content}>
+											<img className={styles.img} src={searchResult} alt="No results" />
+											<span className={styles.text}>{t('no_projects')}</span>
+										</div>
+									</div>
+								)}
+							</>
+						)}
+					</>
 				)}
-				{isLoading || isDeleting ? <Spinner /> : ''}
 			</div>
 		</div>
 	);
