@@ -21,8 +21,7 @@ const IssuePageInfoColumn: React.FC<Props> = ({ issue, initialIssue, leftAligned
 		<>
 			<div
 				style={{
-					position: 'absolute',
-					...(leftAligned ? { left: 400, top: 90 } : { right: 10, top: -5 }),
+					...(leftAligned ? {} : { position: 'absolute', right: 10, top: -5 }),
 					width: 270,
 				}}
 			>

@@ -8,13 +8,15 @@ export class ProjectsRepository extends Repository<Projects> {
 	}
 
 	getOneProject(id: string, userId: string): Promise<Projects | undefined> {
-		return getRepository(Projects)
-			.createQueryBuilder('project')
-			.leftJoinAndSelect('project.lead', 'lead')
-			.leftJoinAndSelect('project.users', 'users')
-			.where('project.id = :id', { id })
-			.andWhere('users.id = :userId', { userId })
-			.getOne();
+		return (
+			getRepository(Projects)
+				.createQueryBuilder('project')
+				.leftJoinAndSelect('project.lead', 'lead')
+				.leftJoinAndSelect('project.users', 'users')
+				.where('project.id = :id', { id })
+				//.andWhere('users.id = :userId', { userId })
+				.getOne()
+		);
 	}
 
 	getOneByKey(key: string): Promise<Projects | undefined> {

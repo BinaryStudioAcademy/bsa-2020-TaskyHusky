@@ -56,31 +56,31 @@ const ProjectIssuesPage: React.FC<Props> = ({ projectId }) => {
 		  };
 
 	return (
-		<main style={{ paddingTop: 20, height: '80%', marginBottom: 10 }}>
-			<Header style={leftPadded} as="h2">
-				{t('issues')}
-			</Header>
-			<Breadcrumb style={{ ...leftPadded, marginBottom: 20 }}>
-				<Breadcrumb.Section href="/projects">
-					<span className={styles.link}>{t('projects')}</span>
-				</Breadcrumb.Section>
-				<Breadcrumb.Divider />
-				<Breadcrumb.Section link>
-					<span className={styles.link}>{project.name}</span>
-				</Breadcrumb.Section>
-			</Breadcrumb>
-			<Form>
-				<Form.Group>
-					<Form.Input
-						placeholder={t('search')}
-						icon="search"
-						value={search}
-						onChange={(event, data) => setSearch(data.value)}
-						style={{ ...leftPadded, marginRight: 60, width: 300 }}
-					/>
-				</Form.Group>
-			</Form>
-			<div className="fill" style={{ display: 'flex', marginTop: 20, overflowY: 'hidden' }}>
+		<main style={{ paddingTop: 20, height: '80%', marginBottom: 10, display: 'flex' }}>
+			<div>
+				<Header style={leftPadded} as="h2">
+					{t('issues')}
+				</Header>
+				<Breadcrumb style={{ ...leftPadded, marginBottom: 20 }}>
+					<Breadcrumb.Section href="/projects">
+						<span className={styles.link}>{t('projects')}</span>
+					</Breadcrumb.Section>
+					<Breadcrumb.Divider />
+					<Breadcrumb.Section link>
+						<span className={styles.link}>{project.name}</span>
+					</Breadcrumb.Section>
+				</Breadcrumb>
+				<Form>
+					<Form.Group>
+						<Form.Input
+							placeholder={t('search')}
+							icon="search"
+							value={search}
+							onChange={(event, data) => setSearch(data.value)}
+							style={{ ...leftPadded, marginRight: 60, width: 300 }}
+						/>
+					</Form.Group>
+				</Form>
 				<ProjectIssuesColumn
 					onChangeSelectedCard={(key) => {
 						setSelectedIssueKey(key);
@@ -89,21 +89,21 @@ const ProjectIssuesPage: React.FC<Props> = ({ projectId }) => {
 					search={search}
 					projectId={projectId}
 				/>
-				<div>
-					{selectedIssue ? (
-						<div style={{ marginLeft: 30 }}>
-							<IssuePageInfoColumn
-								leftAligned
-								withDescrtiption
-								toPageLink
-								issue={selectedIssue}
-								initialIssue={initialIssue}
-							/>
-						</div>
-					) : (
-						''
-					)}
-				</div>
+			</div>
+			<div className="fill">
+				{selectedIssue ? (
+					<div style={{ marginLeft: 30 }}>
+						<IssuePageInfoColumn
+							leftAligned
+							withDescrtiption
+							toPageLink
+							issue={selectedIssue}
+							initialIssue={initialIssue}
+						/>
+					</div>
+				) : (
+					''
+				)}
 			</div>
 		</main>
 	);
