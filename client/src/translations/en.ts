@@ -271,5 +271,12 @@ export const en = {
 	no_projects: 'No projects',
 	createAt: 'Created at',
 	updatedAt: 'Updated at',
+	create_team_modal_text:
+		'Get everyone working in one place by adding them to a team. Stay connected with @mentions,\n' +
+		'collaborate on work together, and efficiently manage everything from the team profile page.',
+	create_team_modal_header: 'Create new team',
+	team_name: 'Team name',
+	create_team_modal_placeholder: "What's your team called?",
+	start: 'Start',
 	search_people_page_placeholder: 'Search for people and teams',
 };
