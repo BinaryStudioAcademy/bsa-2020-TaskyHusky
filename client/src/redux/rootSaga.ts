@@ -16,12 +16,14 @@ import scrumBoardSaga from 'containers/Board/Scrum/logic/saga';
 import peoplePageSaga from 'containers/People/logic/saga';
 import issueCommentSaga from 'components/IssueCommentForm/logic/saga';
 import headerSaga from '../containers/Header/logic/saga';
+import projectCommonSaga from 'components/ProjectsCommon/logic/saga';
 
 export default function* rootSaga() {
 	yield all([
 		boardsSaga(),
 		projectsSaga(),
 		projectSaga(),
+		projectCommonSaga(),
 		createProjectSaga(),
 		authSaga(),
 		issueSaga(),
