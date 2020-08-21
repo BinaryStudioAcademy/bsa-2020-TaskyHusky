@@ -13,7 +13,7 @@ import ProjectSidebar from 'components/ProjectSidebar';
 import Spinner from 'components/common/Spinner';
 import Form from './form';
 import * as generalProjectActions from 'components/ProjectsCommon/logic/actions';
-import OptionsWithConfirmation from 'components/ProjectsCommon/ConfirmedTrash';
+import Options from 'components/common/Options';
 
 const ProjectSettings = () => {
 	const { is404Error, isLoading, project: projectData } = useSelector((rootState: RootState) => rootState.project);
@@ -59,7 +59,7 @@ const ProjectSettings = () => {
 								</div>
 								<h1 className={styles.header_inner__title}>{t('details')}</h1>
 								<div className={styles.header__options}>
-									<OptionsWithConfirmation config={setProjectActions({ id, onTrash })} />
+									<Options config={setProjectActions({ id, onTrash })} />
 								</div>
 							</div>
 							<div className={styles.body_inner__container}>
