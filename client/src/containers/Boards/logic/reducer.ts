@@ -7,12 +7,14 @@ export const boardReducer = createReducer<BoardsState>(initialState, {
 		return {
 			...state,
 			boards: boards.boards,
+			isLoading: false,
 		};
 	},
 	[actionTypes.SUCCESS_GET_RECENT_BOARDS](state, recentBoards) {
 		return {
 			...state,
 			recentBoards: recentBoards.recentBoards,
+			isLoading: true,
 		};
 	},
 });

@@ -12,6 +12,7 @@ import CustomInput from 'components/common/Input/CustomInput';
 import { generateKey } from 'commonLogic/keyGenerator';
 import * as validationMessage from 'constants/ValidationMessages';
 import { validProjectName, validProjectKey } from 'helpers/validationRules';
+import icons from 'assets/images/project';
 
 type Template = keyof typeof WebApi.Board.BoardType;
 
@@ -53,6 +54,7 @@ const CreateProjectModal: React.FC = () => {
 				name,
 				key,
 				template,
+				icon: icons.icon1,
 			}),
 		);
 	};
@@ -116,7 +118,6 @@ const CreateProjectModal: React.FC = () => {
 
 	return (
 		<Modal
-			closeIcon
 			onClose={onModalClose}
 			onOpen={onModalOpen}
 			open={isModalOpened}

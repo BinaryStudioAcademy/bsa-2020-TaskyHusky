@@ -11,6 +11,7 @@ export interface AdvancedSearch {
 	issues: WebApi.Entities.Issue[];
 	filter?: WebApi.Entities.Filter;
 	isFilterEdited: boolean;
+	issuesCount: number;
 }
 
 export const initialState: AdvancedSearch = {
@@ -18,4 +19,5 @@ export const initialState: AdvancedSearch = {
 	issues: [],
 	addedFilterParts: [],
 	isFilterEdited: false,
+	issuesCount: 0,
 };

@@ -12,6 +12,7 @@ export type InitialProject = {
 	name: string;
 	key: string;
 	template: string;
+	icon: string;
 };
 
 export type Keys = {
