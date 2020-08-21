@@ -28,6 +28,7 @@ interface IssueResult {
 	sprintID?: string;
 	projectID?: string;
 	issueKey?: string;
+	watchers?: string[];
 	assigned?: UserModel;
 	creator: UserModel;
 }
