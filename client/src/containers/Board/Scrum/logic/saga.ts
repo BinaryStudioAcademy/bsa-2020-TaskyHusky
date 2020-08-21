@@ -1,3 +1,4 @@
+import { createIssue } from 'pages/IssuePage/logic/actions';
 import { getBoardSprints, getBoardProjects } from 'services/board.service';
 import { getSprintIssues, updateSprint } from 'services/sprint.service';
 import { deleteSprint, createSprint } from 'services/sprint.service';
@@ -5,6 +6,7 @@ import { all, put, takeEvery, call } from 'redux-saga/effects';
 import * as actionTypes from './actionTypes';
 import * as actions from './actions';
 import { NotificationManager } from 'react-notifications';
+import { CREATE_ISSUE_SUCCESS } from 'pages/IssuePage/logic/actionTypes';
 
 export function* loadSprintsRequest(action: ReturnType<typeof actions.loadSprintsTrigger>) {
 	try {
@@ -69,6 +71,20 @@ export function* loadProjectRequest(action: ReturnType<typeof actions.loadProjec
 	}
 }
 
+export function* createIssueSuccess(action: ReturnType<typeof createIssue>) {
+	try {
+		const {
+			data: { sprint: sprintId },
+		}: { data: { sprint?: string } } = action;
+
+		if (sprintId) {
+			yield put(actions.loadIssuesTrigger({ sprintId }));
+		}
+	} catch (error) {
+		NotificationManager.error(error.clientException.message, 'Error');
+	}
+}
+
 export function* watchLoadSprintsRequest() {
 	yield takeEvery(actionTypes.LOAD_SPRINTS_TRIGGER, loadSprintsRequest);
 }
@@ -93,6 +109,10 @@ export function* watchCreateSprintRequest() {
 	yield takeEvery(actionTypes.CREATE_SPRINT_TRIGGER, createSprintRequest);
 }
 
+export function* watchCreateIssueSuccess() {
+	yield takeEvery(CREATE_ISSUE_SUCCESS, createIssueSuccess);
+}
+
 export default function* scrumBoardSaga() {
 	yield all([
 		watchLoadSprintsRequest(),
@@ -101,5 +121,6 @@ export default function* scrumBoardSaga() {
 		watchUpdateSprintRequest(),
 		watchCreateSprintRequest(),
 		watchLoadProjectRequest(),
+		watchCreateIssueSuccess(),
 	]);
 }
