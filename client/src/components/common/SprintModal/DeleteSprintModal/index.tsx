@@ -35,8 +35,10 @@ const SprintModal = (props: Props) => {
 	};
 
 	return (
-		<Modal size="tiny" dimmer="inverted" onClose={props.clickAction} open={props.isOpen}>
-			<Header>{`${t('delete_sprint')} - '${sprintName}'`}</Header>
+		<Modal closeIcon size="tiny" dimmer="inverted" onClose={props.clickAction} open={props.isOpen}>
+			<Header>
+				{t('delete_sprint')}: {sprintName}
+			</Header>
 			<Modal.Content>
 				<Header icon textAlign="center">
 					<Icon name="trash alternate outline" />

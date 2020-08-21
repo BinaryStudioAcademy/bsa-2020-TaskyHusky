@@ -8,11 +8,11 @@ interface GenerateKeyArgs {
 	keys: Keys[];
 }
 
-export const generateKey = ({ name, key, isKeyTouched, keys }: GenerateKeyArgs): string => {
+export const generateKey = ({ name, key, isKeyTouched, keys: keysFromDB }: GenerateKeyArgs): string => {
 	let alphaItemIndex = 0;
 	let temporaryKey = key;
 	let generatedKey = key;
-	let stringItem = -1;
+	let stringItemIndex = 0;
 
 	if (!isKeyTouched) {
 		const spaceIndex = name.trimEnd().search(' ');
@@ -24,35 +24,38 @@ export const generateKey = ({ name, key, isKeyTouched, keys }: GenerateKeyArgs):
 				.map((word) => word[0].toUpperCase())
 				.join('');
 		} else {
-			temporaryKey = name.substr(0, 2).padStart(2, name[0]).toUpperCase();
+			temporaryKey = name.substr(0, 2).toUpperCase();
 		}
 	}
 
-	function keygen(result: string): void {
-		if (result === '') {
+	function keygen(rawKey: string): void {
+		if (rawKey === '') {
 			return;
 		}
 
-		const index = keys.findIndex((item: any) => item.key === result);
+		const keyIndex = keysFromDB.findIndex((keyItem: any) => keyItem.key === rawKey);
 
-		if (index === -1) {
-			generatedKey = result;
-			result = '';
+		if (keyIndex === -1) {
+			generatedKey = rawKey;
+			rawKey = '';
 			return;
 		}
 
-		result = result.substring(0, result.length + stringItem) + alphabet[alphaItemIndex];
-		alphaItemIndex++;
+		rawKey = rawKey.substring(0, rawKey.length - 1) + alphabet[alphaItemIndex];
 
-		if (alphaItemIndex === alphabet.length - 1) {
-			stringItem++;
+		if (alphaItemIndex !== alphabet.length - 1) {
+			alphaItemIndex++;
+		} else {
+			alphaItemIndex = 0;
+			rawKey = rawKey.substring(0, rawKey.length - 2) + alphabet[stringItemIndex] + alphabet[alphaItemIndex];
+			stringItemIndex++;
 		}
 
-		generatedKey = result;
-		keygen(result);
+		generatedKey = rawKey;
+		keygen(rawKey);
 	}
 
-	stringItem = -1;
+	stringItemIndex = 0;
 	alphaItemIndex = 0;
 	keygen(temporaryKey);
 

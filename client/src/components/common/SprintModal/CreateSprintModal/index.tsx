@@ -53,7 +53,7 @@ const CreateSprintModal = (props: Props) => {
 	};
 
 	return (
-		<Modal size="tiny" dimmer="inverted" onClose={handleClose} open={props.isOpen}>
+		<Modal closeIcon size="tiny" dimmer="inverted" onClose={handleClose} open={props.isOpen}>
 			<Header>{t('create_sprint')}</Header>
 			<Modal.Content>
 				<Form>
@@ -85,6 +85,7 @@ const CreateSprintModal = (props: Props) => {
 					<Form.Field>
 						<Checkbox
 							toggle
+							disabled
 							label={isActive ? t('mark_sprint_as_active') : t('mark_sprint_as_inactive')}
 							checked={isActive}
 							onChange={() => {

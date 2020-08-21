@@ -5,7 +5,12 @@
 }
 
 .team {
+  color: #2C2C2C;
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.team:hover{
+  color: #2C2C2C;
 }

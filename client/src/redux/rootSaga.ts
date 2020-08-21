@@ -14,15 +14,16 @@ import issueSaga from 'pages/IssuePage/logic/saga';
 import projectSaga from 'containers/ProjectSettings/logic/saga';
 import scrumBoardSaga from 'containers/Board/Scrum/logic/saga';
 import peoplePageSaga from 'containers/People/logic/saga';
-import peoplePageSearchSaga from 'containers/SearchPeopleAndTeamField/logic/saga';
 import issueCommentSaga from 'components/IssueCommentForm/logic/saga';
 import headerSaga from '../containers/Header/logic/saga';
+import projectCommonSaga from 'components/ProjectsCommon/logic/saga';
 
 export default function* rootSaga() {
 	yield all([
 		boardsSaga(),
 		projectsSaga(),
 		projectSaga(),
+		projectCommonSaga(),
 		createProjectSaga(),
 		authSaga(),
 		issueSaga(),
@@ -37,6 +38,5 @@ export default function* rootSaga() {
 		issueCommentSaga(),
 		headerSaga(),
 		peoplePageSaga(),
-		peoplePageSearchSaga(),
 	]);
 }
