@@ -24,30 +24,33 @@ type ResultsToRender =
 const SearchField: React.FC = (): ReactElement => {
 	const { people, teams } = useSelector((state: RootState) => state.peoplePage);
 
-	const [results, setResult] = useState<ResultsToRender>(undefined);
+	const [searchValue, setSearchValue] = useState('');
+
+	const results = React.useMemo(() => {
+		const teamsToRender = teams.filter(
+			(team) => team.name && team.name.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1,
+		);
+
+		const usersToRender = people.filter((people) => {
+			const fullName = `${people.firstName} ${people.lastName}`;
+			return fullName.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1;
+		});
+
+		if (teamsToRender.length === 0 && usersToRender.length === 0) {
+			return undefined;
+		}
+
+		return {
+			users: fillResultField('users', usersToRender),
+			teams: fillResultField('teams', teamsToRender),
+		};
+	}, [searchValue, teams, people]);
 
 	const handlerChange = (e: MouseEvent<HTMLElement>, { value }: SearchProps): void => {
 		if (!value) {
 			return;
 		}
-		const teamsToRender = teams.filter(
-			(team) => team.name && team.name.toLowerCase().indexOf(value.toLowerCase()) !== -1,
-		);
-
-		const usersToRender = people.filter((people) => {
-			const fullName = `${people.firstName} ${people.lastName}`;
-			return fullName.toLowerCase().indexOf(value.toLowerCase()) !== -1;
-		});
-
-		if (teamsToRender.length === 0 && usersToRender.length === 0) {
-			setResult(undefined);
-			return;
-		}
-
-		setResult({
-			users: fillResultField('users', usersToRender),
-			teams: fillResultField('teams', teamsToRender),
-		});
+		setSearchValue(value);
 	};
 
 	const resultRender = (value: any): React.ReactElement => {
