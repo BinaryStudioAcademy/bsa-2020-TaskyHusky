@@ -4,28 +4,17 @@ import { useDispatch } from 'react-redux';
 import { Button, Divider, Form, Grid, Header, List, Popup, Segment } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 import styles from '../ForgotPassword/styles.module.scss';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import PasswordCheck from '../../components/PasswordCheck';
 import PasswordInput from '../../components/common/PasswordInput';
 
-interface Props {
-	match: {
-		params: {
-			token: string;
-		};
-	};
-}
-
-const ResetPassword: React.FC<Props> = ({ match }: Props) => {
+const ResetPassword: React.FC = () => {
 	const [password, setPassword] = useState('');
 	const [isPasswordValid, setIsPasswordValid] = useState(true);
 	const { t } = useTranslation();
-
 	const dispatch = useDispatch();
-	const {
-		params: { token },
-	} = match;
 
+	const { token } = useParams();
 	const handleSubmit: (event: SyntheticEvent) => void = (event) => {
 		event.preventDefault();
 		dispatch(actions.resetPassword({ id: token, password }));

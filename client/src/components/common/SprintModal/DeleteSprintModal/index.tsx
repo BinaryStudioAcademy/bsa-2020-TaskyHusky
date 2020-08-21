@@ -35,21 +35,24 @@ const SprintModal = (props: Props) => {
 	};
 
 	return (
-		<Modal basic onClose={props.clickAction} open={props.isOpen} size="small">
-			<Header icon>
-				<Icon name="trash alternate outline" />
-				{`${t('delete_sprint')} - '${sprintName}'`}
-			</Header>
+		<Modal size="tiny" dimmer="inverted" onClose={props.clickAction} open={props.isOpen}>
+			<Header>{`${t('delete_sprint')} - '${sprintName}'`}</Header>
 			<Modal.Content>
+				<Header icon textAlign="center">
+					<Icon name="trash alternate outline" />
+				</Header>
 				<p>{t('delete_sprint_warning')}</p>
 			</Modal.Content>
+
 			<Modal.Actions>
-				<Button color="red" inverted onClick={handleNoButtonClick}>
-					<Icon name="remove" /> {t('cancel')}
-				</Button>
-				<Button basic color="green" inverted onClick={handleYesButtonClick}>
-					<Icon name="checkmark" /> {t('delete')}
-				</Button>
+				<Button color="grey" onClick={handleNoButtonClick} content={t('cancel')} />
+				<Button
+					labelPosition="right"
+					icon="checkmark"
+					primary
+					onClick={handleYesButtonClick}
+					content={t('delete')}
+				/>
 			</Modal.Actions>
 		</Modal>
 	);

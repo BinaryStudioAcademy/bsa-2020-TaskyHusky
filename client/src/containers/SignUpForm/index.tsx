@@ -8,7 +8,7 @@ import * as actions from 'containers/LoginPage/logic/actions';
 import { RootState } from 'typings/rootState';
 import styles from './styles.module.scss';
 import { useTranslation } from 'react-i18next';
-import { normalizeEmail } from 'helpers/normalizeEmail.helper';
+import { normalizeEmail } from 'helpers/email.helper';
 
 const SignUpForm: React.FC = () => {
 	const dispatch = useDispatch();

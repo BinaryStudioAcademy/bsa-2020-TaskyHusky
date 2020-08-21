@@ -1,4 +1,5 @@
 import { AdvancedSearch, FilterPartState } from './state';
+import { Sort } from '../IssueTable';
 
 export const FETCH_FILTER_PARTS = 'SEARCH:FETCH_FILTER_PARTS';
 export const UPDATE_SEARCH_SUCCESS = 'SEARCH:UPDATE_SEARCH_SUCCESS';
@@ -30,6 +31,7 @@ export type UpdateFilterPartArgs = {
 
 export type LoadIssuesSuccessArgs = {
 	issues: WebApi.Entities.Issue[];
+	issuesCount: number;
 };
 
 export type LoadFilterByIdArgs = {
@@ -50,4 +52,10 @@ export type RedirectId = {
 
 export type UpdateFilterStaredBy = {
 	staredBy: string;
+};
+
+export type LoadIssues = {
+	from?: number;
+	to?: number;
+	sort?: Sort;
 };

@@ -1,3 +1,4 @@
+/* eslint-disable quotes */
 export interface UserData {
 	userName: string;
 	id: string;
