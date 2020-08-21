@@ -47,7 +47,7 @@ const SearchField: React.FC = (): ReactElement => {
 	}, [searchValue, teams, people]);
 
 	const handlerChange = (e: MouseEvent<HTMLElement>, { value }: SearchProps): void => {
-		if (!value) {
+		if (value === undefined) {
 			return;
 		}
 		setSearchValue(value);
