@@ -26,10 +26,6 @@ const Options = ({ config, isBackgroundShown = true }: Params) => {
 		setIsConfirmModalOpen(true);
 	};
 
-	const confirmAction = () => {
-		setIsConfirmModalOpen(false);
-	};
-
 	return (
 		<>
 			<Dropdown
@@ -47,23 +43,24 @@ const Options = ({ config, isBackgroundShown = true }: Params) => {
 				{isOpened || isConfirmModalOpen ? (
 					<Dropdown.Menu as="span">
 						{config.map((it) => (
-							<>
-								<Dropdown.Item
-									key={it.text}
-									as="span"
-									text={it.text}
-									onClick={
-										it.withConfirmation ? () => addConfirmation() : () => it.onClickAction(it.id)
-									}
-								/>
-								<ConfirmModal
-									isOpened={isConfirmModalOpen}
-									setIsOpened={setIsConfirmModalOpen}
-									confirmAction={confirmAction}
-									header={it.confirmHeader || ''}
-									content={it.confirmText || ''}
-								/>
-							</>
+							<Dropdown.Item
+								key={it.text}
+								as="span"
+								text={it.text}
+								onClick={it.withConfirmation ? () => addConfirmation() : () => it.onClickAction(it.id)}
+								content={
+									<>
+										<span>{it.text}</span>
+										<ConfirmModal
+											isOpened={isConfirmModalOpen}
+											setIsOpened={setIsConfirmModalOpen}
+											confirmAction={() => it.onClickAction(it.id)}
+											header={it.confirmHeader || ''}
+											content={it.confirmText || ''}
+										/>
+									</>
+								}
+							/>
 						))}
 					</Dropdown.Menu>
 				) : null}

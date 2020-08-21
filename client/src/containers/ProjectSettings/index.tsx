@@ -15,7 +15,6 @@ import Form from './form';
 import * as generalProjectActions from 'components/ProjectsCommon/logic/actions';
 import Options from 'components/common/Options';
 
-
 const ProjectSettings = () => {
 	const { is404Error, isLoading, project: projectData } = useSelector((rootState: RootState) => rootState.project);
 	const { t } = useTranslation();
@@ -28,7 +27,6 @@ const ProjectSettings = () => {
 	const { isDeleted: isProjectDeleted, isLoading: isDeleting } = useSelector(
 		(rootState: RootState) => rootState.projectCommon,
 	);
-
 
 	if (is404Error) {
 		throw new Error();
@@ -49,13 +47,6 @@ const ProjectSettings = () => {
 
 	return (
 		<>
-			<ConfirmModal
-				isOpened={isConfirmModalOpen}
-				setIsOpened={setIsConfirmModalOpen}
-				confirmAction={onConfirmTrash}
-				header="Move to trash?"
-				content="Only Tasky Husky admins can restore the project from the trash"
-			/>
 			{isRedirected ? (
 				<Redirect to={'/projects'} />
 			) : (
