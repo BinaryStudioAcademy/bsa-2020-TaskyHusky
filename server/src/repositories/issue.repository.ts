@@ -1,8 +1,9 @@
 import { EntityRepository, Repository, FindOperator, Any, Raw } from 'typeorm';
 import { Issue } from '../entity/Issue';
 import { getConditions } from '../helpers/issue.helper';
+import { UserProfile } from '../entity/UserProfile';
 
-const RELS = ['priority', 'type', 'creator', 'assigned', 'status'];
+const RELS = ['priority', 'type', 'creator', 'assigned', 'status', 'watchers'];
 
 export type Filter = {
 	issueType?: string[];
@@ -48,6 +49,11 @@ export class IssueRepository extends Repository<Issue> {
 	createOne(data: Issue) {
 		const entity = this.create(data);
 		return this.save(entity);
+	}
+
+	async watch(id: string, userId: string) {
+		const { watchers = [] }: Issue = await this.findOneById(id);
+		return await this.update(id, { watchers: [...watchers, userId] });
 	}
 
 	updateOneById(id: string, data: Issue) {

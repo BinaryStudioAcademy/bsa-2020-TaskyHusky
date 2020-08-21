@@ -1,4 +1,14 @@
-import { Entity, Column, ManyToOne, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import {
+	Entity,
+	Column,
+	ManyToOne,
+	PrimaryGeneratedColumn,
+	CreateDateColumn,
+	UpdateDateColumn,
+	ManyToMany,
+	JoinTable,
+} from 'typeorm';
+
 import { IsNotEmpty, IsString, IsArray } from 'class-validator';
 import { IssueStatus } from './IssueStatus';
 import { UserProfile } from './UserProfile';
@@ -60,6 +70,10 @@ export class Issue {
 
 	@ManyToOne((type) => UserProfile, (userProfile) => userProfile.createdIssues)
 	creator!: UserProfile;
+
+	@ManyToMany((type) => UserProfile, (user) => user.watchingIssues)
+	@JoinTable()
+	watchers?: string[];
 
 	@CreateDateColumn({ type: 'date' })
 	createdAt?: Date;

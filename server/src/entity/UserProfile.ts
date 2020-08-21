@@ -104,7 +104,10 @@ export class UserProfile {
 
 	@ManyToMany((type) => UserProfile, (userProfile) => userProfile.teammates)
 	@JoinTable()
-	teammates?: UserProfile[];
+	teammates?: string[];
+
+	@ManyToMany((type) => Issue, (issue) => issue.watchers)
+	watchingIssues?: Issue[];
 
 	constructor(userData?: Partial<UserProfile>) {
 		if (userData) {
