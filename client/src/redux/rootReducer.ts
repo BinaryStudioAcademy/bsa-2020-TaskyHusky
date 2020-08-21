@@ -13,7 +13,6 @@ import { saveFilterReducer } from './../containers/SaveFilterModal/logic/reducer
 import { usersReducer } from 'commonLogic/users/reducer';
 import { advancedSearchReducer } from 'containers/AdvancedSearch/logic/reducer';
 import { peoplePageReducer } from '../containers/People/logic/reducer';
-import { peoplePageSearchReducer } from '../containers/SearchPeopleAndTeamField/logic/reducer';
 import { boardReducer } from '../containers/Boards/logic/reducer';
 import { headerReducer } from '../containers/Header/logic/reducer';
 import { scrumBoardReducer } from 'containers/Board/Scrum/logic/reducer';
@@ -34,7 +33,6 @@ const rootReducer: Reducer<RootState> = combineReducers({
 	advancedSearch: advancedSearchReducer,
 	scrumBoard: scrumBoardReducer,
 	peoplePage: peoplePageReducer,
-	peoplePageSearch: peoplePageSearchReducer,
 	header: headerReducer,
 });
 

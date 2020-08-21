@@ -269,4 +269,5 @@ export const en = {
 	no_projects: 'No projects',
 	createAt: 'Created at',
 	updatedAt: 'Updated at',
+	search_people_page_placeholder: 'Search for people and teams',
 };
