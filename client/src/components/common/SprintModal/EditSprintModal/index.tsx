@@ -70,7 +70,7 @@ const EditSprintModal = (props: Props) => {
 	};
 
 	return (
-		<Modal onClose={handleClose} open={props.isOpen} size="tiny" dimmer="inverted">
+		<Modal closeIcon onClose={handleClose} open={props.isOpen} size="tiny" dimmer="inverted">
 			<Header>
 				{t('edit_sprint')}: {sprintName}
 			</Header>
