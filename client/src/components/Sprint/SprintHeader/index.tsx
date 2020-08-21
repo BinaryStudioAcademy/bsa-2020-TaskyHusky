@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { List, Item, Button } from 'semantic-ui-react';
 
-import Options, { ItemProps } from 'components/common/Options';
+import Options, { ConfigItem } from 'components/common/Options';
 import styles from './styles.module.scss';
 import CreateIssueModal from 'containers/CreateIssueModal';
 import DeleteSprintModal from 'components/common/SprintModal/DeleteSprintModal';
@@ -26,7 +26,7 @@ export const SprintHeader: React.FC<Props> = ({ id, isActive, name, issues, isCo
 	const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false);
 	const { t } = useTranslation();
 
-	const config: ItemProps[] = [
+	const config: ConfigItem[] = [
 		{
 			id,
 			text: t('edit_sprint'),

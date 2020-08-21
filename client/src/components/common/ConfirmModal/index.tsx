@@ -4,9 +4,9 @@ import { Modal, Button } from 'semantic-ui-react';
 interface Props {
 	isOpened: boolean;
 	setIsOpened: (param: boolean) => void;
-	confirmAction: () => void;
-	header: string;
-	content: string;
+	confirmAction: (cb: any) => void;
+	header?: string;
+	content?: string;
 }
 
 export const ConfirmModal = ({ isOpened, setIsOpened, confirmAction, header, content }: Props) => (

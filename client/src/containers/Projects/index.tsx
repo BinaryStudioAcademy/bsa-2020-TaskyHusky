@@ -10,8 +10,8 @@ import { useHistory, NavLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import * as generalProjectActions from 'components/ProjectsCommon/logic/actions';
 import * as actions from './logic/actions';
-import OptionsWithConfirmation from 'components/ProjectsCommon/ConfirmedTrash';
 import searchResult from 'assets/images/search-result.svg';
+import Options from 'components/common/Options';
 
 const Projects: React.FC = () => {
 	const history = useHistory();
@@ -82,9 +82,7 @@ const Projects: React.FC = () => {
 												<NavLink to={`/project/${id}/issues`}>{t('go_to_board')}</NavLink>
 											</Table.Cell>
 											<Table.Cell>
-												<OptionsWithConfirmation
-													config={setProjectActions({ id, onOpenSettings, onTrash })}
-												/>
+												<Options config={setProjectActions({ id, onOpenSettings, onTrash })} />
 											</Table.Cell>
 										</Table.Row>
 									))}
