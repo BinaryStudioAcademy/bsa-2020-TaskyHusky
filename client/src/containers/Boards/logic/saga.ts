@@ -2,6 +2,7 @@ import * as service from 'services/board.service';
 import { all, put, takeEvery, call } from 'redux-saga/effects';
 import * as actionTypes from './actionTypes';
 import * as actions from './actions';
+import { NotificationManager } from 'react-notifications';
 
 export function* fetchBoards() {
 	const boards = yield call(service.getBoards);
@@ -36,6 +37,7 @@ export function* createBoard(action: ReturnType<typeof actions.createBoard>) {
 		...board,
 	});
 	yield put(actions.startLoading());
+	NotificationManager.success('Board created successfully', 'Created');
 }
 
 export function* watchCreateBoard() {
