@@ -1,9 +1,10 @@
 import React, { ReactElement, ChangeEvent, useState } from 'react';
-import { Modal, Image, Form, Button, Message } from 'semantic-ui-react';
+import { Modal, Image, Form, Button } from 'semantic-ui-react';
 import { addTeam } from '../../services/team.service';
 
 import style from './style.module.scss';
 import linksImg from 'assets/images/create-new-team.svg';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
 	isOpen: boolean;
@@ -12,13 +13,12 @@ interface Props {
 
 const AddTeamPopup: React.FC<Props> = ({ isOpen = false, closeClb }): ReactElement => {
 	const [teamName, setTeamName] = useState<string>('');
-	const [commonError, setCommonError] = useState<string | null>(null);
 	const [errorTeamName, setErrorTeamName] = useState<null | string>(null);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const { t } = useTranslation();
 
 	const handlerChange = (e: ChangeEvent<HTMLInputElement>) => {
 		setErrorTeamName(null);
-		setCommonError(null);
 		setTeamName(e.target.value);
 	};
 
@@ -32,7 +32,6 @@ const AddTeamPopup: React.FC<Props> = ({ isOpen = false, closeClb }): ReactEleme
 			await addTeam(teamName);
 			alert('Success added Team');
 		} catch (e) {
-			setCommonError(e);
 		} finally {
 			setIsLoading(false);
 		}
@@ -40,28 +39,24 @@ const AddTeamPopup: React.FC<Props> = ({ isOpen = false, closeClb }): ReactEleme
 
 	return (
 		<Modal open={isOpen} onClose={closeClb} closeIcon size="small">
-			<Modal.Header>Create new team</Modal.Header>
+			<Modal.Header>{t('create_team_modal_header')}</Modal.Header>
 			<Modal.Content image scrolling>
 				<Image size="big" src={linksImg} wrapped className={style.img} />
 				<Form onSubmit={handlerSubmit} loading={isLoading}>
-					<p>
-						Get everyone working in one place by adding them to a team. Stay connected with @mentions,
-						collaborate on work together, and efficiently manage everything from the team profile page.
-					</p>
+					<p>{t('create_team_modal_text')}</p>
 					<Form.Input
-						label="Team name"
-						placeholder="What's your team called?"
+						label={t('team_name')}
+						placeholder={t('create_team_modal_placeholder')}
 						value={teamName}
 						onChange={handlerChange}
 						error={errorTeamName}
 					/>
-					{commonError && <Message color="red">commonError</Message>}
 				</Form>
 			</Modal.Content>
 			<Modal.Actions>
-				<Button onClick={closeClb}>Cancel</Button>
+				<Button onClick={closeClb}>{t('cancel')}</Button>
 				<Button primary onClick={handlerSubmit}>
-					Start
+					{t('start')}
 				</Button>
 			</Modal.Actions>
 		</Modal>
