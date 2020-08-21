@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from 'typings/rootState';
 import { IModifiedEntity } from 'typings/entityModifiedForSearchElement';
 import { fillResultField } from 'helpers/fillResultsToRender.helper';
+import { useTranslation } from 'react-i18next';
 
 type ResultsToRender =
 	| {
@@ -23,6 +24,7 @@ type ResultsToRender =
 
 const SearchField: React.FC = (): ReactElement => {
 	const { people, teams } = useSelector((state: RootState) => state.peoplePage);
+	const { t } = useTranslation();
 
 	const [searchValue, setSearchValue] = useState('');
 
@@ -75,7 +77,7 @@ const SearchField: React.FC = (): ReactElement => {
 				onSearchChange={handlerChange}
 				className={style.field}
 				size="large"
-				input={{ fluid: true, placeholder: 'Search for people and teams' }}
+				input={{ fluid: true, placeholder: t('search_people_page_placeholder') }}
 				results={results}
 				resultRenderer={resultRender}
 			/>
