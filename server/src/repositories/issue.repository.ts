@@ -49,6 +49,10 @@ export class IssueRepository extends Repository<Issue> {
 		return this.find({ relations: RELS, where: { project: { id } } });
 	}
 
+	findAllByBoardId(id: string): Promise<Issue[]> {
+		return this.find({ relations: RELS.concat(['sprint']), where: { board: { id } } });
+	}
+
 	findOneById(id: string) {
 		return this.findOneOrFail({ where: { id }, relations: RELS });
 	}
