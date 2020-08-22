@@ -15,7 +15,7 @@ export const scrumBoardReducer = createReducer<ScrumBoardState>(initialState, {
 		const { sprintId, issues } = action;
 
 		const stateCopy = { ...state };
-		stateCopy.matchIssueToSprint[sprintId] = issues;
+		stateCopy.matchIssuesToSprint[sprintId] = issues;
 
 		return {
 			...stateCopy,

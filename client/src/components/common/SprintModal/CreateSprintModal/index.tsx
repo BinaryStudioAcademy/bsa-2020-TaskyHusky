@@ -21,16 +21,17 @@ const CreateSprintModal = (props: Props) => {
 	const resetLocalState = () => {
 		setIsActive(false);
 		setIsCompleted(false);
+		setIsNameValid(true);
 		setName('');
 	};
 
-	const handleNoButtonClick = () => {
+	const handleClose = () => {
 		resetLocalState();
 		props.clickAction();
 	};
 
-	const handleYesButtonClick = () => {
-		if (name.length === 0) {
+	const handleSubmit = () => {
+		if (name.trim().length === 0) {
 			setIsNameValid(false);
 			return;
 		}
@@ -52,15 +53,15 @@ const CreateSprintModal = (props: Props) => {
 	};
 
 	return (
-		<Modal onClose={props.clickAction} open={props.isOpen} size="small">
-			<Header>Create sprint</Header>
+		<Modal closeIcon size="tiny" dimmer="inverted" onClose={handleClose} open={props.isOpen}>
+			<Header>{t('create_sprint')}</Header>
 			<Modal.Content>
 				<Form>
 					<Form.Field>
 						<Popup
 							className={styles.errorPopup}
 							open={!isNameValid}
-							content={t('invalid_email')}
+							content={t('sprint_name_cannot_be_empty')}
 							on={[]}
 							trigger={
 								<Form.Input
@@ -84,6 +85,7 @@ const CreateSprintModal = (props: Props) => {
 					<Form.Field>
 						<Checkbox
 							toggle
+							disabled
 							label={isActive ? t('mark_sprint_as_active') : t('mark_sprint_as_inactive')}
 							checked={isActive}
 							onChange={() => {
@@ -105,15 +107,8 @@ const CreateSprintModal = (props: Props) => {
 				</Form>
 			</Modal.Content>
 			<Modal.Actions>
-				<Button color="grey" onClick={handleNoButtonClick} content={t('cancel')} />
-				<Button
-					color="green"
-					onClick={handleYesButtonClick}
-					content={t('submit')}
-					labelPosition="right"
-					icon="checkmark"
-					primary
-				/>
+				<Button color="grey" onClick={handleClose} content={t('cancel')} />
+				<Button onClick={handleSubmit} content={t('submit')} labelPosition="right" icon="checkmark" primary />
 			</Modal.Actions>
 		</Modal>
 	);

@@ -3,17 +3,16 @@ import i18n from 'i18next';
 import { Icon } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
-import mockAvatar from 'assets/images/projectAvatars/viewavatar.svg';
 import styles from './styles.module.scss';
 
-const ProjectSidebar = (ProjectComponent: any) => (
+const ProjectSidebar = (project: WebApi.Entities.Projects, ProjectComponent: JSX.Element) => (
 	<div className={styles.container}>
 		<div className={styles.sidebar__container}>
 			<div className={styles.sidebar__header}>
 				<div className={styles.header__item}>
-					<img className={styles.header__img} src={mockAvatar} alt="Project avatar" />
+					<img className={styles.header__img} src={project.icon} alt="Project avatar" />
 					<div className={styles.header__info_container}>
-						<span className={styles.header__name}>NBA</span>
+						<span className={styles.header__name}>{project.name}</span>
 						<span className={styles.header__type}>Classic software project</span>
 					</div>
 				</div>

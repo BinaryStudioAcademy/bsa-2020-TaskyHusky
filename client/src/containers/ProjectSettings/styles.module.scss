@@ -86,44 +86,40 @@
 }
 
 .icons__container {
-    padding: 5px 10px;
+    padding: 5px 16px;
 }
 
 .icons__list {
     margin: 0;
     padding: 0;
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(62px, 1fr));
+    list-style: none;
 }
 
 .icons__icon {
     height: 56px;
     width: 56px;
-    padding: 2px;
-    margin: 3px;
-    border: 2px solid transparent;
+    border-radius: 3px;
     background-color: transparent;
-
-    &:hover {
-        border: 2px solid black;
-    }
-}
-
-.icons__list {
-    list-style: none;
 }
 
 .icons__icon_btn {
-    padding: 0;
-    margin: 0;
+    padding: 3px;
+    margin: 3px auto;
+    padding-bottom: 0;
     border:none;
     background-color: transparent;
+    border: 3px solid transparent;
+    border-radius: 3px;
     cursor: pointer;
 
-    
-
+    &:hover {
+        border: 3px solid black;
+    }
 }
 
-.icons__list_item {
-
+.action_button {
+    margin-right: 25px !important;
 }
+

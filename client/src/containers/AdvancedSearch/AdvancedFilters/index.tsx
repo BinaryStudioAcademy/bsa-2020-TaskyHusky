@@ -3,8 +3,8 @@ import styles from './styles.module.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'typings/rootState';
 import { Form } from 'semantic-ui-react';
-import FilterPart from 'components/FilterPart';
-import MoreFilterPartsDropdown from 'components/MoreFilters';
+import FilterPart from 'components/AdvancedSearch/FilterPart';
+import MoreFilterPartsDropdown from 'components/AdvancedSearch/MoreFilters';
 import { fetchFilterParts, setAddedFilterParts } from '../logic/actions';
 import { FilterPartState } from '../logic/state';
 import { useParams } from 'react-router';
@@ -39,7 +39,7 @@ const AdvancedFilters: React.FC = () => {
 						setAddedFilterParts={(data) => setAddedFilterPartsHandler(data)}
 					/>
 				</Form.Group>
-				<Form.Group style={{ marginLeft: '3px' }}>
+				<Form.Group>
 					{addedFilterParts.map((part) => (
 						<FilterPart key={part.id} filterPart={part} />
 					))}

@@ -3,20 +3,23 @@ import { Modal, Button } from 'semantic-ui-react';
 import i18n from 'i18next';
 
 import styles from './styles.module.scss';
-
-import i1 from 'assets/images/projectAvatars/1.svg';
+import icons from 'assets/images/project';
 
 interface Props {
 	currentIcon: any;
-	setCurrentIcon: (iconName: any) => void;
+	onIconChange: (field: string, icon: string) => void;
 }
 
-const SelectIcon = ({ currentIcon, setCurrentIcon }: Props) => {
-	const [isIconsModalOpened, setIsIconsModalOpened] = useState(false);
+const SelectIcon = ({ currentIcon, onIconChange }: Props) => {
+	const [isIconsModalOpened, setIsIconsModalOpened] = useState<boolean>(false);
+
+	const onChooseIcon = (icon: string): void => {
+		onIconChange('icon', icon);
+		setIsIconsModalOpened(false);
+	};
 
 	return (
 		<Modal
-			closeIcon
 			onClose={() => setIsIconsModalOpened(false)}
 			onOpen={() => setIsIconsModalOpened(true)}
 			open={isIconsModalOpened}
@@ -24,7 +27,7 @@ const SelectIcon = ({ currentIcon, setCurrentIcon }: Props) => {
 			size="tiny"
 			trigger={
 				<button type="button" className={styles.form__avatar}>
-					<img className={styles.avatar__img} src={i1} alt="Project avatar" />
+					<img className={styles.avatar__img} src={currentIcon} alt="Project avatar" />
 					<span className={styles.avatar__text}>{i18n.t('select_image')}</span>
 				</button>
 			}
@@ -32,11 +35,13 @@ const SelectIcon = ({ currentIcon, setCurrentIcon }: Props) => {
 			<Modal.Header>{'Click to edit this avatar'}</Modal.Header>
 			<div className={styles.icons__container}>
 				<ul className={styles.icons__list}>
-					<li className={styles.icons__list_item}>
-						<button className={styles.icons__icon_btn} onClick={() => setCurrentIcon(i1)}>
-							<img className={styles.icons__icon} src={i1} alt="Icon" />
-						</button>
-					</li>
+					{Object.values(icons).map((icon: string) => (
+						<li className={styles.icons__list_item} key={icon}>
+							<button className={styles.icons__icon_btn} onClick={() => onChooseIcon(icon)}>
+								<img className={styles.icons__icon} src={icon} alt="Icon" />
+							</button>
+						</li>
+					))}
 				</ul>
 			</div>
 			<Modal.Actions>
