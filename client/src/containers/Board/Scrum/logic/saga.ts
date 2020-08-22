@@ -99,6 +99,18 @@ export function* loadBacklogRequest(action: ReturnType<typeof actions.loadBacklo
 	}
 }
 
+export function* deleteSprintSuccess(action: ReturnType<typeof actions.deleteSprintSuccess>) {
+	try {
+		const { sprint } = action;
+
+		if (sprint.board) {
+			yield put(actions.loadBacklogTrigger({ boardId: sprint.board.id }));
+		}
+	} catch (error) {
+		NotificationManager.error(error.clientException.message, 'Error');
+	}
+}
+
 export function* watchLoadSprintsRequest() {
 	yield takeEvery(actionTypes.LOAD_SPRINTS_TRIGGER, loadSprintsRequest);
 }
@@ -131,6 +143,10 @@ export function* watchLoadBacklogRequest() {
 	yield takeEvery(actionTypes.LOAD_BACKLOG_TRIGGER, loadBacklogRequest);
 }
 
+export function* watchDeleteSprintSuccess() {
+	yield takeEvery(actionTypes.DELETE_SPRINT_SUCCESS, deleteSprintSuccess);
+}
+
 export default function* scrumBoardSaga() {
 	yield all([
 		watchLoadSprintsRequest(),
@@ -141,5 +157,6 @@ export default function* scrumBoardSaga() {
 		watchLoadProjectRequest(),
 		watchCreateIssueSuccess(),
 		watchLoadBacklogRequest(),
+		watchDeleteSprintSuccess(),
 	]);
 }

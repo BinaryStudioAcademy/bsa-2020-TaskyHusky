@@ -2,7 +2,6 @@ import React from 'react';
 import { Button, Header, Icon, Modal } from 'semantic-ui-react';
 import { useDispatch } from 'react-redux';
 import * as actions from 'containers/Board/Scrum/logic/actions';
-import { NotificationManager } from 'react-notifications';
 import { useTranslation } from 'react-i18next';
 
 type Props = {
@@ -10,26 +9,21 @@ type Props = {
 	sprintId: string;
 	isOpen: boolean;
 	clickAction: any;
-	sprintIssues: any;
+	sprintIssues: WebApi.Entities.Issue[];
 };
 
 const SprintModal = (props: Props) => {
 	const { t } = useTranslation();
 	const dispatch = useDispatch();
 	const { sprintName, sprintId, sprintIssues } = props;
+	const sprintHasIssues = sprintIssues?.length > 0;
 
 	const handleNoButtonClick = () => {
 		props.clickAction();
 	};
 
 	const handleYesButtonClick = () => {
-		if (sprintIssues.length > 0) {
-			NotificationManager.error(t('sprint_cannot_be_deleted'), 'Error');
-		}
-
-		if (sprintIssues.length === 0) {
-			dispatch(actions.deleteSprintTrigger({ sprintId }));
-		}
+		dispatch(actions.deleteSprintTrigger({ sprintId }));
 
 		props.clickAction();
 	};
@@ -43,7 +37,11 @@ const SprintModal = (props: Props) => {
 				<Header icon textAlign="center">
 					<Icon name="trash alternate outline" />
 				</Header>
-				<p>{t('delete_sprint_warning')}</p>
+				<p>
+					{sprintHasIssues
+						? t('delete_sprint_with_issues_warning')
+						: t('delete_sprint_with_no_issues_warning')}
+				</p>
 			</Modal.Content>
 
 			<Modal.Actions>
