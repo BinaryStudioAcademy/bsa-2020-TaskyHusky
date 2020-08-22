@@ -5,6 +5,7 @@ import { ContextProvider } from 'containers/CreateIssueModal/logic/context';
 import UpdateIssueModal from 'containers/UpdateIssueModal';
 import { useTranslation } from 'react-i18next';
 import { useIO } from 'hooks/useIO';
+import { NotificationManager } from 'react-notifications';
 
 interface Props {
 	issue: WebApi.Result.IssueResult;
@@ -25,13 +26,26 @@ const IssuePageInfoColumn: React.FC<Props> = ({
 	let openEditModal: () => void = () => {};
 	const { t } = useTranslation();
 	const io = useIO(WebApi.IO.Types.Issue);
+
 	if (!io) {
 		return null;
 	}
 
+	io.removeAllListeners();
+
 	io.on(WebApi.IO.IssueActions.UpdateIssue, (id: string, data: WebApi.Result.IssueResult) => {
 		if (id === issue.id) {
 			setIssue(data);
+		}
+	});
+
+	io.on(WebApi.IO.IssueActions.DeleteIssue, (id: string) => {
+		if (id === issue.id) {
+			NotificationManager.warning(
+				`Issue ${issue.issueKey} was deleted. This page will not be available, once you reload or leave it.`,
+				'Warning',
+				6000,
+			);
 		}
 	});
 

@@ -76,6 +76,7 @@ export class IssueRepository extends Repository<Issue> {
 	}
 
 	deleteOneById(id: string) {
+		sockets.forEach((s) => s.emit(IssueActions.DeleteIssue, id));
 		return this.delete(id);
 	}
 }

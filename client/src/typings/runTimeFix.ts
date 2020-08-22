@@ -9,6 +9,7 @@ export const Enums = {
 	'WebApi.IO': {
 		IssueActions: {
 			UpdateIssue: 'ISSUE:UPDATE',
+			DeleteIssue: 'ISSUE:DELETE',
 		},
 		Types: {
 			Issue: 'ISSUE',
