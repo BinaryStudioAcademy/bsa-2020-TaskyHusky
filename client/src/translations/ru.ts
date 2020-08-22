@@ -249,4 +249,5 @@ export const ru = {
 	no_projects: 'Не найдено ни одного проекта',
 	createAt: 'Создано',
 	updatedAt: 'Изменен',
+	sign_up_with_google: 'Продолжить с помощью Google',
 };

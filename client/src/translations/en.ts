@@ -281,4 +281,5 @@ export const en = {
 	create_team_modal_placeholder: "What's your team called?",
 	start: 'Start',
 	search_people_page_placeholder: 'Search for people and teams',
+	sign_up_with_google: 'Continue with Google',
 };

@@ -248,4 +248,5 @@ export const ua = {
 	no_projects: 'Не знайдено проектів',
 	createAt: 'Створений',
 	updatedAt: 'Оновлений',
+	sign_up_with_google: 'Продовжити з допомогою Google',
 };
