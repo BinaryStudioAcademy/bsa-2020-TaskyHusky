@@ -5,7 +5,7 @@ import UserActivityItem from 'components/UserActivityItem';
 import styles from './styles.module.scss';
 
 interface Props {
-	mockData: any;
+	data: any;
 	countItem: number;
 	icon?: string;
 	emptyContent?: {
@@ -16,7 +16,7 @@ interface Props {
 }
 
 const ProfileProjectBlock: React.FC<Props> = (props: Props) => {
-	const { mockData, countItem, emptyContent } = props;
+	const { data, countItem, emptyContent } = props;
 	const { t } = useTranslation();
 	const [activeIndex, setActiveIndex] = useState<number>(0);
 	const [showHidden, setShowHidden] = useState<boolean>(false);
@@ -30,15 +30,15 @@ const ProfileProjectBlock: React.FC<Props> = (props: Props) => {
 	return (
 		<>
 			<article className={styles.container}>
-				{mockData.length ? (
+				{data.length ? (
 					<Accordion>
-						{mockData.map(
+						{data.map(
 							(item: any, index: number) =>
 								index <= countItem - 1 && (
 									<UserActivityItem item={item} icon={props.icon} key={item.id} />
 								),
 						)}
-						{mockData.length > countItem && (
+						{data.length > countItem && (
 							<>
 								<Accordion.Title active={activeIndex === 0} index={0} onClick={handleClick}>
 									<input
@@ -48,7 +48,7 @@ const ProfileProjectBlock: React.FC<Props> = (props: Props) => {
 									/>
 								</Accordion.Title>
 								<Accordion.Content active={activeIndex !== 0}>
-									{mockData.map(
+									{data.map(
 										(item: any, index: number) =>
 											index > countItem - 1 && (
 												<UserActivityItem item={item} icon={props.icon} key={item.id} />
@@ -63,8 +63,8 @@ const ProfileProjectBlock: React.FC<Props> = (props: Props) => {
 						<div className={styles.emptyCard}>
 							<img className={styles.image} src={emptyContent.img} alt="icon" />
 							<div>
-								<h3>{t(emptyContent.title)}</h3>
-								<p>{t(emptyContent.content)}</p>
+								<h3 className={styles.title}>{t(emptyContent.title)}</h3>
+								<p className={styles.text}>{t(emptyContent.content)}</p>
 							</div>
 						</div>
 					)

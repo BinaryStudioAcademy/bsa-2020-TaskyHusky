@@ -6,13 +6,14 @@ import projectIcon from 'icons/profile/projectIcon.svg';
 
 interface Props {
 	isCurrentUser: boolean;
-	mockData: any;
+	activity: any;
 	projects: Array<any>;
+	teammates: Array<any>;
 }
 
 const ProfileSection: React.FC<Props> = (props: Props) => {
 	const { t } = useTranslation();
-	const { isCurrentUser, mockData, projects } = props;
+	const { isCurrentUser, activity, projects, teammates } = props;
 	const countActivity = 3;
 	const countProject = 2;
 	const countColleagues = 1;
@@ -34,23 +35,19 @@ const ProfileSection: React.FC<Props> = (props: Props) => {
 			<h3 className={styles.header}>{t('worked_on')}</h3>
 			{isCurrentUser && <p className={styles.headerSecondary}>{t('content_privat_message')}</p>}
 			<ProfileActivityBlock
-				mockData={mockData.activity}
+				data={activity}
 				countItem={countActivity}
 				icon={projectIcon}
 				emptyContent={emptyActivityCard}
 			/>
-			{mockData.activity.length && (
+			{activity.length && (
 				<>
 					<h3 className={styles.header}>{t('work_places')}</h3>
-					<ProfileActivityBlock mockData={projects} countItem={countProject} />
+					<ProfileActivityBlock data={projects} countItem={countProject} />
 				</>
 			)}
 			<h3 className={styles.header}>{t('work_with')}</h3>
-			<ProfileActivityBlock
-				mockData={mockData.colleagues}
-				countItem={countColleagues}
-				emptyContent={emptyColleaguesCard}
-			/>
+			<ProfileActivityBlock data={teammates} countItem={countColleagues} emptyContent={emptyColleaguesCard} />
 		</section>
 	);
 };

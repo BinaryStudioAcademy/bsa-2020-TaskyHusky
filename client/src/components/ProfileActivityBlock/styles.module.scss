@@ -24,3 +24,11 @@
   cursor: pointer;
   padding: 0;
 }
+
+.title {
+  @include manager-header;
+}
+
+.text {
+  @include text-data;
+}

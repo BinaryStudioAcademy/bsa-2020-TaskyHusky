@@ -28,8 +28,16 @@ export const requestGetUserProjects = async (id: string): Promise<any> => {
 		endpoint: `user/projects/${id}`,
 		skipAuthorization: false,
 	});
+	return (await res.json()) as Array<WebApi.Entities.Projects>;
+};
 
-	return (await res.json()) as WebApi.Entities.UserProfile;
+export const requestGetUserTeams = async (id: string): Promise<any> => {
+	const res = await callWebApi({
+		method: 'GET',
+		endpoint: `user/teams/${id}`,
+		skipAuthorization: false,
+	});
+	return (await res.json()) as Array<WebApi.Entities.Team>;
 };
 
 export const requestUpdateUser = async (userData: Partial<UserProfileState>): Promise<WebApi.Entities.UserProfile> => {

@@ -83,8 +83,6 @@ const SecurityManager = () => {
 	const onClose = () => {
 		setIsFormSubmited(false);
 	};
-	console.log(isFormSubmited);
-	console.log(isPasswordSecure);
 
 	return (
 		<section className={styles.container}>

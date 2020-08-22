@@ -10,7 +10,8 @@ import ProfileManagerSection from 'components/ProfileManagerSection';
 import Spinner from 'components/common/Spinner';
 import { UserProfileState, initialState } from './logiс/state';
 import { useTranslation } from 'react-i18next';
-import { requestGetUserProjects } from 'services/user.service';
+import { requestGetUserProjects, requestGetUserTeams } from 'services/user.service';
+import { fetchPeople } from 'services/people.service';
 
 const ProfilePage = ({ id }: { id: string }) => {
 	const dispatch = useDispatch();
@@ -30,36 +31,46 @@ const ProfilePage = ({ id }: { id: string }) => {
 		dispatch(actions.updateUser({ partialState: { editMode: modeToShow } }));
 	};
 
-	const mockData = {
-		teams: [
-			{ name: 'Example name1', members: 1, id: 1 },
-			{ name: 'Example name2', members: 2, id: 2 },
-		],
-		activity: [
-			{ id: 1, project: 'First scrum project', name: 'Homepage footer uses an inline style-should use a class' },
-			{ id: 2, project: 'First scrum project', name: 'Homepage footer uses an inline style-should use a class' },
-			{ id: 3, project: 'First scrum project', name: 'Homepage footer uses an inline style-should use a class' },
-			{ id: 4, project: 'First scrum project', name: 'Homepage footer uses an inline style-should use a class' },
-			{ id: 5, project: 'First scrum project', name: 'Homepage footer uses an inline style-should use a class' },
-			{ id: 6, project: 'First scrum project', name: 'Homepage footer uses an inline style-should use a class' },
-			{ id: 7, project: 'First scrum project', name: 'Fsp-1 Implement dark somethin else very important' },
-		],
-		colleagues: [
-			{ id: 1, project: 'Software project', name: 'Fan Angel' },
-			{ id: 2, project: 'Software project', name: 'Fan Angel' },
-		],
-	};
+	const activity = [
+		{ id: 1, project: 'First scrum project', name: 'Homepage footer uses an inline style-should use a class' },
+		{ id: 2, project: 'First scrum project', name: 'Homepage footer uses an inline style-should use a class' },
+		{ id: 3, project: 'First scrum project', name: 'Homepage footer uses an inline style-should use a class' },
+		{ id: 4, project: 'First scrum project', name: 'Homepage footer uses an inline style-should use a class' },
+		{ id: 5, project: 'First scrum project', name: 'Homepage footer uses an inline style-should use a class' },
+		{ id: 6, project: 'First scrum project', name: 'Homepage footer uses an inline style-should use a class' },
+		{ id: 7, project: 'First scrum project', name: 'Fsp-1 Implement dark somethin else very important' },
+	];
 
-	let projects = useSelector((state: RootState) => state.projects.projects);
+	const projects = useSelector((state: RootState) => state.projects.projects);
+	const teammates = useSelector((state: RootState) => state.peoplePage.people);
+	const teams = useSelector((state: RootState) => state.peoplePage.teams);
+
+	const [data, setData] = useState({
+		teammates,
+		teams,
+		projects,
+	});
 
 	const getUser = async () => {
 		if (isCurrentUser) {
 			setUser({ ...user, ...currentUser, isLoading: false });
 			dispatch(actions.updateUser({ partialState: { ...currentUser, isLoading: false } }));
+
+			if (!data.teammates.length) {
+				const teammates = await fetchPeople(id);
+				setData({ ...data, teammates });
+			}
+			if (!teams.length) {
+				const teams = await requestGetUserTeams(id);
+				setData({ ...data, teams });
+			}
 		} else {
 			dispatch(actions.requestGetUser({ id }));
 			setUser({ ...user, ...userData });
-			projects = await requestGetUserProjects(id);
+			const teammates = await fetchPeople(id);
+			const teams = await requestGetUserTeams(id);
+			const projects = await requestGetUserProjects(id);
+			setData({ ...data, teammates, teams, projects });
 		}
 	};
 
@@ -83,13 +94,18 @@ const ProfilePage = ({ id }: { id: string }) => {
 						<ProfileAside
 							user={user}
 							isCurrentUser={isCurrentUser}
-							mockData={mockData}
+							teams={data.teams}
 							showManager={showManager}
 						/>
 						{editMode ? (
 							<ProfileManagerSection user={user} showManager={showManager} updateUser={updateUser} />
 						) : (
-							<ProfileSection isCurrentUser={isCurrentUser} mockData={mockData} projects={projects} />
+							<ProfileSection
+								isCurrentUser={isCurrentUser}
+								activity={activity}
+								projects={data.projects}
+								teammates={data.teammates}
+							/>
 						)}
 					</div>
 				</div>
