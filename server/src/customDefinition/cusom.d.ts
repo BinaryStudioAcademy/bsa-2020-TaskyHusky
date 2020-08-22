@@ -1,5 +1,8 @@
+import { Server as IOServer } from 'socket.io';
+
 declare namespace Express {
 	export interface Request {
+		io: IOServer;
 		user: {
 			id: string;
 			email: string;
