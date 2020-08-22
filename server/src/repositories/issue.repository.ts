@@ -1,12 +1,8 @@
 import { EntityRepository, Repository } from 'typeorm';
 import { Issue } from '../entity/Issue';
 import { getConditions } from '../helpers/issue.helper';
-import { UserProfile } from '../entity/UserProfile';
 
-<<<<<<< HEAD
 const RELS = ['priority', 'type', 'creator', 'assigned', 'status', 'watchers'];
-=======
-const RELS = ['priority', 'type', 'creator', 'assigned', 'status'];
 type SortDir = 'DESC' | 'ASC';
 
 type Sort = {
@@ -20,7 +16,6 @@ type Sort = {
 	createdAt?: SortDir;
 	updatedAt?: SortDir;
 };
->>>>>>> ba3e3caebe85358344dc1d3a9fceaedccda50ec3
 
 export type Filter = {
 	issueType?: string[];
