@@ -241,7 +241,9 @@ export const en = {
 	edit_sprint: 'Edit sprint',
 	delete_sprint: 'Delete sprint',
 	sprint_cannot_be_deleted: 'Sprint cannot be deleted',
-	delete_sprint_warning: 'Are you sure you want to delete this sprint? This action cannot be undone.',
+	delete_sprint_with_no_issues_warning: 'Are you sure you want to delete this sprint? This action cannot be undone. ',
+	delete_sprint_with_issues_warning:
+		'Are you sure you want to delete this sprint? All current tasks will be moved to Backlog. This action cannot be undone. ',
 	enter_sprint_name: 'Enter sprint name',
 	mark_sprint_as_active: 'Sprint will be marked as active',
 	mark_sprint_as_inactive: 'Sprint will be marked as inactive',

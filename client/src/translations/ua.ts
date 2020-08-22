@@ -233,7 +233,9 @@ export const ua = {
 	edit_sprint: 'Редагувати спринт',
 	delete_sprint: 'Видалити спринт',
 	sprint_cannot_be_deleted: 'Неможливо видалити спринт',
-	delete_sprint_warning: 'Ви впевнені, що хочете видалити цей спринт? Цю дію не можна скасувати.',
+	delete_sprint_with_no_issues_warning: 'Ви впевнені, що хочете видалити цей спринт? Цю дію не можна скасувати.',
+	delete_sprint_with_issues_warning:
+		'Ви впевнені, що хочете видалити цей спринт? Всі поточні завдання будуть перенесені в Беклог. Цю дію не можна скасувати.',
 	enter_sprint_name: 'Введіть назву спринту',
 	mark_sprint_as_active: 'Спринт буде позначено як активний',
 	mark_sprint_as_inactive: 'Спринт буде позначено як неактивний',
