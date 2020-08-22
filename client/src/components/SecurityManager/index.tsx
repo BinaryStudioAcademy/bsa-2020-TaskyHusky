@@ -20,15 +20,24 @@ const SecurityManager = () => {
 	const [isRepeatedPassValid, setIsRepeatedPassValid] = useState<boolean>(true);
 	const [isPasswordValid, setIsPasswordValid] = useState<boolean>(true);
 	const [errorMessage, setErrorMessage] = useState<string>('');
+	const [isPasswordSecure, setIsPasswordSecure] = useState<boolean>(false);
+	const [isSubmit, setIsSubmit] = useState<boolean>(false);
 	const handleChange = (event: any) => {
+		if (isRepeatedPassValid && isPasswordValid && passwords.oldPassword) {
+			setIsSubmit(true);
+		}
 		setPasswords({
 			...passwords,
 			[(event.target as HTMLInputElement).name]: (event.target as HTMLInputElement).value,
 		});
 	};
 
+	const checkPassSecurity = (isSecure: boolean) => {
+		setIsPasswordSecure(isSecure);
+	};
+
 	const onBlurPass = () => {
-		const customValidator = new CustomValidator(passwords.newPassword, 'Password');
+		const customValidator = new CustomValidator(passwords.newPassword);
 		const isntValid = customValidator
 			.checkMinLength(acceptLength)
 			.checkMaxLength(128)
@@ -54,6 +63,7 @@ const SecurityManager = () => {
 			const { oldPassword, newPassword } = passwords;
 			dispatch(requestChangePassword({ oldPassword, newPassword }));
 			setPasswords({ ...passwords, oldPassword: '', newPassword: '', repeatedPassword: '' });
+			console.log(isPasswordSecure);
 		}
 	};
 	return (
@@ -81,7 +91,11 @@ const SecurityManager = () => {
 						onBlur={onBlurPass}
 						errorText={errorMessage}
 					/>
-					<PasswordCheck passLength={passwords.newPassword.length} acceptLength={acceptLength} />
+					<PasswordCheck
+						pass={passwords.newPassword}
+						acceptLength={acceptLength}
+						checkPassSecurity={checkPassSecurity}
+					/>
 					<SubmitedInput
 						text={passwords.repeatedPassword}
 						propKey="repeatedPassword"
@@ -93,7 +107,7 @@ const SecurityManager = () => {
 						onBlur={onBlurRepeated}
 						errorText={t('pass_error_equal')}
 					/>
-					<Button className={styles.submitButton} type="submit">
+					<Button className={styles.submitButton} type="submit" disabled={isSubmit ? false : true}>
 						{t('save_changes')}
 					</Button>
 				</Form>

@@ -45,10 +45,7 @@ const ProfileManager: React.FC<Props> = (props: Props) => {
 		});
 	};
 	const onBlur = (event: any) => {
-		const customValidator = new CustomValidator(
-			(event.target as HTMLInputElement).value,
-			(event.target as HTMLInputElement).name,
-		);
+		const customValidator = new CustomValidator((event.target as HTMLInputElement).value);
 		const isntValid = customValidator.checkMinLength(2).checkMaxLength(40).checkSimpleField().validate();
 		if (isntValid) {
 			setErrorMessage({ ...errorMessage, [(event.target as HTMLInputElement).name]: isntValid });

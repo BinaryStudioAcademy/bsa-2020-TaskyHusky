@@ -23,7 +23,7 @@ const EmailManager: React.FC<Props> = (props: Props) => {
 		setEmailData((event.target as HTMLInputElement).value);
 	};
 	const onBlur = () => {
-		const customValidator = new CustomValidator(emailData, 'Email');
+		const customValidator = new CustomValidator(emailData);
 		const isntValid = customValidator.checkMinLength(6).checkMaxLength(321).checkEmailField().validate();
 		if (isntValid) {
 			setErrorMessage(isntValid);
