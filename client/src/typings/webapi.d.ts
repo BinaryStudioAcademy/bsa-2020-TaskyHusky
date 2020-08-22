@@ -72,7 +72,7 @@ namespace WebApi.Result {
 		sprint?: SprintModel;
 		project?: Projects;
 		issueKey?: string;
-		watchers?: string[];
+		watchers?: UserModel[];
 		assigned?: UserModel;
 		creator: UserModel;
 	}
@@ -150,8 +150,8 @@ namespace WebApi.User {
 		id: string;
 		email: string;
 		password?: string;
-		lastName: string;
-		firstName: string;
+		lastName?: string;
+		firstName?: string;
 		username?: string;
 		avatar?: string;
 		location?: string;
@@ -228,7 +228,7 @@ namespace WebApi.Entities {
 		issueKey?: string;
 		assigned?: UserProfile;
 		creator: UserProfile;
-		watchers?: string[];
+		watchers?: UserProfile[];
 		createdAt?: Date;
 		updatedAt?: Date;
 	}
@@ -317,7 +317,7 @@ namespace WebApi.Entities {
 		department?: string;
 		location?: string;
 		organization?: string;
-		email?: string;
+		email: string;
 		jobTitle?: string;
 		userSettingsId?: string;
 		password?: string;
@@ -335,7 +335,7 @@ namespace WebApi.Entities {
 		projects?: Projects[];
 		incomingInvites?: UserProfile[];
 		pendingInvites?: UserProfile[];
-		teammates?: string[];
+		teammates?: UserProfile[];
 		watchingIssues?: Issue[];
 	}
 }

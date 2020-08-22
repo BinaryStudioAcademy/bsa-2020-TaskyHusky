@@ -64,14 +64,16 @@ export class IssueRepository extends Repository<Issue> {
 
 	async watch(id: string, userId: string) {
 		const { watchers = [] }: Issue = await this.findOneById(id);
-		return await this.update(id, { watchers: [...watchers, userId] });
+		const qBuilder = this.createQueryBuilder().relation(Issue, 'watchers').of(id);
+		const promise = watchers.some((user) => user.id === userId) ? qBuilder.remove(userId) : qBuilder.add(userId);
+		return await promise;
 	}
 
-	updateOneById(id: string, data: Issue) {
+	updateOneById(id: string, data: Partial<Issue>) {
 		return this.update(id, data);
 	}
 
-	updateOneByKey(key: string, data: Issue) {
+	updateOneByKey(key: string, data: Partial<Issue>) {
 		return this.update({ issueKey: key }, data);
 	}
 

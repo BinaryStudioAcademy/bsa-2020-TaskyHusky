@@ -73,7 +73,7 @@ export class Issue {
 
 	@ManyToMany((type) => UserProfile, (user) => user.watchingIssues)
 	@JoinTable()
-	watchers?: string[];
+	watchers?: UserProfile[];
 
 	@CreateDateColumn({ type: 'date' })
 	createdAt?: Date;

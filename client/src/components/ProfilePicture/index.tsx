@@ -50,7 +50,9 @@ const ProfilePicture: React.FC<Props> = (props: Props) => {
 							) : avatar ? (
 								<img src={avatar} className={styles.avatar} alt="Avatar" />
 							) : (
-								<h1 className={styles.initials}>{getInitials({ id: '', firstName, lastName })}</h1>
+								<h1 className={styles.initials}>
+									{getInitials({ id: '', firstName, lastName, email: '' })}
+								</h1>
 							)}
 							{isCurrentUser && (
 								<>

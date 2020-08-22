@@ -244,4 +244,8 @@ export const ua = {
 	no_projects: 'Не знайдено проектів',
 	createAt: 'Створений',
 	updatedAt: 'Оновлений',
+	anonymous: 'Аноним',
+	watchers: 'Відстежують',
+	watch: 'Відстежувати',
+	unwatch: 'Не відстежувати',
 };

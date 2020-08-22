@@ -29,7 +29,7 @@ interface IssueResult {
 	sprint?: SprintModel;
 	project?: Projects;
 	issueKey?: string;
-	watchers?: string[];
+	watchers?: UserModel[];
 	assigned?: UserModel;
 	creator: UserModel;
 }

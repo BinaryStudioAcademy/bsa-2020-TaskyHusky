@@ -14,14 +14,10 @@ export class UserProfile {
 	@Column({ nullable: true })
 	googleId?: string;
 
-	@Column()
-	@IsString()
-	@IsNotEmpty()
+	@Column({ nullable: true })
 	firstName?: string;
 
-	@Column()
-	@IsString()
-	@IsNotEmpty()
+	@Column({ nullable: true })
 	lastName?: string;
 
 	@Column({ nullable: true })
@@ -44,7 +40,7 @@ export class UserProfile {
 	@Length(6, 30)
 	@IsLowercase()
 	@IsNotEmpty()
-	email?: string;
+	email!: string;
 
 	@Column({ nullable: true })
 	jobTitle?: string;
@@ -104,7 +100,7 @@ export class UserProfile {
 
 	@ManyToMany((type) => UserProfile, (userProfile) => userProfile.teammates)
 	@JoinTable()
-	teammates?: string[];
+	teammates?: UserProfile[];
 
 	@ManyToMany((type) => Issue, (issue) => issue.watchers)
 	watchingIssues?: Issue[];
@@ -115,7 +111,9 @@ export class UserProfile {
 
 			this.firstName = firstName;
 			this.lastName = lastName;
-			this.email = email;
+
+			// eslint-disable-next-line no-non-null-assertion
+			this.email = email!;
 			this.password = password;
 		}
 	}
