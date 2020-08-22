@@ -112,7 +112,7 @@ const CreateIssueModalBody: React.FC<Props> = ({
 		const data = {
 			...context.data,
 			...(boardColumnID ? { boardColumn: boardColumnID } : {}),
-			sprint: sprintID ?? null,
+			sprint: sprintID,
 			project: projectID ?? context.data.project,
 			issueKey: generateRandomString(KeyGenerate.LENGTH),
 			assigned: context.data.assigned,

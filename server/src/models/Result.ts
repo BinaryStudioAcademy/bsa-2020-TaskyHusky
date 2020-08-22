@@ -1,4 +1,5 @@
 import { UserModel } from './User';
+import { Projects } from '../entity/Projects';
 
 interface UserAuthResult {
 	user: UserModel;
@@ -25,8 +26,8 @@ interface IssueResult {
 		icon: string;
 	};
 	description?: string;
-	sprintID?: string;
-	projectID?: string;
+	sprint?: SprintModel;
+	project?: Projects;
 	issueKey?: string;
 	watchers?: string[];
 	assigned?: UserModel;

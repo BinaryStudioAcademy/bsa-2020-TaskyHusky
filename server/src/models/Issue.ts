@@ -11,8 +11,8 @@ interface PartialIssue {
 	links?: string[];
 	priority: string;
 	description?: string;
-	sprint?: Sprint;
-	project?: Projects;
+	sprint?: string;
+	project?: string;
 	issueKey?: string;
 	assigned?: string;
 	creator: string;

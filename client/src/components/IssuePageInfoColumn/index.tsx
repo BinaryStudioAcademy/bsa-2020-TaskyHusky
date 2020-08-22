@@ -58,7 +58,7 @@ const IssuePageInfoColumn: React.FC<Props> = ({ issue, initialIssue, leftAligned
 					{getUsername(issue.creator)}
 				</a>
 				<h4>{t('sprint')}</h4>
-				Sprint will be here
+				{issue.sprint ? issue.sprint.sprintName : t('no')}
 				<h4>{t('links')}</h4>
 				{issue.links && issue.links.length
 					? issue.links.map((l, i) => (
