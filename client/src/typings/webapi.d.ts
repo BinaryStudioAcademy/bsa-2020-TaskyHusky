@@ -22,6 +22,15 @@ namespace WebApi.Board {
 	}
 }
 
+namespace WebApi.IO {
+	export enum IssueActions {
+		UpdateIssue = 'ISSUE:UPDATE',
+	}
+	export enum Types {
+		Issue = 'ISSUE',
+	}
+}
+
 namespace WebApi.Issue {
 	interface PartialIssue {
 		id?: string;
@@ -268,7 +277,7 @@ namespace WebApi.Entities {
 		name: string;
 		key: string;
 		description?: string;
-		icon?: string;
+		icon: string;
 		url?: string;
 		category?: string;
 		sprints?: Sprint[];

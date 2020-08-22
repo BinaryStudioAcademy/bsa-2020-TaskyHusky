@@ -14,7 +14,7 @@ interface Props {
 	issueTypes: WebApi.Entities.IssueType[];
 	priorities: WebApi.Entities.Priority[];
 	users: WebApi.Entities.UserProfile[];
-	onSubmit: () => void;
+	onSubmit?: (data: WebApi.Issue.PartialIssue) => void;
 }
 
 interface SelectOption {
@@ -87,7 +87,10 @@ const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, p
 		);
 
 		setOpened(false);
-		onSubmit();
+
+		if (onSubmit) {
+			onSubmit(context.data);
+		}
 	};
 
 	return (

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Label, Icon, Button } from 'semantic-ui-react';
 import { getUsername } from 'helpers/getUsername.helper';
 import { ContextProvider } from 'containers/CreateIssueModal/logic/context';
@@ -14,11 +14,26 @@ interface Props {
 	toPageLink?: boolean;
 }
 
-const IssuePageInfoColumn: React.FC<Props> = ({ issue, initialIssue, leftAligned, withDescrtiption, toPageLink }) => {
+const IssuePageInfoColumn: React.FC<Props> = ({
+	issue: givenIssue,
+	initialIssue,
+	leftAligned,
+	withDescrtiption,
+	toPageLink,
+}) => {
+	const [issue, setIssue] = useState<WebApi.Result.IssueResult>(givenIssue);
 	let openEditModal: () => void = () => {};
 	const { t } = useTranslation();
-	const io = useIO();
-	console.log(io?.connected);
+	const io = useIO(WebApi.IO.Types.Issue);
+	if (!io) {
+		return null;
+	}
+
+	io.on(WebApi.IO.IssueActions.UpdateIssue, (id: string, data: WebApi.Result.IssueResult) => {
+		if (id === issue.id) {
+			setIssue(data);
+		}
+	});
 
 	return (
 		<>
@@ -90,11 +105,7 @@ const IssuePageInfoColumn: React.FC<Props> = ({ issue, initialIssue, leftAligned
 				</Label>
 			</div>
 			<ContextProvider customInitalState={initialIssue}>
-				<UpdateIssueModal
-					onSubmit={() => window.location.reload()}
-					current={issue}
-					getOpenFunc={(open) => (openEditModal = open)}
-				/>
+				<UpdateIssueModal current={issue} getOpenFunc={(open) => (openEditModal = open)} />
 			</ContextProvider>
 		</>
 	);

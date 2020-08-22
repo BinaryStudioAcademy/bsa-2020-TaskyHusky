@@ -11,7 +11,7 @@ import { routesWhiteList } from './config/jwt.config';
 import { authenticateJwt } from './src/middleware/jwt.middleware';
 import errorHandlerMiddleware from './src/middleware/errorHandler.middleware';
 import { configIO, injectIO } from './config/io.config';
-import IO_Handlers from './socketConnectionHandlers';
+import IO_Handlers from './src/socketConnectionHandlers';
 
 createConnection()
 	.then(async (connection) => {

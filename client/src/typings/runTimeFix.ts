@@ -6,6 +6,14 @@ export const Enums = {
 			Kanban: 'Kanban',
 		},
 	},
+	'WebApi.IO': {
+		IssueActions: {
+			UpdateIssue: 'ISSUE:UPDATE',
+		},
+		Types: {
+			Issue: 'ISSUE',
+		},
+	},
 };
 
 (function () {

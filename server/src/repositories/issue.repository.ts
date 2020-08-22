@@ -1,6 +1,8 @@
 import { EntityRepository, Repository } from 'typeorm';
 import { Issue } from '../entity/Issue';
 import { getConditions } from '../helpers/issue.helper';
+import sockets from '../socketConnectionHandlers/issue.handler';
+import { IssueActions } from '../models/IO';
 
 const RELS = ['priority', 'type', 'creator', 'assigned', 'status'];
 type SortDir = 'DESC' | 'ASC';
@@ -62,8 +64,11 @@ export class IssueRepository extends Repository<Issue> {
 		return this.save(entity);
 	}
 
-	updateOneById(id: string, data: Issue) {
-		return this.update(id, data);
+	async updateOneById(id: string, data: Issue) {
+		const result = await this.update(id, data);
+		const newIssue = await this.findOneById(id);
+		sockets.forEach((s) => s.emit(IssueActions.UpdateIssue, id, newIssue));
+		return result;
 	}
 
 	updateOneByKey(key: string, data: Issue) {
