@@ -63,7 +63,13 @@ const IssuePageInfoColumn: React.FC<Props> = ({ issue, initialIssue, leftAligned
 								<>
 									<Dropdown.Divider />
 									{issueWatchers.map((watcher, i) => (
-										<Dropdown.Item key={i} as="a" rel="noopener noreferrer" target="_blank">
+										<Dropdown.Item
+											key={i}
+											as="a"
+											rel="noopener noreferrer"
+											target="_blank"
+											href={`/profile/${watcher.id}`}
+										>
 											{getUsername(watcher)}
 										</Dropdown.Item>
 									))}
