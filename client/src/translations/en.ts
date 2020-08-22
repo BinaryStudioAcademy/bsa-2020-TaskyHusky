@@ -277,4 +277,7 @@ export const en = {
 	create_team_modal_placeholder: "What's your team called?",
 	start: 'Start',
 	search_people_page_placeholder: 'Search for people and teams',
+	save_not_secure: 'Saving not secure password',
+	save_not_secure_text:
+		'Do you want to save not secure password? To make your password secure you can add special symbols, numbers and uppercase letters.',
 };

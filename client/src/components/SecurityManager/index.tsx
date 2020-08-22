@@ -7,6 +7,7 @@ import { Button, Form } from 'semantic-ui-react';
 import SubmitedInput from 'components/SubmitedInput';
 import PasswordCheck from 'components/PasswordCheck';
 import CustomValidator from 'helpers/validation.helper';
+import ConfirmPassModal from 'components/ConfirmPassModal';
 
 const SecurityManager = () => {
 	const { t } = useTranslation();
@@ -17,19 +18,30 @@ const SecurityManager = () => {
 		newPassword: '',
 		repeatedPassword: '',
 	});
-	const [isRepeatedPassValid, setIsRepeatedPassValid] = useState<boolean>(true);
+
+	const [isRepeatedPassValid, setIsRepeatedPassValid] = useState<boolean>(false);
 	const [isPasswordValid, setIsPasswordValid] = useState<boolean>(true);
 	const [errorMessage, setErrorMessage] = useState<string>('');
 	const [isPasswordSecure, setIsPasswordSecure] = useState<boolean>(false);
-	const [isSubmit, setIsSubmit] = useState<boolean>(false);
+	const [isFormSubmited, setIsFormSubmited] = useState<boolean>(false);
+
+	const isSubmitPossible =
+		isRepeatedPassValid &&
+		isPasswordValid &&
+		passwords.oldPassword &&
+		passwords.repeatedPassword &&
+		passwords.newPassword;
+
 	const handleChange = (event: any) => {
-		if (isRepeatedPassValid && isPasswordValid && passwords.oldPassword) {
-			setIsSubmit(true);
-		}
 		setPasswords({
 			...passwords,
 			[(event.target as HTMLInputElement).name]: (event.target as HTMLInputElement).value,
 		});
+		if ((event.target as HTMLInputElement).name === 'repeatedPassword') {
+			setIsRepeatedPassValid(passwords.newPassword === (event.target as HTMLInputElement).value);
+		} else {
+			setIsRepeatedPassValid(passwords.newPassword === passwords.repeatedPassword);
+		}
 	};
 
 	const checkPassSecurity = (isSecure: boolean) => {
@@ -51,23 +63,34 @@ const SecurityManager = () => {
 		}
 	};
 
-	const onBlurRepeated = () => {
-		setIsRepeatedPassValid(
-			!!passwords.newPassword &&
-				!!passwords.repeatedPassword &&
-				passwords.newPassword === passwords.repeatedPassword,
-		);
+	const updatePassword = () => {
+		setIsFormSubmited(false);
+		const { oldPassword, newPassword } = passwords;
+		dispatch(requestChangePassword({ oldPassword, newPassword }));
+		setPasswords({ ...passwords, oldPassword: '', newPassword: '', repeatedPassword: '' });
+		setIsRepeatedPassValid(false);
 	};
+
 	const onSubmit = () => {
-		if (isPasswordValid && isRepeatedPassValid) {
-			const { oldPassword, newPassword } = passwords;
-			dispatch(requestChangePassword({ oldPassword, newPassword }));
-			setPasswords({ ...passwords, oldPassword: '', newPassword: '', repeatedPassword: '' });
-			console.log(isPasswordSecure);
+		if (isSubmitPossible) {
+			setIsFormSubmited(true);
+			if (isPasswordSecure) {
+				updatePassword();
+			}
 		}
 	};
+
+	const onClose = () => {
+		setIsFormSubmited(false);
+	};
+	console.log(isFormSubmited);
+	console.log(isPasswordSecure);
+
 	return (
 		<section className={styles.container}>
+			{isFormSubmited && !isPasswordSecure && (
+				<ConfirmPassModal updatePassword={updatePassword} onClose={onClose} />
+			)}
 			<h3 className={styles.header}>{t('security')}</h3>
 			<div className={styles.card}>
 				<h4 className={styles.card__header}>{t('change_pass')}</h4>
@@ -104,10 +127,9 @@ const SecurityManager = () => {
 						type="password"
 						handleChange={handleChange}
 						isValid={isRepeatedPassValid}
-						onBlur={onBlurRepeated}
 						errorText={t('pass_error_equal')}
 					/>
-					<Button className={styles.submitButton} type="submit" disabled={isSubmit ? false : true}>
+					<Button className={styles.submitButton} type="submit" disabled={isSubmitPossible ? false : true}>
 						{t('save_changes')}
 					</Button>
 				</Form>
