@@ -81,14 +81,14 @@ passport.use(
 			secretOrKey: jwtSecret,
 		},
 		async ({ id }: { id: string }, next): Promise<void> => {
-			const userRepository = getCustomRepository(UserRepository);
-			const user = await userRepository.getById(id);
+			try {
+				const userRepository = getCustomRepository(UserRepository);
+				const user = await userRepository.getById(id);
 
-			if (!user) {
+				return next(null, user);
+			} catch (error) {
 				return next(new ErrorResponse(HttpStatusCode.UNAUTHORIZED, authErrorMessages.NO_USER), null);
 			}
-
-			return next(null, user);
 		},
 	),
 );

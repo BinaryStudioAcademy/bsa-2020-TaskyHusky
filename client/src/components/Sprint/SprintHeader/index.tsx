@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { List, Item, Button } from 'semantic-ui-react';
 
-import Options, { ItemProps } from 'components/common/Options';
+import Options, { ConfigItem } from 'components/common/Options';
 import styles from './styles.module.scss';
 import CreateIssueModal from 'containers/CreateIssueModal';
 import DeleteSprintModal from 'components/common/SprintModal/DeleteSprintModal';
 import EditSprintModal from 'components/common/SprintModal/EditSprintModal';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
+import { RootState } from 'typings/rootState';
 
 type Props = {
 	id: string;
@@ -17,11 +19,14 @@ type Props = {
 };
 
 export const SprintHeader: React.FC<Props> = ({ id, isActive, name, issues, isCompleted }) => {
+	const {
+		project: { id: projectId },
+	} = useSelector((rootState: RootState) => rootState.scrumBoard);
 	const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
 	const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false);
 	const { t } = useTranslation();
 
-	const config: ItemProps[] = [
+	const config: ConfigItem[] = [
 		{
 			id,
 			text: t('edit_sprint'),
@@ -50,7 +55,7 @@ export const SprintHeader: React.FC<Props> = ({ id, isActive, name, issues, isCo
 
 				<List.Item>
 					<List.Content className={styles.rightContent}>
-						<CreateIssueModal>
+						<CreateIssueModal projectID={projectId} sprintID={id}>
 							<Button icon="add" className={styles.createIssueButton} title="Create issue" />
 						</CreateIssueModal>
 						<Options config={config} />

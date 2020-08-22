@@ -1,6 +1,6 @@
 import callWebApi from 'helpers/callApi.helper';
 
-export const deleteSprint = async (id: string): Promise<any> => {
+export const deleteSprint = async (id: string): Promise<WebApi.Entities.Sprint> => {
 	const res: Response = await callWebApi({
 		method: 'DELETE',
 		endpoint: `sprint/${id}`,

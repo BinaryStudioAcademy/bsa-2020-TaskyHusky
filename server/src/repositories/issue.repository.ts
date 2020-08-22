@@ -1,9 +1,26 @@
-import { EntityRepository, Repository, FindOperator, Any, Raw } from 'typeorm';
+import { EntityRepository, Repository } from 'typeorm';
 import { Issue } from '../entity/Issue';
 import { getConditions } from '../helpers/issue.helper';
 import { UserProfile } from '../entity/UserProfile';
 
+<<<<<<< HEAD
 const RELS = ['priority', 'type', 'creator', 'assigned', 'status', 'watchers'];
+=======
+const RELS = ['priority', 'type', 'creator', 'assigned', 'status'];
+type SortDir = 'DESC' | 'ASC';
+
+type Sort = {
+	summary?: SortDir;
+	assigned?: SortDir;
+	creator?: SortDir;
+	type?: SortDir;
+	priority?: SortDir;
+	status?: SortDir;
+	issueKey?: SortDir;
+	createdAt?: SortDir;
+	updatedAt?: SortDir;
+};
+>>>>>>> ba3e3caebe85358344dc1d3a9fceaedccda50ec3
 
 export type Filter = {
 	issueType?: string[];
@@ -20,14 +37,13 @@ export type Filter = {
 
 @EntityRepository(Issue)
 export class IssueRepository extends Repository<Issue> {
-	findAll() {
-		return this.find({ relations: RELS });
+	findAll(from: number, to: number) {
+		return this.find({ relations: RELS, skip: from, take: to - from });
 	}
 
-	getFilteredIssues(filter: Filter | undefined) {
+	getFilteredIssues(filter: Filter | undefined, from: number, to: number, sort: Sort) {
 		const where = filter ? getConditions(filter) : {};
-
-		return this.find({ relations: RELS, where });
+		return this.findAndCount({ relations: RELS, where, skip: from, take: to - from, order: sort });
 	}
 
 	findAllByColumnId(id: string) {

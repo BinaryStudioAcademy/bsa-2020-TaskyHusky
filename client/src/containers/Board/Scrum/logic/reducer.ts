@@ -15,7 +15,7 @@ export const scrumBoardReducer = createReducer<ScrumBoardState>(initialState, {
 		const { sprintId, issues } = action;
 
 		const stateCopy = { ...state };
-		stateCopy.matchIssueToSprint[sprintId] = issues;
+		stateCopy.matchIssuesToSprint[sprintId] = issues;
 
 		return {
 			...stateCopy,
@@ -58,6 +58,18 @@ export const scrumBoardReducer = createReducer<ScrumBoardState>(initialState, {
 		return {
 			...state,
 			project,
+		};
+	},
+	[actionTypes.DELETE_SPRINT_SUCCESS](state, action: actionTypes.DeleteSprintSuccess) {
+		const {
+			sprint: { id: deletedSprintId },
+		} = action;
+
+		const updatedSprints = state.sprints.filter((sprint) => sprint.id !== deletedSprintId);
+
+		return {
+			...state,
+			sprints: updatedSprints,
 		};
 	},
 });

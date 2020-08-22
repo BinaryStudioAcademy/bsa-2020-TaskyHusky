@@ -51,10 +51,11 @@ export const advancedSearchReducer = createReducer<AdvancedSearch>(initialState,
 		};
 	},
 	[actionTypes.LOAD_ISSUES_SUCCESS](state, action: actionTypes.LoadIssuesSuccessArgs) {
-		const { issues } = action;
+		const { issues, issuesCount } = action;
 		return {
 			...state,
 			issues,
+			issuesCount,
 		};
 	},
 	[actionTypes.SET_REDIRECT](state, action: actionTypes.RedirectId) {

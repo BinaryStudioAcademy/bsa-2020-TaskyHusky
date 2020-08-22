@@ -1,3 +1,4 @@
+import { createIssue } from 'pages/IssuePage/logic/actions';
 import { getBoardSprints, getBoardProjects } from 'services/board.service';
 import { getSprintIssues, updateSprint } from 'services/sprint.service';
 import { deleteSprint, createSprint } from 'services/sprint.service';
@@ -5,6 +6,7 @@ import { all, put, takeEvery, call } from 'redux-saga/effects';
 import * as actionTypes from './actionTypes';
 import * as actions from './actions';
 import { NotificationManager } from 'react-notifications';
+import { CREATE_ISSUE_SUCCESS } from 'pages/IssuePage/logic/actionTypes';
 
 export function* loadSprintsRequest(action: ReturnType<typeof actions.loadSprintsTrigger>) {
 	try {
@@ -16,11 +18,11 @@ export function* loadSprintsRequest(action: ReturnType<typeof actions.loadSprint
 	}
 }
 
-export function* deleteSprintRequest(action: any) {
+export function* deleteSprintRequest(action: ReturnType<typeof actions.deleteSprintTrigger>) {
 	try {
 		const { sprintId } = action;
-		const response: WebApi.Entities.Sprint[] = yield call(deleteSprint, sprintId);
-		yield put(actions.loadSprintsSuccess({ sprints: response }));
+		const response: WebApi.Entities.Sprint = yield call(deleteSprint, sprintId);
+		yield put(actions.deleteSprintSuccess({ sprint: response }));
 		NotificationManager.success('Sprint was deleted', 'Success');
 	} catch (error) {
 		NotificationManager.error(error.clientException.message, 'Error');
@@ -52,7 +54,6 @@ export function* createSprintRequest(action: ReturnType<typeof actions.createSpr
 	try {
 		const { sprint } = action;
 		const response: WebApi.Entities.Sprint = yield call(createSprint, sprint);
-		console.log('saga response', response);
 		yield put(actions.createSprintSuccess({ sprint: response }));
 		NotificationManager.success('Sprint was successfully created', 'Success');
 	} catch (error) {
@@ -65,6 +66,20 @@ export function* loadProjectRequest(action: ReturnType<typeof actions.loadProjec
 		const { boardId } = action;
 		const [response]: WebApi.Entities.Projects[] = yield call(getBoardProjects, boardId);
 		yield put(actions.loadProjectSuccess({ project: response }));
+	} catch (error) {
+		NotificationManager.error(error.clientException.message, 'Error');
+	}
+}
+
+export function* createIssueSuccess(action: ReturnType<typeof createIssue>) {
+	try {
+		const {
+			data: { sprint: sprintId },
+		}: { data: { sprint?: string } } = action;
+
+		if (sprintId) {
+			yield put(actions.loadIssuesTrigger({ sprintId }));
+		}
 	} catch (error) {
 		NotificationManager.error(error.clientException.message, 'Error');
 	}
@@ -94,6 +109,10 @@ export function* watchCreateSprintRequest() {
 	yield takeEvery(actionTypes.CREATE_SPRINT_TRIGGER, createSprintRequest);
 }
 
+export function* watchCreateIssueSuccess() {
+	yield takeEvery(CREATE_ISSUE_SUCCESS, createIssueSuccess);
+}
+
 export default function* scrumBoardSaga() {
 	yield all([
 		watchLoadSprintsRequest(),
@@ -102,5 +121,6 @@ export default function* scrumBoardSaga() {
 		watchUpdateSprintRequest(),
 		watchCreateSprintRequest(),
 		watchLoadProjectRequest(),
+		watchCreateIssueSuccess(),
 	]);
 }

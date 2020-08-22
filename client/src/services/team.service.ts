@@ -1,5 +1,4 @@
 import callWebApi from 'helpers/callApi.helper';
-import { modifiedEntity } from '../containers/SearchPeopleAndTeamField/logic/state';
 
 export const getTeam = async (id: string): Promise<WebApi.Entities.Team[] | undefined> => {
 	try {
@@ -80,32 +79,4 @@ export const fetchTeams = async () => {
 	});
 
 	return (await res.json()) as WebApi.Entities.Team[];
-};
-
-export const fetchTeamsByNameFilter = async (
-	name: string | undefined,
-): Promise<modifiedEntity<WebApi.Entities.Team>[]> => {
-	const res = await callWebApi({
-		method: 'GET',
-		endpoint: 'team',
-		query: {
-			name,
-		},
-	});
-
-	const teams = (await res.json()) as WebApi.Entities.Team[];
-
-	return teams.map((team) => ({ data: team, title: '', key: team.id }));
-};
-
-export const addTeam = async (name: string) => {
-	const res = await callWebApi({
-		method: 'POST',
-		endpoint: 'team',
-		body: {
-			name,
-		},
-	});
-
-	return await res.json();
 };
