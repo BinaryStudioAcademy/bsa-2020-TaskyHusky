@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next';
 import { getUsername } from 'helpers/getUsername.helper';
 
 interface Props {
-	current: WebApi.Result.IssueResult;
+	current: WebApi.Issue.PartialIssue;
 	getOpenFunc: (open: () => void) => void;
 	issueTypes: WebApi.Entities.IssueType[];
 	priorities: WebApi.Entities.Priority[];
@@ -79,17 +79,16 @@ const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, p
 			return;
 		}
 
-		console.log(context.data);
-
 		dispatch(
 			updateIssue({
-				id: current.id,
+				// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+				id: current.id!,
 				data: { ...context.data },
 			}),
 		);
 
 		setOpened(false);
-		//onSubmit();
+		onSubmit();
 	};
 
 	return (
@@ -118,7 +117,7 @@ const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, p
 							selection
 							style={{ maxWidth: 200 }}
 							options={typeOpts}
-							defaultValue={current.type.id}
+							defaultValue={current.type}
 							placeholder={t('type')}
 							onChange={(event, data) => context.set('type', data.value)}
 						/>
@@ -130,7 +129,7 @@ const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, p
 							selection
 							style={{ maxWidth: 200 }}
 							options={priorityOpts}
-							defaultValue={current.priority.id}
+							defaultValue={current.priority}
 							placeholder={t('priority')}
 							onChange={(event, data) => context.set('priority', data.value)}
 						/>
@@ -152,7 +151,7 @@ const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, p
 							multiple
 							placeholder={t('labels')}
 							options={labelOpts}
-							value={current.labels}
+							value={context.data.labels}
 							onChange={(event, data) => context.set('labels', data.value)}
 						/>
 					</Form.Field>
@@ -162,7 +161,7 @@ const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, p
 						<Form.Dropdown
 							clearable
 							selection
-							defaultValue={current.assigned ? current.assigned.id : undefined}
+							defaultValue={current.assigned}
 							placeholder={t('assigned')}
 							options={usersOpts}
 							onChange={(event, data) => context.set('assigned', data.value)}
@@ -216,6 +215,6 @@ const mapStateToProps = (state: RootState) => ({
 	users: state.users.users,
 });
 
-const labels: string[] = ['label1', 'label2'];
+const labels: string[] = ['label', 'label1', 'label2'];
 
 export default connect(mapStateToProps)(UpdateIssueModal);

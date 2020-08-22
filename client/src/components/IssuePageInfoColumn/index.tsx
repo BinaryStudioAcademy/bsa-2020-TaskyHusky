@@ -148,7 +148,7 @@ const IssuePageInfoColumn: React.FC<Props> = ({ issue, initialIssue, leftAligned
 			<ContextProvider customInitalState={initialIssue}>
 				<UpdateIssueModal
 					onSubmit={() => window.location.reload()}
-					current={issue}
+					current={initialIssue}
 					getOpenFunc={(open) => (openEditModal = open)}
 				/>
 			</ContextProvider>

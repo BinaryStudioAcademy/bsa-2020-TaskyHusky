@@ -137,11 +137,9 @@ export const getComments = async (id: string): Promise<WebApi.Result.IssueCommen
 	return (await res.json()) as WebApi.Result.IssueCommentResult[];
 };
 
-export const watch = async (id: string): Promise<WebApi.Result.IssueResult> => {
-	const res: Response = await callWebApi({
+export const watch = async (id: string): Promise<void> => {
+	await callWebApi({
 		method: 'POST',
 		endpoint: `issue/${id}/watch`,
 	});
-
-	return (await res.json()) as WebApi.Result.IssueResult;
 };
