@@ -20,6 +20,7 @@ const ProfileManager: React.FC<Props> = (props: Props) => {
 	const dispatch = useDispatch();
 	const [user, setUser] = useState(userData);
 	const { firstName, lastName, username, jobTitle, department, location, organization } = user;
+	const [isSubmit, setIsSubmit] = useState<boolean>(false);
 	const [userValidation, setUserValidation] = useState({
 		firstName: true,
 		lastName: true,
@@ -43,6 +44,10 @@ const ProfileManager: React.FC<Props> = (props: Props) => {
 			...user,
 			[(event.target as HTMLInputElement).name]: (event.target as HTMLInputElement).value,
 		});
+		setIsSubmit(
+			userData[(event.target as HTMLInputElement).name as keyof UserProfileState] !==
+				(event.target as HTMLInputElement).value,
+		);
 	};
 	const onBlur = (event: any) => {
 		const customValidator = new CustomValidator((event.target as HTMLInputElement).value);
@@ -148,7 +153,7 @@ const ProfileManager: React.FC<Props> = (props: Props) => {
 						onBlur={onBlur}
 					/>
 					<Form.Field className={styles.formFooter}>
-						<Button className={styles.submitButton} type="submit">
+						<Button className={styles.submitButton} type="submit" disabled={isSubmit ? false : true}>
 							{t('save_changes')}
 						</Button>
 						<Button type="text" onClick={onCancel} className={styles.secondaryButton}>

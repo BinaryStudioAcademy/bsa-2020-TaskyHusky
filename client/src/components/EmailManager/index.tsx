@@ -19,6 +19,7 @@ const EmailManager: React.FC<Props> = (props: Props) => {
 	const [emailData, setEmailData] = useState<string>('');
 	const [isEmailValid, setIsEmailValid] = useState<boolean>(true);
 	const [errorMessage, setErrorMessage] = useState<string>('');
+	const [isSubmit, setIsSumbit] = useState<boolean>(false);
 	const handleChange = (event: any) => {
 		setEmailData((event.target as HTMLInputElement).value);
 	};
@@ -28,15 +29,17 @@ const EmailManager: React.FC<Props> = (props: Props) => {
 		if (isntValid) {
 			setErrorMessage(isntValid);
 			setIsEmailValid(false);
+			setIsSumbit(false);
 		} else {
 			setIsEmailValid(true);
+			setIsSumbit(emailData.trim() !== email);
 		}
 	};
 	const updateUserField = () => {
-		if (emailData !== email && isEmailValid) {
-			updateUser({ email: emailData.trim() });
-			dispatch(requestUpdateUser({ email: emailData.trim() } as Partial<UserProfileState>));
-		}
+		// if (emailData !== email && isEmailValid) {
+		updateUser({ email: emailData.trim() });
+		dispatch(requestUpdateUser({ email: emailData.trim() } as Partial<UserProfileState>));
+		// }
 	};
 
 	const notifaictionsOptions = [
@@ -65,7 +68,7 @@ const EmailManager: React.FC<Props> = (props: Props) => {
 						onBlur={onBlur}
 						errorText={errorMessage}
 					/>
-					<Button type="submit" className={styles.submitButton}>
+					<Button type="submit" className={styles.submitButton} disabled={isSubmit ? false : true}>
 						{t('save_changes')}
 					</Button>
 				</Form>
