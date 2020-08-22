@@ -4,6 +4,7 @@ import { getUsername } from 'helpers/getUsername.helper';
 import { ContextProvider } from 'containers/CreateIssueModal/logic/context';
 import UpdateIssueModal from 'containers/UpdateIssueModal';
 import { useTranslation } from 'react-i18next';
+import { useIO } from 'hooks/useIO';
 
 interface Props {
 	issue: WebApi.Result.IssueResult;
@@ -16,6 +17,8 @@ interface Props {
 const IssuePageInfoColumn: React.FC<Props> = ({ issue, initialIssue, leftAligned, withDescrtiption, toPageLink }) => {
 	let openEditModal: () => void = () => {};
 	const { t } = useTranslation();
+	const io = useIO();
+	console.log(io?.connected);
 
 	return (
 		<>
