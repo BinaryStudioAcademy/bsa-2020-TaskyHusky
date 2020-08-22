@@ -48,7 +48,7 @@ export class Issue {
 	@Column({ nullable: true })
 	description?: string;
 
-	@ManyToOne((type) => Sprint, (sprint) => sprint.issues)
+	@ManyToOne((type) => Sprint, (sprint) => sprint.issues, { onDelete: 'SET NULL' })
 	sprint?: Sprint;
 
 	@ManyToOne((type) => Projects, (projects) => projects.issues)

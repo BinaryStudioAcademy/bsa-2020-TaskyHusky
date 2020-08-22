@@ -125,7 +125,7 @@ export class Issue1597334747593 implements MigrationInterface {
 		const issue4 = new Issue();
 		issue4.id = '469a02fc-0377-4c31-9bd1-c307b7da38b2';
 		issue4.project = project;
-		issue1.board = scrumBoard;
+		issue4.board = scrumBoard;
 		issue4.createdAt = new Date('2020-04-02');
 		issue4.updatedAt = new Date('2020-09-22');
 		issue4.summary = 'Fixed bugs';
@@ -145,7 +145,7 @@ export class Issue1597334747593 implements MigrationInterface {
 		const issue5 = new Issue();
 		issue5.id = '2de14a5e-5407-40e3-b6dd-f412f4409b1f';
 		issue5.project = project;
-		issue1.board = scrumBoard;
+		issue5.board = scrumBoard;
 		issue5.createdAt = new Date('2020-01-01');
 		issue5.updatedAt = new Date('2020-01-02');
 		issue5.summary = 'Add relations to entities';
@@ -165,7 +165,7 @@ export class Issue1597334747593 implements MigrationInterface {
 		const issue6 = new Issue();
 		issue6.id = 'c6cad0eb-5e90-4fba-9c3f-de1fc6b355a2';
 		issue6.project = project;
-		issue1.board = scrumBoard;
+		issue6.board = scrumBoard;
 		issue6.createdAt = new Date('2020-02-23');
 		issue6.updatedAt = new Date('2020-03-23');
 		issue6.summary = 'Invest money in Bitcoin';
@@ -185,7 +185,7 @@ export class Issue1597334747593 implements MigrationInterface {
 		const issue7 = new Issue();
 		issue7.id = '44b274eb-301b-4192-a6b6-9f55a67b6cfe';
 		issue7.project = project;
-		issue1.board = scrumBoard;
+		issue7.board = scrumBoard;
 		issue7.createdAt = new Date('2020-02-12');
 		issue7.updatedAt = new Date('2020-03-12');
 		issue7.summary = 'Think of back-end implementation';
@@ -204,7 +204,7 @@ export class Issue1597334747593 implements MigrationInterface {
 		const issue8 = new Issue();
 		issue8.id = '53eb4b1b-8706-4edb-9d6a-beb5c15a66f2';
 		issue8.project = project;
-		issue1.board = scrumBoard;
+		issue8.board = scrumBoard;
 		issue8.createdAt = new Date('2020-02-25');
 		issue8.updatedAt = new Date('2020-06-19');
 		issue8.summary = 'Fix styling of header menu';
@@ -224,7 +224,7 @@ export class Issue1597334747593 implements MigrationInterface {
 		const issue9 = new Issue();
 		issue9.id = '54f7498e-84af-468e-a5ca-0023aa4c283b';
 		issue9.project = project;
-		issue1.board = scrumBoard;
+		issue9.board = scrumBoard;
 		issue9.createdAt = new Date('2020-02-21');
 		issue9.updatedAt = new Date('2020-012-12');
 		issue9.summary = 'Create seeders';
