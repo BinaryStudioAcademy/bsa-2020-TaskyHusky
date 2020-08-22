@@ -201,11 +201,11 @@ const CreateIssueModalBody: React.FC<Props> = ({
 					</Form.Field>
 					<Divider />
 					<Form.Field>
-						<label>{t('assignee')}</label>
+						<label>{t('assigned')}</label>
 						<Form.Dropdown
 							clearable
 							selection
-							placeholder={t('assignee')}
+							placeholder={t('assigned')}
 							options={usersOpts}
 							onChange={(event, data) => context.set('assigned', data.value)}
 						/>

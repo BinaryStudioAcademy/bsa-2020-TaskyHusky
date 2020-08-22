@@ -79,6 +79,8 @@ const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, p
 			return;
 		}
 
+		console.log(context.data);
+
 		dispatch(
 			updateIssue({
 				id: current.id,
@@ -87,7 +89,7 @@ const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, p
 		);
 
 		setOpened(false);
-		onSubmit();
+		//onSubmit();
 	};
 
 	return (
@@ -156,12 +158,12 @@ const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, p
 					</Form.Field>
 					<Divider />
 					<Form.Field>
-						<label>{t('assignee')}</label>
+						<label>{t('assigned')}</label>
 						<Form.Dropdown
 							clearable
 							selection
 							defaultValue={current.assigned ? current.assigned.id : undefined}
-							placeholder={t('assignee')}
+							placeholder={t('assigned')}
 							options={usersOpts}
 							onChange={(event, data) => context.set('assigned', data.value)}
 						/>

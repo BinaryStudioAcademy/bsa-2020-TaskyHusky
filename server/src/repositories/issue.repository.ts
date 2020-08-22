@@ -69,11 +69,12 @@ export class IssueRepository extends Repository<Issue> {
 		return await promise;
 	}
 
-	updateOneById(id: string, data: Partial<Issue>) {
+	updateOneById(id: string, data: Issue) {
+		console.log(data);
 		return this.update(id, data);
 	}
 
-	updateOneByKey(key: string, data: Partial<Issue>) {
+	updateOneByKey(key: string, data: Issue) {
 		return this.update({ issueKey: key }, data);
 	}
 
