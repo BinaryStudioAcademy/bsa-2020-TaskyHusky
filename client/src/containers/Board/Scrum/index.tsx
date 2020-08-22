@@ -14,6 +14,7 @@ import { extractUUIDFromArrayOfObjects } from 'helpers/extractUUIDFromArrayOfObj
 import CreateSprintModal from 'components/common/SprintModal/CreateSprintModal';
 import getIssuesForSprintId from 'helpers/getIssuesForSprintId.helper';
 import Backlog from 'components/Backlog';
+import { normalizeText } from 'helpers/normalizeText.helper';
 
 const Scrum: BoardComponent = (props) => {
 	const history = useHistory();
@@ -104,7 +105,9 @@ const Scrum: BoardComponent = (props) => {
 
 				<Container>{sprintList}</Container>
 				<Container>
-					<Backlog issues={backlog} />
+					<Backlog
+						issues={backlog.filter((issue) => issue.summary?.toLowerCase().includes(normalizeText(search)))}
+					/>
 				</Container>
 			</Container>
 			<CreateSprintModal
