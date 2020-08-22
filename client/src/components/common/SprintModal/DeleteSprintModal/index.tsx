@@ -16,7 +16,6 @@ const SprintModal = (props: Props) => {
 	const { t } = useTranslation();
 	const dispatch = useDispatch();
 	const { sprintName, sprintId, sprintIssues } = props;
-	const sprintHasIssues = sprintIssues?.length > 0;
 
 	const handleNoButtonClick = () => {
 		props.clickAction();
@@ -38,7 +37,7 @@ const SprintModal = (props: Props) => {
 					<Icon name="trash alternate outline" />
 				</Header>
 				<p>
-					{sprintHasIssues
+					{!!sprintIssues?.length
 						? t('delete_sprint_with_issues_warning')
 						: t('delete_sprint_with_no_issues_warning')}
 				</p>

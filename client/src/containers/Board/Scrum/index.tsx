@@ -42,7 +42,7 @@ const Scrum: BoardComponent = (props) => {
 	}, [dispatch, board]);
 
 	useEffect(() => {
-		if (sprints.length > 0) {
+		if (!!sprints.length) {
 			const arrayOfIds = extractUUIDFromArrayOfObjects(sprints);
 			arrayOfIds.forEach((id) => {
 				dispatch(actions.loadIssuesTrigger({ sprintId: id }));
@@ -50,26 +50,25 @@ const Scrum: BoardComponent = (props) => {
 		}
 	}, [sprints.length, sprints, dispatch]);
 
-	const sprintList =
-		sprints.length > 0 ? (
-			sprints.map((sprint) => {
-				return (
-					<Sprint
-						key={sprint.id}
-						{...sprint}
-						issues={getIssuesForSprintId(search, matchIssuesToSprint, sprint.id)}
-					/>
-				);
-			})
-		) : (
-			<Container className={styles.noSprintsContainer}>
-				<Icon name="info circle" size="huge" />
-				<Header as="h2" className={styles.noSprintsHeader}>
-					<Header.Content>{t('no_sprints_header')}</Header.Content>
-					<Header.Subheader>{t('no_sprints_header_subheader')}</Header.Subheader>
-				</Header>
-			</Container>
-		);
+	const sprintList = !!sprints.length ? (
+		sprints.map((sprint) => {
+			return (
+				<Sprint
+					key={sprint.id}
+					{...sprint}
+					issues={getIssuesForSprintId(search, matchIssuesToSprint, sprint.id)}
+				/>
+			);
+		})
+	) : (
+		<Container className={styles.noSprintsContainer}>
+			<Icon name="info circle" size="huge" />
+			<Header as="h2" className={styles.noSprintsHeader}>
+				<Header.Content>{t('no_sprints_header')}</Header.Content>
+				<Header.Subheader>{t('no_sprints_header_subheader')}</Header.Subheader>
+			</Header>
+		</Container>
+	);
 
 	return (
 		<>
