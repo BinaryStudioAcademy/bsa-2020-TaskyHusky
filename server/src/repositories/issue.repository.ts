@@ -70,7 +70,6 @@ export class IssueRepository extends Repository<Issue> {
 	}
 
 	updateOneById(id: string, data: Issue) {
-		console.log(data);
 		return this.update(id, data);
 	}
 
