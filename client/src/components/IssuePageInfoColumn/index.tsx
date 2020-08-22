@@ -40,7 +40,7 @@ const IssuePageInfoColumn: React.FC<Props> = ({ issue, initialIssue, leftAligned
 				{withDescrtiption ? (
 					<>
 						<h4>{t('description')}</h4>
-						{issue.description}
+						{issue.description || t('no')}
 					</>
 				) : (
 					''
@@ -60,21 +60,25 @@ const IssuePageInfoColumn: React.FC<Props> = ({ issue, initialIssue, leftAligned
 				<h4>{t('sprint')}</h4>
 				Sprint will be here
 				<h4>{t('links')}</h4>
-				{(issue.links ?? []).map((l, i) => (
-					<a rel="noopener noreferrer" target="_blank" href={l} key={i} style={{ marginRight: 10 }}>
-						{l}
-					</a>
-				))}
+				{issue.links && issue.links.length
+					? issue.links.map((l, i) => (
+							<a rel="noopener noreferrer" target="_blank" href={l} key={i} style={{ marginRight: 10 }}>
+								{l}
+							</a>
+					  ))
+					: t('no')}
 				<h4>{t('attachments')}</h4>
-				{(issue.attachments ?? []).map((a, i) => (
-					<a rel="noopener noreferrer" target="_blank" href={a} key={i} style={{ marginRight: 10 }}>
-						{a}
-					</a>
-				))}
+				{issue.attachments && issue.attachments.length
+					? issue.attachments.map((a, i) => (
+							<a rel="noopener noreferrer" target="_blank" href={a} key={i} style={{ marginRight: 10 }}>
+								{a}
+							</a>
+					  ))
+					: t('no')}
 				<h4>{t('labels')}</h4>
-				{(issue.labels || []).map((label, index) => (
-					<Label key={index}>{label}</Label>
-				))}
+				{issue.labels && issue.labels.length
+					? issue.labels.map((label, index) => <Label key={index}>{label}</Label>)
+					: t('no')}
 				<h4>{t('type')}</h4>
 				<Label color={issue.type.color as any}>
 					<Icon name={issue.type.icon as any} />
