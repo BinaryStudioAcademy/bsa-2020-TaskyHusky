@@ -4,7 +4,7 @@ import { getConditions } from '../helpers/issue.helper';
 import issueHandler from '../socketConnectionHandlers/issue.handler';
 import { IssueActions } from '../models/IO';
 
-const RELS = ['priority', 'type', 'creator', 'assigned', 'status'];
+const RELS = ['priority', 'type', 'creator', 'assigned', 'status', 'sprint', 'project'];
 type SortDir = 'DESC' | 'ASC';
 
 type Sort = {

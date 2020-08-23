@@ -38,21 +38,29 @@ const ProjectIssuesColumn: React.FC<Props> = ({ projectId, onChangeSelectedCard,
 	);
 
 	io.on(WebApi.IO.IssueActions.CreateIssue, (newIssue: WebApi.Result.IssueResult) => {
-		setIssues([...issues, newIssue]);
+		if (issues[0] ? newIssue.project?.id === issues[0].project?.id : true) {
+			setIssues([...issues, newIssue]);
+		}
 	});
 
 	io.on(WebApi.IO.IssueActions.UpdateIssue, (id: string, newIssue: WebApi.Result.IssueResult) => {
 		const index = issues.findIndex((issue) => issue.id === id);
-		const newIssues = [...issues];
-		newIssues[index] = newIssue;
-		setIssues(newIssues);
+
+		if (index > -1) {
+			const newIssues = [...issues];
+			newIssues[index] = newIssue;
+			setIssues(newIssues);
+		}
 	});
 
 	io.on(WebApi.IO.IssueActions.DeleteIssue, (id: string) => {
 		const index = issues.findIndex((issue) => issue.id === id);
-		const newIssues = [...issues];
-		newIssues.splice(index, 1);
-		setIssues(newIssues);
+
+		if (index > -1) {
+			const newIssues = [...issues];
+			newIssues.splice(index, 1);
+			setIssues(newIssues);
+		}
 	});
 
 	return (

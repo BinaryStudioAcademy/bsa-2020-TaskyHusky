@@ -5,10 +5,9 @@ import { useTranslation } from 'react-i18next';
 import AssigneeAvatar from './AssigneeAvatar/index';
 import { useIO } from 'hooks/useIO';
 
-type Props = { issues: WebApi.Entities.Issue[] };
+type Props = { issues: WebApi.Entities.Issue[]; id: string };
 
-export const SprintIssues: React.FC<Props> = ({ issues: givenIssues }: Props) => {
-	console.log(givenIssues);
+export const SprintIssues: React.FC<Props> = ({ id, issues: givenIssues }: Props) => {
 	const [issues, setIssues] = useState<WebApi.Entities.Issue[]>(givenIssues);
 	const [mustSetIssues, setMustSetIssues] = useState<boolean>(true);
 	const { t } = useTranslation();
@@ -26,21 +25,29 @@ export const SprintIssues: React.FC<Props> = ({ issues: givenIssues }: Props) =>
 	}
 
 	io.on(WebApi.IO.IssueActions.CreateIssue, (newIssue: WebApi.Entities.Issue) => {
-		setIssues([...issues, newIssue]);
+		if (newIssue.sprint?.id === id) {
+			setIssues([...issues, newIssue]);
+		}
 	});
 
 	io.on(WebApi.IO.IssueActions.UpdateIssue, (id: string, newIssue: WebApi.Entities.Issue) => {
 		const index = issues.findIndex((issue) => issue.id === id);
-		const newIssues = [...issues];
-		newIssues[index] = newIssue;
-		setIssues(newIssues);
+
+		if (index > -1) {
+			const newIssues = [...issues];
+			newIssues[index] = newIssue;
+			setIssues(newIssues);
+		}
 	});
 
 	io.on(WebApi.IO.IssueActions.DeleteIssue, (id: string) => {
 		const index = issues.findIndex((issue) => issue.id === id);
-		const newIssues = [...issues];
-		newIssues.splice(index, 1);
-		setIssues(newIssues);
+
+		if (index > -1) {
+			const newIssues = [...issues];
+			newIssues.splice(index, 1);
+			setIssues(newIssues);
+		}
 	});
 
 	const issuesList =

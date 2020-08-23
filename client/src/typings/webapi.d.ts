@@ -83,8 +83,8 @@ namespace WebApi.Result {
 			icon: string;
 		};
 		description?: string;
-		sprintID?: string;
-		projectID?: string;
+		sprint?: Sprint;
+		project?: Projects;
 		issueKey?: string;
 		assigned?: UserModel;
 		creator: UserModel;
