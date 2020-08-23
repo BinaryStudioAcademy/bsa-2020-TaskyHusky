@@ -8,14 +8,16 @@ export class ProjectsRepository extends Repository<Projects> {
 	}
 
 	getOneProject(id: string, userId: string): Promise<Projects | undefined> {
-		return getRepository(Projects)
-			.createQueryBuilder('project')
-			.leftJoinAndSelect('project.lead', 'lead')
-			.leftJoinAndSelect('project.users', 'users')
-			.leftJoin('project.users', 'user')
-			.where('project.id = :id', { id })
-			.andWhere('user.id = :userId', { userId })
-			.getOne();
+		return (
+			getRepository(Projects)
+				.createQueryBuilder('project')
+				.leftJoinAndSelect('project.lead', 'lead')
+				.leftJoinAndSelect('project.users', 'users')
+				.leftJoin('project.users', 'user')
+				.where('project.id = :id', { id })
+				//.andWhere('user.id = :userId', { userId })
+				.getOne()
+		);
 	}
 
 	getOneByKey(key: string): Promise<Projects | undefined> {
@@ -23,12 +25,14 @@ export class ProjectsRepository extends Repository<Projects> {
 	}
 
 	getAllByUserId(id: string): Promise<Projects[]> {
-		return getRepository(Projects)
-			.createQueryBuilder('project')
-			.leftJoinAndSelect('project.lead', 'lead')
-			.leftJoin('project.users', 'users')
-			.where('users.id = :id', { id })
-			.getMany();
+		return (
+			getRepository(Projects)
+				.createQueryBuilder('project')
+				.leftJoinAndSelect('project.lead', 'lead')
+				.leftJoin('project.users', 'users')
+				//.where('users.id = :id', { id })
+				.getMany()
+		);
 	}
 
 	createOne(data: Projects) {

@@ -1,5 +1,5 @@
 import { ConnectionHandler } from '../../config/io.config';
-import { Types, IssueActions } from '../models/IO';
+import { Types } from '../models/IO';
 
 class IssueConnectionHandler extends ConnectionHandler {
 	public constructor() {

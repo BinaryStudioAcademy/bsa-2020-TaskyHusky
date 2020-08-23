@@ -6,9 +6,13 @@ export const useIO = (type: string) => {
 	const [io, setIO] = useState<SocketIOClient.Socket | undefined>();
 
 	useEffect(() => {
-		const newIO = connect(ioURL, { query: `type=${type}` });
-		setIO(newIO);
-	}, [type]);
+		if (!io) {
+			const newIO = connect(ioURL, { query: `type=${type}` });
+			setIO(newIO);
+		}
+
+		return () => void io?.disconnect();
+	}, [type, io]);
 
 	// This is used to avoid memory leak
 	// eslint-disable-next-line no-unused-expressions
