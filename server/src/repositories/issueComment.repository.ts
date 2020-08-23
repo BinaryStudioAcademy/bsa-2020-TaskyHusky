@@ -5,15 +5,29 @@ import issueHandler from '../socketConnectionHandlers/issue.handler';
 import { IssueActions } from '../models/IO';
 
 const RELS = ['creator'];
+const ID_RELS = ['issue'];
 
 @EntityRepository(IssueComment)
 export class IssueCommentRepository extends Repository<IssueComment> {
 	findAllByIssueId(id: string) {
-		return this.find({ where: { issue: { id } }, relations: RELS, order: { createdAt: 'ASC' } });
+		return this.find({
+			where: { issue: { id } },
+			relations: RELS,
+			loadRelationIds: {
+				relations: ID_RELS,
+			},
+			order: { createdAt: 'ASC' },
+		});
 	}
 
 	findOneById(id: string) {
-		return this.findOne({ where: { id }, relations: RELS });
+		return this.findOneOrFail({
+			where: { id },
+			relations: RELS,
+			loadRelationIds: {
+				relations: ID_RELS,
+			},
+		});
 	}
 
 	async createOne(data: IssueComment) {
@@ -29,14 +43,19 @@ export class IssueCommentRepository extends Repository<IssueComment> {
 		return result;
 	}
 
-	updateOne(id: string, data: PartialIssueComment) {
-		return this.update(
+	async updateOne(id: string, data: PartialIssueComment) {
+		const result = await this.update(
 			{ id },
 			{
 				...data,
 				editedAt: new Date(),
 			},
 		);
+
+		const newComment = await this.findOneById(id);
+		issueHandler.emit(IssueActions.UpdateIssueComment, newComment.issue, id, newComment);
+
+		return result;
 	}
 
 	deleteOne(id: string) {

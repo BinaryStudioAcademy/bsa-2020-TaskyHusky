@@ -44,6 +44,18 @@ const IssuePageContent: React.FC<Props> = ({ issue }) => {
 		}
 	});
 
+	io.on(
+		WebApi.IO.IssueActions.UpdateIssueComment,
+		(id: string, commentId: string, newComment: WebApi.Result.IssueCommentResult) => {
+			if (id === issue.id) {
+				const index = comments.findIndex((comment) => comment.id === commentId);
+				const newComments = [...comments];
+				newComments[index] = newComment;
+				setComments(newComments);
+			}
+		},
+	);
+
 	return (
 		<div className={`fill ${styles.container}`} style={{ position: 'relative' }}>
 			<div className={styles.innerContainer}>
