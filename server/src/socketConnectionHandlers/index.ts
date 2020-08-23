@@ -1,6 +1,6 @@
-import { issue } from './issue.handler';
-import { Handler } from '../../config/io.config';
+import issueHandler from './issue.handler';
+import { ConnectionHandler } from '../../config/io.config';
 
-const IO_Handlers: Handler[] = [issue];
+const IO_Handlers: ConnectionHandler[] = [issueHandler];
 
 export default IO_Handlers;

@@ -1,7 +1,7 @@
 import { EntityRepository, Repository } from 'typeorm';
 import { Issue } from '../entity/Issue';
 import { getConditions } from '../helpers/issue.helper';
-import sockets from '../socketConnectionHandlers/issue.handler';
+import issueHandler from '../socketConnectionHandlers/issue.handler';
 import { IssueActions } from '../models/IO';
 
 const RELS = ['priority', 'type', 'creator', 'assigned', 'status'];
@@ -67,7 +67,7 @@ export class IssueRepository extends Repository<Issue> {
 	async updateOneById(id: string, data: Issue) {
 		const result = await this.update(id, data);
 		const newIssue = await this.findOneById(id);
-		sockets.forEach((s) => s.emit(IssueActions.UpdateIssue, id, newIssue));
+		issueHandler.emit(IssueActions.UpdateIssue, id, newIssue);
 		return result;
 	}
 
@@ -76,7 +76,7 @@ export class IssueRepository extends Repository<Issue> {
 	}
 
 	deleteOneById(id: string) {
-		sockets.forEach((s) => s.emit(IssueActions.DeleteIssue, id));
+		issueHandler.emit(IssueActions.DeleteIssue, id);
 		return this.delete(id);
 	}
 }
