@@ -31,8 +31,6 @@ const IssuePageInfoColumn: React.FC<Props> = ({
 		return null;
 	}
 
-	io.removeAllListeners();
-
 	io.on(WebApi.IO.IssueActions.UpdateIssue, (id: string, data: WebApi.Result.IssueResult) => {
 		if (id === issue.id) {
 			setIssue(data);

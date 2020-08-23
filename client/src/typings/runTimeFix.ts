@@ -10,6 +10,7 @@ export const Enums = {
 		IssueActions: {
 			UpdateIssue: 'ISSUE:UPDATE',
 			DeleteIssue: 'ISSUE:DELETE',
+			CommentIssue: 'ISSUE:COMMENT:ADD',
 		},
 		Types: {
 			Issue: 'ISSUE',

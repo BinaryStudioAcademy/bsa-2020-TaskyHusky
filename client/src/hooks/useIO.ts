@@ -10,5 +10,8 @@ export const useIO = (type: string) => {
 		setIO(newIO);
 	}, [type]);
 
+	// This is used to avoid memory leak
+	// eslint-disable-next-line no-unused-expressions
+	io?.removeAllListeners();
 	return io;
 };

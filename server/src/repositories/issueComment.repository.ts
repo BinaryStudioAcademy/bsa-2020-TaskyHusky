@@ -1,6 +1,8 @@
 import { EntityRepository, Repository } from 'typeorm';
 import { IssueComment } from '../entity/IssueComment';
 import { PartialIssueComment } from '../models/Issue';
+import issueHandler from '../socketConnectionHandlers/issue.handler';
+import { IssueActions } from '../models/IO';
 
 const RELS = ['creator'];
 
@@ -14,13 +16,17 @@ export class IssueCommentRepository extends Repository<IssueComment> {
 		return this.findOne({ where: { id }, relations: RELS });
 	}
 
-	createOne(data: IssueComment) {
+	async createOne(data: IssueComment) {
 		const instance = this.create({
 			...data,
 			createdAt: new Date(),
 		});
 
-		return this.save(instance);
+		const result = await this.save(instance);
+		const newComment = await this.findOneById(result.id);
+		issueHandler.emit(IssueActions.CommentIssue, data.issue, newComment);
+
+		return result;
 	}
 
 	updateOne(id: string, data: PartialIssueComment) {

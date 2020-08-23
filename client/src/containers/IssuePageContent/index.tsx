@@ -6,9 +6,9 @@ import { getComments } from 'services/issue.service';
 import IssueComment from 'components/IssueComment';
 import { useSelector } from 'react-redux';
 import { RootState } from 'typings/rootState';
-import { generateRandomString } from 'helpers/randomString.helper';
 import styles from './styles.module.scss';
 import IssuePageInfoColumn from 'components/IssuePageInfoColumn';
+import { useIO } from 'hooks/useIO';
 
 interface Props {
 	issue: WebApi.Result.IssueResult;
@@ -19,6 +19,7 @@ const IssuePageContent: React.FC<Props> = ({ issue }) => {
 	const [mustFetchComments, setMustFetchComments] = useState<boolean>(true);
 	const { t } = useTranslation();
 	const authData = useSelector((state: RootState) => state.auth);
+	const io = useIO(WebApi.IO.Types.Issue);
 
 	const initialIssue = {
 		...issue,
@@ -33,9 +34,15 @@ const IssuePageContent: React.FC<Props> = ({ issue }) => {
 		}
 	}, [mustFetchComments, issue.id]);
 
-	if (mustFetchComments || !authData.user) {
+	if (mustFetchComments || !authData.user || !io) {
 		return null;
 	}
+
+	io.on(WebApi.IO.IssueActions.CommentIssue, (id: string, newComment: WebApi.Result.IssueCommentResult) => {
+		if (id === issue.id) {
+			setComments([...comments, newComment]);
+		}
+	});
 
 	return (
 		<div className={`fill ${styles.container}`} style={{ position: 'relative' }}>
@@ -60,21 +67,7 @@ const IssuePageContent: React.FC<Props> = ({ issue }) => {
 						<IssueComment comment={comment} key={comment.id} />
 					))}
 				</Comment.Group>
-				<IssueCommentForm
-					issueId={issue.id}
-					onSubmit={(text) => {
-						setComments([
-							...comments,
-							{
-								id: generateRandomString(6),
-								creator: authData.user,
-								createdAt: new Date(),
-								text,
-								issue: issue.id,
-							},
-						]);
-					}}
-				/>
+				<IssueCommentForm issueId={issue.id} />
 			</div>
 			<IssuePageInfoColumn issue={issue} initialIssue={initialIssue} />
 		</div>
