@@ -4,25 +4,27 @@ import { useTranslation } from 'react-i18next';
 import styles from './styles.module.scss';
 import { Button, Checkbox, Select, Form } from 'semantic-ui-react';
 import { requestUpdateUser } from 'containers/ProfilePage/logiс/actions';
-import { UserProfileState } from 'containers/ProfilePage/logiс/state';
 import SubmitedInput from 'components/SubmitedInput';
 import CustomValidator from 'helpers/validation.helper';
 
 interface Props {
-	updateUser: (changedUser: Partial<UserProfileState>) => void;
+	updateUser: (changedUser: Partial<WebApi.Entities.UserProfile>) => void;
 	email: string;
 }
 const EmailManager: React.FC<Props> = (props: Props) => {
 	const { updateUser, email } = props;
 	const dispatch = useDispatch();
 	const { t } = useTranslation();
+
 	const [emailData, setEmailData] = useState<string>('');
 	const [isEmailValid, setIsEmailValid] = useState<boolean>(true);
 	const [errorMessage, setErrorMessage] = useState<string>('');
 	const [isSubmit, setIsSumbit] = useState<boolean>(false);
+
 	const handleChange = (event: any) => {
 		setEmailData((event.target as HTMLInputElement).value);
 	};
+
 	const onBlur = () => {
 		const customValidator = new CustomValidator(emailData);
 		const isntValid = customValidator.checkMinLength(6).checkMaxLength(321).checkEmailField().validate();
@@ -35,11 +37,10 @@ const EmailManager: React.FC<Props> = (props: Props) => {
 			setIsSumbit(emailData.trim() !== email);
 		}
 	};
+
 	const updateUserField = () => {
-		// if (emailData !== email && isEmailValid) {
 		updateUser({ email: emailData.trim() });
-		dispatch(requestUpdateUser({ email: emailData.trim() } as Partial<UserProfileState>));
-		// }
+		dispatch(requestUpdateUser({ email: emailData.trim() } as Partial<WebApi.Entities.UserProfile>));
 	};
 
 	const notifaictionsOptions = [

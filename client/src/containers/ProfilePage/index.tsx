@@ -8,7 +8,7 @@ import ProfileAside from 'components/ProfileAside';
 import ProfileSection from 'components/ProfileSection';
 import ProfileManagerSection from 'components/ProfileManagerSection';
 import Spinner from 'components/common/Spinner';
-import { UserProfileState, initialState } from './logiс/state';
+import { initialState } from './logiс/state';
 import { useTranslation } from 'react-i18next';
 import { requestGetUserProjects, requestGetUserTeams } from 'services/user.service';
 import { fetchPeople } from 'services/people.service';
@@ -74,7 +74,7 @@ const ProfilePage = ({ id }: { id: string }) => {
 		}
 	};
 
-	const updateUser = (changedUser: Partial<UserProfileState>) => {
+	const updateUser = (changedUser: Partial<WebApi.Entities.UserProfile>) => {
 		setUser({ ...user, ...changedUser });
 	};
 

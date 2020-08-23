@@ -7,8 +7,8 @@ import projectIcon from 'icons/profile/projectIcon.svg';
 interface Props {
 	isCurrentUser: boolean;
 	activity: any;
-	projects: Array<any>;
-	teammates: Array<any>;
+	projects: Array<WebApi.Entities.Projects>;
+	teammates: Array<WebApi.Entities.UserProfile>;
 }
 
 const ProfileSection: React.FC<Props> = (props: Props) => {
@@ -40,7 +40,7 @@ const ProfileSection: React.FC<Props> = (props: Props) => {
 				icon={projectIcon}
 				emptyContent={emptyActivityCard}
 			/>
-			{activity.length && (
+			{Boolean(projects.length) && (
 				<>
 					<h3 className={styles.header}>{t('work_places')}</h3>
 					<ProfileActivityBlock data={projects} countItem={countProject} />

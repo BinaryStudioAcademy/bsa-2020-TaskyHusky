@@ -5,7 +5,7 @@ import teamIcon from 'icons/profile/teamIcon.svg';
 import { Link } from 'react-router-dom';
 
 interface Props {
-	teams: any;
+	teams: Array<WebApi.Entities.Team>;
 }
 
 const ProfileTeamBlock: React.FC<Props> = (props: Props) => {
@@ -14,7 +14,7 @@ const ProfileTeamBlock: React.FC<Props> = (props: Props) => {
 	return (
 		<div>
 			<h3 className={styles.header}>{t('team')}</h3>
-			{teams.map((item: any) => (
+			{teams.map((item: WebApi.Entities.Team) => (
 				<div key={item.id} className={styles.item}>
 					<div className={styles.groupIcon}>
 						<img src={teamIcon} alt="icon" />

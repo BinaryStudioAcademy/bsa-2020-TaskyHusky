@@ -3,30 +3,26 @@ import styles from './styles.module.scss';
 
 interface Props {
 	icon?: string;
-	item: {
-		name: string;
-		category: string;
-	};
+	item: any;
 }
 
 const UserActivityItem: React.FC<Props> = (props: Props) => {
-	const {
-		icon,
-		item: { name, category },
-	} = props;
+	const { icon, item } = props;
+
+	const secondaryContent = item.category ? `${item.category} project` : item.jobTitle;
+	const abbr = item.name ? item.name[0] : item.firstName[0] + item.lastName[0];
+
 	return (
 		<div className={styles.activityItem}>
 			{icon ? (
 				<img src={icon} alt="icon" className={styles.icon} />
 			) : (
-				<div className={styles.avatar}>
-					<p className={styles.avatarTitle}>{name[0]}</p>
-				</div>
+				<div className={styles.avatar}>{abbr && <p className={styles.avatarTitle}>{abbr}</p>}</div>
 			)}
 
 			<div className={styles.block}>
-				<p className={styles.content}>{name}</p>
-				<p className={styles.contentSecondary}>{category} project</p>
+				<p className={styles.content}>{item.name ? item.name : item.firstName + ' ' + item.lastName}</p>
+				<p className={styles.contentSecondary}>{secondaryContent}</p>
 			</div>
 		</div>
 	);

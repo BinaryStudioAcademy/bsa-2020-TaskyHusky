@@ -9,7 +9,7 @@ import { UserProfileState } from 'containers/ProfilePage/logiс/state';
 
 interface Props {
 	isCurrentUser: boolean;
-	teams: any;
+	teams: Array<WebApi.Entities.Team>;
 	user: Partial<UserProfileState>;
 	showManager: (modeToShow: string) => void;
 }
