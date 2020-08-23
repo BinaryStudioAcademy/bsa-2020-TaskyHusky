@@ -23,6 +23,7 @@ const IssuePageContent: React.FC<Props> = ({ issue }) => {
 
 	const initialIssue = {
 		...issue,
+		boardColumn: issue.boardColumn ? issue.boardColumn.id : undefined,
 		type: issue.type.id,
 		priority: issue.priority.id,
 	};

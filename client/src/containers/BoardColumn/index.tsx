@@ -6,9 +6,8 @@ import { getByColumnId, getByKey } from 'services/issue.service';
 import IssueCard from 'components/IssueCard';
 import { useTranslation } from 'react-i18next';
 import { extractIdFormDragDropId } from 'helpers/extractId.helper';
-import { useSelector } from 'react-redux';
-import { RootState } from 'typings/rootState';
 import styles from './styles.module.scss';
+import { useIO } from 'hooks/useIO';
 
 interface Props {
 	column: WebApi.Result.BoardColumnResult;
@@ -17,19 +16,11 @@ interface Props {
 	getOnDragEndFunc: (id: string, responder: OnDragEndResponder) => void;
 }
 
-type TypeAndPriority = {
-	id: string;
-	title: string;
-	icon: string;
-	color: string;
-};
-
 const BoardColumn: React.FC<Props> = ({ column, className, search, getOnDragEndFunc }) => {
 	const [issues, setIssues] = useState<WebApi.Result.IssueResult[]>([]);
 	const [issuesFetched, setIssuesFetched] = useState<boolean>(false);
-	const types = useSelector((state: RootState) => state.issues.types);
-	const priorities = useSelector((state: RootState) => state.issues.priorities);
 	const { t } = useTranslation();
+	const io = useIO(WebApi.IO.Types.Issue);
 
 	useEffect(() => {
 		getOnDragEndFunc(column.id, (event) => {
@@ -67,6 +58,36 @@ const BoardColumn: React.FC<Props> = ({ column, className, search, getOnDragEndF
 		(issue.summary as string).toLowerCase().includes(search.toLowerCase()),
 	);
 
+	if (!io) {
+		return null;
+	}
+
+	io.on(WebApi.IO.IssueActions.CreateIssue, (newIssue: WebApi.Result.IssueResult) => {
+		if (newIssue.boardColumn?.id === column.id) {
+			setIssues([...issues, newIssue]);
+		}
+	});
+
+	io.on(WebApi.IO.IssueActions.UpdateIssue, (id: string, newIssue: WebApi.Result.IssueResult) => {
+		const index = issues.findIndex((issue) => issue.id === id);
+
+		if (index > -1) {
+			const newIssues = [...issues];
+			newIssues[index] = newIssue;
+			setIssues(newIssues);
+		}
+	});
+
+	io.on(WebApi.IO.IssueActions.DeleteIssue, (id: string) => {
+		const index = issues.findIndex((issue) => issue.id === id);
+
+		if (index > -1) {
+			const newIssues = [...issues];
+			newIssues.splice(index, 1);
+			setIssues(newIssues);
+		}
+	});
+
 	return (
 		<div className={className}>
 			<Droppable droppableId={`board-column__${column.id}`}>
@@ -75,22 +96,7 @@ const BoardColumn: React.FC<Props> = ({ column, className, search, getOnDragEndF
 						<Header as="h3" floated="left" className={styles.columnHeader}>
 							{column.columnName}
 						</Header>
-						<CreateIssueModal
-							boardColumnID={column.id}
-							onClose={(issue) => {
-								setIssues([
-									...issues,
-									{
-										...issue,
-										id: '',
-										type: types.find((type) => issue.type === type.id) as TypeAndPriority,
-										priority: priorities.find(
-											(priority) => issue.priority === priority.id,
-										) as TypeAndPriority,
-									},
-								]);
-							}}
-						>
+						<CreateIssueModal boardColumnID={column.id}>
 							<Button floated="right" compact>
 								<Icon name="plus circle" />
 								{t('create_issue')}

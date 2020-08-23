@@ -72,7 +72,7 @@ namespace WebApi.Result {
 			icon: string;
 		};
 		summary?: string;
-		boardColumn?: string;
+		boardColumn?: BoardColumnResult;
 		labels?: string[];
 		attachments?: string[];
 		links?: string[];
