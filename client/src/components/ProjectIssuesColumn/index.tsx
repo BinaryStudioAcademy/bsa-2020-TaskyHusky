@@ -41,6 +41,20 @@ const ProjectIssuesColumn: React.FC<Props> = ({ projectId, onChangeSelectedCard,
 		setIssues([...issues, newIssue]);
 	});
 
+	io.on(WebApi.IO.IssueActions.UpdateIssue, (id: string, newIssue: WebApi.Result.IssueResult) => {
+		const index = issues.findIndex((issue) => issue.id === id);
+		const newIssues = [...issues];
+		newIssues[index] = newIssue;
+		setIssues(newIssues);
+	});
+
+	io.on(WebApi.IO.IssueActions.DeleteIssue, (id: string) => {
+		const index = issues.findIndex((issue) => issue.id === id);
+		const newIssues = [...issues];
+		newIssues.splice(index, 1);
+		setIssues(newIssues);
+	});
+
 	return (
 		<Segment style={{ backgroundColor: '#EEE', height: '95%', width: 300, marginLeft: 60 }}>
 			<div style={{ marginTop: 10, overflowY: 'auto', height: '95%' }}>
