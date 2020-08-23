@@ -4,7 +4,7 @@ import { getConditions } from '../helpers/issue.helper';
 import issueHandler from '../socketConnectionHandlers/issue.handler';
 import { IssueActions } from '../models/IO';
 
-const RELS = ['priority', 'type', 'creator', 'assigned', 'status', 'sprint', 'project', 'boardColumn'];
+const RELS = ['priority', 'type', 'creator', 'assigned', 'status', 'sprint', 'project', 'boardColumn', 'watchers'];
 type SortDir = 'DESC' | 'ASC';
 
 type Sort = {
@@ -72,7 +72,11 @@ export class IssueRepository extends Repository<Issue> {
 		const { watchers = [] }: Issue = await this.findOneById(id);
 		const qBuilder = this.createQueryBuilder().relation(Issue, 'watchers').of(id);
 		const promise = watchers.some((user) => user.id === userId) ? qBuilder.remove(userId) : qBuilder.add(userId);
-		return await promise;
+		const result = await promise;
+		const newIssue = await this.findOneById(id);
+		issueHandler.emit(IssueActions.UpdateIssue, id, newIssue);
+
+		return result;
 	}
 
 	async updateOneById(id: string, data: Issue) {

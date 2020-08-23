@@ -27,7 +27,7 @@ const IssuePageInfoColumn: React.FC<Props> = ({
 }) => {
 	const [issue, setIssue] = useState<WebApi.Result.IssueResult>(givenIssue);
 	let openEditModal: () => void = () => {};
-	const [issueWatchers, setIssueWatchers] = useState<WebApi.User.UserModel[]>(issue.watchers ?? []);
+	const issueWatchers = issue.watchers ?? [];
 	const { t } = useTranslation();
 	const io = useIO(WebApi.IO.Types.Issue);
 	const dispatch = useDispatch();
@@ -58,18 +58,6 @@ const IssuePageInfoColumn: React.FC<Props> = ({
 
 	const watch = () => {
 		dispatch(watchIssue({ id: issue.id }));
-		const newWatchers = [...issueWatchers];
-
-		if (watching) {
-			newWatchers.splice(
-				newWatchers.findIndex((watcher) => watcher.id === user.id),
-				1,
-			);
-		} else {
-			newWatchers.push(user as WebApi.User.UserModel);
-		}
-
-		setIssueWatchers(newWatchers);
 	};
 
 	return (
