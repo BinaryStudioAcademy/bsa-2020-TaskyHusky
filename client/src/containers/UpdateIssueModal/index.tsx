@@ -79,18 +79,20 @@ const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, p
 			return;
 		}
 
+		const { watchers, ...data } = context.data;
+
 		dispatch(
 			updateIssue({
 				// This field exists always
 				id: current.id as string,
-				data: { ...context.data },
+				data: data,
 			}),
 		);
 
 		setOpened(false);
 
 		if (onSubmit) {
-			onSubmit(context.data);
+			onSubmit(data);
 		}
 	};
 
