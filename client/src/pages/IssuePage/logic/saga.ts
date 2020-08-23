@@ -71,7 +71,6 @@ function* fetchWatchIssue(action: AnyAction) {
 }
 
 function* watchWatchIssue() {
-	// :) ^^^^^^^^^^
 	yield takeEvery(actionTypes.WATCH_ISSUE, fetchWatchIssue);
 }
 

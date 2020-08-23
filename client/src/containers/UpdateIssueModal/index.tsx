@@ -81,8 +81,8 @@ const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, p
 
 		dispatch(
 			updateIssue({
-				// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-				id: current.id!,
+				// This field exists always
+				id: current.id as string,
 				data: { ...context.data },
 			}),
 		);
