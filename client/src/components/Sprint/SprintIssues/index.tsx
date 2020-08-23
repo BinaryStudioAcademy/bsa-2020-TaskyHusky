@@ -35,8 +35,16 @@ export const SprintIssues: React.FC<Props> = ({ id, issues: givenIssues }: Props
 
 		if (index > -1) {
 			const newIssues = [...issues];
-			newIssues[index] = newIssue;
+
+			if (!newIssue.sprint || newIssue.sprint.id !== id) {
+				newIssues.splice(index, 1);
+			} else {
+				newIssues[index] = newIssue;
+			}
+
 			setIssues(newIssues);
+		} else if (newIssue.sprint?.id === id) {
+			setIssues([...issues, newIssue]);
 		}
 	});
 

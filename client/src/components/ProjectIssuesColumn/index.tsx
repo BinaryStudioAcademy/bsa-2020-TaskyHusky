@@ -48,7 +48,13 @@ const ProjectIssuesColumn: React.FC<Props> = ({ projectId, onChangeSelectedCard,
 
 		if (index > -1) {
 			const newIssues = [...issues];
-			newIssues[index] = newIssue;
+
+			if (!newIssue.project || newIssue.project?.id !== projectId) {
+				newIssues.splice(index, 1);
+			} else {
+				newIssues[index] = newIssue;
+			}
+
 			setIssues(newIssues);
 		}
 	});

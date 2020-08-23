@@ -73,8 +73,16 @@ const BoardColumn: React.FC<Props> = ({ column, className, search, getOnDragEndF
 
 		if (index > -1) {
 			const newIssues = [...issues];
-			newIssues[index] = newIssue;
+
+			if (!newIssue.boardColumn || newIssue.boardColumn.id !== column.id) {
+				newIssues.splice(index, 1);
+			} else {
+				newIssues[index] = newIssue;
+			}
+
 			setIssues(newIssues);
+		} else if (newIssue.boardColumn?.id === column.id) {
+			setIssues([...issues, newIssue]);
 		}
 	});
 
