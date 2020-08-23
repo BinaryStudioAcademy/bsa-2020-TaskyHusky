@@ -20,10 +20,14 @@ const IssuePageContent: React.FC<Props> = ({ issue }) => {
 	const { t } = useTranslation();
 	const authData = useSelector((state: RootState) => state.auth);
 
+	const { watchers, ...issueForDefault } = issue;
+
 	const initialIssue = {
-		...issue,
+		...issueForDefault,
 		type: issue.type.id,
 		priority: issue.priority.id,
+		creator: issue.creator.id,
+		assigned: issue.assigned ? issue.assigned.id : undefined,
 	};
 
 	useEffect(() => {

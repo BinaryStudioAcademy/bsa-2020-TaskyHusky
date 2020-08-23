@@ -280,4 +280,8 @@ export const en = {
 	save_not_secure: 'Saving not secure password',
 	save_not_secure_text:
 		'Do you want to save not secure password? To make your password secure you can add special symbols, numbers and uppercase letters.',
+	anonymous: 'Anonymous',
+	watchers: 'Watchers',
+	watch: 'Watch',
+	unwatch: 'Unwatch',
 };
