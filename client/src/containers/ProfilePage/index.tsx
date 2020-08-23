@@ -46,6 +46,9 @@ const ProfilePage = ({ id }: { id: string }) => {
 	const teams = useSelector((state: RootState) => state.peoplePage.teams);
 
 	const [data, setData] = useState({
+		// teammates: [] as Array<WebApi.Entities.UserProfile>,
+		// teams: [] as Array<WebApi.Entities.Team>,
+		// projects: [] as Array<WebApi.Entities.Projects>,
 		teammates,
 		teams,
 		projects,
@@ -55,15 +58,6 @@ const ProfilePage = ({ id }: { id: string }) => {
 		if (isCurrentUser) {
 			setUser({ ...user, ...currentUser, isLoading: false });
 			dispatch(actions.updateUser({ partialState: { ...currentUser, isLoading: false } }));
-
-			if (!data.teammates.length) {
-				const teammates = await fetchPeople(id);
-				setData({ ...data, teammates });
-			}
-			if (!teams.length) {
-				const teams = await requestGetUserTeams(id);
-				setData({ ...data, teams });
-			}
 		} else {
 			dispatch(actions.requestGetUser({ id }));
 			setUser({ ...user, ...userData });
@@ -71,6 +65,18 @@ const ProfilePage = ({ id }: { id: string }) => {
 			const teams = await requestGetUserTeams(id);
 			const projects = await requestGetUserProjects(id);
 			setData({ ...data, teammates, teams, projects });
+		}
+	};
+
+	const getCurrentUserData = async () => {
+		setData({ ...data, projects, teammates, teams });
+		if (!teams.length) {
+			const teams = await requestGetUserTeams(id);
+			setData({ ...data, teams });
+		}
+		if (!teammates.length) {
+			const teammates = await fetchPeople(id);
+			setData({ ...data, teammates });
 		}
 	};
 
@@ -82,6 +88,13 @@ const ProfilePage = ({ id }: { id: string }) => {
 		getUser();
 		//eslint-disable-next-line
 	}, [userData.id]);
+
+	useEffect(() => {
+		if (isCurrentUser) {
+			getCurrentUserData();
+		}
+		//eslint-disable-next-line
+	}, [projects, teammates, teams]);
 
 	return (
 		<>
