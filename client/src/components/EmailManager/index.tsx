@@ -69,7 +69,7 @@ const EmailManager: React.FC<Props> = (props: Props) => {
 						onBlur={onBlur}
 						errorText={errorMessage}
 					/>
-					<Button type="submit" className={styles.submitButton} disabled={isSubmit ? false : true}>
+					<Button type="submit" className={styles.submitButton} disabled={!isSubmit}>
 						{t('save_changes')}
 					</Button>
 				</Form>

@@ -3,7 +3,7 @@ import styles from './styles.module.scss';
 
 interface Props {
 	icon?: string;
-	item: any;
+	item: WebApi.Entities.Projects | WebApi.Entities.UserProfile | any;
 }
 
 const UserActivityItem: React.FC<Props> = (props: Props) => {

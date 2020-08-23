@@ -12,6 +12,7 @@ import { initialState } from './logiс/state';
 import { useTranslation } from 'react-i18next';
 import { requestGetUserProjects, requestGetUserTeams } from 'services/user.service';
 import { fetchPeople } from 'services/people.service';
+import { NotificationManager } from 'react-notifications';
 
 const ProfilePage = ({ id }: { id: string }) => {
 	const dispatch = useDispatch();
@@ -41,14 +42,13 @@ const ProfilePage = ({ id }: { id: string }) => {
 		{ id: 7, project: 'First scrum project', name: 'Fsp-1 Implement dark somethin else very important' },
 	];
 
-	const projects = useSelector((state: RootState) => state.projects.projects);
-	const teammates = useSelector((state: RootState) => state.peoplePage.people);
-	const teams = useSelector((state: RootState) => state.peoplePage.teams);
+	const { projects, teammates, teams } = useSelector((state: RootState) => ({
+		projects: state.projects.projects,
+		teammates: state.peoplePage.people,
+		teams: state.peoplePage.teams,
+	}));
 
 	const [data, setData] = useState({
-		// teammates: [] as Array<WebApi.Entities.UserProfile>,
-		// teams: [] as Array<WebApi.Entities.Team>,
-		// projects: [] as Array<WebApi.Entities.Projects>,
 		teammates,
 		teams,
 		projects,
@@ -61,10 +61,13 @@ const ProfilePage = ({ id }: { id: string }) => {
 		} else {
 			dispatch(actions.requestGetUser({ id }));
 			setUser({ ...user, ...userData });
-			const teammates = await fetchPeople(id);
-			const teams = await requestGetUserTeams(id);
-			const projects = await requestGetUserProjects(id);
-			setData({ ...data, teammates, teams, projects });
+			Promise.all([requestGetUserTeams(id), requestGetUserProjects(id), fetchPeople(id)])
+				.then((arr) => {
+					setData({ ...data, teams: arr[0], projects: arr[1], teammates: arr[2] });
+				})
+				.catch((error) => {
+					NotificationManager.error('Could not load data', 'Error', 4000);
+				});
 		}
 	};
 

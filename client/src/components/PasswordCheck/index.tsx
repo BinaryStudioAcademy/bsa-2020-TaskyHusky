@@ -23,8 +23,7 @@ const PasswordCheck: React.FC<Props> = (props: Props) => {
 		if (checkPassSecurity) {
 			checkPassSecurity(isSuperPass);
 		}
-		//eslint-disable-next-line
-	}, [isSuperPass]);
+	}, [isSuperPass, checkPassSecurity]);
 
 	return (
 		<div className={pass ? styles.progress : styles.hidden}>

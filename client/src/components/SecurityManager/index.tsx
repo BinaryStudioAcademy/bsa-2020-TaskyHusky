@@ -127,7 +127,7 @@ const SecurityManager = () => {
 						isValid={isRepeatedPassValid}
 						errorText={t('pass_error_equal')}
 					/>
-					<Button className={styles.submitButton} type="submit" disabled={isSubmitPossible ? false : true}>
+					<Button className={styles.submitButton} type="submit" disabled={!isSubmitPossible}>
 						{t('save_changes')}
 					</Button>
 				</Form>

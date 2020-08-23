@@ -153,7 +153,7 @@ const ProfileManager: React.FC<Props> = (props: Props) => {
 						onBlur={onBlur}
 					/>
 					<Form.Field className={styles.formFooter}>
-						<Button className={styles.submitButton} type="submit" disabled={isSubmit ? false : true}>
+						<Button className={styles.submitButton} type="submit" disabled={!isSubmit}>
 							{t('save_changes')}
 						</Button>
 						<Button type="text" onClick={onCancel} className={styles.secondaryButton}>

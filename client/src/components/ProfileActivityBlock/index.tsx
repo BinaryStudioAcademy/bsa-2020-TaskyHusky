@@ -5,7 +5,7 @@ import UserActivityItem from 'components/UserActivityItem';
 import styles from './styles.module.scss';
 
 interface Props {
-	data: any;
+	data: Array<WebApi.Entities.Projects | WebApi.Entities.UserProfile | any>;
 	countItem: number;
 	icon?: string;
 	emptyContent?: {
@@ -15,7 +15,7 @@ interface Props {
 	};
 }
 
-const ProfileProjectBlock: React.FC<Props> = (props: Props) => {
+const ProfileActivityBlock: React.FC<Props> = (props: Props) => {
 	const { data, countItem, emptyContent } = props;
 	const { t } = useTranslation();
 	const [activeIndex, setActiveIndex] = useState<number>(0);
@@ -74,4 +74,4 @@ const ProfileProjectBlock: React.FC<Props> = (props: Props) => {
 	);
 };
 
-export default ProfileProjectBlock;
+export default ProfileActivityBlock;

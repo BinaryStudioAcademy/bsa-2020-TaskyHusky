@@ -78,7 +78,6 @@ const getArgs = (args: RequestArgs): RequestInit => {
 		const formData = new FormData();
 		formData.append('image', args.attachment);
 		body = formData;
-		headers['Access-Control-Allow-Origi'] = '*';
 	}
 
 	return {
