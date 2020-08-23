@@ -21,11 +21,15 @@ const IssuePageContent: React.FC<Props> = ({ issue }) => {
 	const authData = useSelector((state: RootState) => state.auth);
 	const io = useIO(WebApi.IO.Types.Issue);
 
+	const { watchers, ...issueForDefault } = issue;
+
 	const initialIssue = {
-		...issue,
+		...issueForDefault,
 		boardColumn: issue.boardColumn ? issue.boardColumn.id : undefined,
 		type: issue.type.id,
 		priority: issue.priority.id,
+		creator: issue.creator.id,
+		assigned: issue.assigned ? issue.assigned.id : undefined,
 	};
 
 	useEffect(() => {

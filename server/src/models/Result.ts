@@ -30,6 +30,7 @@ interface IssueResult {
 	sprint?: Sprint;
 	project?: Projects;
 	issueKey?: string;
+	watchers?: UserModel[];
 	assigned?: UserModel;
 	creator: UserModel;
 }

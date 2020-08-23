@@ -68,6 +68,13 @@ export class IssueRepository extends Repository<Issue> {
 		return result;
 	}
 
+	async watch(id: string, userId: string) {
+		const { watchers = [] }: Issue = await this.findOneById(id);
+		const qBuilder = this.createQueryBuilder().relation(Issue, 'watchers').of(id);
+		const promise = watchers.some((user) => user.id === userId) ? qBuilder.remove(userId) : qBuilder.add(userId);
+		return await promise;
+	}
+
 	async updateOneById(id: string, data: Issue) {
 		const result = await this.update(id, data);
 		const newIssue = await this.findOneById(id);

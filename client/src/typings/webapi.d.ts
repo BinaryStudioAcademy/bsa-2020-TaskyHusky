@@ -47,11 +47,12 @@ namespace WebApi.Issue {
 		links?: string[];
 		priority: string;
 		description?: string;
-		sprint?: Sprint;
-		project?: Projects;
+		sprint?: string;
+		project?: string;
 		issueKey?: string;
 		assigned?: string;
 		creator: string;
+		watchers?: string[];
 	}
 	interface PartialIssueComment {
 		text?: string;
@@ -86,6 +87,7 @@ namespace WebApi.Result {
 		sprint?: Sprint;
 		project?: Projects;
 		issueKey?: string;
+		watchers?: UserModel[];
 		assigned?: UserModel;
 		creator: UserModel;
 	}
@@ -163,8 +165,8 @@ namespace WebApi.User {
 		id: string;
 		email: string;
 		password?: string;
-		lastName: string;
-		firstName: string;
+		lastName?: string;
+		firstName?: string;
 		username?: string;
 		avatar?: string;
 		location?: string;
@@ -241,6 +243,7 @@ namespace WebApi.Entities {
 		issueKey?: string;
 		assigned?: UserProfile;
 		creator: UserProfile;
+		watchers?: UserProfile[];
 		createdAt?: Date;
 		updatedAt?: Date;
 	}
@@ -329,7 +332,7 @@ namespace WebApi.Entities {
 		department?: string;
 		location?: string;
 		organization?: string;
-		email?: string;
+		email: string;
 		jobTitle?: string;
 		userSettingsId?: string;
 		password?: string;
@@ -348,5 +351,6 @@ namespace WebApi.Entities {
 		incomingInvites?: UserProfile[];
 		pendingInvites?: UserProfile[];
 		teammates?: UserProfile[];
+		watchingIssues?: Issue[];
 	}
 }
