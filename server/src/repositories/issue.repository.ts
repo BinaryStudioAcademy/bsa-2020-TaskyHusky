@@ -59,9 +59,13 @@ export class IssueRepository extends Repository<Issue> {
 		return this.findOneOrFail({ where: { issueKey: key }, relations: RELS });
 	}
 
-	createOne(data: Issue) {
+	async createOne(data: Issue) {
 		const entity = this.create(data);
-		return this.save(entity);
+		const result = await this.save(entity);
+		const newIssue = await this.findOneById(result.id);
+		issueHandler.emit(IssueActions.CreateIssue, newIssue);
+
+		return result;
 	}
 
 	async updateOneById(id: string, data: Issue) {
@@ -71,8 +75,11 @@ export class IssueRepository extends Repository<Issue> {
 		return result;
 	}
 
-	updateOneByKey(key: string, data: Issue) {
-		return this.update({ issueKey: key }, data);
+	async updateOneByKey(key: string, data: Issue) {
+		const result = await this.update({ issueKey: key }, data);
+		const newIssue = await this.findOneByKey(key);
+		issueHandler.emit(IssueActions.UpdateIssue, newIssue.id, newIssue);
+		return result;
 	}
 
 	deleteOneById(id: string) {

@@ -2,7 +2,7 @@ import { connect } from 'socket.io-client';
 import { ioURL } from 'config/io.config';
 import { useEffect, useState } from 'react';
 
-export const useIO = (type: string) => {
+export const useIO = (type: WebApi.IO.Types) => {
 	const [io, setIO] = useState<SocketIOClient.Socket | undefined>();
 
 	useEffect(() => {

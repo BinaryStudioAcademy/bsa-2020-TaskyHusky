@@ -3,6 +3,7 @@ import { Segment } from 'semantic-ui-react';
 import IssueCard from 'components/IssueCard';
 import { useTranslation } from 'react-i18next';
 import { getProjectIssues } from 'services/projects.service';
+import { useIO } from 'hooks/useIO';
 
 interface Props {
 	projectId: string;
@@ -15,23 +16,30 @@ interface Dictionary<V> {
 }
 
 const ProjectIssuesColumn: React.FC<Props> = ({ projectId, onChangeSelectedCard, search }) => {
-	const [issues, setIssues] = useState<WebApi.Result.IssueResult[] | null>(null);
+	const [issues, setIssues] = useState<WebApi.Result.IssueResult[]>([]);
+	const [mustFetchIssues, setMustFetchIssues] = useState<boolean>(true);
 	const issueCardUnselect: Dictionary<() => void> = {};
 	const { t } = useTranslation();
+	const io = useIO(WebApi.IO.Types.Issue);
 
 	useEffect(() => {
-		if (!issues) {
+		if (mustFetchIssues) {
 			getProjectIssues(projectId).then(setIssues);
+			setMustFetchIssues(false);
 		}
-	}, [projectId, issues]);
+	}, [projectId, mustFetchIssues]);
 
-	if (!issues) {
+	if (mustFetchIssues || !io) {
 		return null;
 	}
 
 	const displayIssues = issues.filter((issue) =>
 		(issue.summary as string).toLowerCase().includes(search.toLowerCase()),
 	);
+
+	io.on(WebApi.IO.IssueActions.CreateIssue, (newIssue: WebApi.Result.IssueResult) => {
+		setIssues([...issues, newIssue]);
+	});
 
 	return (
 		<Segment style={{ backgroundColor: '#EEE', height: '95%', width: 300, marginLeft: 60 }}>

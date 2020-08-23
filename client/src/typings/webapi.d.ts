@@ -24,6 +24,7 @@ namespace WebApi.Board {
 
 namespace WebApi.IO {
 	export enum IssueActions {
+		CreateIssue = 'ISSUE:CREATE',
 		UpdateIssue = 'ISSUE:UPDATE',
 		DeleteIssue = 'ISSUE:DELETE',
 		CommentIssue = 'ISSUE:COMMENT:ADD',
