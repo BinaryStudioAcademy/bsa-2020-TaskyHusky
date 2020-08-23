@@ -40,8 +40,8 @@ const IssuePageInfoColumn: React.FC<Props> = ({
 	io.on(WebApi.IO.IssueActions.DeleteIssue, (id: string) => {
 		if (id === issue.id) {
 			NotificationManager.warning(
-				`Issue ${issue.issueKey} was deleted. This page will not be available, once you reload or leave it.`,
-				'Warning',
+				`${t('issue')} ${issue.issueKey} ${t('issue_was_deleted_message_part_2')}`,
+				t('warning'),
 				6000,
 			);
 		}

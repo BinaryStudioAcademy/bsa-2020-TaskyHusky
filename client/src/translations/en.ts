@@ -277,4 +277,7 @@ export const en = {
 	create_team_modal_placeholder: "What's your team called?",
 	start: 'Start',
 	search_people_page_placeholder: 'Search for people and teams',
+	warning: 'Warning',
+	issue_was_deleted_message_part_2: 'was deleted. This page will not be available, once you reload or leave it.',
+	issue: 'Issue',
 };
