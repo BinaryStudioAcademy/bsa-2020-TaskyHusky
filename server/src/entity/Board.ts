@@ -5,6 +5,7 @@ import { Sprint } from './Sprint';
 import { UserProfile } from './UserProfile';
 import { BoardType } from '../models/Board';
 import { Projects } from './Projects';
+import { Issue } from './Issue';
 
 @Entity()
 export class Board {
@@ -24,6 +25,9 @@ export class Board {
 
 	@OneToMany((type) => Sprint, (sprint) => sprint.board)
 	sprints?: Sprint[];
+
+	@OneToMany((type) => Issue, (issue) => issue.board)
+	issues?: Issue[];
 
 	@ManyToOne((type) => UserProfile, (user) => user.boards, {
 		onDelete: 'CASCADE',
