@@ -63,6 +63,20 @@ class IssueController {
 		}
 	}
 
+	async getBacklogByBoardId(req: Request, res: Response) {
+		const { boardId } = req.params;
+		const repository = getCustomRepository(IssueRepository);
+
+		try {
+			const issues = await repository.findAllByBoardId(boardId);
+			const issuesWithoutSprint = issues.filter((issue) => !issue.sprint);
+
+			res.send(issuesWithoutSprint);
+		} catch (err) {
+			res.status(500).send(getWebError(err, 500));
+		}
+	}
+
 	async getByKey(req: Request, res: Response) {
 		const { key } = req.params;
 		const repository = getCustomRepository(IssueRepository);
@@ -72,6 +86,19 @@ class IssueController {
 			res.send(result);
 		} catch (err) {
 			res.status(404).send(getWebError(err, 404));
+		}
+	}
+
+	async watch(req: Request, res: Response) {
+		const { id } = req.params;
+		const { id: userId } = req.user;
+		const repository = getCustomRepository(IssueRepository);
+
+		try {
+			const result = await repository.watch(id, userId);
+			res.send(result);
+		} catch (err) {
+			res.status(500).send(getWebError(err, 500));
 		}
 	}
 
