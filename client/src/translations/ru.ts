@@ -254,4 +254,5 @@ export const ru = {
 	watchers: 'Отслеживают',
 	watch: 'Отслеживать',
 	unwatch: 'Не отслеживать',
+	key: 'Ключ',
 };

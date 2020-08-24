@@ -253,4 +253,5 @@ export const ua = {
 	watchers: 'Відстежують',
 	watch: 'Відстежувати',
 	unwatch: 'Не відстежувати',
+	key: 'Ключ',
 };

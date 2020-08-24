@@ -286,4 +286,5 @@ export const en = {
 	watchers: 'Watchers',
 	watch: 'Watch',
 	unwatch: 'Unwatch',
+	key: 'Key',
 };
