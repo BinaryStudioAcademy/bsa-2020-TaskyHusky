@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, OneToMany, ManyToOne } from 'typeorm';
 import { IsString, IsBoolean, IsNotEmpty, IsDate } from 'class-validator';
 import { UserProfile } from './UserProfile';
 
@@ -24,7 +24,7 @@ export class Notification {
 	@IsBoolean()
 	isViewed!: boolean;
 
-	@OneToMany((type) => UserProfile, (user) => user.notifications)
+	@ManyToOne((type) => UserProfile, (user) => user.notifications)
 	@IsNotEmpty()
 	user!: UserProfile;
 

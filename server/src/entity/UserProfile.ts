@@ -106,7 +106,7 @@ export class UserProfile {
 	@ManyToMany((type) => Issue, (issue) => issue.watchers)
 	watchingIssues?: Issue[];
 
-	@ManyToOne((type) => Notification, (notification) => notification.user)
+	@OneToMany((type) => Notification, (notification) => notification.user)
 	notifications?: Notification[];
 
 	constructor(userData?: Partial<UserProfile>) {
