@@ -9,7 +9,7 @@ interface Props {
 	content?: string;
 }
 
-export const ConfirmModal = ({ isOpened, setIsOpened, confirmAction, header, content }: Props) => (
+const ConfirmModal = ({ isOpened, setIsOpened, confirmAction, header, content }: Props) => (
 	<Modal size={'mini'} dimmer="inverted" open={isOpened} onClose={() => setIsOpened(false)}>
 		<Modal.Header>{header}</Modal.Header>
 		<Modal.Content>
@@ -23,3 +23,5 @@ export const ConfirmModal = ({ isOpened, setIsOpened, confirmAction, header, con
 		</Modal.Actions>
 	</Modal>
 );
+
+export default ConfirmModal;
