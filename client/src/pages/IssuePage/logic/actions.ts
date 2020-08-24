@@ -11,3 +11,4 @@ export const createIssue = createAction<actionTypes.CreateIssue>(actionTypes.CRE
 export const createIssueSuccess = createAction<actionTypes.CreateIssue>(actionTypes.CREATE_ISSUE_SUCCESS);
 export const updateIssue = createAction<actionTypes.UpdateIssue>(actionTypes.UPDATE_ISSUE);
 export const deleteIssue = createAction<actionTypes.DeleteIssue>(actionTypes.DELETE_ISSUE);
+export const watchIssue = createAction<actionTypes.WatchIssue>(actionTypes.WATCH_ISSUE);

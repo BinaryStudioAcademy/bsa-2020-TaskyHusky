@@ -245,4 +245,8 @@ export const ua = {
 	createAt: 'Створений',
 	updatedAt: 'Оновлений',
 	key: 'Ключ',
+	anonymous: 'Аноним',
+	watchers: 'Відстежують',
+	watch: 'Відстежувати',
+	unwatch: 'Не відстежувати',
 };

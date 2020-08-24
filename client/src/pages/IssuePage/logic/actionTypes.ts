@@ -8,6 +8,7 @@ export const UPDATE_ISSUE = 'ISSUE:UPDATE';
 export const DELETE_ISSUE = 'ISSUE:DELETE_ISSUE';
 export const SET_STATUSES = 'ISSUE:SET_STATUSES';
 export const LOAD_STATUSES = 'ISSUE:LOAD_STATUSES';
+export const WATCH_ISSUE = 'ISSUE:WATCH';
 
 export type SetTypes = {
 	data: WebApi.Entities.IssueType[];
@@ -31,5 +32,9 @@ export type UpdateIssue = {
 };
 
 export type DeleteIssue = {
+	id: string;
+};
+
+export type WatchIssue = {
 	id: string;
 };

@@ -17,6 +17,7 @@ router
 	.post('/filtered', controller.getFilteredIssues)
 	.get('/:id', controller.getById)
 	.get('/byKey/:key', controller.getByKey)
+	.post('/:id/watch', controller.watch)
 	.post('/', controller.create)
 	.put('/:id', controller.update)
 	.put('/byKey/:key', controller.updateByKey)

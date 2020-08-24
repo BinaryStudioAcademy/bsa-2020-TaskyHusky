@@ -245,4 +245,8 @@ export const ru = {
 	createAt: 'Создано',
 	updatedAt: 'Изменен',
 	key: 'Ключ',
+	anonymous: 'Аноним',
+	watchers: 'Отслеживают',
+	watch: 'Отслеживать',
+	unwatch: 'Не отслеживать',
 };
