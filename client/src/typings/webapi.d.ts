@@ -38,6 +38,7 @@ namespace WebApi.Issue {
 		issueKey?: string;
 		assigned?: string;
 		creator: string;
+		watchers?: string[];
 	}
 	interface PartialIssueComment {
 		text?: string;
@@ -257,6 +258,16 @@ namespace WebApi.Entities {
 		issues?: Issue[];
 	}
 
+	interface Notification {
+		id: string;
+		title?: string;
+		link?: string;
+		text: string;
+		isViewed: boolean;
+		user: UserProfile;
+		createdAt: Date;
+	}
+
 	interface Priority {
 		id: string;
 		icon: string;
@@ -337,5 +348,6 @@ namespace WebApi.Entities {
 		pendingInvites?: UserProfile[];
 		teammates?: UserProfile[];
 		watchingIssues?: Issue[];
+		notifications?: Notification[];
 	}
 }
