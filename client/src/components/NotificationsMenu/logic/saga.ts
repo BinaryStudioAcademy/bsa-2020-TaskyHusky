@@ -3,8 +3,8 @@ import * as actionTypes from './actionTypes';
 import { call, put, takeEvery, all } from 'redux-saga/effects';
 import { getNotifications, viewNotification } from 'services/notification.service';
 
-function* fetchNotifications({ userId }: ReturnType<typeof actions.loadNotifications>) {
-	const result = yield call(getNotifications, userId);
+function* fetchNotifications() {
+	const result = yield call(getNotifications);
 	yield put(actions.setNotifications({ notifications: result }));
 }
 

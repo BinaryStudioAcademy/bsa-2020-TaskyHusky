@@ -56,7 +56,7 @@ const NotificationsMenu: React.FC = () => {
 					/>
 				</Dropdown.Item>
 				{displayNotifications.length ? (
-					notifications.map((notif) => (
+					displayNotifications.map((notif) => (
 						<div style={{ paddingLeft: 10, paddingRight: 10 }} key={notif.id}>
 							<UserNotification notification={notif} notifications={notifications} />
 						</div>

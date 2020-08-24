@@ -6,7 +6,7 @@ import { getWebError } from '../helpers/error.helper';
 export class NotificationController {
 	getAll = async (req: Request, res: Response) => {
 		const repository = getCustomRepository(NotificationRepository);
-		const { id } = req.params;
+		const { id } = req.user;
 
 		try {
 			const result = await repository.findAllByUser(id);

@@ -5,7 +5,7 @@ const controller = new NotificationController();
 const router = Router();
 
 router
-	.get('/byUser/:id', controller.getAll)
+	.get('/', controller.getAll)
 	.get('/:id', controller.getOneById)
 	.post('/', controller.postNotification)
 	.put('/:id', controller.updateNotification)
