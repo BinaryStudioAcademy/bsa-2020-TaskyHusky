@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { orderBy } from 'lodash-es';
 
 import { setProjectActions } from './config/projectActions';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import Options from 'components/common/Options';
 import { useDispatch } from 'react-redux';
 import * as generalProjectActions from 'components/ProjectsCommon/logic/actions';
@@ -77,7 +77,6 @@ const ProjectsTable = ({ projects }: Props) => {
 						>
 							{t('lead')}
 						</Table.HeaderCell>
-						{/* <Table.HeaderCell>{t('board')}</Table.HeaderCell> */}
 						<Table.HeaderCell
 							className={[styles.column__settings, styles.table__header_cell].join(' ')}
 						></Table.HeaderCell>
@@ -88,8 +87,10 @@ const ProjectsTable = ({ projects }: Props) => {
 					{sortedProjects.map(({ id, name, key, icon, lead }) => (
 						<Table.Row key={id}>
 							<Table.Cell className={[styles.project__name_container].join(' ')}>
-								<img className={styles.project__img} src={icon} alt="Project avatar" />
-								<span className={styles.project__name}>{name}</span>
+								<Link to={`/project/${id}/issues`}>
+									<img className={styles.project__img} src={icon} alt="Project avatar" />
+									<span className={styles.project__name}>{name}</span>
+								</Link>
 							</Table.Cell>
 							<Table.Cell>{key}</Table.Cell>
 							<Table.Cell>Software</Table.Cell>
@@ -97,9 +98,7 @@ const ProjectsTable = ({ projects }: Props) => {
 								<UserAvatar user={lead} small />
 								<span>{`${lead.firstName} ${lead.lastName}`}</span>
 							</Table.Cell>
-							{/* <Table.Cell>
-								<NavLink to={`/project/${id}/issues`}>{t('go_to_board')}</NavLink>
-							</Table.Cell> */}
+
 							<Table.Cell>
 								<Options
 									config={setProjectActions({ id, onOpenSettings, onTrash })}
