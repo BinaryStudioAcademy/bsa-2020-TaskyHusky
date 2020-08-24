@@ -44,7 +44,9 @@ const Projects: React.FC = () => {
 		<div className={styles.wrapper}>
 			<div className={styles.wrapper__title}>
 				<h1 className={styles.title}>{t('projects')}</h1>
-				<CreateProjectModal />
+				<CreateProjectModal>
+					<Button primary>{t('create_project')}</Button>
+				</CreateProjectModal>
 			</div>
 			<div className={[styles.wrapper__filters, styles.filters].join(' ')}>
 				<Input icon="search" placeholder={t('search')} onChange={onSearch} value={searchName} />

@@ -16,12 +16,16 @@ import icons from 'assets/images/project';
 
 type Template = keyof typeof WebApi.Board.BoardType;
 
-const CreateProjectModal: React.FC = () => {
+interface Props {
+	children?: JSX.Element;
+}
+
+const CreateProjectModal: React.FC<Props> = ({ children }) => {
 	const templatesInformation = getTemplatesInformation();
 	const dispatch = useDispatch();
 	const { t } = useTranslation();
 
-	const { isLoading, isModalOpened, isProjectCreated, keys, isError } = useSelector(
+	const { isLoading, isProjectCreated, keys, isError } = useSelector(
 		(rootState: RootState) => rootState.createProject,
 	);
 
@@ -37,6 +41,8 @@ const CreateProjectModal: React.FC = () => {
 	const [isKeyValid, setIsKeyValid] = useState<boolean>(true);
 	const [isGithubUrlValid, setIsGithubUrlValid] = useState<boolean>(true);
 	const [isValidErrorShown, setIsValidErrorShown] = useState<boolean>(false);
+
+	const [isModalOpened, setIsModalOpened] = useState<boolean>(false);
 
 	const { description, image } = templatesInformation[template];
 
@@ -83,11 +89,11 @@ const CreateProjectModal: React.FC = () => {
 			return;
 		}
 
-		dispatch(actions.closeModal());
+		setIsModalOpened(false);
 	};
 
 	const onModalOpen = () => {
-		dispatch(actions.openModal());
+		setIsModalOpened(true);
 		dispatch(actions.startGettingKeys());
 	};
 
@@ -124,9 +130,10 @@ const CreateProjectModal: React.FC = () => {
 			onClose={onModalClose}
 			onOpen={onModalOpen}
 			open={isModalOpened}
-			size={'tiny'}
+			size="tiny"
 			dimmer="inverted"
-			trigger={<Button primary>{t('create_project')}</Button>}
+			trigger={children}
+			openOnTriggerClick
 		>
 			{!isTemplatesView ? (
 				<>
