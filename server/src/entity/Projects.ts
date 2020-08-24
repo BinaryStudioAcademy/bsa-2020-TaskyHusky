@@ -77,7 +77,7 @@ export class Projects {
 	@JoinTable({ name: 'projects_people' })
 	users!: UserProfile[];
 
-	@Column()
+	@Column({ nullable: true })
 	@IsString()
 	@Matches(/https:\/\/github\.com\/(.+\/){2}\/?/)
 	githubUrl?: string;

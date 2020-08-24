@@ -114,7 +114,7 @@ namespace WebApi.Result {
 		description?: string;
 		icon?: string;
 		category?: string;
-		githubUrl: string;
+		githubUrl?: string;
 		createdDate?: Date;
 		updatedDate?: Date;
 		deletedDate?: Date;
