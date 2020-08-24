@@ -176,6 +176,7 @@ namespace WebApi.Entities {
 		name: string;
 		columns?: BoardColumn[];
 		sprints?: Sprint[];
+		issues?: Issue[];
 		createdBy: UserProfile;
 		createdAt: Date;
 		projects?: Projects[];
@@ -220,6 +221,7 @@ namespace WebApi.Entities {
 		status?: IssueStatus;
 		summary?: string;
 		boardColumn?: BoardColumn;
+		board?: Board;
 		labels?: string;
 		attachments?: string;
 		links?: string;
