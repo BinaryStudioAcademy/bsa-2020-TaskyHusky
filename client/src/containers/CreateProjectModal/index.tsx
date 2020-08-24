@@ -11,17 +11,21 @@ import styles from './styles.module.scss';
 import CustomInput from 'components/common/Input/CustomInput';
 import { generateKey } from 'commonLogic/keyGenerator';
 import * as validationMessage from 'constants/ValidationMessages';
-import { validProjectName, validProjectKey } from 'helpers/validationRules';
+import { validProjectName, validProjectKey, validGitHiubUrl } from 'helpers/validationRules';
 import icons from 'assets/images/project';
 
 type Template = keyof typeof WebApi.Board.BoardType;
 
-const CreateProjectModal: React.FC = () => {
+interface Props {
+	children?: JSX.Element;
+}
+
+const CreateProjectModal: React.FC<Props> = ({ children }) => {
 	const templatesInformation = getTemplatesInformation();
 	const dispatch = useDispatch();
 	const { t } = useTranslation();
 
-	const { isLoading, isModalOpened, isProjectCreated, keys, isError } = useSelector(
+	const { isLoading, isProjectCreated, keys, isError } = useSelector(
 		(rootState: RootState) => rootState.createProject,
 	);
 
@@ -30,11 +34,15 @@ const CreateProjectModal: React.FC = () => {
 
 	const [name, setName] = useState<string>('');
 	const [key, setKey] = useState<string>('');
+	const [githubUrl, setGithubUrl] = useState<string>('');
 	const [template, setTemplate] = useState<Template>('Scrum');
 
 	const [isNameValid, setIsNameValid] = useState<boolean>(false);
 	const [isKeyValid, setIsKeyValid] = useState<boolean>(true);
+	const [isGithubUrlValid, setIsGithubUrlValid] = useState<boolean>(true);
 	const [isValidErrorShown, setIsValidErrorShown] = useState<boolean>(false);
+
+	const [isModalOpened, setIsModalOpened] = useState<boolean>(false);
 
 	const { description, image } = templatesInformation[template];
 
@@ -55,6 +63,7 @@ const CreateProjectModal: React.FC = () => {
 				key,
 				template,
 				icon: icons.icon1,
+				githubUrl,
 			}),
 		);
 	};
@@ -80,11 +89,11 @@ const CreateProjectModal: React.FC = () => {
 			return;
 		}
 
-		dispatch(actions.closeModal());
+		setIsModalOpened(false);
 	};
 
 	const onModalOpen = () => {
-		dispatch(actions.openModal());
+		setIsModalOpened(true);
 		dispatch(actions.startGettingKeys());
 	};
 
@@ -121,9 +130,10 @@ const CreateProjectModal: React.FC = () => {
 			onClose={onModalClose}
 			onOpen={onModalOpen}
 			open={isModalOpened}
-			size={'tiny'}
+			size="tiny"
 			dimmer="inverted"
-			trigger={<Button primary>{t('create_project')}</Button>}
+			trigger={children}
+			openOnTriggerClick
 		>
 			{!isTemplatesView ? (
 				<>
@@ -132,7 +142,7 @@ const CreateProjectModal: React.FC = () => {
 					<Modal.Content>
 						<Form className={styles.form_container}>
 							<Form.Field>
-								<label>{t('name')}</label>
+								<label className="required">{t('name')}</label>
 								<CustomInput
 									isValidErrorShown={isValidErrorShown}
 									isDataValid={isNameValid}
@@ -145,7 +155,7 @@ const CreateProjectModal: React.FC = () => {
 								/>
 							</Form.Field>
 							<Form.Field>
-								<label>{t('key')}</label>
+								<label className="required">{t('key')}</label>
 								<CustomInput
 									isValidErrorShown={isValidErrorShown}
 									isDataValid={isKeyValid}
@@ -155,6 +165,19 @@ const CreateProjectModal: React.FC = () => {
 									placeholder="Enter your key"
 									popUpContent={validationMessage.VM_PROJECT_KEY}
 									validation={validProjectKey}
+								/>
+							</Form.Field>
+							<Form.Field>
+								<label>GitHub URL</label>
+								<CustomInput
+									isValidErrorShown={isValidErrorShown}
+									isDataValid={isGithubUrlValid}
+									setIsDataValid={setIsGithubUrlValid}
+									data={githubUrl}
+									setData={setGithubUrl}
+									placeholder="Enter your project's GitHub URL"
+									popUpContent={validationMessage.VM_GITHUB_URL}
+									validation={validGitHiubUrl}
 								/>
 							</Form.Field>
 						</Form>

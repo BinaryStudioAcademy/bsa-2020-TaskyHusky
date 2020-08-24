@@ -41,3 +41,15 @@
 		}
 	}
 }
+
+.project__img {
+	width: 30px;
+	height: 30px;  
+	border-radius: 3px;     
+	margin-right: 14px; 
+  }
+
+  .project__name_container {
+	display: flex;
+	align-items: center;  
+  }

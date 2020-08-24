@@ -76,6 +76,7 @@ interface BoardProjectsResult {
 	description?: string;
 	icon?: string;
 	category?: string;
+	githubUrl?: string;
 	createdDate?: Date;
 	updatedDate?: Date;
 	deletedDate?: Date;
