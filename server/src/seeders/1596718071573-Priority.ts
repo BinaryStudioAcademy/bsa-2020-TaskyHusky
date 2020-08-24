@@ -16,7 +16,7 @@ export class Priority1596718071573 implements MigrationInterface {
 			},
 			{
 				color: 'blue',
-				icon: 'medium m',
+				icon: 'minus',
 				title: 'Medium',
 			},
 			{
