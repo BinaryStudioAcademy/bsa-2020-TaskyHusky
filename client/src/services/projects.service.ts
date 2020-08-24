@@ -1,4 +1,4 @@
-import { ProjectId } from './../containers/ProjectSettings/logic/actionTypes';
+import { ProjectId } from '../containers/ProjectDetails/logic/actionTypes';
 import callWebApi from './../helpers/callApi.helper';
 import { InitialProject, Keys } from './../containers/CreateProjectModal/logic/actionTypes';
 

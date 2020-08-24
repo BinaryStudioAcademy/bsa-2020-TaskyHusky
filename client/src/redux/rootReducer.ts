@@ -1,5 +1,5 @@
 import { projectCommonReducer } from 'components/ProjectsCommon/logic/reducer';
-import { projectReducer } from 'containers/ProjectSettings/logic/reducer';
+import { projectReducer } from 'containers/ProjectDetails/logic/reducer';
 import { createProjectReducer } from 'containers/CreateProjectModal/logic/reducer';
 import { userProfileReducer } from 'containers/ProfilePage/logiс/reducer';
 import { projectsReducer } from 'containers/Projects/logic/reducer';

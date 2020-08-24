@@ -1,5 +1,5 @@
 import { projectCommonState } from '../components/ProjectsCommon/logic/state';
-import { ProjectState } from './../containers/ProjectSettings/logic/state';
+import { ProjectState } from '../containers/ProjectDetails/logic/state';
 import { FilterDefsState } from '../commonLogic/filterDefs/state';
 import { ProjectsState } from '../containers/Projects/logic/state';
 import { AuthState } from './../containers/LoginPage/logic/state';
