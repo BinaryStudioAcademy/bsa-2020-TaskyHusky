@@ -249,4 +249,8 @@ export const ua = {
 	createAt: 'Створений',
 	updatedAt: 'Оновлений',
 	sign_up_with_google: 'Продовжити з допомогою Google',
+	anonymous: 'Аноним',
+	watchers: 'Відстежують',
+	watch: 'Відстежувати',
+	unwatch: 'Не відстежувати',
 };

@@ -89,6 +89,19 @@ class IssueController {
 		}
 	}
 
+	async watch(req: Request, res: Response) {
+		const { id } = req.params;
+		const { id: userId } = req.user;
+		const repository = getCustomRepository(IssueRepository);
+
+		try {
+			const result = await repository.watch(id, userId);
+			res.send(result);
+		} catch (err) {
+			res.status(500).send(getWebError(err, 500));
+		}
+	}
+
 	async create(req: Request, res: Response) {
 		const { body: data } = req;
 		const repository = getCustomRepository(IssueRepository);

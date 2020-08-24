@@ -1,6 +1,3 @@
-import { Sprint } from '../entity/Sprint';
-import { Projects } from '../entity/Projects';
-
 interface PartialIssue {
 	id?: string;
 	type: string;
@@ -11,11 +8,12 @@ interface PartialIssue {
 	links?: string[];
 	priority: string;
 	description?: string;
-	sprint?: Sprint;
-	project?: Projects;
+	sprint?: string;
+	project?: string;
 	issueKey?: string;
 	assigned?: string;
 	creator: string;
+	watchers?: string[];
 }
 
 export interface PartialIssueComment {

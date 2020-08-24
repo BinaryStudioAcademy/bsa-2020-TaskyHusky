@@ -250,4 +250,8 @@ export const ru = {
 	createAt: 'Создано',
 	updatedAt: 'Изменен',
 	sign_up_with_google: 'Продолжить с помощью Google',
+	anonymous: 'Аноним',
+	watchers: 'Отслеживают',
+	watch: 'Отслеживать',
+	unwatch: 'Не отслеживать',
 };

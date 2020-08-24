@@ -2,7 +2,7 @@ import { EntityRepository, Repository } from 'typeorm';
 import { Issue } from '../entity/Issue';
 import { getConditions } from '../helpers/issue.helper';
 
-const RELS = ['priority', 'type', 'creator', 'assigned', 'status'];
+const RELS = ['priority', 'type', 'creator', 'assigned', 'status', 'watchers'];
 type SortDir = 'DESC' | 'ASC';
 
 type Sort = {
@@ -64,6 +64,13 @@ export class IssueRepository extends Repository<Issue> {
 	createOne(data: Issue) {
 		const entity = this.create(data);
 		return this.save(entity);
+	}
+
+	async watch(id: string, userId: string) {
+		const { watchers = [] }: Issue = await this.findOneById(id);
+		const qBuilder = this.createQueryBuilder().relation(Issue, 'watchers').of(id);
+		const promise = watchers.some((user) => user.id === userId) ? qBuilder.remove(userId) : qBuilder.add(userId);
+		return await promise;
 	}
 
 	updateOneById(id: string, data: Issue) {

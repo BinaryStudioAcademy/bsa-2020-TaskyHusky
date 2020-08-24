@@ -145,3 +145,10 @@ export const getBacklogByBoardId = async (id: string): Promise<WebApi.Entities.I
 
 	return await res.json();
 };
+
+export const watch = async (id: string): Promise<void> => {
+	await callWebApi({
+		method: 'POST',
+		endpoint: `issue/${id}/watch`,
+	});
+};
