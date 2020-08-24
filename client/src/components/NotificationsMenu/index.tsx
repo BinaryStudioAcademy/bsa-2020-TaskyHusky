@@ -33,13 +33,14 @@ const NotificationsMenu: React.FC = () => {
 		);
 	};
 
+	document.body.onclick = () => setIsOpened(false);
+
 	return (
 		<Dropdown
 			icon="bell outline"
 			className={styles.circularIcon}
 			direction="left"
 			onOpen={() => setIsOpened(true)}
-			onBlur={() => setIsOpened(false)}
 			open={isOpened}
 		>
 			<Dropdown.Menu className={styles.circularDropdownMenu}>
@@ -56,9 +57,9 @@ const NotificationsMenu: React.FC = () => {
 				</Dropdown.Item>
 				{displayNotifications.length ? (
 					notifications.map((notif) => (
-						<ClosingItem key={notif.id}>
-							<UserNotification notification={notif} />
-						</ClosingItem>
+						<div style={{ paddingLeft: 10, paddingRight: 10 }} key={notif.id}>
+							<UserNotification notification={notif} notifications={notifications} />
+						</div>
 					))
 				) : (
 					<ClosingItem>{t('no')}</ClosingItem>

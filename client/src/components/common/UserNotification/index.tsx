@@ -1,41 +1,51 @@
 import React from 'react';
 import styles from './styles.module.scss';
+import { useDispatch } from 'react-redux';
+import * as actions from 'components/NotificationsMenu/logic/actions';
+import { Button } from 'semantic-ui-react';
 
 interface Props {
 	notification: WebApi.Entities.Notification;
+	notifications: WebApi.Entities.Notification[];
 }
 
-interface LinkProps {
-	children: JSX.Element;
-}
+const UserNotification: React.FC<Props> = ({ notification, notifications }) => {
+	const { id, title, text, link, isViewed } = notification;
+	const dispatch = useDispatch();
 
-const UserNotification: React.FC<Props> = ({ notification }) => {
-	const { title, text, link, isViewed } = notification;
+	const view = () => {
+		dispatch(actions.viewNotification({ id }));
 
-	const Link: React.FC<LinkProps> = ({ children }) => {
-		if (link) {
-			return (
-				<a href={link} rel="noopener noreferrer" target="_blank" className={styles.link}>
-					{children}
-				</a>
-			);
-		}
+		const newNotifications = [...notifications];
+		const index = newNotifications.findIndex((notif) => notif.id === id);
+		newNotifications[index].isViewed = true;
 
-		return children;
+		dispatch(actions.setNotifications({ notifications: newNotifications }));
 	};
 
-	const renderTitle = title ? <h3 className={styles.header}>{title}</h3> : null;
+	const renderTitle = title ? <h3 style={{ marginBottom: 10 }}>{title}</h3> : null;
 
-	const renderMarker = !isViewed ? <div className={styles.unreadMarker} /> : null;
+	const renderMarker = !isViewed ? (
+		<Button onClick={view} secondary inverted compact size="tiny" style={{ marginTop: 10 }}>
+			Mark notification as read
+		</Button>
+	) : null;
 
 	return (
-		<Link>
-			<div className={styles.container}>
-				{renderTitle}
+		<div className={styles.container}>
+			{renderTitle}
+			<div>
 				{text}
-				{renderMarker}
+				{link ? (
+					<a target="_blank" rel="noopener noreferrer" href={link} style={{ marginLeft: 20 }}>
+						See it!
+					</a>
+				) : (
+					''
+				)}
 			</div>
-		</Link>
+			{renderMarker}
+		</div>
 	);
 };
 
