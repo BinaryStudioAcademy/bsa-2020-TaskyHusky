@@ -244,4 +244,5 @@ export const ru = {
 	no_projects: 'Не найдено ни одного проекта',
 	createAt: 'Создано',
 	updatedAt: 'Изменен',
+	key: 'Ключ',
 };

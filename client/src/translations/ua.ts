@@ -244,4 +244,5 @@ export const ua = {
 	no_projects: 'Не знайдено проектів',
 	createAt: 'Створений',
 	updatedAt: 'Оновлений',
+	key: 'Ключ',
 };
