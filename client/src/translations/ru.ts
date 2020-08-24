@@ -249,10 +249,10 @@ export const ru = {
 	no_projects: 'Не найдено ни одного проекта',
 	createAt: 'Создано',
 	updatedAt: 'Изменен',
+	key: 'Ключ',
 	sign_up_with_google: 'Продолжить с помощью Google',
 	anonymous: 'Аноним',
 	watchers: 'Отслеживают',
 	watch: 'Отслеживать',
 	unwatch: 'Не отслеживать',
-	key: 'Ключ',
 };
