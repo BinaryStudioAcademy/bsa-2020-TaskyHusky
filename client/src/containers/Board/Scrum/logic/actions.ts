@@ -24,3 +24,6 @@ export const saveBoardToState = createAction<actionTypes.SaveBoardToState>(actio
 
 export const loadProjectTrigger = createAction<actionTypes.LoadProjectTrigger>(actionTypes.LOAD_PROJECT_TRIGGER);
 export const loadProjectSuccess = createAction<actionTypes.LoadProjectSuccess>(actionTypes.LOAD_PROJECT_SUCCESS);
+
+export const loadBacklogTrigger = createAction<actionTypes.LoadBacklogTrigger>(actionTypes.LOAD_BACKLOG_TRIGGER);
+export const loadBacklogSuccess = createAction<actionTypes.LoadBacklogSuccess>(actionTypes.LOAD_BACKLOG_SUCCESS);

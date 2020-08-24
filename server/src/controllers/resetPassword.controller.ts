@@ -10,16 +10,16 @@ import { transporter } from '../../config/nodeMailer.config';
 import { expirationTime } from '../constants/resetPassword.constants';
 import { sendToken } from '../services/email.service';
 
-async function wrappedVerify(){
-	return new Promise((resolve, reject) =>{
-		transporter.verify(function(error, success) {
+async function wrappedVerify() {
+	return new Promise((resolve, reject) => {
+		transporter.verify((error, success) => {
 			if (error) {
 				reject(error);
 			} else {
 				resolve(true);
 			}
-		})
-	})
+		});
+	});
 }
 
 class ResetPasswordController {

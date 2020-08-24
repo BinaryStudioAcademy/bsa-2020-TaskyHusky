@@ -16,6 +16,7 @@ interface Props {
 	priorities: WebApi.Entities.Priority[];
 	boardColumnID?: string;
 	sprintID?: string;
+	boardID?: string;
 	projectID?: string;
 	onClose?: (data: WebApi.Issue.PartialIssue) => void;
 	projects: WebApi.Entities.Projects[];
@@ -41,6 +42,7 @@ const CreateIssueModalBody: React.FC<Props> = ({
 	projectID,
 	users,
 	sprintID,
+	boardID,
 }) => {
 	const { t } = useTranslation();
 	const [isOpened, setIsOpened] = useState<boolean>(false);
@@ -112,7 +114,8 @@ const CreateIssueModalBody: React.FC<Props> = ({
 		const data = {
 			...context.data,
 			...(boardColumnID ? { boardColumn: boardColumnID } : {}),
-			sprint: sprintID ?? null,
+			sprint: sprintID,
+			board: boardID,
 			project: projectID ?? context.data.project,
 			issueKey: generateRandomString(KeyGenerate.LENGTH),
 			assigned: context.data.assigned,
@@ -201,11 +204,11 @@ const CreateIssueModalBody: React.FC<Props> = ({
 					</Form.Field>
 					<Divider />
 					<Form.Field>
-						<label>{t('assignee')}</label>
+						<label>{t('assigned')}</label>
 						<Form.Dropdown
 							clearable
 							selection
-							placeholder={t('assignee')}
+							placeholder={t('assigned')}
 							options={usersOpts}
 							onChange={(event, data) => context.set('assigned', data.value)}
 						/>

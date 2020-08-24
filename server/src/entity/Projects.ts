@@ -11,7 +11,7 @@ import {
 	CreateDateColumn,
 	UpdateDateColumn,
 } from 'typeorm';
-import { IsNotEmpty, IsString, Length, IsUppercase } from 'class-validator';
+import { IsNotEmpty, IsString, Length, IsUppercase, Matches } from 'class-validator';
 import { Issue } from './Issue';
 import { Sprint } from './Sprint';
 import { Board } from './Board';
@@ -76,6 +76,11 @@ export class Projects {
 	@ManyToMany((type) => UserProfile, (userProfile) => userProfile.projects, { cascade: true })
 	@JoinTable({ name: 'projects_people' })
 	users!: UserProfile[];
+
+	@Column({ nullable: true })
+	@IsString()
+	@Matches(/https:\/\/github\.com\/.+\/.+\.git/)
+	githubUrl?: string;
 
 	@CreateDateColumn()
 	createdDate?: Date;

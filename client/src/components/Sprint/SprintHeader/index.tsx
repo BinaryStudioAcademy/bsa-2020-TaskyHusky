@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { List, Item, Button } from 'semantic-ui-react';
-
 import Options, { ConfigItem } from 'components/common/Options';
 import styles from './styles.module.scss';
 import CreateIssueModal from 'containers/CreateIssueModal';
@@ -21,6 +20,7 @@ type Props = {
 export const SprintHeader: React.FC<Props> = ({ id, isActive, name, issues, isCompleted }) => {
 	const {
 		project: { id: projectId },
+		board: { id: boardId },
 	} = useSelector((rootState: RootState) => rootState.scrumBoard);
 	const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
 	const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false);
@@ -55,7 +55,7 @@ export const SprintHeader: React.FC<Props> = ({ id, isActive, name, issues, isCo
 
 				<List.Item>
 					<List.Content className={styles.rightContent}>
-						<CreateIssueModal projectID={projectId} sprintID={id}>
+						<CreateIssueModal projectID={projectId} sprintID={id} boardID={boardId}>
 							<Button icon="add" className={styles.createIssueButton} title="Create issue" />
 						</CreateIssueModal>
 						<Options config={config} />

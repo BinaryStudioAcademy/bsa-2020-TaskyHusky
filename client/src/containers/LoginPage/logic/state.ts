@@ -6,7 +6,7 @@ export interface User {
 	department?: string;
 	timezone?: string;
 	organization?: string;
-	email?: string;
+	email: string;
 	jobTitle?: string;
 	userSettingsId?: string;
 	password?: string;
