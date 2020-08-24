@@ -11,7 +11,7 @@ import styles from './styles.module.scss';
 import CustomInput from 'components/common/Input/CustomInput';
 import { generateKey } from 'commonLogic/keyGenerator';
 import * as validationMessage from 'constants/ValidationMessages';
-import { validProjectName, validProjectKey } from 'helpers/validationRules';
+import { validProjectName, validProjectKey, validGitHiubUrl } from 'helpers/validationRules';
 import icons from 'assets/images/project';
 
 type Template = keyof typeof WebApi.Board.BoardType;
@@ -34,10 +34,12 @@ const CreateProjectModal: React.FC<Props> = ({ children }) => {
 
 	const [name, setName] = useState<string>('');
 	const [key, setKey] = useState<string>('');
+	const [githubUrl, setGithubUrl] = useState<string>('');
 	const [template, setTemplate] = useState<Template>('Scrum');
 
 	const [isNameValid, setIsNameValid] = useState<boolean>(false);
 	const [isKeyValid, setIsKeyValid] = useState<boolean>(true);
+	const [isGithubUrlValid, setIsGithubUrlValid] = useState<boolean>(true);
 	const [isValidErrorShown, setIsValidErrorShown] = useState<boolean>(false);
 
 	const [isModalOpened, setIsModalOpened] = useState<boolean>(false);
@@ -61,6 +63,7 @@ const CreateProjectModal: React.FC<Props> = ({ children }) => {
 				key,
 				template,
 				icon: icons.icon1,
+				githubUrl,
 			}),
 		);
 	};
@@ -139,7 +142,7 @@ const CreateProjectModal: React.FC<Props> = ({ children }) => {
 					<Modal.Content>
 						<Form className={styles.form_container}>
 							<Form.Field>
-								<label>{t('name')}</label>
+								<label className="required">{t('name')}</label>
 								<CustomInput
 									isValidErrorShown={isValidErrorShown}
 									isDataValid={isNameValid}
@@ -152,7 +155,7 @@ const CreateProjectModal: React.FC<Props> = ({ children }) => {
 								/>
 							</Form.Field>
 							<Form.Field>
-								<label>{t('key')}</label>
+								<label className="required">{t('key')}</label>
 								<CustomInput
 									isValidErrorShown={isValidErrorShown}
 									isDataValid={isKeyValid}
@@ -162,6 +165,19 @@ const CreateProjectModal: React.FC<Props> = ({ children }) => {
 									placeholder="Enter your key"
 									popUpContent={validationMessage.VM_PROJECT_KEY}
 									validation={validProjectKey}
+								/>
+							</Form.Field>
+							<Form.Field>
+								<label>GitHub URL</label>
+								<CustomInput
+									isValidErrorShown={isValidErrorShown}
+									isDataValid={isGithubUrlValid}
+									setIsDataValid={setIsGithubUrlValid}
+									data={githubUrl}
+									setData={setGithubUrl}
+									placeholder="Enter your project's GitHub URL"
+									popUpContent={validationMessage.VM_GITHUB_URL}
+									validation={validGitHiubUrl}
 								/>
 							</Form.Field>
 						</Form>

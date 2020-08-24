@@ -11,6 +11,7 @@ export type InitialProject = {
 	key: string;
 	template: string;
 	icon: string;
+	githubUrl: string;
 };
 
 export type Keys = {

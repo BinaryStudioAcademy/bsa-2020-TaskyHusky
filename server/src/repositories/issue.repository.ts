@@ -49,6 +49,10 @@ export class IssueRepository extends Repository<Issue> {
 		return this.find({ relations: RELS, where: { project: { id } } });
 	}
 
+	findAllByBoardId(id: string): Promise<Issue[]> {
+		return this.find({ relations: RELS.concat(['sprint']), where: { board: { id } } });
+	}
+
 	findOneById(id: string) {
 		return this.findOneOrFail({ where: { id }, relations: RELS });
 	}
@@ -66,7 +70,7 @@ export class IssueRepository extends Repository<Issue> {
 		const { watchers = [] }: Issue = await this.findOneById(id);
 		const qBuilder = this.createQueryBuilder().relation(Issue, 'watchers').of(id);
 		const promise = watchers.some((user) => user.id === userId) ? qBuilder.remove(userId) : qBuilder.add(userId);
-		return await promise;
+		return promise;
 	}
 
 	updateOneById(id: string, data: Issue) {
