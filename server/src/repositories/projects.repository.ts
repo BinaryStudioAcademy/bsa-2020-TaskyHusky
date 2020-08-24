@@ -1,6 +1,5 @@
-import { EntityRepository, Repository, In, getRepository } from 'typeorm';
+import { EntityRepository, Repository, getRepository } from 'typeorm';
 import { Projects } from '../entity/Projects';
-import { UserRepository } from './user.repository';
 
 @EntityRepository(Projects)
 export class ProjectsRepository extends Repository<Projects> {
@@ -13,7 +12,9 @@ export class ProjectsRepository extends Repository<Projects> {
 			.createQueryBuilder('project')
 			.leftJoinAndSelect('project.lead', 'lead')
 			.leftJoinAndSelect('project.users', 'users')
+			.leftJoin('project.users', 'user')
 			.where('project.id = :id', { id })
+			.andWhere('user.id = :userId', { userId })
 			.getOne();
 	}
 

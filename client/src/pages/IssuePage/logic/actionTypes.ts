@@ -3,10 +3,12 @@ export const LOAD_TYPES = 'ISSUE:TYPES:LOAD';
 export const SET_PRIORITIES = 'ISSUE:PRIORITIES:SET';
 export const LOAD_PRIORITIES = 'ISSUE:PRIORITIES:LOAD';
 export const CREATE_ISSUE = 'ISSUE:CREATE';
+export const CREATE_ISSUE_SUCCESS = 'ISSUE:CREATE_SUCCESS';
 export const UPDATE_ISSUE = 'ISSUE:UPDATE';
 export const DELETE_ISSUE = 'ISSUE:DELETE_ISSUE';
 export const SET_STATUSES = 'ISSUE:SET_STATUSES';
 export const LOAD_STATUSES = 'ISSUE:LOAD_STATUSES';
+export const WATCH_ISSUE = 'ISSUE:WATCH';
 
 export type SetTypes = {
 	data: WebApi.Entities.IssueType[];
@@ -30,5 +32,9 @@ export type UpdateIssue = {
 };
 
 export type DeleteIssue = {
+	id: string;
+};
+
+export type WatchIssue = {
 	id: string;
 };

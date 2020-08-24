@@ -3,6 +3,7 @@ import { getCustomRepository } from 'typeorm';
 import { TeammatesRepository } from '../repositories/teammates.repository';
 import { ErrorResponse } from '../helpers/errorHandler.helper';
 import HttpStatusCode from '../constants/httpStattusCode.constants';
+import { UserProfile } from '../entity/UserProfile';
 
 class TeammatesController {
 	getIncomingInvitation = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -34,7 +35,8 @@ class TeammatesController {
 		const { id } = req.params;
 
 		try {
-			const teammates = await teammatesRepository.getTeammates(id);
+			const teammates = <UserProfile[]>await teammatesRepository.getTeammates(id);
+
 			res.send(teammates);
 		} catch (error) {
 			next(new ErrorResponse(HttpStatusCode.NOT_FOUND, error.message));

@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../typings/rootState';
 import * as actions from '../../containers/Boards/logic/actions';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
 import CreateBoardModal from 'components/CreateBoardModal';
 import * as actionTypes from 'containers/Boards/logic/actionTypes';
 
@@ -29,8 +28,8 @@ export const BoardsMenu = ({ onCreateBoard }: { onCreateBoard(board: actionTypes
 					))}
 					<Dropdown.Divider />
 					<Dropdown.Item onClick={() => setCreateBoard(true)}>{t('create_board')}</Dropdown.Item>
-					<Dropdown.Item>
-						<Link to="/boards">{t('view_all_boards')}</Link>
+					<Dropdown.Item as="a" href="/boards">
+						{t('view_all_boards')}
 					</Dropdown.Item>
 				</Dropdown.Menu>
 			</Dropdown>

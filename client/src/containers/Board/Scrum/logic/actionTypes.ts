@@ -70,3 +70,14 @@ export type LoadProjectTrigger = {
 export type LoadProjectSuccess = {
 	project: WebApi.Entities.Projects;
 };
+
+export const LOAD_BACKLOG_TRIGGER = 'SCRUM_BOARD:LOAD_BACKLOG_TRIGGER';
+export const LOAD_BACKLOG_SUCCESS = 'SCRUM_BOARD:LOAD_BACKLOG_SUCCESS';
+
+export type LoadBacklogTrigger = {
+	boardId: string;
+};
+
+export type LoadBacklogSuccess = {
+	backlog: WebApi.Entities.Issue[];
+};

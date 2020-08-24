@@ -228,10 +228,15 @@ export const ru = {
 	no_sprints_header: 'Активные спринты отсутствуют',
 	no_sprints_header_subheader: 'Спланируйте работу своей команды. Создайте свой первый спринт.',
 	no_issues_in_sprint: 'Запланируйте спринт, создав несколько задач.',
+	no_issues_in_backlog: 'Бэклог - это список задач вашей команды',
+	backlog: 'Бэклог',
 	edit_sprint: 'Редактировать спринт',
 	delete_sprint: 'Удалить спринт',
 	sprint_cannot_be_deleted: 'Спринт не может быть удален',
-	delete_sprint_warning: 'Вы уверены, что хотите удалить этот спринт? Это действие не может быть отменено.',
+	delete_sprint_with_no_issues_warning:
+		'Вы уверены, что хотите удалить этот спринт? Это действие не может быть отменено.',
+	delete_sprint_with_issues_warning:
+		'Вы уверены, что хотите удалить этот спринт? Все текущие задачи будут перенесены в Бэклог. Это действие не может быть отменено.',
 	enter_sprint_name: 'Введите название спринта',
 	mark_sprint_as_active: 'Спринт будет отмечен как активный',
 	mark_sprint_as_inactive: 'Спринт будет отмечен как неактивный',
@@ -244,4 +249,10 @@ export const ru = {
 	no_projects: 'Не найдено ни одного проекта',
 	createAt: 'Создано',
 	updatedAt: 'Изменен',
+	sign_up_with_google: 'Продолжить с помощью Google',
+	anonymous: 'Аноним',
+	watchers: 'Отслеживают',
+	watch: 'Отслеживать',
+	unwatch: 'Не отслеживать',
+	key: 'Ключ',
 };

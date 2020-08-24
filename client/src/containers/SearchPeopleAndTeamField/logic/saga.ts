@@ -1,9 +1,5 @@
-import { fetchPeopleByFullNameFilter } from '../../../services/people.service';
-import { fetchTeamsByNameFilter } from '../../../services/team.service';
-import { all, put, takeEvery, call } from 'redux-saga/effects';
-import * as actionTypes from './actionTypes';
-import * as actions from './actions';
-
+import { all } from 'redux-saga/effects';
+/*
 export function* fetchPeopleSearchPage(action: ReturnType<typeof actions.startLoading>) {
 	const { name } = action;
 
@@ -11,9 +7,9 @@ export function* fetchPeopleSearchPage(action: ReturnType<typeof actions.startLo
 	const people = yield call(fetchPeopleByFullNameFilter, name);
 	yield put(actions.SuccessLoading({ teams, people }));
 }
-
+*/
 export function* watchStartLoading() {
-	yield takeEvery(actionTypes.START_LOADING, fetchPeopleSearchPage);
+	//	yield takeEvery(actionTypes.START_LOADING, fetchPeopleSearchPage);
 }
 
 export default function* projectsSaga() {

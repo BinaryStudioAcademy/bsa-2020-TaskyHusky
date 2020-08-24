@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, ManyToOne, JoinTable, OneToMany } from 'typeorm';
-import { IsString, IsArray, IsUUID } from 'class-validator';
+import { IsArray } from 'class-validator';
 import { UserProfile } from './UserProfile';
 import { Projects } from './Projects';
 

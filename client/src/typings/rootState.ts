@@ -1,3 +1,4 @@
+import { projectCommonState } from '../components/ProjectsCommon/logic/state';
 import { ProjectState } from './../containers/ProjectSettings/logic/state';
 import { FilterDefsState } from '../commonLogic/filterDefs/state';
 import { ProjectsState } from '../containers/Projects/logic/state';
@@ -11,7 +12,6 @@ import { SaveFilterState } from 'containers/SaveFilterModal/logic/state';
 import { UsersState } from 'commonLogic/users/state';
 import { AdvancedSearch } from 'containers/AdvancedSearch/logic/state';
 import { PeoplePageState } from '../containers/People/logic/state';
-import { PeoplePagesSearchState } from '../containers/SearchPeopleAndTeamField/logic/state';
 import { BoardsState } from '../containers/Boards/logic/state';
 import { HeaderState } from '../containers/Header/logic/state';
 import { ScrumBoardState } from 'containers/Board/Scrum/logic/state';
@@ -20,6 +20,7 @@ export interface RootState {
 	boards: BoardsState;
 	projects: ProjectsState;
 	project: ProjectState;
+	projectCommon: projectCommonState;
 	createProject: CreateProjectsState;
 	auth: AuthState;
 	issues: IssueState;
@@ -32,6 +33,5 @@ export interface RootState {
 	advancedSearch: AdvancedSearch;
 	scrumBoard: ScrumBoardState;
 	peoplePage: PeoplePageState;
-	peoplePageSearch: PeoplePagesSearchState;
 	header: HeaderState;
 }

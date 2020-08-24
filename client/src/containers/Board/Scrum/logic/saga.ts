@@ -1,10 +1,12 @@
+import { createIssue } from 'pages/IssuePage/logic/actions';
 import { getBoardSprints, getBoardProjects } from 'services/board.service';
-import { getSprintIssues, updateSprint } from 'services/sprint.service';
-import { deleteSprint, createSprint } from 'services/sprint.service';
+import { getSprintIssues, updateSprint, deleteSprint, createSprint } from 'services/sprint.service';
+import { getBacklogByBoardId } from 'services/issue.service';
 import { all, put, takeEvery, call } from 'redux-saga/effects';
 import * as actionTypes from './actionTypes';
 import * as actions from './actions';
 import { NotificationManager } from 'react-notifications';
+import { CREATE_ISSUE_SUCCESS } from 'pages/IssuePage/logic/actionTypes';
 
 export function* loadSprintsRequest(action: ReturnType<typeof actions.loadSprintsTrigger>) {
 	try {
@@ -69,6 +71,46 @@ export function* loadProjectRequest(action: ReturnType<typeof actions.loadProjec
 	}
 }
 
+export function* createIssueSuccess(action: ReturnType<typeof createIssue>) {
+	try {
+		const {
+			data: { sprint: sprintId, board: boardId },
+		}: { data: { sprint?: string; board?: string } } = action;
+
+		if (sprintId) {
+			yield put(actions.loadIssuesTrigger({ sprintId }));
+		}
+
+		if (!sprintId && boardId) {
+			yield put(actions.loadBacklogTrigger({ boardId: boardId }));
+		}
+	} catch (error) {
+		NotificationManager.error(error.clientException.message, 'Error');
+	}
+}
+
+export function* loadBacklogRequest(action: ReturnType<typeof actions.loadBacklogTrigger>) {
+	try {
+		const { boardId } = action;
+		const response: WebApi.Entities.Issue[] = yield call(getBacklogByBoardId, boardId);
+		yield put(actions.loadBacklogSuccess({ backlog: response }));
+	} catch (error) {
+		NotificationManager.error(error.clientException.message, 'Error');
+	}
+}
+
+export function* deleteSprintSuccess(action: ReturnType<typeof actions.deleteSprintSuccess>) {
+	try {
+		const { sprint } = action;
+
+		if (sprint.board) {
+			yield put(actions.loadBacklogTrigger({ boardId: sprint.board.id }));
+		}
+	} catch (error) {
+		NotificationManager.error(error.clientException.message, 'Error');
+	}
+}
+
 export function* watchLoadSprintsRequest() {
 	yield takeEvery(actionTypes.LOAD_SPRINTS_TRIGGER, loadSprintsRequest);
 }
@@ -93,6 +135,18 @@ export function* watchCreateSprintRequest() {
 	yield takeEvery(actionTypes.CREATE_SPRINT_TRIGGER, createSprintRequest);
 }
 
+export function* watchCreateIssueSuccess() {
+	yield takeEvery(CREATE_ISSUE_SUCCESS, createIssueSuccess);
+}
+
+export function* watchLoadBacklogRequest() {
+	yield takeEvery(actionTypes.LOAD_BACKLOG_TRIGGER, loadBacklogRequest);
+}
+
+export function* watchDeleteSprintSuccess() {
+	yield takeEvery(actionTypes.DELETE_SPRINT_SUCCESS, deleteSprintSuccess);
+}
+
 export default function* scrumBoardSaga() {
 	yield all([
 		watchLoadSprintsRequest(),
@@ -101,5 +155,8 @@ export default function* scrumBoardSaga() {
 		watchUpdateSprintRequest(),
 		watchCreateSprintRequest(),
 		watchLoadProjectRequest(),
+		watchCreateIssueSuccess(),
+		watchLoadBacklogRequest(),
+		watchDeleteSprintSuccess(),
 	]);
 }
