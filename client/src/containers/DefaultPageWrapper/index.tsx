@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import Header from '../Header';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { loadTypes, loadPriorities, loadStatuses } from 'pages/IssuePage/logic/actions';
 import { fetchFilterDefs } from '../../commonLogic/filterDefs/actions';
 import { Container } from 'semantic-ui-react';
@@ -10,12 +10,15 @@ import { requestAllUsers } from 'commonLogic/users/actions';
 import { useParams } from 'react-router-dom';
 import NotFound from 'pages/404';
 import validator from 'validator';
+import { loadNotifications } from 'components/NotificationsMenu/logic/actions';
+import { RootState } from 'typings/rootState';
 interface Props {
 	children: JSX.Element[] | JSX.Element;
 }
 
 const DefaultPageWrapper: React.FC<Props> = ({ children }) => {
 	const dispatch = useDispatch();
+	const user = useSelector((state: RootState) => state.auth.user);
 	const params: { id: string | undefined } = useParams();
 	let isIdValid = true;
 
@@ -24,13 +27,16 @@ const DefaultPageWrapper: React.FC<Props> = ({ children }) => {
 	}
 
 	useEffect(() => {
-		dispatch(loadTypes());
-		dispatch(loadProjects());
-		dispatch(loadPriorities());
-		dispatch(loadStatuses());
-		dispatch(fetchFilterDefs());
-		dispatch(requestAllUsers());
-	}, [dispatch]);
+		if (user) {
+			dispatch(loadTypes());
+			dispatch(loadProjects());
+			dispatch(loadPriorities());
+			dispatch(loadStatuses());
+			dispatch(fetchFilterDefs());
+			dispatch(requestAllUsers());
+			dispatch(loadNotifications({ userId: user.id }));
+		}
+	}, [dispatch, user]);
 
 	return (
 		<>

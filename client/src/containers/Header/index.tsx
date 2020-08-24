@@ -20,6 +20,7 @@ import CreateIssueModal from 'containers/CreateIssueModal';
 import { getUsername } from 'helpers/getUsername.helper';
 import { getInitials } from 'helpers/getInitials.helper';
 import InviteNotification from '../../components/InviteNotification';
+import NotificationsMenu from 'components/NotificationsMenu';
 
 export const HeaderMenu = () => {
 	const authStore = useSelector((rootStore: RootState) => rootStore.auth);
@@ -111,15 +112,7 @@ export const HeaderMenu = () => {
 								))}
 							</Dropdown.Menu>
 						</Dropdown>
-						<Dropdown icon="bell outline" className={styles.circularIcon} direction="left">
-							<Dropdown.Menu className={styles.circularDropdownMenu}>
-								<Dropdown.Header>{t('notifications')}</Dropdown.Header>
-								<Dropdown.Item>Notification item #1</Dropdown.Item>
-								<Dropdown.Item>Notification item #2</Dropdown.Item>
-								<Dropdown.Item>Notification item #3</Dropdown.Item>
-								<Dropdown.Item>Notification item #4</Dropdown.Item>
-							</Dropdown.Menu>
-						</Dropdown>
+						<NotificationsMenu />
 						{user ? (
 							<div className={styles.userBlock}>
 								{user.avatar ? (

@@ -1,0 +1,23 @@
+:local(.container) {
+	padding: 10px;
+	width: 300px;
+}
+
+:local(.header) {
+	margin-bottom: 15px;
+}
+
+:local(.unreadMarker) {
+	border-radius: 50%;
+	width: 20px;
+	height: 20px;
+	background-color: #09f;
+	float: right;
+}
+
+:local(.link) {
+	color: #333;
+	:hover {
+		color: #212121;
+	}
+}
