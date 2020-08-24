@@ -72,9 +72,17 @@ const Projects: React.FC = () => {
 								</Table.Header>
 
 								<Table.Body>
-									{filteredData.map(({ id, name, key, lead: { firstName, lastName } }) => (
+									{filteredData.map(({ id, name, key, githubUrl, lead: { firstName, lastName } }) => (
 										<Table.Row key={id}>
-											<Table.Cell>{name}</Table.Cell>
+											<Table.Cell>
+												{githubUrl ? (
+													<a href={githubUrl} target="_blank" rel="noopener noreferrer">
+														{name}
+													</a>
+												) : (
+													name
+												)}
+											</Table.Cell>
 											<Table.Cell>{key}</Table.Cell>
 											<Table.Cell>Software</Table.Cell>
 											<Table.Cell>{`${firstName} ${lastName}`}</Table.Cell>
