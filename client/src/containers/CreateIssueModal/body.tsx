@@ -16,6 +16,7 @@ interface Props {
 	priorities: WebApi.Entities.Priority[];
 	boardColumnID?: string;
 	sprintID?: string;
+	boardID?: string;
 	projectID?: string;
 	onClose?: (data: WebApi.Issue.PartialIssue) => void;
 	projects: WebApi.Entities.Projects[];
@@ -41,6 +42,7 @@ const CreateIssueModalBody: React.FC<Props> = ({
 	projectID,
 	users,
 	sprintID,
+	boardID,
 }) => {
 	const { t } = useTranslation();
 	const [isOpened, setIsOpened] = useState<boolean>(false);
@@ -113,6 +115,7 @@ const CreateIssueModalBody: React.FC<Props> = ({
 			...context.data,
 			...(boardColumnID ? { boardColumn: boardColumnID } : {}),
 			sprint: sprintID,
+			board: boardID,
 			project: projectID ?? context.data.project,
 			issueKey: generateRandomString(KeyGenerate.LENGTH),
 			assigned: context.data.assigned,
