@@ -38,6 +38,7 @@ namespace WebApi.Issue {
 		issueKey?: string;
 		assigned?: string;
 		creator: string;
+		watchers?: string[];
 	}
 	interface PartialIssueComment {
 		text?: string;
@@ -113,6 +114,7 @@ namespace WebApi.Result {
 		description?: string;
 		icon?: string;
 		category?: string;
+		githubUrl: string;
 		createdDate?: Date;
 		updatedDate?: Date;
 		deletedDate?: Date;
@@ -281,6 +283,7 @@ namespace WebApi.Entities {
 		team?: Team;
 		issues?: Issue[];
 		users: UserProfile[];
+		githubUrl?: string;
 		createdDate?: Date;
 		updatedDate?: Date;
 		deletedDate?: Date;
