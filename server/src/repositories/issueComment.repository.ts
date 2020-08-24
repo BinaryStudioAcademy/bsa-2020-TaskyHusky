@@ -1,8 +1,16 @@
-import { EntityRepository, Repository } from 'typeorm';
+import { EntityRepository, Repository, getCustomRepository } from 'typeorm';
 import { IssueComment } from '../entity/IssueComment';
 import { PartialIssueComment } from '../models/Issue';
+import { IssueRepository } from './issue.repository';
+import { NotificationRepository } from './notification.repository';
+import { Issue } from '../entity/Issue';
 
 const RELS = ['creator'];
+
+export interface CreateIssueComment {
+	issue: string;
+	text: string;
+}
 
 @EntityRepository(IssueComment)
 export class IssueCommentRepository extends Repository<IssueComment> {
@@ -14,9 +22,17 @@ export class IssueCommentRepository extends Repository<IssueComment> {
 		return this.findOne({ where: { id }, relations: RELS });
 	}
 
-	createOne(data: IssueComment) {
+	async createOne(data: CreateIssueComment) {
+		const issueRepository = getCustomRepository(IssueRepository);
+		const issue = await issueRepository.findOneById(data.issue);
+		const notification = getCustomRepository(NotificationRepository);
+		notification.notifyIssueWatchers(issue, 'commented');
+
 		const instance = this.create({
 			...data,
+			issue: {
+				id: data.issue,
+			},
 			createdAt: new Date(),
 		});
 

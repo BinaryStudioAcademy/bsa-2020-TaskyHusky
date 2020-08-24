@@ -1,6 +1,7 @@
-import { EntityRepository, Repository } from 'typeorm';
+import { EntityRepository, Repository, getCustomRepository } from 'typeorm';
 import { Issue } from '../entity/Issue';
 import { getConditions } from '../helpers/issue.helper';
+import { NotificationRepository } from './notification.repository';
 
 const RELS = ['priority', 'type', 'creator', 'assigned', 'status', 'watchers'];
 type SortDir = 'DESC' | 'ASC';
@@ -69,15 +70,24 @@ export class IssueRepository extends Repository<Issue> {
 		return await promise;
 	}
 
-	updateOneById(id: string, data: Issue) {
-		return this.update(id, data);
+	async updateOneById(id: string, data: Issue) {
+		const issue = await this.findOneById(id);
+		const notification = getCustomRepository(NotificationRepository);
+		notification.notifyIssueWatchers(issue, 'updated');
+
+		return await this.update(id, data);
 	}
 
 	updateOneByKey(key: string, data: Issue) {
 		return this.update({ issueKey: key }, data);
 	}
 
-	deleteOneById(id: string) {
-		return this.delete(id);
+	async deleteOneById(id: string) {
+		const issue = await this.findOneById(id);
+		const notification = getCustomRepository(NotificationRepository);
+		notification.notifyIssueWatchers(issue, 'deleted', true);
+
+		//return await this.delete(id);
+		return {};
 	}
 }
