@@ -1,5 +1,5 @@
 import React, { useState, ChangeEvent, useMemo } from 'react';
-import { Input } from 'semantic-ui-react';
+import { Input, Button } from 'semantic-ui-react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'typings/rootState';
 import CreateProjectModal from '../CreateProjectModal';
@@ -44,7 +44,9 @@ const Projects: React.FC = () => {
 		<div className={styles.wrapper}>
 			<div className={styles.wrapper__title}>
 				<h1 className={styles.title}>{t('projects')}</h1>
-				<CreateProjectModal />
+				<CreateProjectModal>
+					<Button primary>{t('create_project')}</Button>
+				</CreateProjectModal>
 			</div>
 			<div className={[styles.wrapper__filters, styles.filters].join(' ')}>
 				<Input icon="search" placeholder={t('search')} onChange={onSearch} value={searchName} />

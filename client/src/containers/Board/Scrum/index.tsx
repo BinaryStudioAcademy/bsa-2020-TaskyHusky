@@ -13,6 +13,8 @@ import Sprint from 'components/Sprint';
 import { extractUUIDFromArrayOfObjects } from 'helpers/extractUUIDFromArrayOfObjects.helper';
 import CreateSprintModal from 'components/common/SprintModal/CreateSprintModal';
 import getIssuesForSprintId from 'helpers/getIssuesForSprintId.helper';
+import Backlog from 'components/Backlog';
+import { normalizeText } from 'helpers/normalizeText.helper';
 
 const Scrum: BoardComponent = (props) => {
 	const history = useHistory();
@@ -20,7 +22,9 @@ const Scrum: BoardComponent = (props) => {
 	const { t } = useTranslation();
 	const [search, setSearch] = useState<string>('');
 	const [isCreateModalOpened, setIsCreateModalOpened] = useState<boolean>(false);
-	const { sprints, project, matchIssuesToSprint } = useSelector((rootState: RootState) => rootState.scrumBoard);
+	const { sprints, project, matchIssuesToSprint, backlog } = useSelector(
+		(rootState: RootState) => rootState.scrumBoard,
+	);
 	const { board } = props;
 
 	const projectDetails: BreadCrumbData = { id: project.id, name: project.name };
@@ -31,13 +35,14 @@ const Scrum: BoardComponent = (props) => {
 	};
 
 	useEffect(() => {
+		dispatch(actions.saveBoardToState({ board }));
 		dispatch(actions.loadSprintsTrigger({ boardId: board.id }));
 		dispatch(actions.loadProjectTrigger({ boardId: board.id }));
-		dispatch(actions.saveBoardToState({ board }));
+		dispatch(actions.loadBacklogTrigger({ boardId: board.id }));
 	}, [dispatch, board]);
 
 	useEffect(() => {
-		if (sprints.length > 0) {
+		if (!!sprints.length) {
 			const arrayOfIds = extractUUIDFromArrayOfObjects(sprints);
 			arrayOfIds.forEach((id) => {
 				dispatch(actions.loadIssuesTrigger({ sprintId: id }));
@@ -45,26 +50,25 @@ const Scrum: BoardComponent = (props) => {
 		}
 	}, [sprints.length, sprints, dispatch]);
 
-	const sprintList =
-		sprints.length > 0 ? (
-			sprints.map((sprint) => {
-				return (
-					<Sprint
-						key={sprint.id}
-						{...sprint}
-						issues={getIssuesForSprintId(search, matchIssuesToSprint, sprint.id)}
-					/>
-				);
-			})
-		) : (
-			<Container className={styles.noSprintsContainer}>
-				<Icon name="info circle" size="huge" />
-				<Header as="h2" className={styles.noSprintsHeader}>
-					<Header.Content>{t('no_sprints_header')}</Header.Content>
-					<Header.Subheader>{t('no_sprints_header_subheader')}</Header.Subheader>
-				</Header>
-			</Container>
-		);
+	const sprintList = !!sprints.length ? (
+		sprints.map((sprint) => {
+			return (
+				<Sprint
+					key={sprint.id}
+					{...sprint}
+					issues={getIssuesForSprintId(search, matchIssuesToSprint, sprint.id)}
+				/>
+			);
+		})
+	) : (
+		<Container className={styles.noSprintsContainer}>
+			<Icon name="info circle" size="huge" />
+			<Header as="h2" className={styles.noSprintsHeader}>
+				<Header.Content>{t('no_sprints_header')}</Header.Content>
+				<Header.Subheader>{t('no_sprints_header_subheader')}</Header.Subheader>
+			</Header>
+		</Container>
+	);
 
 	return (
 		<>
@@ -99,6 +103,11 @@ const Scrum: BoardComponent = (props) => {
 				</Container>
 
 				<Container>{sprintList}</Container>
+				<Container>
+					<Backlog
+						issues={backlog.filter((issue) => issue.summary?.toLowerCase().includes(normalizeText(search)))}
+					/>
+				</Container>
 			</Container>
 			<CreateSprintModal
 				clickAction={() => {

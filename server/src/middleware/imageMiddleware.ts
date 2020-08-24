@@ -1,7 +1,7 @@
 import multer from 'multer';
-import { fileSize } from '../../config/aws.config';
 import { Handler } from 'express';
 import { fromBuffer } from 'file-type';
+import { fileSize } from '../../config/aws.config';
 import { allowedImageUploadMimeTypes } from '../../config/multer.config';
 import { ErrorResponse } from '../helpers/errorHandler.helper';
 import HttpStatusCode from '../constants/httpStattusCode.constants';

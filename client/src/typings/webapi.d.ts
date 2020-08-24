@@ -38,6 +38,7 @@ namespace WebApi.Issue {
 		issueKey?: string;
 		assigned?: string;
 		creator: string;
+		watchers?: string[];
 	}
 	interface PartialIssueComment {
 		text?: string;
@@ -113,6 +114,7 @@ namespace WebApi.Result {
 		description?: string;
 		icon?: string;
 		category?: string;
+		githubUrl?: string;
 		createdDate?: Date;
 		updatedDate?: Date;
 		deletedDate?: Date;
@@ -174,6 +176,7 @@ namespace WebApi.Entities {
 		name: string;
 		columns?: BoardColumn[];
 		sprints?: Sprint[];
+		issues?: Issue[];
 		createdBy: UserProfile;
 		createdAt: Date;
 		projects?: Projects[];
@@ -218,6 +221,7 @@ namespace WebApi.Entities {
 		status?: IssueStatus;
 		summary?: string;
 		boardColumn?: BoardColumn;
+		board?: Board;
 		labels?: string;
 		attachments?: string;
 		links?: string;
@@ -281,6 +285,7 @@ namespace WebApi.Entities {
 		team?: Team;
 		issues?: Issue[];
 		users: UserProfile[];
+		githubUrl?: string;
 		createdDate?: Date;
 		updatedDate?: Date;
 		deletedDate?: Date;
