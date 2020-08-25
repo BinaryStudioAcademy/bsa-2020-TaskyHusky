@@ -253,10 +253,10 @@ export const ru = {
 	issue_was_deleted_message_part_2:
 		'была удалена. Эта страница станет недоступной, как только вы перезагрузите или закроете её.',
 	issue: 'Задача',
+	key: 'Ключ',
 	sign_up_with_google: 'Продолжить с помощью Google',
 	anonymous: 'Аноним',
 	watchers: 'Отслеживают',
 	watch: 'Отслеживать',
 	unwatch: 'Не отслеживать',
-	key: 'Ключ',
 };

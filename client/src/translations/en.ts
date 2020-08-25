@@ -284,10 +284,10 @@ export const en = {
 	warning: 'Warning',
 	issue_was_deleted_message_part_2: 'was deleted. This page will not be available, once you reload or leave it.',
 	issue: 'Issue',
+	key: 'Key',
 	sign_up_with_google: 'Continue with Google',
 	anonymous: 'Anonymous',
 	watchers: 'Watchers',
 	watch: 'Watch',
 	unwatch: 'Unwatch',
-	key: 'Key',
 };

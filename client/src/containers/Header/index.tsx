@@ -18,8 +18,8 @@ import { User } from 'containers/LoginPage/logic/state';
 import { useTranslation } from 'react-i18next';
 import CreateIssueModal from 'containers/CreateIssueModal';
 import { getUsername } from 'helpers/getUsername.helper';
-import { getInitials } from 'helpers/getInitials.helper';
 import InviteNotification from '../../components/InviteNotification';
+import UserAvatar from 'components/common/UserAvatar';
 
 export const HeaderMenu = () => {
 	const authStore = useSelector((rootStore: RootState) => rootStore.auth);
@@ -122,11 +122,7 @@ export const HeaderMenu = () => {
 						</Dropdown>
 						{user ? (
 							<div className={styles.userBlock}>
-								{user.avatar ? (
-									<Image src={user.avatar} className={styles.avatarImage} circular />
-								) : (
-									<div className={styles.avatar}>{getInitials(user)}</div>
-								)}
+								<UserAvatar user={user} />
 								<Dropdown
 									text={getUsername(user as WebApi.Entities.UserProfile)}
 									direction="left"

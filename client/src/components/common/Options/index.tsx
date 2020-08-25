@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Dropdown, Icon } from 'semantic-ui-react';
 
 import styles from './styles.module.scss';
-import { ConfirmModal } from '../ConfirmModal';
+import ConfirmModal from '../ConfirmModal';
 
 export type ConfigItem = {
 	id: string;
@@ -21,9 +21,15 @@ export interface Params {
 const Options = ({ config, isBackgroundShown = true }: Params) => {
 	const [isOpened, setIsOpened] = useState(false);
 	const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+	const [item, setItem] = useState<ConfigItem>({
+		id: '',
+		text: '',
+		onClickAction: () => {},
+	});
 
-	const addConfirmation = () => {
+	const addConfirmation = (item: ConfigItem) => {
 		setIsConfirmModalOpen(true);
+		setItem(item);
 	};
 
 	return (
@@ -47,17 +53,12 @@ const Options = ({ config, isBackgroundShown = true }: Params) => {
 								key={it.text}
 								as="span"
 								text={it.text}
-								onClick={it.withConfirmation ? () => addConfirmation() : () => it.onClickAction(it.id)}
+								onClick={
+									it.withConfirmation ? () => addConfirmation(it) : () => it.onClickAction(it.id)
+								}
 								content={
 									<>
 										<span>{it.text}</span>
-										<ConfirmModal
-											isOpened={isConfirmModalOpen}
-											setIsOpened={setIsConfirmModalOpen}
-											confirmAction={() => it.onClickAction(it.id)}
-											header={it.confirmHeader || ''}
-											content={it.confirmText || ''}
-										/>
 									</>
 								}
 							/>
@@ -65,6 +66,13 @@ const Options = ({ config, isBackgroundShown = true }: Params) => {
 					</Dropdown.Menu>
 				) : null}
 			</Dropdown>
+			<ConfirmModal
+				isOpened={isConfirmModalOpen}
+				setIsOpened={setIsConfirmModalOpen}
+				confirmAction={() => item.onClickAction(item.id)}
+				header={item.confirmHeader}
+				content={item.confirmText}
+			/>
 		</>
 	);
 };
