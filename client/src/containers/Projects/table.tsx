@@ -11,15 +11,17 @@ import { useDispatch } from 'react-redux';
 import * as generalProjectActions from 'components/ProjectsCommon/logic/actions';
 import styles from './styles.module.scss';
 import UserAvatar from 'components/common/UserAvatar';
+import { User } from 'containers/LoginPage/logic/state';
 
 type SortByColumn = 'name' | 'key' | 'lead';
 type SortDirections = 'ascending' | 'descending';
 
 interface Props {
 	projects: WebApi.Entities.Projects[];
+	currentUser: User | null;
 }
 
-const ProjectsTable = ({ projects }: Props) => {
+const ProjectsTable = ({ projects, currentUser }: Props) => {
 	const { t } = useTranslation();
 	const dispatch = useDispatch();
 	const history = useHistory();
@@ -72,7 +74,7 @@ const ProjectsTable = ({ projects }: Props) => {
 						</Table.HeaderCell>
 						<Table.HeaderCell className={styles.table__header_cell}>{t('type')}</Table.HeaderCell>
 						<Table.HeaderCell
-							className={styles.table__header_cell}
+							className={[styles.table__header_cell, styles.column__lead].join(' ')}
 							sorted={sortDirection}
 							onClick={() => changeSort('lead')}
 						>
@@ -87,8 +89,8 @@ const ProjectsTable = ({ projects }: Props) => {
 				<Table.Body>
 					{sortedProjects.map(({ id, name, key, icon, lead }) => (
 						<Table.Row key={id}>
-							<Table.Cell className={[styles.project__name_container].join(' ')}>
-								<Link to={`/project/${id}/issues`}>
+							<Table.Cell>
+								<Link to={`/project/${id}/issues`} className={styles.project__name_container}>
 									<img className={styles.project__img} src={icon} alt="Project avatar" />
 									<span className={styles.project__name}>{name}</span>
 								</Link>
@@ -101,10 +103,12 @@ const ProjectsTable = ({ projects }: Props) => {
 							</Table.Cell>
 
 							<Table.Cell>
-								<Options
-									config={setProjectActions({ id, onOpenSettings, onTrash })}
-									isBackgroundShown={false}
-								/>
+								{currentUser?.id === lead.id && (
+									<Options
+										config={setProjectActions({ id, onOpenSettings, onTrash })}
+										isBackgroundShown={false}
+									/>
+								)}
 							</Table.Cell>
 						</Table.Row>
 					))}

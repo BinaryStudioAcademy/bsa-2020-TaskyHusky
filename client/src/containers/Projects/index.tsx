@@ -19,6 +19,8 @@ const Projects: React.FC = () => {
 	const { isDeleted: isProjectDeleted, isLoading: isDeleting } = useSelector(
 		(rootState: RootState) => rootState.projectCommon,
 	);
+	const currentUser = useSelector((rootState: RootState) => rootState.auth.user);
+
 	const [searchName, setSearchName] = useState<string>('');
 
 	const filteredProjects = useMemo(() => {
@@ -57,7 +59,7 @@ const Projects: React.FC = () => {
 				) : (
 					<>
 						{filteredProjects.length > 0 ? (
-							<ProjectsTable projects={filteredProjects} />
+							<ProjectsTable projects={filteredProjects} currentUser={currentUser} />
 						) : (
 							<div className={styles.imgWrapper}>
 								<div className={styles.content}>
