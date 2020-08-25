@@ -1,3 +1,4 @@
+import { addingUsers, deletingUsers } from './../containers/ProjectPeople/logic/actionTypes';
 import { ProjectId } from '../containers/ProjectSettings/logic/actionTypes';
 import callWebApi from './../helpers/callApi.helper';
 import { InitialProject, Keys } from './../containers/CreateProjectModal/logic/actionTypes';
@@ -69,6 +70,19 @@ export const getAllKeys = async (): Promise<Keys[]> => {
 	const res: Response = await callWebApi({
 		method: 'GET',
 		endpoint: 'projects/keys',
+	});
+
+	return (await res.json()) as Keys[];
+};
+
+export const updateProjectUsersList = async ({ usersId, projectId }: addingUsers | deletingUsers): Promise<Keys[]> => {
+	const res: Response = await callWebApi({
+		method: 'PUT',
+		endpoint: 'projects/users',
+		body: {
+			usersId,
+			projectId,
+		},
 	});
 
 	return (await res.json()) as Keys[];
