@@ -1,3 +1,4 @@
+import { ProjectsPeopleState } from './../containers/ProjectPeople/logic/state';
 import { projectCommonState } from '../components/ProjectsCommon/logic/state';
 import { ProjectState } from '../containers/ProjectSettings/logic/state';
 import { FilterDefsState } from '../commonLogic/filterDefs/state';
@@ -20,6 +21,7 @@ export interface RootState {
 	boards: BoardsState;
 	projects: ProjectsState;
 	project: ProjectState;
+	projectPeople: ProjectsPeopleState;
 	projectCommon: projectCommonState;
 	createProject: CreateProjectsState;
 	auth: AuthState;

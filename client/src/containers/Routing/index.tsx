@@ -10,6 +10,7 @@ import Filters from 'pages/Filters';
 import IssuePage from 'pages/IssuePage';
 import ProjectsPage from 'pages/ProjectsPage';
 import ProjectSettings from 'pages/ProjectSettings';
+import ProjectPeople from 'pages/ProjectPeople';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadProfileTrigger } from 'containers/LoginPage/logic/actions';
 import { RootState } from 'typings/rootState';
@@ -48,6 +49,7 @@ const Routing: React.FC = () => {
 			<PrivateRoute exact path="/projects" component={ProjectsPage} />
 			<PrivateRoute exact path="/my-work" component={Work} />
 			<PrivateRoute exact path="/projects/projectSettings/:id" component={ProjectSettings} />
+			<PrivateRoute exact path="/projects/projectPeople/:id" component={ProjectPeople} />
 			<PrivateRoute exact path="/team/:id" component={Team} />
 			<PrivateRoute exact path="/profile/:id" component={Profile} />
 			<PrivateRoute exact path="/filters" component={Filters} />
