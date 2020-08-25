@@ -20,7 +20,41 @@ const IssuePageContent: React.FC<Props> = ({ issue: givenIssue }) => {
 	const [mustFetchComments, setMustFetchComments] = useState<boolean>(true);
 	const { t } = useTranslation();
 	const authData = useSelector((state: RootState) => state.auth);
-	const io = useIO(WebApi.IO.Types.Issue);
+
+	useIO(WebApi.IO.Types.Issue, (io) => {
+		io.on(WebApi.IO.IssueActions.UpdateIssue, (id: string, newIssue: WebApi.Result.IssueResult) => {
+			if (issue.id === id) {
+				setIssue(newIssue);
+			}
+		});
+
+		io.on(WebApi.IO.IssueActions.CommentIssue, (id: string, newComment: WebApi.Result.IssueCommentResult) => {
+			if (id === issue.id) {
+				setComments([...comments, newComment]);
+			}
+		});
+
+		io.on(
+			WebApi.IO.IssueActions.UpdateIssueComment,
+			(id: string, commentId: string, newComment: WebApi.Result.IssueCommentResult) => {
+				if (id === issue.id) {
+					const index = comments.findIndex((comment) => comment.id === commentId);
+					const newComments = [...comments];
+					newComments[index] = newComment;
+					setComments(newComments);
+				}
+			},
+		);
+
+		io.on(WebApi.IO.IssueActions.DeleteIssueComment, (id: string, commentId: string) => {
+			if (id === issue.id) {
+				const index = comments.findIndex((comment) => comment.id === commentId);
+				const newComments = [...comments];
+				newComments.splice(index, 1);
+				setComments(newComments);
+			}
+		});
+	});
 
 	const { watchers, ...issueForDefault } = issue;
 
@@ -40,42 +74,9 @@ const IssuePageContent: React.FC<Props> = ({ issue: givenIssue }) => {
 		}
 	}, [mustFetchComments, issue.id]);
 
-	if (mustFetchComments || !authData.user || !io) {
+	if (mustFetchComments || !authData.user) {
 		return null;
 	}
-
-	io.on(WebApi.IO.IssueActions.UpdateIssue, (id: string, newIssue: WebApi.Result.IssueResult) => {
-		if (issue.id === id) {
-			setIssue(newIssue);
-		}
-	});
-
-	io.on(WebApi.IO.IssueActions.CommentIssue, (id: string, newComment: WebApi.Result.IssueCommentResult) => {
-		if (id === issue.id) {
-			setComments([...comments, newComment]);
-		}
-	});
-
-	io.on(
-		WebApi.IO.IssueActions.UpdateIssueComment,
-		(id: string, commentId: string, newComment: WebApi.Result.IssueCommentResult) => {
-			if (id === issue.id) {
-				const index = comments.findIndex((comment) => comment.id === commentId);
-				const newComments = [...comments];
-				newComments[index] = newComment;
-				setComments(newComments);
-			}
-		},
-	);
-
-	io.on(WebApi.IO.IssueActions.DeleteIssueComment, (id: string, commentId: string) => {
-		if (id === issue.id) {
-			const index = comments.findIndex((comment) => comment.id === commentId);
-			const newComments = [...comments];
-			newComments.splice(index, 1);
-			setComments(newComments);
-		}
-	});
 
 	return (
 		<div className={`fill ${styles.container}`} style={{ position: 'relative' }}>

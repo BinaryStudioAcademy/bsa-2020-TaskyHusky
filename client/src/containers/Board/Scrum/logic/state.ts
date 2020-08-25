@@ -8,7 +8,6 @@ export interface ScrumBoardState {
 	backlog: WebApi.Entities.Issue[];
 	project: WebApi.Result.BoardProjectsResult;
 	board: WebApi.Result.BoardResult;
-	isBacklogLoaded: boolean;
 }
 
 export const initialState: ScrumBoardState = {
@@ -38,5 +37,4 @@ export const initialState: ScrumBoardState = {
 			avatar: '',
 		},
 	},
-	isBacklogLoaded: false,
 };

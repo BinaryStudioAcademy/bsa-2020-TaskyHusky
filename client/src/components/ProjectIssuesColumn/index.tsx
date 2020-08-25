@@ -20,7 +20,40 @@ const ProjectIssuesColumn: React.FC<Props> = ({ projectId, onChangeSelectedCard,
 	const [mustFetchIssues, setMustFetchIssues] = useState<boolean>(true);
 	const issueCardUnselect: Dictionary<() => void> = {};
 	const { t } = useTranslation();
-	const io = useIO(WebApi.IO.Types.Issue);
+
+	useIO(WebApi.IO.Types.Issue, (io) => {
+		io.on(WebApi.IO.IssueActions.CreateIssue, (newIssue: WebApi.Result.IssueResult) => {
+			if (issues[0] ? newIssue.project?.id === issues[0].project?.id : true) {
+				setIssues([...issues, newIssue]);
+			}
+		});
+
+		io.on(WebApi.IO.IssueActions.UpdateIssue, (id: string, newIssue: WebApi.Result.IssueResult) => {
+			const index = issues.findIndex((issue) => issue.id === id);
+
+			if (index > -1) {
+				const newIssues = [...issues];
+
+				if (!newIssue.project || newIssue.project?.id !== projectId) {
+					newIssues.splice(index, 1);
+				} else {
+					newIssues[index] = newIssue;
+				}
+
+				setIssues(newIssues);
+			}
+		});
+
+		io.on(WebApi.IO.IssueActions.DeleteIssue, (id: string) => {
+			const index = issues.findIndex((issue) => issue.id === id);
+
+			if (index > -1) {
+				const newIssues = [...issues];
+				newIssues.splice(index, 1);
+				setIssues(newIssues);
+			}
+		});
+	});
 
 	useEffect(() => {
 		if (mustFetchIssues) {
@@ -29,45 +62,13 @@ const ProjectIssuesColumn: React.FC<Props> = ({ projectId, onChangeSelectedCard,
 		}
 	}, [projectId, mustFetchIssues]);
 
-	if (mustFetchIssues || !io) {
+	if (mustFetchIssues) {
 		return null;
 	}
 
 	const displayIssues = issues.filter((issue) =>
 		(issue.summary as string).toLowerCase().includes(search.toLowerCase()),
 	);
-
-	io.on(WebApi.IO.IssueActions.CreateIssue, (newIssue: WebApi.Result.IssueResult) => {
-		if (issues[0] ? newIssue.project?.id === issues[0].project?.id : true) {
-			setIssues([...issues, newIssue]);
-		}
-	});
-
-	io.on(WebApi.IO.IssueActions.UpdateIssue, (id: string, newIssue: WebApi.Result.IssueResult) => {
-		const index = issues.findIndex((issue) => issue.id === id);
-
-		if (index > -1) {
-			const newIssues = [...issues];
-
-			if (!newIssue.project || newIssue.project?.id !== projectId) {
-				newIssues.splice(index, 1);
-			} else {
-				newIssues[index] = newIssue;
-			}
-
-			setIssues(newIssues);
-		}
-	});
-
-	io.on(WebApi.IO.IssueActions.DeleteIssue, (id: string) => {
-		const index = issues.findIndex((issue) => issue.id === id);
-
-		if (index > -1) {
-			const newIssues = [...issues];
-			newIssues.splice(index, 1);
-			setIssues(newIssues);
-		}
-	});
 
 	return (
 		<Segment style={{ backgroundColor: '#EEE', height: '95%', width: 300, marginLeft: 60 }}>

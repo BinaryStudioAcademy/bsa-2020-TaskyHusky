@@ -22,9 +22,11 @@ const Scrum: BoardComponent = (props) => {
 	const { t } = useTranslation();
 	const [search, setSearch] = useState<string>('');
 	const [isCreateModalOpened, setIsCreateModalOpened] = useState<boolean>(false);
-	const { sprints, project, matchIssuesToSprint, backlog, isBacklogLoaded } = useSelector(
+
+	const { sprints, project, matchIssuesToSprint, backlog } = useSelector(
 		(rootState: RootState) => rootState.scrumBoard,
 	);
+
 	const { board } = props;
 
 	const projectDetails: BreadCrumbData = { id: project.id, name: project.name };
@@ -103,18 +105,11 @@ const Scrum: BoardComponent = (props) => {
 				</Container>
 
 				<Container>{sprintList}</Container>
-				{isBacklogLoaded ? (
-					<Container>
-						<Backlog
-							issues={backlog.filter((issue) =>
-								issue.summary?.toLowerCase().includes(normalizeText(search)),
-							)}
-							boardId={board.id}
-						/>
-					</Container>
-				) : (
-					''
-				)}
+				<Container>
+					<Backlog
+						issues={backlog.filter((issue) => issue.summary?.toLowerCase().includes(normalizeText(search)))}
+					/>
+				</Container>
 			</Container>
 			<CreateSprintModal
 				clickAction={() => {

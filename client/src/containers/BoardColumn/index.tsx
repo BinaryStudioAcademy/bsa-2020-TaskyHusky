@@ -20,7 +20,42 @@ const BoardColumn: React.FC<Props> = ({ column, className, search, getOnDragEndF
 	const [issues, setIssues] = useState<WebApi.Result.IssueResult[]>([]);
 	const [issuesFetched, setIssuesFetched] = useState<boolean>(false);
 	const { t } = useTranslation();
-	const io = useIO(WebApi.IO.Types.Issue);
+
+	useIO(WebApi.IO.Types.Issue, (io) => {
+		io.on(WebApi.IO.IssueActions.CreateIssue, (newIssue: WebApi.Result.IssueResult) => {
+			if (newIssue.boardColumn?.id === column.id) {
+				setIssues([...issues, newIssue]);
+			}
+		});
+
+		io.on(WebApi.IO.IssueActions.UpdateIssue, (id: string, newIssue: WebApi.Result.IssueResult) => {
+			const index = issues.findIndex((issue) => issue.id === id);
+
+			if (index > -1) {
+				const newIssues = [...issues];
+
+				if (!newIssue.boardColumn || newIssue.boardColumn.id !== column.id) {
+					newIssues.splice(index, 1);
+				} else {
+					newIssues[index] = newIssue;
+				}
+
+				setIssues(newIssues);
+			} else if (newIssue.boardColumn?.id === column.id) {
+				setIssues([...issues, newIssue]);
+			}
+		});
+
+		io.on(WebApi.IO.IssueActions.DeleteIssue, (id: string) => {
+			const index = issues.findIndex((issue) => issue.id === id);
+
+			if (index > -1) {
+				const newIssues = [...issues];
+				newIssues.splice(index, 1);
+				setIssues(newIssues);
+			}
+		});
+	});
 
 	useEffect(() => {
 		getOnDragEndFunc(column.id, (event) => {
@@ -57,44 +92,6 @@ const BoardColumn: React.FC<Props> = ({ column, className, search, getOnDragEndF
 	const displayIssues = issues.filter((issue) =>
 		(issue.summary as string).toLowerCase().includes(search.toLowerCase()),
 	);
-
-	if (!io) {
-		return null;
-	}
-
-	io.on(WebApi.IO.IssueActions.CreateIssue, (newIssue: WebApi.Result.IssueResult) => {
-		if (newIssue.boardColumn?.id === column.id) {
-			setIssues([...issues, newIssue]);
-		}
-	});
-
-	io.on(WebApi.IO.IssueActions.UpdateIssue, (id: string, newIssue: WebApi.Result.IssueResult) => {
-		const index = issues.findIndex((issue) => issue.id === id);
-
-		if (index > -1) {
-			const newIssues = [...issues];
-
-			if (!newIssue.boardColumn || newIssue.boardColumn.id !== column.id) {
-				newIssues.splice(index, 1);
-			} else {
-				newIssues[index] = newIssue;
-			}
-
-			setIssues(newIssues);
-		} else if (newIssue.boardColumn?.id === column.id) {
-			setIssues([...issues, newIssue]);
-		}
-	});
-
-	io.on(WebApi.IO.IssueActions.DeleteIssue, (id: string) => {
-		const index = issues.findIndex((issue) => issue.id === id);
-
-		if (index > -1) {
-			const newIssues = [...issues];
-			newIssues.splice(index, 1);
-			setIssues(newIssues);
-		}
-	});
 
 	return (
 		<div className={className}>

@@ -29,29 +29,31 @@ const IssuePageInfoColumn: React.FC<Props> = ({
 	let openEditModal: () => void = () => {};
 	const issueWatchers = issue.watchers ?? [];
 	const { t } = useTranslation();
-	const io = useIO(WebApi.IO.Types.Issue);
+
+	useIO(WebApi.IO.Types.Issue, (io) => {
+		io.on(WebApi.IO.IssueActions.UpdateIssue, (id: string, data: WebApi.Result.IssueResult) => {
+			if (id === issue.id) {
+				setIssue(data);
+			}
+		});
+
+		io.on(WebApi.IO.IssueActions.DeleteIssue, (id: string) => {
+			if (id === issue.id) {
+				NotificationManager.warning(
+					`${t('issue')} ${issue.issueKey} ${t('issue_was_deleted_message_part_2')}`,
+					t('warning'),
+					6000,
+				);
+			}
+		});
+	});
+
 	const dispatch = useDispatch();
 	const user = useSelector((state: RootState) => state.auth.user);
 
-	if (!user || !io) {
+	if (!user) {
 		return null;
 	}
-
-	io.on(WebApi.IO.IssueActions.UpdateIssue, (id: string, data: WebApi.Result.IssueResult) => {
-		if (id === issue.id) {
-			setIssue(data);
-		}
-	});
-
-	io.on(WebApi.IO.IssueActions.DeleteIssue, (id: string) => {
-		if (id === issue.id) {
-			NotificationManager.warning(
-				`${t('issue')} ${issue.issueKey} ${t('issue_was_deleted_message_part_2')}`,
-				t('warning'),
-				6000,
-			);
-		}
-	});
 
 	const watching = (issueWatchers ?? []).some((watcher) => watcher.id === user.id);
 	const watchButtonText = watching ? t('unwatch') : t('watch');
