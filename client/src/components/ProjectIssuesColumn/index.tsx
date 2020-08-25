@@ -3,6 +3,7 @@ import { Segment } from 'semantic-ui-react';
 import IssueCard from 'components/IssueCard';
 import { useTranslation } from 'react-i18next';
 import { getProjectIssues } from 'services/projects.service';
+import { useIO } from 'hooks/useIO';
 
 interface Props {
 	projectId: string;
@@ -15,17 +16,53 @@ interface Dictionary<V> {
 }
 
 const ProjectIssuesColumn: React.FC<Props> = ({ projectId, onChangeSelectedCard, search }) => {
-	const [issues, setIssues] = useState<WebApi.Result.IssueResult[] | null>(null);
+	const [issues, setIssues] = useState<WebApi.Result.IssueResult[]>([]);
+	const [mustFetchIssues, setMustFetchIssues] = useState<boolean>(true);
 	const issueCardUnselect: Dictionary<() => void> = {};
 	const { t } = useTranslation();
 
-	useEffect(() => {
-		if (!issues) {
-			getProjectIssues(projectId).then(setIssues);
-		}
-	}, [projectId, issues]);
+	useIO(WebApi.IO.Types.Issue, (io) => {
+		io.on(WebApi.IO.IssueActions.CreateIssue, (newIssue: WebApi.Result.IssueResult) => {
+			if (issues[0] ? newIssue.project?.id === issues[0].project?.id : true) {
+				setIssues([...issues, newIssue]);
+			}
+		});
 
-	if (!issues) {
+		io.on(WebApi.IO.IssueActions.UpdateIssue, (id: string, newIssue: WebApi.Result.IssueResult) => {
+			const index = issues.findIndex((issue) => issue.id === id);
+
+			if (index > -1) {
+				const newIssues = [...issues];
+
+				if (!newIssue.project || newIssue.project?.id !== projectId) {
+					newIssues.splice(index, 1);
+				} else {
+					newIssues[index] = newIssue;
+				}
+
+				setIssues(newIssues);
+			}
+		});
+
+		io.on(WebApi.IO.IssueActions.DeleteIssue, (id: string) => {
+			const index = issues.findIndex((issue) => issue.id === id);
+
+			if (index > -1) {
+				const newIssues = [...issues];
+				newIssues.splice(index, 1);
+				setIssues(newIssues);
+			}
+		});
+	});
+
+	useEffect(() => {
+		if (mustFetchIssues) {
+			getProjectIssues(projectId).then(setIssues);
+			setMustFetchIssues(false);
+		}
+	}, [projectId, mustFetchIssues]);
+
+	if (mustFetchIssues) {
 		return null;
 	}
 
@@ -34,9 +71,8 @@ const ProjectIssuesColumn: React.FC<Props> = ({ projectId, onChangeSelectedCard,
 	);
 
 	return (
-		<Segment style={{ backgroundColor: '#EEE', height: '95%', width: 300, marginLeft: 20 }}>
-			<div style={{ clear: 'both' }} />
-			<div style={{ marginTop: 10, overflowY: 'auto', height: '71vh' }}>
+		<Segment style={{ backgroundColor: '#EEE', height: '95%', width: 300, marginLeft: 60 }}>
+			<div style={{ marginTop: 10, overflowY: 'auto', height: '95%' }}>
 				{displayIssues.length > 0
 					? displayIssues.map((issue, i) => (
 							<IssueCard

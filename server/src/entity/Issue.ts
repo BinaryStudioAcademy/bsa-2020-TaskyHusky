@@ -1,4 +1,14 @@
-import { Entity, Column, ManyToOne, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import {
+	Entity,
+	Column,
+	ManyToOne,
+	PrimaryGeneratedColumn,
+	CreateDateColumn,
+	UpdateDateColumn,
+	ManyToMany,
+	JoinTable,
+} from 'typeorm';
+
 import { IsNotEmpty, IsString, IsArray } from 'class-validator';
 import { IssueStatus } from './IssueStatus';
 import { UserProfile } from './UserProfile';
@@ -7,6 +17,7 @@ import { Priority } from './Priority';
 import { BoardColumn } from './BoardColumn';
 import { Sprint } from './Sprint';
 import { Projects } from './Projects';
+import { Board } from './Board';
 
 @Entity()
 export class Issue {
@@ -27,6 +38,9 @@ export class Issue {
 	@ManyToOne((type) => BoardColumn, (boardColumn) => boardColumn.issues)
 	boardColumn?: BoardColumn;
 
+	@ManyToOne((type) => Board, (board) => board.issues)
+	board?: Board;
+
 	@Column({ array: true })
 	labels?: string;
 
@@ -44,7 +58,7 @@ export class Issue {
 	@Column({ nullable: true })
 	description?: string;
 
-	@ManyToOne((type) => Sprint, (sprint) => sprint.issues)
+	@ManyToOne((type) => Sprint, (sprint) => sprint.issues, { onDelete: 'SET NULL' })
 	sprint?: Sprint;
 
 	@ManyToOne((type) => Projects, (projects) => projects.issues)
@@ -60,6 +74,10 @@ export class Issue {
 
 	@ManyToOne((type) => UserProfile, (userProfile) => userProfile.createdIssues)
 	creator!: UserProfile;
+
+	@ManyToMany((type) => UserProfile, (user) => user.watchingIssues)
+	@JoinTable()
+	watchers?: UserProfile[];
 
 	@CreateDateColumn({ type: 'date' })
 	createdAt?: Date;

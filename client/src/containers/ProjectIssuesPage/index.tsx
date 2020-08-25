@@ -3,10 +3,10 @@ import { getProjectById } from 'services/projects.service';
 import { Breadcrumb, Header, Form } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 import ProjectIssuesColumn from 'components/ProjectIssuesColumn';
-import IssuePageContent from 'containers/IssuePageContent';
 import { getByKey } from 'services/issue.service';
 import Board from 'containers/Board';
 import styles from './styles.module.scss';
+import IssuePageInfoColumn from 'components/IssuePageInfoColumn';
 
 interface Props {
 	projectId: string;
@@ -17,7 +17,7 @@ const ProjectIssuesPage: React.FC<Props> = ({ projectId }) => {
 	const [selectedIssueKey, setSelectedIssueKey] = useState<string | null>(null);
 	const [selectedIssue, setSelectedIssue] = useState<WebApi.Result.IssueResult | null>(null);
 	const [search, setSearch] = useState<string>('');
-	const leftPadded = { marginLeft: 20 };
+	const leftPadded = { marginLeft: 60 };
 	const { t } = useTranslation();
 
 	useEffect(() => {
@@ -40,32 +40,46 @@ const ProjectIssuesPage: React.FC<Props> = ({ projectId }) => {
 		return <Board boardId={project.boards[0].id} />;
 	}
 
+	const initialIssue = selectedIssue
+		? {
+				...selectedIssue,
+				boardColumn: selectedIssue.boardColumn ? selectedIssue.boardColumn.id : undefined,
+				type: selectedIssue.type.id,
+				priority: selectedIssue.priority.id,
+		  }
+		: {
+				id: '',
+				type: '',
+				priority: '',
+				creator: '',
+		  };
+
 	return (
-		<>
-			<Header style={leftPadded} as="h2">
-				{t('issues')}
-			</Header>
-			<Breadcrumb style={{ ...leftPadded, marginBottom: 20 }}>
-				<Breadcrumb.Section href="/projects">
-					<span className={styles.link}>{t('projects')}</span>
-				</Breadcrumb.Section>
-				<Breadcrumb.Divider />
-				<Breadcrumb.Section link>
-					<span className={styles.link}>{project.name}</span>
-				</Breadcrumb.Section>
-			</Breadcrumb>
-			<Form>
-				<Form.Group>
-					<Form.Input
-						placeholder={t('search')}
-						icon="search"
-						value={search}
-						onChange={(event, data) => setSearch(data.value)}
-						style={{ ...leftPadded, marginRight: 60, width: 300 }}
-					/>
-				</Form.Group>
-			</Form>
-			<div className="fill" style={{ display: 'flex', marginTop: 20, overflowY: 'hidden' }}>
+		<main style={{ paddingTop: 20, height: '80%', marginBottom: 10, display: 'flex' }}>
+			<div>
+				<Header style={leftPadded} as="h2">
+					{t('issues')}
+				</Header>
+				<Breadcrumb style={{ ...leftPadded, marginBottom: 20 }}>
+					<Breadcrumb.Section href="/projects">
+						<span className={styles.link}>{t('projects')}</span>
+					</Breadcrumb.Section>
+					<Breadcrumb.Divider />
+					<Breadcrumb.Section link>
+						<span className={styles.link}>{project.name}</span>
+					</Breadcrumb.Section>
+				</Breadcrumb>
+				<Form>
+					<Form.Group>
+						<Form.Input
+							placeholder={t('search')}
+							icon="search"
+							value={search}
+							onChange={(event, data) => setSearch(data.value)}
+							style={{ ...leftPadded, marginRight: 60, width: 300 }}
+						/>
+					</Form.Group>
+				</Form>
 				<ProjectIssuesColumn
 					onChangeSelectedCard={(key) => {
 						setSelectedIssueKey(key);
@@ -74,17 +88,23 @@ const ProjectIssuesPage: React.FC<Props> = ({ projectId }) => {
 					search={search}
 					projectId={projectId}
 				/>
-				<div style={{ position: 'absolute', top: 70, right: 10, width: '80%' }}>
-					{selectedIssue ? (
-						<div style={{ width: '80%', marginLeft: 30 }}>
-							<IssuePageContent issue={selectedIssue} />
-						</div>
-					) : (
-						''
-					)}
-				</div>
 			</div>
-		</>
+			<div className="fill">
+				{selectedIssue ? (
+					<div style={{ marginLeft: 30 }}>
+						<IssuePageInfoColumn
+							leftAligned
+							withDescrtiption
+							toPageLink
+							issue={selectedIssue}
+							initialIssue={initialIssue}
+						/>
+					</div>
+				) : (
+					''
+				)}
+			</div>
+		</main>
 	);
 };
 

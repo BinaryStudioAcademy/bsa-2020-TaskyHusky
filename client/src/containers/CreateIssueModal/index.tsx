@@ -6,6 +6,8 @@ interface Props {
 	children: JSX.Element;
 	boardColumnID?: string;
 	projectID?: string;
+	sprintID?: string;
+	boardID?: string;
 	onClose?: (data: WebApi.Issue.PartialIssue) => void;
 }
 

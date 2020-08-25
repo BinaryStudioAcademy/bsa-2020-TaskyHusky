@@ -3,7 +3,7 @@ import { ProjectsState, initialState } from './state';
 import { createReducer } from 'helpers/createReducer.helper';
 
 export const projectsReducer = createReducer<ProjectsState>(initialState, {
-	[actionTypes.START_LOADING](state, { projects }) {
+	[actionTypes.START_LOADING](state) {
 		return {
 			...state,
 			isLoading: true,
@@ -13,6 +13,13 @@ export const projectsReducer = createReducer<ProjectsState>(initialState, {
 		return {
 			...state,
 			projects,
+			isLoading: false,
+		};
+	},
+	[actionTypes.FAIL_LOADING](state) {
+		return {
+			...state,
+			projects: [],
 			isLoading: false,
 		};
 	},

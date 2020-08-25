@@ -4,13 +4,14 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'typings/rootState';
 import * as actions from './logic/actions';
 import { createBoard } from './logic/actionTypes';
-import Options, { ItemProps } from '../../components/common/Options';
+import Options, { ConfigItem } from '../../components/common/Options';
 import CreateBoardModal from '../../components/CreateBoardModal';
 import { Link } from 'react-router-dom';
 
 import styles from './styles.module.scss';
 import DeleteBoardModal from '../../components/deleteBoardModal';
 import { useTranslation } from 'react-i18next';
+import Spinner from '../../components/common/Spinner';
 
 const Boards: React.FC = () => {
 	const { t } = useTranslation();
@@ -20,7 +21,7 @@ const Boards: React.FC = () => {
 	const [isModalShown, setIsModalShown] = useState(false);
 	const [boardToDelete, setBoardToDelete] = useState<WebApi.Board.IBoardModel | null>(null);
 	const dispatch = useDispatch();
-	const boards = useSelector((rootState: RootState) => rootState.boards.boards);
+	const { boards, isLoading } = useSelector((rootState: RootState) => rootState.boards);
 
 	useEffect(() => {
 		dispatch(actions.startLoading());
@@ -54,7 +55,7 @@ const Boards: React.FC = () => {
 		dispatch(actions.createBoard({ ...board }));
 	};
 
-	const getBoardMenuActions = (board: WebApi.Board.IBoardModel): ItemProps[] => [
+	const getBoardMenuActions = (board: WebApi.Board.IBoardModel): ConfigItem[] => [
 		{
 			onClickAction: () => {},
 			id: board.id,
@@ -105,36 +106,40 @@ const Boards: React.FC = () => {
 				/>
 			</div>
 			<div className={styles.wrapper__table}>
-				<Table celled fixed>
-					<Table.Header>
-						<Table.Row>
-							<Table.HeaderCell width={5}>Name</Table.HeaderCell>
-							<Table.HeaderCell width={5}>Type</Table.HeaderCell>
-							<Table.HeaderCell width={5}>Admin</Table.HeaderCell>
-							<Table.HeaderCell width={1} />
-						</Table.Row>
-					</Table.Header>
-
-					<Table.Body>
-						{filteredData.map((board) => {
-							const { name, id, boardType, createdBy: user } = board;
-							return (
-								<Table.Row key={id}>
-									<Table.Cell>
-										<Link to={`/board/${id}`}>{name}</Link>
-									</Table.Cell>
-									<Table.Cell>{boardType}</Table.Cell>
-									<Table.Cell>
-										<Link to={`/profile/${user.id}`}>{`${user.firstName} ${user.lastName}`}</Link>
-									</Table.Cell>
-									<Table.Cell>
-										<Options config={getBoardMenuActions(board)} />
-									</Table.Cell>
-								</Table.Row>
-							);
-						})}
-					</Table.Body>
-				</Table>
+				{!isLoading && (
+					<Table celled fixed>
+						<Table.Header>
+							<Table.Row>
+								<Table.HeaderCell width={5}>Name</Table.HeaderCell>
+								<Table.HeaderCell width={5}>Type</Table.HeaderCell>
+								<Table.HeaderCell width={5}>Admin</Table.HeaderCell>
+								<Table.HeaderCell width={1} />
+							</Table.Row>
+						</Table.Header>
+						<Table.Body>
+							{filteredData.map((board) => {
+								const { name, id, boardType, createdBy: user } = board;
+								return (
+									<Table.Row key={id}>
+										<Table.Cell>
+											<Link to={`/board/${id}`}>{name}</Link>
+										</Table.Cell>
+										<Table.Cell>{boardType}</Table.Cell>
+										<Table.Cell>
+											<Link
+												to={`/profile/${user.id}`}
+											>{`${user.firstName} ${user.lastName}`}</Link>
+										</Table.Cell>
+										<Table.Cell>
+											<Options config={getBoardMenuActions(board)} />
+										</Table.Cell>
+									</Table.Row>
+								);
+							})}
+						</Table.Body>
+					</Table>
+				)}
+				{isLoading ? <Spinner /> : ''}
 			</div>
 		</div>
 	);

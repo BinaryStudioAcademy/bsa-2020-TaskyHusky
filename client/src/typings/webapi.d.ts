@@ -3,7 +3,7 @@ namespace WebApi.Board {
 		Scrum = 'Scrum',
 		Kanban = 'Kanban',
 	}
-	export interface IBoardModel {
+	interface IBoardModel {
 		id: string;
 		boardType: BoardType;
 		name: string;
@@ -16,9 +16,23 @@ namespace WebApi.Board {
 			avatar: string;
 		};
 	}
-	export interface IReducedBoard {
+	interface IReducedBoard {
 		id: string;
 		name: string;
+	}
+}
+
+namespace WebApi.IO {
+	export enum IssueActions {
+		CreateIssue = 'ISSUE:CREATE',
+		UpdateIssue = 'ISSUE:UPDATE',
+		DeleteIssue = 'ISSUE:DELETE',
+		CommentIssue = 'ISSUE:COMMENT:ADD',
+		UpdateIssueComment = 'ISSUE:COMMENT:UPDATE',
+		DeleteIssueComment = 'ISSUE:COMMENT:DELETE',
+	}
+	export enum Types {
+		Issue = 'ISSUE',
 	}
 }
 
@@ -33,13 +47,14 @@ namespace WebApi.Issue {
 		links?: string[];
 		priority: string;
 		description?: string;
-		sprint?: Sprint;
-		project?: Projects;
+		sprint?: string;
+		project?: string;
 		issueKey?: string;
 		assigned?: string;
 		creator: string;
+		watchers?: string[];
 	}
-	export interface PartialIssueComment {
+	interface PartialIssueComment {
 		text?: string;
 	}
 }
@@ -58,7 +73,7 @@ namespace WebApi.Result {
 			icon: string;
 		};
 		summary?: string;
-		boardColumn?: string;
+		boardColumn?: BoardColumnResult;
 		labels?: string[];
 		attachments?: string[];
 		links?: string[];
@@ -69,9 +84,10 @@ namespace WebApi.Result {
 			icon: string;
 		};
 		description?: string;
-		sprintID?: string;
-		projectID?: string;
+		sprint?: Sprint;
+		project?: Projects;
 		issueKey?: string;
+		watchers?: UserModel[];
 		assigned?: UserModel;
 		creator: UserModel;
 	}
@@ -105,6 +121,18 @@ namespace WebApi.Result {
 	interface ComposedBoardResult extends BoardResult {
 		columns: BoardColumnResult[];
 	}
+	interface BoardProjectsResult {
+		id: string;
+		name: string;
+		key: string;
+		description?: string;
+		icon?: string;
+		category?: string;
+		githubUrl?: string;
+		createdDate?: Date;
+		updatedDate?: Date;
+		deletedDate?: Date;
+	}
 }
 
 namespace WebApi.Sprint {
@@ -120,7 +148,7 @@ namespace WebApi.Sprint {
 }
 
 namespace WebApi.Team {
-	export interface TeamModel {
+	interface TeamModel {
 		id?: string;
 		name?: string;
 		description?: string;
@@ -133,13 +161,13 @@ namespace WebApi.Team {
 }
 
 namespace WebApi.User {
-	export interface UserModel {
+	interface UserModel {
 		googleId?: string;
 		id: string;
 		email: string;
 		password?: string;
-		lastName: string;
-		firstName: string;
+		lastName?: string;
+		firstName?: string;
 		username?: string;
 		avatar?: string;
 		location?: string;
@@ -162,6 +190,7 @@ namespace WebApi.Entities {
 		name: string;
 		columns?: BoardColumn[];
 		sprints?: Sprint[];
+		issues?: Issue[];
 		createdBy: UserProfile;
 		createdAt: Date;
 		projects?: Projects[];
@@ -206,6 +235,7 @@ namespace WebApi.Entities {
 		status?: IssueStatus;
 		summary?: string;
 		boardColumn?: BoardColumn;
+		board?: Board;
 		labels?: string;
 		attachments?: string;
 		links?: string;
@@ -216,6 +246,7 @@ namespace WebApi.Entities {
 		issueKey?: string;
 		assigned?: UserProfile;
 		creator: UserProfile;
+		watchers?: UserProfile[];
 		createdAt?: Date;
 		updatedAt?: Date;
 	}
@@ -257,7 +288,7 @@ namespace WebApi.Entities {
 		name: string;
 		key: string;
 		description?: string;
-		icon?: string;
+		icon: string;
 		url?: string;
 		category?: string;
 		sprints?: Sprint[];
@@ -268,6 +299,7 @@ namespace WebApi.Entities {
 		team?: Team;
 		issues?: Issue[];
 		users: UserProfile[];
+		githubUrl?: string;
 		createdDate?: Date;
 		updatedDate?: Date;
 		deletedDate?: Date;
@@ -304,7 +336,7 @@ namespace WebApi.Entities {
 		department?: string;
 		location?: string;
 		organization?: string;
-		email?: string;
+		email: string;
 		jobTitle?: string;
 		userSettingsId?: string;
 		password?: string;
@@ -323,5 +355,6 @@ namespace WebApi.Entities {
 		incomingInvites?: UserProfile[];
 		pendingInvites?: UserProfile[];
 		teammates?: UserProfile[];
+		watchingIssues?: Issue[];
 	}
 }

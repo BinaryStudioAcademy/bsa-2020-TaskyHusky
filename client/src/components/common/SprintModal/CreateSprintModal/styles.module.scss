@@ -1,0 +1,5 @@
+@import 'styles/mixins.scss';
+
+:local(.errorPopup) {
+	@include error-popup;
+}

@@ -2,13 +2,14 @@ import { Request, Response } from 'express';
 import { getCustomRepository } from 'typeorm';
 import { getWebError } from '../helpers/error.helper';
 import { IssueRepository } from '../repositories/issue.repository';
+import { UserModel } from '../models/User';
 
 class IssueController {
 	async getAll(req: Request, res: Response) {
 		const repository = getCustomRepository(IssueRepository);
-
+		const { from, to } = req.body;
 		try {
-			const result = await repository.findAll();
+			const result = await repository.findAll(Number(from), Number(to));
 			res.send(result);
 		} catch (err) {
 			res.status(500).send(getWebError(err, 500));
@@ -17,10 +18,10 @@ class IssueController {
 
 	async getFilteredIssues(req: Request, res: Response) {
 		const repository = getCustomRepository(IssueRepository);
-		const { filter } = req.body;
+		const { filter, from, to, sort } = req.body;
 
 		try {
-			const result = await repository.getFilteredIssues(filter);
+			const result = await repository.getFilteredIssues(filter, Number(from), Number(to), sort);
 			res.send(result);
 		} catch (err) {
 			res.status(500).send(getWebError(err, 500));
@@ -63,6 +64,20 @@ class IssueController {
 		}
 	}
 
+	async getBacklogByBoardId(req: Request, res: Response) {
+		const { boardId } = req.params;
+		const repository = getCustomRepository(IssueRepository);
+
+		try {
+			const issues = await repository.findAllByBoardId(boardId);
+			const issuesWithoutSprint = issues.filter((issue) => !issue.sprint);
+
+			res.send(issuesWithoutSprint);
+		} catch (err) {
+			res.status(500).send(getWebError(err, 500));
+		}
+	}
+
 	async getByKey(req: Request, res: Response) {
 		const { key } = req.params;
 		const repository = getCustomRepository(IssueRepository);
@@ -75,6 +90,19 @@ class IssueController {
 		}
 	}
 
+	async watch(req: Request, res: Response) {
+		const { id } = req.params;
+		const { id: userId } = req.user;
+		const repository = getCustomRepository(IssueRepository);
+
+		try {
+			const result = await repository.watch(id, userId);
+			res.send(result);
+		} catch (err) {
+			res.status(500).send(getWebError(err, 500));
+		}
+	}
+
 	async create(req: Request, res: Response) {
 		const { body: data } = req;
 		const repository = getCustomRepository(IssueRepository);
@@ -82,7 +110,7 @@ class IssueController {
 		try {
 			const result = await repository.createOne({
 				...data,
-				creator: req.user.id,
+				creator: (req.user as UserModel).id,
 			});
 
 			res.status(201).send(result);

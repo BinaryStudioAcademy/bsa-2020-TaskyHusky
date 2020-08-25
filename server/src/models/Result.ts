@@ -1,4 +1,6 @@
 import { UserModel } from './User';
+import { Sprint } from '../entity/Sprint';
+import { Projects } from '../entity/Projects';
 
 interface UserAuthResult {
 	user: UserModel;
@@ -14,7 +16,7 @@ interface IssueResult {
 		icon: string;
 	};
 	summary?: string;
-	boardColumn?: string;
+	boardColumn?: BoardColumnResult;
 	labels?: string[];
 	attachments?: string[];
 	links?: string[];
@@ -25,9 +27,10 @@ interface IssueResult {
 		icon: string;
 	};
 	description?: string;
-	sprintID?: string;
-	projectID?: string;
+	sprint?: Sprint;
+	project?: Projects;
 	issueKey?: string;
+	watchers?: UserModel[];
 	assigned?: UserModel;
 	creator: UserModel;
 }
@@ -64,4 +67,17 @@ interface BoardColumnResult {
 
 interface ComposedBoardResult extends BoardResult {
 	columns: BoardColumnResult[];
+}
+
+interface BoardProjectsResult {
+	id: string;
+	name: string;
+	key: string;
+	description?: string;
+	icon?: string;
+	category?: string;
+	githubUrl?: string;
+	createdDate?: Date;
+	updatedDate?: Date;
+	deletedDate?: Date;
 }
