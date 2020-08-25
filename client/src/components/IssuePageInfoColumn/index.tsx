@@ -65,10 +65,10 @@ const IssuePageInfoColumn: React.FC<Props> = ({
 			<div
 				style={{
 					...(leftAligned ? {} : { position: 'absolute', right: 10, top: -5 }),
-					width: 270,
+					width: 400,
 				}}
 			>
-				<Button.Group style={{ marginTop: 10 }}>
+				<Button.Group style={{ marginTop: 10 }} fluid>
 					<Dropdown button className="icon" labeled floating icon="eye" text={String(issueWatchers.length)}>
 						<Dropdown.Menu>
 							<Dropdown.Header>{t('watchers')}</Dropdown.Header>
