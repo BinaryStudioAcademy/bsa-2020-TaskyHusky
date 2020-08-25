@@ -248,6 +248,10 @@ export const ua = {
 	no_projects: 'Не знайдено проектів',
 	createAt: 'Створений',
 	updatedAt: 'Оновлений',
+	warning: 'Предупреждение',
+	issue_was_deleted_message_part_2:
+		'була видалена. Ця сторінка стане недоступною, як тільки ви перезавантажите або закриєте її.',
+	issue: 'Задача',
 	key: 'Ключ',
 	sign_up_with_google: 'Продовжити з допомогою Google',
 	anonymous: 'Аноним',
