@@ -22,6 +22,20 @@ namespace WebApi.Board {
 	}
 }
 
+namespace WebApi.IO {
+	export enum IssueActions {
+		CreateIssue = 'ISSUE:CREATE',
+		UpdateIssue = 'ISSUE:UPDATE',
+		DeleteIssue = 'ISSUE:DELETE',
+		CommentIssue = 'ISSUE:COMMENT:ADD',
+		UpdateIssueComment = 'ISSUE:COMMENT:UPDATE',
+		DeleteIssueComment = 'ISSUE:COMMENT:DELETE',
+	}
+	export enum Types {
+		Issue = 'ISSUE',
+	}
+}
+
 namespace WebApi.Issue {
 	interface PartialIssue {
 		id?: string;
@@ -59,7 +73,7 @@ namespace WebApi.Result {
 			icon: string;
 		};
 		summary?: string;
-		boardColumn?: string;
+		boardColumn?: BoardColumnResult;
 		labels?: string[];
 		attachments?: string[];
 		links?: string[];
@@ -70,7 +84,7 @@ namespace WebApi.Result {
 			icon: string;
 		};
 		description?: string;
-		sprint?: SprintModel;
+		sprint?: Sprint;
 		project?: Projects;
 		issueKey?: string;
 		watchers?: UserModel[];
