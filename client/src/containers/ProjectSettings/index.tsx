@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'typings/rootState';
 import Breadcrumbs from 'components/common/Breadcrumbs';
 import { setBreadcrumbs } from './config/breadcrumbs';
-import * as actions from '../ProjectDetails/logic/actions';
+import * as actions from './logic/actions';
 import styles from './styles.module.scss';
 import ProjectSidebar from 'components/ProjectSidebar';
 import Spinner from 'components/common/Spinner';
