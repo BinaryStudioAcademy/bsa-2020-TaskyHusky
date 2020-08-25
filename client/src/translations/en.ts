@@ -284,10 +284,10 @@ export const en = {
 	save_not_secure: 'Saving not secure password',
 	save_not_secure_text:
 		'Do you want to save not secure password? To make your password secure you can add special symbols, numbers and uppercase letters.',
+	key: 'Key',
 	sign_up_with_google: 'Continue with Google',
 	anonymous: 'Anonymous',
 	watchers: 'Watchers',
 	watch: 'Watch',
 	unwatch: 'Unwatch',
-	key: 'Key',
 };
