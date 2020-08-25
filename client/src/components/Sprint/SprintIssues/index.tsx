@@ -4,12 +4,17 @@ import styles from './styles.module.scss';
 import AssigneeAvatar from './AssigneeAvatar/index';
 import { useIO } from 'hooks/useIO';
 
-type Props = { issues: WebApi.Entities.Issue[]; id: string, noIssuesText: string };
+type Props = {
+	issues: WebApi.Entities.Issue[];
+	noIssuesText: string;
+	id?: string;
+	boardId?: string;
+	isBacklog?: boolean;
+};
 
-export const SprintIssues: React.FC<Props> = ({ id, issues: givenIssues, noIssuesText }: Props) => {
+export const SprintIssues: React.FC<Props> = ({ issues: givenIssues, noIssuesText, isBacklog, id, boardId }: Props) => {
 	const [issues, setIssues] = useState<WebApi.Entities.Issue[]>(givenIssues);
 	const [mustSetIssues, setMustSetIssues] = useState<boolean>(true);
-	const { t } = useTranslation();
 	const io = useIO(WebApi.IO.Types.Issue);
 
 	useEffect(() => {
@@ -24,7 +29,9 @@ export const SprintIssues: React.FC<Props> = ({ id, issues: givenIssues, noIssue
 	}
 
 	io.on(WebApi.IO.IssueActions.CreateIssue, (newIssue: WebApi.Entities.Issue) => {
-		if (newIssue.sprint?.id === id) {
+		const canAddIssue = isBacklog ? newIssue.board?.id === boardId : newIssue.sprint?.id === id;
+
+		if (canAddIssue) {
 			setIssues([...issues, newIssue]);
 		}
 	});
@@ -56,8 +63,8 @@ export const SprintIssues: React.FC<Props> = ({ id, issues: givenIssues, noIssue
 			setIssues(newIssues);
 		}
 	});
-      
-  const issuesList = !!issues?.length ? (
+
+	const issuesList = !!issues?.length ? (
 		issues.map((issue) => {
 			const { type, priority } = issue;
 			return (

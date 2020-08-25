@@ -1,5 +1,5 @@
 import React, { useState, ChangeEvent, useMemo } from 'react';
-import { Input } from 'semantic-ui-react';
+import { Input, Button } from 'semantic-ui-react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'typings/rootState';
 import CreateProjectModal from '../CreateProjectModal';

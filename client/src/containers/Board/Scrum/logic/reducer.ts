@@ -75,6 +75,6 @@ export const scrumBoardReducer = createReducer<ScrumBoardState>(initialState, {
 	[actionTypes.LOAD_BACKLOG_SUCCESS](state, action: actionTypes.LoadBacklogSuccess) {
 		const { backlog } = action;
 
-		return { ...state, backlog };
+		return { ...state, backlog, isBacklogLoaded: true };
 	},
 });

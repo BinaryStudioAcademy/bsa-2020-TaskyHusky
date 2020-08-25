@@ -1,4 +1,4 @@
-import { connect } from 'socket.io-client';
+import connect from 'socket.io-client';
 import { ioURL } from 'config/io.config';
 import { useEffect, useState } from 'react';
 
@@ -7,6 +7,7 @@ export const useIO = (type: WebApi.IO.Types) => {
 
 	useEffect(() => {
 		if (!io) {
+			console.log('Try to connect');
 			const newIO = connect(ioURL, { query: `type=${type}` });
 			setIO(newIO);
 		}

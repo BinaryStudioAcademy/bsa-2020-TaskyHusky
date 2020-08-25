@@ -13,6 +13,7 @@ export class ConnectionHandler {
 
 	public handle(io: IO.Server, socket: IO.Socket) {
 		if (socket.handshake.query.type === this._type) {
+			console.log('connect');
 			this.sockets.push(socket);
 
 			socket.on('disconnect', () => {

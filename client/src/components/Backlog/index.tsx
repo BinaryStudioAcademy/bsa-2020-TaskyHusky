@@ -9,10 +9,11 @@ import { SprintIssues as BacklogIssues } from 'components/Sprint/SprintIssues';
 
 interface Props {
 	issues: WebApi.Entities.Issue[];
+	boardId: string;
 }
 
 const Backlog = (props: Props) => {
-	const { issues } = props;
+	const { issues, boardId } = props;
 	const { t } = useTranslation();
 	const { project, board } = useSelector((rootState: RootState) => rootState.scrumBoard);
 
@@ -32,7 +33,7 @@ const Backlog = (props: Props) => {
 				</List.Item>
 			</List>
 
-			<BacklogIssues issues={issues} noIssuesText={t('no_issues_in_backlog')} />
+			<BacklogIssues issues={issues} isBacklog boardId={boardId} noIssuesText={t('no_issues_in_backlog')} />
 		</>
 	);
 };

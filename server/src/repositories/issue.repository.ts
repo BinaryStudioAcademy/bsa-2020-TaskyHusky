@@ -4,7 +4,19 @@ import { getConditions } from '../helpers/issue.helper';
 import issueHandler from '../socketConnectionHandlers/issue.handler';
 import { IssueActions } from '../models/IO';
 
-const RELS = ['priority', 'type', 'creator', 'assigned', 'status', 'sprint', 'project', 'boardColumn', 'watchers'];
+const RELS = [
+	'priority',
+	'type',
+	'creator',
+	'assigned',
+	'status',
+	'sprint',
+	'project',
+	'boardColumn',
+	'watchers',
+	'board',
+];
+
 type SortDir = 'DESC' | 'ASC';
 
 type Sort = {
@@ -52,7 +64,7 @@ export class IssueRepository extends Repository<Issue> {
 	}
 
 	findAllByBoardId(id: string): Promise<Issue[]> {
-		return this.find({ relations: RELS.concat(['sprint']), where: { board: { id } } });
+		return this.find({ relations: RELS, where: { board: { id } } });
 	}
 
 	findOneById(id: string) {
