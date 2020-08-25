@@ -74,7 +74,7 @@ export const LoginPage: React.FC = () => {
 	const googleBtn = (props: { onClick: () => void; disabled?: boolean }) => (
 		<button onClick={props.onClick} className={styles.google_btn}>
 			<Image src={iconGoogle} className={styles.google_logo} />
-			<span className={styles.google_title}> Continue with Google</span>
+			<span className={styles.google_title}> {t('sign_up_with_google')}</span>
 		</button>
 	);
 

@@ -1,5 +1,7 @@
-import { EntityRepository, Repository } from 'typeorm';
+import { EntityRepository, Repository, getCustomRepository } from 'typeorm';
 import { Team } from '../entity/Team';
+import { getRandomColor } from '../services/colorGenerator.service';
+import { UserRepository } from './user.repository';
 
 @EntityRepository(Team)
 export class TeamRepository extends Repository<Team> {
@@ -63,8 +65,14 @@ export class TeamRepository extends Repository<Team> {
 	}
 
 	async createOne(data: Team) {
-		const entity = await this.create(data);
-		return this.save(entity);
+		const userRepository = getCustomRepository(UserRepository);
+
+		const { color = getRandomColor(), links = [], createdBy: user, ...restData } = data;
+
+		const userToAdd = await userRepository.getById(user.id);
+		if (!userToAdd) throw new Error('User with current ID not found');
+
+		return this.save({ ...restData, createdBy: userToAdd, color, links });
 	}
 
 	async updateOneById(id: string, data: Team | { [key: string]: string[] }) {

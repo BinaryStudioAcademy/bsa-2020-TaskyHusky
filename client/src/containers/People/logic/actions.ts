@@ -5,3 +5,4 @@ export const startLoading = createAction<actionTypes.startLoading>(actionTypes.S
 export const SuccessLoading = createAction<actionTypes.SuccessLoading>(actionTypes.SUCCESS_LOADING);
 
 export const addPeople = createAction<actionTypes.addPeople>(actionTypes.ADD_PEOPLE);
+export const createTeam = createAction<actionTypes.createTeam>(actionTypes.CREATE_TEAM);

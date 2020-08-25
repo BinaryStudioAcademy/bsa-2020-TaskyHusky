@@ -2,7 +2,6 @@ import React from 'react';
 import { Button, Header, Icon, Modal } from 'semantic-ui-react';
 import { useDispatch } from 'react-redux';
 import * as actions from 'containers/Board/Scrum/logic/actions';
-import { NotificationManager } from 'react-notifications';
 import { useTranslation } from 'react-i18next';
 
 type Props = {
@@ -10,7 +9,7 @@ type Props = {
 	sprintId: string;
 	isOpen: boolean;
 	clickAction: any;
-	sprintIssues: any;
+	sprintIssues: WebApi.Entities.Issue[];
 };
 
 const SprintModal = (props: Props) => {
@@ -23,33 +22,36 @@ const SprintModal = (props: Props) => {
 	};
 
 	const handleYesButtonClick = () => {
-		if (sprintIssues.length > 0) {
-			NotificationManager.error(t('sprint_cannot_be_deleted'), 'Error');
-		}
-
-		if (sprintIssues.length === 0) {
-			dispatch(actions.deleteSprintTrigger({ sprintId }));
-		}
+		dispatch(actions.deleteSprintTrigger({ sprintId }));
 
 		props.clickAction();
 	};
 
 	return (
-		<Modal basic onClose={props.clickAction} open={props.isOpen} size="small">
-			<Header icon>
-				<Icon name="trash alternate outline" />
-				{`${t('delete_sprint')} - '${sprintName}'`}
+		<Modal closeIcon size="tiny" dimmer="inverted" onClose={props.clickAction} open={props.isOpen}>
+			<Header>
+				{t('delete_sprint')}: {sprintName}
 			</Header>
 			<Modal.Content>
-				<p>{t('delete_sprint_warning')}</p>
+				<Header icon textAlign="center">
+					<Icon name="trash alternate outline" />
+				</Header>
+				<p>
+					{!!sprintIssues?.length
+						? t('delete_sprint_with_issues_warning')
+						: t('delete_sprint_with_no_issues_warning')}
+				</p>
 			</Modal.Content>
+
 			<Modal.Actions>
-				<Button color="red" inverted onClick={handleNoButtonClick}>
-					<Icon name="remove" /> {t('cancel')}
-				</Button>
-				<Button basic color="green" inverted onClick={handleYesButtonClick}>
-					<Icon name="checkmark" /> {t('delete')}
-				</Button>
+				<Button color="grey" onClick={handleNoButtonClick} content={t('cancel')} />
+				<Button
+					labelPosition="right"
+					icon="checkmark"
+					primary
+					onClick={handleYesButtonClick}
+					content={t('delete')}
+				/>
 			</Modal.Actions>
 		</Modal>
 	);

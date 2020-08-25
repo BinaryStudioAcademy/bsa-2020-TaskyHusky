@@ -15,7 +15,7 @@ export const scrumBoardReducer = createReducer<ScrumBoardState>(initialState, {
 		const { sprintId, issues } = action;
 
 		const stateCopy = { ...state };
-		stateCopy.matchIssueToSprint[sprintId] = issues;
+		stateCopy.matchIssuesToSprint[sprintId] = issues;
 
 		return {
 			...stateCopy,
@@ -71,5 +71,10 @@ export const scrumBoardReducer = createReducer<ScrumBoardState>(initialState, {
 			...state,
 			sprints: updatedSprints,
 		};
+	},
+	[actionTypes.LOAD_BACKLOG_SUCCESS](state, action: actionTypes.LoadBacklogSuccess) {
+		const { backlog } = action;
+
+		return { ...state, backlog };
 	},
 });

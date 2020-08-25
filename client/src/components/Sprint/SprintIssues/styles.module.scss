@@ -43,19 +43,10 @@
 	}
 
 	.issueKeyItem {
-		width: 60px;
+		width: auto;
 	}
 
 	.priorityItem {
 		width: 15px;
-	}
-
-	.avatar {
-		background-color: #ddd;
-		color: #555;
-		text-transform: uppercase;
-		display: flex;
-		justify-content: center;
-		align-items: center;
 	}
 }
