@@ -3,6 +3,7 @@ import { getCustomRepository } from 'typeorm';
 import { getWebError } from '../helpers/error.helper';
 import { IssueRepository } from '../repositories/issue.repository';
 import Elastic from '../services/elasticsearch.service';
+import { UserModel } from '../models/User';
 
 const elastic = new Elastic('issue');
 
@@ -116,7 +117,7 @@ class IssueController {
 		try {
 			const issue = await repository.createOne({
 				...data,
-				creator: req.user.id,
+				creator: (req.user as UserModel).id,
 			});
 			await elastic.addData(issue);
 
