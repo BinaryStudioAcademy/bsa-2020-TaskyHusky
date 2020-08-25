@@ -76,13 +76,13 @@ const IssueItem = ({ issue }: Props) => {
 				<IssueTypeIcon type={type} />
 			</Table.Cell>
 			<Table.Cell>
-				<a href={`/issue/${id}`} className={styles.underlinedLink}>
+				<a href={`/issue/${issueKey}`} className={styles.underlinedLink}>
 					{issueKey}
 				</a>
 			</Table.Cell>
 			<Table.Cell>
 				<div className={styles.userCell}>
-					<a href={`/issue/${id}`} className={styles.underlinedLink}>
+					<a href={`/issue/${issueKey}`} className={styles.underlinedLink}>
 						{summary}
 					</a>
 				</div>
@@ -112,7 +112,7 @@ const IssueItem = ({ issue }: Props) => {
 					<Dropdown.Menu direction="left">
 						<Dropdown.Item
 							content={
-								<a className={styles.issueAction} href={`/issue/${issue.issueKey}`}>
+								<a className={styles.issueAction} href={`/issue/${issueKey}`}>
 									{'View issue'}
 								</a>
 							}

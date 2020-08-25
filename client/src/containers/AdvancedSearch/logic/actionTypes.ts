@@ -58,4 +58,5 @@ export type LoadIssues = {
 	from?: number;
 	to?: number;
 	sort?: Sort;
+	inputText?: string;
 };

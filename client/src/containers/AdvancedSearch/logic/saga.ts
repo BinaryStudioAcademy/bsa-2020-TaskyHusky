@@ -34,14 +34,14 @@ export function* updateFilterPartSaga(action: AnyAction) {
 }
 
 export function* loadIssuesSaga(action: AnyAction) {
-	const { from = 0, to = PAGE_SIZE, sort } = action;
+	const { from = 0, to = PAGE_SIZE, sort, inputText } = action;
 
 	const {
 		advancedSearch: { filterParts },
 	}: RootState = yield select();
 
 	const filterOption = getFilterOptionsFromFilterParts(filterParts);
-	const result = yield call(loadIssuesAndCount, filterOption, from, to, sort);
+	const result = yield call(loadIssuesAndCount, filterOption, from, to, sort, inputText);
 
 	yield put(actions.loadIssuesSuccess({ issues: result[0], issuesCount: result[1] }));
 }

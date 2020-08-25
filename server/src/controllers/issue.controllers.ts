@@ -24,7 +24,9 @@ class IssueController {
 
 		try {
 			const matchedIDs = await elastic.getMatchedIssueIDs(inputText);
-			filter.id = matchedIDs;
+			if (inputText) {
+				filter.id = matchedIDs;
+			}
 			const result = await repository.getFilteredIssues(filter, Number(from), Number(to), sort);
 			res.send(result);
 		} catch (err) {

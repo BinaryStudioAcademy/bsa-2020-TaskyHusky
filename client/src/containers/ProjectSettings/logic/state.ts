@@ -13,7 +13,7 @@ export const initialState: ProjectState = {
 		icon: '',
 		sprints: [],
 		boards: [],
-		icon: '',
+		// icon: '',
 		defaultAssignee: undefined,
 		lead: {
 			id: '',
