@@ -1,4 +1,5 @@
 import { UserModel } from './User';
+import { Sprint } from '../entity/Sprint';
 import { Projects } from '../entity/Projects';
 
 interface UserAuthResult {
@@ -20,7 +21,7 @@ export interface IssueResult {
 		title: string;
 	};
 	summary?: string;
-	boardColumn?: string;
+	boardColumn?: BoardColumnResult;
 	labels?: string[];
 	attachments?: string[];
 	links?: string[];
@@ -31,7 +32,7 @@ export interface IssueResult {
 		icon: string;
 	};
 	description?: string;
-	sprint?: SprintModel;
+	sprint?: Sprint;
 	project?: Projects;
 	issueKey?: string;
 	watchers?: UserModel[];

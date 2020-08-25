@@ -52,7 +52,7 @@ const NotificationsMenu: React.FC = () => {
 							setCanShowAllNotifications(Boolean(data.checked));
 							setIsOpened(true);
 						}}
-						label="Show all notifications during last 10 days"
+						label={t('show_notifs_during_last_10_days')}
 					/>
 				</Dropdown.Item>
 				{displayNotifications.length ? (

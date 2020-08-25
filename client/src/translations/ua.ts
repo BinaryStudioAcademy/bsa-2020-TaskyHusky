@@ -248,10 +248,17 @@ export const ua = {
 	no_projects: 'Не знайдено проектів',
 	createAt: 'Створений',
 	updatedAt: 'Оновлений',
+	warning: 'Предупреждение',
+	issue_was_deleted_message_part_2:
+		'була видалена. Ця сторінка стане недоступною, як тільки ви перезавантажите або закриєте її.',
+	issue: 'Задача',
 	key: 'Ключ',
 	sign_up_with_google: 'Продовжити з допомогою Google',
 	anonymous: 'Аноним',
 	watchers: 'Відстежують',
 	watch: 'Відстежувати',
 	unwatch: 'Не відстежувати',
+	see_it: 'Дивитися!',
+	mark_notif_as_read: 'Відмітити як прочитане',
+	show_notifs_during_last_10_days: "Показати всі об'яви за останні 10 днів",
 };

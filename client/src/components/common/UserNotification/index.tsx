@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import * as actions from 'components/NotificationsMenu/logic/actions';
 import { Button } from 'semantic-ui-react';
 import moment from 'moment';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
 	notification: WebApi.Entities.Notification;
@@ -13,6 +14,7 @@ interface Props {
 const UserNotification: React.FC<Props> = ({ notification, notifications }) => {
 	const { id, title, text, link, isViewed } = notification;
 	const dispatch = useDispatch();
+	const { t } = useTranslation();
 
 	const view = () => {
 		dispatch(actions.viewNotification({ id }));
@@ -28,7 +30,7 @@ const UserNotification: React.FC<Props> = ({ notification, notifications }) => {
 
 	const renderMarker = !isViewed ? (
 		<Button onClick={view} secondary inverted compact size="tiny" style={{ marginTop: 10 }}>
-			Mark notification as read
+			{t('mark_notif_as_read')}
 		</Button>
 	) : null;
 
@@ -40,10 +42,10 @@ const UserNotification: React.FC<Props> = ({ notification, notifications }) => {
 					{moment(notification.createdAt).fromNow()}
 				</div>
 			</div>
-			<div style={{ maxWidth: 260, float: 'left' }}>{text}</div>
+			<div style={{ width: 250, whiteSpace: 'pre-wrap', float: 'left', lineHeight: 1.4 }}>{text}</div>
 			{link ? (
 				<a target="_blank" rel="noopener noreferrer" href={link} style={{ float: 'right' }}>
-					See it!
+					{t('see_it')}
 				</a>
 			) : (
 				''
