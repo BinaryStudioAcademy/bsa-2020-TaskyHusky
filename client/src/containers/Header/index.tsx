@@ -18,9 +18,9 @@ import { User } from 'containers/LoginPage/logic/state';
 import { useTranslation } from 'react-i18next';
 import CreateIssueModal from 'containers/CreateIssueModal';
 import { getUsername } from 'helpers/getUsername.helper';
-import { getInitials } from 'helpers/getInitials.helper';
 import InviteNotification from '../../components/InviteNotification';
 import NotificationsMenu from 'components/NotificationsMenu';
+import UserAvatar from 'components/common/UserAvatar';
 
 export const HeaderMenu = () => {
 	const authStore = useSelector((rootStore: RootState) => rootStore.auth);
@@ -115,11 +115,7 @@ export const HeaderMenu = () => {
 						<NotificationsMenu />
 						{user ? (
 							<div className={styles.userBlock}>
-								{user.avatar ? (
-									<Image src={user.avatar} className={styles.avatarImage} circular />
-								) : (
-									<div className={styles.avatar}>{getInitials(user)}</div>
-								)}
+								<UserAvatar user={user} />
 								<Dropdown
 									text={getUsername(user as WebApi.Entities.UserProfile)}
 									direction="left"
@@ -127,11 +123,11 @@ export const HeaderMenu = () => {
 								>
 									<Dropdown.Menu className={styles.circularDropdownMenu}>
 										<Dropdown.Header>{`${user?.firstName} ${user?.lastName}`}</Dropdown.Header>
-										<Dropdown.Item>
-											<Link to={`/profile/${user?.id}`}>{t('profile')}</Link>
+										<Dropdown.Item as="a" href={`/profile/${user?.id}`}>
+											{t('profile')}
 										</Dropdown.Item>
-										<Dropdown.Item>
-											<Link to={`/profile/${user?.id}`}>{t('acc_settings')}</Link>
+										<Dropdown.Item as="a" href={`/profile/${user?.id}`}>
+											{t('acc_settings')}
 										</Dropdown.Item>
 										<Dropdown.Divider />
 										<Dropdown.Item onClick={logOutHandler}>{t('log_out')}</Dropdown.Item>

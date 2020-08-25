@@ -116,7 +116,7 @@ export class UserProfile {
 			this.firstName = firstName;
 			this.lastName = lastName;
 
-			// eslint-disable-next-line no-non-null-assertion
+			// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 			this.email = email!;
 			this.password = password;
 		}

@@ -10,10 +10,11 @@ export const initialState: ProjectState = {
 		name: '',
 		key: '',
 		category: '',
+		icon: '',
 		sprints: [],
 		boards: [],
-		defaultAssignee: undefined,
 		icon: '',
+		defaultAssignee: undefined,
 		lead: {
 			id: '',
 			firstName: '',
