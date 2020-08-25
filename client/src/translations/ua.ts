@@ -248,10 +248,10 @@ export const ua = {
 	no_projects: 'Не знайдено проектів',
 	createAt: 'Створений',
 	updatedAt: 'Оновлений',
+	key: 'Ключ',
 	sign_up_with_google: 'Продовжити з допомогою Google',
 	anonymous: 'Аноним',
 	watchers: 'Відстежують',
 	watch: 'Відстежувати',
 	unwatch: 'Не відстежувати',
-	key: 'Ключ',
 };
