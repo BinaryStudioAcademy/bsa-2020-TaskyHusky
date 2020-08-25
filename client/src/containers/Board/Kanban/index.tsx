@@ -31,6 +31,7 @@ const Kanban: BoardComponent = ({ board }) => {
 				type: issue.type.id,
 				priority: issue.priority.id,
 				boardColumn: destinationId,
+				status: issue.status?.id,
 			}),
 		);
 	};

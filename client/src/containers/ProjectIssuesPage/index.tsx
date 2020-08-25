@@ -45,14 +45,13 @@ const ProjectIssuesPage: React.FC<Props> = ({ projectId }) => {
 				...selectedIssue,
 				type: selectedIssue.type.id,
 				priority: selectedIssue.priority.id,
+				status: selectedIssue.status?.id,
 		  }
 		: {
 				id: '',
 				type: '',
 				priority: '',
-				creator: {
-					id: '',
-				},
+				creator: '',
 		  };
 
 	return (

@@ -28,6 +28,8 @@ const IssuePageContent: React.FC<Props> = ({ issue }) => {
 		priority: issue.priority.id,
 		creator: issue.creator.id,
 		assigned: issue.assigned ? issue.assigned.id : undefined,
+		boardColumn: issue.boardColumn,
+		status: issue.status?.id,
 	};
 
 	useEffect(() => {

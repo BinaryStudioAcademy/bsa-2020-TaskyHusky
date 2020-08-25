@@ -6,13 +6,18 @@ interface UserAuthResult {
 	jwtToken: string;
 }
 
-interface IssueResult {
+export interface IssueResult {
 	id: string;
 	type: {
 		id: string;
 		color: string;
 		title: string;
 		icon: string;
+	};
+	status?: {
+		id: string;
+		color: string;
+		title: string;
 	};
 	summary?: string;
 	boardColumn?: string;

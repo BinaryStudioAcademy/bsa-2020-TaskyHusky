@@ -11,6 +11,13 @@ export interface CreateNotification {
 	link?: string;
 }
 
+export interface NotifyIssueWatchersSettings {
+	issue: Issue;
+	actionOrText: string;
+	noLink?: boolean;
+	customText?: boolean;
+}
+
 @EntityRepository(Notification)
 export class NotificationRepository extends Repository<Notification> {
 	findAllByUser(userId: string) {
@@ -38,14 +45,14 @@ export class NotificationRepository extends Repository<Notification> {
 		return this.delete({ id });
 	}
 
-	notifyIssueWatchers(issue: Issue, action: string, noLink?: boolean) {
+	notifyIssueWatchers({ issue, noLink, actionOrText, customText }: NotifyIssueWatchersSettings) {
 		const { watchers = [], issueKey } = issue;
 
 		return Promise.all(
 			watchers.map(async (watcher) =>
 				this.createOne({
 					user: { ...watcher },
-					text: `Issue ${issueKey} was ${action}.`,
+					text: customText ? actionOrText : `Issue ${issueKey} was ${actionOrText}.`,
 					link: !noLink ? `http://${appHost}:${frontendPort}/issue/${issueKey}` : undefined,
 					title: issueKey,
 				}),

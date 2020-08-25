@@ -2,6 +2,8 @@ import { EntityRepository, Repository, getCustomRepository } from 'typeorm';
 import { Issue } from '../entity/Issue';
 import { getConditions } from '../helpers/issue.helper';
 import { NotificationRepository } from './notification.repository';
+import { PartialIssue } from '../models/Issue';
+import { chooseMessage } from '../AI/selectUpdateIssueWatchNotificationMessage.ai';
 
 const RELS = ['priority', 'type', 'creator', 'assigned', 'status', 'watchers'];
 type SortDir = 'DESC' | 'ASC';
@@ -58,6 +60,10 @@ export class IssueRepository extends Repository<Issue> {
 		return this.findOneOrFail({ where: { id }, relations: RELS });
 	}
 
+	_findByIdWithRelIds(id: string): Promise<PartialIssue> {
+		return this.findOneOrFail({ where: { id }, loadRelationIds: { relations: RELS } }) as Promise<any>;
+	}
+
 	findOneByKey(key: string) {
 		return this.findOneOrFail({ where: { issueKey: key }, relations: RELS });
 	}
@@ -74,12 +80,18 @@ export class IssueRepository extends Repository<Issue> {
 		return promise;
 	}
 
-	async updateOneById(id: string, data: Issue) {
+	async updateOneById(id: string, data: PartialIssue) {
 		const issue = await this.findOneById(id);
+		const partialIssue = await this._findByIdWithRelIds(id);
 		const notification = getCustomRepository(NotificationRepository);
-		notification.notifyIssueWatchers(issue, 'updated');
 
-		return await this.update(id, data);
+		notification.notifyIssueWatchers({
+			issue,
+			actionOrText: chooseMessage(partialIssue, { ...partialIssue, ...data }),
+			customText: true,
+		});
+
+		return await this.update(id, data as any);
 	}
 
 	updateOneByKey(key: string, data: Issue) {
@@ -89,9 +101,8 @@ export class IssueRepository extends Repository<Issue> {
 	async deleteOneById(id: string) {
 		const issue = await this.findOneById(id);
 		const notification = getCustomRepository(NotificationRepository);
-		notification.notifyIssueWatchers(issue, 'deleted', true);
+		notification.notifyIssueWatchers({ issue, actionOrText: 'deleted', noLink: true });
 
-		//return await this.delete(id);
-		return {};
+		return await this.delete(id);
 	}
 }

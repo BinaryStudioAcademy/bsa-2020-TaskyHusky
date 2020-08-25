@@ -24,11 +24,18 @@ type TypeAndPriority = {
 	color: string;
 };
 
+type Status = {
+	id: string;
+	title: string;
+	color: string;
+};
+
 const BoardColumn: React.FC<Props> = ({ column, className, search, getOnDragEndFunc }) => {
 	const [issues, setIssues] = useState<WebApi.Result.IssueResult[]>([]);
 	const [issuesFetched, setIssuesFetched] = useState<boolean>(false);
 	const types = useSelector((state: RootState) => state.issues.types);
 	const priorities = useSelector((state: RootState) => state.issues.priorities);
+	const statuses = useSelector((state: RootState) => state.issues.statuses);
 	const { t } = useTranslation();
 
 	useEffect(() => {
@@ -84,6 +91,8 @@ const BoardColumn: React.FC<Props> = ({ column, className, search, getOnDragEndF
 										...issue,
 										id: '',
 										type: types.find((type) => issue.type === type.id) as TypeAndPriority,
+										boardColumn: '',
+										status: statuses.find((status) => issue.status === status.id) as Status,
 										priority: priorities.find(
 											(priority) => issue.priority === priority.id,
 										) as TypeAndPriority,

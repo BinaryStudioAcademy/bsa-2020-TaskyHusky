@@ -3,7 +3,6 @@ import { IssueComment } from '../entity/IssueComment';
 import { PartialIssueComment } from '../models/Issue';
 import { IssueRepository } from './issue.repository';
 import { NotificationRepository } from './notification.repository';
-import { Issue } from '../entity/Issue';
 
 const RELS = ['creator'];
 
@@ -26,7 +25,7 @@ export class IssueCommentRepository extends Repository<IssueComment> {
 		const issueRepository = getCustomRepository(IssueRepository);
 		const issue = await issueRepository.findOneById(data.issue);
 		const notification = getCustomRepository(NotificationRepository);
-		notification.notifyIssueWatchers(issue, 'commented');
+		notification.notifyIssueWatchers({ issue, actionOrText: 'commented' });
 
 		const instance = this.create({
 			...data,
