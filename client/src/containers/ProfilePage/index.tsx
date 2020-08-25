@@ -74,11 +74,11 @@ const ProfilePage = ({ id }: { id: string }) => {
 		setData({ ...data, projects, teammates, teams });
 		if (!teams.length) {
 			const teams = await requestGetUserTeams(id);
-			setData({ ...data, teams });
+			setData((data) => ({ ...data, teams }));
 		}
 		if (!teammates.length) {
 			const teammates = await requestTeammates(id);
-			setData({ ...data, teammates });
+			setData((data) => ({ ...data, teammates }));
 		}
 	};
 
