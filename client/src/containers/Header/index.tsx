@@ -130,7 +130,7 @@ export const HeaderMenu = () => {
 								>
 									<Dropdown.Menu className={styles.circularDropdownMenu}>
 										<Dropdown.Header>{`${user?.firstName} ${user?.lastName}`}</Dropdown.Header>
-										<Link to={`/profile/${user?.id}`}>
+										<Link to={{ pathname: `/profile/${user?.id}`, search: '?param=' }}>
 											<Dropdown.Item>{t('profile')}</Dropdown.Item>
 										</Link>
 										<Link to={{ pathname: `/profile/${user?.id}`, search: '?param=profile' }}>

@@ -56,6 +56,7 @@ const ProfilePage = ({ id }: { id: string }) => {
 	let projects = useSelector((state: RootState) => state.projects.projects);
 
 	const getUser = async () => {
+		console.log(navLocation);
 		if (isCurrentUser) {
 			setUser({ ...user, ...currentUser, isLoading: false, editMode: navLocation });
 			dispatch(actions.updateUser({ partialState: { ...currentUser, isLoading: false, editMode: navLocation } }));
@@ -73,7 +74,7 @@ const ProfilePage = ({ id }: { id: string }) => {
 	useEffect(() => {
 		getUser();
 		//eslint-disable-next-line
-	}, [userData.id]);
+	}, [userData.id, navLocation]);
 
 	return (
 		<>
