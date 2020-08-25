@@ -10,8 +10,7 @@ import ProfileManagerSection from 'components/ProfileManagerSection';
 import Spinner from 'components/common/Spinner';
 import { initialState } from './logiс/state';
 import { useTranslation } from 'react-i18next';
-import { requestGetUserProjects, requestGetUserTeams } from 'services/user.service';
-import { fetchPeople } from 'services/people.service';
+import { requestGetUserProjects, requestGetUserTeams, requestTeammates } from 'services/user.service';
 import { NotificationManager } from 'react-notifications';
 
 const ProfilePage = ({ id }: { id: string }) => {
@@ -61,7 +60,7 @@ const ProfilePage = ({ id }: { id: string }) => {
 		} else {
 			dispatch(actions.requestGetUser({ id }));
 			setUser({ ...user, ...userData });
-			Promise.all([requestGetUserTeams(id), requestGetUserProjects(id), fetchPeople(id)])
+			Promise.all([requestGetUserTeams(id), requestGetUserProjects(id), requestTeammates(id)])
 				.then((arr) => {
 					setData({ ...data, teams: arr[0], projects: arr[1], teammates: arr[2] });
 				})
@@ -78,7 +77,7 @@ const ProfilePage = ({ id }: { id: string }) => {
 			setData({ ...data, teams });
 		}
 		if (!teammates.length) {
-			const teammates = await fetchPeople(id);
+			const teammates = await requestTeammates(id);
 			setData({ ...data, teammates });
 		}
 	};
