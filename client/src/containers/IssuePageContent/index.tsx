@@ -14,7 +14,8 @@ interface Props {
 	issue: WebApi.Result.IssueResult;
 }
 
-const IssuePageContent: React.FC<Props> = ({ issue }) => {
+const IssuePageContent: React.FC<Props> = ({ issue: givenIssue }) => {
+	const [issue, setIssue] = useState<WebApi.Result.IssueResult>(givenIssue);
 	const [comments, setComments] = useState<WebApi.Result.IssueCommentResult[]>([]);
 	const [mustFetchComments, setMustFetchComments] = useState<boolean>(true);
 	const { t } = useTranslation();
@@ -42,6 +43,12 @@ const IssuePageContent: React.FC<Props> = ({ issue }) => {
 	if (mustFetchComments || !authData.user || !io) {
 		return null;
 	}
+
+	io.on(WebApi.IO.IssueActions.UpdateIssue, (id: string, newIssue: WebApi.Result.IssueResult) => {
+		if (issue.id === id) {
+			setIssue(newIssue);
+		}
+	});
 
 	io.on(WebApi.IO.IssueActions.CommentIssue, (id: string, newComment: WebApi.Result.IssueCommentResult) => {
 		if (id === issue.id) {
