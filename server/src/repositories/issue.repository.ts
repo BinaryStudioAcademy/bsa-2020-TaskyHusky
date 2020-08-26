@@ -74,7 +74,7 @@ export class IssueRepository extends Repository<Issue> {
 		return this.findOneOrFail({ where: { id }, relations: RELS });
 	}
 
-	_findByIdWithRelIds(id: string): Promise<PartialIssue> {
+	findByIdWithRelIds(id: string): Promise<PartialIssue> {
 		return this.findOneOrFail({ where: { id }, loadRelationIds: { relations: RELS } }) as Promise<any>;
 	}
 
@@ -104,7 +104,7 @@ export class IssueRepository extends Repository<Issue> {
 
 	async updateOneById(id: string, data: PartialIssue) {
 		const issue = await this.findOneById(id);
-		const partialIssue = await this._findByIdWithRelIds(id);
+		const partialIssue = await this.findByIdWithRelIds(id);
 		const notification = getCustomRepository(NotificationRepository);
 		const result = await this.update(id, data as any);
 		const newIssue = await this.findOneById(id);
@@ -132,6 +132,7 @@ export class IssueRepository extends Repository<Issue> {
 		issueHandler.emit(IssueActions.DeleteIssue, id);
 		notification.notifyIssueWatchers({ issue, actionOrText: 'deleted', noLink: true });
 
-		return await this.delete(id);
+		const result = await this.delete(id);
+		return result;
 	}
 }
