@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import styles from './styles.module.scss';
 import * as actions from './logiс/actions';
 import ProfileHeader from 'components/ProfileHeader';
@@ -15,6 +16,8 @@ import { NotificationManager } from 'react-notifications';
 
 const ProfilePage = ({ id }: { id: string }) => {
 	const dispatch = useDispatch();
+	const location = useLocation();
+	const navLocation = location.search ? location.search.split('=')[1] : '';
 	const { t } = useTranslation();
 	const [user, setUser] = useState(initialState);
 	const { editMode, isLoading } = user;
@@ -54,9 +57,10 @@ const ProfilePage = ({ id }: { id: string }) => {
 	});
 
 	const getUser = async () => {
+		console.log(navLocation);
 		if (isCurrentUser) {
-			setUser({ ...user, ...currentUser, isLoading: false });
-			dispatch(actions.updateUser({ partialState: { ...currentUser, isLoading: false } }));
+			setUser({ ...user, ...currentUser, isLoading: false, editMode: navLocation });
+			dispatch(actions.updateUser({ partialState: { ...currentUser, isLoading: false, editMode: navLocation } }));
 		} else {
 			dispatch(actions.requestGetUser({ id }));
 			setUser({ ...user, ...userData });
@@ -89,7 +93,7 @@ const ProfilePage = ({ id }: { id: string }) => {
 	useEffect(() => {
 		getUser();
 		//eslint-disable-next-line
-	}, [userData.id]);
+	}, [userData.id, navLocation]);
 
 	useEffect(() => {
 		if (isCurrentUser) {

@@ -7,6 +7,7 @@ import { requestUpdateUser } from 'containers/ProfilePage/logiс/actions';
 import { UserProfileState } from 'containers/ProfilePage/logiс/state';
 import { useDispatch } from 'react-redux';
 import CustomValidator from 'helpers/validation.helper';
+import JobTitleSelect from 'components/JobTitleSelect';
 
 interface Props {
 	showManager: (modeToShow: string) => void;
@@ -48,6 +49,12 @@ const ProfileManager: React.FC<Props> = (props: Props) => {
 			userData[(event.target as HTMLInputElement).name as keyof UserProfileState] !==
 				(event.target as HTMLInputElement).value,
 		);
+	};
+	const handleSelect = (propKey: string, value: string) => {
+		setUser({
+			...user,
+			[propKey]: value,
+		});
 	};
 	const onBlur = (event: any) => {
 		const customValidator = new CustomValidator((event.target as HTMLInputElement).value);
@@ -108,16 +115,12 @@ const ProfileManager: React.FC<Props> = (props: Props) => {
 						isValid={userValidation.username}
 						onBlur={onBlur}
 					/>
-					<SubmitedInput
-						handleChange={handleChange}
+					<JobTitleSelect
+						handleSelect={handleSelect}
 						text={jobTitle}
 						propKey="jobTitle"
 						placeholder={t('placeholder_job')}
 						title={t('job_title')}
-						type="text"
-						errorText={errorMessage.jobTitle}
-						isValid={userValidation.jobTitle}
-						onBlur={onBlur}
 					/>
 					<SubmitedInput
 						handleChange={handleChange}
