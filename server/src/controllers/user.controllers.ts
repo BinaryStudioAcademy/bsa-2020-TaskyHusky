@@ -46,7 +46,7 @@ class UserController {
 
 	changePassword = async (req: Request, res: Response): Promise<void> => {
 		const userRepository = getCustomRepository(UserRepository);
-		const { oldPassword, newPassword } = req.body;
+		const { oldPassword, password: newPassword } = req.body;
 		const { email, id } = req.user;
 		const { password } = await userRepository.getByEmail(email);
 		try {

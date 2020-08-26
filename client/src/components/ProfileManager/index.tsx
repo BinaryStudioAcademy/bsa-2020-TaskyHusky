@@ -20,7 +20,15 @@ const ProfileManager: React.FC<Props> = (props: Props) => {
 	const { showManager, updateUser, user: userData } = props;
 	const dispatch = useDispatch();
 	const [user, setUser] = useState(userData);
-	const { firstName, lastName, username, jobTitle, department, location, organization } = user;
+	const {
+		firstName,
+		lastName,
+		username = '',
+		jobTitle = '',
+		department = '',
+		location = '',
+		organization = '',
+	} = user;
 	const [isSubmit, setIsSubmit] = useState<boolean>(false);
 	const [userValidation, setUserValidation] = useState({
 		firstName: true,
