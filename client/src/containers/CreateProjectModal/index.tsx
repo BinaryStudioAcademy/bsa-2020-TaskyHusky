@@ -11,7 +11,7 @@ import styles from './styles.module.scss';
 import CustomInput from 'components/common/Input/CustomInput';
 import { generateKey } from 'commonLogic/keyGenerator';
 import * as validationMessage from 'constants/ValidationMessages';
-import { validProjectName, validProjectKey, validGitHiubUrl } from 'helpers/validationRules';
+import { validProjectName, validProjectKey, validGitHubUrl } from 'helpers/validationRules';
 import icons from 'assets/images/project';
 
 type Template = keyof typeof WebApi.Board.BoardType;
@@ -177,7 +177,7 @@ const CreateProjectModal: React.FC<Props> = ({ children }) => {
 									setData={setGithubUrl}
 									placeholder="Enter your project's GitHub URL"
 									popUpContent={validationMessage.VM_GITHUB_URL}
-									validation={validGitHiubUrl}
+									validation={validGitHubUrl}
 								/>
 							</Form.Field>
 						</Form>
