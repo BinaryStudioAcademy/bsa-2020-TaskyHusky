@@ -7,13 +7,50 @@ import { RootState } from 'typings/rootState';
 import UserNotification from 'components/common/UserNotification';
 import moment from 'moment';
 import * as actions from './logic/actions';
+import { useIO } from 'hooks/useIO';
 
 const NotificationsMenu: React.FC = () => {
 	const [canShowAllNotifications, setCanShowAllNotifications] = useState<boolean>(false);
 	const [isOpened, setIsOpened] = useState<boolean>(false);
 	const notifications = useSelector((state: RootState) => state.notifications.notifications);
+	const user = useSelector((state: RootState) => state.auth.user);
 	const { t } = useTranslation();
 	const dispatch = useDispatch();
+
+	useIO(WebApi.IO.Types.Notification, (io) => {
+		io.on(WebApi.IO.NotificationActions.CreateNotification, (newNotification: WebApi.Result.NotificationResult) => {
+			if (user && newNotification.user.id === user.id) {
+				dispatch(actions.setNotifications({ notifications: [...notifications, newNotification] }));
+			}
+		});
+
+		io.on(WebApi.IO.NotificationActions.ViewNotification, (id: string) => {
+			const newNotifications = [...notifications];
+			const index = newNotifications.findIndex((notif) => notif.id === id);
+
+			if (index > -1) {
+				newNotifications[index].isViewed = true;
+				dispatch(actions.setNotifications({ notifications: newNotifications }));
+			}
+		});
+
+		io.on(WebApi.IO.NotificationActions.UnviewNotification, (id: string) => {
+			const newNotifications = [...notifications];
+			const index = newNotifications.findIndex((notif) => notif.id === id);
+
+			if (index > -1) {
+				newNotifications[index].isViewed = false;
+				dispatch(actions.setNotifications({ notifications: newNotifications }));
+			}
+		});
+
+		io.on(WebApi.IO.NotificationActions.ViewAllNotifications, (userId: string) => {
+			if (user && user.id === userId) {
+				const newNotifications = [...notifications].map((notif) => ({ ...notif, isViewed: true }));
+				dispatch(actions.setNotifications({ notifications: newNotifications }));
+			}
+		});
+	});
 
 	const displayNotifications = notifications.filter((notif) =>
 		canShowAllNotifications ? moment(notif.createdAt).isAfter(moment().subtract(10, 'days')) : !notif.isViewed,
@@ -41,8 +78,6 @@ const NotificationsMenu: React.FC = () => {
 
 	const viewAll = () => {
 		dispatch(actions.viewAllNotifications());
-		const newNotifications = [...notifications].map((notif) => ({ ...notif, isViewed: true }));
-		dispatch(actions.setNotifications({ notifications: newNotifications }));
 	};
 
 	return (
@@ -81,7 +116,7 @@ const NotificationsMenu: React.FC = () => {
 				{displayNotifications.length ? (
 					displayNotifications.map((notif) => (
 						<div style={{ paddingLeft: 10, paddingRight: 10 }} key={notif.id}>
-							<UserNotification notification={notif} notifications={notifications} />
+							<UserNotification notification={notif} />
 						</div>
 					))
 				) : (
