@@ -25,15 +25,17 @@ const Kanban: BoardComponent = ({ board }) => {
 		const cardKey = extractIdFormDragDropId(draggableId);
 		onDragEndFuncs.forEach((func) => func(event, provided));
 
-		getByKey(cardKey).then((issue) =>
-			updateIssueByKey(cardKey, {
-				...issue,
+		getByKey(cardKey).then((issue) => {
+			const { watchers, ...issueToSend } = issue;
+
+			return updateIssueByKey(cardKey, {
+				...issueToSend,
 				type: issue.type.id,
 				priority: issue.priority.id,
 				boardColumn: destinationId,
 				status: issue.status?.id,
-			}),
-		);
+			});
+		});
 	};
 
 	return (

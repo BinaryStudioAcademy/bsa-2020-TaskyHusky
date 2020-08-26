@@ -13,5 +13,5 @@ export type UnviewNotification = {
 };
 
 export type SetNotifications = {
-	notifications: WebApi.Entities.Notification[];
+	notifications: WebApi.Result.NotificationResult[];
 };
