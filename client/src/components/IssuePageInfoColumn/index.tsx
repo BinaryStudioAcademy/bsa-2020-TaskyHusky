@@ -71,7 +71,15 @@ const IssuePageInfoColumn: React.FC<Props> = ({
 				}}
 			>
 				<Button.Group style={{ marginTop: 10 }} fluid>
-					<Dropdown button className="icon" labeled floating icon="eye" text={String(issueWatchers.length)}>
+					<Dropdown
+						button
+						className="icon"
+						labeled
+						title={watching ? t('watching') : t('not_watching')}
+						floating
+						icon={<Icon name={watching ? 'eye' : 'eye slash'} color={watching ? 'green' : 'grey'} />}
+						text={String(issueWatchers.length)}
+					>
 						<Dropdown.Menu>
 							<Dropdown.Header>{t('watchers')}</Dropdown.Header>
 							<Dropdown.Item onClick={watch}>{watchButtonText}</Dropdown.Item>
@@ -108,10 +116,6 @@ const IssuePageInfoColumn: React.FC<Props> = ({
 				) : (
 					''
 				)}
-				<Label style={{ marginBottom: -10 }}>
-					<Icon name={watching ? 'eye' : 'eye slash'} color={watching ? 'green' : 'grey'} />
-					{watching ? t('watching') : t('not_watching')}
-				</Label>
 				{withDescrtiption ? (
 					<>
 						<h4>{t('description')}</h4>

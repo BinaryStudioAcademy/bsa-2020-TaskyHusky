@@ -1,5 +1,5 @@
 export interface NotificationsState {
-	notifications: WebApi.Entities.Notification[];
+	notifications: WebApi.Result.NotificationResult[];
 }
 
 export const initialState: NotificationsState = {

@@ -6,6 +6,8 @@ import { PartialIssue } from '../models/Issue';
 import { chooseMessage } from '../AI/selectUpdateIssueWatchNotificationMessage.ai';
 import issueHandler from '../socketConnectionHandlers/issue.handler';
 import { IssueActions } from '../models/IO';
+import { getDiffPropNames } from '../helpers/objectsDiff.helper';
+import { isEquivalent } from '../helpers/isEquivalent.helper';
 
 const RELS = [
 	'priority',
@@ -110,11 +112,19 @@ export class IssueRepository extends Repository<Issue> {
 		const newIssue = await this.findOneById(id);
 		issueHandler.emit(IssueActions.UpdateIssue, id, newIssue);
 
-		notification.notifyIssueWatchers({
-			issue,
-			actionOrText: chooseMessage(partialIssue, { ...partialIssue, ...data }),
-			customText: true,
-		});
+		const difference = getDiffPropNames<PartialIssue, PartialIssue>(
+			partialIssue,
+			{ ...partialIssue, ...data },
+			isEquivalent,
+		);
+
+		if (difference.length) {
+			notification.notifyIssueWatchers({
+				issue,
+				actionOrText: chooseMessage(partialIssue, { ...partialIssue, ...data }),
+				customText: true,
+			});
+		}
 
 		return result;
 	}
