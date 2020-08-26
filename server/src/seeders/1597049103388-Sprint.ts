@@ -18,7 +18,7 @@ export class Sprint1597046103388 implements MigrationInterface {
 		sprint2.id = '7dac8783-2421-4683-ae5d-d9adf0c75ecb';
 		sprint2.sprintName = 'Innovative Chipmunk Ferret';
 		sprint2.isActive = false;
-		sprint2.isCompleted = true;
+		sprint2.isCompleted = false;
 		sprint2.project = undefined;
 		sprint2.board = undefined;
 
@@ -26,7 +26,7 @@ export class Sprint1597046103388 implements MigrationInterface {
 		sprint3.id = '5b15a872-0532-499b-9d75-28a874f843e8';
 		sprint3.sprintName = 'Panda Grizzly-bear';
 		sprint3.isActive = false;
-		sprint3.isCompleted = true;
+		sprint3.isCompleted = false;
 		sprint3.project = undefined;
 		sprint3.board = undefined;
 
