@@ -290,4 +290,5 @@ export const en = {
 	watchers: 'Watchers',
 	watch: 'Watch',
 	unwatch: 'Unwatch',
+	commits: 'Git commits',
 };

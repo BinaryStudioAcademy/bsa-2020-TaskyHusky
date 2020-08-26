@@ -1,22 +1,32 @@
 import React, { useState, useEffect } from 'react';
-import { Comment } from 'semantic-ui-react';
+import { Button, Comment, List } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 import IssueCommentForm from 'components/IssueCommentForm';
-import { getComments } from 'services/issue.service';
+import { getComments, getCommits } from 'services/issue.service';
 import IssueComment from 'components/IssueComment';
 import { useSelector } from 'react-redux';
 import { RootState } from 'typings/rootState';
 import styles from './styles.module.scss';
 import IssuePageInfoColumn from 'components/IssuePageInfoColumn';
 import { useIO } from 'hooks/useIO';
+import { Link } from 'react-router-dom';
 
 interface Props {
 	issue: WebApi.Result.IssueResult;
 }
 
+enum MenuStates {
+	commentsShown = 'commentsShown',
+	commitsShown = 'commitsShown',
+	none = 'none',
+}
+
 const IssuePageContent: React.FC<Props> = ({ issue: givenIssue }) => {
+	const [menuState, setMenuState] = useState<MenuStates>(MenuStates.none);
+
 	const [issue, setIssue] = useState<WebApi.Result.IssueResult>(givenIssue);
 	const [comments, setComments] = useState<WebApi.Result.IssueCommentResult[]>([]);
+	const [commits, setCommits] = useState<string[]>([]);
 	const [mustFetchComments, setMustFetchComments] = useState<boolean>(true);
 	const { t } = useTranslation();
 	const authData = useSelector((state: RootState) => state.auth);
@@ -70,9 +80,10 @@ const IssuePageContent: React.FC<Props> = ({ issue: givenIssue }) => {
 	useEffect(() => {
 		if (mustFetchComments) {
 			getComments(issue.id).then(setComments);
+			getCommits(issue.summary || '').then(setCommits);
 			setMustFetchComments(false);
 		}
-	}, [mustFetchComments, issue.id]);
+	}, [mustFetchComments, issue.id, issue.summary]);
 
 	if (mustFetchComments || !authData.user) {
 		return null;
@@ -87,21 +98,40 @@ const IssuePageContent: React.FC<Props> = ({ issue: givenIssue }) => {
 				<h1>{issue.summary}</h1>
 				<h4>{t('description')}</h4>
 				<p>{issue.description}</p>
-				<h3>{t('comments')}</h3>
-				<Comment.Group
-					style={{
-						maxHeight: '50vh',
-						overflowY: 'auto',
-						width: '100%',
-						maxWidth: '100%',
-						marginBottom: 20,
-					}}
-				>
-					{comments.map((comment) => (
-						<IssueComment comment={comment} key={comment.id} />
-					))}
-				</Comment.Group>
-				<IssueCommentForm issueId={issue.id} />
+				<Button onClick={() => setMenuState(MenuStates.commentsShown)}>{t('comments')}</Button>
+				<Button onClick={() => setMenuState(MenuStates.commitsShown)}>{t('commits')}</Button>
+				{menuState === MenuStates.commitsShown && (
+					<div className={styles.commitsContainer}>
+						<List horizontal>
+							{commits.map((commit, index) => (
+								<List.Item key={index}>
+									<Link
+										to={{ pathname: `https://github.com/witcher1359/testFeature/commit/${commit}` }}
+										target="_blank"
+									>
+										{commit.slice(0, 6)}
+									</Link>
+								</List.Item>
+							))}
+						</List>
+					</div>
+				)}
+				{menuState === MenuStates.commentsShown && (
+					<Comment.Group
+						style={{
+							maxHeight: '50vh',
+							overflowY: 'auto',
+							width: '100%',
+							maxWidth: '100%',
+							marginBottom: 20,
+						}}
+					>
+						{comments.map((comment) => (
+							<IssueComment comment={comment} key={comment.id} />
+						))}
+					</Comment.Group>
+				)}
+				{menuState === MenuStates.commentsShown && <IssueCommentForm issueId={issue.id} />}
 			</div>
 			<IssuePageInfoColumn issue={issue} initialIssue={initialIssue} />
 		</div>

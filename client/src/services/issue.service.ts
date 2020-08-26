@@ -137,6 +137,15 @@ export const getComments = async (id: string): Promise<WebApi.Result.IssueCommen
 	return (await res.json()) as WebApi.Result.IssueCommentResult[];
 };
 
+export const getCommits = async (issue: string): Promise<string[]> => {
+	const res: Response = await callWebApi({
+		method: 'GET',
+		endpoint: `commits/${issue}`,
+	});
+
+	return (await res.json()) as string[];
+};
+
 export const getBacklogByBoardId = async (id: string): Promise<WebApi.Entities.Issue[]> => {
 	const res: Response = await callWebApi({
 		method: 'GET',
