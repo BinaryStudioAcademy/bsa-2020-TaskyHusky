@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Form, TextArea, Button, Icon, Popup, Dropdown } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
-import * as actions from './logic/actions';
+import * as actions from '../ProjectSettings/logic/actions';
 
 import styles from './styles.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
