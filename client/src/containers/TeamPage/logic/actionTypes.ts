@@ -23,6 +23,18 @@ export const SEARCH_PEOPLE_LOADER = 'TEAM:SEARCH_PEOPLE_LOADER';
 export const CLEAR_FOUND_USERS = 'TEAM:CLEAR_FOUND_USERS';
 export const CLEAR_FOUND_USERS_DONE = 'TEAM:CLEAR_FOUND_USERS_DONE';
 
+export const ADD_PEOPLE_TO_TEAM_LOADING = 'TEAM:ADD_PEOPLE_TO_TEAM_LOADING';
+export const ADD_PEOPLE_TO_TEAM_SUCCESS = 'TEAM:ADD_PEOPLE_TO_TEAM_SUCCESS';
+
+export type startAddingUsers = {
+	id: string,
+	users: WebApi.Entities.UserProfile[]
+}
+
+export type successAddingUsers = {
+	users: WebApi.Entities.UserProfile[];
+}
+
 export type startsearchingPeople = {
 	id: string,
 	match: string

@@ -5,7 +5,8 @@ import {
 	deleteOneLink,
 	getTeamsProjects,
 	getTeamsUsers,
-	findUsersColleagues
+	findUsersColleagues,
+	addUsersToTeam
 } from 'services/team.service';
 import { all, put, takeEvery, call } from 'redux-saga/effects';
 import * as actionTypes from './actionTypes';
@@ -86,11 +87,20 @@ export function* searchPeople(props: any) {
 		})
 		yield put(actions.successSearchPeople({ results: searchResult }));
 	} catch (error) {
-		NotificationManager.error('No such user', 'Error', 4000);
 	}
 }
 
-function* clearResultField () {
+function* inviteUsersToTeam({ id, users }: any) {
+	try {
+		const team = yield call(addUsersToTeam, id, users);
+		yield put(actions.addPeopleToTeamDone({ users: team.users }))
+
+	} catch (error) {
+		console.log(error);
+	}
+}
+
+function* clearResultField() {
 	yield put(actions.clearResultsDone());
 }
 
@@ -117,12 +127,17 @@ export function* watchClearSearchResults() {
 	yield takeEvery(actionTypes.CLEAR_FOUND_USERS, clearResultField);
 }
 
+export function* watchAddPeopleToTeam() {
+	yield takeEvery(actionTypes.ADD_PEOPLE_TO_TEAM_LOADING, inviteUsersToTeam);
+}
+
 export default function* teamSaga() {
 	yield all([
 		watchStartLoading(),
 		watchAddLinksLoading(),
 		watchFieldUpdateLoading(),
 		watchDeleteLinksLoading(),
-		watchSearchPeopleLoading()
+		watchSearchPeopleLoading(),
+		watchAddPeopleToTeam()
 	]);
 }

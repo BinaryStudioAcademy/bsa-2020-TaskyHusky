@@ -42,6 +42,16 @@ export const teamReducer = createReducer<TeamState>(initialState, {
 		};
 	},
 
+	[actionTypes.ADD_PEOPLE_TO_TEAM_SUCCESS](state: TeamState, action: actionTypes.successAddingUsers) {
+		return {
+			...state,
+			team: {
+				...state.team,
+				...action,
+			},
+		};
+	},
+
 	[actionTypes.UPDATE_LINK_FIELD_SUCCESS](state: TeamState, action: actionTypes.AddLinkSuccess) {
 		return {
 			...state,

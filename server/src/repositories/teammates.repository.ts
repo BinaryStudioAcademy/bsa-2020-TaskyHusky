@@ -57,7 +57,10 @@ export class TeammatesRepository extends Repository<UserProfile> {
 			.addSelect(['user.id', 'user.firstName', 'user.lastName', 'user.avatar', 'user.email'])
 			.getOne();
 
-		return user?.teammates || [];
+		if (!user) {
+			throw new Error('User does not exist');
+		}
+		return user.teammates || [];
 	}
 
 	async createInvitation(creatorId: string, teammateEmail: string): Promise<void> {

@@ -7,6 +7,7 @@ import ChosenPeople from './ResultPeople/chosenPeople';
 
 type Props = {
 	onClose: (arg: boolean) => void;
+	onConfirm: (arg: WebApi.Entities.UserProfile[]) => void;
 	search: (match: string) => void;
 	clearStateAfterSelect: () => void;
 	people: {
@@ -16,7 +17,7 @@ type Props = {
 	searchLoading: boolean;
 };
 
-const TeamAddPeopleModal = ({ onClose, search, searchLoading, people, clearStateAfterSelect }: Props) => {
+const TeamAddPeopleModal = ({ onConfirm, onClose, search, searchLoading, people, clearStateAfterSelect }: Props) => {
 	const [chosenUsers, setChosenUser] = useState<WebApi.Entities.UserProfile[] | []>([]);
 	const [searchText, setSearchText] = useState<string | undefined>('');
 
@@ -24,7 +25,6 @@ const TeamAddPeopleModal = ({ onClose, search, searchLoading, people, clearState
 		if (chosenUsers.length >= 4) {
 			return;
 		}
-
 		setSearchText(value);
 		if (value) {
 			search(value);
@@ -49,6 +49,13 @@ const TeamAddPeopleModal = ({ onClose, search, searchLoading, people, clearState
 		setSearchText('');
 	};
 
+	const handlerAccept = () => {
+		if (chosenUsers.length > 0) {
+			onConfirm(chosenUsers);
+		}
+		onClose(false);
+	};
+
 	return (
 		<Modal onClose={() => onClose(false)} open size="small">
 			<Modal.Header>Add teammates</Modal.Header>
@@ -67,10 +74,10 @@ const TeamAddPeopleModal = ({ onClose, search, searchLoading, people, clearState
 					minCharacters={2}
 					value={searchText}
 				/>
-				<p className={styles.description_p}>No more than 10 people can be invited at the same time.</p>
+				<p className={styles.description_p}>No more than 4 people can be invited at the same time.</p>
 			</Modal.Content>
 			<Modal.Actions>
-				<Button content="Accept" primary labelPosition="left" icon="checkmark" onClick={() => onClose(false)} />
+				<Button content="Accept" primary labelPosition="left" icon="checkmark" onClick={handlerAccept} />
 				<Button color="grey" onClick={() => onClose(false)}>
 					Cancel
 				</Button>

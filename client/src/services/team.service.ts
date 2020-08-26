@@ -94,3 +94,15 @@ export const findUsersColleagues = async (id: string, match: string) => {
 	})
 	return await (result.json()) as WebApi.Entities.UserProfile[];
 }
+
+export const addUsersToTeam = async (id: string, users: WebApi.Entities.UserProfile[]) => {
+	const result = await callWebApi({
+		method: 'POST',
+		endpoint: 'team/connect-to-team',
+		body: {
+			id,
+			users
+		}
+	})
+	return await (result.json()) as WebApi.Entities.UserProfile[];
+}

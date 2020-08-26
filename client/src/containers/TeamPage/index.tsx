@@ -104,7 +104,15 @@ const TeamPage = ({
 	const onSearchPeople = (match: string) => {
 		dispatch(actions.startSearchPeople({ id: params.id, match }));
 	};
+
 	const onSelectUserInAddUsers = () => dispatch(actions.clearResults());
+
+	const onAddPeopleToTeamConfirm = (users: WebApi.Entities.UserProfile[]) => {
+		dispatch(actions.addPeopleToTeamLoading({ id: params.id, users }));
+	};
+const handlerRemoveFromTeam = (id: string) => {
+	console.log('deleted')
+}
 	return loading ? (
 		<Spinner />
 	) : (
@@ -123,7 +131,7 @@ const TeamPage = ({
 						showAddPeopleModal={showAddPeopleModal}
 					/>
 					<TeamsMembersCard teammates={[{ ...team.createdBy }]} title={'Team owner'} />
-					<TeamsMembersCard teammates={team.users} title={'Members'} />
+					<TeamsMembersCard teammates={team.users} title={'Members'} removeFromTeam={handlerRemoveFromTeam} />
 				</Grid.Column>
 				<Grid.Column className={[styles.col_media, styles.col_right].join(' ')}>
 					<TeamWorkedProjects projects={team.projects} />
@@ -142,6 +150,7 @@ const TeamPage = ({
 					people={searchPeople}
 					search={onSearchPeople}
 					onClose={setAddPeopleModal}
+					onConfirm={onAddPeopleToTeamConfirm}
 				/>
 			)}
 			{addLinks && <CreateLink onConfirm={onEditLinkAccept} currentLink={editedLink} onClose={toggleAddLinks} />}

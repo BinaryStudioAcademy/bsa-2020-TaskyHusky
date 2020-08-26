@@ -1,5 +1,6 @@
 import { EntityRepository, Repository, getCustomRepository } from 'typeorm';
 import { Team } from '../entity/Team';
+import { UserProfile } from '../entity/UserProfile';
 import { getRandomColor } from '../services/colorGenerator.service';
 import { UserRepository } from './user.repository';
 
@@ -82,5 +83,37 @@ export class TeamRepository extends Repository<Team> {
 
 	deleteOneById(id: string) {
 		return this.delete(id);
+	}
+
+	// eslint-disable-next-line consistent-return
+	async addPeopleToTeam(id: string, users: UserProfile[]) {
+		try {
+			const team = await this.createQueryBuilder('Team')
+				.where('Team.id = :id', { id })
+				.leftJoinAndSelect('Team.users', 'Users')
+				.getOne();
+
+			if (!team) {
+				throw new Error('Team was not found');
+			}
+
+			// eslint-disable-next-line array-callback-return
+			users.map((user: UserProfile): void => {
+				const isExist = team?.users?.find((el) => el.id === user.id);
+				if (!isExist) {
+					team?.users?.push(user);
+				}
+			});
+
+			await this.save(team);
+
+			const updatedTeam = await this.createQueryBuilder('Team')
+				.where('Team.id = :id', { id })
+				.leftJoinAndSelect('Team.users', 'Users')
+				.getOne();
+			return updatedTeam;
+		} catch (error) {
+			console.log(error);
+		}
 	}
 }

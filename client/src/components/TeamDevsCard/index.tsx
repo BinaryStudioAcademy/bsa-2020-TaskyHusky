@@ -22,7 +22,6 @@ const TeamDevsCard = ({
 	description = '',
 	name = '',
 }: CardProps) => {
-	console.log(currentProfile, teamOwner);
 	const [showDelete, setShowDelete] = useState<boolean>(false);
 	const [lockEditFields, setEditFields] = useState<boolean>(true);
 	const [title, setTitle] = useState<string>(name);
