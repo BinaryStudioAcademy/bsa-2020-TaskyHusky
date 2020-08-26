@@ -10,7 +10,7 @@ interface Props {
 	project: WebApi.Entities.Projects;
 }
 
-const AddPeopleModal = ({ project: { id: projectId, users: projectUsers } }: Props) => {
+const AddPeopleModal = ({ project: { id: projectId, lead, users: projectUsers } }: Props) => {
 	const dispatch = useDispatch();
 	const { users } = useSelector((rootState: RootState) => rootState.users);
 	const { isLoading, isAdded } = useSelector((rootState: RootState) => rootState.projectPeople);
@@ -20,8 +20,11 @@ const AddPeopleModal = ({ project: { id: projectId, users: projectUsers } }: Pro
 	const [selectedUsersIds, setSelectedUsersIds] = useState<string[]>([]);
 
 	const usersNotInProject = useMemo(
-		() => users.filter((user) => projectUsers.every((projectsUser) => projectsUser.id !== user.id)),
-		[users, projectUsers],
+		() =>
+			users.filter((user) =>
+				projectUsers.some((projectsUser) => projectsUser.id !== user.id && user.id !== lead.id),
+			),
+		[users, projectUsers, lead.id],
 	);
 
 	if (isAdded) {
