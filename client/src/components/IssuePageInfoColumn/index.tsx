@@ -108,6 +108,10 @@ const IssuePageInfoColumn: React.FC<Props> = ({
 				) : (
 					''
 				)}
+				<Label style={{ marginBottom: -10 }}>
+					<Icon name={watching ? 'eye' : 'eye slash'} color={watching ? 'green' : 'grey'} />
+					{watching ? t('watching') : t('not_watching')}
+				</Label>
 				{withDescrtiption ? (
 					<>
 						<h4>{t('description')}</h4>
