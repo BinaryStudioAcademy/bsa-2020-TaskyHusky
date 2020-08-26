@@ -293,4 +293,8 @@ export const en = {
 	see_it: 'See it!',
 	mark_notif_as_read: 'Mark notification as read',
 	show_notifs_during_last_10_days: 'Show all notifications during last 10 days',
+	mark_notif_as_unread: 'Mark notification as unread',
+	mark_all_as_read: 'Mark all as read',
+	watching: 'Watching',
+	not_watching: 'Not watching',
 };

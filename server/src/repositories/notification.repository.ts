@@ -3,12 +3,17 @@ import { Notification } from '../entity/Notification';
 import { Issue } from '../entity/Issue';
 import { appHost, frontendPort } from '../../config/app.config';
 import { UserProfile } from '../entity/UserProfile';
+import { templatedReplace } from '../helpers/templatedReplace.helper';
 
 export interface CreateNotification {
 	text: string;
 	user: UserProfile;
 	title?: string;
 	link?: string;
+}
+
+export interface UpdateNoification extends Partial<CreateNotification> {
+	isViewed?: boolean;
 }
 
 export interface NotifyIssueWatchersSettings {
@@ -37,8 +42,20 @@ export class NotificationRepository extends Repository<Notification> {
 		return this.save(instance);
 	}
 
-	updateOneById(id: string, data: Partial<CreateNotification>) {
+	updateOneById(id: string, data: UpdateNoification) {
 		return this.update({ id }, data);
+	}
+
+	viewOneById(id: string) {
+		return this.updateOneById(id, { isViewed: true });
+	}
+
+	unviewOneById(id: string) {
+		return this.updateOneById(id, { isViewed: false });
+	}
+
+	viewAll(userId: string) {
+		return this.update({ user: { id: userId } }, { isViewed: true });
 	}
 
 	deleteOneById(id: string) {

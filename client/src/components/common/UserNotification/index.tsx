@@ -26,13 +26,27 @@ const UserNotification: React.FC<Props> = ({ notification, notifications }) => {
 		dispatch(actions.setNotifications({ notifications: newNotifications }));
 	};
 
+	const unview = () => {
+		dispatch(actions.unviewNotification({ id }));
+
+		const newNotifications = [...notifications];
+		const index = newNotifications.findIndex((notif) => notif.id === id);
+		newNotifications[index].isViewed = false;
+
+		dispatch(actions.setNotifications({ notifications: newNotifications }));
+	};
+
 	const renderTitle = title ? <h3 style={{ marginBottom: 10 }}>{title}</h3> : null;
 
-	const renderMarker = !isViewed ? (
-		<Button onClick={view} secondary inverted compact size="tiny" style={{ marginTop: 10 }}>
+	const renderButton = !isViewed ? (
+		<Button onClick={view} secondary compact size="mini" style={{ marginTop: 10 }}>
 			{t('mark_notif_as_read')}
 		</Button>
-	) : null;
+	) : (
+		<Button onClick={unview} secondary inverted compact size="mini" style={{ marginTop: 10 }}>
+			{t('mark_notif_as_unread')}
+		</Button>
+	);
 
 	return (
 		<div className={styles.container}>
@@ -51,7 +65,7 @@ const UserNotification: React.FC<Props> = ({ notification, notifications }) => {
 				''
 			)}
 			<div style={{ clear: 'both' }} />
-			{renderMarker}
+			{renderButton}
 		</div>
 	);
 };

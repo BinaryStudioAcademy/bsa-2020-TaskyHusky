@@ -1,21 +1,25 @@
 import React, { useState } from 'react';
-import { Dropdown, Checkbox, DropdownItemProps } from 'semantic-ui-react';
+import { Dropdown, Checkbox, DropdownItemProps, Button } from 'semantic-ui-react';
 import styles from 'containers/Header/styles.module.scss';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'typings/rootState';
 import UserNotification from 'components/common/UserNotification';
 import moment from 'moment';
+import * as actions from './logic/actions';
 
 const NotificationsMenu: React.FC = () => {
 	const [canShowAllNotifications, setCanShowAllNotifications] = useState<boolean>(false);
 	const [isOpened, setIsOpened] = useState<boolean>(false);
 	const notifications = useSelector((state: RootState) => state.notifications.notifications);
 	const { t } = useTranslation();
+	const dispatch = useDispatch();
 
 	const displayNotifications = notifications.filter((notif) =>
 		canShowAllNotifications ? moment(notif.createdAt).isAfter(moment().subtract(10, 'days')) : !notif.isViewed,
 	);
+
+	const isThereUnread = notifications.some((notif) => !notif.isViewed);
 
 	const ClosingItem: React.FC<DropdownItemProps> = (props) => {
 		return (
@@ -35,6 +39,12 @@ const NotificationsMenu: React.FC = () => {
 
 	document.body.onclick = () => setIsOpened(false);
 
+	const viewAll = () => {
+		dispatch(actions.viewAllNotifications());
+		const newNotifications = [...notifications].map((notif) => ({ ...notif, isViewed: true }));
+		dispatch(actions.setNotifications({ notifications: newNotifications }));
+	};
+
 	return (
 		<Dropdown
 			icon="bell outline"
@@ -44,7 +54,20 @@ const NotificationsMenu: React.FC = () => {
 			open={isOpened}
 		>
 			<Dropdown.Menu className={styles.circularDropdownMenu}>
-				<Dropdown.Header>{t('notifications')}</Dropdown.Header>
+				<Dropdown.Header>
+					{t('notifications')}
+					{isThereUnread ? (
+						<Button
+							positive
+							compact
+							size="mini"
+							style={{ color: 'white', marginLeft: 20 }}
+							onClick={viewAll}
+						>
+							{t('mark_all_as_read')}
+						</Button>
+					) : null}
+				</Dropdown.Header>
 				<Dropdown.Item>
 					<Checkbox
 						toggle

@@ -30,7 +30,6 @@ export class NotificationController {
 
 	postNotification = async (req: Request, res: Response) => {
 		const { body: data } = req;
-
 		const repository = getCustomRepository(NotificationRepository);
 
 		try {
@@ -57,11 +56,44 @@ export class NotificationController {
 		}
 	};
 
-	deleteNotification = async (req: Request, res: Response) => {
-		const {
-			params: { id },
-		} = req;
+	viewNotification = async (req: Request, res: Response) => {
+		const { id } = req.params;
+		const repository = getCustomRepository(NotificationRepository);
 
+		try {
+			const result = await repository.viewOneById(id);
+			res.send(result);
+		} catch (err) {
+			res.status(404).send(getWebError(err, 404));
+		}
+	};
+
+	unviewNotification = async (req: Request, res: Response) => {
+		const { id } = req.params;
+		const repository = getCustomRepository(NotificationRepository);
+
+		try {
+			const result = await repository.unviewOneById(id);
+			res.send(result);
+		} catch (err) {
+			res.status(404).send(getWebError(err, 404));
+		}
+	};
+
+	viewAllNotifications = async (req: Request, res: Response) => {
+		const { id } = req.user;
+		const repository = getCustomRepository(NotificationRepository);
+
+		try {
+			const result = await repository.viewAll(id);
+			res.send(result);
+		} catch (err) {
+			res.status(500).send(getWebError(err, 500));
+		}
+	};
+
+	deleteNotification = async (req: Request, res: Response) => {
+		const { id } = req.params;
 		const repository = getCustomRepository(NotificationRepository);
 
 		try {

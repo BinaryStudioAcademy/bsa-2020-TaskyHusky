@@ -261,4 +261,8 @@ export const ua = {
 	see_it: 'Дивитися!',
 	mark_notif_as_read: 'Відмітити як прочитане',
 	show_notifs_during_last_10_days: "Показати всі об'яви за останні 10 днів",
+	mark_notif_as_unread: 'Відмітити як непрочитане',
+	mark_all_as_read: 'Відмітити все як прочитане',
+	watching: 'Відстежуєтся',
+	not_watching: 'Не відстежуєтся',
 };

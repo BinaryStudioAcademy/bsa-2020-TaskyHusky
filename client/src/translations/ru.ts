@@ -262,4 +262,8 @@ export const ru = {
 	see_it: 'Смотреть!',
 	mark_notif_as_read: 'Отметить как прочитаное',
 	show_notifs_during_last_10_days: 'Показать все объявления за последние 10 дней',
+	mark_notif_as_unread: 'Отметить как непрочитаное',
+	mark_all_as_read: 'Отметить всё как прочитаное',
+	watching: 'Отслеживается',
+	not_watching: 'Не отслеживается',
 };
