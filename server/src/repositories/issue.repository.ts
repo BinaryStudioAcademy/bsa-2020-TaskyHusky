@@ -1,6 +1,9 @@
-import { EntityRepository, Repository } from 'typeorm';
+import { EntityRepository, Repository, getCustomRepository } from 'typeorm';
 import { Issue } from '../entity/Issue';
 import { getConditions } from '../helpers/issue.helper';
+import { NotificationRepository } from './notification.repository';
+import { PartialIssue } from '../models/Issue';
+import { chooseMessage } from '../AI/selectUpdateIssueWatchNotificationMessage.ai';
 import issueHandler from '../socketConnectionHandlers/issue.handler';
 import { IssueActions } from '../models/IO';
 
@@ -72,6 +75,10 @@ export class IssueRepository extends Repository<Issue> {
 		return this.findOneOrFail({ where: { id }, relations: RELS });
 	}
 
+	findByIdWithRelIds(id: string): Promise<PartialIssue> {
+		return this.findOneOrFail({ where: { id }, loadRelationIds: { relations: RELS } }) as Promise<any>;
+	}
+
 	findOneByKey(key: string) {
 		return this.findOneOrFail({ where: { issueKey: key }, relations: RELS });
 	}
@@ -96,10 +103,20 @@ export class IssueRepository extends Repository<Issue> {
 		return result;
 	}
 
-	async updateOneById(id: string, data: Issue) {
-		const result = await this.update(id, data);
+	async updateOneById(id: string, data: PartialIssue) {
+		const issue = await this.findOneById(id);
+		const partialIssue = await this.findByIdWithRelIds(id);
+		const notification = getCustomRepository(NotificationRepository);
+		const result = await this.update(id, data as any);
 		const newIssue = await this.findOneById(id);
 		issueHandler.emit(IssueActions.UpdateIssue, id, newIssue);
+
+		notification.notifyIssueWatchers({
+			issue,
+			actionOrText: chooseMessage(partialIssue, { ...partialIssue, ...data }),
+			customText: true,
+		});
+
 		return result;
 	}
 
@@ -110,8 +127,13 @@ export class IssueRepository extends Repository<Issue> {
 		return result;
 	}
 
-	deleteOneById(id: string) {
+	async deleteOneById(id: string) {
+		const issue = await this.findOneById(id);
+		const notification = getCustomRepository(NotificationRepository);
 		issueHandler.emit(IssueActions.DeleteIssue, id);
-		return this.delete(id);
+		notification.notifyIssueWatchers({ issue, actionOrText: 'deleted', noLink: true });
+
+		const result = await this.delete(id);
+		return result;
 	}
 }
