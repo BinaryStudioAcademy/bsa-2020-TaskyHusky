@@ -52,13 +52,13 @@ const Scrum: BoardComponent = (props) => {
 		}
 	}, [sprints.length, sprints, dispatch]);
 
-	const sprintList = !!sprints.length ? (
+	const sprintList = !!sprints.filter((sprint) => !sprint.isCompleted).length ? (
 		sprints.map((sprint) => {
-			return sprint.isCompleted ? null : (
+			return (
 				<Sprint
 					key={sprint.id}
 					{...sprint}
-					issues={getIssuesForSprintId(search, matchIssuesToSprint, sprint.id)}
+					issues={getIssuesForSprintId(normalizeText(search), matchIssuesToSprint, sprint.id)}
 				/>
 			);
 		})

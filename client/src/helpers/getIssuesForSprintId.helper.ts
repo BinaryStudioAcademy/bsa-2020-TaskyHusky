@@ -7,10 +7,6 @@ export type GetIssuesForSprintId = {
 };
 
 const getIssuesForSprintId: GetIssuesForSprintId = (searchString, matchIssuesToSprintIdObject, sprintId) => {
-	if (!normalizeText(searchString)) {
-		return matchIssuesToSprintIdObject[sprintId];
-	}
-
 	const entries = Object.entries(matchIssuesToSprintIdObject);
 	const filteredEntries = entries.map(([sprintId, issues]) => [
 		sprintId,
