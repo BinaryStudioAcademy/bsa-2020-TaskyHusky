@@ -1,13 +1,14 @@
 import React from 'react';
 import { Dropdown } from 'semantic-ui-react';
 import styles from './styles.module.scss';
+import { UserProfileState } from 'containers/ProfilePage/logiс/state';
 
 interface Props {
 	text: string;
-	propKey: string;
+	propKey: keyof UserProfileState;
 	placeholder: string;
 	title: string;
-	handleSelect: (propKey: string, value: string) => void;
+	handleSelect: (propKey: keyof UserProfileState, value: string) => void;
 }
 
 const options = [

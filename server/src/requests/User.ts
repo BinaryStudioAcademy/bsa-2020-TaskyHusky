@@ -44,7 +44,7 @@ export class UserProfile {
 
 	@Expose()
 	@MinLength(6)
-	@Matches(RegExp(/^(?=.*[0-9]+.*)(?=.*[A-Z]+.*)(?=.*[@$!%*#?&]+.*)(?=.*[a-z]+.*)[0-9a-zA-Z\d@$!%*#?&]*$/g))
+	// @Matches(RegExp(/^(?=.*[0-9]+.*)(?=.*[A-Z]+.*)(?=.*[@$!%*#?&]+.*)(?=.*[a-z]+.*)[0-9a-zA-Z\d@$!%*#?&]*$/g))
 	password?: string;
 
 	@Expose()

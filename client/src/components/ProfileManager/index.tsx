@@ -48,6 +48,7 @@ const ProfileManager: React.FC<Props> = (props: Props) => {
 		location: '',
 		organization: '',
 	});
+
 	const handleChange = (event: any) => {
 		setUser({
 			...user,
@@ -58,12 +59,15 @@ const ProfileManager: React.FC<Props> = (props: Props) => {
 				(event.target as HTMLInputElement).value,
 		);
 	};
-	const handleSelect = (propKey: string, value: string) => {
+
+	const handleSelect = (propKey: keyof UserProfileState, value: string) => {
 		setUser({
 			...user,
 			[propKey]: value,
 		});
+		setIsSubmit(userData[propKey] !== value);
 	};
+
 	const onBlur = (event: any) => {
 		const customValidator = new CustomValidator((event.target as HTMLInputElement).value);
 		const isntValid = customValidator.checkMinLength(2).checkMaxLength(40).checkSimpleField().validate();
@@ -74,6 +78,7 @@ const ProfileManager: React.FC<Props> = (props: Props) => {
 			setUserValidation({ ...userValidation, [(event.target as HTMLInputElement).name]: true });
 		}
 	};
+
 	const onSubmit = () => {
 		if (Object.values(userValidation).every((item) => item)) {
 			const { editMode, isLoading, ...rest } = user;
@@ -85,6 +90,7 @@ const ProfileManager: React.FC<Props> = (props: Props) => {
 	const onCancel = () => {
 		showManager('');
 	};
+
 	return (
 		<section className={styles.container}>
 			<h3 className={styles.header}>{t('about_you')}</h3>

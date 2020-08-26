@@ -39,6 +39,7 @@ const EmailManager: React.FC<Props> = (props: Props) => {
 	};
 
 	const updateUserField = () => {
+		setIsSumbit(false);
 		updateUser({ email: emailData.trim() });
 		dispatch(requestUpdateUser({ email: emailData.trim() } as Partial<WebApi.Entities.UserProfile>));
 	};

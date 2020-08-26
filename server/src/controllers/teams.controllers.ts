@@ -5,7 +5,6 @@ import { TeamRepository } from '../repositories/teams.repository';
 import { getWebError } from '../helpers/error.helper';
 import HttpStatusCode from '../constants/httpStattusCode.constants';
 import { linksParse } from '../helpers/team.parser';
-import { Team } from '../entity/Team';
 
 class TeamsController {
 	getTeams = async (req: Request, res: Response): Promise<void> => {
