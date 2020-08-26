@@ -26,7 +26,6 @@ const ProfileAside: React.FC<Props> = (props: Props) => {
 		department = '',
 		organization = '',
 		location = '',
-		email = '',
 	} = user;
 	return (
 		<aside className={styles.userInfo}>
@@ -51,7 +50,7 @@ const ProfileAside: React.FC<Props> = (props: Props) => {
 							location={location}
 							isCurrentUser={isCurrentUser}
 						/>
-						<ProfileContacntBlock email={email} />
+						<ProfileContacntBlock />
 						<ProfileTeamBlock teams={teams} />
 					</>
 				)}

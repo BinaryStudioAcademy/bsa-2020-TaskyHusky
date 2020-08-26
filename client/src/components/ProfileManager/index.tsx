@@ -84,6 +84,7 @@ const ProfileManager: React.FC<Props> = (props: Props) => {
 			const { editMode, isLoading, ...rest } = user;
 			updateUser(user);
 			dispatch(requestUpdateUser({ ...rest } as Partial<UserProfileState>));
+			setIsSubmit(false);
 		}
 	};
 

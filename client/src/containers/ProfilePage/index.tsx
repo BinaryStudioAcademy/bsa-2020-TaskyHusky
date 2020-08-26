@@ -9,7 +9,6 @@ import ProfileAside from 'components/ProfileAside';
 import ProfileSection from 'components/ProfileSection';
 import ProfileManagerSection from 'components/ProfileManagerSection';
 import Spinner from 'components/common/Spinner';
-import { initialState } from './logiс/state';
 import { useTranslation } from 'react-i18next';
 import { requestGetUserProjects, requestGetUserTeams, requestTeammates } from 'services/user.service';
 import { NotificationManager } from 'react-notifications';
@@ -19,10 +18,13 @@ const ProfilePage = ({ id }: { id: string }) => {
 	const location = useLocation();
 	const navLocation = location.search ? location.search.split('=')[1] : '';
 	const { t } = useTranslation();
-	const [user, setUser] = useState(initialState);
+
+	const { userData, currentUser } = useSelector((state: RootState) => ({
+		userData: state.user,
+		currentUser: state.auth.user,
+	}));
+	const [user, setUser] = useState(userData);
 	const { editMode, isLoading } = user;
-	const currentUser = useSelector((state: RootState) => state.auth.user);
-	const userData = useSelector((state: RootState) => state.user);
 
 	const isCurrentUser = currentUser ? id === currentUser.id : false;
 
@@ -57,7 +59,6 @@ const ProfilePage = ({ id }: { id: string }) => {
 	});
 
 	const getUser = async () => {
-		console.log(navLocation);
 		if (isCurrentUser) {
 			setUser({ ...user, ...currentUser, isLoading: false, editMode: navLocation });
 			dispatch(actions.updateUser({ partialState: { ...currentUser, isLoading: false, editMode: navLocation } }));
@@ -93,7 +94,7 @@ const ProfilePage = ({ id }: { id: string }) => {
 	useEffect(() => {
 		getUser();
 		//eslint-disable-next-line
-	}, [userData.id, navLocation]);
+	}, [userData.id, navLocation, id]);
 
 	useEffect(() => {
 		if (isCurrentUser) {
