@@ -91,7 +91,7 @@ const ProjectsTable = ({ projects, currentUser }: Props) => {
 						<Table.Row key={id}>
 							<Table.Cell>
 								<Link to={`/project/${id}/issues`} className={styles.project__name_container}>
-									<img className={styles.project__img} src={icon} alt="Project avatar" />
+									{icon && <img className={styles.project__img} src={icon} alt="Avatar" />}
 									<span className={styles.project__name}>{name}</span>
 								</Link>
 							</Table.Cell>
