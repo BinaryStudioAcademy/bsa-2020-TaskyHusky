@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { getCustomRepository } from 'typeorm';
 import { getWebError } from '../helpers/error.helper';
 import { IssueRepository } from '../repositories/issue.repository';
+import { UserModel } from '../models/User';
 
 class IssueController {
 	async getAll(req: Request, res: Response) {
@@ -109,7 +110,7 @@ class IssueController {
 		try {
 			const result = await repository.createOne({
 				...data,
-				creator: req.user.id,
+				creator: (req.user as UserModel).id,
 			});
 
 			res.status(201).send(result);

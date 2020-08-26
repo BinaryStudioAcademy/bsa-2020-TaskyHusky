@@ -78,7 +78,7 @@ export class Projects {
 
 	@Column({ nullable: true })
 	@IsString()
-	@Matches(/https:\/\/github\.com\/.+\/.+\.git/)
+	@Matches(/(https:\/\/github\.com\/.+\/.+\.git)|/)
 	githubUrl?: string;
 
 	@CreateDateColumn()

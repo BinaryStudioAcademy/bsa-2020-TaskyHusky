@@ -1,4 +1,5 @@
 import { Team } from '../entity/Team';
+import { Notification } from '../entity/Notification';
 
 export interface UserModel {
 	googleId?: string;

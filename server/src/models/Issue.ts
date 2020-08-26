@@ -1,6 +1,7 @@
-interface PartialIssue {
+export interface PartialIssue {
 	id?: string;
 	type: string;
+	status?: string;
 	summary?: string;
 	boardColumn?: string;
 	labels?: string[];
