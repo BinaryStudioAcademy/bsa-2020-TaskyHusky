@@ -7,8 +7,10 @@ import configureLanguages from './config/i18n.config';
 import 'semantic-ui-css/semantic.min.css';
 import 'react-notifications/lib/notifications.css';
 import 'styles/index.scss';
+import PushManager from 'config/push.config';
 
 configureLanguages();
+PushManager.initialize();
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
