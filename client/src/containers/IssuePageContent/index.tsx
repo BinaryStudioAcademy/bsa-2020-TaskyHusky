@@ -65,6 +65,7 @@ const IssuePageContent: React.FC<Props> = ({ issue: givenIssue }) => {
 		priority: issue.priority.id,
 		creator: issue.creator.id,
 		assigned: issue.assigned ? issue.assigned.id : undefined,
+		status: issue.status?.id,
 	};
 
 	useEffect(() => {
