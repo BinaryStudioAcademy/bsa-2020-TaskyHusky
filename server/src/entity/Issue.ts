@@ -25,7 +25,7 @@ export class Issue {
 	id!: string;
 
 	@ManyToOne((type) => IssueType, (issueType) => issueType.issues, { eager: true })
-	type?: IssueType;
+	type!: IssueType;
 
 	@ManyToOne((type) => IssueStatus, (issueStatus) => issueStatus.issues)
 	status?: IssueStatus;
@@ -33,7 +33,7 @@ export class Issue {
 	@Column()
 	@IsNotEmpty()
 	@IsString()
-	summary?: string;
+	summary!: string;
 
 	@ManyToOne((type) => BoardColumn, (boardColumn) => boardColumn.issues)
 	boardColumn?: BoardColumn;

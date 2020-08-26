@@ -10,6 +10,8 @@ import { requestAllUsers } from 'commonLogic/users/actions';
 import { useParams } from 'react-router-dom';
 import NotFound from 'pages/404';
 import validator from 'validator';
+import { loadNotifications } from 'components/NotificationsMenu/logic/actions';
+
 interface Props {
 	children: JSX.Element[] | JSX.Element;
 }
@@ -30,6 +32,7 @@ const DefaultPageWrapper: React.FC<Props> = ({ children }) => {
 		dispatch(loadStatuses());
 		dispatch(fetchFilterDefs());
 		dispatch(requestAllUsers());
+		dispatch(loadNotifications());
 	}, [dispatch]);
 
 	return (

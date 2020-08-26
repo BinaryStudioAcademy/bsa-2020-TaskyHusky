@@ -22,10 +22,25 @@ namespace WebApi.Board {
 	}
 }
 
+namespace WebApi.IO {
+	export enum IssueActions {
+		CreateIssue = 'ISSUE:CREATE',
+		UpdateIssue = 'ISSUE:UPDATE',
+		DeleteIssue = 'ISSUE:DELETE',
+		CommentIssue = 'ISSUE:COMMENT:ADD',
+		UpdateIssueComment = 'ISSUE:COMMENT:UPDATE',
+		DeleteIssueComment = 'ISSUE:COMMENT:DELETE',
+	}
+	export enum Types {
+		Issue = 'ISSUE',
+	}
+}
+
 namespace WebApi.Issue {
 	interface PartialIssue {
 		id?: string;
 		type: string;
+		status?: string;
 		summary?: string;
 		boardColumn?: string;
 		labels?: string[];
@@ -58,8 +73,13 @@ namespace WebApi.Result {
 			title: string;
 			icon: string;
 		};
+		status?: {
+			id: string;
+			color: string;
+			title: string;
+		};
 		summary?: string;
-		boardColumn?: string;
+		boardColumn?: BoardColumnResult;
 		labels?: string[];
 		attachments?: string[];
 		links?: string[];
@@ -70,7 +90,7 @@ namespace WebApi.Result {
 			icon: string;
 		};
 		description?: string;
-		sprint?: SprintModel;
+		sprint?: Sprint;
 		project?: Projects;
 		issueKey?: string;
 		watchers?: UserModel[];
@@ -217,9 +237,9 @@ namespace WebApi.Entities {
 
 	interface Issue {
 		id: string;
-		type?: IssueType;
+		type: IssueType;
 		status?: IssueStatus;
-		summary?: string;
+		summary: string;
 		boardColumn?: BoardColumn;
 		board?: Board;
 		labels?: string;
@@ -248,17 +268,27 @@ namespace WebApi.Entities {
 
 	interface IssueStatus {
 		id: string;
-		color?: string;
-		title?: string;
+		color: string;
+		title: string;
 		issues?: Issue[];
 	}
 
 	interface IssueType {
 		id: string;
-		icon?: string;
-		color?: string;
-		title?: string;
+		icon: string;
+		color: string;
+		title: string;
 		issues?: Issue[];
+	}
+
+	interface Notification {
+		id: string;
+		title?: string;
+		link?: string;
+		text: string;
+		isViewed: boolean;
+		user: UserProfile;
+		createdAt: Date;
 	}
 
 	interface Priority {
@@ -342,5 +372,6 @@ namespace WebApi.Entities {
 		pendingInvites?: UserProfile[];
 		teammates?: UserProfile[];
 		watchingIssues?: Issue[];
+		notifications?: Notification[];
 	}
 }
