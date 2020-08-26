@@ -61,7 +61,7 @@ const ProjectPeople = () => {
 				</div>
 				<Input
 					icon="search"
-					placeholder="Search for names or email addresses"
+					placeholder={t('search_name_email')}
 					className={styles.body_inner__find}
 					onChange={onSearchChange}
 					value={searchData}
@@ -98,7 +98,7 @@ const ProjectPeople = () => {
 										onClick={() => onDeleteUser(user.id)}
 										loading={idAction === user.id}
 									>
-										Delete
+										{t('delete')}
 									</Button>
 								</Table.Cell>
 							</Table.Row>

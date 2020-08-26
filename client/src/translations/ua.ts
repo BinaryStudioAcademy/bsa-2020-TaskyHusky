@@ -265,4 +265,6 @@ export const ua = {
 	mark_all_as_read: 'Відмітити все як прочитане',
 	watching: 'Відстежуєтся',
 	not_watching: 'Не відстежуєтся',
+	add: 'Додати',
+	search_name_email: 'Пошук по імені або email адресою',
 };

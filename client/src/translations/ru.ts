@@ -266,4 +266,6 @@ export const ru = {
 	mark_all_as_read: 'Отметить всё как прочитаное',
 	watching: 'Отслеживается',
 	not_watching: 'Не отслеживается',
+	add: 'Добавить',
+	search_name_email: 'Поиск по имени или email адресу',
 };
