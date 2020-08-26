@@ -96,17 +96,17 @@ export class IssueRepository extends Repository<Issue> {
 	}
 
 	async updateOneById(id: string, data: Issue) {
-		const result = await this.update(id, data);
+		await this.update(id, data);
 		const newIssue = await this.findOneById(id);
 		issueHandler.emit(IssueActions.UpdateIssue, id, newIssue);
-		return result;
+		return newIssue;
 	}
 
 	async updateOneByKey(key: string, data: Issue) {
-		const result = await this.update({ issueKey: key }, data);
+		await this.update({ issueKey: key }, data);
 		const newIssue = await this.findOneByKey(key);
 		issueHandler.emit(IssueActions.UpdateIssue, newIssue.id, newIssue);
-		return result;
+		return newIssue;
 	}
 
 	deleteOneById(id: string) {
