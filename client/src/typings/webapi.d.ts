@@ -31,8 +31,15 @@ namespace WebApi.IO {
 		UpdateIssueComment = 'ISSUE:COMMENT:UPDATE',
 		DeleteIssueComment = 'ISSUE:COMMENT:DELETE',
 	}
+	export enum NotificationActions {
+		CreateNotification = 'NOTIFICATION:CREATE',
+		ViewNotification = 'NOTIFICATION:VIEW',
+		UnviewNotification = 'NOTIFICATION:UNVIEW',
+		ViewAllNotifications = 'NOTIFICATION:ALL:VIEW',
+	}
 	export enum Types {
 		Issue = 'ISSUE',
+		Notification = 'NOTIFICATION',
 	}
 }
 
@@ -138,6 +145,15 @@ namespace WebApi.Result {
 		createdDate?: Date;
 		updatedDate?: Date;
 		deletedDate?: Date;
+	}
+	interface NotificationResult {
+		id: string;
+		title?: string;
+		link?: string;
+		user: string;
+		text: string;
+		isViewed: boolean;
+		createdAt: Date;
 	}
 }
 

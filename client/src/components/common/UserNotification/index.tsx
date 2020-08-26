@@ -7,8 +7,8 @@ import moment from 'moment';
 import { useTranslation } from 'react-i18next';
 
 interface Props {
-	notification: WebApi.Entities.Notification;
-	notifications: WebApi.Entities.Notification[];
+	notification: WebApi.Result.NotificationResult;
+	notifications: WebApi.Result.NotificationResult[];
 }
 
 const UserNotification: React.FC<Props> = ({ notification, notifications }) => {

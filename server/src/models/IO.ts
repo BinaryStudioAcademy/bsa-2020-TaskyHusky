@@ -7,6 +7,14 @@ export enum IssueActions {
 	DeleteIssueComment = 'ISSUE:COMMENT:DELETE',
 }
 
+export enum NotificationActions {
+	CreateNotification = 'NOTIFICATION:CREATE',
+	ViewNotification = 'NOTIFICATION:VIEW',
+	UnviewNotification = 'NOTIFICATION:UNVIEW',
+	ViewAllNotifications = 'NOTIFICATION:ALL:VIEW',
+}
+
 export enum Types {
 	Issue = 'ISSUE',
+	Notification = 'NOTIFICATION',
 }
