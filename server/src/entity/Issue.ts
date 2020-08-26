@@ -27,7 +27,7 @@ export class Issue {
 	@ManyToOne((type) => IssueType, (issueType) => issueType.issues, { eager: true })
 	type?: IssueType;
 
-	@ManyToOne((type) => IssueStatus, (issueStatus) => issueStatus.issues)
+	@ManyToOne((type) => IssueStatus, (issueStatus) => issueStatus.issues, { eager: true })
 	status?: IssueStatus;
 
 	@Column()
