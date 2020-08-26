@@ -54,7 +54,7 @@ const Scrum: BoardComponent = (props) => {
 
 	const sprintList = !!sprints.length ? (
 		sprints.map((sprint) => {
-			return (
+			return sprint.isCompleted ? null : (
 				<Sprint
 					key={sprint.id}
 					{...sprint}
