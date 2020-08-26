@@ -5,12 +5,14 @@ import { useSelector, useDispatch } from 'react-redux';
 import * as actions from './logic/actions';
 import { RootState } from 'typings/rootState';
 import { startGettingProject } from 'containers/ProjectSettings/logic/actions';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
 	project: WebApi.Entities.Projects;
 }
 
 const AddPeopleModal = ({ project: { id: projectId, lead, users: projectUsers } }: Props) => {
+	const { t } = useTranslation();
 	const dispatch = useDispatch();
 	const { users } = useSelector((rootState: RootState) => rootState.users);
 	const { isLoading, isAdded } = useSelector((rootState: RootState) => rootState.projectPeople);
@@ -56,11 +58,11 @@ const AddPeopleModal = ({ project: { id: projectId, lead, users: projectUsers } 
 			onClose={() => setIsOpen(false)}
 			trigger={
 				<Button primary onClick={() => setIsOpen(true)}>
-					Add people
+					{t('add_people')}
 				</Button>
 			}
 		>
-			<Modal.Header>Add people</Modal.Header>
+			<Modal.Header>{t('add_people')}</Modal.Header>
 			<Modal.Content>
 				<Dropdown
 					fluid
@@ -72,7 +74,7 @@ const AddPeopleModal = ({ project: { id: projectId, lead, users: projectUsers } 
 						value: user.id,
 						text: `${user.firstName} ${user.lastName}`,
 					}))}
-					placeholder="Users"
+					placeholder={t('people')}
 					search
 					searchQuery={searchQuery}
 					selection
@@ -80,9 +82,9 @@ const AddPeopleModal = ({ project: { id: projectId, lead, users: projectUsers } 
 				/>
 			</Modal.Content>
 			<Modal.Actions>
-				<Button onClick={() => setIsOpen(false)}>Cancel</Button>
+				<Button onClick={() => setIsOpen(false)}>{t('cancel')}</Button>
 				<Button primary onClick={onAddSelectedUsers} loading={isLoading}>
-					Add
+					{t('add')}
 				</Button>
 			</Modal.Actions>
 		</Modal>

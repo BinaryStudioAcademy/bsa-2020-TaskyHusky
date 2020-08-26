@@ -297,4 +297,6 @@ export const en = {
 	mark_all_as_read: 'Mark all as read',
 	watching: 'Watching',
 	not_watching: 'Not watching',
+	add: 'Add',
+	search_name_email: 'Search for names or email addresses',
 };
