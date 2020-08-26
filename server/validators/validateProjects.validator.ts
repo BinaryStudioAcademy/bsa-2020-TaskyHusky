@@ -5,14 +5,13 @@ interface ProjectValidationTemplate {
 	description: string;
 	icon: string;
 	url: string;
-	githubUrl: string;
+	githubUrl?: string;
 }
 
 const projectValidationTemplate: ProjectValidationTemplate = {
 	description: '',
 	icon: '',
 	url: '',
-	githubUrl: '',
 };
 
 export const validateProject = async (data: Projects): Promise<ValidationError[]> => {

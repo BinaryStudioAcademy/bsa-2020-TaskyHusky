@@ -98,7 +98,7 @@
 		right: 4px !important;
 	}
 
-	.circularDropdownMenu > * {
+	.circularDropdownMenu > *:not(button) {
 		color: rgba(80, 80, 80, 0.9) !important;
 	}
 }

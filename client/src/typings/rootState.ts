@@ -16,6 +16,7 @@ import { PeoplePageState } from '../containers/People/logic/state';
 import { BoardsState } from '../containers/Boards/logic/state';
 import { HeaderState } from '../containers/Header/logic/state';
 import { ScrumBoardState } from 'containers/Board/Scrum/logic/state';
+import { NotificationsState } from 'components/NotificationsMenu/logic/state';
 
 export interface RootState {
 	boards: BoardsState;
@@ -36,4 +37,5 @@ export interface RootState {
 	scrumBoard: ScrumBoardState;
 	peoplePage: PeoplePageState;
 	header: HeaderState;
+	notifications: NotificationsState;
 }
