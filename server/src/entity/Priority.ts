@@ -1,12 +1,11 @@
 import { PrimaryGeneratedColumn, Column, Entity, OneToMany } from 'typeorm';
-import { IsNumber, IsString, IsNotEmpty } from 'class-validator';
+import { IsString, IsNotEmpty } from 'class-validator';
 import { Issue } from './Issue';
 
 @Entity()
 export class Priority {
-	@PrimaryGeneratedColumn('increment')
-	@IsNumber()
-	id!: number;
+	@PrimaryGeneratedColumn('uuid')
+	id!: string;
 
 	@Column()
 	@IsString()
