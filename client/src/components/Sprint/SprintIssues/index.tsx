@@ -3,7 +3,10 @@ import { List, Item } from 'semantic-ui-react';
 import styles from './styles.module.scss';
 import AssigneeAvatar from './AssigneeAvatar/index';
 
-type Props = { issues: WebApi.Entities.Issue[]; noIssuesText: string };
+type Props = {
+	issues: WebApi.Entities.Issue[];
+	noIssuesText: string;
+};
 
 export const SprintIssues: React.FC<Props> = ({ issues, noIssuesText }: Props) => {
 	const issuesList = !!issues?.length ? (
@@ -15,7 +18,6 @@ export const SprintIssues: React.FC<Props> = ({ issues, noIssuesText }: Props) =
 						<List.Icon name={type?.icon as any} color={type?.color as any} title={type?.title} />
 						<List.Header>{issue.summary}</List.Header>
 					</List.Content>
-
 					<List.Content className={styles.rightContent}>
 						<AssigneeAvatar user={issue.assigned} />
 						<Item className={styles.issueKeyItem}>{issue.issueKey}</Item>

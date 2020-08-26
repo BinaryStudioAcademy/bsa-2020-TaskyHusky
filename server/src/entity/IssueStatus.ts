@@ -10,12 +10,12 @@ export class IssueStatus {
 	@Column()
 	@IsString()
 	@IsNotEmpty()
-	color?: string;
+	color!: string;
 
 	@Column()
 	@IsString()
 	@IsNotEmpty()
-	title?: string;
+	title!: string;
 
 	@OneToMany((type) => Issue, (issue) => issue.status)
 	issues?: Issue[];
