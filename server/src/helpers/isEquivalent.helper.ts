@@ -5,11 +5,15 @@ export const isEquivalent = (val0: any, val1: any): boolean => {
 	if (val0 === val1) return true;
 	if (props0.length !== props1.length) return false;
 
-	for (const propName of props0) {
-		if (val0[propName] !== val1[propName]) {
-			return false;
-		}
-	}
+	const result = props0
+		.map((propName) => {
+			if (val0[propName] !== val1[propName]) {
+				return false;
+			}
 
-	return true;
+			return true;
+		})
+		.reduce((a, b) => a && b);
+
+	return result;
 };

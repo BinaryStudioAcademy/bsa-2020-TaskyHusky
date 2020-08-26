@@ -19,8 +19,6 @@ export function* watchStartAddingUsers() {
 }
 
 export function* deleteUser(projectData: ReturnType<typeof actions.startDeletingUser>) {
-	console.log('usersId', projectData);
-
 	try {
 		yield call(updateProjectUsersList, projectData);
 		yield put(actions.successDeletingUser());

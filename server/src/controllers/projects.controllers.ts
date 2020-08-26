@@ -154,8 +154,9 @@ class ProjectsController {
 		const { users: prevProjectUsers } = prevProject;
 
 		const isLeadInUsers = prevProjectUsers.find((user) => user.id === prevProjectLeadId);
+		const isLead = usersId === prevProjectLeadId;
 
-		if (!isLeadInUsers) {
+		if (!isLeadInUsers || isLead) {
 			next(new ErrorResponse(HttpStatusCode.UNPROCESSABLE_ENTITY, projectsErrorMessages.INVALID_DATA));
 			return;
 		}
