@@ -91,7 +91,7 @@ interface NotificationResult {
 	id: string;
 	title?: string;
 	link?: string;
-	user: string;
+	user: UserModel;
 	text: string;
 	isViewed: boolean;
 	createdAt: Date;
