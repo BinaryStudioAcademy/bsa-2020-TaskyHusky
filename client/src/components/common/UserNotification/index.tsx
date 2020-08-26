@@ -7,33 +7,20 @@ import moment from 'moment';
 import { useTranslation } from 'react-i18next';
 
 interface Props {
-	notification: WebApi.Entities.Notification;
-	notifications: WebApi.Entities.Notification[];
+	notification: WebApi.Result.NotificationResult;
 }
 
-const UserNotification: React.FC<Props> = ({ notification, notifications }) => {
+const UserNotification: React.FC<Props> = ({ notification }) => {
 	const { id, title, text, link, isViewed } = notification;
 	const dispatch = useDispatch();
 	const { t } = useTranslation();
 
 	const view = () => {
 		dispatch(actions.viewNotification({ id }));
-
-		const newNotifications = [...notifications];
-		const index = newNotifications.findIndex((notif) => notif.id === id);
-		newNotifications[index].isViewed = true;
-
-		dispatch(actions.setNotifications({ notifications: newNotifications }));
 	};
 
 	const unview = () => {
 		dispatch(actions.unviewNotification({ id }));
-
-		const newNotifications = [...notifications];
-		const index = newNotifications.findIndex((notif) => notif.id === id);
-		newNotifications[index].isViewed = false;
-
-		dispatch(actions.setNotifications({ notifications: newNotifications }));
 	};
 
 	const renderTitle = title ? <h3 style={{ marginBottom: 10 }}>{title}</h3> : null;

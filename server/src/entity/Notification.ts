@@ -24,7 +24,7 @@ export class Notification {
 	@IsBoolean()
 	isViewed!: boolean;
 
-	@ManyToOne((type) => UserProfile, (user) => user.notifications)
+	@ManyToOne((type) => UserProfile, (user) => user.notifications, { eager: true })
 	@IsNotEmpty()
 	user!: UserProfile;
 
