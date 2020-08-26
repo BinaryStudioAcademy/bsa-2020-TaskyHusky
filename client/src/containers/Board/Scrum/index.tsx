@@ -12,7 +12,7 @@ import { useHistory } from 'react-router-dom';
 import Sprint from 'components/Sprint';
 import { extractUUIDFromArrayOfObjects } from 'helpers/extractUUIDFromArrayOfObjects.helper';
 import CreateSprintModal from 'components/common/SprintModal/CreateSprintModal';
-import getIssuesForSprintId from 'helpers/getIssuesForSprintId.helper';
+import getIssuesForSprintId from 'helpers/getIssuesBySearchText.helper';
 import Backlog from 'components/Backlog';
 import { normalizeText } from 'helpers/normalizeText.helper';
 
@@ -53,15 +53,9 @@ const Scrum: BoardComponent = (props) => {
 	}, [sprints.length, sprints, dispatch]);
 
 	const sprintList = !!sprints.filter((sprint) => !sprint.isCompleted).length ? (
-		sprints.map((sprint) => {
-			return (
-				<Sprint
-					key={sprint.id}
-					{...sprint}
-					issues={getIssuesForSprintId(normalizeText(search), matchIssuesToSprint, sprint.id)}
-				/>
-			);
-		})
+		sprints.map((sprint) => (
+			<Sprint key={sprint.id} {...sprint} issues={getIssuesForSprintId(search, matchIssuesToSprint[sprint.id])} />
+		))
 	) : (
 		<Container className={styles.noSprintsContainer}>
 			<Icon name="info circle" size="huge" />
