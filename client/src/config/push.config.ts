@@ -1,6 +1,7 @@
 import { NotificationManager } from 'react-notifications';
 import i18next from 'i18next';
 import { LocalStorageKeys } from 'constants/LocalStorageKeys';
+import logo from '../assets/logo192.png';
 
 const GRANTED = 'granted';
 const DENIED = 'denied';
@@ -112,6 +113,7 @@ class PushNotificationsManager {
 		const notif = new Notification(title, {
 			body: message,
 			data: subtitle,
+			icon: logo,
 		});
 
 		notif.onclick = onClick ?? null;

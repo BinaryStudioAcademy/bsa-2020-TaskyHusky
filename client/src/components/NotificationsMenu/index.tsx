@@ -9,10 +9,8 @@ import moment from 'moment';
 import * as actions from './logic/actions';
 import { useIO } from 'hooks/useIO';
 import pushNotificationManager from 'config/push.config';
-import { Redirect } from 'react-router-dom';
 
 const NotificationsMenu: React.FC = () => {
-	const [notifLinkToRedirect, setNotifLinkToRedirect] = useState<string>();
 	const [canShowAllNotifications, setCanShowAllNotifications] = useState<boolean>(false);
 	const [isOpened, setIsOpened] = useState<boolean>(false);
 	const notifications = useSelector((state: RootState) => state.notifications.notifications);
@@ -25,7 +23,7 @@ const NotificationsMenu: React.FC = () => {
 			pushNotificationManager.push({
 				title: newNotification.title,
 				message: newNotification.text,
-				onClick: () => newNotification.link && setNotifLinkToRedirect(newNotification.link),
+				onClick: () => newNotification.link && window.location.replace(newNotification.link),
 			});
 
 			if (user && newNotification.user.id === user.id) {
@@ -90,52 +88,49 @@ const NotificationsMenu: React.FC = () => {
 	};
 
 	return (
-		<>
-			{notifLinkToRedirect ? <Redirect to={notifLinkToRedirect} /> : ''}
-			<Dropdown
-				icon="bell outline"
-				className={styles.circularIcon}
-				direction="left"
-				onOpen={() => setIsOpened(true)}
-				open={isOpened}
-			>
-				<Dropdown.Menu className={styles.circularDropdownMenu}>
-					<Dropdown.Header>
-						{t('notifications')}
-						{isThereUnread ? (
-							<Button
-								positive
-								compact
-								size="mini"
-								style={{ color: 'white', marginLeft: 20 }}
-								onClick={viewAll}
-							>
-								{t('mark_all_as_read')}
-							</Button>
-						) : null}
-					</Dropdown.Header>
-					<Dropdown.Item>
-						<Checkbox
-							toggle
-							onChange={(event, data) => {
-								setCanShowAllNotifications(Boolean(data.checked));
-								setIsOpened(true);
-							}}
-							label={t('show_notifs_during_last_10_days')}
-						/>
-					</Dropdown.Item>
-					{displayNotifications.length ? (
-						displayNotifications.map((notif) => (
-							<div style={{ paddingLeft: 10, paddingRight: 10 }} key={notif.id}>
-								<UserNotification notification={notif} />
-							</div>
-						))
-					) : (
-						<ClosingItem>{t('no')}</ClosingItem>
-					)}
-				</Dropdown.Menu>
-			</Dropdown>
-		</>
+		<Dropdown
+			icon="bell outline"
+			className={styles.circularIcon}
+			direction="left"
+			onOpen={() => setIsOpened(true)}
+			open={isOpened}
+		>
+			<Dropdown.Menu className={styles.circularDropdownMenu}>
+				<Dropdown.Header>
+					{t('notifications')}
+					{isThereUnread ? (
+						<Button
+							positive
+							compact
+							size="mini"
+							style={{ color: 'white', marginLeft: 20 }}
+							onClick={viewAll}
+						>
+							{t('mark_all_as_read')}
+						</Button>
+					) : null}
+				</Dropdown.Header>
+				<Dropdown.Item>
+					<Checkbox
+						toggle
+						onChange={(event, data) => {
+							setCanShowAllNotifications(Boolean(data.checked));
+							setIsOpened(true);
+						}}
+						label={t('show_notifs_during_last_10_days')}
+					/>
+				</Dropdown.Item>
+				{displayNotifications.length ? (
+					displayNotifications.map((notif) => (
+						<div style={{ paddingLeft: 10, paddingRight: 10 }} key={notif.id}>
+							<UserNotification notification={notif} />
+						</div>
+					))
+				) : (
+					<ClosingItem>{t('no')}</ClosingItem>
+				)}
+			</Dropdown.Menu>
+		</Dropdown>
 	);
 };
 
