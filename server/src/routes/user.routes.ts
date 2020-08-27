@@ -13,6 +13,7 @@ router.get('/', userController.getAllUser);
 router.get('/teammates', userController.getTeammates);
 router.get('/:id', userController.getUser);
 router.get('/projects/:id', userController.getProjects);
+router.get('/teams/:id', userController.getTeams);
 router.put('/', userController.updateUser);
 router.put('/password', userController.changePassword);
 router.delete('/', userController.deleteUser);

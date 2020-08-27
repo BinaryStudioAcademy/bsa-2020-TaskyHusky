@@ -6,7 +6,7 @@ import { Types } from '../src/models/IO';
 export class ConnectionHandler {
 	public sockets: IO.Socket[] = [];
 
-	protected type: string;
+	public type: string;
 
 	public constructor(type: Types) {
 		this.type = type;

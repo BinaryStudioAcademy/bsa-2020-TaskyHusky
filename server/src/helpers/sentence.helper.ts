@@ -1,5 +1,5 @@
 export const camelCaseToWords = (camelCase: string): string => {
-	return camelCase.replace(/[A-Z]/, (letter) => ` ${letter.toLowerCase()}`);
+	return (camelCase || '').replace(/[A-Z]/, (letter) => ` ${letter.toLowerCase()}`);
 };
 
 export const asSentence = (str: string): string => {

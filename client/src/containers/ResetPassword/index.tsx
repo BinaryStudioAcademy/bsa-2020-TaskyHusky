@@ -36,7 +36,7 @@ const ResetPassword: React.FC = () => {
 								content={t('invalid_password')}
 								trigger={<PasswordInput onChange={setPassword} onChangeValid={setIsPasswordValid} />}
 							/>
-							<PasswordCheck passLength={password.length} acceptLength={6} />
+							<PasswordCheck pass={password} acceptLength={6} />
 							<Button
 								positive
 								className={styles.continueButton}

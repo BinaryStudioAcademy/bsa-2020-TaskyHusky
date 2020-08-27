@@ -15,8 +15,23 @@ export const Enums = {
 			UpdateIssueComment: 'ISSUE:COMMENT:UPDATE',
 			DeleteIssueComment: 'ISSUE:COMMENT:DELETE',
 		},
+		NotificationActions: {
+			CreateNotification: 'NOTIFICATION:CREATE',
+			ViewNotification: 'NOTIFICATION:VIEW',
+			UnviewNotification: 'NOTIFICATION:UNVIEW',
+			ViewAllNotifications: 'NOTIFICATION:ALL:VIEW',
+		},
 		Types: {
 			Issue: 'ISSUE',
+			Notification: 'NOTIFICATION',
+		},
+	},
+	'WebApi.User': {
+		jobTitle: {
+			dbAdmin: 'Database administrator',
+			backEndDev: 'Back-end developer',
+			frontEndDev: 'Front-end developer',
+			fullStackDev: 'Full-Stack developer',
 		},
 	},
 };

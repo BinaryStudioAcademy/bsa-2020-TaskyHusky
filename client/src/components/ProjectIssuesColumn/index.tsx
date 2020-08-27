@@ -71,8 +71,8 @@ const ProjectIssuesColumn: React.FC<Props> = ({ projectId, onChangeSelectedCard,
 	);
 
 	return (
-		<Segment style={{ backgroundColor: '#EEE', height: '95%', width: 300, marginLeft: 60 }}>
-			<div style={{ marginTop: 10, overflowY: 'auto', height: '95%' }}>
+		<Segment style={{ backgroundColor: '#EEE', height: '95%', width: 300, marginLeft: 60, overflowY: 'auto' }}>
+			<div style={{ marginTop: 10, height: '95%' }}>
 				{displayIssues.length > 0
 					? displayIssues.map((issue, i) => (
 							<IssueCard

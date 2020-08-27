@@ -12,6 +12,7 @@ import { authenticateJwt } from './src/middleware/jwt.middleware';
 import errorHandlerMiddleware from './src/middleware/errorHandler.middleware';
 import { configIO, injectIO } from './config/io.config';
 import IOHandlers from './src/socketConnectionHandlers';
+import { consumeMessageFromQueue } from './src/helpers/email.worker';
 
 createConnection()
 	.then(async (connection) => {
@@ -22,7 +23,14 @@ createConnection()
 		app.use(
 			cors({
 				origin: '*',
-				allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization'],
+				allowedHeaders: [
+					'Origin',
+					'X-Requested-With',
+					'Content-Type',
+					'Accept',
+					'Authorization',
+					'Access-Control-Allow-Origin',
+				],
 			}),
 		);
 
@@ -34,6 +42,7 @@ createConnection()
 		app.use('/api', authenticateJwt(routesWhiteList), routes);
 
 		app.use(errorHandlerMiddleware);
+		consumeMessageFromQueue();
 
 		// No express app here!!!
 		http.listen(appPort, () => {
