@@ -3,7 +3,6 @@ import { Button, Modal, Search, SearchProps } from 'semantic-ui-react';
 import styles from './styles.module.scss';
 import ResultPeople from './ResultPeople';
 import ChosenPeople from './ResultPeople/chosenPeople';
-// import debounce from 'lodash-es/debounce';
 
 type Props = {
 	onClose: (arg: boolean) => void;

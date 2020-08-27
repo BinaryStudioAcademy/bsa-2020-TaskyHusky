@@ -26,7 +26,6 @@ export class ProjectsRepository extends Repository<Projects> {
 		return getRepository(Projects)
 			.createQueryBuilder('project')
 			.leftJoinAndSelect('project.lead', 'lead')
-			.leftJoinAndSelect('project.boards', 'board')
 			.leftJoin('project.users', 'users')
 			.where('users.id = :id', { id })
 			.getMany();
