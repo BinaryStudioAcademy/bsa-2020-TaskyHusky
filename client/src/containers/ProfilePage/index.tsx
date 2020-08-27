@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import styles from './styles.module.scss';
 import * as actions from './logiс/actions';
 import ProfileHeader from 'components/ProfileHeader';
@@ -8,18 +9,22 @@ import ProfileAside from 'components/ProfileAside';
 import ProfileSection from 'components/ProfileSection';
 import ProfileManagerSection from 'components/ProfileManagerSection';
 import Spinner from 'components/common/Spinner';
-import { initialState } from './logiс/state';
 import { useTranslation } from 'react-i18next';
 import { requestGetUserProjects, requestGetUserTeams, requestTeammates } from 'services/user.service';
 import { NotificationManager } from 'react-notifications';
 
 const ProfilePage = ({ id }: { id: string }) => {
 	const dispatch = useDispatch();
+	const location = useLocation();
+	const navLocation = location.search ? location.search.split('=')[1] : '';
 	const { t } = useTranslation();
-	const [user, setUser] = useState(initialState);
+
+	const { userData, currentUser } = useSelector((state: RootState) => ({
+		userData: state.user,
+		currentUser: state.auth.user,
+	}));
+	const [user, setUser] = useState(userData);
 	const { editMode, isLoading } = user;
-	const currentUser = useSelector((state: RootState) => state.auth.user);
-	const userData = useSelector((state: RootState) => state.user);
 
 	const isCurrentUser = currentUser ? id === currentUser.id : false;
 
@@ -55,8 +60,8 @@ const ProfilePage = ({ id }: { id: string }) => {
 
 	const getUser = async () => {
 		if (isCurrentUser) {
-			setUser({ ...user, ...currentUser, isLoading: false });
-			dispatch(actions.updateUser({ partialState: { ...currentUser, isLoading: false } }));
+			setUser({ ...user, ...currentUser, isLoading: false, editMode: navLocation });
+			dispatch(actions.updateUser({ partialState: { ...currentUser, isLoading: false, editMode: navLocation } }));
 		} else {
 			dispatch(actions.requestGetUser({ id }));
 			setUser({ ...user, ...userData });
@@ -89,7 +94,7 @@ const ProfilePage = ({ id }: { id: string }) => {
 	useEffect(() => {
 		getUser();
 		//eslint-disable-next-line
-	}, [userData.id]);
+	}, [userData.id, navLocation, id]);
 
 	useEffect(() => {
 		if (isCurrentUser) {

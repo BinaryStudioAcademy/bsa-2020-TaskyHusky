@@ -10,7 +10,7 @@ interface Props {
 	type: string;
 	isValid?: boolean;
 	onBlur?: (event: ChangeEvent<HTMLInputElement>) => void;
-	handleChange: (event: ChangeEvent<HTMLInputElement>) => void;
+	handleChange: (event: any) => void;
 	errorText?: string;
 }
 

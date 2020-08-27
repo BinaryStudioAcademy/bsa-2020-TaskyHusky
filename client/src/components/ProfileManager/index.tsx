@@ -7,6 +7,7 @@ import { requestUpdateUser } from 'containers/ProfilePage/logiс/actions';
 import { UserProfileState } from 'containers/ProfilePage/logiс/state';
 import { useDispatch } from 'react-redux';
 import CustomValidator from 'helpers/validation.helper';
+import JobTitleSelect from 'components/JobTitleSelect';
 
 interface Props {
 	showManager: (modeToShow: string) => void;
@@ -47,6 +48,7 @@ const ProfileManager: React.FC<Props> = (props: Props) => {
 		location: '',
 		organization: '',
 	});
+
 	const handleChange = (event: any) => {
 		setUser({
 			...user,
@@ -57,6 +59,15 @@ const ProfileManager: React.FC<Props> = (props: Props) => {
 				(event.target as HTMLInputElement).value,
 		);
 	};
+
+	const handleSelect = (propKey: keyof UserProfileState, value: string) => {
+		setUser({
+			...user,
+			[propKey]: value,
+		});
+		setIsSubmit(userData[propKey] !== value);
+	};
+
 	const onBlur = (event: any) => {
 		const customValidator = new CustomValidator((event.target as HTMLInputElement).value);
 		const isntValid = customValidator.checkMinLength(2).checkMaxLength(40).checkSimpleField().validate();
@@ -67,17 +78,20 @@ const ProfileManager: React.FC<Props> = (props: Props) => {
 			setUserValidation({ ...userValidation, [(event.target as HTMLInputElement).name]: true });
 		}
 	};
+
 	const onSubmit = () => {
 		if (Object.values(userValidation).every((item) => item)) {
 			const { editMode, isLoading, ...rest } = user;
 			updateUser(user);
 			dispatch(requestUpdateUser({ ...rest } as Partial<UserProfileState>));
+			setIsSubmit(false);
 		}
 	};
 
 	const onCancel = () => {
 		showManager('');
 	};
+
 	return (
 		<section className={styles.container}>
 			<h3 className={styles.header}>{t('about_you')}</h3>
@@ -116,16 +130,12 @@ const ProfileManager: React.FC<Props> = (props: Props) => {
 						isValid={userValidation.username}
 						onBlur={onBlur}
 					/>
-					<SubmitedInput
-						handleChange={handleChange}
+					<JobTitleSelect
+						handleSelect={handleSelect}
 						text={jobTitle}
 						propKey="jobTitle"
 						placeholder={t('placeholder_job')}
 						title={t('job_title')}
-						type="text"
-						errorText={errorMessage.jobTitle}
-						isValid={userValidation.jobTitle}
-						onBlur={onBlur}
 					/>
 					<SubmitedInput
 						handleChange={handleChange}

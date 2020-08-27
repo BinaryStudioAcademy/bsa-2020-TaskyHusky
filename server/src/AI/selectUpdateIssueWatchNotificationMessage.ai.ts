@@ -1,9 +1,9 @@
+import _ from 'lodash';
 import { getDiffPropNames } from '../helpers/objectsDiff.helper';
 import { Dictionary } from '../../typing/Dictionary';
 import { templatedReplace } from '../helpers/templatedReplace.helper';
 import { asSentence, camelCaseToWords } from '../helpers/sentence.helper';
 import { PartialIssue } from '../models/Issue';
-import _ from 'lodash';
 
 const TEMPLATE = 'Issue {issueKey} was updated. {fields} {were/was} changed.';
 

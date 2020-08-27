@@ -185,6 +185,12 @@ namespace WebApi.Team {
 }
 
 namespace WebApi.User {
+	export enum jobTitle {
+		dbAdmin = 'Database administrator',
+		backEndDev = 'Back-end developer',
+		frontEndDev = 'Front-end developer',
+		fullStackDev = 'Full-Stack developer',
+	}
 	interface UserModel {
 		googleId?: string;
 		id: string;
@@ -197,7 +203,7 @@ namespace WebApi.User {
 		location?: string;
 		department?: string;
 		organization?: string;
-		jobTitle?: string;
+		jobTitle?: jobTitle;
 		userSettingsId?: string;
 		teams?: Team[];
 		resetPasswordToken?: string | null;

@@ -16,7 +16,6 @@ export class Board {
 	createdAt!: Date;
 
 	@Expose()
-	@IsDefined()
 	createdBy!: {
 		id: string;
 		firstName: string;

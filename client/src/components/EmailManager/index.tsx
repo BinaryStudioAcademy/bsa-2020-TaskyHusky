@@ -1,21 +1,18 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import styles from './styles.module.scss';
+import { RootState } from 'typings/rootState';
 import { Button, Checkbox, Select, Form } from 'semantic-ui-react';
 import { requestUpdateUser } from 'containers/ProfilePage/logiс/actions';
 import SubmitedInput from 'components/SubmitedInput';
 import CustomValidator from 'helpers/validation.helper';
 
-interface Props {
-	updateUser: (changedUser: Partial<WebApi.Entities.UserProfile>) => void;
-	email: string;
-}
-const EmailManager: React.FC<Props> = (props: Props) => {
-	const { updateUser, email } = props;
+const EmailManager = () => {
 	const dispatch = useDispatch();
 	const { t } = useTranslation();
 
+	const email = useSelector((state: RootState) => state.user.email);
 	const [emailData, setEmailData] = useState<string>('');
 	const [isEmailValid, setIsEmailValid] = useState<boolean>(true);
 	const [errorMessage, setErrorMessage] = useState<string>('');
@@ -39,8 +36,9 @@ const EmailManager: React.FC<Props> = (props: Props) => {
 	};
 
 	const updateUserField = () => {
-		updateUser({ email: emailData.trim() });
+		setIsSumbit(false);
 		dispatch(requestUpdateUser({ email: emailData.trim() } as Partial<WebApi.Entities.UserProfile>));
+		setEmailData('');
 	};
 
 	const notifaictionsOptions = [

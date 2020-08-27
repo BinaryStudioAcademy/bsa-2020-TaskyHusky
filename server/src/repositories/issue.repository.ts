@@ -1,4 +1,5 @@
 import { EntityRepository, Repository, getCustomRepository } from 'typeorm';
+import _ from 'lodash';
 import { Issue } from '../entity/Issue';
 import { getConditions } from '../helpers/issue.helper';
 import { NotificationRepository } from './notification.repository';
@@ -7,7 +8,6 @@ import { chooseMessage } from '../AI/selectUpdateIssueWatchNotificationMessage.a
 import issueHandler from '../socketConnectionHandlers/issue.handler';
 import { IssueActions } from '../models/IO';
 import { getDiffPropNames } from '../helpers/objectsDiff.helper';
-import _ from 'lodash';
 
 const RELS = [
 	'priority',

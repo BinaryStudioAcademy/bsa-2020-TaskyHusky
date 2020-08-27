@@ -23,7 +23,14 @@ createConnection()
 		app.use(
 			cors({
 				origin: '*',
-				allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization'],
+				allowedHeaders: [
+					'Origin',
+					'X-Requested-With',
+					'Content-Type',
+					'Accept',
+					'Authorization',
+					'Access-Control-Allow-Origin',
+				],
 			}),
 		);
 
