@@ -45,6 +45,20 @@ export class TeammatesRepository extends Repository<UserProfile> {
 		return user.teammates || [];
 	}
 
+	async getTeammate(id: string, match: string) {
+		const name = match.toLowerCase();
+		const user = await this.createQueryBuilder('UserProfile')
+			.where('UserProfile.id = :id', { id })
+			.innerJoin('UserProfile.teammates', 'user')
+			.andWhere('(LOWER(user.firstName) LIKE :name OR LOWER(user.lastName) LIKE :name)', { name: `${name}%` })
+			.addSelect(['UserProfile.id', 'user.id', 'user.firstName', 'user.lastName', 'user.avatar', 'user.email'])
+			.getOne();
+		if (!user) {
+			throw new Error('User does not exist');
+		}
+		return user.teammates || [];
+	}
+
 	async createInvitation(creatorId: string, teammateEmail: string): Promise<void> {
 		const creator = await this.findOne({ where: { id: creatorId } });
 		const teammate = await this.findOne({ where: { email: teammateEmail } });
