@@ -8,6 +8,7 @@ import UserNotification from 'components/common/UserNotification';
 import moment from 'moment';
 import * as actions from './logic/actions';
 import { useIO } from 'hooks/useIO';
+import pushNotificationManager from 'config/push.config';
 
 const NotificationsMenu: React.FC = () => {
 	const [canShowAllNotifications, setCanShowAllNotifications] = useState<boolean>(false);
@@ -19,6 +20,12 @@ const NotificationsMenu: React.FC = () => {
 
 	useIO(WebApi.IO.Types.Notification, (io) => {
 		io.on(WebApi.IO.NotificationActions.CreateNotification, (newNotification: WebApi.Result.NotificationResult) => {
+			pushNotificationManager.push({
+				title: newNotification.title,
+				message: newNotification.text,
+				onClick: () => newNotification.link && window.location.replace(newNotification.link),
+			});
+
 			if (user && newNotification.user.id === user.id) {
 				dispatch(actions.setNotifications({ notifications: [...notifications, newNotification] }));
 			}

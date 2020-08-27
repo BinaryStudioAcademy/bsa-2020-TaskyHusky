@@ -1,17 +1,58 @@
-import { email as nodeMailerEmail, transporter } from '../../config/nodeMailer.config';
+import { SendEmailRequest, AddressList } from 'aws-sdk/clients/ses';
+import AWS from '../../libs/aws';
+import { awsConfig } from '../../config/aws.config';
 import { appHost, frontendPort } from '../../config/app.config';
+import { sendEmail } from '../helpers/email.worker';
 
-export const sendToken = (email: string, resetPasswordToken: string) => {
-	const mailOptions = {
-		from: nodeMailerEmail,
-		to: email,
-		subject: 'Please, confirm your email',
-		text: `http://${appHost}:${frontendPort}/reset-password/${resetPasswordToken} your token will expire in 1 day`,
+const ses = new AWS.SES({ apiVersion: '2010-12-01' });
+
+export type EmailArgs = {
+	to: AddressList;
+	subject: string;
+	message: string;
+	from?: string;
+};
+
+function sendMailWithSes(args: EmailArgs) {
+	const { to, subject, message, from = awsConfig.ses.from.default } = args;
+	const params: SendEmailRequest = {
+		Destination: { ToAddresses: to },
+		Message: {
+			Body: {
+				Html: {
+					Charset: 'UTF-8',
+					Data: message,
+				},
+			},
+			Subject: { Charset: 'UTF-8', Data: subject },
+		},
+		ReturnPath: from,
+		Source: from,
 	};
 
-	return transporter.sendMail(mailOptions, (err) => {
-		if (err) throw err;
+	return new Promise((resolve, reject) => {
+		ses.sendEmail(params, (err, data) => {
+			if (err) {
+				reject(err);
+			} else {
+				resolve(data);
+			}
+		});
 	});
+}
+
+export const EmailService = {
+	sendEmail: sendMailWithSes,
+};
+
+export const sendToken = (email: string, resetPasswordToken: string) => {
+	const mailOptions: EmailArgs = {
+		to: ['admin@taskyhusky.xyz'],
+		subject: 'Please, confirm your email',
+		message: `http://${appHost}:${frontendPort}/reset-password/${resetPasswordToken} your token will expire in 1 day`,
+	};
+
+	sendEmail(mailOptions);
 };
 
 export interface CommentMentionEmailParams {
@@ -22,16 +63,12 @@ export interface CommentMentionEmailParams {
 
 export const sendMentionedInComment = (params: CommentMentionEmailParams) => {
 	const { email, issueKey, userName } = params;
-
-	const mailOptions = {
-		from: nodeMailerEmail,
-		to: email,
+	const mailOptions: EmailArgs = {
+		to: ['admin@taskyhusky.xyz'],
 		subject: 'Mention',
-		html: `Dear ${userName}, you have been mentioned in issue comment!<br />
-			Go <a rel="noopener noreferrer" href='http://${appHost}:${frontendPort}/issue/${issueKey}'>here</a> and check out!`,
+		message: `Dear ${userName}, you have been mentioned in issue comment!<br />
+		Go <a rel="noopener noreferrer" href='http://${appHost}:${frontendPort}/issue/${issueKey}'>here</a> and check out!`,
 	};
 
-	return transporter.sendMail(mailOptions, (err) => {
-		if (err) throw err;
-	});
+	sendEmail(mailOptions);
 };

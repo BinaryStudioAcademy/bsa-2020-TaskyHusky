@@ -8,9 +8,10 @@ import ProfileAside from 'components/ProfileAside';
 import ProfileSection from 'components/ProfileSection';
 import ProfileManagerSection from 'components/ProfileManagerSection';
 import Spinner from 'components/common/Spinner';
-import { UserProfileState, initialState } from './logiс/state';
+import { initialState } from './logiс/state';
 import { useTranslation } from 'react-i18next';
-import { requestGetUserProjects } from 'services/user.service';
+import { requestGetUserProjects, requestGetUserTeams, requestTeammates } from 'services/user.service';
+import { NotificationManager } from 'react-notifications';
 
 const ProfilePage = ({ id }: { id: string }) => {
 	const dispatch = useDispatch();
@@ -30,27 +31,27 @@ const ProfilePage = ({ id }: { id: string }) => {
 		dispatch(actions.updateUser({ partialState: { editMode: modeToShow } }));
 	};
 
-	const mockData = {
-		teams: [
-			{ name: 'Example name1', members: 1, id: 1 },
-			{ name: 'Example name2', members: 2, id: 2 },
-		],
-		activity: [
-			{ id: 1, project: 'First scrum project', name: 'Homepage footer uses an inline style-should use a class' },
-			{ id: 2, project: 'First scrum project', name: 'Homepage footer uses an inline style-should use a class' },
-			{ id: 3, project: 'First scrum project', name: 'Homepage footer uses an inline style-should use a class' },
-			{ id: 4, project: 'First scrum project', name: 'Homepage footer uses an inline style-should use a class' },
-			{ id: 5, project: 'First scrum project', name: 'Homepage footer uses an inline style-should use a class' },
-			{ id: 6, project: 'First scrum project', name: 'Homepage footer uses an inline style-should use a class' },
-			{ id: 7, project: 'First scrum project', name: 'Fsp-1 Implement dark somethin else very important' },
-		],
-		colleagues: [
-			{ id: 1, project: 'Software project', name: 'Fan Angel' },
-			{ id: 2, project: 'Software project', name: 'Fan Angel' },
-		],
-	};
+	const activity = [
+		{ id: 1, project: 'First scrum project', name: 'Homepage footer uses an inline style-should use a class' },
+		{ id: 2, project: 'First scrum project', name: 'Homepage footer uses an inline style-should use a class' },
+		{ id: 3, project: 'First scrum project', name: 'Homepage footer uses an inline style-should use a class' },
+		{ id: 4, project: 'First scrum project', name: 'Homepage footer uses an inline style-should use a class' },
+		{ id: 5, project: 'First scrum project', name: 'Homepage footer uses an inline style-should use a class' },
+		{ id: 6, project: 'First scrum project', name: 'Homepage footer uses an inline style-should use a class' },
+		{ id: 7, project: 'First scrum project', name: 'Fsp-1 Implement dark somethin else very important' },
+	];
 
-	let projects = useSelector((state: RootState) => state.projects.projects);
+	const { projects, teammates, teams } = useSelector((state: RootState) => ({
+		projects: state.projects.projects,
+		teammates: state.peoplePage.people,
+		teams: state.peoplePage.teams,
+	}));
+
+	const [data, setData] = useState({
+		teammates,
+		teams,
+		projects,
+	});
 
 	const getUser = async () => {
 		if (isCurrentUser) {
@@ -59,11 +60,29 @@ const ProfilePage = ({ id }: { id: string }) => {
 		} else {
 			dispatch(actions.requestGetUser({ id }));
 			setUser({ ...user, ...userData });
-			projects = await requestGetUserProjects(id);
+			Promise.all([requestGetUserTeams(id), requestGetUserProjects(id), requestTeammates(id)])
+				.then((arr) => {
+					setData({ ...data, teams: arr[0], projects: arr[1], teammates: arr[2] });
+				})
+				.catch((error) => {
+					NotificationManager.error('Could not load data', 'Error', 4000);
+				});
 		}
 	};
 
-	const updateUser = (changedUser: Partial<UserProfileState>) => {
+	const getCurrentUserData = async () => {
+		setData({ ...data, projects, teammates, teams });
+		if (!teams.length) {
+			const teams = await requestGetUserTeams(id);
+			setData((data) => ({ ...data, teams }));
+		}
+		if (!teammates.length) {
+			const teammates = await requestTeammates(id);
+			setData((data) => ({ ...data, teammates }));
+		}
+	};
+
+	const updateUser = (changedUser: Partial<WebApi.Entities.UserProfile>) => {
 		setUser({ ...user, ...changedUser });
 	};
 
@@ -71,6 +90,13 @@ const ProfilePage = ({ id }: { id: string }) => {
 		getUser();
 		//eslint-disable-next-line
 	}, [userData.id]);
+
+	useEffect(() => {
+		if (isCurrentUser) {
+			getCurrentUserData();
+		}
+		//eslint-disable-next-line
+	}, [projects, teammates, teams]);
 
 	return (
 		<>
@@ -83,13 +109,18 @@ const ProfilePage = ({ id }: { id: string }) => {
 						<ProfileAside
 							user={user}
 							isCurrentUser={isCurrentUser}
-							mockData={mockData}
+							teams={data.teams}
 							showManager={showManager}
 						/>
 						{editMode ? (
 							<ProfileManagerSection user={user} showManager={showManager} updateUser={updateUser} />
 						) : (
-							<ProfileSection isCurrentUser={isCurrentUser} mockData={mockData} projects={projects} />
+							<ProfileSection
+								isCurrentUser={isCurrentUser}
+								activity={activity}
+								projects={data.projects}
+								teammates={data.teammates}
+							/>
 						)}
 					</div>
 				</div>

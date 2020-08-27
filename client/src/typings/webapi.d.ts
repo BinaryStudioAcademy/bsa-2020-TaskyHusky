@@ -49,13 +49,13 @@ namespace WebApi.Issue {
 		type?: string;
 		status?: string;
 		summary?: string;
-		board?: string;
 		boardColumn?: string;
 		labels?: string[];
 		attachments?: string[];
 		links?: string[];
 		priority?: string;
 		description?: string;
+		board?: string;
 		sprint?: string | null;
 		project?: string;
 		issueKey?: string;
@@ -91,6 +91,7 @@ namespace WebApi.Result {
 		labels?: string[];
 		attachments?: string[];
 		links?: string[];
+		board?: BoardResult;
 		priority: {
 			id: string;
 			color: string;

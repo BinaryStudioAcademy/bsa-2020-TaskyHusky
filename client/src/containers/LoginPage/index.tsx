@@ -8,11 +8,10 @@ import PasswordInput from 'components/common/PasswordInput';
 import { useTranslation } from 'react-i18next';
 import validator from 'validator';
 import { normalizeEmail } from 'helpers/email.helper';
-import { NotificationManager } from 'react-notifications';
 import iconGoogle from 'assets/images/icon-google.svg';
 import GoogleLogin, { GoogleLoginResponse, GoogleLoginResponseOffline } from 'react-google-login';
-
 import { RootState } from 'typings/rootState';
+import { GoogleAuth } from 'constants/GoogleLogin';
 
 export const LoginPage: React.FC = () => {
 	const history = useHistory();
@@ -67,10 +66,6 @@ export const LoginPage: React.FC = () => {
 		dispatch(actions.sendGoogleAuth({ user }));
 	};
 
-	const googleAuthFailed = () => {
-		NotificationManager.error('Error google authentication', 'Error', 4000);
-	};
-
 	const googleBtn = (props: { onClick: () => void; disabled?: boolean }) => (
 		<button onClick={props.onClick} className={styles.google_btn}>
 			<Image src={iconGoogle} className={styles.google_logo} />
@@ -115,13 +110,11 @@ export const LoginPage: React.FC = () => {
 						</Button>
 						<Divider horizontal>{t('or')}</Divider>
 						<GoogleLogin
-							// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-							clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID!}
+							clientId={GoogleAuth.CLIENT_ID}
 							buttonText="Login"
 							render={(props) => googleBtn(props)}
 							onSuccess={googleAuth}
-							onFailure={googleAuthFailed}
-							cookiePolicy={'single_host_origin'}
+							cookiePolicy={GoogleAuth.COOKIE_POLICY}
 						/>
 					</Form>
 					<Divider />

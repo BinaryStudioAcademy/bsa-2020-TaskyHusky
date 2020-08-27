@@ -3,13 +3,13 @@ export interface PartialIssue {
 	type?: string;
 	status?: string;
 	summary?: string;
-	board?: string;
 	boardColumn?: string;
 	labels?: string[];
 	attachments?: string[];
 	links?: string[];
 	priority?: string;
 	description?: string;
+	board?: string;
 	sprint?: string | null;
 	project?: string;
 	issueKey?: string;

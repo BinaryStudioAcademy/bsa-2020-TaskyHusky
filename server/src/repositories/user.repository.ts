@@ -30,6 +30,19 @@ export class UserRepository extends Repository<UserProfile> {
 		return user.projects;
 	}
 
+	async getTeams(id: string): Promise<any> {
+		const user = await this.createQueryBuilder('user')
+			.where('user.id = :id', { id })
+			.leftJoinAndSelect('user.teams', 'team')
+			.getOne();
+
+		if (!user) {
+			throw new Error('User with such id does not exist');
+		}
+
+		return user.teams;
+	}
+
 	getByEmail(email: string): Promise<any> {
 		return this.findOne({ where: { email } });
 	}

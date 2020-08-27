@@ -9,13 +9,13 @@ import { UserProfileState } from 'containers/ProfilePage/logiс/state';
 
 interface Props {
 	isCurrentUser: boolean;
-	mockData?: any;
+	teams: Array<WebApi.Entities.Team>;
 	user: Partial<UserProfileState>;
 	showManager: (modeToShow: string) => void;
 }
 
 const ProfileAside: React.FC<Props> = (props: Props) => {
-	const { user, isCurrentUser, mockData, showManager } = props;
+	const { user, isCurrentUser, teams, showManager } = props;
 	const {
 		avatar = '',
 		firstName = '',
@@ -52,7 +52,7 @@ const ProfileAside: React.FC<Props> = (props: Props) => {
 							isCurrentUser={isCurrentUser}
 						/>
 						<ProfileContacntBlock email={email} />
-						<ProfileTeamBlock mockData={mockData} />
+						<ProfileTeamBlock teams={teams} />
 					</>
 				)}
 			</div>
