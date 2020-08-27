@@ -6,7 +6,6 @@ import { Link, Redirect } from 'react-router-dom';
 import ProjectsMenu from 'components/ProjectsMenu';
 import FiltersMenu from 'components/FiltersMenu';
 import BoardsMenu from '../../components/BoardsMenu';
-import DashboardsMenu from 'components/DashboardsMenu';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'typings/rootState';
 import { removeToken } from 'helpers/setToken.helper';
@@ -75,7 +74,6 @@ export const HeaderMenu = () => {
 					</Menu.Item>
 					<ProjectsMenu />
 					<FiltersMenu />
-					<DashboardsMenu />
 					<BoardsMenu onCreateBoard={onCreateBoard} />
 					<Menu.Item
 						as="span"
