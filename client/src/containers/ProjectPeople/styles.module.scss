@@ -37,3 +37,26 @@
 .user__action {
     width: 84px;
 }
+
+.column__name, 
+.column__email {
+    width: 40%;
+}
+
+
+.imgWrapper {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	.content {
+		display: flex;
+		flex-direction: column;
+		.img {
+			width: 200px;
+			margin: 10px;
+		}
+		.text {
+			text-align: center;
+		}
+	}
+}

@@ -94,4 +94,12 @@ export class UserRepository extends Repository<UserProfile> {
 	findAll(): Promise<UserProfile[]> {
 		return this.find();
 	}
+
+	async getUserTeammates(userId: string) {
+		return this.findOne({
+			where: { id: userId },
+			relations: ['teammates'],
+			select: ['id'],
+		});
+	}
 }

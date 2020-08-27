@@ -1,39 +1,31 @@
-import React, { useState, useMemo, memo } from 'react';
+import React, { useState, memo, useEffect } from 'react';
 import { Modal, Button, Dropdown, DropdownOnSearchChangeData } from 'semantic-ui-react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import * as actions from './logic/actions';
 import { RootState } from 'typings/rootState';
-import { startGettingProject } from 'containers/ProjectSettings/logic/actions';
 import { useTranslation } from 'react-i18next';
 
 interface Props {
 	project: WebApi.Entities.Projects;
 }
 
-const AddPeopleModal = ({ project: { id: projectId, lead, users: projectUsers } }: Props) => {
+const AddPeopleModal = ({ project, project: { lead, users: projectUsers } }: Props) => {
 	const { t } = useTranslation();
 	const dispatch = useDispatch();
-	const { users } = useSelector((rootState: RootState) => rootState.users);
-	const { isLoading, isAdded } = useSelector((rootState: RootState) => rootState.projectPeople);
+	const { isPeopleLoading, people, isLoading } = useSelector((rootState: RootState) => rootState.projectPeople);
 
 	const [isOpen, setIsOpen] = useState<boolean>(false);
 	const [searchQuery, setSearchQuery] = useState<string>('');
 	const [selectedUsersIds, setSelectedUsersIds] = useState<string[]>([]);
 
-	const usersNotInProject = useMemo(
-		() =>
-			users.filter((user) =>
-				projectUsers.some((projectsUser) => projectsUser.id !== user.id && user.id !== lead.id),
-			),
-		[users, projectUsers, lead.id],
-	);
+	useEffect(() => {
+		dispatch(actions.startGettingPeople());
+	}, [dispatch]);
 
-	if (isAdded) {
-		dispatch(actions.resetState());
-		setIsOpen(false);
-		dispatch(startGettingProject({ id: projectId }));
-	}
+	const peopleNotInProject = people.filter((user) =>
+		projectUsers.every((projectsUser) => projectsUser.id !== user.id),
+	);
 
 	const onSearchQueryChange = (
 		event: React.SyntheticEvent<HTMLElement, Event>,
@@ -47,7 +39,9 @@ const AddPeopleModal = ({ project: { id: projectId, lead, users: projectUsers } 
 	};
 
 	const onAddSelectedUsers = () => {
-		dispatch(actions.startAddingUsers({ usersId: selectedUsersIds, projectId }));
+		dispatch(actions.startAddingUsers({ usersId: selectedUsersIds, project, people }));
+		setIsOpen(false);
+		setSelectedUsersIds([]);
 	};
 
 	return (
@@ -65,16 +59,18 @@ const AddPeopleModal = ({ project: { id: projectId, lead, users: projectUsers } 
 			<Modal.Header>{t('add_people')}</Modal.Header>
 			<Modal.Content>
 				<Dropdown
+					loading={isPeopleLoading}
+					disabled={isPeopleLoading}
 					fluid
 					multiple
 					onChange={onSearchDataChange}
 					onSearchChange={onSearchQueryChange}
-					options={usersNotInProject.map((user) => ({
+					options={peopleNotInProject.map((user) => ({
 						key: user.id,
 						value: user.id,
 						text: `${user.firstName} ${user.lastName}`,
 					}))}
-					placeholder={t('people')}
+					placeholder={isPeopleLoading ? t('loading') : t('people')}
 					search
 					searchQuery={searchQuery}
 					selection

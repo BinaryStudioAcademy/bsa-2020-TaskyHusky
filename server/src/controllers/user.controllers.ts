@@ -5,6 +5,7 @@ import { UserRepository } from '../repositories/user.repository';
 import uploadS3 from '../services/file.service';
 import { avatarFolder } from '../../config/aws.config';
 import { ErrorResponse } from '../helpers/errorHandler.helper';
+import HttpStatusCode from '../constants/httpStattusCode.constants';
 
 class UserController {
 	uploadAvatar = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -117,6 +118,18 @@ class UserController {
 			res.status(200).send({ message: 'User was deleted' });
 		} catch (error) {
 			res.status(400).send(error.message);
+		}
+	};
+
+	getTeammates = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+		const userRepository = getCustomRepository(UserRepository);
+		const { id: userId } = req.user;
+
+		try {
+			const user = await userRepository.getUserTeammates(userId);
+			res.status(200).send(user);
+		} catch (error) {
+			next(new ErrorResponse(HttpStatusCode.UNPROCESSABLE_ENTITY, error.message));
 		}
 	};
 }
