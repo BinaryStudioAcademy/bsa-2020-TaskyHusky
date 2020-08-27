@@ -65,7 +65,13 @@ const CreateSprintModal = (props: Props) => {
 	};
 
 	const getNextDate = (week: number, startDate: Date) => {
-		const nextDate = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate() + 7 * week);
+		const nextDate = new Date(
+			startDate.getFullYear(),
+			startDate.getMonth(),
+			startDate.getDate() + 7 * week,
+			startDate.getHours(),
+			startDate.getMinutes() + 15,
+		);
 		return nextDate;
 	};
 
