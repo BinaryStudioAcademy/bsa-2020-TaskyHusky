@@ -55,6 +55,7 @@ const TeamDevsCard = ({
 			</Card.Content>
 			<Card.Content>
 				<textarea
+					placeholder={t('add_some_description')}
 					disabled={lockEditFields}
 					onChange={(e) => setTeamDescription(e.target.value)}
 					defaultValue={teamDescription}
@@ -64,7 +65,7 @@ const TeamDevsCard = ({
 			</Card.Content>
 			<Card.Content className={styles.edit_field_btn}>
 				<Button compact color="blue" fluid onClick={() => submitEditFields()}>
-					{t(lockEditFields ? 'Edit fields' : 'Save changes')}
+					{t(lockEditFields ? 'edit_fields' : 'save_changes')}
 				</Button>
 			</Card.Content>
 			<Card.Content extra>
@@ -75,10 +76,10 @@ const TeamDevsCard = ({
 						onClick={showAddPeopleModal}
 						disabled={currentProfile?.id !== teamOwner?.id}
 					>
-						{t('Add people')}
+						{t('add_people')}
 					</Button>
 					<Button compact color="red" onClick={() => setShowDelete(true)}>
-						{t('Delete team')}
+						{t('delete_team')}
 					</Button>
 				</Button.Group>
 			</Card.Content>

@@ -1,17 +1,8 @@
-$gradient: linear-gradient(90deg, rgba(52, 221, 255, 1) 0%, rgba(95, 221, 247, 1) 58%, rgba(166, 240, 255, 1) 100%);
-
 .header {
 	width: 100%;
-	height: 100px;
-	box-shadow: 0 0 10px rgba(166, 240, 255, 1);
+	height: 40px;
 }
-.header_z {
-	z-index: -1;
-}
-.team_header {
-	background: rgb(52, 221, 255);
-	background: $gradient;
-}
+
 .meta_header {
 	margin-left: 14px;
 }

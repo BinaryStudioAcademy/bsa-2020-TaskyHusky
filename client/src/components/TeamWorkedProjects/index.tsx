@@ -29,10 +29,10 @@ const TeamWorkedProjects = ({ projects }: Props) => {
 									{project.name}
 								</Header>
 								<p>
-									{t('Project key')}:<span className={styles.team_key}> {project.key}</span>
+									{t('project_key')}:<span className={styles.team_key}> {project.key}</span>
 								</p>
 								<p>
-									{t('Project category')}:
+									{t('project_category')}:
 									<span className={styles.team_category}>{project.category}</span>
 								</p>
 							</Link>
@@ -42,11 +42,7 @@ const TeamWorkedProjects = ({ projects }: Props) => {
 							<Image src={worksImg} size="small" />
 							<div className={styles.worked_block}>
 								<Header as="h4">{t('no_works')}</Header>
-								<p className={styles.p_descr}>
-									{t(
-										'There are no projects which have been started yet. When it&apos;ll happen you can get quick access to one you need',
-									)}
-								</p>
+								<p className={styles.p_descr}>{t('there_are_no_projects')}</p>
 							</div>
 						</>
 					)}
