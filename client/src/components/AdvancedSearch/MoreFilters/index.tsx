@@ -41,7 +41,7 @@ const MoreFilterDefsDropdown = ({
 			className={styles.moreFilterDropdown}
 		>
 			<Dropdown.Menu className={styles.dropdownMenu} onClick={(e: Event) => e.stopPropagation()}>
-				<Input placeholder={'Search criteria'} icon="search" iconPosition="left" />
+				<Input icon="search" iconPosition="left" />
 				<Dropdown.Divider />
 				<Dropdown.Header icon="filter" content={'Criteria'} />
 				<Dropdown.Menu scrolling>
