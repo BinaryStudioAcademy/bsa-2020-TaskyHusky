@@ -1,6 +1,6 @@
 import React from 'react';
 import { Image } from 'semantic-ui-react';
-import styles from '../styles.module.scss';
+import styles from './styles.module.scss';
 
 const ResultPeople: React.FC<WebApi.Entities.UserProfile> = ({ firstName, lastName, avatar, email }) => (
 	<div className={styles.search_result}>
@@ -8,7 +8,7 @@ const ResultPeople: React.FC<WebApi.Entities.UserProfile> = ({ firstName, lastNa
 		<b>
 			{firstName} {lastName}
 		</b>
-		<p>{email}</p>
+		<p className={styles.email}>{email}</p>
 	</div>
 );
 

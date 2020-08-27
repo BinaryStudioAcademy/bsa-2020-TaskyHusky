@@ -83,7 +83,7 @@ export const fetchTeams = async () => {
 	return (await res.json()) as WebApi.Entities.Team[];
 };
 
-export const findUsersColleagues = async (id: string, match: string) => {
+export const findUsersColleagues = async (id: string, match?: string) => {
 	const result = await callWebApi({
 		method: 'POST',
 		endpoint: 'user/search',
@@ -95,7 +95,7 @@ export const findUsersColleagues = async (id: string, match: string) => {
 	return await (result.json()) as WebApi.Entities.UserProfile[];
 }
 
-export const addUsersToTeam = async (id: string, users: WebApi.Entities.UserProfile[]) => {
+export const addUsersToTeam = async (id: string, users?: WebApi.Entities.UserProfile[]) => {
 	const result = await callWebApi({
 		method: 'POST',
 		endpoint: 'team/connect-to-team',

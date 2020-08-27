@@ -48,15 +48,11 @@ export class TeammatesRepository extends Repository<UserProfile> {
 	async getTeammate(id: string, match: string) {
 		const name = match.toLowerCase();
 		const user = await this.createQueryBuilder('UserProfile')
-			.where('UserProfile.id =:id', { id })
+			.where('UserProfile.id = :id', { id })
 			.innerJoin('UserProfile.teammates', 'user')
-			.where(
-				'LOWER(user.firstName) LIKE :name OR LOWER(user.email) LIKE :name OR LOWER(user.lastName) LIKE :name',
-				{ name: `${name}%` },
-			)
-			.addSelect(['user.id', 'user.firstName', 'user.lastName', 'user.avatar', 'user.email'])
+			.andWhere('(LOWER(user.firstName) LIKE :name OR LOWER(user.lastName) LIKE :name)', { name: `${name}%` })
+			.addSelect(['UserProfile.id', 'user.id', 'user.firstName', 'user.lastName', 'user.avatar', 'user.email'])
 			.getOne();
-
 		if (!user) {
 			throw new Error('User does not exist');
 		}

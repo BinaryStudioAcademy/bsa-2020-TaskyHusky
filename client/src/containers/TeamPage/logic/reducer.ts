@@ -73,13 +73,11 @@ export const teamReducer = createReducer<TeamState>(initialState, {
 			}
 		};
 	},
-	[actionTypes.SEARCH_PEOPLE_LOADER](state: TeamState) {
+	[actionTypes.FAIL_SEARCHING_PEOPLE](state: TeamState) {
 		return {
 			...state,
 			results: {
-				users: {
-					results: []
-				},
+				...state.results,
 				loading: false
 			}
 		};

@@ -101,8 +101,10 @@ const TeamPage = ({
 		setAddLinks(false);
 		setEditedLink(undefined);
 	};
+
 	const onSearchPeople = (match: string) => {
-		dispatch(actions.startSearchPeople({ id: params.id, match }));
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+		dispatch(actions.startSearchPeople({ id: currentProfile!.id, match }));
 	};
 
 	const onSelectUserInAddUsers = () => dispatch(actions.clearResults());
@@ -110,9 +112,9 @@ const TeamPage = ({
 	const onAddPeopleToTeamConfirm = (users: WebApi.Entities.UserProfile[]) => {
 		dispatch(actions.addPeopleToTeamLoading({ id: params.id, users }));
 	};
-const handlerRemoveFromTeam = (id: string) => {
-	console.log('deleted')
-}
+	const handlerRemoveFromTeam = (id: string) => {
+		console.log('deleted');
+	};
 	return loading ? (
 		<Spinner />
 	) : (
@@ -133,7 +135,7 @@ const handlerRemoveFromTeam = (id: string) => {
 					<TeamsMembersCard teammates={[{ ...team.createdBy }]} title={'Team owner'} />
 					<TeamsMembersCard teammates={team.users} title={'Members'} removeFromTeam={handlerRemoveFromTeam} />
 				</Grid.Column>
-				<Grid.Column className={[styles.col_media, styles.col_right].join(' ')}>
+				<Grid.Column className={`${styles.col_media}, ${styles.col_right}`}>
 					<TeamWorkedProjects projects={team.projects} />
 					<TeamLinks
 						currentLinks={team.links ?? []}

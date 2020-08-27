@@ -19,12 +19,9 @@ type Props = {
 	link?: Link;
 	field?: string;
 	type: string;
+	match?: string;
+	users?: WebApi.Entities.UserProfile[]
 };
-
-type PropsPost = {
-	id: string;
-	match: string
-}
 
 export function* fetchTeam(props: Props) {
 	try {
@@ -72,13 +69,13 @@ export function* updateField(props: Props) {
 		NotificationManager.error('Error update data', 'Error', 4000);
 	}
 }
-// TODO: define type
-export function* searchPeople(props: any) {
+
+export function* searchPeople(props: Props) {
 	try {
 		yield put(actions.searchPeopleLoader());
 		const users = yield call(findUsersColleagues, props.id, props.match);
-		const searchResult: { data: any; key: any; title: any; }[] = [];
-		users.filter((el: any) => {
+		const searchResult: { data: WebApi.Entities.UserProfile; key: string; title?: string; }[] = [];
+		users.filter((el: WebApi.Entities.UserProfile) => {
 			searchResult.push({
 				data: el,
 				key: el.id,
@@ -87,16 +84,17 @@ export function* searchPeople(props: any) {
 		})
 		yield put(actions.successSearchPeople({ results: searchResult }));
 	} catch (error) {
+		yield put(actions.failSearchPeople());
 	}
 }
 
-function* inviteUsersToTeam({ id, users }: any) {
+function* inviteUsersToTeam(props: Props) {
 	try {
-		const team = yield call(addUsersToTeam, id, users);
+		const team = yield call(addUsersToTeam, props.id, props.users);
 		yield put(actions.addPeopleToTeamDone({ users: team.users }))
 
 	} catch (error) {
-		console.log(error);
+		NotificationManager.error('Error add users to team', 'Error', 4000);
 	}
 }
 

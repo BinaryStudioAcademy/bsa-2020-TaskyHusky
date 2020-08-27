@@ -96,10 +96,9 @@ export class TeamRepository extends Repository<Team> {
 			if (!team) {
 				throw new Error('Team was not found');
 			}
-
 			// eslint-disable-next-line array-callback-return
 			users.map((user: UserProfile): void => {
-				const isExist = team?.users?.find((el) => el.id === user.id);
+				const isExist = team.users?.find((el) => el.id === user.id);
 				if (!isExist) {
 					team?.users?.push(user);
 				}
@@ -111,6 +110,7 @@ export class TeamRepository extends Repository<Team> {
 				.where('Team.id = :id', { id })
 				.leftJoinAndSelect('Team.users', 'Users')
 				.getOne();
+
 			return updatedTeam;
 		} catch (error) {
 			console.log(error);
