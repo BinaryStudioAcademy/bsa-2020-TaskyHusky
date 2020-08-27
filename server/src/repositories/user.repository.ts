@@ -1,14 +1,17 @@
 import { EntityRepository, Repository, Between, getCustomRepository } from 'typeorm';
-import { UserProfile } from '../entity/UserProfile';
 import { expirationTime } from '../constants/resetPassword.constants';
 import { TeamRepository } from './teams.repository';
+import { UserProfile } from '../entity/UserProfile';
+import { Projects } from '../entity/Projects';
+import { Team } from '../entity/Team';
+
 @EntityRepository(UserProfile)
 export class UserRepository extends Repository<UserProfile> {
 	getAll() {
 		return this.findAll();
 	}
 
-	async getById(id: string): Promise<any> {
+	async getById(id: string): Promise<UserProfile> {
 		const user = await this.findOne({ where: { id } });
 		if (!user) {
 			throw new Error('Can not find user');
@@ -17,7 +20,7 @@ export class UserRepository extends Repository<UserProfile> {
 		return rest;
 	}
 
-	async getProjects(id: string): Promise<any> {
+	async getProjects(id: string): Promise<Projects[] | undefined> {
 		const user = await this.createQueryBuilder('user')
 			.where('user.id = :id', { id })
 			.leftJoinAndSelect('user.projects', 'project')
@@ -30,7 +33,7 @@ export class UserRepository extends Repository<UserProfile> {
 		return user.projects;
 	}
 
-	async getTeams(id: string): Promise<any> {
+	async getTeams(id: string): Promise<Team[] | undefined> {
 		const user = await this.createQueryBuilder('user')
 			.where('user.id = :id', { id })
 			.leftJoinAndSelect('user.teams', 'team')
@@ -43,11 +46,11 @@ export class UserRepository extends Repository<UserProfile> {
 		return user.teams;
 	}
 
-	getByEmail(email: string): Promise<any> {
+	getByEmail(email: string): Promise<UserProfile | undefined> {
 		return this.findOne({ where: { email } });
 	}
 
-	getByToken(token: string): Promise<any> {
+	getByToken(token: string): Promise<UserProfile | undefined> {
 		return this.findOne({
 			where: {
 				resetPasswordToken: token,
@@ -56,7 +59,7 @@ export class UserRepository extends Repository<UserProfile> {
 		});
 	}
 
-	async createNew(data: UserProfile): Promise<any> {
+	async createNew(data: UserProfile): Promise<UserProfile> {
 		const user = this.create(data);
 		const newUser = await this.save(user);
 		if (!newUser) {
@@ -66,7 +69,7 @@ export class UserRepository extends Repository<UserProfile> {
 		return rest;
 	}
 
-	async updateById(id: string, user: Partial<UserProfile>): Promise<any> {
+	async updateById(id: string, user: Partial<UserProfile>): Promise<UserProfile> {
 		this.update(id, user);
 		const updatedUser = await this.findOne(id);
 		if (!updatedUser) {
@@ -88,7 +91,7 @@ export class UserRepository extends Repository<UserProfile> {
 		return this.delete(id);
 	}
 
-	findAll() {
+	findAll(): Promise<UserProfile[]> {
 		return this.find();
 	}
 }

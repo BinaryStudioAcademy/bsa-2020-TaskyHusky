@@ -4,10 +4,10 @@ import { plainToClass } from 'class-transformer';
 import { ErrorResponse } from '../helpers/errorHandler.helper';
 import HttpStatusCode from '../constants/httpStattusCode.constants';
 
-export const validateRequestMw = (dtoClass: any) => {
+export const validateRequestMw = (classToFetch: any) => {
 	return async (req: Request, res: Response, next: NextFunction) => {
 		if (req.method === 'POST' || req.method === 'PUT') {
-			const output = plainToClass(dtoClass, req.body);
+			const output = plainToClass(classToFetch, req.body);
 
 			const errors = await validate(output, { skipMissingProperties: true });
 
