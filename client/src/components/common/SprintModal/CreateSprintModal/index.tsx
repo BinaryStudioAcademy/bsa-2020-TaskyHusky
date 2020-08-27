@@ -64,11 +64,6 @@ const CreateSprintModal = (props: Props) => {
 	const [endDateDisable, setEndDateDisable] = useState(true);
 	const [isDateValid, setIsDateValid] = useState(true);
 
-	// const validateDate = () => {
-	// 	const isValid = endDate > startDate;
-	// 	setIsDateValid(isValid);
-	// };
-
 	const handleStartDatePick = (date: Date) => {
 		setStartDate(date);
 		if (duration !== 'custom') {
@@ -145,26 +140,35 @@ const CreateSprintModal = (props: Props) => {
 						label="Start date"
 						error={!isDateValid}
 						control={() => (
-							<DatePicker
-								name="StartTime"
-								dateFormat="MM/dd/yyyy h:mm aa"
-								showTimeSelect
-								selected={startDate}
-								onChange={handleStartDatePick}
-							/>
+							<div style={{ display: 'flex', flexDirection: 'column' }}>
+								<DatePicker
+									name="StartTime"
+									dateFormat="MM/dd/yyyy h:mm aa"
+									showTimeSelect
+									selected={startDate}
+									onChange={handleStartDatePick}
+								/>
+								{!isDateValid && (
+									<span style={{ color: 'red' }}>
+										The start date of a sprint must be before the end date.
+									</span>
+								)}
+							</div>
 						)}
 					/>
 					<Form.Field
 						label="End date"
 						control={() => (
-							<DatePicker
-								disabled={endDateDisable}
-								name="EndTime"
-								dateFormat="MM/dd/yyyy h:mm aa"
-								showTimeSelect
-								selected={endDate}
-								onChange={handleEndDatePick}
-							/>
+							<div style={{ display: 'flex', flexDirection: 'column' }}>
+								<DatePicker
+									disabled={endDateDisable}
+									name="EndTime"
+									dateFormat="MM/dd/yyyy h:mm aa"
+									showTimeSelect
+									selected={endDate}
+									onChange={handleEndDatePick}
+								/>
+							</div>
 						)}
 					/>
 					<Form.Field>
