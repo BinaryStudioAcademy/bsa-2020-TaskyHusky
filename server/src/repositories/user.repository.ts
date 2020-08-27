@@ -1,7 +1,7 @@
-import { EntityRepository, Repository, Between } from 'typeorm';
+import { EntityRepository, Repository, Between, getCustomRepository } from 'typeorm';
 import { UserProfile } from '../entity/UserProfile';
 import { expirationTime } from '../constants/resetPassword.constants';
-
+import { TeamRepository } from './teams.repository';
 @EntityRepository(UserProfile)
 export class UserRepository extends Repository<UserProfile> {
 	getAll() {
@@ -76,7 +76,15 @@ export class UserRepository extends Repository<UserProfile> {
 		return rest;
 	}
 
-	deleteById(id: string) {
+	async deleteById(id: string): Promise<any> {
+		const user = await this.createQueryBuilder('user')
+			.where('user.id = :id', { id })
+			.leftJoinAndSelect('user.teamsOwner', 'team')
+			.getOne();
+		const teamRepository = getCustomRepository(TeamRepository);
+		user?.teamsOwner?.map((item) => {
+			teamRepository.deleteOneById(item.id);
+		});
 		return this.delete(id);
 	}
 
