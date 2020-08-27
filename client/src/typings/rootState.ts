@@ -1,5 +1,5 @@
 import { projectCommonState } from '../components/ProjectsCommon/logic/state';
-import { ProjectState } from './../containers/ProjectSettings/logic/state';
+import { ProjectState } from '../containers/ProjectSettings/logic/state';
 import { FilterDefsState } from '../commonLogic/filterDefs/state';
 import { ProjectsState } from '../containers/Projects/logic/state';
 import { AuthState } from './../containers/LoginPage/logic/state';
@@ -15,6 +15,7 @@ import { PeoplePageState } from '../containers/People/logic/state';
 import { BoardsState } from '../containers/Boards/logic/state';
 import { HeaderState } from '../containers/Header/logic/state';
 import { ScrumBoardState } from 'containers/Board/Scrum/logic/state';
+import { NotificationsState } from 'components/NotificationsMenu/logic/state';
 
 export interface RootState {
 	boards: BoardsState;
@@ -34,4 +35,5 @@ export interface RootState {
 	scrumBoard: ScrumBoardState;
 	peoplePage: PeoplePageState;
 	header: HeaderState;
+	notifications: NotificationsState;
 }

@@ -4,6 +4,8 @@ import { getUsername } from 'helpers/getUsername.helper';
 import { ContextProvider } from 'containers/CreateIssueModal/logic/context';
 import UpdateIssueModal from 'containers/UpdateIssueModal';
 import { useTranslation } from 'react-i18next';
+import { useIO } from 'hooks/useIO';
+import { NotificationManager } from 'react-notifications';
 import { useDispatch, useSelector } from 'react-redux';
 import { watchIssue } from 'pages/IssuePage/logic/actions';
 import { RootState } from 'typings/rootState';
@@ -16,10 +18,36 @@ interface Props {
 	toPageLink?: boolean;
 }
 
-const IssuePageInfoColumn: React.FC<Props> = ({ issue, initialIssue, leftAligned, withDescrtiption, toPageLink }) => {
+const IssuePageInfoColumn: React.FC<Props> = ({
+	issue: givenIssue,
+	initialIssue,
+	leftAligned,
+	withDescrtiption,
+	toPageLink,
+}) => {
+	const [issue, setIssue] = useState<WebApi.Result.IssueResult>(givenIssue);
 	let openEditModal: () => void = () => {};
-	const [issueWatchers, setIssueWatchers] = useState<WebApi.User.UserModel[]>(issue.watchers ?? []);
+	const issueWatchers = issue.watchers ?? [];
 	const { t } = useTranslation();
+
+	useIO(WebApi.IO.Types.Issue, (io) => {
+		io.on(WebApi.IO.IssueActions.UpdateIssue, (id: string, data: WebApi.Result.IssueResult) => {
+			if (id === issue.id) {
+				setIssue(data);
+			}
+		});
+
+		io.on(WebApi.IO.IssueActions.DeleteIssue, (id: string) => {
+			if (id === issue.id) {
+				NotificationManager.warning(
+					`${t('issue')} ${issue.issueKey} ${t('issue_was_deleted_message_part_2')}`,
+					t('warning'),
+					6000,
+				);
+			}
+		});
+	});
+
 	const dispatch = useDispatch();
 	const user = useSelector((state: RootState) => state.auth.user);
 
@@ -32,18 +60,6 @@ const IssuePageInfoColumn: React.FC<Props> = ({ issue, initialIssue, leftAligned
 
 	const watch = () => {
 		dispatch(watchIssue({ id: issue.id }));
-		const newWatchers = [...issueWatchers];
-
-		if (watching) {
-			newWatchers.splice(
-				newWatchers.findIndex((watcher) => watcher.id === user.id),
-				1,
-			);
-		} else {
-			newWatchers.push(user);
-		}
-
-		setIssueWatchers(newWatchers);
 	};
 
 	return (
@@ -55,7 +71,15 @@ const IssuePageInfoColumn: React.FC<Props> = ({ issue, initialIssue, leftAligned
 				}}
 			>
 				<Button.Group style={{ marginTop: 10 }} fluid>
-					<Dropdown button className="icon" labeled floating icon="eye" text={String(issueWatchers.length)}>
+					<Dropdown
+						button
+						className="icon"
+						labeled
+						title={watching ? t('watching') : t('not_watching')}
+						floating
+						icon={<Icon name={watching ? 'eye' : 'eye slash'} color={watching ? 'green' : 'grey'} />}
+						text={String(issueWatchers.length)}
+					>
 						<Dropdown.Menu>
 							<Dropdown.Header>{t('watchers')}</Dropdown.Header>
 							<Dropdown.Item onClick={watch}>{watchButtonText}</Dropdown.Item>
@@ -86,7 +110,7 @@ const IssuePageInfoColumn: React.FC<Props> = ({ issue, initialIssue, leftAligned
 				{toPageLink ? (
 					<h4>
 						<a rel="noopener noreferrer" target="_blank" href={`/issue/${issue.issueKey}`}>
-							Go to issue page
+							Go to issue page #{issue.issueKey}
 						</a>
 					</h4>
 				) : (
@@ -146,11 +170,7 @@ const IssuePageInfoColumn: React.FC<Props> = ({ issue, initialIssue, leftAligned
 				</Label>
 			</div>
 			<ContextProvider customInitalState={initialIssue}>
-				<UpdateIssueModal
-					onSubmit={() => window.location.reload()}
-					current={initialIssue}
-					getOpenFunc={(open) => (openEditModal = open)}
-				/>
+				<UpdateIssueModal current={initialIssue} getOpenFunc={(open) => (openEditModal = open)} />
 			</ContextProvider>
 		</>
 	);
