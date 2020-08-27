@@ -46,20 +46,21 @@ namespace WebApi.IO {
 namespace WebApi.Issue {
 	interface PartialIssue {
 		id?: string;
-		type: string;
+		type?: string;
 		status?: string;
 		summary?: string;
 		boardColumn?: string;
 		labels?: string[];
 		attachments?: string[];
 		links?: string[];
-		priority: string;
+		priority?: string;
 		description?: string;
-		sprint?: string;
+		board?: string;
+		sprint?: string | null;
 		project?: string;
 		issueKey?: string;
 		assigned?: string;
-		creator: string;
+		creator?: string;
 		watchers?: string[];
 	}
 	interface PartialIssueComment {
@@ -90,6 +91,7 @@ namespace WebApi.Result {
 		labels?: string[];
 		attachments?: string[];
 		links?: string[];
+		board?: BoardResult;
 		priority: {
 			id: string;
 			color: string;
@@ -183,6 +185,12 @@ namespace WebApi.Team {
 }
 
 namespace WebApi.User {
+	export enum jobTitle {
+		dbAdmin = 'Database administrator',
+		backEndDev = 'Back-end developer',
+		frontEndDev = 'Front-end developer',
+		fullStackDev = 'Full-Stack developer',
+	}
 	interface UserModel {
 		googleId?: string;
 		id: string;
@@ -195,7 +203,7 @@ namespace WebApi.User {
 		location?: string;
 		department?: string;
 		organization?: string;
-		jobTitle?: string;
+		jobTitle?: jobTitle;
 		userSettingsId?: string;
 		teams?: Team[];
 		resetPasswordToken?: string | null;

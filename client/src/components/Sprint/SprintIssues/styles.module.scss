@@ -46,6 +46,11 @@
 		width: auto;
 	}
 
+	.issueKeyItemCompleted {
+		@extend .issueKeyItem;
+		text-decoration: line-through;
+	}
+
 	.priorityItem {
 		width: 15px;
 	}

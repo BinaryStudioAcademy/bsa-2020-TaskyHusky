@@ -9,7 +9,7 @@ export const Sprint: React.FC<Props> = (props: Props) => {
 	const { t } = useTranslation();
 	const { id, isActive, sprintName, issues, isCompleted } = props;
 
-	if (!issues) {
+	if (!issues || isCompleted) {
 		return null;
 	}
 
