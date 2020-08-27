@@ -1,13 +1,23 @@
 import React, { useState } from 'react';
+import DatePicker from 'react-datepicker';
 import styles from './styles.module.scss';
-import { Button, Header, Modal, Form, Checkbox, Popup } from 'semantic-ui-react';
+import { Button, Header, Modal, Form, Checkbox, Popup, Dropdown, DropdownProps } from 'semantic-ui-react';
 import { useDispatch, useSelector } from 'react-redux';
 import * as actions from 'containers/Board/Scrum/logic/actions';
 import { useTranslation } from 'react-i18next';
 import { RootState } from 'typings/rootState';
 import { ScrumBoardState } from 'containers/Board/Scrum/logic/state';
+import 'react-datepicker/dist/react-datepicker.css';
 
 type Props = { clickAction: any; isOpen: boolean };
+
+const DURATIONS = [
+	{ key: 1, text: '1 week', value: 1 },
+	{ key: 2, text: '2 weeks', value: 2 },
+	{ key: 3, text: '3 weeks', value: 3 },
+	{ key: 4, text: '4 weeks', value: 4 },
+	{ key: 5, text: 'custom', value: 5 },
+];
 
 const CreateSprintModal = (props: Props) => {
 	const scrumBoardState: ScrumBoardState = useSelector((rootState: RootState) => rootState.scrumBoard);
@@ -46,10 +56,46 @@ const CreateSprintModal = (props: Props) => {
 			isCompleted,
 			board: boardId,
 			project: projectId,
+			startDate,
+			endDate,
 		};
 		dispatch(actions.createSprintTrigger({ sprint: sprint }));
 		resetLocalState();
 		props.clickAction();
+	};
+
+	const getNextDate = (week: number, startDate: Date) => {
+		const nextDate = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate() + 7 * week);
+		return nextDate;
+	};
+
+	const [duration, setDuration] = useState(1);
+	const [endDateDisable, setEndDateDisable] = useState(true);
+	const [startDate, setStartDate] = useState(new Date());
+	const [endDate, setEndDate] = useState(getNextDate(duration, startDate));
+
+	const handleStartDatePick = (date: Date | null) => {
+		if (date) {
+			setStartDate(date as Date);
+			setEndDate(getNextDate(duration, date as Date));
+		}
+	};
+
+	const handleEndDatePick = (date: Date | null) => {
+		if (date) {
+			setEndDate(date as Date);
+		}
+	};
+
+	const handleDurationPick = (event: React.SyntheticEvent<HTMLElement, Event>, data: DropdownProps) => {
+		if (data.value === 5) {
+			setEndDateDisable(false);
+		} else {
+			const newDuration = Number(data.value);
+			setDuration(newDuration);
+			setEndDate(getNextDate(newDuration, startDate));
+			setEndDateDisable(true);
+		}
 	};
 
 	return (
@@ -82,6 +128,44 @@ const CreateSprintModal = (props: Props) => {
 							}
 						/>
 					</Form.Field>
+					<Form.Field
+						label="Duration"
+						control={() => (
+							<Dropdown
+								defaultValue={duration}
+								placeholder="Duration"
+								search
+								selection
+								options={DURATIONS}
+								onChange={handleDurationPick}
+							/>
+						)}
+					/>
+					<Form.Field
+						label="Start date"
+						control={() => (
+							<DatePicker
+								name="StartTime"
+								dateFormat="MM/dd/yyyy h:mm aa"
+								showTimeSelect
+								selected={startDate}
+								onChange={handleStartDatePick}
+							/>
+						)}
+					/>
+					<Form.Field
+						label="End date"
+						control={() => (
+							<DatePicker
+								disabled={endDateDisable}
+								name="EndTime"
+								dateFormat="MM/dd/yyyy h:mm aa"
+								showTimeSelect
+								selected={endDate}
+								onChange={handleEndDatePick}
+							/>
+						)}
+					/>
 					<Form.Field>
 						<Checkbox
 							toggle
