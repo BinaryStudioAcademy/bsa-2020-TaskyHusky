@@ -33,15 +33,23 @@ export class IssueCommentController {
 	async createOne(req: Request, res: Response) {
 		const repository = getCustomRepository(IssueCommentRepository);
 		const issueRepository = getCustomRepository(IssueRepository);
-		const { body: data } = req;
+
+		const {
+			body: data,
+			user: { id: userId },
+		} = req;
+
 		const issue = await issueRepository.findOneById(data.issue);
 		parseMentionsXMLAndSendEmails(data.text, issue.issueKey as string);
 
 		try {
-			const result = await repository.createOne({
-				...data,
-				creator: req.user.id,
-			});
+			const result = await repository.createOne(
+				{
+					...data,
+					creator: req.user.id,
+				},
+				userId,
+			);
 
 			res.send(result);
 		} catch (err) {

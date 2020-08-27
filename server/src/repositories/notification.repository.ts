@@ -22,6 +22,7 @@ export interface NotifyIssueWatchersSettings {
 	actionOrText: string;
 	noLink?: boolean;
 	customText?: boolean;
+	senderId: string;
 }
 
 @EntityRepository(Notification)
@@ -70,17 +71,19 @@ export class NotificationRepository extends Repository<Notification> {
 		return this.delete({ id });
 	}
 
-	notifyIssueWatchers({ issue, noLink, actionOrText, customText }: NotifyIssueWatchersSettings) {
+	notifyIssueWatchers({ issue, noLink, actionOrText, customText, senderId }: NotifyIssueWatchersSettings) {
 		const { watchers = [], issueKey } = issue;
 
 		return Promise.all(
-			watchers.map(async (watcher) =>
-				this.createOne({
-					user: { ...watcher },
-					text: customText ? actionOrText : `Issue ${issueKey} was ${actionOrText}.`,
-					link: !noLink ? `http://${appHost}:${frontendPort}/issue/${issueKey}` : undefined,
-					title: issueKey,
-				}),
+			watchers.map(
+				async (watcher) =>
+					watcher.id !== senderId &&
+					this.createOne({
+						user: { ...watcher },
+						text: customText ? actionOrText : `Issue ${issueKey} was ${actionOrText}.`,
+						link: !noLink ? `http://${appHost}:${frontendPort}/issue/${issueKey}` : undefined,
+						title: issueKey,
+					}),
 			),
 		);
 	}

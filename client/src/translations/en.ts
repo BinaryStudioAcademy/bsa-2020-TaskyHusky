@@ -296,4 +296,8 @@ export const en = {
 	mark_all_as_read: 'Mark all as read',
 	watching: 'Watching',
 	not_watching: 'Not watching',
+	sorry_alert: 'Sorry!',
+	not_suported_push_alert: 'Sorry, but your browser does not support push notifications.',
+	denied_push_alert: 'Sorry, but push notifications permission is not granted.',
+	notification: 'Notification',
 };
