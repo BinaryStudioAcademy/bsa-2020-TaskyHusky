@@ -94,7 +94,6 @@ export const en = {
 	issueKey: 'Key',
 	create_filter: 'Create filter',
 	owner: 'Owner',
-	stared_by: 'Stared by',
 	project: 'Project',
 	group: 'Group',
 	lead: 'Lead',
