@@ -55,7 +55,7 @@ export const requestChangePassword = async (oldPassword: string, newPassword: st
 	const res = await callWebApi({
 		method: 'PUT',
 		endpoint: 'user/password',
-		body: { oldPassword, newPassword },
+		body: { oldPassword, password: newPassword },
 		skipAuthorization: false,
 	});
 

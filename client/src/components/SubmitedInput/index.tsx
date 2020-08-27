@@ -16,7 +16,7 @@ interface Props {
 
 const SubmitedInput: React.FC<Props> = (props: Props) => {
 	const {
-		text,
+		text = '',
 		propKey,
 		placeholder,
 		title,

@@ -63,6 +63,7 @@ const IssuePageContent: React.FC<Props> = ({ issue: givenIssue }) => {
 		boardColumn: issue.boardColumn?.id,
 		type: issue.type.id,
 		priority: issue.priority.id,
+		board: issue.board?.id,
 		sprint: issue.sprint?.id,
 		project: issue.project?.id,
 		creator: issue.creator.id,
