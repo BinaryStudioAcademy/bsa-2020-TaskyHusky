@@ -6,5 +6,6 @@
 	"eslint.workingDirectories": [
 		{ "directory": "client", "changeProcessCWD": true },
 		{ "directory": "server", "changeProcessCWD": true }
-	]
+	],
+	"svg.preview.background": "white"
 }
