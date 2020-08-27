@@ -1,31 +1,37 @@
 /* eslint-disable */
 export const Enums = {
-	'WebApi.Board': {
-		BoardType: {
+	"WebApi.Board": {
+		"BoardType": {
 			Scrum: 'Scrum',
 			Kanban: 'Kanban',
-		},
-	},
-	'WebApi.IO': {
-		IssueActions: {
+		}
+
+	}, "WebApi.IO": {
+		"IssueActions": {
 			CreateIssue: 'ISSUE:CREATE',
 			UpdateIssue: 'ISSUE:UPDATE',
 			DeleteIssue: 'ISSUE:DELETE',
 			CommentIssue: 'ISSUE:COMMENT:ADD',
 			UpdateIssueComment: 'ISSUE:COMMENT:UPDATE',
 			DeleteIssueComment: 'ISSUE:COMMENT:DELETE',
-		},
-		NotificationActions: {
+		}, "NotificationActions": {
 			CreateNotification: 'NOTIFICATION:CREATE',
 			ViewNotification: 'NOTIFICATION:VIEW',
 			UnviewNotification: 'NOTIFICATION:UNVIEW',
 			ViewAllNotifications: 'NOTIFICATION:ALL:VIEW',
-		},
-		Types: {
+		}, "Types": {
 			Issue: 'ISSUE',
 			Notification: 'NOTIFICATION',
-		},
-	},
+		}
+	}, "WebApi.User": {
+		"jobTitle": {
+			dbAdmin: 'Database administrator',
+			backEndDev: 'Back-end developer',
+			frontEndDev: 'Front-end developer',
+			fullStackDev: 'Full-Stack developer',
+		}
+
+	}
 };
 
 

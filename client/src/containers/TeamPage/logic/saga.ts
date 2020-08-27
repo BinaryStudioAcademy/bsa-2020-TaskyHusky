@@ -74,15 +74,7 @@ export function* searchPeople(props: Props) {
 	try {
 		yield put(actions.searchPeopleLoader());
 		const users = yield call(findUsersColleagues, props.id, props.match);
-		const searchResult: { data: WebApi.Entities.UserProfile; key: string; title?: string; }[] = [];
-		users.filter((el: WebApi.Entities.UserProfile) => {
-			searchResult.push({
-				data: el,
-				key: el.id,
-				title: el.firstName
-			})
-		})
-		yield put(actions.successSearchPeople({ results: searchResult }));
+		yield put(actions.successSearchPeople({ results: users }));
 	} catch (error) {
 		yield put(actions.failSearchPeople());
 	}

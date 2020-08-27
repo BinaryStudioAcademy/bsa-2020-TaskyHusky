@@ -20,7 +20,7 @@ export const BoardsMenu = ({ onCreateBoard }: { onCreateBoard(board: actionTypes
 
 	return (
 		<>
-			<Dropdown text={t('boards')} className="link item">
+			<Dropdown text={t('boards')} className={`${styles.media_query} link item`}>
 				<Dropdown.Menu className={styles.dropDownMenu}>
 					<Dropdown.Header>{t('recent')}</Dropdown.Header>
 					{recentBoards.map((board) => (

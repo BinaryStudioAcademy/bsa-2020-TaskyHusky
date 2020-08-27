@@ -1,10 +1,8 @@
 export default class CustomValidator {
 	value: string;
 	errors: Array<string>;
-	field: string;
 
-	constructor(valueToCheck: string, fieldName: string) {
-		this.field = fieldName ? fieldName : 'field';
+	constructor(valueToCheck: string) {
 		this.value = valueToCheck;
 		this.errors = [];
 	}
@@ -13,7 +11,7 @@ export default class CustomValidator {
 		if (this.value.length >= minLength) {
 			return this;
 		} else {
-			this.errors.push(`${this.field} mast be longer than ${minLength} symbols.`);
+			this.errors.push(`Field mast be longer than ${minLength} symbols.`);
 			return this;
 		}
 	}
@@ -22,7 +20,7 @@ export default class CustomValidator {
 		if (this.value.length <= maxLength) {
 			return this;
 		} else {
-			this.errors.push(`${this.field} mast be shorter than ${maxLength} symbols.`);
+			this.errors.push(`Field mast be shorter than ${maxLength} symbols.`);
 			return this;
 		}
 	}
@@ -32,7 +30,7 @@ export default class CustomValidator {
 			return this;
 		} else {
 			this.errors.push(
-				`${this.field} should started with alphabetic character. Field can contain digits, hyphen and underscore.`,
+				`Field should started with alphabetic character. Field can contain digits, hyphen and underscore.`,
 			);
 			return this;
 		}
@@ -50,6 +48,21 @@ export default class CustomValidator {
 	checkPasswordField() {
 		if (
 			this.value.match(/^(?=.*[0-9]+.*)(?=.*[A-Z]+.*)(?=.*[@$!%*#?&]+.*)(?=.*[a-z]+.*)[0-9a-zA-Z\d@$!%*#?&]*$/g)
+		) {
+			return this;
+		} else {
+			this.errors.push(
+				`Password should contain at least 1 digit, 1 capital letter, 1 small letter, 1 special character.`,
+			);
+			return this;
+		}
+	}
+
+	checkSuperPasswordField() {
+		if (
+			this.value.match(
+				/^(?=(.*[0-9]){3,})(?=(.*[A-Z]){3,})(?=(.*[@$!%*#?&]){3,})(?=(.*[a-z]){3,})[0-9a-zA-Z\d@$!%*#?&]*$/g,
+			)
 		) {
 			return this;
 		} else {

@@ -34,15 +34,9 @@ const BoardModalMenuType = (props: Props) => {
 			<Grid.Row>
 				<Grid.Column className={styles.buttonContainer}>
 					<Button onClick={() => props.onTypeSelection(boardTypes.scrum)}>Create a Scrum board</Button>
-					<Button basic color="blue" className={styles.link}>
-						Create a Scrum board with sample data
-					</Button>
 				</Grid.Column>
 				<Grid.Column className={styles.buttonContainer}>
 					<Button onClick={() => props.onTypeSelection(boardTypes.kanban)}>Create a Kanban board</Button>
-					<Button basic color="blue" className={styles.link}>
-						Create a Kanban board with sample data
-					</Button>
 				</Grid.Column>
 			</Grid.Row>
 		</Grid>

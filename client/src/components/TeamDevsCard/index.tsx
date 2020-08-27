@@ -19,8 +19,8 @@ const TeamDevsCard = ({
 	showAddPeopleModal,
 	teamOwner,
 	changeMainFields,
-	description = '',
-	name = '',
+	description = ' ',
+	name = ' ',
 }: CardProps) => {
 	const [showDelete, setShowDelete] = useState<boolean>(false);
 	const [lockEditFields, setEditFields] = useState<boolean>(true);
@@ -32,9 +32,10 @@ const TeamDevsCard = ({
 		if (lockEditFields) {
 			return;
 		}
-		if (name === title.trim() && description === teamDescription.trim()) {
+		if (name === title.trim() && description === teamDescription) {
 			return;
 		}
+
 		changeMainFields({
 			name: title,
 			description: teamDescription,

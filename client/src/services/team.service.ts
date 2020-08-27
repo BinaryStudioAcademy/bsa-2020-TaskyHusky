@@ -92,7 +92,16 @@ export const findUsersColleagues = async (id: string, match?: string) => {
 			match
 		}
 	})
-	return await (result.json()) as WebApi.Entities.UserProfile[];
+	const searchResult: { data: WebApi.Entities.UserProfile; key: string; title?: string; }[] = [];
+	const users = await result.json();
+	users.forEach((el: WebApi.Entities.UserProfile) => {
+		searchResult.push({
+			data: el,
+			key: el.id,
+			title: el.firstName
+		})
+	})
+	return searchResult;
 }
 
 export const addUsersToTeam = async (id: string, users?: WebApi.Entities.UserProfile[]) => {
