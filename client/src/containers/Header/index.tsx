@@ -63,6 +63,7 @@ export const HeaderMenu = () => {
 						<span className={`${styles.logoText} site-logo-text`}>TaskyHusky</span>
 					</Menu.Item>
 					<Menu.Item
+						className={styles.media_query}
 						as="span"
 						name="your-work"
 						active={activeItem === 'your-work'}
@@ -76,6 +77,7 @@ export const HeaderMenu = () => {
 					<FiltersMenu />
 					<BoardsMenu onCreateBoard={onCreateBoard} />
 					<Menu.Item
+						className={styles.media_query}
 						as="span"
 						name="people"
 						active={activeItem === 'people'}
