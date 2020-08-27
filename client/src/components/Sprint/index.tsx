@@ -1,22 +1,40 @@
 import React from 'react';
-import { SprintHeader } from './SprintHeader/index';
-import { SprintIssues } from './SprintIssues/index';
 import { useTranslation } from 'react-i18next';
+import { SprintHeader } from './SprintHeader/index';
+import { SprintIssues } from './SprintIssues';
 
-type Props = WebApi.Entities.Sprint;
+type Props = { sprint: WebApi.Entities.Sprint; issues: WebApi.Entities.Issue[] };
 
-export const Sprint: React.FC<Props> = (props: Props) => {
+interface DragProps {
+	listId: string;
+	listType?: string;
+	internalScroll?: boolean;
+	isCombineEnabled?: boolean;
+}
+
+export const Sprint: React.FC<Props & DragProps> = (props: Props & DragProps) => {
 	const { t } = useTranslation();
-	const { id, isActive, sprintName, issues, isCompleted } = props;
 
-	if (!issues || isCompleted) {
+	if (!props.issues || props.sprint?.isCompleted) {
 		return null;
 	}
 
 	return (
 		<>
-			<SprintHeader id={id} isActive={isActive} name={sprintName} issues={issues} isCompleted={isCompleted} />
-			<SprintIssues issues={issues} noIssuesText={t('no_issues_in_sprint')} />
+			<SprintHeader
+				id={props.sprint?.id ?? 'backlog'}
+				isActive={props.sprint?.isActive}
+				name={props.sprint?.sprintName ?? t('backlog')}
+				issues={props.issues}
+				isCompleted={props.sprint?.isCompleted}
+			/>
+
+			<SprintIssues
+				issues={props.issues}
+				sprintName={props.sprint?.sprintName ?? t('backlog')}
+				listId={props.listId}
+				listType={props.listType}
+			/>
 		</>
 	);
 };
