@@ -120,16 +120,12 @@ class IssueController {
 	}
 
 	async update(req: Request, res: Response) {
-		const {
-			params: { id },
-			user: { id: userId },
-		} = req;
-
+		const { id } = req.params;
 		const { body: data } = req;
 		const repository = getCustomRepository(IssueRepository);
 
 		try {
-			const result = await repository.updateOneById(id, data, userId);
+			const result = await repository.updateOneById(id, data);
 			res.send(result);
 		} catch (err) {
 			res.status(404).send(getWebError(err, 404));
@@ -137,17 +133,13 @@ class IssueController {
 	}
 
 	async updateByKey(req: Request, res: Response) {
-		const {
-			params: { key },
-			user: { id: userId },
-		} = req;
-
+		const { key } = req.params;
 		const { body: data } = req;
 
 		const repository = getCustomRepository(IssueRepository);
 
 		try {
-			const result = await repository.updateOneByKey(key, data, userId);
+			const result = await repository.updateOneByKey(key, data);
 			res.send(result);
 		} catch (err) {
 			res.status(404).send(getWebError(err, 404));
@@ -155,15 +147,11 @@ class IssueController {
 	}
 
 	async delete(req: Request, res: Response) {
-		const {
-			params: { id },
-			user: { id: userId },
-		} = req;
-
+		const { id } = req.params;
 		const repository = getCustomRepository(IssueRepository);
 
 		try {
-			const result = await repository.deleteOneById(id, userId);
+			const result = await repository.deleteOneById(id);
 			res.send(result);
 		} catch (err) {
 			res.status(404).send(getWebError(err, 404));

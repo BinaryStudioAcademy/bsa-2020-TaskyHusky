@@ -43,14 +43,9 @@ const ProjectIssuesPage: React.FC<Props> = ({ projectId }) => {
 	const initialIssue = selectedIssue
 		? {
 				...selectedIssue,
-				boardColumn: selectedIssue.boardColumn?.id,
+				boardColumn: selectedIssue.boardColumn ? selectedIssue.boardColumn.id : undefined,
 				type: selectedIssue.type.id,
 				priority: selectedIssue.priority.id,
-				board: selectedIssue.board?.id,
-				sprint: selectedIssue.sprint?.id,
-				project: selectedIssue.project?.id,
-				creator: selectedIssue.creator.id,
-				assigned: selectedIssue.assigned?.id,
 				status: selectedIssue.status?.id,
 		  }
 		: {

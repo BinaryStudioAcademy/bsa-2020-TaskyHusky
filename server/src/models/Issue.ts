@@ -9,7 +9,6 @@ export interface PartialIssue {
 	links?: string[];
 	priority: string;
 	description?: string;
-	board?: string;
 	sprint?: string;
 	project?: string;
 	issueKey?: string;

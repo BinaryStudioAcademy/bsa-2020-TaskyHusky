@@ -37,7 +37,7 @@ export class IssueCommentRepository extends Repository<IssueComment> {
 		});
 	}
 
-	async createOne(data: CreateIssueComment, senderId: string) {
+	async createOne(data: CreateIssueComment) {
 		const issueRepository = getCustomRepository(IssueRepository);
 		const issue = await issueRepository.findOneById(data.issue);
 		const notification = getCustomRepository(NotificationRepository);
@@ -53,7 +53,7 @@ export class IssueCommentRepository extends Repository<IssueComment> {
 		const result = await this.save(instance);
 		const newComment = await this.findOneById(result.id);
 		issueHandler.emit(IssueActions.CommentIssue, data.issue, newComment);
-		notification.notifyIssueWatchers({ issue, actionOrText: 'commented', senderId });
+		notification.notifyIssueWatchers({ issue, actionOrText: 'commented' });
 
 		return result;
 	}

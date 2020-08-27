@@ -269,8 +269,4 @@ export const ru = {
 	mark_all_as_read: 'Отметить всё как прочитаное',
 	watching: 'Отслеживается',
 	not_watching: 'Не отслеживается',
-	sorry_alert: undefined,
-	not_suported_push_alert: 'Ваш браузер не поддерживает push-уведомления.',
-	denied_push_alert: 'Разрешение на push-уведомления не предоставлено.',
-	notification: 'Объявление',
 };

@@ -30,14 +30,9 @@ const Kanban: BoardComponent = ({ board }) => {
 
 			return updateIssueByKey(cardKey, {
 				...issueToSend,
-				boardColumn: destinationId,
 				type: issue.type.id,
 				priority: issue.priority.id,
-				board: issue.board?.id,
-				sprint: issue.sprint?.id,
-				project: issue.project?.id,
-				creator: issue.creator.id,
-				assigned: issue.assigned?.id,
+				boardColumn: destinationId,
 				status: issue.status?.id,
 			});
 		});

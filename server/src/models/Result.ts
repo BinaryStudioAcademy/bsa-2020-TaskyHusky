@@ -25,7 +25,6 @@ export interface IssueResult {
 	labels?: string[];
 	attachments?: string[];
 	links?: string[];
-	board?: BoardResult;
 	priority: {
 		id: string;
 		color: string;

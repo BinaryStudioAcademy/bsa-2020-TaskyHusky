@@ -80,10 +80,6 @@ export class IssueRepository extends Repository<Issue> {
 		return this.findOneOrFail({ where: { id }, loadRelationIds: { relations: RELS } }) as Promise<any>;
 	}
 
-	findByKeyWithRelIds(key: string): Promise<PartialIssue> {
-		return this.findOneOrFail({ where: { issueKey: key }, loadRelationIds: { relations: RELS } }) as Promise<any>;
-	}
-
 	findOneByKey(key: string) {
 		return this.findOneOrFail({ where: { issueKey: key }, relations: RELS });
 	}
@@ -108,8 +104,13 @@ export class IssueRepository extends Repository<Issue> {
 		return result;
 	}
 
-	notify(partialIssue: PartialIssue, data: PartialIssue, issue: Issue, senderId: string) {
+	async updateOneById(id: string, data: PartialIssue) {
+		const issue = await this.findOneById(id);
+		const partialIssue = await this.findByIdWithRelIds(id);
 		const notification = getCustomRepository(NotificationRepository);
+		const result = await this.update(id, data as any);
+		const newIssue = await this.findOneById(id);
+		issueHandler.emit(IssueActions.UpdateIssue, id, newIssue);
 
 		const difference = getDiffPropNames<PartialIssue, PartialIssue>(
 			partialIssue,
@@ -120,38 +121,26 @@ export class IssueRepository extends Repository<Issue> {
 		if (difference.length) {
 			notification.notifyIssueWatchers({
 				issue,
-				senderId,
 				actionOrText: chooseMessage(partialIssue, { ...partialIssue, ...data }),
 				customText: true,
 			});
 		}
-	}
-
-	async updateOneById(id: string, data: PartialIssue, senderId: string) {
-		const partialIssue = await this.findByIdWithRelIds(id);
-		const result = await this.update(id, data as any);
-		const newIssue = await this.findOneById(id);
-		issueHandler.emit(IssueActions.UpdateIssue, id, newIssue);
-		this.notify(partialIssue, data, newIssue, senderId);
 
 		return result;
 	}
 
-	async updateOneByKey(key: string, data: PartialIssue, senderId: string) {
-		const result = await this.update({ issueKey: key }, data as any);
-		const partialIssue = await this.findByKeyWithRelIds(key);
+	async updateOneByKey(key: string, data: Issue) {
+		const result = await this.update({ issueKey: key }, data);
 		const newIssue = await this.findOneByKey(key);
 		issueHandler.emit(IssueActions.UpdateIssue, newIssue.id, newIssue);
-		this.notify(partialIssue, data, newIssue, senderId);
-
 		return result;
 	}
 
-	async deleteOneById(id: string, senderId: string) {
+	async deleteOneById(id: string) {
 		const issue = await this.findOneById(id);
 		const notification = getCustomRepository(NotificationRepository);
 		issueHandler.emit(IssueActions.DeleteIssue, id);
-		notification.notifyIssueWatchers({ issue, actionOrText: 'deleted', noLink: true, senderId });
+		notification.notifyIssueWatchers({ issue, actionOrText: 'deleted', noLink: true });
 
 		const result = await this.delete(id);
 		return result;

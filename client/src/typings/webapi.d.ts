@@ -55,7 +55,6 @@ namespace WebApi.Issue {
 		links?: string[];
 		priority: string;
 		description?: string;
-		board?: string;
 		sprint?: string;
 		project?: string;
 		issueKey?: string;
@@ -91,7 +90,6 @@ namespace WebApi.Result {
 		labels?: string[];
 		attachments?: string[];
 		links?: string[];
-		board?: BoardResult;
 		priority: {
 			id: string;
 			color: string;
