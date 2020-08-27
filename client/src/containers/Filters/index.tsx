@@ -60,7 +60,7 @@ const Filters: React.FC = () => {
 							</Table.HeaderCell>
 							<Table.HeaderCell>{t('name')}</Table.HeaderCell>
 							<Table.HeaderCell>{t('owner')}</Table.HeaderCell>
-							<Table.HeaderCell>{t('stared_by')}</Table.HeaderCell>
+							<Table.HeaderCell>{t('favorite')}</Table.HeaderCell>
 							<Table.HeaderCell> </Table.HeaderCell>
 						</Table.Row>
 					</Table.Header>
