@@ -8,16 +8,10 @@ import { useTranslation } from 'react-i18next';
 import { RootState } from 'typings/rootState';
 import { ScrumBoardState } from 'containers/Board/Scrum/logic/state';
 import 'react-datepicker/dist/react-datepicker.css';
+import { getNextDate } from './helpers';
+import { DURATIONS } from './constants';
 
 type Props = { clickAction: any; isOpen: boolean };
-
-const DURATIONS = [
-	{ key: 1, text: '1 week', value: 1 },
-	{ key: 2, text: '2 weeks', value: 2 },
-	{ key: 3, text: '3 weeks', value: 3 },
-	{ key: 4, text: '4 weeks', value: 4 },
-	{ key: 5, text: 'custom', value: 5 },
-];
 
 const CreateSprintModal = (props: Props) => {
 	const scrumBoardState: ScrumBoardState = useSelector((rootState: RootState) => rootState.scrumBoard);
@@ -64,43 +58,43 @@ const CreateSprintModal = (props: Props) => {
 		props.clickAction();
 	};
 
-	const getNextDate = (week: number, startDate: Date) => {
-		const nextDate = new Date(
-			startDate.getFullYear(),
-			startDate.getMonth(),
-			startDate.getDate() + 7 * week,
-			startDate.getHours(),
-			startDate.getMinutes() + 15,
-		);
-		return nextDate;
-	};
-
-	const [duration, setDuration] = useState(1);
-	const [endDateDisable, setEndDateDisable] = useState(true);
+	const [duration, setDuration] = useState<number | 'custom'>(1);
 	const [startDate, setStartDate] = useState(new Date());
 	const [endDate, setEndDate] = useState(getNextDate(duration, startDate));
+	const [endDateDisable, setEndDateDisable] = useState(true);
+	const [isDateValid, setIsDateValid] = useState(true);
 
-	const handleStartDatePick = (date: Date | null) => {
-		if (date) {
-			setStartDate(date as Date);
+	// const validateDate = () => {
+	// 	const isValid = endDate > startDate;
+	// 	setIsDateValid(isValid);
+	// };
+
+	const handleStartDatePick = (date: Date) => {
+		setStartDate(date);
+		if (duration !== 'custom') {
 			setEndDate(getNextDate(duration, date as Date));
 		}
+		const isValid = endDate > date;
+		setIsDateValid(isValid);
 	};
 
-	const handleEndDatePick = (date: Date | null) => {
-		if (date) {
-			setEndDate(date as Date);
-		}
+	const handleEndDatePick = (date: Date) => {
+		setEndDate(date as Date);
+		const isValid = date > startDate;
+		setIsDateValid(isValid);
 	};
 
 	const handleDurationPick = (event: React.SyntheticEvent<HTMLElement, Event>, data: DropdownProps) => {
-		if (data.value === 5) {
+		const { value } = data;
+
+		if (value === 'custom') {
 			setEndDateDisable(false);
-		} else {
-			const newDuration = Number(data.value);
-			setDuration(newDuration);
-			setEndDate(getNextDate(newDuration, startDate));
+			setDuration(value);
+		} else if (typeof value === 'number') {
+			setDuration(value);
+			setEndDate(getNextDate(value, startDate));
 			setEndDateDisable(true);
+			setIsDateValid(true);
 		}
 	};
 
@@ -138,7 +132,7 @@ const CreateSprintModal = (props: Props) => {
 						label="Duration"
 						control={() => (
 							<Dropdown
-								defaultValue={duration}
+								value={duration}
 								placeholder="Duration"
 								search
 								selection
@@ -149,6 +143,7 @@ const CreateSprintModal = (props: Props) => {
 					/>
 					<Form.Field
 						label="Start date"
+						error={!isDateValid}
 						control={() => (
 							<DatePicker
 								name="StartTime"
@@ -198,7 +193,14 @@ const CreateSprintModal = (props: Props) => {
 			</Modal.Content>
 			<Modal.Actions>
 				<Button color="grey" onClick={handleClose} content={t('cancel')} />
-				<Button onClick={handleSubmit} content={t('submit')} labelPosition="right" icon="checkmark" primary />
+				<Button
+					disabled={!isDateValid}
+					onClick={handleSubmit}
+					content={t('submit')}
+					labelPosition="right"
+					icon="checkmark"
+					primary
+				/>
 			</Modal.Actions>
 		</Modal>
 	);
