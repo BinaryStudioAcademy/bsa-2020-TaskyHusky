@@ -129,22 +129,22 @@ export class IssueRepository extends Repository<Issue> {
 
 	async updateOneById(id: string, data: PartialIssue, senderId: string) {
 		const partialIssue = await this.findByIdWithRelIds(id);
-		const result = await this.update(id, data as any);
+		await this.update(id, data as any);
 		const newIssue = await this.findOneById(id);
 		issueHandler.emit(IssueActions.UpdateIssue, id, newIssue);
 		this.notify(partialIssue, data, newIssue, senderId);
 
-		return result;
+		return newIssue;
 	}
 
 	async updateOneByKey(key: string, data: PartialIssue, senderId: string) {
-		const result = await this.update({ issueKey: key }, data as any);
+		await this.update({ issueKey: key }, data as any);
 		const partialIssue = await this.findByKeyWithRelIds(key);
 		const newIssue = await this.findOneByKey(key);
 		issueHandler.emit(IssueActions.UpdateIssue, newIssue.id, newIssue);
 		this.notify(partialIssue, data, newIssue, senderId);
 
-		return result;
+		return newIssue;
 	}
 
 	async deleteOneById(id: string, senderId: string) {

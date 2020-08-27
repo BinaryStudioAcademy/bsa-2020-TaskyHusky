@@ -1,20 +1,20 @@
 export interface PartialIssue {
 	id?: string;
-	type: string;
+	type?: string;
 	status?: string;
 	summary?: string;
 	boardColumn?: string;
 	labels?: string[];
 	attachments?: string[];
 	links?: string[];
-	priority: string;
+	priority?: string;
 	description?: string;
 	board?: string;
-	sprint?: string;
+	sprint?: string | null;
 	project?: string;
 	issueKey?: string;
 	assigned?: string;
-	creator: string;
+	creator?: string;
 	watchers?: string[];
 }
 

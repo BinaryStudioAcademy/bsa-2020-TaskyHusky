@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import styles from './styles.module.scss';
 import { RootState } from 'typings/rootState';
 import { ScrumBoardState } from 'containers/Board/Scrum/logic/state';
+import { updateIssue } from 'pages/IssuePage/logic/actions';
 
 type Props = {
 	sprintName: string;
@@ -14,7 +15,7 @@ type Props = {
 	sprintIsCompleted: boolean;
 	isOpen: boolean;
 	clickAction: any;
-	sprintIssues: any;
+	sprintIssues: WebApi.Entities.Issue[];
 };
 
 const EditSprintModal = (props: Props) => {
@@ -68,12 +69,26 @@ const EditSprintModal = (props: Props) => {
 			isCompleted,
 		};
 
+		if (sprint.isCompleted) {
+			props.sprintIssues.forEach((issue) => {
+				if (issue.status?.title !== 'Done') {
+					dispatch(
+						updateIssue({
+							id: issue.id,
+							data: {
+								sprint: null,
+							},
+						}),
+					);
+				}
+			});
+		}
 		dispatch(actions.updateSprintDataTrigger({ sprint }));
 		props.clickAction();
 	};
 
 	return (
-		<Modal closeIcon onClose={handleClose} open={props.isOpen} size="tiny" dimmer="inverted">
+		<Modal onClose={handleClose} open={props.isOpen} size="tiny" dimmer="inverted">
 			<Header>
 				{t('edit_sprint')}: {sprintName}
 			</Header>
