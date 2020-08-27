@@ -94,6 +94,17 @@ class TeamsController {
 		}
 	};
 
+	addUsersToTeam = async (req: Request, res: Response): Promise<void> => {
+		const teamRepository = getCustomRepository(TeamRepository);
+		const { users, id } = req.body;
+		try {
+			const updatedTeam = await teamRepository.addPeopleToTeam(id, users);
+			res.status(200).send(linksParse(updatedTeam));
+		} catch (error) {
+			res.status(HttpStatusCode.NOT_FOUND).send(getWebError(error, HttpStatusCode.NOT_FOUND));
+		}
+	};
+
 	updateTeamsFields = async (req: Request, res: Response): Promise<void> => {
 		const teamRepository = getCustomRepository(TeamRepository);
 		const { id } = req.params;

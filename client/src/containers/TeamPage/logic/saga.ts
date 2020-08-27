@@ -5,6 +5,8 @@ import {
 	deleteOneLink,
 	getTeamsProjects,
 	getTeamsUsers,
+	findUsersColleagues,
+	addUsersToTeam
 } from 'services/team.service';
 import { all, put, takeEvery, call } from 'redux-saga/effects';
 import * as actionTypes from './actionTypes';
@@ -17,6 +19,8 @@ type Props = {
 	link?: Link;
 	field?: string;
 	type: string;
+	match?: string;
+	users?: WebApi.Entities.UserProfile[]
 };
 
 export function* fetchTeam(props: Props) {
@@ -66,6 +70,30 @@ export function* updateField(props: Props) {
 	}
 }
 
+export function* searchPeople(props: Props) {
+	try {
+		yield put(actions.searchPeopleLoader());
+		const users = yield call(findUsersColleagues, props.id, props.match);
+		yield put(actions.successSearchPeople({ results: users }));
+	} catch (error) {
+		yield put(actions.failSearchPeople());
+	}
+}
+
+function* inviteUsersToTeam(props: Props) {
+	try {
+		const team = yield call(addUsersToTeam, props.id, props.users);
+		yield put(actions.addPeopleToTeamDone({ users: team.users }))
+
+	} catch (error) {
+		NotificationManager.error('Error add users to team', 'Error', 4000);
+	}
+}
+
+function* clearResultField() {
+	yield put(actions.clearResultsDone());
+}
+
 export function* watchStartLoading() {
 	yield takeEvery(actionTypes.START_LOADING, fetchTeam);
 }
@@ -81,6 +109,25 @@ export function* watchFieldUpdateLoading() {
 	yield takeEvery(actionTypes.UPDATE_FIELD_LOADING, updateField);
 }
 
+export function* watchSearchPeopleLoading() {
+	yield takeEvery(actionTypes.START_SEARCHING_PEOPLE, searchPeople);
+}
+
+export function* watchClearSearchResults() {
+	yield takeEvery(actionTypes.CLEAR_FOUND_USERS, clearResultField);
+}
+
+export function* watchAddPeopleToTeam() {
+	yield takeEvery(actionTypes.ADD_PEOPLE_TO_TEAM_LOADING, inviteUsersToTeam);
+}
+
 export default function* teamSaga() {
-	yield all([watchStartLoading(), watchAddLinksLoading(), watchFieldUpdateLoading(), watchDeleteLinksLoading()]);
+	yield all([
+		watchStartLoading(),
+		watchAddLinksLoading(),
+		watchFieldUpdateLoading(),
+		watchDeleteLinksLoading(),
+		watchSearchPeopleLoading(),
+		watchAddPeopleToTeam()
+	]);
 }
