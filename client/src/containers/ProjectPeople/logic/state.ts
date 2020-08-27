@@ -3,6 +3,8 @@ export interface ProjectsPeopleState {
 	isAdded: boolean;
 	isDeleted: boolean;
 	idAction: string;
+	people: WebApi.Entities.UserProfile[];
+	isPeopleLoading: boolean;
 }
 
 export const initialState: ProjectsPeopleState = {
@@ -10,4 +12,6 @@ export const initialState: ProjectsPeopleState = {
 	isAdded: false,
 	isDeleted: false,
 	idAction: '',
+	people: [],
+	isPeopleLoading: false,
 };

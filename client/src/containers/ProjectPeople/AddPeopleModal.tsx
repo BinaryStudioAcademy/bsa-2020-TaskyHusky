@@ -1,4 +1,4 @@
-import React, { useState, useMemo, memo } from 'react';
+import React, { useState, useMemo, memo, useEffect } from 'react';
 import { Modal, Button, Dropdown, DropdownOnSearchChangeData } from 'semantic-ui-react';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -14,19 +14,24 @@ interface Props {
 const AddPeopleModal = ({ project: { id: projectId, lead, users: projectUsers } }: Props) => {
 	const { t } = useTranslation();
 	const dispatch = useDispatch();
-	const { users } = useSelector((rootState: RootState) => rootState.users);
-	const { isLoading, isAdded } = useSelector((rootState: RootState) => rootState.projectPeople);
+	const { isPeopleLoading, people, isLoading, isAdded } = useSelector(
+		(rootState: RootState) => rootState.projectPeople,
+	);
 
 	const [isOpen, setIsOpen] = useState<boolean>(false);
 	const [searchQuery, setSearchQuery] = useState<string>('');
 	const [selectedUsersIds, setSelectedUsersIds] = useState<string[]>([]);
 
-	const usersNotInProject = useMemo(
+	useEffect(() => {
+		dispatch(actions.startGettingPeople());
+	}, [dispatch]);
+
+	const peopleNotInProject = useMemo(
 		() =>
-			users.filter((user) =>
+			people.filter((user) =>
 				projectUsers.some((projectsUser) => projectsUser.id !== user.id && user.id !== lead.id),
 			),
-		[users, projectUsers, lead.id],
+		[people, projectUsers, lead.id],
 	);
 
 	if (isAdded) {
@@ -65,16 +70,18 @@ const AddPeopleModal = ({ project: { id: projectId, lead, users: projectUsers } 
 			<Modal.Header>{t('add_people')}</Modal.Header>
 			<Modal.Content>
 				<Dropdown
+					loading={isPeopleLoading}
+					disabled={isPeopleLoading}
 					fluid
 					multiple
 					onChange={onSearchDataChange}
 					onSearchChange={onSearchQueryChange}
-					options={usersNotInProject.map((user) => ({
+					options={peopleNotInProject.map((user) => ({
 						key: user.id,
 						value: user.id,
 						text: `${user.firstName} ${user.lastName}`,
 					}))}
-					placeholder={t('people')}
+					placeholder={isPeopleLoading ? t('loading') : t('people')}
 					search
 					searchQuery={searchQuery}
 					selection

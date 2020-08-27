@@ -46,4 +46,23 @@ export const projectPeopleReducer = createReducer<ProjectsPeopleState>(initialSt
 			...initialState,
 		};
 	},
+	[actionTypes.START_GETTING_PEOPLE](state) {
+		return {
+			...state,
+			isPeopleLoading: true,
+		};
+	},
+	[actionTypes.SUCCESS_GETTING_PEOPLE](state, { people }) {
+		return {
+			...state,
+			isPeopleLoading: false,
+			people,
+		};
+	},
+	[actionTypes.FAIL_GETTING_PEOPLE](state) {
+		return {
+			...state,
+			isPeopleLoading: false,
+		};
+	},
 });

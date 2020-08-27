@@ -10,6 +10,7 @@ const userController = new UserController();
 router.use('/', teamMates);
 router.use('/notification', notifications);
 router.get('/', userController.getAllUser);
+router.get('/teammates', userController.getTeammates);
 router.get('/:id', userController.getUser);
 router.get('/projects/:id', userController.getProjects);
 router.put('/', userController.updateUser);
