@@ -67,10 +67,6 @@ export const LoginPage: React.FC = () => {
 		dispatch(actions.sendGoogleAuth({ user }));
 	};
 
-	const googleAuthFailed = () => {
-		NotificationManager.error('Error google authentication', 'Error', 4000);
-	};
-
 	const googleBtn = (props: { onClick: () => void; disabled?: boolean }) => (
 		<button onClick={props.onClick} className={styles.google_btn}>
 			<Image src={iconGoogle} className={styles.google_logo} />
@@ -119,7 +115,6 @@ export const LoginPage: React.FC = () => {
 							buttonText="Login"
 							render={(props) => googleBtn(props)}
 							onSuccess={googleAuth}
-							onFailure={googleAuthFailed}
 							cookiePolicy={GoogleAuth.COOKIE_POLICY}
 						/>
 					</Form>
