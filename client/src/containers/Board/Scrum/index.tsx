@@ -54,7 +54,11 @@ const Scrum: BoardComponent = (props) => {
 
 	const sprintList = !!sprints.filter((sprint) => !sprint.isCompleted).length ? (
 		sprints.map((sprint) => (
-			<Sprint key={sprint.id} {...sprint} issues={getIssuesForSprintId(search, matchIssuesToSprint[sprint.id])} />
+			<Sprint
+				key={sprint.id}
+				{...sprint}
+				issues={getIssuesForSprintId(normalizeText(search), matchIssuesToSprint[sprint.id])}
+			/>
 		))
 	) : (
 		<Container className={styles.noSprintsContainer}>
@@ -100,9 +104,7 @@ const Scrum: BoardComponent = (props) => {
 
 				<Container>{sprintList}</Container>
 				<Container>
-					<Backlog
-						issues={backlog.filter((issue) => issue.summary?.toLowerCase().includes(normalizeText(search)))}
-					/>
+					<Backlog issues={getIssuesForSprintId(normalizeText(search), backlog)} />
 				</Container>
 			</Container>
 			<CreateSprintModal
