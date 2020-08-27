@@ -1,3 +1,4 @@
+import * as projectSettingsActions from './../../ProjectSettings/logic/actions';
 import { getPeople } from 'services/user.service';
 import { updateProjectUsersList } from 'services/projects.service';
 import { NotificationManager } from 'react-notifications';
@@ -5,10 +6,13 @@ import { all, put, takeEvery, call } from 'redux-saga/effects';
 import * as actionTypes from './actionTypes';
 import * as actions from './actions';
 
-export function* addUsers(projectData: ReturnType<typeof actions.startAddingUsers>) {
+export function* addUsers({ usersId, project, people }: ReturnType<typeof actions.startAddingUsers>) {
 	try {
-		yield call(updateProjectUsersList, projectData);
-		yield put(actions.successAddingUsers());
+		const addedUsers = people.filter((user) => usersId.some((id) => id === user.id));
+		const users = [...project.users, ...addedUsers];
+		const updateProject = { ...project, users };
+		yield put(projectSettingsActions.updateProject({ project: updateProject }));
+		yield call(updateProjectUsersList, { usersId, projectId: project.id });
 	} catch (error) {
 		yield put(actions.failAddingUsers());
 		NotificationManager.error(error.statusText, 'Fail', 5000);
@@ -19,10 +23,14 @@ export function* watchStartAddingUsers() {
 	yield takeEvery(actionTypes.START_ADDING_USERS, addUsers);
 }
 
-export function* deleteUser(projectData: ReturnType<typeof actions.startDeletingUser>) {
+export function* deleteUser({ usersId, project }: ReturnType<typeof actions.startDeletingUser>) {
 	try {
-		yield call(updateProjectUsersList, projectData);
+		yield call(updateProjectUsersList, { usersId, projectId: project.id });
 		yield put(actions.successDeletingUser());
+
+		const users = project.users.filter((user) => user.id !== usersId);
+		const updateProject = { ...project, users };
+		yield put(projectSettingsActions.updateProject({ project: updateProject }));
 	} catch (error) {
 		yield put(actions.failDeletingUser());
 		NotificationManager.error(error.statusText, 'Fail', 5000);

@@ -6,20 +6,16 @@ export const projectPeopleReducer = createReducer<ProjectsPeopleState>(initialSt
 	[actionTypes.START_ADDING_USERS](state) {
 		return {
 			...state,
-			isLoading: true,
 		};
 	},
 	[actionTypes.SUCCESS_ADDING_USERS](state) {
 		return {
 			...state,
-			isLoading: false,
-			isAdded: true,
 		};
 	},
 	[actionTypes.FAIL_ADDING_USERS](state) {
 		return {
 			...state,
-			isLoading: false,
 		};
 	},
 	[actionTypes.START_DELETING_USERS](state, { usersId }) {
@@ -31,7 +27,6 @@ export const projectPeopleReducer = createReducer<ProjectsPeopleState>(initialSt
 	[actionTypes.SUCCESS_DELETING_USERS](state) {
 		return {
 			...state,
-			isDeleted: true,
 			idAction: '',
 		};
 	},
@@ -39,11 +34,6 @@ export const projectPeopleReducer = createReducer<ProjectsPeopleState>(initialSt
 		return {
 			...state,
 			idAction: '',
-		};
-	},
-	[actionTypes.RESET_STATE]() {
-		return {
-			...initialState,
 		};
 	},
 	[actionTypes.START_GETTING_PEOPLE](state) {

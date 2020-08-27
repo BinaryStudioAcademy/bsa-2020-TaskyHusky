@@ -1,22 +1,19 @@
-import React, { useState, useMemo, memo, useEffect } from 'react';
+import React, { useState, memo, useEffect } from 'react';
 import { Modal, Button, Dropdown, DropdownOnSearchChangeData } from 'semantic-ui-react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import * as actions from './logic/actions';
 import { RootState } from 'typings/rootState';
-import { startGettingProject } from 'containers/ProjectSettings/logic/actions';
 import { useTranslation } from 'react-i18next';
 
 interface Props {
 	project: WebApi.Entities.Projects;
 }
 
-const AddPeopleModal = ({ project: { id: projectId, lead, users: projectUsers } }: Props) => {
+const AddPeopleModal = ({ project, project: { lead, users: projectUsers } }: Props) => {
 	const { t } = useTranslation();
 	const dispatch = useDispatch();
-	const { isPeopleLoading, people, isLoading, isAdded } = useSelector(
-		(rootState: RootState) => rootState.projectPeople,
-	);
+	const { isPeopleLoading, people, isLoading } = useSelector((rootState: RootState) => rootState.projectPeople);
 
 	const [isOpen, setIsOpen] = useState<boolean>(false);
 	const [searchQuery, setSearchQuery] = useState<string>('');
@@ -26,19 +23,9 @@ const AddPeopleModal = ({ project: { id: projectId, lead, users: projectUsers } 
 		dispatch(actions.startGettingPeople());
 	}, [dispatch]);
 
-	const peopleNotInProject = useMemo(
-		() =>
-			people.filter((user) =>
-				projectUsers.some((projectsUser) => projectsUser.id !== user.id && user.id !== lead.id),
-			),
-		[people, projectUsers, lead.id],
+	const peopleNotInProject = people.filter((user) =>
+		projectUsers.every((projectsUser) => projectsUser.id !== user.id),
 	);
-
-	if (isAdded) {
-		dispatch(actions.resetState());
-		setIsOpen(false);
-		dispatch(startGettingProject({ id: projectId }));
-	}
 
 	const onSearchQueryChange = (
 		event: React.SyntheticEvent<HTMLElement, Event>,
@@ -52,7 +39,9 @@ const AddPeopleModal = ({ project: { id: projectId, lead, users: projectUsers } 
 	};
 
 	const onAddSelectedUsers = () => {
-		dispatch(actions.startAddingUsers({ usersId: selectedUsersIds, projectId }));
+		dispatch(actions.startAddingUsers({ usersId: selectedUsersIds, project, people }));
+		setIsOpen(false);
+		setSelectedUsersIds([]);
 	};
 
 	return (
