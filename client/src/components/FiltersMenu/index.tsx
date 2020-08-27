@@ -7,7 +7,7 @@ export const FiltersMenu = () => {
 	const { t } = useTranslation();
 
 	return (
-		<Dropdown text={t('filters')} className="link item">
+		<Dropdown text={t('filters')} className={`${styles.media_query} link item`}>
 			<Dropdown.Menu className={styles.dropDownMenu}>
 				<Dropdown.Header>{t('recent')}</Dropdown.Header>
 				<Dropdown.Item>
