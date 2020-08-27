@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 export const useIO = (type: WebApi.IO.Types, handle: (io: SocketIOClient.Socket) => void) => {
 	useEffect(() => {
 		const query = `type=${type}`;
-		const io = connect(ioURL, { query, reconnection: false });
+		const io = connect(ioURL, { query, reconnection: false, transports: ['websocket'] });
 		handle(io);
 
 		return () => void io.disconnect();
