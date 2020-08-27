@@ -104,7 +104,7 @@ export function* deleteSprintSuccess(action: ReturnType<typeof actions.deleteSpr
 		const { sprint } = action;
 
 		if (sprint.board) {
-			yield put(actions.loadBacklogTrigger({ boardId: sprint.board.id }));
+			// yield put(actions.loadBacklogTrigger({ boardId: sprint.board.id }));
 		}
 	} catch (error) {
 		NotificationManager.error(error.clientException.message, 'Error');
@@ -114,7 +114,7 @@ export function* deleteSprintSuccess(action: ReturnType<typeof actions.deleteSpr
 export function* updateIssueSuccessRequest(action: ReturnType<typeof updateIssueSuccess>) {
 	const boardId = action.data.board?.id;
 	if (boardId) {
-		yield put(actions.loadBacklogTrigger({ boardId }));
+		// yield put(actions.loadBacklogTrigger({ boardId }));
 	}
 }
 

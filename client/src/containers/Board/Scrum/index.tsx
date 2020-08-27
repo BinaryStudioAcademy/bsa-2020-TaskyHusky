@@ -1,5 +1,5 @@
 import React, { useState, useEffect, ChangeEvent } from 'react';
-import { Header, Container, Form, Button, InputOnChangeData, Icon } from 'semantic-ui-react';
+import { Header, Container, Form, Button, InputOnChangeData } from 'semantic-ui-react';
 import { BoardComponent } from '../';
 import { useTranslation } from 'react-i18next';
 import styles from './style.module.scss';
@@ -9,12 +9,16 @@ import { RootState } from 'typings/rootState';
 import Breadcrumbs from 'components/common/Breadcrumbs';
 import { setBreadcrumbs, BreadCrumbData } from './config/breadcrumbs';
 import { useHistory } from 'react-router-dom';
-import Sprint from 'components/Sprint';
 import { extractUUIDFromArrayOfObjects } from 'helpers/extractUUIDFromArrayOfObjects.helper';
 import CreateSprintModal from 'components/common/SprintModal/CreateSprintModal';
 import getIssuesForSprintId from 'helpers/getIssuesBySearchText.helper';
-import Backlog from 'components/Backlog';
 import { normalizeText } from 'helpers/normalizeText.helper';
+import { DragDropContext, DropResult } from 'react-beautiful-dnd';
+import { reorderIssues } from './helpers/reorder';
+import { isEmpty } from 'lodash-es';
+import Sprint from 'components/Sprint';
+import { updateIssue } from 'pages/IssuePage/logic/actions';
+import Spinner from 'components/common/Spinner';
 
 const Scrum: BoardComponent = (props) => {
 	const history = useHistory();
@@ -22,6 +26,8 @@ const Scrum: BoardComponent = (props) => {
 	const { t } = useTranslation();
 	const [search, setSearch] = useState<string>('');
 	const [isCreateModalOpened, setIsCreateModalOpened] = useState<boolean>(false);
+	const [issuesMap, setIssuesMap] = useState<{ [sprintId: string]: WebApi.Entities.Issue[] }>({});
+	const state = useSelector((rootState: RootState) => rootState.scrumBoard);
 
 	const { sprints, project, matchIssuesToSprint, backlog } = useSelector(
 		(rootState: RootState) => rootState.scrumBoard,
@@ -34,6 +40,43 @@ const Scrum: BoardComponent = (props) => {
 
 	const clearSearchInputValue = (): void => {
 		setSearch('');
+	};
+
+	const onDragEndDrop = ({ destination, source }: DropResult) => {
+		if (!destination) {
+			return;
+		}
+
+		const sourceSprintId = source.droppableId;
+		const destinationSprintId = destination.droppableId;
+
+		if (sourceSprintId === destinationSprintId) {
+			return;
+		}
+
+		if (destinationSprintId === 'backlog') {
+			dispatch(
+				updateIssue({
+					id: issuesMap[source.droppableId][source.index].id,
+					data: {
+						sprint: null,
+					},
+				}),
+			);
+		}
+
+		if (destinationSprintId !== 'backlog' && sourceSprintId !== destinationSprintId) {
+			dispatch(
+				updateIssue({
+					id: issuesMap[source.droppableId][source.index].id,
+					data: {
+						sprint: destinationSprintId,
+					},
+				}),
+			);
+		}
+
+		setIssuesMap(reorderIssues(issuesMap, source, destination));
 	};
 
 	useEffect(() => {
@@ -52,23 +95,27 @@ const Scrum: BoardComponent = (props) => {
 		}
 	}, [sprints.length, sprints, dispatch]);
 
-	const sprintList = !!sprints.filter((sprint) => !sprint.isCompleted).length ? (
-		sprints.map((sprint) => (
-			<Sprint
-				key={sprint.id}
-				{...sprint}
-				issues={getIssuesForSprintId(normalizeText(search), matchIssuesToSprint[sprint.id])}
-			/>
-		))
-	) : (
-		<Container className={styles.noSprintsContainer}>
-			<Icon name="info circle" size="huge" />
-			<Header as="h2" className={styles.noSprintsHeader}>
-				<Header.Content>{t('no_sprints_header')}</Header.Content>
-				<Header.Subheader>{t('no_sprints_header_subheader')}</Header.Subheader>
-			</Header>
-		</Container>
-	);
+	useEffect(() => {
+		setIssuesMap({ ...matchIssuesToSprint, backlog: backlog });
+	}, [state, matchIssuesToSprint, backlog]);
+	console.log(issuesMap);
+
+	const sprintList =
+		!isEmpty(sprints) && !isEmpty(issuesMap) ? (
+			Object.entries(issuesMap).map(([sprintId, issues]: [string, WebApi.Entities.Issue[]]) => {
+				return (
+					<Sprint
+						key={sprintId}
+						listId={sprintId}
+						listType="CARD"
+						sprint={sprints.filter((sprint) => sprint.id === sprintId)[0]}
+						issues={getIssuesForSprintId(normalizeText(search), issues)}
+					/>
+				);
+			})
+		) : (
+			<Spinner />
+		);
 
 	return (
 		<>
@@ -102,10 +149,7 @@ const Scrum: BoardComponent = (props) => {
 					</Button>
 				</Container>
 
-				<Container>{sprintList}</Container>
-				<Container>
-					<Backlog issues={getIssuesForSprintId(normalizeText(search), backlog)} />
-				</Container>
+				<DragDropContext onDragEnd={onDragEndDrop}>{sprintList}</DragDropContext>
 			</Container>
 			<CreateSprintModal
 				clickAction={() => {
