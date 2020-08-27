@@ -1,7 +1,16 @@
 import { NotificationManager } from 'react-notifications';
+import i18next from 'i18next';
+import { LocalStorageKeys } from 'constants/LocalStorageKeys';
 
 const GRANTED = 'granted';
 const DENIED = 'denied';
+
+interface Options {
+	title?: string;
+	message?: string;
+	subtitle?: string;
+	onClick?: (this: Notification, ev: Event) => any;
+}
 
 class PushNotificationsManager {
 	private initialized: boolean = false;
@@ -16,11 +25,16 @@ class PushNotificationsManager {
 	}
 
 	private alertNoSupport(): void {
-		NotificationManager.error('Sorry, but your browser does not support push notifications.', 'Sorry!', 6000);
+		const noSupportAlerted = localStorage.getItem(LocalStorageKeys.SESSION_NO_SUPPORT_PUSH_ALERTED);
+
+		if (!noSupportAlerted) {
+			NotificationManager.error(i18next.t('not_suported_push_alert'), i18next.t('sorry_alert'), 6000);
+			localStorage.setItem(LocalStorageKeys.SESSION_NO_SUPPORT_PUSH_ALERTED, '1');
+		}
 	}
 
 	private alertNotGranted(): void {
-		NotificationManager.error('Sorry, but push notifications permission is not granted.', 'Sorry!', 6000);
+		NotificationManager.error(i18next.t('denied_push_alert'), i18next.t('sorry_alert'), 6000);
 	}
 
 	private checkGrantedPermission(): boolean {
@@ -36,6 +50,11 @@ class PushNotificationsManager {
 		return permission === GRANTED;
 	}
 
+	private successInitializiation(): void {
+		this.granted = true;
+		this.initialized = true;
+	}
+
 	public async initialize(): Promise<void> {
 		const supportOk = this.checkSupport();
 
@@ -47,9 +66,7 @@ class PushNotificationsManager {
 		const grantedPermission = this.checkGrantedPermission();
 
 		if (grantedPermission) {
-			this.granted = true;
-			this.initialized = true; // All is ok!
-			return;
+			return this.successInitializiation();
 		}
 
 		const pendingPermission = this.checkNotDeniedPermission();
@@ -64,20 +81,22 @@ class PushNotificationsManager {
 			return this.alertNotGranted();
 		}
 
-		this.granted = true;
-		this.initialized = true; // All is ok!
+		this.successInitializiation();
 	}
 
-	public push(title: string, message: string): void {
-		console.log(this.initialized, this.granted);
+	public push(options: Options): void {
 		if (!this.initialized || !this.granted) {
 			return;
 		}
 
-		new Notification(title, {
-			tag: 'ache-mail',
+		const { message, title = i18next.t('notification') as string, subtitle, onClick } = options;
+
+		const notif = new Notification(title, {
 			body: message,
+			data: subtitle,
 		});
+
+		notif.onclick = onClick ?? null;
 	}
 }
 
