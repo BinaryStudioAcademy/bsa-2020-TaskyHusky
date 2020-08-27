@@ -76,6 +76,7 @@ export class IssueCommentRepository extends Repository<IssueComment> {
 	async deleteOne(id: string) {
 		const { issue } = await this.findOneById(id);
 		issueHandler.emit(IssueActions.DeleteIssueComment, issue, id);
-		return await this.delete({ id });
+		const result = await this.delete({ id });
+		return result;
 	}
 }
