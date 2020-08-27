@@ -115,8 +115,7 @@ export const LoginPage: React.FC = () => {
 						</Button>
 						<Divider horizontal>{t('or')}</Divider>
 						<GoogleLogin
-							// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-							clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID!}
+							clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID as string}
 							buttonText="Login"
 							render={(props) => googleBtn(props)}
 							onSuccess={googleAuth}
