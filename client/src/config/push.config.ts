@@ -34,15 +34,24 @@ class PushNotificationsManager {
 	}
 
 	private alertNotGranted(): void {
-		NotificationManager.error(i18next.t('denied_push_alert'), i18next.t('sorry_alert'), 6000);
+		const noPermAlerted = localStorage.getItem(LocalStorageKeys.SESSION_NO_PERM_PUSH_ALERTED);
+
+		if (!noPermAlerted) {
+			NotificationManager.error(i18next.t('denied_push_alert'), i18next.t('sorry_alert'), 6000);
+			localStorage.setItem(LocalStorageKeys.SESSION_NO_PERM_PUSH_ALERTED, '1');
+		}
+	}
+
+	private checkPermission(permission: string): boolean {
+		return Notification.permission === permission;
 	}
 
 	private checkGrantedPermission(): boolean {
-		return Notification.permission === GRANTED;
+		return this.checkPermission(GRANTED);
 	}
 
-	private checkNotDeniedPermission(): boolean {
-		return Notification.permission !== DENIED;
+	private checkDeniedPermission(): boolean {
+		return this.checkPermission(DENIED);
 	}
 
 	private async requestPermission(): Promise<boolean> {
@@ -55,30 +64,39 @@ class PushNotificationsManager {
 		this.initialized = true;
 	}
 
+	private failInitialization(reason: () => void): void {
+		this.initialized = true;
+		reason();
+	}
+
+	private resetAlerts(): void {
+		localStorage.removeItem(LocalStorageKeys.SESSION_NO_SUPPORT_PUSH_ALERTED);
+		localStorage.removeItem(LocalStorageKeys.SESSION_NO_PERM_PUSH_ALERTED);
+	}
+
 	public async initialize(): Promise<void> {
 		const supportOk = this.checkSupport();
 
 		if (!supportOk) {
-			this.initialized = true;
-			return this.alertNoSupport();
+			return this.failInitialization(this.alertNoSupport);
 		}
 
 		const grantedPermission = this.checkGrantedPermission();
+		const deniedPermission = this.checkDeniedPermission();
 
 		if (grantedPermission) {
+			this.resetAlerts();
 			return this.successInitializiation();
-		}
+		} else if (deniedPermission) {
+			return this.failInitialization(this.alertNotGranted);
+		} else {
+			const isGrantedAfterRequest = await this.requestPermission();
 
-		const pendingPermission = this.checkNotDeniedPermission();
-		let isGrantedAfterRequest = true;
-
-		if (pendingPermission) {
-			isGrantedAfterRequest = await this.requestPermission();
-		}
-
-		if (!isGrantedAfterRequest) {
-			this.initialized = true;
-			return this.alertNotGranted();
+			if (!isGrantedAfterRequest) {
+				return this.failInitialization(this.alertNotGranted);
+			} else {
+				this.resetAlerts();
+			}
 		}
 
 		this.successInitializiation();
