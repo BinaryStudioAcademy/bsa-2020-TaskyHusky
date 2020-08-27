@@ -22,6 +22,7 @@ import Search from 'pages/AdvancedSearch';
 import Work from 'pages/Work';
 import ResetPassword from '../ResetPassword';
 import ForgotPassword from '../ForgotPassword';
+import ResetEmail from '../ResetEmail';
 
 const Routing: React.FC = () => {
 	const dispatch = useDispatch();
@@ -44,6 +45,7 @@ const Routing: React.FC = () => {
 			<PublicRoute exact restricted path="/forgot-password" component={ForgotPassword} />
 			<PublicRoute exact restricted path="/reset-password/:token" component={ResetPassword} />
 			<PublicRoute exact restricted path="/signup" component={SignUp} />
+			<PrivateRoute path="/reset-email/:token/:emailBtoa" component={ResetEmail} />
 			<PrivateRoute path="/issue/:key" component={IssuePage} />
 			<PrivateRoute exact path="/projects" component={ProjectsPage} />
 			<PrivateRoute exact path="/my-work" component={Work} />

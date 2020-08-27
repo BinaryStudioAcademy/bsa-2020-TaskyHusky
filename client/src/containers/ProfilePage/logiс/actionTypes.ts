@@ -7,6 +7,8 @@ export const DELETE_USER = 'USER:DELETE_USER';
 export const REQUEST_DELETE_USER = 'USER:REQUEST_DELETE_USER';
 export const REQUEST_CHANGE_PASSWORD = 'USER:REQUEST_CHANGE_PASSWORD';
 export const REQUEST_UPDATE_AVATAR = 'USER:REQUEST_UPDATE_AVATAR';
+export const SEND_EMAIL_RESET_LINK = 'USER:SEND_EMAIL_RESET_LINK';
+export const RESET_EMAIL = 'USER:RESET_EMAIL';
 
 export type RequestGetUser = {
 	id: string;
@@ -29,4 +31,14 @@ export type RequestChangePassword = {
 
 export type RequestUpdateAvatar = {
 	image: File;
+};
+
+export type SendEmailResetLink = {
+	email: string;
+};
+
+export type RequestChangeEmail = {
+	email: string;
+	password: string;
+	token: string;
 };

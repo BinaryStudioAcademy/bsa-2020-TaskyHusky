@@ -303,4 +303,7 @@ export const en = {
 	not_suported_push_alert: 'Sorry, but your browser does not support push notifications.',
 	denied_push_alert: 'Sorry, but push notifications permission is not granted.',
 	notification: 'Notification',
+	send_confirm_link: 'Send confirmation link',
+	confirm_email_change: 'Confirm email change',
+	type_pass_confirm_email: 'Type your passsword to confirm email change',
 };

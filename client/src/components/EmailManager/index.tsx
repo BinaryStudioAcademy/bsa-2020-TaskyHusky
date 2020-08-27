@@ -1,17 +1,16 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import styles from './styles.module.scss';
 import { RootState } from 'typings/rootState';
 import { Button, Checkbox, Select, Form } from 'semantic-ui-react';
-import { requestUpdateUser } from 'containers/ProfilePage/logiс/actions';
 import SubmitedInput from 'components/SubmitedInput';
 import CustomValidator from 'helpers/validation.helper';
+import { sendEmailResetLink } from 'containers/ProfilePage/logiс/actions';
 
 const EmailManager = () => {
-	const dispatch = useDispatch();
 	const { t } = useTranslation();
-
+	const dispatch = useDispatch();
 	const email = useSelector((state: RootState) => state.user.email);
 	const [emailData, setEmailData] = useState<string>('');
 	const [isEmailValid, setIsEmailValid] = useState<boolean>(true);
@@ -37,8 +36,8 @@ const EmailManager = () => {
 
 	const updateUserField = () => {
 		setIsSumbit(false);
-		dispatch(requestUpdateUser({ email: emailData.trim() } as Partial<WebApi.Entities.UserProfile>));
 		setEmailData('');
+		dispatch(sendEmailResetLink({ email: emailData }));
 	};
 
 	const notifaictionsOptions = [
@@ -67,6 +66,7 @@ const EmailManager = () => {
 						onBlur={onBlur}
 						errorText={errorMessage}
 					/>
+					{isSubmit && <p className={`${styles.textData} ${styles.addText}`}>{t('send_confirm_link')}</p>}
 					<Button type="submit" className={styles.submitButton} disabled={!isSubmit}>
 						{t('save_changes')}
 					</Button>

@@ -4,6 +4,8 @@ import {
 	requestDeleteUser,
 	requestChangePassword,
 	requestUdateAvatar,
+	requestSendEmailResetLink,
+	requestChangeEmail,
 } from 'services/user.service';
 import { NotificationManager } from 'react-notifications';
 import { all, put, call, takeEvery } from 'redux-saga/effects';
@@ -31,6 +33,17 @@ function* changePassword(action: ReturnType<typeof actions.requestChangePassword
 	}
 }
 
+function* changeEmail(action: ReturnType<typeof actions.requestChangeEmail>) {
+	const { password, email, token } = action;
+	try {
+		const user: WebApi.Entities.UserProfile = yield call(requestChangeEmail, password, email, token);
+		yield put(actions.updateUser({ partialState: user }));
+		NotificationManager.success('Email was updated', 'Success', 4000);
+	} catch (error) {
+		NotificationManager.error('Could not update email', 'Error', 4000);
+	}
+}
+
 function* getUser(action: ReturnType<typeof actions.requestGetUser>) {
 	const { id } = action;
 	try {
@@ -51,9 +64,24 @@ function* updateAvatar(action: ReturnType<typeof actions.requestUpdateAvatar>) {
 	}
 }
 
+export function* sendEmailResetLink(action: ReturnType<typeof actions.sendEmailResetLink>) {
+	console.log(action);
+	try {
+		const { email } = action;
+		yield call(requestSendEmailResetLink, email);
+		NotificationManager.success('Email was send', 'Success', 4000);
+	} catch (error) {
+		NotificationManager.error('Could not send email', 'Error');
+	}
+}
+
 function* deleteUser() {
 	yield call(requestDeleteUser);
 	yield put(actions.deleteUser(null));
+}
+
+function* watchSendEmailLink() {
+	yield takeEvery(actionTypes.SEND_EMAIL_RESET_LINK, sendEmailResetLink);
 }
 
 function* watchUpdateAvatar() {
@@ -76,6 +104,18 @@ function* watchDeleteUser() {
 	yield takeEvery(actionTypes.REQUEST_DELETE_USER, deleteUser);
 }
 
+function* watchUpdateEmail() {
+	yield takeEvery(actionTypes.RESET_EMAIL, changeEmail);
+}
+
 export default function* userSaga() {
-	yield all([watchUpdateUser(), watchGetUser(), watchDeleteUser(), watchChangePassword(), watchUpdateAvatar()]);
+	yield all([
+		watchUpdateUser(),
+		watchGetUser(),
+		watchDeleteUser(),
+		watchChangePassword(),
+		watchUpdateAvatar(),
+		watchSendEmailLink(),
+		watchUpdateEmail(),
+	]);
 }

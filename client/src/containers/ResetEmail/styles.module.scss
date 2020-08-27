@@ -1,0 +1,23 @@
+@import 'styles/mixins.scss';
+
+.submitButton {
+  margin-top: 20px !important;
+  @include content-btn;
+  background-color: #2185d0 !important;
+  color: $primary-bg !important;
+  border: none !important;
+}
+
+.mainHeader {
+  @include primary-header;
+  text-align: center;
+}
+
+.grid {
+  height: 100vh;
+  justify-content: center;
+}
+
+.column {
+  max-width: 450px;
+}

@@ -273,4 +273,7 @@ export const ru = {
 	not_suported_push_alert: 'Ваш браузер не поддерживает push-уведомления.',
 	denied_push_alert: 'Разрешение на push-уведомления не предоставлено.',
 	notification: 'Объявление',
+	send_confirm_link: 'Отправить ссылку для подтверждения e-mail',
+	confirm_email_change: 'Подтвердите изменение email',
+	type_pass_confirm_email: 'Введите пароль для подтверджения изменения email',
 };

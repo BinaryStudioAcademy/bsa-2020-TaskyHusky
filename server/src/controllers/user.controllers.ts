@@ -1,15 +1,49 @@
 import { Request, Response, NextFunction } from 'express';
 import { getCustomRepository } from 'typeorm';
+import { randomBytes } from 'crypto';
 import { passwordValid, hashPassword } from '../helpers/password.helper';
 import { UserRepository } from '../repositories/user.repository';
 import uploadS3 from '../services/file.service';
 import { avatarFolder } from '../../config/aws.config';
 import { ErrorResponse } from '../helpers/errorHandler.helper';
+import { UserProfile } from '../entity/UserProfile';
+import { expirationTime } from '../constants/resetPassword.constants';
+import { sendMailWithSes } from '../services/email.service';
+import { resetEmailTemplate } from '../helpers/emailTemplates.helper';
 
 class UserController {
+	sendResetEmail = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+		const userRepository = getCustomRepository(UserRepository);
+		const { email } = req.body;
+		try {
+			const user = <UserProfile>await userRepository.getByEmail(email);
+			if (user) {
+				next(new ErrorResponse(400, 'User with such email already exist.'));
+			}
+
+			const resetPasswordToken = randomBytes(20).toString('hex');
+
+			const resetPasswordExpires = new Date(Date.now() + expirationTime);
+
+			const savedUser = await userRepository.updateById(req.user.id, {
+				resetPasswordToken,
+				resetPasswordExpires,
+			});
+
+			await sendMailWithSes({
+				to: [email],
+				message: resetEmailTemplate(`${resetPasswordToken}/${Buffer.from(email).toString('base64')}`),
+				subject: 'Request to change email',
+			});
+			res.status(200).send(savedUser);
+		} catch (error) {
+			next(new ErrorResponse(404, error.message));
+		}
+	};
+
 	uploadAvatar = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
 		const userRepository = getCustomRepository(UserRepository);
-		const { id, firstName, lastName } = req.user;
+		const { id, firstName, lastName } = <UserProfile>req.user;
 		const name = `${firstName}_${lastName}_${id}`;
 		try {
 			const avatar = await uploadS3(avatarFolder, req.file, name);
@@ -48,8 +82,8 @@ class UserController {
 	changePassword = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
 		const userRepository = getCustomRepository(UserRepository);
 		const { oldPassword, password: newPassword } = req.body;
-		const { email, id } = req.user;
-		const { password } = await userRepository.getByEmail(email);
+		const { email, id } = <UserProfile>req.user;
+		const { password } = <UserProfile>await userRepository.getByEmail(email);
 		try {
 			if (!passwordValid(oldPassword, password)) {
 				next(new ErrorResponse(404, 'Old password is incorrect'));
@@ -57,6 +91,30 @@ class UserController {
 			const changedPassword = hashPassword(newPassword);
 			userRepository.updateById(id, { password: changedPassword });
 			res.send({ message: 'Password was changed' });
+		} catch (error) {
+			res.status(400).send(error.message);
+		}
+	};
+
+	changeEmail = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+		const userRepository = getCustomRepository(UserRepository);
+		const { email, password } = req.body;
+		const { token } = req.params;
+		const user = <UserProfile>await userRepository.getByToken(token);
+		if (!user) {
+			next(new ErrorResponse(400, 'Token is expired or invalid'));
+		}
+		const { password: validPassword, id } = user;
+		try {
+			if (!passwordValid(validPassword, password)) {
+				next(new ErrorResponse(400, 'Old password is incorrect'));
+			}
+			const updatedUser = userRepository.updateById(id, {
+				email,
+				resetEmailToken: null,
+				resetEmailExpires: null,
+			});
+			res.send(updatedUser);
 		} catch (error) {
 			res.status(400).send(error.message);
 		}
@@ -97,8 +155,8 @@ class UserController {
 				next(new ErrorResponse(400, 'This email is already taken'));
 			}
 		}
-		if (req.body.password) {
-			next(new ErrorResponse(400, 'Forbidden to change password'));
+		if (req.body.password || req.body.email) {
+			next(new ErrorResponse(400, 'Forbidden to change password and email'));
 		}
 		try {
 			const updatedUser = await userRepository.updateById(id, req.body);

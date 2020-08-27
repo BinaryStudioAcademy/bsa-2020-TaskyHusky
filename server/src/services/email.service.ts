@@ -13,8 +13,8 @@ export type EmailArgs = {
 	from?: string;
 };
 
-function sendMailWithSes(args: EmailArgs) {
-	const { to, subject, message, from = awsConfig.ses.from.default } = args;
+export function sendMailWithSes(args: EmailArgs) {
+	const { to, message, subject, from = awsConfig.ses.from.default } = args;
 	const params: SendEmailRequest = {
 		Destination: { ToAddresses: to },
 		Message: {
@@ -47,7 +47,7 @@ export const EmailService = {
 
 export const sendToken = (email: string, resetPasswordToken: string) => {
 	const mailOptions: EmailArgs = {
-		to: ['admin@taskyhusky.xyz'],
+		to: [email],
 		subject: 'Please, confirm your email',
 		message: `http://${appHost}:${frontendPort}/reset-password/${resetPasswordToken} your token will expire in 1 day`,
 	};
