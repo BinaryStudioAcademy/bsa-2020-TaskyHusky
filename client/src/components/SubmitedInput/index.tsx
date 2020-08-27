@@ -10,13 +10,13 @@ interface Props {
 	type: string;
 	isValid?: boolean;
 	onBlur?: (event: ChangeEvent<HTMLInputElement>) => void;
-	handleChange: (event: ChangeEvent<HTMLInputElement>) => void;
+	handleChange: (event: any) => void;
 	errorText?: string;
 }
 
 const SubmitedInput: React.FC<Props> = (props: Props) => {
 	const {
-		text,
+		text = '',
 		propKey,
 		placeholder,
 		title,
@@ -40,7 +40,7 @@ const SubmitedInput: React.FC<Props> = (props: Props) => {
 	return (
 		<Popup
 			className={styles.errorPopup}
-			open={!isValid}
+			open={!isValid && Boolean(text) && Boolean(errorText)}
 			content={errorText}
 			on={[]}
 			trigger={
@@ -54,7 +54,7 @@ const SubmitedInput: React.FC<Props> = (props: Props) => {
 						value={text}
 						placeholder={placeholder}
 						onChange={(event) => handleChange(event)}
-						error={isValid ? false : true}
+						error={isValid || !text ? false : true}
 						onBlur={onBlur && ((event: ChangeEvent<HTMLInputElement>) => onBlur(event))}
 					/>
 				</div>

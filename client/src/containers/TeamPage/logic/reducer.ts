@@ -42,12 +42,52 @@ export const teamReducer = createReducer<TeamState>(initialState, {
 		};
 	},
 
+	[actionTypes.ADD_PEOPLE_TO_TEAM_SUCCESS](state: TeamState, action: actionTypes.successAddingUsers) {
+		return {
+			...state,
+			team: {
+				...state.team,
+				...action,
+			},
+		};
+	},
+
 	[actionTypes.UPDATE_LINK_FIELD_SUCCESS](state: TeamState, action: actionTypes.AddLinkSuccess) {
 		return {
 			...state,
 			team: {
 				...state.team,
 				links: action.links,
+			},
+		};
+	},
+
+	[actionTypes.SUCCESS_SEARCHING_PEOPLE](state: TeamState, action: actionTypes.successSearchPeople) {
+		return {
+			...state,
+			results: {
+				users: {
+					results: [...action.results],
+				},
+				loading: false,
+			},
+		};
+	},
+	[actionTypes.FAIL_SEARCHING_PEOPLE](state: TeamState) {
+		return {
+			...state,
+			results: {
+				...state.results,
+				loading: false,
+			},
+		};
+	},
+	[actionTypes.SEARCH_PEOPLE_LOADER](state: TeamState) {
+		return {
+			...state,
+			results: {
+				...state.results,
+				loading: true,
 			},
 		};
 	},

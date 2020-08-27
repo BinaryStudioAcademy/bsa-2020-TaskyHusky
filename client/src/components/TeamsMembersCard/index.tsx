@@ -10,6 +10,7 @@ import { getBgColor } from './helper';
 type Props = {
 	teammates?: User[];
 	title: string;
+	removeFromTeam?: (arg: string) => void;
 };
 export interface User {
 	id: string;
@@ -22,7 +23,7 @@ export interface User {
 	jobTitle?: string;
 }
 
-const TeamsMembersCard = ({ teammates = [], title }: Props) => {
+const TeamsMembersCard = ({ title, removeFromTeam, teammates = [] }: Props) => {
 	const [bgColor, setBgColor] = useState<{ [key: string]: string }>({ backgroundColor: 'white' });
 	const [modal, setModal] = useState<boolean>(false);
 	const [viewUser, setViewUser] = useState<User | undefined>();

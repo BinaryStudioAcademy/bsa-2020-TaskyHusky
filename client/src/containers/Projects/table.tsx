@@ -41,7 +41,7 @@ const ProjectsTable = ({ projects, currentUser }: Props) => {
 	};
 
 	const onTrash = (id: string): void => {
-		dispatch(generalProjectActions.startDeletingProject({ id }));
+		dispatch(generalProjectActions.startDeletingProject({ id, projects }));
 	};
 
 	const changeSort = (column: SortByColumn) => {

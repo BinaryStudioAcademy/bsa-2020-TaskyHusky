@@ -8,7 +8,7 @@ export const useIO = (type: WebApi.IO.Types, handle: (io: SocketIOClient.Socket)
 	useEffect(() => {
 		if (!io) {
 			const query = `type=${type}`;
-			const newIO = connect(ioURL, { query });
+			const newIO = connect(ioURL, { query, transports: ['websocket'] });
 			setIO(newIO);
 			handle(newIO);
 		} else {

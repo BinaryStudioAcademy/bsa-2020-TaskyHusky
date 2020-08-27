@@ -26,6 +26,14 @@ export const Enums = {
 			Notification: 'NOTIFICATION',
 		},
 	},
+	'WebApi.User': {
+		jobTitle: {
+			dbAdmin: 'Database administrator',
+			backEndDev: 'Back-end developer',
+			frontEndDev: 'Front-end developer',
+			fullStackDev: 'Full-Stack developer',
+		},
+	},
 };
 
 (function () {

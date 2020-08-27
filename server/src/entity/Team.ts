@@ -11,7 +11,7 @@ export class Team {
 	@Column({ nullable: true })
 	description?: string;
 
-	@Column('text', { array: true })
+	@Column('text', { array: true, nullable: true })
 	@IsArray()
 	links?: string[];
 

@@ -14,7 +14,7 @@ export const ProjectsMenu = () => {
 		dispatch(actions.openModal());
 	};
 	return (
-		<Dropdown text={t('projects')} className="link item">
+		<Dropdown text={t('projects')} className={`${styles.media_query} link item`}>
 			<Dropdown.Menu className={styles.dropDownMenu}>
 				<Dropdown.Header>{t('recent')}</Dropdown.Header>
 				<Dropdown.Item>

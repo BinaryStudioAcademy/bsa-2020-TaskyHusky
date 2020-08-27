@@ -20,7 +20,13 @@ export const SprintIssues: React.FC<Props> = ({ issues, noIssuesText }: Props) =
 					</List.Content>
 					<List.Content className={styles.rightContent}>
 						<AssigneeAvatar user={issue.assigned} />
-						<Item className={styles.issueKeyItem}>{issue.issueKey}</Item>
+						<Item
+							className={
+								issue.status?.title === 'Done' ? styles.issueKeyItemCompleted : styles.issueKeyItem
+							}
+						>
+							{issue.issueKey}
+						</Item>
 						<List.Icon
 							title={priority?.title}
 							name={priority?.icon as any}
