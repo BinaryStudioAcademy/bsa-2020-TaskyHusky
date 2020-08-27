@@ -10,7 +10,6 @@ import clock from 'icons/profile/clock.svg';
 
 interface Props {
 	isCurrentUser: boolean;
-	mockData?: any;
 	jobTitle: string;
 	organization: string;
 	department: string;

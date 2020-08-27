@@ -33,9 +33,20 @@ class UserController {
 		}
 	};
 
+	getTeams = async (req: Request, res: Response): Promise<void> => {
+		const userRepository = getCustomRepository(UserRepository);
+		const { id } = req.params;
+		try {
+			const teams = await userRepository.getTeams(id);
+			res.send(teams);
+		} catch (error) {
+			res.status(404).send(error.message);
+		}
+	};
+
 	changePassword = async (req: Request, res: Response): Promise<void> => {
 		const userRepository = getCustomRepository(UserRepository);
-		const { oldPassword, newPassword } = req.body;
+		const { oldPassword, password: newPassword } = req.body;
 		const { email, id } = req.user;
 		const { password } = await userRepository.getByEmail(email);
 		try {
