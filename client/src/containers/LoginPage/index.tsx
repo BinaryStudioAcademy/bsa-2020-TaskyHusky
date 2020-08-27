@@ -11,8 +11,8 @@ import { normalizeEmail } from 'helpers/email.helper';
 import { NotificationManager } from 'react-notifications';
 import iconGoogle from 'assets/images/icon-google.svg';
 import GoogleLogin, { GoogleLoginResponse, GoogleLoginResponseOffline } from 'react-google-login';
-
 import { RootState } from 'typings/rootState';
+import { GoogleAuth } from 'constants/GoogleLogin';
 
 export const LoginPage: React.FC = () => {
 	const history = useHistory();
@@ -115,12 +115,12 @@ export const LoginPage: React.FC = () => {
 						</Button>
 						<Divider horizontal>{t('or')}</Divider>
 						<GoogleLogin
-							clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID as string}
+							clientId={GoogleAuth.CLIENT_ID}
 							buttonText="Login"
 							render={(props) => googleBtn(props)}
 							onSuccess={googleAuth}
 							onFailure={googleAuthFailed}
-							cookiePolicy={'single_host_origin'}
+							cookiePolicy={GoogleAuth.COOKIE_POLICY}
 						/>
 					</Form>
 					<Divider />
