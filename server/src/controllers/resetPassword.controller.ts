@@ -6,21 +6,8 @@ import { UserProfile } from '../entity/UserProfile';
 import { ErrorResponse } from '../helpers/errorHandler.helper';
 import { hashPassword } from '../helpers/password.helper';
 import HttpStatusCode from '../constants/httpStattusCode.constants';
-import { transporter } from '../../config/nodeMailer.config';
 import { expirationTime } from '../constants/resetPassword.constants';
 import { sendToken } from '../services/email.service';
-
-async function wrappedVerify() {
-	return new Promise((resolve, reject) => {
-		transporter.verify((error, success) => {
-			if (error) {
-				reject(error);
-			} else {
-				resolve(true);
-			}
-		});
-	});
-}
 
 class ResetPasswordController {
 	forgotPassword = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -28,8 +15,6 @@ class ResetPasswordController {
 		const { email } = req.body;
 
 		try {
-			await wrappedVerify();
-
 			const user = <UserProfile>await userRepository.getByEmail(email);
 			if (!user) throw new Error('User with this email does not exist');
 

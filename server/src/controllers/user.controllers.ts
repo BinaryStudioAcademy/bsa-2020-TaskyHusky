@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { getCustomRepository } from 'typeorm';
 import { passwordValid, hashPassword } from '../helpers/password.helper';
 import { UserRepository } from '../repositories/user.repository';
-import uploadS3 from '../helpers/image.helper';
+import uploadS3 from '../services/file.service';
 import { avatarFolder } from '../../config/aws.config';
 
 class UserController {
