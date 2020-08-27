@@ -22,7 +22,7 @@ const ProjectSidebar = (project: WebApi.Entities.Projects, ProjectComponent: JSX
 						</div>
 					</div>
 					<Link
-						to={`/projects/${project.id}/issues`}
+						to={`/project/${project.id}/issues`}
 						className={[styles.header__item, styles.header__item_back, styles.header__link].join(' ')}
 					>
 						<Icon
