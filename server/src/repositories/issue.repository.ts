@@ -7,7 +7,7 @@ import { chooseMessage } from '../AI/selectUpdateIssueWatchNotificationMessage.a
 import issueHandler from '../socketConnectionHandlers/issue.handler';
 import { IssueActions } from '../models/IO';
 import { getDiffPropNames } from '../helpers/objectsDiff.helper';
-import { isEquivalent } from '../helpers/isEquivalent.helper';
+import _ from 'lodash';
 
 const RELS = [
 	'priority',
@@ -114,7 +114,7 @@ export class IssueRepository extends Repository<Issue> {
 		const difference = getDiffPropNames<PartialIssue, PartialIssue>(
 			partialIssue,
 			{ ...partialIssue, ...data },
-			isEquivalent,
+			_.isEqual,
 		);
 
 		if (difference.length) {
