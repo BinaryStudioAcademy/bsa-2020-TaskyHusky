@@ -57,7 +57,11 @@ const IssueCard: React.FC<Props> = ({ issue, index, noDrag, noRedirect, selectab
 	};
 
 	const content = (
-		<Segment onClick={onClick} style={{ backgroundColor: selected ? '#EFF' : 'white' }}>
+		<Segment
+			onClick={onClick}
+			style={{ backgroundColor: selected ? '#EFF' : 'white' }}
+			className={styles.card_margin}
+		>
 			{redirecting ? <Redirect to={`/issue/${issue.issueKey}`} /> : ''}
 			<Header>{issue.summary}</Header>
 			<div className={styles.inlineContainer}>
