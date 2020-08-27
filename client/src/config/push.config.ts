@@ -116,7 +116,12 @@ class PushNotificationsManager {
 			icon: logo,
 		});
 
-		notif.onclick = onClick ?? null;
+		notif.onclick = function (ev: Event) {
+			if (onClick) {
+				onClick.call(this, ev);
+			}
+			this.close();
+		};
 	}
 }
 
