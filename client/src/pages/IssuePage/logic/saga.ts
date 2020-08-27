@@ -10,7 +10,7 @@ import {
 	watch,
 } from 'services/issue.service';
 
-import { setTypes, setPriorities, setStatuses, createIssueSuccess } from './actions';
+import { setTypes, setPriorities, setStatuses, createIssueSuccess, updateIssueSuccess } from './actions';
 import * as actionTypes from './actionTypes';
 import { AnyAction } from 'redux';
 
@@ -51,7 +51,8 @@ function* watchCreateIssue() {
 }
 
 function* fetchUpdateIssue(action: AnyAction) {
-	yield call(updateIssue, action.id, action.data);
+	const response: WebApi.Entities.Issue = yield call(updateIssue, action.id, action.data);
+	yield put(updateIssueSuccess({ data: response }));
 }
 
 function* deleteIssueSaga(action: AnyAction) {
