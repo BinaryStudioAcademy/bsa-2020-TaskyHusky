@@ -19,7 +19,7 @@ const TeamDevsCard = ({
 	showAddPeopleModal,
 	teamOwner,
 	changeMainFields,
-	description = ' ',
+	description = '',
 	name = ' ',
 }: CardProps) => {
 	const [showDelete, setShowDelete] = useState<boolean>(false);
@@ -41,6 +41,13 @@ const TeamDevsCard = ({
 			description: teamDescription,
 		});
 	};
+
+	const abortChhange = () => {
+		setTitle(name);
+		setTeamDescription(description);
+		setEditFields(true);
+	};
+
 	return (
 		<Card>
 			<Card.Content className={styles.card_header}>
@@ -65,9 +72,14 @@ const TeamDevsCard = ({
 				/>
 			</Card.Content>
 			<Card.Content className={styles.edit_field_btn}>
-				<Button compact color="blue" fluid onClick={() => submitEditFields()}>
+				<Button compact fluid={lockEditFields} color="blue" onClick={() => submitEditFields()}>
 					{t(lockEditFields ? 'edit_fields' : 'save_changes')}
 				</Button>
+				{!lockEditFields && (
+					<Button compact basic className={styles.edit_btn} onClick={abortChhange}>
+						{t('cancel')}
+					</Button>
+				)}
 			</Card.Content>
 			<Card.Content extra>
 				<Button.Group fluid>
