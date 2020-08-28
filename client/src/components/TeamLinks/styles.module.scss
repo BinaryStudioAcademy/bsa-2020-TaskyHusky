@@ -38,3 +38,16 @@
   font-size: 1.1rem;
   margin-bottom: 8px;
 }
+
+.delete_btn {
+  border: 1px solid #2185d0 !important;
+  .delete_btn_value {
+    color: #2185d0 !important;
+  }
+}
+.edit_btn {
+  border: 1px solid #4d4c4c !important;
+  .edit_btn_value {
+    color: #4d4c4c;
+  }
+}

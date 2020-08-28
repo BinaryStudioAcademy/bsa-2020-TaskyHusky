@@ -93,7 +93,10 @@ export type EditFieldLoadingArgs = {
 };
 
 export type EditFieldSuccess = {
-	field: { [key: string]: string | [] };
+	field: {
+		name: string,
+		description: string
+	};
 };
 
 export type DeleteTeamLoading = {

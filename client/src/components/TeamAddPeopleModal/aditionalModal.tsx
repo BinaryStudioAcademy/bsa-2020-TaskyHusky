@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, Button, Icon } from 'semantic-ui-react';
+import { Modal, Button } from 'semantic-ui-react';
 import styles from './styles.module.scss';
 import { useTranslation } from 'react-i18next';
 
@@ -12,9 +12,8 @@ const AditionalModal = ({ setShowDelete, confirmDelete }: Props) => {
 	const { t } = useTranslation();
 
 	return (
-		<Modal onClose={() => setShowDelete(false)} open size="tiny" dimmer="blurring">
+		<Modal onClose={() => setShowDelete(false)} open size="tiny" dimmer="inverted">
 			<Modal.Header>
-				<Icon name="warning circle" size="large" color="red" />
 				<span className={styles.title_modal}>{t('you_are_going_to_delete_team')}</span>
 			</Modal.Header>
 			<Modal.Content>
@@ -22,8 +21,12 @@ const AditionalModal = ({ setShowDelete, confirmDelete }: Props) => {
 				<p className={styles.text_modal}>{t('deleting_team_cannot_be_prevented')}</p>
 			</Modal.Content>
 			<Modal.Actions>
-				<Button content={t('cancel')} onClick={() => setShowDelete(false)} />
-				<Button icon="check" content={t('Im_sure')} color="red" onClick={confirmDelete} />
+				<Button basic className={styles.edit_btn} onClick={() => setShowDelete(false)}>
+					<span className={styles.edit_btn_value}> {t('cancel')} </span>
+				</Button>
+				<Button icon="check" primary onClick={confirmDelete}>
+					{t('Im_sure')}
+				</Button>
 			</Modal.Actions>
 		</Modal>
 	);

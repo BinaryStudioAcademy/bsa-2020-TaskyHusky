@@ -3,7 +3,10 @@ import styles from './styles.module.scss';
 import Avatar from 'components/Avatar';
 import { Link } from 'react-router-dom';
 import { Button, Icon } from 'semantic-ui-react';
+import { useSelector } from 'react-redux';
+import { RootState } from 'typings/rootState';
 import Spinner from 'components/common/Spinner';
+
 type UserModel = {
 	id: string;
 	email?: string;
@@ -18,10 +21,10 @@ type UserModel = {
 type Props = {
 	user: UserModel;
 	onClose: (arg: React.BaseSyntheticEvent) => void;
-	color: { [key: string]: string };
 };
 
-const ModalViewProfile = ({ user, onClose, color }: Props) => {
+const ModalViewProfile = ({ user, onClose }: Props) => {
+	const color = useSelector((rootStore: RootState) => rootStore.team.team.color);
 	return (
 		<>
 			<div className={styles.block_wrapper} onMouseLeave={(e) => onClose(e)}>
@@ -29,7 +32,7 @@ const ModalViewProfile = ({ user, onClose, color }: Props) => {
 					<Spinner />
 				) : (
 					<>
-						<div className={styles.header} style={color}>
+						<div className={styles.header} style={{ backgroundColor: color }}>
 							<div className={styles.left_margin}></div>
 							<div className={styles.name}>
 								<span>{`${user.firstName} ${user.lastName}`}</span>
@@ -46,18 +49,18 @@ const ModalViewProfile = ({ user, onClose, color }: Props) => {
 							<div className={styles.details}>
 								<span>
 									<Icon name="at" size="small" color="grey" />
-									{user.email}
+									<span className={styles.user_field}>{user.email}</span>
 								</span>
 								{user.location && (
 									<span>
 										<Icon name="map signs" size="small" color="grey" />
-										{user.location}
+										<span className={styles.user_field}>{user.location}</span>
 									</span>
 								)}
 								{user.department && (
 									<span>
 										<Icon name="building" size="small" color="grey" />
-										{user.department}
+										<span className={styles.user_field}>{user.department}</span>
 									</span>
 								)}
 								<Link to={`/profile/${user.id}`}>

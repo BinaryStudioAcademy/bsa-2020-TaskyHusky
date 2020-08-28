@@ -41,7 +41,6 @@ const MoreFilterDefsDropdown = ({
 			className={styles.moreFilterDropdown}
 		>
 			<Dropdown.Menu className={styles.dropdownMenu} onClick={(e: Event) => e.stopPropagation()}>
-				<Dropdown.Divider />
 				<Dropdown.Header icon="filter" content={'Criteria'} />
 				<Dropdown.Menu scrolling>
 					{additionalFilterParts.map(({ id, filterDef }) => (
