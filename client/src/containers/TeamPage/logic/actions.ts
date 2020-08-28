@@ -26,5 +26,7 @@ export const failSearchPeople = createAction(actionTypes.FAIL_SEARCHING_PEOPLE);
 export const clearResults = createAction(actionTypes.CLEAR_FOUND_USERS);
 export const clearResultsDone = createAction(actionTypes.CLEAR_FOUND_USERS_DONE);
 
-export const addPeopleToTeamLoading = createAction<actionTypes.startAddingUsers>(actionTypes.ADD_PEOPLE_TO_TEAM_LOADING);
+export const addPeopleToTeamLoading = createAction<actionTypes.startAddingUsers>(
+	actionTypes.ADD_PEOPLE_TO_TEAM_LOADING,
+);
 export const addPeopleToTeamDone = createAction<actionTypes.successAddingUsers>(actionTypes.ADD_PEOPLE_TO_TEAM_SUCCESS);

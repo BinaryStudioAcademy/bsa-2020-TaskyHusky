@@ -119,8 +119,8 @@ const TeamPage = ({
 		<Spinner />
 	) : (
 		<Grid columns="equal" centered className={styles.page_main}>
-			<Grid.Row className={styles.header_z}>
-				<div className={`${styles.header} ${styles.team_header}`}></div>
+			<Grid.Row>
+				<div className={styles.header}></div>
 			</Grid.Row>
 			<Grid.Row className={styles.main_row}>
 				<Grid.Column className={`${styles.col_media} ${styles.col_left}`}>
@@ -132,8 +132,8 @@ const TeamPage = ({
 						name={team.name}
 						showAddPeopleModal={showAddPeopleModal}
 					/>
-					<TeamsMembersCard teammates={[{ ...team.createdBy }]} title={'Team owner'} />
-					<TeamsMembersCard teammates={team.users} title={'Members'} removeFromTeam={handlerRemoveFromTeam} />
+					<TeamsMembersCard teammates={[{ ...team.createdBy }]} title={'team_owner'} />
+					<TeamsMembersCard teammates={team.users} title={'members'} removeFromTeam={handlerRemoveFromTeam} />
 				</Grid.Column>
 				<Grid.Column className={`${styles.col_media}, ${styles.col_right}`}>
 					<TeamWorkedProjects projects={team.projects} />
