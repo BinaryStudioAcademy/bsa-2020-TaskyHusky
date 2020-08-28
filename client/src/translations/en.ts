@@ -306,4 +306,5 @@ export const en = {
 	send_confirm_link: 'Send confirmation link',
 	confirm_email_change: 'Confirm email change',
 	type_pass_confirm_email: 'Type your passsword to confirm email change',
+	email_update: 'Your email was successfully changed',
 };

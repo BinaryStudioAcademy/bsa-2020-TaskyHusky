@@ -51,7 +51,7 @@ export class UserProfile {
 
 	@Column()
 	@MinLength(6)
-	password!: string;
+	password?: string;
 
 	@OneToMany((type) => Board, (board) => board.createdBy)
 	boards?: Board[];
@@ -62,10 +62,10 @@ export class UserProfile {
 	@Column({ type: 'timestamp without time zone', name: 'resetPasswordExpires', nullable: true })
 	public resetPasswordExpires?: Date | null;
 
-	@Column({ type: 'character varying', name: 'resetPasswordToken', nullable: true })
+	@Column({ type: 'character varying', name: 'resetEmailToken', nullable: true })
 	public resetEmailToken?: string | null;
 
-	@Column({ type: 'timestamp without time zone', name: 'resetPasswordExpires', nullable: true })
+	@Column({ type: 'timestamp without time zone', name: 'resetEmailExpires', nullable: true })
 	public resetEmailExpires?: Date | null;
 
 	@OneToMany((type) => Filter, (filter) => filter.owner)
@@ -124,8 +124,7 @@ export class UserProfile {
 
 			// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 			this.email = email!;
-			// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-			this.password = password!;
+			this.password = password;
 		}
 	}
 }

@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styles from './styles.module.scss';
 import { useTranslation } from 'react-i18next';
-import { requestChangePassword } from 'containers/ProfilePage/logiс/actions';
+import { RootState } from 'typings/rootState';
+import { requestChangePassword, sendPassResetLink } from 'containers/ProfilePage/logiс/actions';
 import { Button, Form } from 'semantic-ui-react';
 import SubmitedInput from 'components/SubmitedInput';
 import PasswordCheck from 'components/PasswordCheck';
 import CustomValidator from 'helpers/validation.helper';
 import ConfirmPassModal from 'components/ConfirmPassModal';
+import SubmitEmail from 'components/SubmitEmail';
 
 const SecurityManager = () => {
 	const { t } = useTranslation();
@@ -31,6 +33,8 @@ const SecurityManager = () => {
 		passwords.oldPassword &&
 		passwords.repeatedPassword &&
 		passwords.newPassword;
+
+	const email = useSelector((state: RootState) => state.user.email);
 
 	const handleChange = (event: any) => {
 		setPasswords({
@@ -78,6 +82,10 @@ const SecurityManager = () => {
 				updatePassword();
 			}
 		}
+	};
+
+	const sendEmail = (emailData: string) => {
+		dispatch(sendPassResetLink({ email: emailData }));
 	};
 
 	const onClose = () => {
@@ -130,6 +138,7 @@ const SecurityManager = () => {
 					<Button className={styles.submitButton} type="submit" disabled={!isSubmitPossible}>
 						{t('save_changes')}
 					</Button>
+					<SubmitEmail sendEmail={sendEmail} email={email} newEmail={true} />
 				</Form>
 			</div>
 		</section>

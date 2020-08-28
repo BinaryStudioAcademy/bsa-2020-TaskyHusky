@@ -7,6 +7,7 @@ import {
 	requestSendEmailResetLink,
 	requestChangeEmail,
 } from 'services/user.service';
+import { forgotPassword } from 'services/auth.service';
 import { NotificationManager } from 'react-notifications';
 import { all, put, call, takeEvery } from 'redux-saga/effects';
 import * as actionTypes from './actionTypes';
@@ -37,6 +38,7 @@ function* changeEmail(action: ReturnType<typeof actions.requestChangeEmail>) {
 	const { password, email, token } = action;
 	try {
 		const user: WebApi.Entities.UserProfile = yield call(requestChangeEmail, password, email, token);
+		console.log(user);
 		yield put(actions.updateUser({ partialState: user }));
 		NotificationManager.success('Email was updated', 'Success', 4000);
 	} catch (error) {
@@ -65,10 +67,19 @@ function* updateAvatar(action: ReturnType<typeof actions.requestUpdateAvatar>) {
 }
 
 export function* sendEmailResetLink(action: ReturnType<typeof actions.sendEmailResetLink>) {
-	console.log(action);
 	try {
 		const { email } = action;
 		yield call(requestSendEmailResetLink, email);
+		NotificationManager.success('Email was send', 'Success', 4000);
+	} catch (error) {
+		NotificationManager.error('Could not send email', 'Error');
+	}
+}
+
+export function* sendPassResetLink(action: ReturnType<typeof actions.sendPassResetLink>) {
+	try {
+		const { email } = action;
+		yield call(forgotPassword, email);
 		NotificationManager.success('Email was send', 'Success', 4000);
 	} catch (error) {
 		NotificationManager.error('Could not send email', 'Error');
@@ -108,6 +119,10 @@ function* watchUpdateEmail() {
 	yield takeEvery(actionTypes.RESET_EMAIL, changeEmail);
 }
 
+function* watchSendPassLink() {
+	yield takeEvery(actionTypes.SEND_PASS_RESET_LINK, sendPassResetLink);
+}
+
 export default function* userSaga() {
 	yield all([
 		watchUpdateUser(),
@@ -117,5 +132,6 @@ export default function* userSaga() {
 		watchUpdateAvatar(),
 		watchSendEmailLink(),
 		watchUpdateEmail(),
+		watchSendPassLink(),
 	]);
 }

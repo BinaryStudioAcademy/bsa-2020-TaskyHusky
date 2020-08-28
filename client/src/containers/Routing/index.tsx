@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Switch } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import PrivateRoute from 'components/PrivateRoute';
 import Login from 'pages/LogIn';
 import Team from 'pages/Team';
@@ -43,7 +43,7 @@ const Routing: React.FC = () => {
 		<Switch>
 			<PublicRoute exact restricted path="/login" component={Login} />
 			<PublicRoute exact restricted path="/forgot-password" component={ForgotPassword} />
-			<PublicRoute exact restricted path="/reset-password/:token" component={ResetPassword} />
+			<Route exact path="/reset-password/:token" component={ResetPassword} />
 			<PublicRoute exact restricted path="/signup" component={SignUp} />
 			<PrivateRoute path="/reset-email/:token/:emailBtoa" component={ResetEmail} />
 			<PrivateRoute path="/issue/:key" component={IssuePage} />

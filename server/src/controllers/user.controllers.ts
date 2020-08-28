@@ -18,26 +18,25 @@ class UserController {
 		try {
 			const user = <UserProfile>await userRepository.getByEmail(email);
 			if (user) {
-				next(new ErrorResponse(400, 'User with such email already exist.'));
+				throw new Error('User with such email already exist.');
 			}
 
-			const resetPasswordToken = randomBytes(20).toString('hex');
+			const resetEmailToken = randomBytes(20).toString('hex');
 
-			const resetPasswordExpires = new Date(Date.now() + expirationTime);
-
+			const resetEmailExpires = new Date(Date.now() + expirationTime);
 			const savedUser = await userRepository.updateById(req.user.id, {
-				resetPasswordToken,
-				resetPasswordExpires,
+				resetEmailToken,
+				resetEmailExpires,
 			});
 
 			await sendMailWithSes({
 				to: [email],
-				message: resetEmailTemplate(`${resetPasswordToken}/${Buffer.from(email).toString('base64')}`),
+				message: resetEmailTemplate(`${resetEmailToken}/${Buffer.from(email).toString('base64')}`),
 				subject: 'Request to change email',
 			});
 			res.status(200).send(savedUser);
 		} catch (error) {
-			next(new ErrorResponse(404, error.message));
+			next(new ErrorResponse(400, error.message));
 		}
 	};
 
@@ -48,12 +47,12 @@ class UserController {
 		try {
 			const avatar = await uploadS3(avatarFolder, req.file, name);
 			if (!avatar) {
-				next(new ErrorResponse(400, 'Could not update avatar'));
+				throw new Error('Could not update avatar');
 			}
 			const user = await userRepository.updateById(id, { avatar });
 			res.send(user);
 		} catch (error) {
-			res.status(400).send(error.message);
+			next(new ErrorResponse(400, error.message));
 		}
 	};
 
@@ -83,16 +82,16 @@ class UserController {
 		const userRepository = getCustomRepository(UserRepository);
 		const { oldPassword, password: newPassword } = req.body;
 		const { email, id } = <UserProfile>req.user;
-		const { password } = <UserProfile>await userRepository.getByEmail(email);
+		const { password = '' } = <UserProfile>await userRepository.getByEmail(email);
 		try {
 			if (!passwordValid(oldPassword, password)) {
-				next(new ErrorResponse(404, 'Old password is incorrect'));
+				throw new Error('Old password is incorrect');
 			}
 			const changedPassword = hashPassword(newPassword);
 			userRepository.updateById(id, { password: changedPassword });
 			res.send({ message: 'Password was changed' });
 		} catch (error) {
-			res.status(400).send(error.message);
+			next(new ErrorResponse(404, error.message));
 		}
 	};
 
@@ -100,23 +99,23 @@ class UserController {
 		const userRepository = getCustomRepository(UserRepository);
 		const { email, password } = req.body;
 		const { token } = req.params;
-		const user = <UserProfile>await userRepository.getByToken(token);
+		const user = <UserProfile>await userRepository.getByEmailToken(token);
 		if (!user) {
-			next(new ErrorResponse(400, 'Token is expired or invalid'));
+			throw new Error('Token is expired or invalid');
 		}
-		const { password: validPassword, id } = user;
+		const { password: validPassword = '', id } = user;
 		try {
-			if (!passwordValid(validPassword, password)) {
-				next(new ErrorResponse(400, 'Old password is incorrect'));
+			if (!passwordValid(password, validPassword)) {
+				throw new Error('Password is incorrect');
 			}
-			const updatedUser = userRepository.updateById(id, {
+			const updatedUser = await userRepository.updateById(id, {
 				email,
 				resetEmailToken: null,
 				resetEmailExpires: null,
 			});
 			res.send(updatedUser);
 		} catch (error) {
-			res.status(400).send(error.message);
+			next(new ErrorResponse(400, error.message));
 		}
 	};
 
@@ -127,11 +126,11 @@ class UserController {
 		try {
 			const user = await userRepository.getById(id);
 			if (!user) {
-				next(new ErrorResponse(404, 'User was not found'));
+				throw new Error('User was not found');
 			}
 			res.send(user);
 		} catch (error) {
-			res.status(404).send(error.message);
+			next(new ErrorResponse(404, error.message));
 		}
 	};
 
@@ -152,17 +151,17 @@ class UserController {
 		if (req.body.email) {
 			const checkUser = await userRepository.getByEmail(req.body.email);
 			if (checkUser && checkUser.id !== id) {
-				next(new ErrorResponse(400, 'This email is already taken'));
+				throw new Error('This email is already taken');
 			}
 		}
 		if (req.body.password || req.body.email) {
-			next(new ErrorResponse(400, 'Forbidden to change password and email'));
+			throw new Error('Forbidden to change password and email');
 		}
 		try {
 			const updatedUser = await userRepository.updateById(id, req.body);
 			res.status(200).send(updatedUser);
 		} catch (error) {
-			res.status(400).send(error.message);
+			next(new ErrorResponse(400, error.message));
 		}
 	};
 

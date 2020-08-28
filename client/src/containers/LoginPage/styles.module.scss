@@ -45,6 +45,7 @@
 	left: 0;
 	right: 0;
 }
+
 .google_btn {
 	display: flex;
 	width: 100%;
@@ -56,16 +57,19 @@
 	border-radius: 5px;
 	cursor: pointer;
 	animation: all 1s;
+
 	&:hover {
 		transition: background-color 0.5s;
 		background-color: rgb(247, 247, 247);
 		box-shadow: 0 0 2px #ccc, 0 0 13px inset #ffff;
 	}
+
 	.google_title {
 		font-weight: 500;
 		font-size: 1.2rem;
 		padding-left: 10px;
 	}
+
 	.google_logo {
 		width: 35px;
 	}

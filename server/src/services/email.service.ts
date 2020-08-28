@@ -1,8 +1,6 @@
 import { SendEmailRequest, AddressList } from 'aws-sdk/clients/ses';
 import AWS from '../../libs/aws';
 import { awsConfig } from '../../config/aws.config';
-import { appHost, frontendPort } from '../../config/app.config';
-import { sendEmail } from '../helpers/email.worker';
 
 const ses = new AWS.SES({ apiVersion: '2010-12-01' });
 
@@ -40,35 +38,3 @@ export function sendMailWithSes(args: EmailArgs) {
 		});
 	});
 }
-
-export const EmailService = {
-	sendEmail: sendMailWithSes,
-};
-
-export const sendToken = (email: string, resetPasswordToken: string) => {
-	const mailOptions: EmailArgs = {
-		to: [email],
-		subject: 'Please, confirm your email',
-		message: `http://${appHost}:${frontendPort}/reset-password/${resetPasswordToken} your token will expire in 1 day`,
-	};
-
-	sendEmail(mailOptions);
-};
-
-export interface CommentMentionEmailParams {
-	userName: string;
-	issueKey: string;
-	email: string;
-}
-
-export const sendMentionedInComment = (params: CommentMentionEmailParams) => {
-	const { email, issueKey, userName } = params;
-	const mailOptions: EmailArgs = {
-		to: [email],
-		subject: 'Mention',
-		message: `Dear ${userName}, you have been mentioned in issue comment!<br />
-		Go <a rel="noopener noreferrer" href='http://${appHost}:${frontendPort}/issue/${issueKey}'>here</a> and check out!`,
-	};
-
-	sendEmail(mailOptions);
-};

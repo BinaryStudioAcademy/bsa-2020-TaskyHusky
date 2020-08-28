@@ -271,4 +271,5 @@ export const ua = {
 	send_confirm_link: 'Відправити посилання для підтвердження e-mail',
 	confirm_email_change: 'Підтвердіть змінення email',
 	type_pass_confirm_email: 'Введіть пароль для підтвердження зміни email',
+	email_update: 'Email змінено',
 };

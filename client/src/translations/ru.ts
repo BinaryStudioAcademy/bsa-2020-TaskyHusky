@@ -276,4 +276,5 @@ export const ru = {
 	send_confirm_link: 'Отправить ссылку для подтверждения e-mail',
 	confirm_email_change: 'Подтвердите изменение email',
 	type_pass_confirm_email: 'Введите пароль для подтверджения изменения email',
+	email_update: 'Email был успешно изменен',
 };
