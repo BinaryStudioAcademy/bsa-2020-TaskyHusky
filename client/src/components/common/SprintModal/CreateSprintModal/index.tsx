@@ -90,7 +90,9 @@ const CreateSprintModal = (props: Props) => {
 		setStartDate(date);
 
 		const nextEndDate = getNextDate(duration, date);
-		setEndDate(nextEndDate);
+		if (duration !== 'custom') {
+			setEndDate(nextEndDate);
+		}
 
 		const isValid = (duration === 'custom' ? endDate : nextEndDate) > date;
 		setIsDateValid(isValid);

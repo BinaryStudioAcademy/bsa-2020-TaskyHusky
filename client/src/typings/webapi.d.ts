@@ -353,6 +353,8 @@ namespace WebApi.Entities {
 		isActive: boolean;
 		isCompleted: boolean;
 		issues: Issue[];
+		startDate: Date;
+		endDate: Date;
 	}
 
 	interface Team {

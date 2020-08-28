@@ -6,4 +6,6 @@ interface SprintModel {
 	project: string;
 	board: string;
 	issues: string[];
+	startDate: Date;
+	endDate: Date;
 }

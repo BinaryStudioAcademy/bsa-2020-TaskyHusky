@@ -12,6 +12,8 @@ export function* loadSprintsRequest(action: ReturnType<typeof actions.loadSprint
 	try {
 		const { boardId } = action;
 		const response: WebApi.Entities.Sprint[] = yield call(getBoardSprints, boardId);
+		console.log(response);
+
 		yield put(actions.loadSprintsSuccess({ sprints: response }));
 	} catch (error) {
 		NotificationManager.error(error.clientException.message, 'Error');

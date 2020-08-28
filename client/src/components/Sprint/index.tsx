@@ -7,7 +7,7 @@ type Props = WebApi.Entities.Sprint;
 
 export const Sprint: React.FC<Props> = (props: Props) => {
 	const { t } = useTranslation();
-	const { id, isActive, sprintName, issues, isCompleted } = props;
+	const { id, isActive, sprintName, issues, isCompleted, startDate, endDate } = props;
 
 	if (!issues || isCompleted) {
 		return null;
@@ -15,7 +15,15 @@ export const Sprint: React.FC<Props> = (props: Props) => {
 
 	return (
 		<>
-			<SprintHeader id={id} isActive={isActive} name={sprintName} issues={issues} isCompleted={isCompleted} />
+			<SprintHeader
+				startDate={startDate}
+				endDate={endDate}
+				id={id}
+				isActive={isActive}
+				name={sprintName}
+				issues={issues}
+				isCompleted={isCompleted}
+			/>
 			<SprintIssues issues={issues} noIssuesText={t('no_issues_in_sprint')} />
 		</>
 	);
