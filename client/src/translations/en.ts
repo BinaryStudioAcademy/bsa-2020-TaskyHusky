@@ -303,4 +303,11 @@ export const en = {
 	not_suported_push_alert: 'Sorry, but your browser does not support push notifications.',
 	denied_push_alert: 'Sorry, but push notifications permission is not granted.',
 	notification: 'Notification',
+	startDate: 'Start date',
+	endDate: 'End date',
+	duration: 'Duration',
+	dateValidationError: 'The start date of a sprint must be before the end date.',
+	week: 'week',
+	weeks: 'weeks',
+	custom: 'custom',
 };

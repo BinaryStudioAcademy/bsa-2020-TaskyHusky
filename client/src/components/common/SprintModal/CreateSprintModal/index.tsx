@@ -9,7 +9,7 @@ import { RootState } from 'typings/rootState';
 import { ScrumBoardState } from 'containers/Board/Scrum/logic/state';
 import 'react-datepicker/dist/react-datepicker.css';
 import { getNextDate } from './helpers';
-import { DURATIONS } from './constants';
+import ru from 'date-fns/locale/ru';
 
 type Props = { clickAction: any; isOpen: boolean };
 
@@ -58,6 +58,28 @@ const CreateSprintModal = (props: Props) => {
 		props.clickAction();
 	};
 
+	const getLocale = () => {
+		const lng = localStorage.getItem('session:lng');
+		switch (lng) {
+			case 'ru':
+				return ru;
+			case 'ua':
+				return ru;
+			case 'en':
+				return 'en';
+			default:
+				return 'en';
+		}
+	};
+
+	const DURATIONS = [
+		{ key: 1, text: `1 ${t('week')}`, value: 1 },
+		{ key: 2, text: `2 ${t('weeks')}`, value: 2 },
+		{ key: 3, text: `3 ${t('weeks')}`, value: 3 },
+		{ key: 4, text: `4 ${t('weeks')}`, value: 4 },
+		{ key: 5, text: t('custom'), value: 'custom' },
+	];
+
 	const [duration, setDuration] = useState<number | 'custom'>(1);
 	const [startDate, setStartDate] = useState(new Date());
 	const [endDate, setEndDate] = useState(getNextDate(duration, startDate));
@@ -66,15 +88,16 @@ const CreateSprintModal = (props: Props) => {
 
 	const handleStartDatePick = (date: Date) => {
 		setStartDate(date);
-		if (duration !== 'custom') {
-			setEndDate(getNextDate(duration, date as Date));
-		}
-		const isValid = endDate > date;
+
+		const nextEndDate = getNextDate(duration, date);
+		setEndDate(nextEndDate);
+
+		const isValid = (duration === 'custom' ? endDate : nextEndDate) > date;
 		setIsDateValid(isValid);
 	};
 
 	const handleEndDatePick = (date: Date) => {
-		setEndDate(date as Date);
+		setEndDate(date);
 		const isValid = date > startDate;
 		setIsDateValid(isValid);
 	};
@@ -86,8 +109,8 @@ const CreateSprintModal = (props: Props) => {
 			setEndDateDisable(false);
 			setDuration(value);
 		} else if (typeof value === 'number') {
-			setDuration(value);
 			setEndDate(getNextDate(value, startDate));
+			setDuration(value);
 			setEndDateDisable(true);
 			setIsDateValid(true);
 		}
@@ -124,11 +147,11 @@ const CreateSprintModal = (props: Props) => {
 						/>
 					</Form.Field>
 					<Form.Field
-						label="Duration"
+						label={t('duration')}
 						control={() => (
 							<Dropdown
 								value={duration}
-								placeholder="Duration"
+								placeholder={t('duration')}
 								search
 								selection
 								options={DURATIONS}
@@ -137,30 +160,28 @@ const CreateSprintModal = (props: Props) => {
 						)}
 					/>
 					<Form.Field
-						label="Start date"
+						label={t('startDate')}
 						error={!isDateValid}
 						control={() => (
 							<div style={{ display: 'flex', flexDirection: 'column' }}>
 								<DatePicker
+									locale={getLocale()}
 									name="StartTime"
 									dateFormat="MM/dd/yyyy h:mm aa"
 									showTimeSelect
 									selected={startDate}
 									onChange={handleStartDatePick}
 								/>
-								{!isDateValid && (
-									<span style={{ color: 'red' }}>
-										The start date of a sprint must be before the end date.
-									</span>
-								)}
+								{!isDateValid && <span style={{ color: 'red' }}>{t('dateValidationError')}</span>}
 							</div>
 						)}
 					/>
 					<Form.Field
-						label="End date"
+						label={t('endDate')}
 						control={() => (
 							<div style={{ display: 'flex', flexDirection: 'column' }}>
 								<DatePicker
+									locale={getLocale()}
 									disabled={endDateDisable}
 									name="EndTime"
 									dateFormat="MM/dd/yyyy h:mm aa"

@@ -268,4 +268,11 @@ export const ua = {
 	mark_all_as_read: 'Відмітити все як прочитане',
 	watching: 'Відстежуєтся',
 	not_watching: 'Не відстежуєтся',
+	startDate: 'Початок',
+	endDate: 'Кінець',
+	duration: 'Тривалість',
+	dateValidationError: 'Початок спринта повен бути раніше, ніж кінець.',
+	week: 'тиждень',
+	weeks: 'тижні',
+	custom: 'керований',
 };
