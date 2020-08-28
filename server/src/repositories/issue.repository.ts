@@ -129,7 +129,6 @@ export class IssueRepository extends Repository<Issue> {
 
 	async updateOneById(id: string, data: PartialIssue, senderId: string) {
 		const partialIssue = await this.findByIdWithRelIds(id);
-		console.log('update', data.attachments, partialIssue.attachments);
 		await this.update(id, data as any);
 		const newIssue = await this.findOneById(id);
 		issueHandler.emit(IssueActions.UpdateIssue, id, newIssue);

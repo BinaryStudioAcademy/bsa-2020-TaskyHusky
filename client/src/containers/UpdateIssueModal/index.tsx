@@ -188,6 +188,7 @@ const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, p
 							currentLinks={context.data.attachments}
 							onChange={(newFiles) => context.set('attachments', newFiles)}
 							onChangePending={(isPending) => setIsUploadPending(isPending)}
+							issueKey={context.data.issueKey as string}
 						/>
 					</Form.Field>
 					<Form.Field>

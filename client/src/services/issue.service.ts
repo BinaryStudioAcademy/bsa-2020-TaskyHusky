@@ -153,12 +153,15 @@ export const watch = async (id: string): Promise<void> => {
 	});
 };
 
-export const attachFile = async (file: File): Promise<string> => {
+export const attachFile = async (file: File, issueKey: string): Promise<string> => {
 	const res: Response = await callWebApi({
 		method: 'POST',
 		endpoint: 'issue/attachment',
 		attachment: file,
 		attachmentFieldName: 'file',
+		query: {
+			issueKey,
+		},
 	});
 
 	return ((await res.json()) as { link: string }).link;
