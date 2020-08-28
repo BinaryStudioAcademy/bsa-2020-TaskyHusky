@@ -5,6 +5,20 @@ import { IssueRepository } from '../repositories/issue.repository';
 import { UserModel } from '../models/User';
 
 class IssueController {
+	async uploadAttachment(req: Request, res: Response) {
+		const { file } = req;
+		const { originalname } = file;
+
+		try {
+			const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
+			const awsName = `${originalname}_${uniqueSuffix}`;
+			const link = 'https://example.com'; //await uploadS3(issueAttachmentFolder, file, name);
+			res.status(201).send({ link });
+		} catch (err) {
+			res.status(400).send(getWebError(err, 400));
+		}
+	}
+
 	async getAll(req: Request, res: Response) {
 		const repository = getCustomRepository(IssueRepository);
 		const { from, to } = req.body;

@@ -153,7 +153,7 @@ export const watch = async (id: string): Promise<void> => {
 	});
 };
 
-export const attachFile = async (file: File): Promise<WebApi.Result.IssueAttachmentResult> => {
+export const attachFile = async (file: File): Promise<string> => {
 	const res: Response = await callWebApi({
 		method: 'POST',
 		endpoint: 'issue/attachment',
@@ -161,5 +161,5 @@ export const attachFile = async (file: File): Promise<WebApi.Result.IssueAttachm
 		attachmentFieldName: 'file',
 	});
 
-	return (await res.json()) as WebApi.Result.IssueAttachmentResult;
+	return ((await res.json()) as { link: string }).link;
 };

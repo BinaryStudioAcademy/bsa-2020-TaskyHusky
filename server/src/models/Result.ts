@@ -7,12 +7,6 @@ interface UserAuthResult {
 	jwtToken: string;
 }
 
-export interface IssueAttachmentResult {
-	id: string;
-	name: string;
-	link: string;
-}
-
 export interface IssueResult {
 	id: string;
 	type: {
@@ -29,7 +23,7 @@ export interface IssueResult {
 	summary?: string;
 	boardColumn?: BoardColumnResult;
 	labels?: string[];
-	attachments?: IssueAttachmentResult[];
+	attachments?: string[];
 	links?: string[];
 	board?: BoardResult;
 	priority: {

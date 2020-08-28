@@ -51,7 +51,7 @@ namespace WebApi.Issue {
 		summary?: string;
 		boardColumn?: string;
 		labels?: string[];
-		attachments?: IssueAttachmentResult[];
+		attachments?: string[];
 		links?: string[];
 		priority?: string;
 		description?: string;
@@ -73,11 +73,6 @@ namespace WebApi.Result {
 		user: UserModel;
 		jwtToken: string;
 	}
-	interface IssueAttachmentResult {
-		id: string;
-		name: string;
-		link: string;
-	}
 	interface IssueResult {
 		id: string;
 		type: {
@@ -94,7 +89,7 @@ namespace WebApi.Result {
 		summary?: string;
 		boardColumn?: BoardColumnResult;
 		labels?: string[];
-		attachments?: IssueAttachmentResult[];
+		attachments?: string[];
 		links?: string[];
 		board?: BoardResult;
 		priority: {
@@ -272,8 +267,8 @@ namespace WebApi.Entities {
 		boardColumn?: BoardColumn;
 		board?: Board;
 		labels?: string;
-		attachments?: IssueAttachment[];
-		links?: string;
+		attachments?: string[];
+		links?: string[];
 		priority?: Priority;
 		description?: string;
 		sprint?: Sprint;
@@ -284,13 +279,6 @@ namespace WebApi.Entities {
 		watchers?: UserProfile[];
 		createdAt?: Date;
 		updatedAt?: Date;
-	}
-
-	interface IssueAttachment {
-		id: string;
-		name: string;
-		link: string;
-		issue?: Issue;
 	}
 
 	interface IssueComment {

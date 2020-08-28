@@ -20,7 +20,6 @@ const RELS = [
 	'boardColumn',
 	'watchers',
 	'board',
-	'attachments',
 ];
 
 type SortDir = 'DESC' | 'ASC';
@@ -90,11 +89,9 @@ export class IssueRepository extends Repository<Issue> {
 	}
 
 	async createOne(data: Issue) {
-		console.log('create');
 		const entity = this.create(data);
 		const result = await this.save(entity);
 		const newIssue = await this.findOneById(result.id);
-		console.log(entity, newIssue, result);
 		issueHandler.emit(IssueActions.CreateIssue, newIssue);
 
 		return result;
@@ -132,6 +129,7 @@ export class IssueRepository extends Repository<Issue> {
 
 	async updateOneById(id: string, data: PartialIssue, senderId: string) {
 		const partialIssue = await this.findByIdWithRelIds(id);
+		console.log('update', data.attachments, partialIssue.attachments);
 		await this.update(id, data as any);
 		const newIssue = await this.findOneById(id);
 		issueHandler.emit(IssueActions.UpdateIssue, id, newIssue);

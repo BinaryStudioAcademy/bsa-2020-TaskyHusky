@@ -6,12 +6,12 @@ import { Label, Icon, Button } from 'semantic-ui-react';
 
 interface Props {
 	onChangePending?: (pending: boolean) => void;
-	onChange?: (newLinks: WebApi.Result.IssueAttachmentResult[]) => void;
-	files?: WebApi.Result.IssueAttachmentResult[];
+	onChange?: (newLinks: string[]) => void;
+	currentLinks?: string[];
 }
 
-const IssueFileInput: React.FC<Props> = ({ onChange = () => {}, onChangePending = () => {}, files = [] }) => {
-	const upload = async (newFileList: FileList): Promise<WebApi.Result.IssueAttachmentResult[]> => {
+const IssueFileInput: React.FC<Props> = ({ onChange = () => {}, onChangePending = () => {}, currentLinks = [] }) => {
+	const upload = async (newFileList: FileList): Promise<string[]> => {
 		return await Promise.all(Array.from(newFileList).map((file) => attachFile(file)));
 	};
 
@@ -19,9 +19,9 @@ const IssueFileInput: React.FC<Props> = ({ onChange = () => {}, onChangePending 
 		if (newFileList) {
 			onChangePending(true);
 
-			upload(newFileList).then((newFiles) => {
+			upload(newFileList).then((newLinks) => {
 				onChangePending(false);
-				onChange([...files, ...newFiles]);
+				onChange([...currentLinks, ...newLinks]);
 			});
 		}
 	};
@@ -40,19 +40,19 @@ const IssueFileInput: React.FC<Props> = ({ onChange = () => {}, onChangePending 
 				</Button>
 			</FileInput>
 			<div className={styles.smallText}>
-				{files.map((file) => (
-					<Label key={file.id}>
-						<a href={file.link} target="_blank" rel="noopener noreferrer">
-							{file.name}
+				{currentLinks.map((link, i) => (
+					<Label key={i}>
+						<a href={link} target="_blank" rel="noopener noreferrer">
+							{link}
 						</a>
 						<Icon
 							name="delete"
 							link
 							onClick={() => {
-								const index = files.findIndex((fileToCheck) => fileToCheck.id === file.id);
-								const newFiles = [...files];
-								newFiles.splice(index, 1);
-								onChange(newFiles);
+								const index = currentLinks.findIndex((linkToCheck) => linkToCheck === link);
+								const newLinks = [...currentLinks];
+								newLinks.splice(index, 1);
+								onChange(newLinks);
 							}}
 						/>
 					</Label>

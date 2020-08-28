@@ -228,10 +228,8 @@ const CreateIssueModalBody: React.FC<Props> = ({
 						<label>{t('attachments')}</label>
 						<IssueFileInput
 							onChangePending={setIsFileUploadPending}
-							onChange={(attachments: WebApi.Result.IssueAttachmentResult[]) =>
-								context.set('attachments', attachments)
-							}
-							files={context.data.attachments}
+							onChange={(attachments: string[]) => context.set('attachments', attachments)}
+							currentLinks={context.data.attachments}
 						/>
 					</Form.Field>
 					<Form.Field>

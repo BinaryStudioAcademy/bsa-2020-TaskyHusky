@@ -1,5 +1,3 @@
-import { IssueAttachmentResult } from './Result';
-
 export interface PartialIssue {
 	id?: string;
 	type?: string;
@@ -7,7 +5,7 @@ export interface PartialIssue {
 	summary?: string;
 	boardColumn?: string;
 	labels?: string[];
-	attachments?: IssueAttachmentResult[];
+	attachments?: string[];
 	links?: string[];
 	priority?: string;
 	description?: string;

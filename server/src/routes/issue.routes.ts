@@ -4,7 +4,7 @@ import issueType from './issueType.routes';
 import priority from './priority.routes';
 import status from './issueStatus.routes';
 import comment from './issueComment.routes';
-import attachment from './issueAttachment.routes';
+import { uploadIssueAttachment, validateIssueAttachment } from '../middleware/issueAttachmentMiddleware';
 
 const router = Router();
 const controller = new IssueController();
@@ -14,11 +14,11 @@ router
 	.use('/priority', priority)
 	.use('/status', status)
 	.use('/comment', comment)
-	.use('/attachment', attachment)
 	.get('/', controller.getAll)
 	.get('/:id', controller.getById)
 	.get('/byKey/:key', controller.getByKey)
 	.get('/:boardId/boardIssues', controller.getBacklogByBoardId)
+	.post('/attachment', uploadIssueAttachment, validateIssueAttachment, controller.uploadAttachment)
 	.post('/filtered', controller.getFilteredIssues)
 	.post('/:id/watch', controller.watch)
 	.post('/', controller.create)

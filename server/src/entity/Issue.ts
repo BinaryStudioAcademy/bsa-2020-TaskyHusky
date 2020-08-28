@@ -19,7 +19,6 @@ import { BoardColumn } from './BoardColumn';
 import { Sprint } from './Sprint';
 import { Projects } from './Projects';
 import { Board } from './Board';
-import { IssueAttachment } from './IssueAttachment';
 
 @Entity()
 export class Issue {
@@ -46,9 +45,9 @@ export class Issue {
 	@Column({ array: true })
 	labels?: string;
 
-	@OneToMany((type) => IssueAttachment, (attachment) => attachment.issue)
-	@IsNotEmpty()
-	attachments?: IssueAttachment[];
+	@Column({ array: true, nullable: true })
+	@IsArray()
+	attachments?: string;
 
 	@Column({ array: true })
 	@IsArray()
