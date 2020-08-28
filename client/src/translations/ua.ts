@@ -267,6 +267,11 @@ export const ua = {
 	mark_all_as_read: 'Відмітити все як прочитане',
 	watching: 'Відстежуєтся',
 	not_watching: 'Не відстежуєтся',
+	and: 'та',
+	drag_n_drop_files_here: 'Перетягніть файли сюди',
+	click_to_browse: 'Натисніть для завантаження',
+	files_are_available: 'файли доступні',
+	click_to_download: 'Натисніть для скачування',
 	startDate: 'Початок',
 	endDate: 'Кінець',
 	duration: 'Тривалість',
@@ -296,6 +301,6 @@ export const ua = {
 	project_key: 'Ідентифікатор проекту',
 	there_are_no_projects_which_have_been_started_yet:
 		'У вас ще немає проектів, які були розпочаті. Коли це станеться, ви зможете швидко отримати доступ до потрібної Вам роботи',
-	team_owner: 'Творець команды',
+	team_owner: 'Творець команди',
 	you_are_the_first: 'Ви перший і поки що єдиний учасник команди',
 };
