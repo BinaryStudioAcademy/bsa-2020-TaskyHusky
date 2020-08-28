@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Card, Icon, Button } from 'semantic-ui-react';
+import { Card, Icon, Button, TextArea, TextAreaProps } from 'semantic-ui-react';
 import styles from 'containers/TeamPage/styles.module.scss';
 import AditionalModal from 'components/TeamAddPeopleModal/aditionalModal';
 import { useTranslation } from 'react-i18next';
@@ -54,14 +54,15 @@ const TeamDevsCard = ({
 				/>
 			</Card.Content>
 			<Card.Content>
-				<textarea
+				<TextArea
+					as="textarea"
 					placeholder={t('add_some_description')}
 					disabled={lockEditFields}
-					onChange={(e) => setTeamDescription(e.target.value)}
-					defaultValue={teamDescription}
-					rows={4}
+					onChange={(event: TextAreaProps) => setTeamDescription(event.target.value)}
+					value={teamDescription}
+					rows={3}
 					className={lockEditFields ? styles.input_area : `${styles.input_area} ${styles.input_borders}`}
-				></textarea>
+				/>
 			</Card.Content>
 			<Card.Content className={styles.edit_field_btn}>
 				<Button compact color="blue" fluid onClick={() => submitEditFields()}>

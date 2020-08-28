@@ -316,15 +316,14 @@ export const en = {
 	delete_team: 'Delete team',
 	web_address: 'Web address',
 	title: 'Title',
-	for_example: 'For example: My first project',
+	for_example_my_first_project: 'For example: My first project',
 	add_small_specification: 'Add small specification and other members of you team will know, why it\'s important',
 	small_description: 'Small description',
 	delete_link: 'Delete this link',
 	link_to: 'Link to',
 	will_be_deleted_from_section: 'will be deleted from team links section',
 	project_key: 'Project key',
-	there_are_no_projects: 'There are no projects which have been started yet. When it&apos;ll happen you can get quick access to one you need',
+	there_are_no_projects_which_have_been_started_yet: 'There are no projects which have been started yet. When it&apos;ll happen you can get quick access to one you need',
 	team_owner: 'Team owner',
-	you_are_the_first:'You are the first member of this team',
-
+	you_are_the_first: 'You are the first member of this team',
 };

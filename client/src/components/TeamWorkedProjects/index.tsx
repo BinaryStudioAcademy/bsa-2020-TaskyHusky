@@ -42,7 +42,9 @@ const TeamWorkedProjects = ({ projects }: Props) => {
 							<Image src={worksImg} size="small" />
 							<div className={styles.worked_block}>
 								<Header as="h4">{t('no_works')}</Header>
-								<p className={styles.p_descr}>{t('there_are_no_projects')}</p>
+								<p className={styles.p_descr}>
+									{t('there_are_no_projects_which_have_been_started_yet')}
+								</p>
 							</div>
 						</>
 					)}

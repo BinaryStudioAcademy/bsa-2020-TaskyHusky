@@ -44,7 +44,7 @@ const CreateLink = ({ onClose, currentLink, onConfirm }: Props) => {
 						<input
 							value={newLink.name}
 							onChange={(e) => onChange(e)}
-							placeholder={t('for_example ')}
+							placeholder={t('for_example_my_first_project')}
 							name="name"
 						/>
 					</Form.Field>
