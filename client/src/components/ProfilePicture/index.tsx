@@ -58,7 +58,7 @@ const ProfilePicture: React.FC<Props> = (props: Props) => {
 								<>
 									<Icon name="photo" size="big" className={styles.editBtn} />
 									<input
-										accept="*.jpg,*.jpeg,*.png,*.bmp"
+										accept=".jpg, .jpeg, .png, .bmp"
 										id="contained-button-file"
 										multiple
 										type="file"
