@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Modal, Form, Button, Header, Icon, Divider } from 'semantic-ui-react';
+import { Modal, Form, Button, Header, Icon, Divider, InputOnChangeData } from 'semantic-ui-react';
 import { useCreateIssueModalContext } from './logic/context';
 import TagsInput from 'components/common/TagsInput';
 import { connect, useDispatch, useSelector } from 'react-redux';
@@ -9,6 +9,7 @@ import { generateRandomString } from 'helpers/randomString.helper';
 import { KeyGenerate } from 'constants/KeyGenerate';
 import { useTranslation } from 'react-i18next';
 import { getUsername } from 'helpers/getUsername.helper';
+import { isNumber } from 'util';
 
 interface Props {
 	children: JSX.Element;
@@ -46,6 +47,7 @@ const CreateIssueModalBody: React.FC<Props> = ({
 }) => {
 	const { t } = useTranslation();
 	const [isOpened, setIsOpened] = useState<boolean>(false);
+	const [isStoryPointValid, setIsStoryPointValid] = useState(true);
 	const dispatch = useDispatch();
 	const context = useCreateIssueModalContext();
 	const user = useSelector((state: RootState) => state.auth.user);
@@ -107,7 +109,7 @@ const CreateIssueModalBody: React.FC<Props> = ({
 		const projectCond = !projectID && !boardColumnID ? context.data.project : true;
 		const allFields = context.data.type && context.data.summary && context.data.priority && projectCond;
 
-		if (!allFields) {
+		if (!allFields || !isStoryPointValid) {
 			return;
 		}
 
@@ -128,6 +130,18 @@ const CreateIssueModalBody: React.FC<Props> = ({
 		}
 
 		setIsOpened(false);
+	};
+
+	const handleStoryPointChange = (event: React.ChangeEvent<HTMLInputElement>, data: InputOnChangeData) => {
+		const { value } = data;
+		const number = parseInt(value, 10);
+
+		if (isNumber(number) && number < 99999 && number >= 0) {
+			context.set('storyPoint', data.value);
+			setIsStoryPointValid(true);
+		} else {
+			setIsStoryPointValid(false);
+		}
 	};
 
 	return (
@@ -211,6 +225,15 @@ const CreateIssueModalBody: React.FC<Props> = ({
 							placeholder={t('assigned')}
 							options={usersOpts}
 							onChange={(event, data) => context.set('assigned', data.value)}
+						/>
+					</Form.Field>
+					<Form.Field>
+						<label>{t('storyPoint')}</label>
+						<Form.Input
+							error={!isStoryPointValid}
+							placeholder={t('storyPoint')}
+							fluid
+							onChange={handleStoryPointChange}
 						/>
 					</Form.Field>
 					<Form.Field>

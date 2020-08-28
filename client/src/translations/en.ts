@@ -334,4 +334,5 @@ export const en = {
 		'There are no projects which have been started yet. When it&apos;ll happen you can get quick access to one you need',
 	team_owner: 'Team owner',
 	you_are_the_first: 'You are the first member of this team',
+	storyPoint: 'Story point',
 };

@@ -168,6 +168,8 @@ const IssuePageInfoColumn: React.FC<Props> = ({
 					<Icon name={issue.priority.icon as any} />
 					{issue.priority.title}
 				</Label>
+				<h4>{t('storyPoint')}</h4>
+				{<Label style={{ borderRadius: '40%' }}>{issue.storyPoint || 0}</Label>}
 			</div>
 			<ContextProvider customInitalState={initialIssue}>
 				<UpdateIssueModal current={initialIssue} getOpenFunc={(open) => (openEditModal = open)} />

@@ -62,6 +62,7 @@ namespace WebApi.Issue {
 		assigned?: string;
 		creator?: string;
 		watchers?: string[];
+		storyPoint?: number;
 	}
 	interface PartialIssueComment {
 		text?: string;
@@ -105,6 +106,7 @@ namespace WebApi.Result {
 		watchers?: UserModel[];
 		assigned?: UserModel;
 		creator: UserModel;
+		storyPoint: number;
 	}
 	interface IssueCommentResult {
 		id: string;
@@ -281,6 +283,7 @@ namespace WebApi.Entities {
 		watchers?: UserProfile[];
 		createdAt?: Date;
 		updatedAt?: Date;
+		storyPoint?: number;
 	}
 
 	interface IssueComment {

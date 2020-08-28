@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Modal, Button, Header, Icon, Divider } from 'semantic-ui-react';
+import { Form, Modal, Button, Header, Icon, Divider, InputOnChangeData } from 'semantic-ui-react';
 import { connect, useDispatch } from 'react-redux';
 import { RootState } from 'typings/rootState';
 import TagsInput from 'components/common/TagsInput';
@@ -7,6 +7,7 @@ import { useCreateIssueModalContext } from 'containers/CreateIssueModal/logic/co
 import { updateIssue } from 'pages/IssuePage/logic/actions';
 import { useTranslation } from 'react-i18next';
 import { getUsername } from 'helpers/getUsername.helper';
+import { isNumber } from 'util';
 
 interface Props {
 	current: WebApi.Issue.PartialIssue;
@@ -27,6 +28,7 @@ interface SelectOption {
 const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, priorities, users, onSubmit }) => {
 	const context = useCreateIssueModalContext();
 	const [opened, setOpened] = useState<boolean>(false);
+	const [isStoryPointValid, setIsStoryPointValid] = useState(true);
 	const dispatch = useDispatch();
 	const { t } = useTranslation();
 	getOpenFunc(() => setOpened(true));
@@ -75,7 +77,7 @@ const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, p
 		event.preventDefault();
 		const allFields = context.data.type && context.data.priority && context.data.summary;
 
-		if (!allFields) {
+		if (!allFields || !isStoryPointValid) {
 			return;
 		}
 
@@ -93,6 +95,18 @@ const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, p
 
 		if (onSubmit) {
 			onSubmit(data);
+		}
+	};
+
+	const handleStoryPointChange = (event: React.ChangeEvent<HTMLInputElement>, data: InputOnChangeData) => {
+		const { value } = data;
+		const number = parseInt(value, 10);
+
+		if (isNumber(number) && number < 99999 && number >= 0) {
+			context.set('storyPoint', data.value);
+			setIsStoryPointValid(true);
+		} else {
+			setIsStoryPointValid(false);
 		}
 	};
 
@@ -170,6 +184,16 @@ const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, p
 							placeholder={t('assigned')}
 							options={usersOpts}
 							onChange={(event, data) => context.set('assigned', data.value)}
+						/>
+					</Form.Field>
+					<Form.Field>
+						<label>{t('storyPoint')}</label>
+						<Form.Input
+							error={!isStoryPointValid}
+							placeholder={t('storyPoint')}
+							fluid
+							defaultValue={current.storyPoint}
+							onChange={handleStoryPointChange}
 						/>
 					</Form.Field>
 					<Form.Field>
