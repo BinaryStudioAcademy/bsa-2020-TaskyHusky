@@ -33,7 +33,7 @@ const AdvancedFilters: React.FC = () => {
 					{getDefaultFilterParts(filterParts).map((part) => (
 						<FilterPart key={part.id} filterPart={part} />
 					))}
-					<MoreFilterPartsDropdown
+					<MoreFilterPartsDropdown 
 						additionalFilterParts={getAdditionalFilterParts(filterParts)}
 						addedFilterParts={addedFilterParts}
 						setAddedFilterParts={(data) => setAddedFilterPartsHandler(data)}
