@@ -1,9 +1,12 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { SprintHeader } from './SprintHeader/index';
+import { SprintHeader } from './SprintHeader';
 import { SprintIssues } from './SprintIssues';
 
-type Props = { sprint: WebApi.Entities.Sprint; issues: WebApi.Entities.Issue[] };
+interface Props {
+	sprint: WebApi.Entities.Sprint;
+	issues: WebApi.Entities.Issue[];
+}
 
 interface DragProps {
 	listId: string;

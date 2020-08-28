@@ -62,4 +62,15 @@
 	.priorityItem {
 		width: 15px;
 	}
+
+	.backLight {
+		box-shadow: 0px 0px 10px #c3c3c3;
+		transition: box-shadow 0.2s ease;
+	}
+
+	.issuesList {
+		margin-top: 14px;
+		margin-bottom: 14px;
+		padding: 10px;
+	}
 }

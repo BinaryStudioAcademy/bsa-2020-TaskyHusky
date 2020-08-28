@@ -22,11 +22,7 @@ export const SprintIssues: React.FC<Props & DragProps> = (props: Props & DragPro
 	const renderIssues = (dropProvided: DroppableProvided) => {
 		return (
 			<div ref={dropProvided.innerRef}>
-				<List
-					selection={!!props.issues?.length}
-					verticalAlign="middle"
-					style={{ marginTop: '14px', marginBottom: '14px' }}
-				>
+				<List selection={!!props.issues?.length} verticalAlign="middle" className={styles.issuesList}>
 					{!!props.issues?.length ? (
 						props.issues.map((issue, index) => (
 							<Draggable key={issue.id} draggableId={issue.id} index={index}>
@@ -90,7 +86,7 @@ export const SprintIssues: React.FC<Props & DragProps> = (props: Props & DragPro
 	return (
 		<Droppable droppableId={props.listId} type={props.listType} direction="vertical" isCombineEnabled={false}>
 			{(dropProvided, dropSnapshot) => (
-				<div {...dropProvided.droppableProps}>
+				<div className={dropSnapshot.isDraggingOver ? styles.backLight : ''} {...dropProvided.droppableProps}>
 					{props.internalScroll ? <div>{renderIssues(dropProvided)}</div> : renderIssues(dropProvided)}
 				</div>
 			)}
