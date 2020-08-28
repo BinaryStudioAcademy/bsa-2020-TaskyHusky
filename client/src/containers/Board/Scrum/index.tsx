@@ -1,5 +1,5 @@
 import React, { useState, useEffect, ChangeEvent } from 'react';
-import { Header, Container, Form, Button, InputOnChangeData } from 'semantic-ui-react';
+import { Header, Container, Form, Button, InputOnChangeData, Icon } from 'semantic-ui-react';
 import { BoardComponent } from '../';
 import { useTranslation } from 'react-i18next';
 import styles from './style.module.scss';
@@ -148,6 +148,16 @@ const Scrum: BoardComponent = (props) => {
 						{t('create_sprint')}
 					</Button>
 				</Container>
+
+				{!!sprints.filter((sprint) => !sprint.isCompleted).length ? null : (
+					<Container className={styles.noSprintsContainer}>
+						<Icon name="info circle" size="huge" />
+						<Header as="h2" className={styles.noSprintsHeader}>
+							<Header.Content>{t('no_sprints_header')}</Header.Content>
+							<Header.Subheader>{t('no_sprints_header_subheader')}</Header.Subheader>
+						</Header>
+					</Container>
+				)}
 
 				<DragDropContext onDragEnd={onDragEndDrop}>{sprintList}</DragDropContext>
 			</Container>
