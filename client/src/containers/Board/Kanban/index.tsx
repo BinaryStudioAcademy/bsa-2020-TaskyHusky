@@ -7,6 +7,7 @@ import { extractIdFormDragDropId } from 'helpers/extractId.helper';
 import { getByKey, updateIssueByKey } from 'services/issue.service';
 import { Header, Form, Button, Breadcrumb } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
+import { convertIssueResultToPartialIssue } from 'helpers/issueResultToPartialIssue';
 
 const Kanban: BoardComponent = ({ board }) => {
 	const [search, setSearch] = useState<string>('');
@@ -28,18 +29,10 @@ const Kanban: BoardComponent = ({ board }) => {
 		getByKey(cardKey).then((issue) => {
 			const { watchers, ...issueToSend } = issue;
 
-			return updateIssueByKey(cardKey, {
-				...issueToSend,
-				boardColumn: destinationId,
-				type: issue.type.id,
-				priority: issue.priority.id,
-				board: issue.board?.id,
-				sprint: issue.sprint?.id,
-				project: issue.project?.id,
-				creator: issue.creator.id,
-				assigned: issue.assigned?.id,
-				status: issue.status?.id,
-			});
+			return updateIssueByKey(
+				cardKey,
+				convertIssueResultToPartialIssue(issueToSend, { boardColumn: destinationId }),
+			);
 		});
 	};
 

@@ -10,6 +10,7 @@
 	&:focus {
 		.dropdownMenu {
 			display: block !important;
+			min-width: 200px !important;
 		}
 	}
 	.dropdownMenu {
