@@ -9,11 +9,12 @@ interface Props {
 	email: string;
 	sendEmail: (event: any) => void;
 	newEmail: boolean;
+	title: string;
 }
 
 const SubmitEmail: React.FC<Props> = (props: Props) => {
 	const { t } = useTranslation();
-	const { email, sendEmail, newEmail } = props;
+	const { email, sendEmail, newEmail, title } = props;
 	const [emailData, setEmailData] = useState<string>('');
 	const [isEmailValid, setIsEmailValid] = useState<boolean>(true);
 	const [errorMessage, setErrorMessage] = useState<string>('');
@@ -47,7 +48,7 @@ const SubmitEmail: React.FC<Props> = (props: Props) => {
 			<SubmitedInput
 				text={emailData}
 				propKey="email"
-				title={t('email_title')}
+				title={title}
 				placeholder={t('email_placeholder')}
 				type="text"
 				handleChange={handleChange}

@@ -15,17 +15,18 @@ const SecurityManager = () => {
 	const { t } = useTranslation();
 	const dispatch = useDispatch();
 	const acceptLength = 6;
+
 	const [passwords, setPasswords] = useState({
 		oldPassword: '',
 		newPassword: '',
 		repeatedPassword: '',
 	});
-
 	const [isRepeatedPassValid, setIsRepeatedPassValid] = useState<boolean>(false);
 	const [isPasswordValid, setIsPasswordValid] = useState<boolean>(true);
 	const [errorMessage, setErrorMessage] = useState<string>('');
 	const [isPasswordSecure, setIsPasswordSecure] = useState<boolean>(false);
 	const [isFormSubmited, setIsFormSubmited] = useState<boolean>(false);
+	const [isShowHidden, setIsShowHidden] = useState<boolean>(false);
 
 	const isSubmitPossible =
 		isRepeatedPassValid &&
@@ -35,6 +36,10 @@ const SecurityManager = () => {
 		passwords.newPassword;
 
 	const email = useSelector((state: RootState) => state.user.email);
+
+	const showHiddenContent = () => {
+		setIsShowHidden(!isShowHidden);
+	};
 
 	const handleChange = (event: any) => {
 		setPasswords({
@@ -86,6 +91,7 @@ const SecurityManager = () => {
 
 	const sendEmail = (emailData: string) => {
 		dispatch(sendPassResetLink({ email: emailData }));
+		setIsShowHidden(false);
 	};
 
 	const onClose = () => {
@@ -138,8 +144,13 @@ const SecurityManager = () => {
 					<Button className={styles.submitButton} type="submit" disabled={!isSubmitPossible}>
 						{t('save_changes')}
 					</Button>
-					<SubmitEmail sendEmail={sendEmail} email={email} newEmail={true} />
 				</Form>
+				<Button className={styles.forgotPass} onClick={showHiddenContent}>
+					{t('forgot_pass')}
+				</Button>
+				{isShowHidden && (
+					<SubmitEmail sendEmail={sendEmail} email={email} newEmail={true} title={t('email_confirm_pass')} />
+				)}
 			</div>
 		</section>
 	);

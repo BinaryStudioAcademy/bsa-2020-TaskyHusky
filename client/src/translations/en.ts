@@ -127,7 +127,7 @@ export const en = {
 	del_btn: 'Delete account',
 	change_email: 'Change Email',
 	current_email: 'Your current email adress is ',
-	email_title: 'New Email Adress',
+	new_email_title: 'New Email Adress',
 	email_placeholder: 'Enter new email adress',
 	send_email_notif: 'Send me email notifications',
 	dont_send_email_notif: 'Do not send me email notifications',
@@ -307,4 +307,6 @@ export const en = {
 	confirm_email_change: 'Confirm email change',
 	type_pass_confirm_email: 'Type your passsword to confirm email change',
 	email_update: 'Your email was successfully changed',
+	email_confirm_pass: 'Type your current email to confirm sending reset link',
+	forgot_pass: 'Forgot your password?',
 };

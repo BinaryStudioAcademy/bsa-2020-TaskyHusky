@@ -30,7 +30,7 @@ const EmailManager = () => {
 					{t('current_email')}
 					{email}
 				</p>
-				<SubmitEmail sendEmail={sendEmail} email={email} newEmail={false} />
+				<SubmitEmail sendEmail={sendEmail} email={email} newEmail={false} title={t('new_email_title')} />
 				<h4 className={styles.cardHeader}>{t('email_notif')}</h4>
 				<p className={styles.textData}>{t('content_notif')}</p>
 				<Select

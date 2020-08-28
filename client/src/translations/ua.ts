@@ -128,7 +128,7 @@ export const ua = {
 	del_btn: 'Видалити обліковий запис',
 	change_email: 'Змінити адресу електронної пошти',
 	current_email: 'Поточна адреса електронної пошти – ',
-	email_title: 'Нова адреса електронної пошти',
+	new_email_title: 'Нова адреса електронної пошти',
 	email_placeholder: 'Укажіть нову адресу електронної пошти',
 	send_email_notif: 'Відправляти мені сповіщення по електронній пошті',
 	dont_send_email_notif: 'Не відправляти мені сповіщення по електронній пошті',
@@ -272,4 +272,6 @@ export const ua = {
 	confirm_email_change: 'Підтвердіть змінення email',
 	type_pass_confirm_email: 'Введіть пароль для підтвердження зміни email',
 	email_update: 'Email змінено',
+	email_confirm_pass: 'Введіть свій email для підтвердження відправки посилання на зміну паролю',
+	forgot_pass: 'Забули пароль?',
 };
