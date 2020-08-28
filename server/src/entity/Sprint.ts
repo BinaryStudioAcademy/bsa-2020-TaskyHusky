@@ -32,11 +32,11 @@ export class Sprint {
 	@OneToMany((type) => Issue, (issue) => issue.sprint, { onDelete: 'CASCADE', eager: true })
 	issues!: Issue[];
 
-	@Column()
+	@Column({ nullable: true })
 	@IsDate()
-	startDate!: Date;
+	startDate?: Date;
 
-	@Column()
+	@Column({ nullable: true })
 	@IsDate()
-	endDate!: Date;
+	endDate?: Date;
 }
