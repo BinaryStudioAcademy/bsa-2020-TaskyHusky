@@ -5,10 +5,14 @@
 
 .text_modal {
   color: #292828;
+  text-align: justify;
   font-size: 1.2rem;
 }
 .title_modal {
   color: #292828;
+  width: 100%;
+  display: block;
+  text-align: center !important;
   font-size: 1.4rem;
   text-transform: uppercase;
 }

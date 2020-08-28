@@ -14,7 +14,7 @@ const DeleteLink = ({ onClose, link, onDelete }: Props) => {
 	const { t } = useTranslation();
 
 	return (
-		<Modal onClose={onClose} open size="tiny">
+		<Modal onClose={onClose} dimmer="inverted" open size="tiny">
 			<Modal.Header>{t('delete_link')}</Modal.Header>
 			<Modal.Content>
 				<p className={styles.link_description}>

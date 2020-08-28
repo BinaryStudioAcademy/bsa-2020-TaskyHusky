@@ -49,18 +49,18 @@ const ModalViewProfile = ({ user, onClose }: Props) => {
 							<div className={styles.details}>
 								<span>
 									<Icon name="at" size="small" color="grey" />
-									{user.email}
+									<span className={styles.user_field}>{user.email}</span>
 								</span>
 								{user.location && (
 									<span>
 										<Icon name="map signs" size="small" color="grey" />
-										{user.location}
+										<span className={styles.user_field}>{user.location}</span>
 									</span>
 								)}
 								{user.department && (
 									<span>
 										<Icon name="building" size="small" color="grey" />
-										{user.department}
+										<span className={styles.user_field}>{user.department}</span>
 									</span>
 								)}
 								<Link to={`/profile/${user.id}`}>

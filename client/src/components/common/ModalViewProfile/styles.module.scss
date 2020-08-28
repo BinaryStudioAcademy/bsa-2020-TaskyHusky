@@ -2,8 +2,8 @@
   position: absolute;
   left: 29%;
   bottom: 40%;
-  width: 400px;
-  height: 300px;
+  width: 300px;
+  height: 250px;
   border: 1px solid #cccccc;
   box-shadow: 0px 0px 6px #cccccc;
   box-sizing: border-box;
@@ -12,36 +12,39 @@
   .header {
     display: flex;
     width: 100%;
-    height: 110px;
+    height: 70px;
     border-bottom: 1px solid #cccccc;
+    overflow: hidden;
     .name {
       display: flex;
       flex-direction: column;
       color: #ffffff;
-      font-size: 1.2rem;
+      font-size: 0.9rem;
       align-self: flex-end;
-      padding: 10px 0;
       span {
-        padding: 6px 0;
+        padding: 3px 0;
         &:first-child {
-          font-size: 1.3rem;
+          font-size: 1.2rem;
         }
       }
     }
   }
   .avatar {
     position: absolute;
-    top: 40px;
-    left: 35px;
+    top: 35px;
+    left: 25px;
     img,
     a > div > div {
-      width: 130px;
-      height: 130px;
+      width: 70px;
+      height: 70px;
       border-radius: 50%;
+    }
+    img {
+      background-color: #ffffff;
     }
 
     span {
-      font-size: 4rem;
+      font-size: 3rem;
       text-align: center;
     }
   }
@@ -57,9 +60,16 @@
       flex-direction: column;
       justify-content: space-between;
       color: #3a3a3a;
-      font-size: 1.2rem;
+      font-size: 1rem;
       span {
         padding: 6px 0;
+        display: flex;
+        align-items: center;
+
+        .user_field {
+          max-width: 150px;
+          overflow: hidden;
+        }
       }
       a {
         display: flex;
@@ -72,5 +82,6 @@
 .left_margin {
   display: block;
   box-sizing: border-box;
-  width: 200px;
+  width: 120px;
+  min-width: 120px !important;
 }

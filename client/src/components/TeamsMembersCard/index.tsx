@@ -68,7 +68,7 @@ const TeamsMembersCard = ({ title, removeFromTeam, teammates = [] }: Props) => {
 								<p className={styles.metainfo}>{el.jobTitle}</p>
 							</div>
 							{modal && viewUser?.id === el.id && (
-								<ModalViewProfile key={el.id} user={viewUser} onClose={hideModal}/>
+								<ModalViewProfile key={el.id} user={viewUser} onClose={hideModal} />
 							)}
 						</div>
 					</Card.Content>

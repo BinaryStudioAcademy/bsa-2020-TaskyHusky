@@ -59,7 +59,7 @@ const TeamAddPeopleModal = ({ onConfirm, onClose, search, searchLoading, people,
 	};
 
 	return (
-		<Modal onClose={() => onClose(false)} open size="small">
+		<Modal onClose={() => onClose(false)} dimmer="inverted" open size="small">
 			<Modal.Header>{t('add_teammates')}</Modal.Header>
 			<Modal.Content>
 				{chosenUsers.length > 0 && <ChosenPeople users={chosenUsers} />}
