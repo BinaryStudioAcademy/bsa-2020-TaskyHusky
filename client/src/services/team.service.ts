@@ -115,3 +115,11 @@ export const addUsersToTeam = async (id: string, users?: WebApi.Entities.UserPro
 	});
 	return (await result.json()) as WebApi.Entities.UserProfile[];
 };
+
+export const deleteTeamRequest = async (id: string) => {
+	const result = await callWebApi({
+		method: 'DELETE',
+		endpoint: `team/${id}`,
+	});
+	return await result.json();
+};

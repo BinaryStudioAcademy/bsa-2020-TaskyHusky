@@ -7,6 +7,7 @@ import {
 	getTeamsUsers,
 	findUsersColleagues,
 	addUsersToTeam,
+	deleteTeamRequest
 } from 'services/team.service';
 import { all, put, takeEvery, call } from 'redux-saga/effects';
 import * as actionTypes from './actionTypes';
@@ -89,6 +90,17 @@ function* inviteUsersToTeam(props: Props) {
 	}
 }
 
+function* deleteTeam(props: Props) {
+	try {
+		yield call(deleteTeamRequest, props.id);
+		yield put(actions.deleteTeamSuccess());
+		NotificationManager.info('Team has been deleted', 'Info', 4000);
+		window.location.replace('/people');
+	} catch (error) {
+		NotificationManager.error('Error delete team', 'Error', 4000);
+	}
+}
+
 function* clearResultField() {
 	yield put(actions.clearResultsDone());
 }
@@ -120,6 +132,10 @@ export function* watchAddPeopleToTeam() {
 	yield takeEvery(actionTypes.ADD_PEOPLE_TO_TEAM_LOADING, inviteUsersToTeam);
 }
 
+export function* watchDeleteTeam() {
+	yield takeEvery(actionTypes.DELETE_TEAM_LOADING, deleteTeam);
+}
+
 export default function* teamSaga() {
 	yield all([
 		watchStartLoading(),
@@ -128,5 +144,6 @@ export default function* teamSaga() {
 		watchDeleteLinksLoading(),
 		watchSearchPeopleLoading(),
 		watchAddPeopleToTeam(),
+		watchDeleteTeam()
 	]);
 }

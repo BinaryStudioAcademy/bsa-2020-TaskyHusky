@@ -91,6 +91,9 @@ export const teamReducer = createReducer<TeamState>(initialState, {
 			},
 		};
 	},
+	[actionTypes.DELETE_TEAM_SUCCESS](state: TeamState) {
+		return initialState
+	},
 
 	[actionTypes.LOADING](state: TeamState) {
 		return {

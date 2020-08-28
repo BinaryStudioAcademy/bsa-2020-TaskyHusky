@@ -28,6 +28,9 @@ export const CLEAR_FOUND_USERS_DONE = 'TEAM:CLEAR_FOUND_USERS_DONE';
 export const ADD_PEOPLE_TO_TEAM_LOADING = 'TEAM:ADD_PEOPLE_TO_TEAM_LOADING';
 export const ADD_PEOPLE_TO_TEAM_SUCCESS = 'TEAM:ADD_PEOPLE_TO_TEAM_SUCCESS';
 
+export const DELETE_TEAM_LOADING = 'TEAM:DELETE_TEAM_LOADING';
+export const DELETE_TEAM_SUCCESS = 'TEAM:DELETE_TEAM_SUCCESS';
+
 export type startAddingUsers = {
 	id: string;
 	users: WebApi.Entities.UserProfile[];
@@ -88,3 +91,6 @@ export type EditFieldLoadingArgs = {
 export type EditFieldSuccess = {
 	field: { [key: string]: string | [] };
 };
+export type DeleteTeamLoading = {
+	id: string;
+}

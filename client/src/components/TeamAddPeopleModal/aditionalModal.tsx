@@ -5,9 +5,10 @@ import { useTranslation } from 'react-i18next';
 
 type Props = {
 	setShowDelete: (arg: boolean) => void;
+	confirmDelete: () => void;
 };
 
-const AditionalModal = ({ setShowDelete }: Props) => {
+const AditionalModal = ({ setShowDelete, confirmDelete }: Props) => {
 	const { t } = useTranslation();
 
 	return (
@@ -22,7 +23,7 @@ const AditionalModal = ({ setShowDelete }: Props) => {
 			</Modal.Content>
 			<Modal.Actions>
 				<Button content={t('cancel')} onClick={() => setShowDelete(false)} />
-				<Button icon="check" content={t('Im_sure')} color="red" onClick={() => console.log('deleted')} />
+				<Button icon="check" content={t('Im_sure')} color="red" onClick={confirmDelete} />
 			</Modal.Actions>
 		</Modal>
 	);

@@ -11,6 +11,7 @@ type CardProps = {
 	description?: string;
 	name?: string;
 	showAddPeopleModal: () => void;
+	confirmDelete: () => void;
 	changeMainFields: (arg: { [key: string]: string }) => void;
 };
 
@@ -19,6 +20,7 @@ const TeamDevsCard = ({
 	showAddPeopleModal,
 	teamOwner,
 	changeMainFields,
+	confirmDelete,
 	description = ' ',
 	name = ' ',
 }: CardProps) => {
@@ -84,7 +86,7 @@ const TeamDevsCard = ({
 					</Button>
 				</Button.Group>
 			</Card.Content>
-			{showDelete && <AditionalModal setShowDelete={setShowDelete} />}
+			{showDelete && <AditionalModal confirmDelete={confirmDelete} setShowDelete={setShowDelete} />}
 		</Card>
 	);
 };

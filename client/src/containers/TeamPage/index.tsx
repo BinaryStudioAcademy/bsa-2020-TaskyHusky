@@ -115,6 +115,8 @@ const TeamPage = ({
 	const handlerRemoveFromTeam = (id: string) => {
 		console.log('deleted');
 	};
+	const confirmDeleteTeam = () => dispatch(actions.deleteTeamLoading({ id: params.id }));
+
 	return loading ? (
 		<Spinner />
 	) : (
@@ -125,6 +127,7 @@ const TeamPage = ({
 			<Grid.Row className={styles.main_row}>
 				<Grid.Column className={`${styles.col_media} ${styles.col_left}`}>
 					<TeamDevsCard
+						confirmDelete={confirmDeleteTeam}
 						currentProfile={currentProfile}
 						teamOwner={team.createdBy}
 						changeMainFields={changeMainFields}
