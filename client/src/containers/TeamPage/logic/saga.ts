@@ -7,13 +7,16 @@ import {
 	getTeamsUsers,
 	findUsersColleagues,
 	addUsersToTeam,
-	deleteTeamRequest
+	deleteTeamRequest,
+	removeUserFromTeamRequest
 } from 'services/team.service';
 import { all, put, takeEvery, call } from 'redux-saga/effects';
 import * as actionTypes from './actionTypes';
 import * as actions from './actions';
 import { Link } from '../index';
 import { NotificationManager } from 'react-notifications';
+import history from 'helpers/history.helper';
+
 
 type Props = {
 	id: string;
@@ -23,6 +26,11 @@ type Props = {
 	match?: string;
 	users?: WebApi.Entities.UserProfile[];
 };
+type RemoveUserFromTeam = {
+	userId: string,
+	teamId: string,
+	type: string
+}
 
 export function* fetchTeam(props: Props) {
 	try {
@@ -95,7 +103,19 @@ function* deleteTeam(props: Props) {
 		yield call(deleteTeamRequest, props.id);
 		yield put(actions.deleteTeamSuccess());
 		NotificationManager.info('Team has been deleted', 'Info', 4000);
-		window.location.replace('/people');
+		history.push('/people');
+	} catch (error) {
+		NotificationManager.error('Error delete team', 'Error', 4000);
+	}
+}
+
+function* removeUserFromTeam(props: RemoveUserFromTeam) {
+	try {
+		yield call(removeUserFromTeamRequest, props.userId, props.teamId);
+
+		//	yield put(actions.deleteTeamSuccess());
+
+		NotificationManager.info('User has been removed', 'Info', 4000);
 	} catch (error) {
 		NotificationManager.error('Error delete team', 'Error', 4000);
 	}
@@ -136,6 +156,10 @@ export function* watchDeleteTeam() {
 	yield takeEvery(actionTypes.DELETE_TEAM_LOADING, deleteTeam);
 }
 
+export function* watchDeletePeopleFromTeam() {
+	yield takeEvery(actionTypes.DELETE_PEOPLE_FROM_TEAM_LOADING, removeUserFromTeam);
+}
+
 export default function* teamSaga() {
 	yield all([
 		watchStartLoading(),
@@ -144,6 +168,7 @@ export default function* teamSaga() {
 		watchDeleteLinksLoading(),
 		watchSearchPeopleLoading(),
 		watchAddPeopleToTeam(),
-		watchDeleteTeam()
+		watchDeleteTeam(),
+		watchDeletePeopleFromTeam()
 	]);
 }

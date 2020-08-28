@@ -28,6 +28,9 @@ export const CLEAR_FOUND_USERS_DONE = 'TEAM:CLEAR_FOUND_USERS_DONE';
 export const ADD_PEOPLE_TO_TEAM_LOADING = 'TEAM:ADD_PEOPLE_TO_TEAM_LOADING';
 export const ADD_PEOPLE_TO_TEAM_SUCCESS = 'TEAM:ADD_PEOPLE_TO_TEAM_SUCCESS';
 
+export const DELETE_PEOPLE_FROM_TEAM_LOADING = 'TEAM:DELETE_PEOPLE_FROM_TEAM_LOADING';
+export const DELETE_PEOPLE_FROM_TEAM_SUCCESS = 'TEAM:DELETE_PEOPLE_FROM_TEAM_SUCCESS';
+
 export const DELETE_TEAM_LOADING = 'TEAM:DELETE_TEAM_LOADING';
 export const DELETE_TEAM_SUCCESS = 'TEAM:DELETE_TEAM_SUCCESS';
 
@@ -88,9 +91,20 @@ export type EditFieldLoadingArgs = {
 	id: string;
 	field: { [key: string]: string | [] };
 };
+
 export type EditFieldSuccess = {
 	field: { [key: string]: string | [] };
 };
+
 export type DeleteTeamLoading = {
 	id: string;
+}
+
+export type DeletePeopleLoading = {
+	teamId: string;
+	userId: string;
+}
+
+export type DeletePeopleSuccess = {
+	users: WebApi.Entities.UserProfile[];
 }

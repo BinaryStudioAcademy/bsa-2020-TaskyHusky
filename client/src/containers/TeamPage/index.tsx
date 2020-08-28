@@ -112,10 +112,10 @@ const TeamPage = ({
 	const onAddPeopleToTeamConfirm = (users: WebApi.Entities.UserProfile[]) => {
 		dispatch(actions.addPeopleToTeamLoading({ id: params.id, users }));
 	};
-	const handlerRemoveFromTeam = (id: string) => {
-		console.log('deleted');
-	};
-	const confirmDeleteTeam = () => dispatch(actions.deleteTeamLoading({ id: params.id }));
+	const handlerRemoveFromTeam = (userId: string) =>
+		dispatch(actions.deletePeopleFromTeamLoading({ userId, teamId: team.id }));
+
+	const confirmDeleteTeam = () => dispatch(actions.deleteTeamLoading({ id: team.id }));
 
 	return loading ? (
 		<Spinner />
@@ -135,8 +135,16 @@ const TeamPage = ({
 						name={team.name}
 						showAddPeopleModal={showAddPeopleModal}
 					/>
-					<TeamsMembersCard teammates={[{ ...team.createdBy }]} title={'team_owner'} />
-					<TeamsMembersCard teammates={team.users} title={'members'} removeFromTeam={handlerRemoveFromTeam} />
+					<TeamsMembersCard
+						teammates={[{ ...team.createdBy }]}
+						title={'team_owner'}
+						removeUserFromTeam={handlerRemoveFromTeam}
+					/>
+					<TeamsMembersCard
+						teammates={team.users}
+						title={'members'}
+						removeUserFromTeam={handlerRemoveFromTeam}
+					/>
 				</Grid.Column>
 				<Grid.Column className={`${styles.col_media}, ${styles.col_right}`}>
 					<TeamWorkedProjects projects={team.projects} />

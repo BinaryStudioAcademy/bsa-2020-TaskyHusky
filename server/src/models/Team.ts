@@ -2,7 +2,7 @@ import { UserProfile } from '../entity/UserProfile';
 import { Projects } from '../entity/Projects';
 
 export interface TeamModel {
-	id?: string;
+	id: string;
 	name?: string;
 	description?: string;
 	color?: string;
