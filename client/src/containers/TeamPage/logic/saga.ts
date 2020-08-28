@@ -6,7 +6,7 @@ import {
 	getTeamsProjects,
 	getTeamsUsers,
 	findUsersColleagues,
-	addUsersToTeam
+	addUsersToTeam,
 } from 'services/team.service';
 import { all, put, takeEvery, call } from 'redux-saga/effects';
 import * as actionTypes from './actionTypes';
@@ -20,7 +20,7 @@ type Props = {
 	field?: string;
 	type: string;
 	match?: string;
-	users?: WebApi.Entities.UserProfile[]
+	users?: WebApi.Entities.UserProfile[];
 };
 
 export function* fetchTeam(props: Props) {
@@ -83,8 +83,7 @@ export function* searchPeople(props: Props) {
 function* inviteUsersToTeam(props: Props) {
 	try {
 		const team = yield call(addUsersToTeam, props.id, props.users);
-		yield put(actions.addPeopleToTeamDone({ users: team.users }))
-
+		yield put(actions.addPeopleToTeamDone({ users: team.users }));
 	} catch (error) {
 		NotificationManager.error('Error add users to team', 'Error', 4000);
 	}
@@ -128,6 +127,6 @@ export default function* teamSaga() {
 		watchFieldUpdateLoading(),
 		watchDeleteLinksLoading(),
 		watchSearchPeopleLoading(),
-		watchAddPeopleToTeam()
+		watchAddPeopleToTeam(),
 	]);
 }
