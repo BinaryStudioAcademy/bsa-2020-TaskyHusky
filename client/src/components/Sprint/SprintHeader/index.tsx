@@ -15,9 +15,11 @@ type Props = {
 	isCompleted: boolean;
 	name: string;
 	issues: WebApi.Entities.Issue[];
+	endDate: Date | undefined;
+	startDate: Date | undefined;
 };
 
-export const SprintHeader: React.FC<Props> = ({ id, isActive, name, issues, isCompleted }) => {
+export const SprintHeader: React.FC<Props> = ({ id, isActive, name, issues, isCompleted, startDate, endDate }) => {
 	const {
 		project: { id: projectId },
 		board: { id: boardId },
@@ -70,6 +72,8 @@ export const SprintHeader: React.FC<Props> = ({ id, isActive, name, issues, isCo
 				clickAction={() => setIsDeleteModalOpen(!isDeleteModalOpen)}
 			/>
 			<EditSprintModal
+				startDate={startDate}
+				endDate={endDate}
 				sprintName={name}
 				sprintId={id}
 				sprintIssues={issues}
