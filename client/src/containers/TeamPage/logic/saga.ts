@@ -111,10 +111,8 @@ function* deleteTeam(props: Props) {
 
 function* removeUserFromTeam(props: RemoveUserFromTeam) {
 	try {
-		yield call(removeUserFromTeamRequest, props.userId, props.teamId);
-
-		//	yield put(actions.deleteTeamSuccess());
-
+		const team = yield call(removeUserFromTeamRequest, props.userId, props.teamId);
+		yield put(actions.deletePeopleFromTeamSuccess({ users: team.users }));
 		NotificationManager.info('User has been removed', 'Info', 4000);
 	} catch (error) {
 		NotificationManager.error('Error delete team', 'Error', 4000);

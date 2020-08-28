@@ -29,12 +29,12 @@ export const clearResultsDone = createAction(actionTypes.CLEAR_FOUND_USERS_DONE)
 export const addPeopleToTeamLoading = createAction<actionTypes.startAddingUsers>(
 	actionTypes.ADD_PEOPLE_TO_TEAM_LOADING,
 );
-export const addPeopleToTeamDone = createAction<actionTypes.successAddingUsers>(actionTypes.ADD_PEOPLE_TO_TEAM_SUCCESS);
+export const addPeopleToTeamDone = createAction<actionTypes.successAddingUsers>(actionTypes.UPDATE_TEAM_USERS_SECCESS);
 
 export const deletePeopleFromTeamLoading = createAction<actionTypes.DeletePeopleLoading>(
 	actionTypes.DELETE_PEOPLE_FROM_TEAM_LOADING,
 );
-export const deletePeopleFromTeamSuccess = createAction<actionTypes.DeletePeopleSuccess>(actionTypes.DELETE_PEOPLE_FROM_TEAM_SUCCESS);
+export const deletePeopleFromTeamSuccess = createAction<actionTypes.successAddingUsers>(actionTypes.UPDATE_TEAM_USERS_SECCESS);
 
 export const deleteTeamLoading = createAction<actionTypes.DeleteTeamLoading>(actionTypes.DELETE_TEAM_LOADING);
 export const deleteTeamSuccess = createAction(actionTypes.DELETE_TEAM_SUCCESS);

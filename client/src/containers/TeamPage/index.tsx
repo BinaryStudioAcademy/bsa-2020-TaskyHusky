@@ -137,12 +137,14 @@ const TeamPage = ({
 					/>
 					<TeamsMembersCard
 						teammates={[{ ...team.createdBy }]}
+						teamOwner={team.createdBy}
 						title={'team_owner'}
 						removeUserFromTeam={handlerRemoveFromTeam}
 					/>
 					<TeamsMembersCard
 						teammates={team.users}
 						title={'members'}
+						teamOwner={team.createdBy}
 						removeUserFromTeam={handlerRemoveFromTeam}
 					/>
 				</Grid.Column>

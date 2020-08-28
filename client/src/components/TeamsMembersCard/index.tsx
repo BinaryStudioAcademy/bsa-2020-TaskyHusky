@@ -10,6 +10,7 @@ import RemoveUserModal from './removeUserModal';
 type Props = {
 	teammates?: User[];
 	title: string;
+	teamOwner: WebApi.Entities.UserProfile;
 	removeUserFromTeam: (arg: string) => void;
 };
 export interface User {
@@ -23,7 +24,7 @@ export interface User {
 	jobTitle?: string;
 }
 
-const TeamsMembersCard = ({ title, removeUserFromTeam, teammates = [] }: Props) => {
+const TeamsMembersCard = ({ title, teamOwner, removeUserFromTeam, teammates = [] }: Props) => {
 	const [modal, setModal] = useState<boolean>(false);
 	const [removeUserModal, setRemoveUserModal] = useState<boolean>(false);
 	const [viewUser, setViewUser] = useState<User | undefined>();
@@ -37,18 +38,27 @@ const TeamsMembersCard = ({ title, removeUserFromTeam, teammates = [] }: Props) 
 		setViewUser(user);
 		setModal(true);
 	};
+
 	const hideModal = (e: React.BaseSyntheticEvent) => {
 		if (!e.target.classList.contains('card_body') && !e.target.classList.contains('block_wrapper')) {
 			setModal(false);
 			setViewUser(undefined);
 		}
 	};
+
 	const { t } = useTranslation();
 	const fullUserName = (fn: string, ln: string): string => `${fn} ${ln}`;
 	const onDeleteUserClick = (user: User) => {
 		setUserToRemove(user);
 		setRemoveUserModal(true);
 	};
+
+	const removeUser = (id: string) => {
+		removeUserFromTeam(id);
+		setViewUser(undefined);
+		setRemoveUserModal(false);
+	};
+
 	return (
 		<Card>
 			<Card.Content header={t(title)} />
@@ -77,7 +87,7 @@ const TeamsMembersCard = ({ title, removeUserFromTeam, teammates = [] }: Props) 
 							<div className={styles.user_info}>
 								<p> {fullUserName(el.firstName, el.lastName)}</p>
 								<p className={styles.metainfo}>{el.jobTitle}</p>
-								{viewUser?.id === el.id && (
+								{teamOwner && viewUser?.id === el.id && viewUser.id !== teamOwner?.id && (
 									<Icon
 										name="delete"
 										onClick={() => onDeleteUserClick(el)}
@@ -88,7 +98,7 @@ const TeamsMembersCard = ({ title, removeUserFromTeam, teammates = [] }: Props) 
 							{removeUserModal && (
 								<RemoveUserModal
 									user={userToRemove}
-									confirm={removeUserFromTeam}
+									confirm={removeUser}
 									setShowDelete={setRemoveUserModal}
 								/>
 							)}

@@ -30,7 +30,7 @@ const RemoveUserModal = ({ setShowDelete, user, confirm }: Props) => {
 				<Button basic className={styles.edit_btn} onClick={() => setShowDelete(false)}>
 					<span className={styles.edit_btn_value}> {t('cancel')} </span>
 				</Button>
-				<Button icon="check" primary onClick={() => confirm(user.id!)}>
+				<Button primary onClick={() => confirm(user.id!)}>
 					{t('accept')}
 				</Button>
 			</Modal.Actions>

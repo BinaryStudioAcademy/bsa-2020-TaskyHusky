@@ -2,9 +2,12 @@
 .user_block,
 .main_info {
   display: flex;
-  max-width: 200px;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 .user_block {
+  flex-shrink: 0.5;
+  width: 190px;
   margin: 5px;
   border-right: 1px solid #cccccc;
   border-radius: 6px;
