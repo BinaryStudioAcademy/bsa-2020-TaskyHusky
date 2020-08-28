@@ -268,4 +268,9 @@ export const ua = {
 	mark_all_as_read: 'Відмітити все як прочитане',
 	watching: 'Відстежуєтся',
 	not_watching: 'Не відстежуєтся',
+	and: 'та',
+	drag_n_drop_files_here: 'Перетягніть файли сюди',
+	click_to_browse: 'Натисніть для завантаження',
+	files_are_available: 'файли доступні',
+	click_to_download: 'Натисніть для скачування',
 };

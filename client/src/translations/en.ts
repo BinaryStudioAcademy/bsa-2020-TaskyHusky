@@ -303,4 +303,9 @@ export const en = {
 	not_suported_push_alert: 'Sorry, but your browser does not support push notifications.',
 	denied_push_alert: 'Sorry, but push notifications permission is not granted.',
 	notification: 'Notification',
+	and: 'аnd',
+	drag_n_drop_files_here: "Drag'n'drop files here",
+	click_to_browse: 'Click to browse',
+	files_are_available: 'files are available',
+	click_to_download: 'Click to download',
 };

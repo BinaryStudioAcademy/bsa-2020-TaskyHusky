@@ -6,6 +6,14 @@ import { Label, Icon, Button } from 'semantic-ui-react';
 import { FileDrop } from 'react-file-drop';
 import { getFnameByLink } from 'helpers/getFnameByLink';
 
+import {
+	ALLOWED_ISSUE_ATTACHMENT_MIME_TYPES,
+	ALLOWED_ISSUE_ATTACHMENT_EXTNAMES,
+	ALLOWED_ISSUE_ATTACHMENT_EXTNAMES_HR,
+} from 'constants/FileType';
+
+import { useTranslation } from 'react-i18next';
+
 interface Props {
 	onChangePending?: (pending: boolean) => void;
 	onChange?: (newLinks: string[]) => void;
@@ -20,16 +28,22 @@ const IssueFileInput: React.FC<Props> = ({
 	issueKey,
 }) => {
 	const currentLinks = givenCurrentLinks ?? [];
+	const { t } = useTranslation();
 
-	const upload = async (newFileList: FileList): Promise<string[]> => {
-		return await Promise.all(Array.from(newFileList).map((file) => attachFile(file, issueKey)));
+	const upload = async (newFileList: File[]): Promise<string[]> => {
+		return await Promise.all(newFileList.map((file) => attachFile(file, issueKey)));
 	};
 
 	const handleUpload = (newFileList: FileList | null) => {
 		if (newFileList) {
 			onChangePending(true);
 
-			upload(newFileList).then((newLinks) => {
+			upload(
+				Array.from(newFileList).filter((file) => {
+					console.log(file.type);
+					return ALLOWED_ISSUE_ATTACHMENT_MIME_TYPES.includes(file.type);
+				}),
+			).then((newLinks) => {
 				onChangePending(false);
 				onChange([...currentLinks, ...newLinks]);
 			});
@@ -43,19 +57,19 @@ const IssueFileInput: React.FC<Props> = ({
 			onDrop={handleUpload}
 		>
 			<div className={styles.smallText}>
-				.png, .jpg, .jpeg, .bmp, .docx, .pptx, .xlsx and .txt files are available
+				{ALLOWED_ISSUE_ATTACHMENT_EXTNAMES_HR()} {t('files_are_available')}
 			</div>
 			<div className={styles.controlsContainer}>
-				<div>Drag&apos;n&apos;drop files here</div>
+				<div>{t('drag_n_drop_files_here')}</div>
 				<div className={styles.smallText} style={{ marginRight: 15, marginLeft: 15 }}>
-					or
+					{t('or')}
 				</div>
 				<FileInput
-					attributes={{ accept: '.png, .jpg, .jpeg, .bmp, .docx, .pptx, .xlsx, .txt', multiple: true }}
+					attributes={{ accept: ALLOWED_ISSUE_ATTACHMENT_EXTNAMES, multiple: true }}
 					onChange={handleUpload}
 				>
 					<Button secondary compact style={{ marginTop: 5, marginBottom: 5 }} type="button">
-						Click to browse
+						{t('click_to_browse')}
 					</Button>
 				</FileInput>
 			</div>

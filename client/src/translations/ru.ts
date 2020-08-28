@@ -273,4 +273,9 @@ export const ru = {
 	not_suported_push_alert: 'Ваш браузер не поддерживает push-уведомления.',
 	denied_push_alert: 'Разрешение на push-уведомления не предоставлено.',
 	notification: 'Объявление',
+	and: 'и',
+	drag_n_drop_files_here: 'Перетащите файлы сюда',
+	click_to_browse: 'Нажмите для загрузки',
+	files_are_available: 'файлы доступны',
+	click_to_download: 'Нажмите для скачивания',
 };

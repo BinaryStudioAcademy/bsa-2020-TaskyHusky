@@ -167,7 +167,7 @@ const IssuePageInfoColumn: React.FC<Props> = ({
 								>
 									{isImage(fname) ? <Image src={link} alt="Image" /> : ''}
 									<a href={link} download>
-										Click to download
+										{t('click_to_download')}
 									</a>
 								</Popup>
 							);
