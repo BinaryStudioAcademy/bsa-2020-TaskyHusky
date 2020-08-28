@@ -60,7 +60,7 @@ export const SprintHeader: React.FC<Props> = ({ id, isActive, name, issues, isCo
 						<CreateIssueModal projectID={projectId} sprintID={id} boardID={boardId}>
 							<Button icon="add" className={styles.createIssueButton} title="Create issue" />
 						</CreateIssueModal>
-						<Options config={config} />
+						{id !== 'backlog' ? <Options config={config} /> : null}
 					</List.Content>
 				</List.Item>
 			</List>
