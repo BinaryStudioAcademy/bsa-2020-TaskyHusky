@@ -33,7 +33,6 @@ export const teamReducer = createReducer<TeamState>(initialState, {
 	},
 
 	[actionTypes.UPDATE_FIELD_SUCCESS](state: TeamState, action: actionTypes.EditFieldSuccess) {
-		console.log(action);
 		return {
 			...state,
 			team: {
