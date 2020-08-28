@@ -30,7 +30,6 @@ export const en = {
 	term_of_use: 'Term of use',
 	privacy_policy: 'Privacy policy',
 	profile: 'Profile',
-	acc_settings: 'Account settings',
 	log_out: 'Log out',
 	recent: 'Recent',
 	view_all_dashboards: 'View all dashboards',

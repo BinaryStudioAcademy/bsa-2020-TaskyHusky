@@ -30,7 +30,6 @@ export const ua = {
 	term_of_use: 'Правила використання',
 	privacy_policy: 'Політика конфіденційності',
 	profile: 'Профіль',
-	acc_settings: 'Налаштування аккаунту',
 	log_out: 'Вийти',
 	recent: 'Недавні',
 	view_all_dashboards: 'Усі дашбоарди',
