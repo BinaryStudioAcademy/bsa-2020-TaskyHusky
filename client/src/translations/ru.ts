@@ -30,7 +30,6 @@ export const ru = {
 	term_of_use: 'Правила использования',
 	privacy_policy: 'Политика конфиденциальности',
 	profile: 'Профиль',
-	acc_settings: 'Настройки аккаунта',
 	log_out: 'Выйти',
 	recent: 'Недавние',
 	view_all_dashboards: 'Все дашбоарды',

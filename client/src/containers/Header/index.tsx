@@ -100,7 +100,7 @@ export const HeaderMenu = () => {
 					</CreateIssueModal>
 					<Menu.Item position="right" className={styles.rightMenu}>
 						<Dropdown icon="users" className={styles.circularIcon} direction="left">
-							<Dropdown.Menu>
+							<Dropdown.Menu className={styles.circularDropdownMenu}>
 								{incomingInvites.map((invite) => (
 									<InviteNotification
 										id={invite.id}
@@ -125,9 +125,6 @@ export const HeaderMenu = () => {
 										<Dropdown.Header>{`${user?.firstName} ${user?.lastName}`}</Dropdown.Header>
 										<Link to={{ pathname: `/profile/${user?.id}`, search: '?param=' }}>
 											<Dropdown.Item>{t('profile')}</Dropdown.Item>
-										</Link>
-										<Link to={{ pathname: `/profile/${user?.id}`, search: '?param=profile' }}>
-											<Dropdown.Item>{t('acc_settings')}</Dropdown.Item>
 										</Link>
 										<Dropdown.Divider />
 										<Dropdown.Item onClick={logOutHandler}>{t('log_out')}</Dropdown.Item>
