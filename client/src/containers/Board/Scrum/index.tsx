@@ -49,6 +49,7 @@ const Scrum: BoardComponent = (props) => {
 
 		const sourceSprintId = source.droppableId;
 		const destinationSprintId = destination.droppableId;
+		const issueId = issuesMap[source.droppableId][source.index].id;
 
 		if (sourceSprintId === destinationSprintId) {
 			return;
@@ -57,7 +58,7 @@ const Scrum: BoardComponent = (props) => {
 		if (destinationSprintId === 'backlog') {
 			dispatch(
 				updateIssue({
-					id: issuesMap[source.droppableId][source.index].id,
+					id: issueId,
 					data: {
 						sprint: null,
 					},
@@ -68,7 +69,7 @@ const Scrum: BoardComponent = (props) => {
 		if (destinationSprintId !== 'backlog' && sourceSprintId !== destinationSprintId) {
 			dispatch(
 				updateIssue({
-					id: issuesMap[source.droppableId][source.index].id,
+					id: issueId,
 					data: {
 						sprint: destinationSprintId,
 					},
