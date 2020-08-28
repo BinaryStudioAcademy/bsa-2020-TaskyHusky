@@ -22,7 +22,6 @@ export const createProjectReducer = createReducer<CreateProjectsState>(initialSt
 		};
 	},
 	[actionTypes.SUCCESS_CREATING_PROJECT](state) {
-		console.log('state', state);
 		return {
 			...state,
 			isLoading: false,
