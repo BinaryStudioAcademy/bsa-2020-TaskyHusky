@@ -15,8 +15,8 @@ type Props = {
 	isCompleted: boolean;
 	name: string;
 	issues: WebApi.Entities.Issue[];
-	endDate: Date;
-	startDate: Date;
+	endDate: Date | undefined;
+	startDate: Date | undefined;
 };
 
 export const SprintHeader: React.FC<Props> = ({ id, isActive, name, issues, isCompleted, startDate, endDate }) => {

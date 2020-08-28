@@ -9,7 +9,7 @@ import { ScrumBoardState } from 'containers/Board/Scrum/logic/state';
 import { updateIssue } from 'pages/IssuePage/logic/actions';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { getNextDate } from '../CreateSprintModal/helpers';
+import { getNextDate } from './helpers';
 import ru from 'date-fns/locale/ru';
 
 type Props = {
@@ -20,8 +20,8 @@ type Props = {
 	isOpen: boolean;
 	clickAction: any;
 	sprintIssues: WebApi.Entities.Issue[];
-	startDate: Date;
-	endDate: Date;
+	startDate: Date | undefined;
+	endDate: Date | undefined;
 };
 
 const EditSprintModal = (props: Props) => {
@@ -35,7 +35,6 @@ const EditSprintModal = (props: Props) => {
 		startDate: sprintStartDate,
 		endDate: sprintEndDate,
 	} = props;
-	console.log(sprintStartDate, sprintEndDate);
 
 	const [isActive, setIsActive] = useState<boolean>(sprintIsActive);
 	const [isCompleted, setIsCompleted] = useState<boolean>(sprintIsCompleted);
@@ -126,13 +125,18 @@ const EditSprintModal = (props: Props) => {
 		{ key: 5, text: t('custom'), value: 'custom' },
 	];
 
-	const [duration, setDuration] = useState<number | 'custom'>('custom');
-	const [startDate, setStartDate] = useState(new Date(sprintStartDate));
-	const [endDate, setEndDate] = useState(new Date(sprintEndDate));
-	const [endDateDisable, setEndDateDisable] = useState(false);
+	const [duration, setDuration] = useState<number | 'custom'>(sprintEndDate ? 'custom' : 1);
+	const [startDate, setStartDate] = useState(sprintStartDate ? new Date(sprintStartDate) : new Date());
+	const [endDateDisable, setEndDateDisable] = useState(sprintEndDate && isActive ? false : true);
 	const [isDateValid, setIsDateValid] = useState(true);
+	const [endDate, setEndDate] = useState(sprintEndDate ? new Date(sprintEndDate) : getNextDate(1, startDate));
+	const [startDateDisable, setStartDateDisable] = useState(isActive ? false : true);
+	const [durationDisable, setDurationDisable] = useState(isActive ? false : true);
 
-	const handleStartDatePick = (date: Date) => {
+	const handleStartDatePick = (date: Date | null) => {
+		if (!date) {
+			return;
+		}
 		setStartDate(date);
 
 		const nextEndDate = getNextDate(duration, date);
@@ -144,7 +148,10 @@ const EditSprintModal = (props: Props) => {
 		setIsDateValid(isValid);
 	};
 
-	const handleEndDatePick = (date: Date) => {
+	const handleEndDatePick = (date: Date | null) => {
+		if (!date) {
+			return;
+		}
 		setEndDate(date);
 		const isValid = date > startDate;
 		setIsDateValid(isValid);
@@ -161,6 +168,20 @@ const EditSprintModal = (props: Props) => {
 			setDuration(value);
 			setEndDateDisable(true);
 			setIsDateValid(true);
+		}
+	};
+
+	const toggleSprintActive = () => {
+		const updatedIsActive = !isActive;
+		setIsActive(updatedIsActive);
+		if (updatedIsActive) {
+			setStartDateDisable(false);
+			setDurationDisable(false);
+			setEndDateDisable(duration === 'custom' ? false : true);
+		} else {
+			setStartDateDisable(true);
+			setDurationDisable(true);
+			setEndDateDisable(true);
 		}
 	};
 
@@ -200,6 +221,7 @@ const EditSprintModal = (props: Props) => {
 						label={t('duration')}
 						control={() => (
 							<Dropdown
+								disabled={durationDisable}
 								value={duration}
 								placeholder={t('duration')}
 								search
@@ -215,6 +237,7 @@ const EditSprintModal = (props: Props) => {
 						control={() => (
 							<div style={{ display: 'flex', flexDirection: 'column' }}>
 								<DatePicker
+									disabled={startDateDisable}
 									locale={getLocale()}
 									name="StartTime"
 									dateFormat="MM/dd/yyyy h:mm aa"
@@ -248,9 +271,7 @@ const EditSprintModal = (props: Props) => {
 							disabled={isActivationToggleDisabled(scrumBoardState)}
 							label={isActive ? t('mark_sprint_as_active') : t('mark_sprint_as_inactive')}
 							checked={isActive}
-							onChange={() => {
-								setIsActive(!isActive);
-							}}
+							onChange={toggleSprintActive}
 						/>
 					</Form.Field>
 					<Form.Field>

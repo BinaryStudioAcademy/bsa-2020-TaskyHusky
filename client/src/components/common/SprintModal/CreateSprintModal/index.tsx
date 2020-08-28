@@ -1,15 +1,11 @@
 import React, { useState } from 'react';
-import DatePicker from 'react-datepicker';
 import styles from './styles.module.scss';
-import { Button, Header, Modal, Form, Checkbox, Popup, Dropdown, DropdownProps } from 'semantic-ui-react';
+import { Button, Header, Modal, Form, Checkbox, Popup } from 'semantic-ui-react';
 import { useDispatch, useSelector } from 'react-redux';
 import * as actions from 'containers/Board/Scrum/logic/actions';
 import { useTranslation } from 'react-i18next';
 import { RootState } from 'typings/rootState';
 import { ScrumBoardState } from 'containers/Board/Scrum/logic/state';
-import 'react-datepicker/dist/react-datepicker.css';
-import { getNextDate } from './helpers';
-import ru from 'date-fns/locale/ru';
 
 type Props = { clickAction: any; isOpen: boolean };
 
@@ -50,72 +46,10 @@ const CreateSprintModal = (props: Props) => {
 			isCompleted,
 			board: boardId,
 			project: projectId,
-			startDate,
-			endDate,
 		};
 		dispatch(actions.createSprintTrigger({ sprint: sprint }));
 		resetLocalState();
 		props.clickAction();
-	};
-
-	const getLocale = () => {
-		const lng = localStorage.getItem('session:lng');
-		switch (lng) {
-			case 'ru':
-				return ru;
-			case 'ua':
-				return ru;
-			case 'en':
-				return 'en';
-			default:
-				return 'en';
-		}
-	};
-
-	const DURATIONS = [
-		{ key: 1, text: `1 ${t('week')}`, value: 1 },
-		{ key: 2, text: `2 ${t('weeks')}`, value: 2 },
-		{ key: 3, text: `3 ${t('weeks')}`, value: 3 },
-		{ key: 4, text: `4 ${t('weeks')}`, value: 4 },
-		{ key: 5, text: t('custom'), value: 'custom' },
-	];
-
-	const [duration, setDuration] = useState<number | 'custom'>(1);
-	const [startDate, setStartDate] = useState(new Date());
-	const [endDate, setEndDate] = useState(getNextDate(duration, startDate));
-	const [endDateDisable, setEndDateDisable] = useState(true);
-	const [isDateValid, setIsDateValid] = useState(true);
-
-	const handleStartDatePick = (date: Date) => {
-		setStartDate(date);
-
-		const nextEndDate = getNextDate(duration, date);
-		if (duration !== 'custom') {
-			setEndDate(nextEndDate);
-		}
-
-		const isValid = (duration === 'custom' ? endDate : nextEndDate) > date;
-		setIsDateValid(isValid);
-	};
-
-	const handleEndDatePick = (date: Date) => {
-		setEndDate(date);
-		const isValid = date > startDate;
-		setIsDateValid(isValid);
-	};
-
-	const handleDurationPick = (event: React.SyntheticEvent<HTMLElement, Event>, data: DropdownProps) => {
-		const { value } = data;
-
-		if (value === 'custom') {
-			setEndDateDisable(false);
-			setDuration(value);
-		} else if (typeof value === 'number') {
-			setEndDate(getNextDate(value, startDate));
-			setDuration(value);
-			setEndDateDisable(true);
-			setIsDateValid(true);
-		}
 	};
 
 	return (
@@ -148,52 +82,6 @@ const CreateSprintModal = (props: Props) => {
 							}
 						/>
 					</Form.Field>
-					<Form.Field
-						label={t('duration')}
-						control={() => (
-							<Dropdown
-								value={duration}
-								placeholder={t('duration')}
-								search
-								selection
-								options={DURATIONS}
-								onChange={handleDurationPick}
-							/>
-						)}
-					/>
-					<Form.Field
-						label={t('startDate')}
-						error={!isDateValid}
-						control={() => (
-							<div style={{ display: 'flex', flexDirection: 'column' }}>
-								<DatePicker
-									locale={getLocale()}
-									name="StartTime"
-									dateFormat="MM/dd/yyyy h:mm aa"
-									showTimeSelect
-									selected={startDate}
-									onChange={handleStartDatePick}
-								/>
-								{!isDateValid && <span style={{ color: 'red' }}>{t('dateValidationError')}</span>}
-							</div>
-						)}
-					/>
-					<Form.Field
-						label={t('endDate')}
-						control={() => (
-							<div style={{ display: 'flex', flexDirection: 'column' }}>
-								<DatePicker
-									locale={getLocale()}
-									disabled={endDateDisable}
-									name="EndTime"
-									dateFormat="MM/dd/yyyy h:mm aa"
-									showTimeSelect
-									selected={endDate}
-									onChange={handleEndDatePick}
-								/>
-							</div>
-						)}
-					/>
 					<Form.Field>
 						<Checkbox
 							toggle
@@ -220,14 +108,7 @@ const CreateSprintModal = (props: Props) => {
 			</Modal.Content>
 			<Modal.Actions>
 				<Button color="grey" onClick={handleClose} content={t('cancel')} />
-				<Button
-					disabled={!isDateValid}
-					onClick={handleSubmit}
-					content={t('submit')}
-					labelPosition="right"
-					icon="checkmark"
-					primary
-				/>
+				<Button onClick={handleSubmit} content={t('submit')} labelPosition="right" icon="checkmark" primary />
 			</Modal.Actions>
 		</Modal>
 	);
