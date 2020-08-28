@@ -13,7 +13,6 @@ export const projectCommonReducer = createReducer<projectCommonState>(initialSta
 		return {
 			...state,
 			isLoading: false,
-			isDeleted: true,
 		};
 	},
 	[actionTypes.FAIL_DELETING_PROJECT](state) {
