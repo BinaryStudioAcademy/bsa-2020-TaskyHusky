@@ -11,18 +11,26 @@ import { routesWhiteList } from './config/jwt.config';
 import { authenticateJwt } from './src/middleware/jwt.middleware';
 import errorHandlerMiddleware from './src/middleware/errorHandler.middleware';
 import { configIO, injectIO } from './config/io.config';
-import IO_Handlers from './src/socketConnectionHandlers';
+import IOHandlers from './src/socketConnectionHandlers';
+import { consumeMessageFromQueue } from './src/helpers/email.worker';
 
 createConnection()
 	.then(async (connection) => {
 		await connection.runMigrations();
 		const app = express();
-		const { io, http } = configIO(app, IO_Handlers);
+		const { io, http } = configIO(app, IOHandlers);
 
 		app.use(
 			cors({
 				origin: '*',
-				allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization'],
+				allowedHeaders: [
+					'Origin',
+					'X-Requested-With',
+					'Content-Type',
+					'Accept',
+					'Authorization',
+					'Access-Control-Allow-Origin',
+				],
 			}),
 		);
 
@@ -34,6 +42,7 @@ createConnection()
 		app.use('/api', authenticateJwt(routesWhiteList), routes);
 
 		app.use(errorHandlerMiddleware);
+		consumeMessageFromQueue();
 
 		// No express app here!!!
 		http.listen(appPort, () => {

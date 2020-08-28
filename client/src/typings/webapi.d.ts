@@ -31,28 +31,36 @@ namespace WebApi.IO {
 		UpdateIssueComment = 'ISSUE:COMMENT:UPDATE',
 		DeleteIssueComment = 'ISSUE:COMMENT:DELETE',
 	}
+	export enum NotificationActions {
+		CreateNotification = 'NOTIFICATION:CREATE',
+		ViewNotification = 'NOTIFICATION:VIEW',
+		UnviewNotification = 'NOTIFICATION:UNVIEW',
+		ViewAllNotifications = 'NOTIFICATION:ALL:VIEW',
+	}
 	export enum Types {
 		Issue = 'ISSUE',
+		Notification = 'NOTIFICATION',
 	}
 }
 
 namespace WebApi.Issue {
 	interface PartialIssue {
 		id?: string;
-		type: string;
+		type?: string;
 		status?: string;
 		summary?: string;
 		boardColumn?: string;
 		labels?: string[];
 		attachments?: string[];
 		links?: string[];
-		priority: string;
+		priority?: string;
 		description?: string;
-		sprint?: string;
+		board?: string;
+		sprint?: string | null;
 		project?: string;
 		issueKey?: string;
 		assigned?: string;
-		creator: string;
+		creator?: string;
 		watchers?: string[];
 	}
 	interface PartialIssueComment {
@@ -83,6 +91,7 @@ namespace WebApi.Result {
 		labels?: string[];
 		attachments?: string[];
 		links?: string[];
+		board?: BoardResult;
 		priority: {
 			id: string;
 			color: string;
@@ -139,6 +148,15 @@ namespace WebApi.Result {
 		updatedDate?: Date;
 		deletedDate?: Date;
 	}
+	interface NotificationResult {
+		id: string;
+		title?: string;
+		link?: string;
+		user: UserModel;
+		text: string;
+		isViewed: boolean;
+		createdAt: Date;
+	}
 }
 
 namespace WebApi.Sprint {
@@ -150,6 +168,8 @@ namespace WebApi.Sprint {
 		project: string;
 		board: string;
 		issues: string[];
+		startDate: Date;
+		endDate: Date;
 	}
 }
 
@@ -167,6 +187,12 @@ namespace WebApi.Team {
 }
 
 namespace WebApi.User {
+	export enum jobTitle {
+		dbAdmin = 'Database administrator',
+		backEndDev = 'Back-end developer',
+		frontEndDev = 'Front-end developer',
+		fullStackDev = 'Full-Stack developer',
+	}
 	interface UserModel {
 		googleId?: string;
 		id: string;
@@ -179,7 +205,7 @@ namespace WebApi.User {
 		location?: string;
 		department?: string;
 		organization?: string;
-		jobTitle?: string;
+		jobTitle?: jobTitle;
 		userSettingsId?: string;
 		teams?: Team[];
 		resetPasswordToken?: string | null;
@@ -243,8 +269,8 @@ namespace WebApi.Entities {
 		boardColumn?: BoardColumn;
 		board?: Board;
 		labels?: string;
-		attachments?: string;
-		links?: string;
+		attachments?: string[];
+		links?: string[];
 		priority?: Priority;
 		description?: string;
 		sprint?: Sprint;
@@ -329,6 +355,8 @@ namespace WebApi.Entities {
 		isActive: boolean;
 		isCompleted: boolean;
 		issues: Issue[];
+		startDate?: Date;
+		endDate?: Date;
 	}
 
 	interface Team {

@@ -1,13 +1,13 @@
 import { CompareWith, isEqual } from './isEqual.helper';
 
-export const getDiffPropNames = <T0 extends Object, T1 extends Object>(
+export const getDiffPropNames = <T0 extends Record<string, unknown>, T1 extends Record<string, unknown>>(
 	o0: T0,
 	o1: T1,
 	compareWith: CompareWith = '===',
 ): string[] => {
 	const propNames: string[] = [];
 
-	for (const key in o0) {
+	Object.keys(o0).forEach((key) => {
 		if (Object.prototype.hasOwnProperty.call(o0, key)) {
 			const element0 = o0[key];
 			const element1 = key in o1 ? (o1 as any)[key] : undefined;
@@ -16,7 +16,7 @@ export const getDiffPropNames = <T0 extends Object, T1 extends Object>(
 				propNames.push(key);
 			}
 		}
-	}
+	});
 
 	return propNames;
 };

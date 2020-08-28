@@ -41,7 +41,7 @@ const InviteNotification: React.FC<Props> = (props: Props) => {
 	return (
 		<Card>
 			<Card.Content>
-				<Image floated="right" size="mini" src={avatar} />
+				<Image floated="right" size="mini" src={avatar} circular />
 				<Card.Header>{name}</Card.Header>
 				<Card.Meta>{jobTitle}</Card.Meta>
 				<Card.Description>{t('invite_notification_text')}</Card.Description>

@@ -3,7 +3,7 @@ import styles from './styles.module.scss';
 
 interface Props {
 	fullName: string;
-	imgSrc: string;
+	imgSrc?: string;
 }
 
 const Avatar = ({ fullName, imgSrc }: Props) => {

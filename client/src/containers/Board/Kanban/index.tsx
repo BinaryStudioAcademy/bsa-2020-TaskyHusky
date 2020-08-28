@@ -7,6 +7,7 @@ import { extractIdFormDragDropId } from 'helpers/extractId.helper';
 import { getByKey, updateIssueByKey } from 'services/issue.service';
 import { Header, Form, Button, Breadcrumb } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
+import { convertIssueResultToPartialIssue } from 'helpers/issueResultToPartialIssue';
 
 const Kanban: BoardComponent = ({ board }) => {
 	const [search, setSearch] = useState<string>('');
@@ -25,15 +26,14 @@ const Kanban: BoardComponent = ({ board }) => {
 		const cardKey = extractIdFormDragDropId(draggableId);
 		onDragEndFuncs.forEach((func) => func(event, provided));
 
-		getByKey(cardKey).then((issue) =>
-			updateIssueByKey(cardKey, {
-				...issue,
-				type: issue.type.id,
-				priority: issue.priority.id,
-				boardColumn: destinationId,
-				status: issue.status?.id,
-			}),
-		);
+		getByKey(cardKey).then((issue) => {
+			const { watchers, ...issueToSend } = issue;
+
+			return updateIssueByKey(
+				cardKey,
+				convertIssueResultToPartialIssue(issueToSend, { boardColumn: destinationId }),
+			);
+		});
 	};
 
 	return (

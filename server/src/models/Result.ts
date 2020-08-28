@@ -25,6 +25,7 @@ export interface IssueResult {
 	labels?: string[];
 	attachments?: string[];
 	links?: string[];
+	board?: BoardResult;
 	priority: {
 		id: string;
 		color: string;
@@ -85,4 +86,14 @@ interface BoardProjectsResult {
 	createdDate?: Date;
 	updatedDate?: Date;
 	deletedDate?: Date;
+}
+
+interface NotificationResult {
+	id: string;
+	title?: string;
+	link?: string;
+	user: UserModel;
+	text: string;
+	isViewed: boolean;
+	createdAt: Date;
 }

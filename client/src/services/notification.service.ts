@@ -1,12 +1,12 @@
 import callWebApi from 'helpers/callApi.helper';
 
-export const getNotifications = async (): Promise<WebApi.Entities.Notification[]> => {
+export const getNotifications = async (): Promise<WebApi.Result.NotificationResult[]> => {
 	const res: Response = await callWebApi({
 		method: 'GET',
 		endpoint: `user/notification`,
 	});
 
-	return (await res.json()) as WebApi.Entities.Notification[];
+	return (await res.json()) as WebApi.Result.NotificationResult[];
 };
 
 export const viewNotification = async (id: string): Promise<void> => {

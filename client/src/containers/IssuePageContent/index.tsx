@@ -9,6 +9,7 @@ import { RootState } from 'typings/rootState';
 import styles from './styles.module.scss';
 import IssuePageInfoColumn from 'components/IssuePageInfoColumn';
 import { useIO } from 'hooks/useIO';
+import { convertIssueResultToPartialIssue } from 'helpers/issueResultToPartialIssue';
 
 interface Props {
 	issue: WebApi.Result.IssueResult;
@@ -58,15 +59,7 @@ const IssuePageContent: React.FC<Props> = ({ issue: givenIssue }) => {
 
 	const { watchers, ...issueForDefault } = issue;
 
-	const initialIssue = {
-		...issueForDefault,
-		boardColumn: issue.boardColumn ? issue.boardColumn.id : undefined,
-		type: issue.type.id,
-		priority: issue.priority.id,
-		creator: issue.creator.id,
-		assigned: issue.assigned ? issue.assigned.id : undefined,
-		status: issue.status?.id,
-	};
+	const initialIssue = convertIssueResultToPartialIssue(issueForDefault);
 
 	useEffect(() => {
 		if (mustFetchComments) {
