@@ -5,10 +5,14 @@
 
 .text_modal {
   color: #292828;
+  text-align: justify;
   font-size: 1.2rem;
 }
 .title_modal {
   color: #292828;
+  width: 100%;
+  display: block;
+  text-align: center !important;
   font-size: 1.4rem;
   text-transform: uppercase;
 }
@@ -20,4 +24,17 @@
 
 .border {
   border: 1px solid black;
+}
+
+.delete_btn {
+  border: 1px solid #2185d0 !important;
+  .delete_btn_value {
+    color: #2185d0 !important;
+  }
+}
+.edit_btn {
+  border: 1px solid #4d4c4c !important;
+  .edit_btn_value {
+    color: #4d4c4c;
+  }
 }

@@ -24,7 +24,7 @@ const TeamLinks = ({ addLinks, currentLinks, edit, deleteLink }: Props) => {
 	return (
 		<>
 			<div className={styles.link_header}>
-				<Header as="h3">{t('Links')}</Header>
+				<Header as="h3">{t('links')}</Header>
 				<Button compact basic className={styles.btn_borderless} icon="plus" onClick={addLinks} />
 			</div>
 			<div className={[styles.worked_block_wrapper, styles.shadow_top, styles.align_center].join(' ')}>

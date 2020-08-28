@@ -5,12 +5,11 @@ import Avatar from 'components/Avatar';
 import styles from './styles.module.scss';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { getBgColor } from './helper';
 
 type Props = {
 	teammates?: User[];
 	title: string;
-	removeFromTeam?: (arg: string) => void
+	removeFromTeam?: (arg: string) => void;
 };
 export interface User {
 	id: string;
@@ -23,12 +22,10 @@ export interface User {
 	jobTitle?: string;
 }
 
-const TeamsMembersCard = ({title, removeFromTeam, teammates = [] }: Props) => {
-	const [bgColor, setBgColor] = useState<{ [key: string]: string }>({ backgroundColor: 'white' });
+const TeamsMembersCard = ({ title, removeFromTeam, teammates = [] }: Props) => {
 	const [modal, setModal] = useState<boolean>(false);
 	const [viewUser, setViewUser] = useState<User | undefined>();
 	const onHover = (user: User) => {
-		setBgColor(getBgColor());
 		setViewUser(user);
 		setModal(true);
 	};
@@ -46,35 +43,39 @@ const TeamsMembersCard = ({title, removeFromTeam, teammates = [] }: Props) => {
 			<Card.Content header={t(title)} />
 			<Card.Meta>
 				<span className={styles.meta_header}>
-					{title === 'Members' && ` ${teammates.length}  ${t('members')}`}
+					{teammates.length > 0 && title === 'members' && ` ${teammates.length}  ${t('members')}`}
 				</span>
 			</Card.Meta>
-			{teammates.map((el) => (
-				<Card.Content key={el.id}>
-					<div
-						className={styles.card_body}
-						onMouseEnter={() => onHover(el)}
-						onMouseLeave={(e) => hideModal(e)}
-					>
-						<div className={styles.icon}>
-							<Link to={`/profile/${el.id}`}>
-								<Avatar
-									key={el.id}
-									fullName={fullUserName(el.firstName, el.lastName)}
-									imgSrc={el.avatar}
-								/>
-							</Link>
+			{teammates.length > 0 ? (
+				teammates.map((el) => (
+					<Card.Content key={el.id}>
+						<div
+							className={styles.card_body}
+							onMouseEnter={() => onHover(el)}
+							onMouseLeave={(e) => hideModal(e)}
+						>
+							<div className={styles.icon}>
+								<Link to={`/profile/${el.id}`}>
+									<Avatar
+										key={el.id}
+										fullName={fullUserName(el.firstName, el.lastName)}
+										imgSrc={el.avatar}
+									/>
+								</Link>
+							</div>
+							<div className={styles.user_info}>
+								<p> {fullUserName(el.firstName, el.lastName)}</p>
+								<p className={styles.metainfo}>{el.jobTitle}</p>
+							</div>
+							{modal && viewUser?.id === el.id && (
+								<ModalViewProfile key={el.id} user={viewUser} onClose={hideModal} />
+							)}
 						</div>
-						<div className={styles.user_info}>
-							<p> {fullUserName(el.firstName, el.lastName)}</p>
-							<p className={styles.metainfo}>{el.jobTitle}</p>
-						</div>
-						{modal && viewUser?.id === el.id && (
-							<ModalViewProfile key={el.id} user={viewUser} onClose={hideModal} color={bgColor} />
-						)}
-					</div>
-				</Card.Content>
-			))}
+					</Card.Content>
+				))
+			) : (
+				<Card.Content className={styles.info_message}>{t('you_are_the_first')}</Card.Content>
+			)}
 		</Card>
 	);
 };

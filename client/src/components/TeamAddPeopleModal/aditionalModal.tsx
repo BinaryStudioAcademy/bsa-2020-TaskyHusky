@@ -1,28 +1,31 @@
 import React from 'react';
-import { Modal, Button, Icon } from 'semantic-ui-react';
+import { Modal, Button } from 'semantic-ui-react';
 import styles from './styles.module.scss';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
 	setShowDelete: (arg: boolean) => void;
 };
 
 const AditionalModal = ({ setShowDelete }: Props) => {
+	const { t } = useTranslation();
+
 	return (
-		<Modal onClose={() => setShowDelete(false)} open size="tiny" dimmer="blurring">
+		<Modal onClose={() => setShowDelete(false)} open size="tiny" dimmer="inverted">
 			<Modal.Header>
-				<Icon name="warning circle" size="large" color="red" />
-				<span className={styles.title_modal}>You are going to delete this team</span>
+				<span className={styles.title_modal}>{t('you_are_going_to_delete_team')}</span>
 			</Modal.Header>
 			<Modal.Content>
-				<p className={styles.text_modal}>
-					Deleting the team will destroy all information related to it. The name of the team, participants,
-					description, profile photo and links to attracted materials will be deleted.
-				</p>
-				<p className={styles.text_modal}>Deleting the team cannot be prevented. Are you sure to continue?</p>
+				<p className={styles.text_modal}>{t('deleting_will_destroy_information')}</p>
+				<p className={styles.text_modal}>{t('deleting_team_cannot_be_prevented')}</p>
 			</Modal.Content>
 			<Modal.Actions>
-				<Button content="Cancel" onClick={() => setShowDelete(false)} />
-				<Button icon="check" content="I'm sure" color="red" onClick={() => console.log('deleted')} />
+				<Button basic className={styles.edit_btn} onClick={() => setShowDelete(false)}>
+					<span className={styles.edit_btn_value}> {t('cancel')} </span>
+				</Button>
+				<Button icon="check" primary onClick={() => console.log('deleted')}>
+					{t('Im_sure')}
+				</Button>
 			</Modal.Actions>
 		</Modal>
 	);

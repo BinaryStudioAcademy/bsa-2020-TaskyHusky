@@ -168,6 +168,8 @@ namespace WebApi.Sprint {
 		project: string;
 		board: string;
 		issues: string[];
+		startDate: Date;
+		endDate: Date;
 	}
 }
 
@@ -267,8 +269,8 @@ namespace WebApi.Entities {
 		boardColumn?: BoardColumn;
 		board?: Board;
 		labels?: string;
-		attachments?: string;
-		links?: string;
+		attachments?: string[];
+		links?: string[];
 		priority?: Priority;
 		description?: string;
 		sprint?: Sprint;
@@ -353,6 +355,8 @@ namespace WebApi.Entities {
 		isActive: boolean;
 		isCompleted: boolean;
 		issues: Issue[];
+		startDate?: Date;
+		endDate?: Date;
 	}
 
 	interface Team {

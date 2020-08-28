@@ -1,17 +1,8 @@
-$gradient: linear-gradient(90deg, rgba(52, 221, 255, 1) 0%, rgba(95, 221, 247, 1) 58%, rgba(166, 240, 255, 1) 100%);
-
 .header {
 	width: 100%;
-	height: 100px;
-	box-shadow: 0 0 10px rgba(166, 240, 255, 1);
+	height: 40px;
 }
-.header_z {
-	z-index: -1;
-}
-.team_header {
-	background: rgb(52, 221, 255);
-	background: $gradient;
-}
+
 .meta_header {
 	margin-left: 14px;
 }
@@ -68,8 +59,11 @@ $gradient: linear-gradient(90deg, rgba(52, 221, 255, 1) 0%, rgba(95, 221, 247, 1
 }
 .input_area {
 	width: 100%;
+	height: 100%;
 	max-width: 100%;
 	min-width: 100%;
+	min-height: 100px;
+	max-height: 200px;
 	font-size: 1.2rem;
 	padding: 6px;
 	border: 1px solid transparent;
@@ -82,12 +76,12 @@ $gradient: linear-gradient(90deg, rgba(52, 221, 255, 1) 0%, rgba(95, 221, 247, 1
 }
 
 .input_borders {
-	border-color: #333232;
+	border-color: #9e9e9e;
 	border-radius: 6px;
-	background-color: #fffff6;
+	background-color: #ffffff;
 	&:hover,
 	&:focus {
-		background-color: #ffffff;
+		background-color: #fcfcfc;
 	}
 }
 
@@ -108,11 +102,33 @@ $gradient: linear-gradient(90deg, rgba(52, 221, 255, 1) 0%, rgba(95, 221, 247, 1
 		max-width: 700px;
 	}
 }
-
-.edit_field_btn {
-	border-top: none !important;
+.media_btns {
+	flex-shrink: 0.5 !important;
 }
-
+.edit_field_btn {
+	display: flex !important;
+	width: 100% !important;
+	box-sizing: border-box;
+	justify-content: center !important;
+	flex-shrink: 0.5;
+	border-top: none !important;
+	button {
+		margin: 0;
+		margin-top: 5px !important;
+	}
+}
+.delete_btn {
+	border: 1px solid #2185d0 !important;
+	.delete_btn_value {
+		color: #2185d0 !important;
+	}
+}
+.edit_btn {
+	border: 1px solid #4d4c4c !important;
+	.edit_btn_value {
+		color: #4d4c4c;
+	}
+}
 @media (max-width: 950px) {
 	.main_row {
 		padding: 0 20px !important;

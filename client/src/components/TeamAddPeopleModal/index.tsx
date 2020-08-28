@@ -3,6 +3,7 @@ import { Button, Modal, Search, SearchProps } from 'semantic-ui-react';
 import styles from './styles.module.scss';
 import ResultPeople from './ResultPeople';
 import ChosenPeople from './ResultPeople/chosenPeople';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
 	onClose: (arg: boolean) => void;
@@ -19,6 +20,8 @@ type Props = {
 const TeamAddPeopleModal = ({ onConfirm, onClose, search, searchLoading, people, clearStateAfterSelect }: Props) => {
 	const [chosenUsers, setChosenUser] = useState<WebApi.Entities.UserProfile[] | []>([]);
 	const [searchText, setSearchText] = useState<string | undefined>('');
+
+	const { t } = useTranslation();
 
 	const handlerChange = (e: MouseEvent<HTMLElement>, { value }: SearchProps): void => {
 		if (chosenUsers.length >= 4) {
@@ -38,7 +41,7 @@ const TeamAddPeopleModal = ({ onConfirm, onClose, search, searchLoading, people,
 				return <ResultPeople id={id} firstName={firstName} lastName={lastName} email={email} avatar={avatar} />;
 			}
 		}
-		return <div> No results found </div>;
+		return <div> {t('no_results_found')}</div>;
 	};
 
 	const onChosenField = (e: React.SyntheticEvent, data: any) => {
@@ -56,8 +59,8 @@ const TeamAddPeopleModal = ({ onConfirm, onClose, search, searchLoading, people,
 	};
 
 	return (
-		<Modal onClose={() => onClose(false)} open size="small">
-			<Modal.Header>Add teammates</Modal.Header>
+		<Modal onClose={() => onClose(false)} dimmer="inverted" open size="small">
+			<Modal.Header>{t('add_teammates')}</Modal.Header>
 			<Modal.Content>
 				{chosenUsers.length > 0 && <ChosenPeople users={chosenUsers} />}
 				<Search
@@ -73,12 +76,12 @@ const TeamAddPeopleModal = ({ onConfirm, onClose, search, searchLoading, people,
 					minCharacters={2}
 					value={searchText}
 				/>
-				<p className={styles.description_p}>No more than 4 people can be invited at the same time.</p>
+				<p className={styles.description_p}>{t('no_more_4_people_can_ba_added')}</p>
 			</Modal.Content>
 			<Modal.Actions>
-				<Button content="Accept" primary labelPosition="left" icon="checkmark" onClick={handlerAccept} />
-				<Button color="grey" onClick={() => onClose(false)}>
-					Cancel
+				<Button content={t('accept')} primary labelPosition="left" icon="checkmark" onClick={handlerAccept} />
+				<Button basic className={styles.edit_btn} onClick={() => onClose(false)}>
+					<span className={styles.edit_btn_value}>{t('cancel')}</span>
 				</Button>
 			</Modal.Actions>
 		</Modal>

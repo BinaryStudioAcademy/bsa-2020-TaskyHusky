@@ -29,23 +29,23 @@ export const ADD_PEOPLE_TO_TEAM_LOADING = 'TEAM:ADD_PEOPLE_TO_TEAM_LOADING';
 export const ADD_PEOPLE_TO_TEAM_SUCCESS = 'TEAM:ADD_PEOPLE_TO_TEAM_SUCCESS';
 
 export type startAddingUsers = {
-	id: string,
-	users: WebApi.Entities.UserProfile[]
-}
+	id: string;
+	users: WebApi.Entities.UserProfile[];
+};
 
 export type successAddingUsers = {
 	users: WebApi.Entities.UserProfile[];
-}
+};
 
 export type startsearchingPeople = {
-	id: string,
-	match: string
-}
+	id: string;
+	match: string;
+};
 
 export type successSearchPeople = {
-	results: any, //semantic-ui structure for result render
-	loading?: boolean
-}
+	results: any; //semantic-ui structure for result render
+	loading?: boolean;
+};
 
 export type AddLinkSuccess = {
 	links?: any;
@@ -86,5 +86,8 @@ export type EditFieldLoadingArgs = {
 	field: { [key: string]: string | [] };
 };
 export type EditFieldSuccess = {
-	field: { [key: string]: string | [] };
+	field: {
+		name: string,
+		description: string
+	};
 };

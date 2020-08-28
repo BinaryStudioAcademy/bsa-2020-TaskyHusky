@@ -7,6 +7,7 @@ import { useCreateIssueModalContext } from 'containers/CreateIssueModal/logic/co
 import { updateIssue } from 'pages/IssuePage/logic/actions';
 import { useTranslation } from 'react-i18next';
 import { getUsername } from 'helpers/getUsername.helper';
+import IssueFileInput from 'components/IssueFileInput';
 
 interface Props {
 	current: WebApi.Issue.PartialIssue;
@@ -27,6 +28,7 @@ interface SelectOption {
 const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, priorities, users, onSubmit }) => {
 	const context = useCreateIssueModalContext();
 	const [opened, setOpened] = useState<boolean>(false);
+	const [isUploadPending, setIsUploadPending] = useState<boolean>(false);
 	const dispatch = useDispatch();
 	const { t } = useTranslation();
 	getOpenFunc(() => setOpened(true));
@@ -182,10 +184,11 @@ const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, p
 					</Form.Field>
 					<Form.Field>
 						<label>{t('attachments')}</label>
-						<TagsInput
-							placeholder={t('add_attachment')}
-							tags={context.data.attachments ?? []}
-							onChange={(tags) => context.set('attachments', [...tags])}
+						<IssueFileInput
+							currentLinks={context.data.attachments}
+							onChange={(newFiles) => context.set('attachments', newFiles)}
+							onChangePending={(isPending) => setIsUploadPending(isPending)}
+							issueKey={context.data.issueKey as string}
 						/>
 					</Form.Field>
 					<Form.Field>
@@ -202,7 +205,7 @@ const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, p
 			</Modal.Content>
 			<Modal.Actions style={{ height: 67 }}>
 				<Button.Group floated="right">
-					<Button primary type="submit">
+					<Button primary type="submit" disabled={isUploadPending}>
 						{t('submit')}
 					</Button>
 					<Button onClick={() => setOpened(false)} basic>
