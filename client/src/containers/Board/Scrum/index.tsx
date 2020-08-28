@@ -99,7 +99,6 @@ const Scrum: BoardComponent = (props) => {
 	useEffect(() => {
 		setIssuesMap({ ...matchIssuesToSprint, backlog: backlog });
 	}, [state, matchIssuesToSprint, backlog]);
-	console.log(issuesMap);
 
 	const sprintList =
 		!isEmpty(sprints) && !isEmpty(issuesMap) ? (

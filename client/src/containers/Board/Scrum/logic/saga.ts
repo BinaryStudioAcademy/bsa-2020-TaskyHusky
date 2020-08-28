@@ -44,7 +44,7 @@ export function* updateSprintRequest(action: ReturnType<typeof actions.updateSpr
 		const { sprint } = action;
 		const response: WebApi.Entities.Sprint = yield call(updateSprint, sprint);
 		yield put(actions.updateSprintDataSuccess({ sprint: response }));
-		yield put(actions.loadBacklogTrigger({ boardId: <string>response.board?.id }));
+		yield put(actions.loadBacklogTrigger({ boardId: response.board?.id as string }));
 		NotificationManager.success('Sprint was successfully updated', 'Success');
 	} catch (error) {
 		NotificationManager.error(error.clientException.message, 'Error');
