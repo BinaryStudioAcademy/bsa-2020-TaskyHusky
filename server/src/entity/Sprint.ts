@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToOne } from 'typeorm';
-import { IsBoolean, IsString, IsUUID } from 'class-validator';
+import { IsBoolean, IsString, IsUUID, IsDate } from 'class-validator';
 import { Issue } from './Issue';
 import { Projects } from './Projects';
 import { Board } from './Board';
@@ -31,4 +31,12 @@ export class Sprint {
 
 	@OneToMany((type) => Issue, (issue) => issue.sprint, { onDelete: 'CASCADE', eager: true })
 	issues!: Issue[];
+
+	@Column({ nullable: true })
+	@IsDate()
+	startDate?: Date;
+
+	@Column({ nullable: true })
+	@IsDate()
+	endDate?: Date;
 }

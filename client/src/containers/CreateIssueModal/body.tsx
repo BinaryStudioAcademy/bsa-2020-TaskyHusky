@@ -9,6 +9,7 @@ import { generateRandomString } from 'helpers/randomString.helper';
 import { KeyGenerate } from 'constants/KeyGenerate';
 import { useTranslation } from 'react-i18next';
 import { getUsername } from 'helpers/getUsername.helper';
+import IssueFileInput from 'components/IssueFileInput';
 
 interface Props {
 	children: JSX.Element;
@@ -46,6 +47,8 @@ const CreateIssueModalBody: React.FC<Props> = ({
 }) => {
 	const { t } = useTranslation();
 	const [isOpened, setIsOpened] = useState<boolean>(false);
+	const [isFileUploadPending, setIsFileUploadPending] = useState<boolean>(false);
+	const [issueKey] = useState<string>(generateRandomString(KeyGenerate.LENGTH));
 	const dispatch = useDispatch();
 	const context = useCreateIssueModalContext();
 	const user = useSelector((state: RootState) => state.auth.user);
@@ -117,7 +120,7 @@ const CreateIssueModalBody: React.FC<Props> = ({
 			sprint: sprintID,
 			board: boardID,
 			project: projectID ?? context.data.project,
-			issueKey: generateRandomString(KeyGenerate.LENGTH),
+			issueKey,
 			assigned: context.data.assigned,
 		};
 
@@ -223,10 +226,11 @@ const CreateIssueModalBody: React.FC<Props> = ({
 					</Form.Field>
 					<Form.Field>
 						<label>{t('attachments')}</label>
-						<TagsInput
-							placeholder={t('add_attachment')}
-							tags={context.data.attachments ?? []}
-							onChange={(tags) => context.set('attachments', [...tags])}
+						<IssueFileInput
+							onChangePending={setIsFileUploadPending}
+							onChange={(attachments: string[]) => context.set('attachments', attachments)}
+							currentLinks={context.data.attachments}
+							issueKey={issueKey}
 						/>
 					</Form.Field>
 					<Form.Field>
@@ -243,7 +247,7 @@ const CreateIssueModalBody: React.FC<Props> = ({
 			</Modal.Content>
 			<Modal.Actions style={{ height: 67 }}>
 				<Button.Group floated="right">
-					<Button primary type="submit">
+					<Button primary type="submit" disabled={isFileUploadPending}>
 						{t('submit')}
 					</Button>
 					<Button onClick={getSetOpenFunc(false)} basic>

@@ -1,4 +1,4 @@
-@import "../../styles/variables.scss";
+@import '../../styles/variables.scss';
 :global(#root) {
 	.menuWrapper > * {
 		color: $header-text !important;
@@ -86,17 +86,18 @@
 	}
 
 	.circularIcon {
+		font-size: 18px;
 		margin-left: 10px;
 		border-radius: 50%;
-		padding: 7px;
-		height: 30px;
-		width: 30px;
+		padding: 9px;
+		height: 40px;
+		width: 40px;
 		@media (max-width: 600px) {
 			display: none;
 		}
 		&:hover {
 			background: rgba(0, 0, 0, 0.05);
-			padding: 7px;
+			padding: 9px;
 		}
 
 		i {
@@ -105,6 +106,7 @@
 	}
 
 	.circularDropdownMenu {
+		font-size: 15px;
 		position: absolute;
 		top: 38px;
 		right: 4px !important;

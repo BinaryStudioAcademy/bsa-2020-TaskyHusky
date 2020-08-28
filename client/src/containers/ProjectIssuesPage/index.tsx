@@ -7,6 +7,7 @@ import { getByKey } from 'services/issue.service';
 import Board from 'containers/Board';
 import styles from './styles.module.scss';
 import IssuePageInfoColumn from 'components/IssuePageInfoColumn';
+import { convertIssueResultToPartialIssue } from 'helpers/issueResultToPartialIssue';
 
 interface Props {
 	projectId: string;
@@ -40,25 +41,7 @@ const ProjectIssuesPage: React.FC<Props> = ({ projectId }) => {
 		return <Board boardId={project.boards[0].id} />;
 	}
 
-	const initialIssue = selectedIssue
-		? {
-				...selectedIssue,
-				boardColumn: selectedIssue.boardColumn?.id,
-				type: selectedIssue.type.id,
-				priority: selectedIssue.priority.id,
-				board: selectedIssue.board?.id,
-				sprint: selectedIssue.sprint?.id,
-				project: selectedIssue.project?.id,
-				creator: selectedIssue.creator.id,
-				assigned: selectedIssue.assigned?.id,
-				status: selectedIssue.status?.id,
-		  }
-		: {
-				id: '',
-				type: '',
-				priority: '',
-				creator: '',
-		  };
+	const initialIssue = selectedIssue ? convertIssueResultToPartialIssue(selectedIssue) : {};
 
 	return (
 		<main style={{ paddingTop: 20, height: '80%', marginBottom: 10, display: 'flex' }}>
