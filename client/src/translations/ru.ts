@@ -2,7 +2,7 @@ export const ru = {
 	login_header: 'Вход в аккаунт TaskyHusky',
 	invalid_email: 'Введите валидный e-mail',
 	log_in: 'Войти',
-	email: 'E-mail',
+	email: 'Эл. адрес',
 	password: 'Пароль',
 	continue: 'Далее',
 	cant_login: 'Не удаётся войти?',
