@@ -126,10 +126,10 @@ const EditSprintModal = (props: Props) => {
 		{ key: 5, text: t('custom'), value: 'custom' },
 	];
 
-	const [duration, setDuration] = useState<number | 'custom'>(1);
+	const [duration, setDuration] = useState<number | 'custom'>('custom');
 	const [startDate, setStartDate] = useState(new Date(sprintStartDate));
 	const [endDate, setEndDate] = useState(new Date(sprintEndDate));
-	const [endDateDisable, setEndDateDisable] = useState(true);
+	const [endDateDisable, setEndDateDisable] = useState(false);
 	const [isDateValid, setIsDateValid] = useState(true);
 
 	const handleStartDatePick = (date: Date) => {
