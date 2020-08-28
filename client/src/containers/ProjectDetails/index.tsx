@@ -9,15 +9,19 @@ import { setProjectActions } from './config/projectActions';
 import * as generalProjectActions from 'components/ProjectsCommon/logic/actions';
 
 import styles from './styles.module.scss';
+import { useHistory } from 'react-router-dom';
 
 const ProjectDetails = () => {
 	const { t } = useTranslation();
 	const dispatch = useDispatch();
+	const history = useHistory();
+	const { projects } = useSelector((rootState: RootState) => rootState.projects);
 	const { project: projectData } = useSelector((rootState: RootState) => rootState.project);
 	const { id } = projectData;
 
 	const onTrash = () => {
-		dispatch(generalProjectActions.startDeletingProject({ id }));
+		dispatch(generalProjectActions.startDeletingProject({ id, projects }));
+		history.push('/projects');
 	};
 
 	return (

@@ -73,7 +73,14 @@ export class BoardRepository extends Repository<Board> {
 		const boardWithSprints = await this.createQueryBuilder('board')
 			.where('board.id = :id', { id })
 			.innerJoin('board.sprints', 'sprint')
-			.addSelect(['sprint.id', 'sprint.sprintName', 'sprint.isCompleted', 'sprint.isActive'])
+			.addSelect([
+				'sprint.id',
+				'sprint.sprintName',
+				'sprint.isCompleted',
+				'sprint.isActive',
+				'sprint.startDate',
+				'sprint.endDate',
+			])
 			.getOne();
 
 		if (!boardWithSprints) {

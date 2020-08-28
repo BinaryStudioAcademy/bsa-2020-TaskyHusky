@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, Modal } from 'semantic-ui-react';
 import styles from './styles.module.scss';
 import { CurrentLink } from './index';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
 	onClose: () => void;
@@ -10,19 +11,27 @@ type Props = {
 };
 
 const DeleteLink = ({ onClose, link, onDelete }: Props) => {
+	const { t } = useTranslation();
+
 	return (
 		<Modal onClose={onClose} open size="tiny">
-			<Modal.Header>Delete this link</Modal.Header>
+			<Modal.Header>{t('delete_link')}</Modal.Header>
 			<Modal.Content>
 				<p className={styles.link_description}>
-					Link to <span className={styles.link_title}>{link.name}</span> will be deleted from team links
-					section
+					{t('link_to')} <span className={styles.link_title}>{link.name}</span>{' '}
+					{t('will_be_deleted_from_section')}
 				</p>
 			</Modal.Content>
 			<Modal.Actions>
-				<Button content="Accept" primary labelPosition="left" icon="checkmark" onClick={() => onDelete(link)} />
+				<Button
+					content={t('accept')}
+					primary
+					labelPosition="left"
+					icon="checkmark"
+					onClick={() => onDelete(link)}
+				/>
 				<Button color="grey" onClick={onClose}>
-					Cancel
+					{t('cancel')}
 				</Button>
 			</Modal.Actions>
 		</Modal>

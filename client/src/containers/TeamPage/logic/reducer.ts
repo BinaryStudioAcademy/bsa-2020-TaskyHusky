@@ -67,10 +67,10 @@ export const teamReducer = createReducer<TeamState>(initialState, {
 			...state,
 			results: {
 				users: {
-					results: [...action.results]
+					results: [...action.results],
 				},
-				loading: false
-			}
+				loading: false,
+			},
 		};
 	},
 	[actionTypes.FAIL_SEARCHING_PEOPLE](state: TeamState) {
@@ -78,8 +78,8 @@ export const teamReducer = createReducer<TeamState>(initialState, {
 			...state,
 			results: {
 				...state.results,
-				loading: false
-			}
+				loading: false,
+			},
 		};
 	},
 	[actionTypes.SEARCH_PEOPLE_LOADER](state: TeamState) {
@@ -87,8 +87,8 @@ export const teamReducer = createReducer<TeamState>(initialState, {
 			...state,
 			results: {
 				...state.results,
-				loading: true
-			}
+				loading: true,
+			},
 		};
 	},
 
