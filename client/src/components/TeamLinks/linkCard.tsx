@@ -7,10 +7,12 @@ import { useTranslation } from 'react-i18next';
 export type Props = {
 	edit: (arg: CurrentLink) => void;
 	deleteLink: (arg: CurrentLink) => void;
+	authUser: WebApi.Entities.UserProfile | null;
+	teamOwner?: WebApi.Entities.UserProfile;
 	link: CurrentLink;
 };
 
-const LinkCard = ({ link, edit, deleteLink }: Props) => {
+const LinkCard = ({ link, edit, deleteLink, authUser, teamOwner }: Props) => {
 	const [showButtons, setShowButtons] = useState<boolean>(false);
 	const showBtns = () => setShowButtons(true);
 	const hideBtns = () => setShowButtons(false);
@@ -25,7 +27,7 @@ const LinkCard = ({ link, edit, deleteLink }: Props) => {
 				<Icon name="linkify" size="large" />
 				{link.http}
 			</a>
-			{showButtons && (
+			{teamOwner && showButtons && authUser?.id === teamOwner.id && (
 				<div className={styles.btns_block}>
 					<Button size="medium" basic className={styles.edit_btn} onClick={() => edit(link)}>
 						<span className={styles.edit_btn_value}> {t('edit')}</span>

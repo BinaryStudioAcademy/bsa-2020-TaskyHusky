@@ -6,6 +6,8 @@ import styles from './styles.module.scss';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import RemoveUserModal from './removeUserModal';
+import { useSelector } from 'react-redux';
+import { RootState } from 'typings/rootState';
 
 type Props = {
 	teammates?: User[];
@@ -25,6 +27,8 @@ export interface User {
 }
 
 const TeamsMembersCard = ({ title, teamOwner, removeUserFromTeam, teammates = [] }: Props) => {
+	const authUser = useSelector((rootState: RootState) => rootState.auth.user);
+
 	const [modal, setModal] = useState<boolean>(false);
 	const [removeUserModal, setRemoveUserModal] = useState<boolean>(false);
 	const [viewUser, setViewUser] = useState<User | undefined>();
@@ -87,13 +91,16 @@ const TeamsMembersCard = ({ title, teamOwner, removeUserFromTeam, teammates = []
 							<div className={styles.user_info}>
 								<p> {fullUserName(el.firstName, el.lastName)}</p>
 								<p className={styles.metainfo}>{el.jobTitle}</p>
-								{teamOwner && viewUser?.id === el.id && viewUser.id !== teamOwner?.id && (
-									<Icon
-										name="delete"
-										onClick={() => onDeleteUserClick(el)}
-										className={styles.user_delete_btn}
-									/>
-								)}
+								{teamOwner &&
+									authUser?.id === teamOwner.id &&
+									viewUser?.id === el.id &&
+									viewUser.id !== teamOwner.id && (
+										<Icon
+											name="delete"
+											onClick={() => onDeleteUserClick(el)}
+											className={styles.user_delete_btn}
+										/>
+									)}
 							</div>
 							{removeUserModal && (
 								<RemoveUserModal

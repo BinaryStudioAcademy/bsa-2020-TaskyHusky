@@ -4,6 +4,8 @@ import styles from 'containers/TeamPage/styles.module.scss';
 import AditionalModal from 'components/TeamAddPeopleModal/aditionalModal';
 import { useTranslation } from 'react-i18next';
 import { User } from 'containers/LoginPage/logic/state';
+import { useSelector } from 'react-redux';
+import { RootState } from 'typings/rootState';
 
 type CardProps = {
 	teamOwner: WebApi.Entities.UserProfile;
@@ -24,6 +26,8 @@ const TeamDevsCard = ({
 	description = ' ',
 	name = ' ',
 }: CardProps) => {
+	const authUser = useSelector((rootState: RootState) => rootState.auth.user);
+
 	const [showDelete, setShowDelete] = useState<boolean>(false);
 	const [lockEditFields, setEditFields] = useState<boolean>(true);
 	const [title, setTitle] = useState<string>(name);
@@ -73,32 +77,37 @@ const TeamDevsCard = ({
 					className={lockEditFields ? styles.input_area : `${styles.input_area} ${styles.input_borders}`}
 				/>
 			</Card.Content>
-			<Card.Content className={styles.edit_field_btn}>
-				<Button compact fluid={lockEditFields} color="blue" onClick={() => submitEditFields()}>
-					{t(lockEditFields ? 'edit_fields' : 'save_changes')}
-				</Button>
-				{!lockEditFields && (
-					<Button compact basic className={styles.edit_btn} onClick={abortChhange}>
-						{t('cancel')}
-					</Button>
-				)}
-			</Card.Content>
-			<Card.Content extra>
-				<Button.Group fluid>
-					<Button
-						basic
-						compact
-						className={`${styles.margin_1} ${styles.media_btns} ${styles.edit_btn}`}
-						onClick={showAddPeopleModal}
-						disabled={currentProfile?.id !== teamOwner?.id}
-					>
-						<span className={styles.edit_btn_value}>{t('add_people')}</span>
-					</Button>
-					<Button compact basic className={styles.delete_btn} onClick={() => setShowDelete(true)}>
-						<span className={styles.delete_btn_value}>{t('delete_team')}</span>
-					</Button>
-				</Button.Group>
-			</Card.Content>
+			{teamOwner && teamOwner.id === authUser?.id && (
+				<>
+					<Card.Content className={styles.edit_field_btn}>
+						<Button compact fluid={lockEditFields} color="blue" onClick={() => submitEditFields()}>
+							{t(lockEditFields ? 'edit_fields' : 'save_changes')}
+						</Button>
+						{!lockEditFields && (
+							<Button compact basic className={styles.edit_btn} onClick={abortChhange}>
+								{t('cancel')}
+							</Button>
+						)}
+					</Card.Content>
+					<Card.Content extra>
+						<Button.Group fluid>
+							<Button
+								basic
+								compact
+								className={`${styles.margin_1} ${styles.media_btns} ${styles.edit_btn}`}
+								onClick={showAddPeopleModal}
+								disabled={currentProfile?.id !== teamOwner?.id}
+							>
+								<span className={styles.edit_btn_value}>{t('add_people')}</span>
+							</Button>
+							<Button compact basic className={styles.delete_btn} onClick={() => setShowDelete(true)}>
+								<span className={styles.delete_btn_value}>{t('delete_team')}</span>
+							</Button>
+						</Button.Group>
+					</Card.Content>
+				</>
+			)}
+
 			{showDelete && <AditionalModal confirmDelete={confirmDelete} setShowDelete={setShowDelete} />}
 		</Card>
 	);
