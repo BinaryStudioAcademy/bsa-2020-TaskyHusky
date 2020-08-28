@@ -102,11 +102,24 @@
 		max-width: 700px;
 	}
 }
-
+.media_btns {
+	flex-shrink: 0.5 !important;
+}
 .edit_field_btn {
 	border-top: none !important;
 }
-
+.delete_btn {
+	border: 1px solid #2185d0 !important;
+	.delete_btn_value {
+		color: #2185d0 !important;
+	}
+}
+.edit_btn {
+	border: 1px solid #4d4c4c !important;
+	.edit_btn_value {
+		color: #4d4c4c;
+	}
+}
 @media (max-width: 950px) {
 	.main_row {
 		padding: 0 20px !important;

@@ -30,8 +30,8 @@ const DeleteLink = ({ onClose, link, onDelete }: Props) => {
 					icon="checkmark"
 					onClick={() => onDelete(link)}
 				/>
-				<Button color="grey" onClick={onClose}>
-					{t('cancel')}
+				<Button basic className={styles.edit_btn} onClick={onClose}>
+					<span className={styles.edit_btn_value}>{t('cancel')}</span>
 				</Button>
 			</Modal.Actions>
 		</Modal>

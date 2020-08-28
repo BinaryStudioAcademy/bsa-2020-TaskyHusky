@@ -72,15 +72,16 @@ const TeamDevsCard = ({
 			<Card.Content extra>
 				<Button.Group fluid>
 					<Button
+						basic
 						compact
-						className={styles.margin_1}
+						className={`${styles.margin_1} ${styles.media_btns} ${styles.edit_btn}`}
 						onClick={showAddPeopleModal}
 						disabled={currentProfile?.id !== teamOwner?.id}
 					>
-						{t('add_people')}
+						<span className={styles.edit_btn_value}>{t('add_people')}</span>
 					</Button>
-					<Button compact color="red" onClick={() => setShowDelete(true)}>
-						{t('delete_team')}
+					<Button compact basic className={styles.delete_btn} onClick={() => setShowDelete(true)}>
+						<span className={styles.delete_btn_value}>{t('delete_team')}</span>
 					</Button>
 				</Button.Group>
 			</Card.Content>

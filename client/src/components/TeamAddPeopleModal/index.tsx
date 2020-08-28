@@ -80,8 +80,8 @@ const TeamAddPeopleModal = ({ onConfirm, onClose, search, searchLoading, people,
 			</Modal.Content>
 			<Modal.Actions>
 				<Button content={t('accept')} primary labelPosition="left" icon="checkmark" onClick={handlerAccept} />
-				<Button color="grey" onClick={() => onClose(false)}>
-					{t('cancel')}
+				<Button basic className={styles.edit_btn} onClick={() => onClose(false)}>
+					<span className={styles.edit_btn_value}>{t('cancel')}</span>
 				</Button>
 			</Modal.Actions>
 		</Modal>

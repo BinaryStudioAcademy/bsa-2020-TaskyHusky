@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Button, Modal, Form } from 'semantic-ui-react';
 import { CurrentLink } from './index';
 import { useTranslation } from 'react-i18next';
+import styles from './styles.module.scss';
 
 type Props = {
 	onClose: () => void;
@@ -67,8 +68,8 @@ const CreateLink = ({ onClose, currentLink, onConfirm }: Props) => {
 					icon="checkmark"
 					onClick={() => onConfirm(newLink)}
 				/>
-				<Button color="grey" onClick={onClose}>
-					{t('cancel')}
+				<Button basic className={styles.edit_btn} onClick={onClose}>
+					<span className={styles.edit_btn_value}>{t('cancel')}</span>
 				</Button>
 			</Modal.Actions>
 		</Modal>

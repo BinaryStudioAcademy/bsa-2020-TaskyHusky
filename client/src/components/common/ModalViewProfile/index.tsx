@@ -3,7 +3,10 @@ import styles from './styles.module.scss';
 import Avatar from 'components/Avatar';
 import { Link } from 'react-router-dom';
 import { Button, Icon } from 'semantic-ui-react';
+import { useSelector } from 'react-redux';
+import { RootState } from 'typings/rootState';
 import Spinner from 'components/common/Spinner';
+
 type UserModel = {
 	id: string;
 	email?: string;
@@ -18,10 +21,10 @@ type UserModel = {
 type Props = {
 	user: UserModel;
 	onClose: (arg: React.BaseSyntheticEvent) => void;
-	color: { [key: string]: string };
 };
 
-const ModalViewProfile = ({ user, onClose, color }: Props) => {
+const ModalViewProfile = ({ user, onClose }: Props) => {
+	const color = useSelector((rootStore: RootState) => rootStore.team.team.color);
 	return (
 		<>
 			<div className={styles.block_wrapper} onMouseLeave={(e) => onClose(e)}>
@@ -29,7 +32,7 @@ const ModalViewProfile = ({ user, onClose, color }: Props) => {
 					<Spinner />
 				) : (
 					<>
-						<div className={styles.header} style={color}>
+						<div className={styles.header} style={{ backgroundColor: color }}>
 							<div className={styles.left_margin}></div>
 							<div className={styles.name}>
 								<span>{`${user.firstName} ${user.lastName}`}</span>
