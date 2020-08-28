@@ -5,14 +5,15 @@
 	font-size: 22px;
 	text-align: center;
 	background-color: $background;
+	border-radius: 5px;
 }
 
 :local(.button) {
-	@include button(2px dashed #333);
+	@include button(1px dashed #888);
 }
 
 :local(.dragOverButton) {
-	@include button(2px solid #000, #0f06);
+	@include button(1px solid #000, #0f06);
 }
 
 :local(.controlsContainer) {
