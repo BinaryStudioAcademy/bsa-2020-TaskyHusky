@@ -26,8 +26,8 @@ export const ProjectsMenu = () => {
 					Project #1
 				</Dropdown.Item>
 				<Dropdown.Divider />
-				<Dropdown.Item>
-					<Link to="/projects">{t('view_all_projects')}</Link>
+				<Dropdown.Item as={Link} to="/projects">
+					{t('view_all_projects')}
 				</Dropdown.Item>
 				<Dropdown.Item onClick={onCreateProject}>{t('create_project')}</Dropdown.Item>
 			</Dropdown.Menu>
