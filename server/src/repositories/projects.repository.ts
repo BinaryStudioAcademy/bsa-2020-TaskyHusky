@@ -8,11 +8,13 @@ export class ProjectsRepository extends Repository<Projects> {
 	}
 
 	getOneProject(id: string, userId: string): Promise<Projects | undefined> {
+		// todo add userPermission lead validation
 		return getRepository(Projects)
 			.createQueryBuilder('project')
 			.leftJoinAndSelect('project.lead', 'lead')
 			.leftJoinAndSelect('project.users', 'users')
 			.leftJoinAndSelect('project.boards', 'boards')
+			.leftJoinAndSelect('project.labels', 'labels')
 			.leftJoin('project.users', 'user')
 			.where('project.id = :id', { id })
 			.andWhere('user.id = :userId', { userId })

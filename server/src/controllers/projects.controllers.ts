@@ -1,5 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { getCustomRepository } from 'typeorm';
+import { ProjectLabel } from '../entity/ProjectLabel';
+import { validateLabel } from '../../validators/validateProjectLabel.validator';
 import { validateProject } from '../../validators/validateProjects.validator';
 import { projectsErrorMessages } from '../constants/projects.constants';
 import { UserProfile } from '../entity/UserProfile';
@@ -195,6 +197,130 @@ class ProjectsController {
 		const projectsRepository = getCustomRepository(ProjectsRepository);
 		const keys = await projectsRepository.getKeys();
 		res.send(keys);
+	};
+
+	createLabel = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+		const projectsRepository = getCustomRepository(ProjectsRepository);
+		const { projectId, label } = req.body;
+		const { id: userId } = req.user;
+
+		try {
+			const isLabelDataValid = this.validateLabelData(label, next);
+			if (!isLabelDataValid) {
+				return;
+			}
+
+			const project = await this.getProjectById(projectId, userId, projectsRepository, next);
+
+			if (!project) {
+				return;
+			}
+
+			const { labels: prevLabels } = project;
+			const labelIndex = prevLabels.findIndex((labelItem) => labelItem.text === label.text);
+
+			if (labelIndex !== -1) {
+				next(new ErrorResponse(HttpStatusCode.UNPROCESSABLE_ENTITY, projectsErrorMessages.INVALID_DATA));
+				return;
+			}
+
+			const updatedLabelsList = [...prevLabels, label];
+			const dataToUpdate = { ...project, labels: updatedLabelsList };
+			const updatedProject = await projectsRepository.updateOne(dataToUpdate);
+			res.status(201).send(updatedProject);
+		} catch (error) {
+			next(new ErrorResponse(HttpStatusCode.INTERNAL_SERVER_ERROR, error.message));
+		}
+	};
+
+	updateLabel = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+		const projectsRepository = getCustomRepository(ProjectsRepository);
+		const { projectId, label } = req.body;
+		const { id: userId } = req.user;
+
+		try {
+			const isLabelDataValid = await this.validateLabelData(label, next);
+			if (!isLabelDataValid) {
+				return;
+			}
+
+			const project = await this.getProjectById(projectId, userId, projectsRepository, next);
+			if (!project) {
+				return;
+			}
+
+			const { labels: prevLabels } = project;
+			let updatedLabelsList;
+			try {
+				updatedLabelsList = prevLabels.map((labelItem) => {
+					if (labelItem.text === label.text && labelItem.id !== label.id) {
+						throw new Error();
+					}
+
+					if (labelItem.id === label.id) {
+						return label;
+					}
+
+					return labelItem;
+				});
+			} catch (error) {
+				next(new ErrorResponse(HttpStatusCode.UNPROCESSABLE_ENTITY, projectsErrorMessages.INVALID_DATA));
+				return;
+			}
+
+			const dataToUpdate = { ...project, labels: updatedLabelsList };
+			const updatedProject = await projectsRepository.updateOne(dataToUpdate);
+			res.status(200).send(updatedProject);
+		} catch (error) {
+			next(new ErrorResponse(HttpStatusCode.INTERNAL_SERVER_ERROR, error.message));
+		}
+	};
+
+	deleteLabel = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+		const projectsRepository = getCustomRepository(ProjectsRepository);
+		const { projectId, labelId } = req.body;
+		const { id: userId } = req.user;
+
+		try {
+			const project = await this.getProjectById(projectId, userId, projectsRepository, next);
+			if (!project) {
+				return;
+			}
+
+			const { labels: prevLabels } = project;
+			const updatedLabelsList = prevLabels.filter((label) => label.id !== labelId);
+			const dataToUpdate = { ...project, labels: updatedLabelsList };
+			const updatedProject = await projectsRepository.updateOne(dataToUpdate);
+			res.status(200).send(updatedProject);
+		} catch (error) {
+			next(new ErrorResponse(HttpStatusCode.INTERNAL_SERVER_ERROR, error.message));
+		}
+	};
+
+	protected validateLabelData = async (label: ProjectLabel, next: NextFunction): Promise<boolean> => {
+		const validationErrors = await validateLabel(label);
+
+		if (validationErrors.length > 0) {
+			next(new ErrorResponse(HttpStatusCode.UNPROCESSABLE_ENTITY, projectsErrorMessages.INVALID_DATA));
+			return false;
+		}
+		return true;
+	};
+
+	protected getProjectById = async (
+		projectId: string,
+		userId: string,
+		projectsRepository: ProjectsRepository,
+		next: NextFunction,
+	): Promise<Projects | null> => {
+		const project = await projectsRepository.getOneProject(projectId, userId);
+
+		if (project === undefined) {
+			next(new ErrorResponse(HttpStatusCode.NOT_FOUND, projectsErrorMessages.PROJECT_NOT_FOUND));
+			return null;
+		}
+
+		return project;
 	};
 }
 
