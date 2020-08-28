@@ -42,7 +42,7 @@ export const useCreateIssueModalContext = () => {
 		throw new Error('useCreateIssueModalContext must be used inside a ContextProvider');
 	}
 
-	type Value = string | number | boolean | undefined | string[];
+	type Value = string | number | boolean | undefined | string[] | WebApi.Result.IssueAttachmentResult[];
 
 	const set = (key: keyof WebApi.Issue.PartialIssue, value: Value) =>
 		dispatch({

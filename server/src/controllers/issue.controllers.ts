@@ -3,25 +3,12 @@ import { getCustomRepository } from 'typeorm';
 import { getWebError } from '../helpers/error.helper';
 import { IssueRepository } from '../repositories/issue.repository';
 import { UserModel } from '../models/User';
-import uploadS3 from '../services/file.service';
-import { issueAttachmentFolder } from '../../config/aws.config';
 
 class IssueController {
-	async attach(req: Request, res: Response) {
-		const { body: { id, index }, file } = req;
-		const name = `${id}_issue_attachment_${index}`;
-
-		try {
-			const link = await uploadS3(issueAttachmentFolder, file, name);
-			res.send({ link });
-		} catch (err) {
-			res.status(400).send(getWebError(err, 400));
-		}
-	}
-
 	async getAll(req: Request, res: Response) {
 		const repository = getCustomRepository(IssueRepository);
 		const { from, to } = req.body;
+
 		try {
 			const result = await repository.findAll(Number(from), Number(to));
 			res.send(result);

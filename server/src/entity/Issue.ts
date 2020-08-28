@@ -7,6 +7,7 @@ import {
 	UpdateDateColumn,
 	ManyToMany,
 	JoinTable,
+	OneToMany,
 } from 'typeorm';
 
 import { IsNotEmpty, IsString, IsArray } from 'class-validator';
@@ -18,6 +19,7 @@ import { BoardColumn } from './BoardColumn';
 import { Sprint } from './Sprint';
 import { Projects } from './Projects';
 import { Board } from './Board';
+import { IssueAttachment } from './IssueAttachment';
 
 @Entity()
 export class Issue {
@@ -44,9 +46,9 @@ export class Issue {
 	@Column({ array: true })
 	labels?: string;
 
-	@Column({ array: true })
-	@IsArray()
-	attachments?: string;
+	@OneToMany((type) => IssueAttachment, (attachment) => attachment.issue)
+	@IsNotEmpty()
+	attachments?: IssueAttachment[];
 
 	@Column({ array: true })
 	@IsArray()

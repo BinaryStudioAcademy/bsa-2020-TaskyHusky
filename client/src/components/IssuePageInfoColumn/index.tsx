@@ -148,9 +148,15 @@ const IssuePageInfoColumn: React.FC<Props> = ({
 					: t('no')}
 				<h4>{t('attachments')}</h4>
 				{issue.attachments && issue.attachments.length
-					? issue.attachments.map((a, i) => (
-							<a rel="noopener noreferrer" target="_blank" href={a} key={i} style={{ marginRight: 10 }}>
-								{a}
+					? issue.attachments.map(({ name, link }, i) => (
+							<a
+								rel="noopener noreferrer"
+								target="_blank"
+								href={name}
+								key={i}
+								style={{ marginRight: 10 }}
+							>
+								{link}
 							</a>
 					  ))
 					: t('no')}

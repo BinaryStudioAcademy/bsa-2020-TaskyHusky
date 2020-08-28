@@ -152,3 +152,14 @@ export const watch = async (id: string): Promise<void> => {
 		endpoint: `issue/${id}/watch`,
 	});
 };
+
+export const attachFile = async (file: File): Promise<WebApi.Result.IssueAttachmentResult> => {
+	const res: Response = await callWebApi({
+		method: 'POST',
+		endpoint: 'issue/attachment',
+		attachment: file,
+		attachmentFieldName: 'file',
+	});
+
+	return (await res.json()) as WebApi.Result.IssueAttachmentResult;
+};
