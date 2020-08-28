@@ -27,8 +27,12 @@ const LinkCard = ({ link, edit, deleteLink }: Props) => {
 			</a>
 			{showButtons && (
 				<div className={styles.btns_block}>
-					<Button size="large" content={t('edit')} onClick={() => edit(link)} />
-					<Button size="large" content={t('delete')} onClick={() => deleteLink(link)} />
+					<Button size="medium" basic className={styles.edit_btn} onClick={() => edit(link)}>
+						<span className={styles.edit_btn_value}> {t('edit')}</span>
+					</Button>
+					<Button size="medium" basic className={styles.delete_btn} onClick={() => deleteLink(link)}>
+						<span className={styles.delete_btn_value}>{t('delete')}</span>
+					</Button>
 				</div>
 			)}
 		</div>
