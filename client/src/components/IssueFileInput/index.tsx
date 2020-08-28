@@ -39,15 +39,19 @@ const IssueFileInput: React.FC<Props> = ({
 			onChangePending(true);
 
 			upload(
-				Array.from(newFileList).filter((file) => {
-					console.log(file.type);
-					return ALLOWED_ISSUE_ATTACHMENT_MIME_TYPES.includes(file.type);
-				}),
+				Array.from(newFileList).filter((file) => ALLOWED_ISSUE_ATTACHMENT_MIME_TYPES.includes(file.type)),
 			).then((newLinks) => {
 				onChangePending(false);
 				onChange([...currentLinks, ...newLinks]);
 			});
 		}
+	};
+
+	const curryDeleteLink = (currentLink: string) => () => {
+		const index = currentLinks.findIndex((linkToCheck) => linkToCheck === currentLink);
+		const newLinks = [...currentLinks];
+		newLinks.splice(index, 1);
+		onChange(newLinks);
 	};
 
 	return (
@@ -79,16 +83,7 @@ const IssueFileInput: React.FC<Props> = ({
 						<a href={link} target="_blank" rel="noopener noreferrer">
 							{getFnameByLink(link)}
 						</a>
-						<Icon
-							name="delete"
-							link
-							onClick={() => {
-								const index = currentLinks.findIndex((linkToCheck) => linkToCheck === link);
-								const newLinks = [...currentLinks];
-								newLinks.splice(index, 1);
-								onChange(newLinks);
-							}}
-						/>
+						<Icon name="delete" link onClick={curryDeleteLink(link)} />
 					</Label>
 				))}
 			</div>
