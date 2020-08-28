@@ -1,4 +1,4 @@
-import { createIssue, updateIssueSuccess } from 'pages/IssuePage/logic/actions';
+import { createIssue } from 'pages/IssuePage/logic/actions';
 import { getBoardSprints, getBoardProjects } from 'services/board.service';
 import { getSprintIssues, updateSprint, deleteSprint, createSprint } from 'services/sprint.service';
 import { getBacklogByBoardId } from 'services/issue.service';
@@ -6,7 +6,7 @@ import { all, put, takeEvery, call } from 'redux-saga/effects';
 import * as actionTypes from './actionTypes';
 import * as actions from './actions';
 import { NotificationManager } from 'react-notifications';
-import { CREATE_ISSUE_SUCCESS, UPDATE_ISSUE_SUCCESS } from 'pages/IssuePage/logic/actionTypes';
+import { CREATE_ISSUE_SUCCESS } from 'pages/IssuePage/logic/actionTypes';
 
 export function* loadSprintsRequest(action: ReturnType<typeof actions.loadSprintsTrigger>) {
 	try {
@@ -42,8 +42,9 @@ export function* loadIssuesRequest(action: ReturnType<typeof actions.loadIssuesT
 export function* updateSprintRequest(action: ReturnType<typeof actions.updateSprintDataTrigger>) {
 	try {
 		const { sprint } = action;
-		const response: any = yield call(updateSprint, sprint);
+		const response: WebApi.Entities.Sprint = yield call(updateSprint, sprint);
 		yield put(actions.updateSprintDataSuccess({ sprint: response }));
+		yield put(actions.loadBacklogTrigger({ boardId: <string>response.board?.id }));
 		NotificationManager.success('Sprint was successfully updated', 'Success');
 	} catch (error) {
 		NotificationManager.error(error.clientException.message, 'Error');
@@ -104,17 +105,10 @@ export function* deleteSprintSuccess(action: ReturnType<typeof actions.deleteSpr
 		const { sprint } = action;
 
 		if (sprint.board) {
-			// yield put(actions.loadBacklogTrigger({ boardId: sprint.board.id }));
+			yield put(actions.loadBacklogTrigger({ boardId: sprint.board.id }));
 		}
 	} catch (error) {
 		NotificationManager.error(error.clientException.message, 'Error');
-	}
-}
-
-export function* updateIssueSuccessRequest(action: ReturnType<typeof updateIssueSuccess>) {
-	const boardId = action.data.board?.id;
-	if (boardId) {
-		// yield put(actions.loadBacklogTrigger({ boardId }));
 	}
 }
 
@@ -154,10 +148,6 @@ export function* watchDeleteSprintSuccess() {
 	yield takeEvery(actionTypes.DELETE_SPRINT_SUCCESS, deleteSprintSuccess);
 }
 
-export function* watchUpdateIssueSuccess() {
-	yield takeEvery(UPDATE_ISSUE_SUCCESS, updateIssueSuccessRequest);
-}
-
 export default function* scrumBoardSaga() {
 	yield all([
 		watchLoadSprintsRequest(),
@@ -169,6 +159,5 @@ export default function* scrumBoardSaga() {
 		watchCreateIssueSuccess(),
 		watchLoadBacklogRequest(),
 		watchDeleteSprintSuccess(),
-		watchUpdateIssueSuccess(),
 	]);
 }
