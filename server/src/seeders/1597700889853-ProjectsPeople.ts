@@ -20,8 +20,8 @@ export class ProjectsPeople1597700889853 implements MigrationInterface {
 			},
 		});
 
-		const user1 = await userRepository.getByEmail('test@test.com') as UserProfile;
-		const user2 = await userRepository.getByEmail('test1@test.com') as UserProfile;
+		const user1 = (await userRepository.getByEmail('test@test.com')) as UserProfile;
+		const user2 = (await userRepository.getByEmail('test1@test.com')) as UserProfile;
 
 		user1.projects = [project2, project1];
 		user2.projects = [project1, project2];
