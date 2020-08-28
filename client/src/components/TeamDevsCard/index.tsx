@@ -1,17 +1,27 @@
 import React, { useState } from 'react';
-import { Card, Icon, Button } from 'semantic-ui-react';
+import { Card, Icon, Button, TextArea, TextAreaProps } from 'semantic-ui-react';
 import styles from 'containers/TeamPage/styles.module.scss';
 import AditionalModal from 'components/TeamAddPeopleModal/aditionalModal';
 import { useTranslation } from 'react-i18next';
+import { User } from 'containers/LoginPage/logic/state';
 
 type CardProps = {
+	teamOwner: WebApi.Entities.UserProfile;
+	currentProfile: User | null;
 	description?: string;
 	name?: string;
 	showAddPeopleModal: () => void;
 	changeMainFields: (arg: { [key: string]: string }) => void;
 };
 
-const TeamDevsCard = ({ changeMainFields, description = '', name = '', showAddPeopleModal }: CardProps) => {
+const TeamDevsCard = ({
+	currentProfile,
+	showAddPeopleModal,
+	teamOwner,
+	changeMainFields,
+	description = ' ',
+	name = ' ',
+}: CardProps) => {
 	const [showDelete, setShowDelete] = useState<boolean>(false);
 	const [lockEditFields, setEditFields] = useState<boolean>(true);
 	const [title, setTitle] = useState<string>(name);
@@ -22,9 +32,10 @@ const TeamDevsCard = ({ changeMainFields, description = '', name = '', showAddPe
 		if (lockEditFields) {
 			return;
 		}
-		if (name === title.trim() && description === teamDescription.trim()) {
+		if (name === title.trim() && description === teamDescription) {
 			return;
 		}
+
 		changeMainFields({
 			name: title,
 			description: teamDescription,
@@ -43,26 +54,33 @@ const TeamDevsCard = ({ changeMainFields, description = '', name = '', showAddPe
 				/>
 			</Card.Content>
 			<Card.Content>
-				<textarea
+				<TextArea
+					as="textarea"
+					placeholder={t('add_some_description')}
 					disabled={lockEditFields}
-					onChange={(e) => setTeamDescription(e.target.value)}
-					defaultValue={teamDescription}
-					rows={4}
+					onChange={(event: TextAreaProps) => setTeamDescription(event.target.value)}
+					value={teamDescription}
+					rows={3}
 					className={lockEditFields ? styles.input_area : `${styles.input_area} ${styles.input_borders}`}
-				></textarea>
+				/>
 			</Card.Content>
 			<Card.Content className={styles.edit_field_btn}>
 				<Button compact color="blue" fluid onClick={() => submitEditFields()}>
-					{t(lockEditFields ? 'Edit fields' : 'Save changes')}
+					{t(lockEditFields ? 'edit_fields' : 'save_changes')}
 				</Button>
 			</Card.Content>
 			<Card.Content extra>
 				<Button.Group fluid>
-					<Button compact className={styles.margin_1} onClick={showAddPeopleModal}>
-						{t('Add people')}
+					<Button
+						compact
+						className={styles.margin_1}
+						onClick={showAddPeopleModal}
+						disabled={currentProfile?.id !== teamOwner?.id}
+					>
+						{t('add_people')}
 					</Button>
 					<Button compact color="red" onClick={() => setShowDelete(true)}>
-						{t('Delete team')}
+						{t('delete_team')}
 					</Button>
 				</Button.Group>
 			</Card.Content>

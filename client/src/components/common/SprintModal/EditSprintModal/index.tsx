@@ -136,7 +136,6 @@ const EditSprintModal = (props: Props) => {
 		setStartDate(date);
 
 		const nextEndDate = getNextDate(duration, date);
-		console.log(duration);
 		if (duration !== 'custom') {
 			setEndDate(nextEndDate);
 		}

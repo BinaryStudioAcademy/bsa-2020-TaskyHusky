@@ -47,7 +47,7 @@ export const EmailService = {
 
 export const sendToken = (email: string, resetPasswordToken: string) => {
 	const mailOptions: EmailArgs = {
-		to: ['admin@taskyhusky.xyz'],
+		to: [email],
 		subject: 'Please, confirm your email',
 		message: `http://${appHost}:${frontendPort}/reset-password/${resetPasswordToken} your token will expire in 1 day`,
 	};
@@ -64,7 +64,7 @@ export interface CommentMentionEmailParams {
 export const sendMentionedInComment = (params: CommentMentionEmailParams) => {
 	const { email, issueKey, userName } = params;
 	const mailOptions: EmailArgs = {
-		to: ['admin@taskyhusky.xyz'],
+		to: [email],
 		subject: 'Mention',
 		message: `Dear ${userName}, you have been mentioned in issue comment!<br />
 		Go <a rel="noopener noreferrer" href='http://${appHost}:${frontendPort}/issue/${issueKey}'>here</a> and check out!`,

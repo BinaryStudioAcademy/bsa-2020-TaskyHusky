@@ -17,3 +17,16 @@ export const updateLinkFieldsSuccess = createAction<actionTypes.AddLinkSuccess>(
 
 export const updateFieldsLoading = createAction<actionTypes.EditFieldLoadingArgs>(actionTypes.UPDATE_FIELD_LOADING);
 export const updateFieldsSuccess = createAction<actionTypes.EditFieldSuccess>(actionTypes.UPDATE_FIELD_SUCCESS);
+
+export const searchPeopleLoader = createAction(actionTypes.SEARCH_PEOPLE_LOADER);
+export const startSearchPeople = createAction<actionTypes.startsearchingPeople>(actionTypes.START_SEARCHING_PEOPLE);
+export const successSearchPeople = createAction<actionTypes.successSearchPeople>(actionTypes.SUCCESS_SEARCHING_PEOPLE);
+export const failSearchPeople = createAction(actionTypes.FAIL_SEARCHING_PEOPLE);
+
+export const clearResults = createAction(actionTypes.CLEAR_FOUND_USERS);
+export const clearResultsDone = createAction(actionTypes.CLEAR_FOUND_USERS_DONE);
+
+export const addPeopleToTeamLoading = createAction<actionTypes.startAddingUsers>(
+	actionTypes.ADD_PEOPLE_TO_TEAM_LOADING,
+);
+export const addPeopleToTeamDone = createAction<actionTypes.successAddingUsers>(actionTypes.ADD_PEOPLE_TO_TEAM_SUCCESS);
