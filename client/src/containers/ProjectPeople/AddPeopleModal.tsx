@@ -10,10 +10,12 @@ interface Props {
 	project: WebApi.Entities.Projects;
 }
 
-const AddPeopleModal = ({ project, project: { lead, users: projectUsers } }: Props) => {
+const AddPeopleModal = (props: Props) => {
 	const { t } = useTranslation();
 	const dispatch = useDispatch();
 	const { isPeopleLoading, people, isLoading } = useSelector((rootState: RootState) => rootState.projectPeople);
+	const { project } = props;
+	const { users: projectUsers } = project;
 
 	const [isOpen, setIsOpen] = useState<boolean>(false);
 	const [searchQuery, setSearchQuery] = useState<string>('');
