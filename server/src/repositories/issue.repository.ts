@@ -8,6 +8,9 @@ import { chooseMessage } from '../AI/selectUpdateIssueWatchNotificationMessage.a
 import issueHandler from '../socketConnectionHandlers/issue.handler';
 import { IssueActions } from '../models/IO';
 import { getDiffPropNames } from '../helpers/objectsDiff.helper';
+import { ProjectsRepository } from './projects.repository';
+import { Projects } from '../entity/Projects';
+import { extractIndexFromIssueKey } from '../helpers/extractIndex.helper';
 
 const RELS = [
 	'priority',
@@ -49,6 +52,17 @@ export type Filter = {
 	comment?: string;
 };
 
+export interface Create {
+	type: string;
+	priority: string;
+	project: string;
+	summary: string;
+	labels?: string[];
+	links?: string[];
+	attachments?: string;
+	description?: string;
+}
+
 @EntityRepository(Issue)
 export class IssueRepository extends Repository<Issue> {
 	findAll(from: number, to: number) {
@@ -88,9 +102,24 @@ export class IssueRepository extends Repository<Issue> {
 		return this.findOneOrFail({ where: { issueKey: key }, relations: RELS });
 	}
 
-	async createOne(data: Issue) {
-		const entity = this.create(data);
-		const result = await this.save(entity);
+	async createOne(data: Create) {
+		const { project } = data;
+		const projectReposritory = getCustomRepository(ProjectsRepository);
+		const { key, issues = [] } = (await projectReposritory.getWithIssuesById(project)) as Projects;
+		const e = extractIndexFromIssueKey;
+		const sorted = issues.sort((i0, i1) => (e(i0.issueKey as string) > e(i1.issueKey as string) ? 1 : -1));
+		let lastKey: string;
+
+		if (sorted.length) {
+			const lastIssue = sorted[sorted.length - 1];
+			lastKey = lastIssue.issueKey as string;
+		} else {
+			lastKey = '-0';
+		}
+
+		const newKey = `${key}-${e(lastKey) + 1}`;
+		const entity = this.create({ ...data, issueKey: newKey } as any);
+		const result = ((await this.save(entity)) as unknown) as Issue;
 		const newIssue = await this.findOneById(result.id);
 		issueHandler.emit(IssueActions.CreateIssue, newIssue);
 
