@@ -21,6 +21,14 @@ export class ProjectsRepository extends Repository<Projects> {
 			.getOne();
 	}
 
+	getWithIssuesById(id: string): Promise<Projects | undefined> {
+		return getRepository(Projects)
+			.createQueryBuilder('project')
+			.leftJoinAndSelect('project.issues', 'issues')
+			.where('project.id = :id', { id })
+			.getOne();
+	}
+
 	getOneByKey(key: string): Promise<Projects | undefined> {
 		return this.findOne({ key }, { withDeleted: true });
 	}

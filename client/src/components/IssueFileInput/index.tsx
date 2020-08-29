@@ -1,10 +1,8 @@
 import React from 'react';
 import FileInput from 'components/common/FileInput';
 import styles from './styles.module.scss';
-import { attachFile } from 'services/issue.service';
 import { Label, Icon, Button } from 'semantic-ui-react';
 import { FileDrop } from 'react-file-drop';
-import { getFnameByLink } from 'helpers/getFnameByLink';
 
 import {
 	ALLOWED_ISSUE_ATTACHMENT_MIME_TYPES,
@@ -13,80 +11,90 @@ import {
 } from 'constants/FileType';
 
 import { useTranslation } from 'react-i18next';
+import { getFnameByLink } from 'helpers/getFnameByLink';
 
 interface Props {
-	onChangePending?: (pending: boolean) => void;
-	onChange?: (newLinks: string[]) => void;
-	currentLinks?: string[];
-	issueKey: string;
+	currentFiles?: File[];
+	alreadyAttached?: string[];
+	onChange?: (newFiles: File[]) => void;
+	onDeleteAlreadyAttached?: (newLinks: string[]) => void;
 }
 
 const IssueFileInput: React.FC<Props> = ({
 	onChange = () => {},
-	onChangePending = () => {},
-	currentLinks: givenCurrentLinks,
-	issueKey,
+	currentFiles: givenCurrentFiles,
+	alreadyAttached = [],
+	onDeleteAlreadyAttached = () => {},
 }) => {
-	const currentLinks = givenCurrentLinks ?? [];
+	const currentFiles = givenCurrentFiles ?? [];
 	const { t } = useTranslation();
 
-	const upload = async (newFileList: File[]): Promise<string[]> => {
-		return await Promise.all(newFileList.map((file) => attachFile(file, issueKey)));
-	};
-
-	const handleUpload = (newFileList: FileList | null) => {
+	const handleChange = (newFileList: FileList | null) => {
 		if (newFileList) {
-			onChangePending(true);
-
-			upload(
-				Array.from(newFileList).filter((file) => ALLOWED_ISSUE_ATTACHMENT_MIME_TYPES.includes(file.type)),
-			).then((newLinks) => {
-				onChangePending(false);
-				onChange([...currentLinks, ...newLinks]);
-			});
+			onChange([
+				...currentFiles,
+				...Array.from(newFileList).filter((file) => ALLOWED_ISSUE_ATTACHMENT_MIME_TYPES.includes(file.type)),
+			]);
 		}
 	};
 
-	const curryDeleteLink = (currentLink: string) => () => {
-		const index = currentLinks.findIndex((linkToCheck) => linkToCheck === currentLink);
-		const newLinks = [...currentLinks];
+	const curryDeleteFile = (index: number) => () => {
+		const newFiles = [...currentFiles];
+		newFiles.splice(index, 1);
+		onChange(newFiles);
+	};
+
+	const curryDeleteLink = (index: number) => () => {
+		const newLinks = [...alreadyAttached];
 		newLinks.splice(index, 1);
-		onChange(newLinks);
+		onDeleteAlreadyAttached(newLinks);
+	};
+
+	const Body: React.FC = () => {
+		return (
+			<>
+				<div className={styles.smallText}>
+					{ALLOWED_ISSUE_ATTACHMENT_EXTNAMES_HR()} {t('files_are_available')}
+				</div>
+				<div className={styles.controlsContainer}>
+					<div>{t('drag_n_drop_files_here')}</div>
+					<div className={styles.smallText} style={{ marginRight: 15, marginLeft: 15 }}>
+						{t('or')}
+					</div>
+					<FileInput
+						attributes={{ accept: ALLOWED_ISSUE_ATTACHMENT_EXTNAMES, multiple: true }}
+						onChange={handleChange}
+					>
+						<Button secondary compact style={{ marginTop: 5, marginBottom: 5 }} type="button">
+							{t('click_to_browse')}
+						</Button>
+					</FileInput>
+				</div>
+				<div className={styles.smallText}>
+					{alreadyAttached.map((link, i) => (
+						<Label key={i}>
+							{getFnameByLink(link)}
+							<Icon name="delete" link onClick={curryDeleteLink(i)} />
+						</Label>
+					))}
+					{currentFiles.map((file, i) => (
+						<Label key={i}>
+							{file.name}
+							<Icon name="delete" link onClick={curryDeleteFile(i)} />
+						</Label>
+					))}
+				</div>
+			</>
+		);
 	};
 
 	return (
 		<FileDrop
 			targetClassName={styles.button}
 			draggingOverTargetClassName={styles.dragOverButton}
-			onDrop={handleUpload}
+			onDrop={handleChange}
 		>
-			<div className={styles.smallText}>
-				{ALLOWED_ISSUE_ATTACHMENT_EXTNAMES_HR()} {t('files_are_available')}
-			</div>
-			<div className={styles.controlsContainer}>
-				<div>{t('drag_n_drop_files_here')}</div>
-				<div className={styles.smallText} style={{ marginRight: 15, marginLeft: 15 }}>
-					{t('or')}
-				</div>
-				<FileInput
-					attributes={{ accept: ALLOWED_ISSUE_ATTACHMENT_EXTNAMES, multiple: true }}
-					onChange={handleUpload}
-				>
-					<Button secondary compact style={{ marginTop: 5, marginBottom: 5 }} type="button">
-						{t('click_to_browse')}
-					</Button>
-				</FileInput>
-			</div>
-			<div className={styles.smallText}>
-				{currentLinks.map((link, i) => (
-					<Label key={i}>
-						<a href={link} target="_blank" rel="noopener noreferrer">
-							{getFnameByLink(link)}
-						</a>
-						<Icon name="delete" link onClick={curryDeleteLink(link)} />
-					</Label>
-				))}
-			</div>
+			<Body />
 		</FileDrop>
 	);
 };

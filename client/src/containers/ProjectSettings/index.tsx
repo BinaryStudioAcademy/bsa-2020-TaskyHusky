@@ -32,17 +32,15 @@ const ProjectSettings = ({ children }: Props) => {
 	}, [id, dispatch]);
 
 	return (
-		<>
-			{ProjectSidebar(
-				projectData,
-				<section className={styles.header_inner__container}>
-					<div className={styles.header_inner__breadcrumbs}>
-						<Breadcrumbs sections={setBreadcrumbs({ history, name })} />
-					</div>
-					{isLoading || isDeleting ? <Spinner /> : children}
-				</section>,
-			)}
-		</>
+		<div className={styles.container}>
+			<ProjectSidebar project={projectData} />
+			<section className={styles.header_inner__container}>
+				<div className={styles.header_inner__breadcrumbs}>
+					<Breadcrumbs sections={setBreadcrumbs({ history, name })} />
+				</div>
+				{isLoading || isDeleting ? <Spinner /> : children}
+			</section>
+		</div>
 	);
 };
 
