@@ -50,51 +50,43 @@ const IssueFileInput: React.FC<Props> = ({
 		onDeleteAlreadyAttached(newLinks);
 	};
 
-	const Body: React.FC = () => {
-		return (
-			<>
-				<div className={styles.smallText}>
-					{ALLOWED_ISSUE_ATTACHMENT_EXTNAMES_HR()} {t('files_are_available')}
-				</div>
-				<div className={styles.controlsContainer}>
-					<div>{t('drag_n_drop_files_here')}</div>
-					<div className={styles.smallText} style={{ marginRight: 15, marginLeft: 15 }}>
-						{t('or')}
-					</div>
-					<FileInput
-						attributes={{ accept: ALLOWED_ISSUE_ATTACHMENT_EXTNAMES, multiple: true }}
-						onChange={handleChange}
-					>
-						<Button secondary compact style={{ marginTop: 5, marginBottom: 5 }} type="button">
-							{t('click_to_browse')}
-						</Button>
-					</FileInput>
-				</div>
-				<div className={styles.smallText}>
-					{alreadyAttached.map((link, i) => (
-						<Label key={i}>
-							{getFnameByLink(link)}
-							<Icon name="delete" link onClick={curryDeleteLink(i)} />
-						</Label>
-					))}
-					{currentFiles.map((file, i) => (
-						<Label key={i}>
-							{file.name}
-							<Icon name="delete" link onClick={curryDeleteFile(i)} />
-						</Label>
-					))}
-				</div>
-			</>
-		);
-	};
-
 	return (
 		<FileDrop
 			targetClassName={styles.button}
 			draggingOverTargetClassName={styles.dragOverButton}
 			onDrop={handleChange}
 		>
-			<Body />
+			<div className={styles.smallText}>
+				{ALLOWED_ISSUE_ATTACHMENT_EXTNAMES_HR()} {t('files_are_available')}
+			</div>
+			<div className={styles.controlsContainer}>
+				<div>{t('drag_n_drop_files_here')}</div>
+				<div className={styles.smallText} style={{ marginRight: 15, marginLeft: 15 }}>
+					{t('or')}
+				</div>
+				<FileInput
+					attributes={{ accept: ALLOWED_ISSUE_ATTACHMENT_EXTNAMES, multiple: true }}
+					onChange={handleChange}
+				>
+					<Button secondary compact style={{ marginTop: 5, marginBottom: 5 }} type="button">
+						{t('click_to_browse')}
+					</Button>
+				</FileInput>
+			</div>
+			<div className={styles.smallText}>
+				{alreadyAttached.map((link, i) => (
+					<Label key={i}>
+						{getFnameByLink(link)}
+						<Icon name="delete" link onClick={curryDeleteLink(i)} />
+					</Label>
+				))}
+				{currentFiles.map((file, i) => (
+					<Label key={i}>
+						{file.name}
+						<Icon name="delete" link onClick={curryDeleteFile(i)} />
+					</Label>
+				))}
+			</div>
 		</FileDrop>
 	);
 };
