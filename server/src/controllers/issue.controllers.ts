@@ -18,7 +18,7 @@ class IssueController {
 		const repository = getCustomRepository(IssueRepository);
 
 		try {
-			const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
+			const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
 			const awsName = `${originalname}`;
 			const link = await uploadS3(`${issueAttachmentFolder}/${issueKey}/${uniqueSuffix}`, file, awsName);
 			const prevIssue = await repository.findOneByKey(issueKey as string);
