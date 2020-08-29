@@ -9,7 +9,7 @@ import TeamWorkedProjects from 'components/TeamWorkedProjects';
 import TeamLinks from 'components/TeamLinks';
 import * as actions from './logic/actions';
 import TeamAddPeopleModal from 'components/TeamAddPeopleModal';
-import CreateLink from 'components/TeamLinks/CreateLink';
+import CreateLink from 'components/TeamLinks/СreateLink';
 import DeleteLink from 'components/TeamLinks/DeleteLink';
 import Spinner from 'components/common/Spinner';
 import { RootState } from 'typings/rootState';

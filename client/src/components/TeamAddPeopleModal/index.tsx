@@ -2,7 +2,7 @@ import React, { MouseEvent, useState } from 'react';
 import { Button, Modal, Search, SearchProps } from 'semantic-ui-react';
 import styles from './styles.module.scss';
 import ResultPeople from './ResultPeople';
-import ChosenPeople from './ResultPeople/ChosenPeople';
+import ChosenPeople from './ResultPeople/СhosenPeople';
 import { useTranslation } from 'react-i18next';
 
 type Props = {
