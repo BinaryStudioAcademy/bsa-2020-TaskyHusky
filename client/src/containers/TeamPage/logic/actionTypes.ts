@@ -86,5 +86,8 @@ export type EditFieldLoadingArgs = {
 	field: { [key: string]: string | [] };
 };
 export type EditFieldSuccess = {
-	field: { [key: string]: string | [] };
+	field: {
+		name: string;
+		description: string;
+	};
 };

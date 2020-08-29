@@ -5,7 +5,6 @@ import Avatar from 'components/Avatar';
 import styles from './styles.module.scss';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { getBgColor } from './helper';
 
 type Props = {
 	teammates?: User[];
@@ -24,11 +23,9 @@ export interface User {
 }
 
 const TeamsMembersCard = ({ title, removeFromTeam, teammates = [] }: Props) => {
-	const [bgColor, setBgColor] = useState<{ [key: string]: string }>({ backgroundColor: 'white' });
 	const [modal, setModal] = useState<boolean>(false);
 	const [viewUser, setViewUser] = useState<User | undefined>();
 	const onHover = (user: User) => {
-		setBgColor(getBgColor());
 		setViewUser(user);
 		setModal(true);
 	};
@@ -71,7 +68,7 @@ const TeamsMembersCard = ({ title, removeFromTeam, teammates = [] }: Props) => {
 								<p className={styles.metainfo}>{el.jobTitle}</p>
 							</div>
 							{modal && viewUser?.id === el.id && (
-								<ModalViewProfile key={el.id} user={viewUser} onClose={hideModal} color={bgColor} />
+								<ModalViewProfile key={el.id} user={viewUser} onClose={hideModal} />
 							)}
 						</div>
 					</Card.Content>

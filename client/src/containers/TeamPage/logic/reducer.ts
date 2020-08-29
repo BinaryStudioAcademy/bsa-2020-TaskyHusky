@@ -32,12 +32,13 @@ export const teamReducer = createReducer<TeamState>(initialState, {
 		};
 	},
 
-	[actionTypes.UPDATE_FIELD_SUCCESS](state: TeamState, action: actionTypes.SuccessLoadingProjects) {
+	[actionTypes.UPDATE_FIELD_SUCCESS](state: TeamState, action: actionTypes.EditFieldSuccess) {
 		return {
 			...state,
 			team: {
 				...state.team,
-				...action,
+				name: action.field.name,
+				description: action.field.description,
 			},
 		};
 	},

@@ -11,6 +11,7 @@ import {
 	UpdateDateColumn,
 } from 'typeorm';
 import { IsNotEmpty, IsString, Length, IsUppercase, Matches } from 'class-validator';
+import { ProjectLabel } from './ProjectLabel';
 import { Issue } from './Issue';
 import { Sprint } from './Sprint';
 import { Board } from './Board';
@@ -71,6 +72,9 @@ export class Projects {
 
 	@OneToMany((type) => Issue, (issue) => issue.project, { cascade: true })
 	issues?: Issue[];
+
+	@OneToMany((type) => ProjectLabel, (labels) => labels.project, { cascade: true })
+	labels!: ProjectLabel[];
 
 	@ManyToMany((type) => UserProfile, (userProfile) => userProfile.projects, { cascade: true })
 	@JoinTable({ name: 'projects_people' })

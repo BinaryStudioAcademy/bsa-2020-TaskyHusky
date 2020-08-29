@@ -19,7 +19,7 @@ const TeamDevsCard = ({
 	showAddPeopleModal,
 	teamOwner,
 	changeMainFields,
-	description = ' ',
+	description = '',
 	name = ' ',
 }: CardProps) => {
 	const [showDelete, setShowDelete] = useState<boolean>(false);
@@ -41,6 +41,13 @@ const TeamDevsCard = ({
 			description: teamDescription,
 		});
 	};
+
+	const abortChhange = () => {
+		setTitle(name);
+		setTeamDescription(description);
+		setEditFields(true);
+	};
+
 	return (
 		<Card>
 			<Card.Content className={styles.card_header}>
@@ -65,22 +72,28 @@ const TeamDevsCard = ({
 				/>
 			</Card.Content>
 			<Card.Content className={styles.edit_field_btn}>
-				<Button compact color="blue" fluid onClick={() => submitEditFields()}>
+				<Button compact fluid={lockEditFields} color="blue" onClick={() => submitEditFields()}>
 					{t(lockEditFields ? 'edit_fields' : 'save_changes')}
 				</Button>
+				{!lockEditFields && (
+					<Button compact basic className={styles.edit_btn} onClick={abortChhange}>
+						{t('cancel')}
+					</Button>
+				)}
 			</Card.Content>
 			<Card.Content extra>
 				<Button.Group fluid>
 					<Button
+						basic
 						compact
-						className={styles.margin_1}
+						className={`${styles.margin_1} ${styles.media_btns} ${styles.edit_btn}`}
 						onClick={showAddPeopleModal}
 						disabled={currentProfile?.id !== teamOwner?.id}
 					>
-						{t('add_people')}
+						<span className={styles.edit_btn_value}>{t('add_people')}</span>
 					</Button>
-					<Button compact color="red" onClick={() => setShowDelete(true)}>
-						{t('delete_team')}
+					<Button compact basic className={styles.delete_btn} onClick={() => setShowDelete(true)}>
+						<span className={styles.delete_btn_value}>{t('delete_team')}</span>
 					</Button>
 				</Button.Group>
 			</Card.Content>

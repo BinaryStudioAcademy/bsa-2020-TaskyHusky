@@ -14,7 +14,7 @@ const DeleteLink = ({ onClose, link, onDelete }: Props) => {
 	const { t } = useTranslation();
 
 	return (
-		<Modal onClose={onClose} open size="tiny">
+		<Modal onClose={onClose} dimmer="inverted" open size="tiny">
 			<Modal.Header>{t('delete_link')}</Modal.Header>
 			<Modal.Content>
 				<p className={styles.link_description}>
@@ -30,8 +30,8 @@ const DeleteLink = ({ onClose, link, onDelete }: Props) => {
 					icon="checkmark"
 					onClick={() => onDelete(link)}
 				/>
-				<Button color="grey" onClick={onClose}>
-					{t('cancel')}
+				<Button basic className={styles.edit_btn} onClick={onClose}>
+					<span className={styles.edit_btn_value}>{t('cancel')}</span>
 				</Button>
 			</Modal.Actions>
 		</Modal>
