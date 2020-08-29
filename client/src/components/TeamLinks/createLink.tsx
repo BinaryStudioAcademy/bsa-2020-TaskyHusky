@@ -68,8 +68,8 @@ const CreateLink = ({ onClose, currentLink, onConfirm }: Props) => {
 					icon="checkmark"
 					onClick={() => onConfirm(newLink)}
 				/>
-				<Button basic className={styles.edit_btn} onClick={onClose}>
-					<span className={styles.edit_btn_value}>{t('cancel')}</span>
+				<Button basic className={styles.editBtn} onClick={onClose}>
+					<span className={styles.editBtnValue}>{t('cancel')}</span>
 				</Button>
 			</Modal.Actions>
 		</Modal>

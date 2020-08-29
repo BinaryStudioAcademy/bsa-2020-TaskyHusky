@@ -44,7 +44,7 @@ const TeamsMembersCard = ({ title, teamOwner, removeUserFromTeam, teammates = []
 	};
 
 	const hideModal = (e: React.BaseSyntheticEvent) => {
-		if (!e.target.classList.contains('card_body') && !e.target.classList.contains('block_wrapper')) {
+		if (!e.target.classList.contains('cardBody') && !e.target.classList.contains('blockWrapper')) {
 			setModal(false);
 			setViewUser(undefined);
 		}
@@ -63,42 +63,42 @@ const TeamsMembersCard = ({ title, teamOwner, removeUserFromTeam, teammates = []
 		setRemoveUserModal(false);
 	};
 
-	const showDeleteUserIcon = (el: User) =>
-		teamOwner && authUser?.id === teamOwner.id && viewUser?.id === el.id && viewUser?.id !== teamOwner.id;
+	const showDeleteUserIcon = (user: User) =>
+		teamOwner && authUser?.id === teamOwner.id && viewUser?.id === user.id && viewUser?.id !== teamOwner.id;
 
 	return (
 		<Card>
 			<Card.Content header={t(title)} />
 			<Card.Meta>
-				<span className={styles.meta_header}>
+				<span className={styles.metaHeader}>
 					{teammates.length > 0 && title === 'members' && ` ${teammates.length}  ${t('members')}`}
 				</span>
 			</Card.Meta>
 			{teammates.length > 0 ? (
-				teammates.map((el) => (
-					<Card.Content key={el.id}>
+				teammates.map((teammate) => (
+					<Card.Content key={teammate.id}>
 						<div
-							className={styles.card_body}
-							onMouseEnter={() => onHover(el)}
+							className={styles.cardBody}
+							onMouseEnter={() => onHover(teammate)}
 							onMouseLeave={(e) => hideModal(e)}
 						>
 							<div className={styles.icon}>
-								<Link to={`/profile/${el.id}`}>
+								<Link to={`/profile/${teammate.id}`}>
 									<Avatar
-										key={el.id}
-										fullName={fullUserName(el.firstName, el.lastName)}
-										imgSrc={el.avatar}
+										key={teammate.id}
+										fullName={fullUserName(teammate.firstName, teammate.lastName)}
+										imgSrc={teammate.avatar}
 									/>
 								</Link>
 							</div>
-							<div className={styles.user_info}>
-								<p> {fullUserName(el.firstName, el.lastName)}</p>
-								<p className={styles.metainfo}>{el.jobTitle}</p>
-								{showDeleteUserIcon(el) && (
+							<div className={styles.userInfo}>
+								<p> {fullUserName(teammate.firstName, teammate.lastName)}</p>
+								<p className={styles.metainfo}>{teammate.jobTitle}</p>
+								{showDeleteUserIcon(teammate) && (
 									<Icon
 										name="delete"
-										onClick={() => onDeleteUserClick(el)}
-										className={styles.user_delete_btn}
+										onClick={() => onDeleteUserClick(teammate)}
+										className={styles.userDeleteBtn}
 									/>
 								)}
 							</div>
@@ -109,14 +109,14 @@ const TeamsMembersCard = ({ title, teamOwner, removeUserFromTeam, teammates = []
 									setShowDelete={setRemoveUserModal}
 								/>
 							)}
-							{modal && viewUser?.id === el.id && (
-								<ModalViewProfile key={el.id} user={viewUser} onClose={hideModal} />
+							{modal && viewUser?.id === teammate.id && (
+								<ModalViewProfile key={teammate.id} user={viewUser} onClose={hideModal} />
 							)}
 						</div>
 					</Card.Content>
 				))
 			) : (
-				<Card.Content className={styles.info_message}>{t('you_are_the_first')}</Card.Content>
+				<Card.Content className={styles.infoMessage}>{t('you_are_the_first')}</Card.Content>
 			)}
 		</Card>
 	);

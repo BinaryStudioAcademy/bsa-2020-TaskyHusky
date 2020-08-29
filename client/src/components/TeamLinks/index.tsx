@@ -33,13 +33,13 @@ const TeamLinks = ({ addLinks, currentLinks, edit, deleteLink }: Props) => {
 
 	return (
 		<>
-			<div className={styles.link_header}>
+			<div className={styles.linkHeader}>
 				<Header as="h3">{t('links')}</Header>
 				{isUserConsistsInTeam && (
-					<Button compact basic className={styles.btn_borderless} icon="plus" onClick={addLinks} />
+					<Button compact basic className={styles.btnBorderless} icon="plus" onClick={addLinks} />
 				)}
 			</div>
-			<div className={[styles.worked_block_wrapper, styles.shadow_top, styles.align_center].join(' ')}>
+			<div className={`${styles.workedBlockWrapper} ${styles.shadowTop} ${styles.alignCenter}`}>
 				{currentLinks.length ? (
 					currentLinks.map((el: any) => {
 						return (

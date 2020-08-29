@@ -120,12 +120,12 @@ const TeamPage = ({
 	return loading ? (
 		<Spinner />
 	) : (
-		<Grid columns="equal" centered className={styles.page_main}>
+		<Grid columns="equal" centered className={styles.pageMain}>
 			<Grid.Row>
 				<div className={styles.header}></div>
 			</Grid.Row>
-			<Grid.Row className={styles.main_row}>
-				<Grid.Column className={`${styles.col_media} ${styles.col_left}`}>
+			<Grid.Row className={styles.mainRow}>
+				<Grid.Column className={`${styles.colMedia} ${styles.colLeft}`}>
 					<TeamDevsCard
 						confirmDelete={confirmDeleteTeam}
 						currentProfile={currentProfile}
@@ -148,7 +148,7 @@ const TeamPage = ({
 						removeUserFromTeam={handlerRemoveFromTeam}
 					/>
 				</Grid.Column>
-				<Grid.Column className={`${styles.col_media}, ${styles.col_right}`}>
+				<Grid.Column className={`${styles.colMedia}, ${styles.colRight}`}>
 					<TeamWorkedProjects projects={team.projects} />
 					<TeamLinks
 						currentLinks={team.links ?? []}
