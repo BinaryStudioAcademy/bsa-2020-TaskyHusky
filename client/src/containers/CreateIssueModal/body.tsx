@@ -8,6 +8,7 @@ import { createIssue } from 'pages/IssuePage/logic/actions';
 import { useTranslation } from 'react-i18next';
 import { getUsername } from 'helpers/getUsername.helper';
 import IssueFileInput from 'components/IssueFileInput';
+import { initialState } from './logic/initalState';
 
 interface Props {
 	children: JSX.Element;
@@ -124,6 +125,11 @@ const CreateIssueModalBody: React.FC<Props> = ({
 		setIsOpened(false);
 	};
 
+	const clearContext = () => {
+		// Can't do it without any
+		Object.keys(context.data).forEach((key) => context.set(key as any, (initialState as any)[key]));
+	};
+
 	if (projectsLoading) {
 		return null;
 	}
@@ -137,6 +143,7 @@ const CreateIssueModalBody: React.FC<Props> = ({
 			closeOnEscape
 			closeOnDimmerClick
 			onClose={getSetOpenFunc(false)}
+			onOpen={clearContext}
 			openOnTriggerClick
 			trigger={<div onClick={getSetOpenFunc(true)}>{children}</div>}
 			style={{ maxWidth: 700, height: '70%' }}

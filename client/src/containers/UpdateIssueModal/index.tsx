@@ -8,6 +8,7 @@ import { updateIssue } from 'pages/IssuePage/logic/actions';
 import { useTranslation } from 'react-i18next';
 import { getUsername } from 'helpers/getUsername.helper';
 import IssueFileInput from 'components/IssueFileInput';
+import { initialState } from 'containers/CreateIssueModal/logic/initalState';
 
 interface Props {
 	current: WebApi.Issue.PartialIssue;
@@ -99,6 +100,11 @@ const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, p
 		}
 	};
 
+	const clearContext = () => {
+		// Can't do it without any
+		Object.keys(context.data).forEach((key) => context.set(key as any, (initialState as any)[key]));
+	};
+
 	return (
 		<Modal
 			as="form"
@@ -107,6 +113,7 @@ const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, p
 			closeIcon
 			closeOnDimmerClick
 			closeOnEscape
+			onOpen={clearContext}
 			onClose={() => setOpened(false)}
 			style={{ maxWidth: 700, height: '70%' }}
 		>
