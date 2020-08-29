@@ -3,7 +3,7 @@ import { Header, Image, Button } from 'semantic-ui-react';
 import linksImg from 'assets/images/team-page-links.svg';
 import styles from 'containers/TeamPage/styles.module.scss';
 import { useTranslation } from 'react-i18next';
-import LinkCard from './LinkCard';
+import LinkCard from './linkCard';
 import { useSelector } from 'react-redux';
 import { RootState } from 'typings/rootState';
 
