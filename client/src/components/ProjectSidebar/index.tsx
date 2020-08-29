@@ -7,7 +7,11 @@ import classNames from 'classnames';
 import styles from './styles.module.scss';
 import { sidebarItems } from './config/sidebarItems';
 
-const ProjectSidebar = (project: WebApi.Entities.Projects, ProjectComponent: JSX.Element) => {
+interface Props {
+	project: WebApi.Entities.Projects;
+}
+
+const ProjectSidebar = ({ project }: Props) => {
 	const projectsLink = '/projects';
 	const { pathname } = useLocation();
 
@@ -44,8 +48,6 @@ const ProjectSidebar = (project: WebApi.Entities.Projects, ProjectComponent: JSX
 					</div>
 				</div>
 			</div>
-
-			<div className={styles.content__container}>{ProjectComponent}</div>
 		</aside>
 	);
 };

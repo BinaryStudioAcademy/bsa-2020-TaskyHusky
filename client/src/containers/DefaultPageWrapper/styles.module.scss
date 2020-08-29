@@ -5,5 +5,15 @@
 		width: 100%;
 		margin-left: 0;
 		margin-right: 0;
+		background-color: #fff;
+		overflow: hidden;
 	}
+}
+
+.content_flow {
+	overflow: auto;
+}
+
+.content_flow__hidden {
+	overflow: hidden;
 }
