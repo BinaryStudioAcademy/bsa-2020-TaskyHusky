@@ -28,7 +28,7 @@ interface SelectOption {
 const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, priorities, users, onSubmit }) => {
 	const context = useCreateIssueModalContext();
 	const [opened, setOpened] = useState<boolean>(false);
-	const [isUploadPending, setIsUploadPending] = useState<boolean>(false);
+	const [attachments, setAttachments] = useState<File[]>([]);
 	const dispatch = useDispatch();
 	const { t } = useTranslation();
 	getOpenFunc(() => setOpened(true));
@@ -88,6 +88,7 @@ const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, p
 				// This field exists always
 				id: current.id as string,
 				data: data,
+				files: attachments,
 			}),
 		);
 
@@ -185,10 +186,10 @@ const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, p
 					<Form.Field>
 						<label>{t('attachments')}</label>
 						<IssueFileInput
-							currentLinks={context.data.attachments}
-							onChange={(newFiles) => context.set('attachments', newFiles)}
-							onChangePending={(isPending) => setIsUploadPending(isPending)}
-							issueKey={context.data.issueKey as string}
+							currentFiles={attachments}
+							onChange={(newFiles) => setAttachments(newFiles)}
+							onDeleteAlreadyAttached={(newLinks) => context.set('attachments', newLinks)}
+							alreadyAttached={context.data.attachments}
 						/>
 					</Form.Field>
 					<Form.Field>
@@ -205,7 +206,7 @@ const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, p
 			</Modal.Content>
 			<Modal.Actions style={{ height: 67 }}>
 				<Button.Group floated="right">
-					<Button primary type="submit" disabled={isUploadPending}>
+					<Button primary type="submit">
 						{t('submit')}
 					</Button>
 					<Button onClick={() => setOpened(false)} basic>
