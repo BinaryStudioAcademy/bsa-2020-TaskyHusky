@@ -63,6 +63,9 @@ const TeamsMembersCard = ({ title, teamOwner, removeUserFromTeam, teammates = []
 		setRemoveUserModal(false);
 	};
 
+	const showDeleteUserIcon = (el: User) =>
+		teamOwner && authUser?.id === teamOwner.id && viewUser?.id === el.id && viewUser?.id !== teamOwner.id;
+
 	return (
 		<Card>
 			<Card.Content header={t(title)} />
@@ -91,16 +94,13 @@ const TeamsMembersCard = ({ title, teamOwner, removeUserFromTeam, teammates = []
 							<div className={styles.user_info}>
 								<p> {fullUserName(el.firstName, el.lastName)}</p>
 								<p className={styles.metainfo}>{el.jobTitle}</p>
-								{teamOwner &&
-									authUser?.id === teamOwner.id &&
-									viewUser?.id === el.id &&
-									viewUser.id !== teamOwner.id && (
-										<Icon
-											name="delete"
-											onClick={() => onDeleteUserClick(el)}
-											className={styles.user_delete_btn}
-										/>
-									)}
+								{showDeleteUserIcon(el) && (
+									<Icon
+										name="delete"
+										onClick={() => onDeleteUserClick(el)}
+										className={styles.user_delete_btn}
+									/>
+								)}
 							</div>
 							{removeUserModal && (
 								<RemoveUserModal
