@@ -10,7 +10,7 @@ interface Props {
 	project: WebApi.Entities.Projects;
 }
 
-const ProjectSidebar = ({ project }: Props) => {
+const ProjectSidebar: React.FC<Props> = ({ project }) => {
 	const projectsLink = '/projects';
 	const { pathname } = useLocation();
 
