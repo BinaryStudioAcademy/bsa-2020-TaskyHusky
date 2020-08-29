@@ -1,7 +1,7 @@
 import multer from 'multer';
 import { Handler } from 'express';
-import { fileSize } from '../../config/aws.config';
 import { fromBuffer } from 'file-type';
+import { fileSize } from '../../config/aws.config';
 import { allowedIssueAttchmentUploadFileTypes } from '../../config/multer.config';
 import HttpStatusCode from '../constants/httpStattusCode.constants';
 import { ErrorResponse } from '../helpers/errorHandler.helper';
@@ -31,7 +31,7 @@ export const validateIssueAttachment: Handler = async (req, res, next) => {
 			allow: allowedIssueAttchmentUploadFileTypes,
 		})
 	) {
-		next(new ErrorResponse(HttpStatusCode.BAD_REQUEST, `Disallowed file mime type.`));
+		next(new ErrorResponse(HttpStatusCode.BAD_REQUEST, 'Disallowed file mime type.'));
 	}
 
 	next();
