@@ -43,7 +43,7 @@ export const teamReducer = createReducer<TeamState>(initialState, {
 		};
 	},
 
-	[actionTypes.ADD_PEOPLE_TO_TEAM_SUCCESS](state: TeamState, action: actionTypes.successAddingUsers) {
+	[actionTypes.UPDATE_TEAM_USERS_SECCESS](state: TeamState, action: actionTypes.successAddingUsers) {
 		return {
 			...state,
 			team: {
@@ -92,8 +92,11 @@ export const teamReducer = createReducer<TeamState>(initialState, {
 			},
 		};
 	},
+	[actionTypes.DELETE_TEAM_SUCCESS](state: TeamState) {
+		return initialState
+	},
 
-	[actionTypes.LOADING](state: TeamState) {
+	[actionTypes.SET_IS_LOADING](state: TeamState) {
 		return {
 			...state,
 			team: {

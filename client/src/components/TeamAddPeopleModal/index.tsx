@@ -2,7 +2,7 @@ import React, { MouseEvent, useState } from 'react';
 import { Button, Modal, Search, SearchProps } from 'semantic-ui-react';
 import styles from './styles.module.scss';
 import ResultPeople from './ResultPeople';
-import ChosenPeople from './ResultPeople/chosenPeople';
+import ChosenPeople from './ResultPeople/ChosenPeople';
 import { useTranslation } from 'react-i18next';
 
 type Props = {
@@ -76,12 +76,12 @@ const TeamAddPeopleModal = ({ onConfirm, onClose, search, searchLoading, people,
 					minCharacters={2}
 					value={searchText}
 				/>
-				<p className={styles.description_p}>{t('no_more_4_people_can_ba_added')}</p>
+				<p className={styles.descriptionP}>{t('no_more_4_people_can_ba_added')}</p>
 			</Modal.Content>
 			<Modal.Actions>
 				<Button content={t('accept')} primary labelPosition="left" icon="checkmark" onClick={handlerAccept} />
-				<Button basic className={styles.edit_btn} onClick={() => onClose(false)}>
-					<span className={styles.edit_btn_value}>{t('cancel')}</span>
+				<Button basic className={styles.editBtn} onClick={() => onClose(false)}>
+					<span className={styles.editBtnValue}>{t('cancel')}</span>
 				</Button>
 			</Modal.Actions>
 		</Modal>

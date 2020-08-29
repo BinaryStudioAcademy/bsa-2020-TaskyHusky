@@ -175,7 +175,7 @@ namespace WebApi.Sprint {
 
 namespace WebApi.Team {
 	interface TeamModel {
-		id?: string;
+		id: string;
 		name?: string;
 		description?: string;
 		color?: string;
