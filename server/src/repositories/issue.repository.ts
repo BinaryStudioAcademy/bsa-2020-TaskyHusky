@@ -107,6 +107,7 @@ export class IssueRepository extends Repository<Issue> {
 		const projectReposritory = getCustomRepository(ProjectsRepository);
 		const { key, issues = [] } = (await projectReposritory.getWithIssuesById(project)) as Projects;
 		const e = extractIndexFromIssueKey;
+		// eslint-disable-next-line
 		const lastIndex = issues.reduce((acc, current) => (acc = Math.max(acc, e(current.issueKey as string))), 0);
 		const newKey = `${key}-${lastIndex + 1}`;
 		const entity = this.create({ ...data, issueKey: newKey } as any);
