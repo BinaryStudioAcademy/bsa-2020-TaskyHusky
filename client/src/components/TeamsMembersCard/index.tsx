@@ -5,7 +5,7 @@ import Avatar from 'components/Avatar';
 import styles from './styles.module.scss';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import RemoveUserModal from './RemoveUserModal';
+import RemoveUserModal from './removeUserModal';
 import { useSelector } from 'react-redux';
 import { RootState } from 'typings/rootState';
 
