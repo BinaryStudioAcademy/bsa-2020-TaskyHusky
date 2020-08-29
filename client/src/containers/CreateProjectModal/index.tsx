@@ -25,7 +25,7 @@ const CreateProjectModal: React.FC<Props> = ({ children }) => {
 	const dispatch = useDispatch();
 	const { t } = useTranslation();
 
-	const { isLoading, isProjectCreated, keys, isError } = useSelector(
+	const { isLoading, isModalOpened, isProjectCreated, keys, isError } = useSelector(
 		(rootState: RootState) => rootState.createProject,
 	);
 
@@ -41,8 +41,6 @@ const CreateProjectModal: React.FC<Props> = ({ children }) => {
 	const [isKeyValid, setIsKeyValid] = useState<boolean>(true);
 	const [isGithubUrlValid, setIsGithubUrlValid] = useState<boolean>(true);
 	const [isValidErrorShown, setIsValidErrorShown] = useState<boolean>(false);
-
-	const [isModalOpened, setIsModalOpened] = useState<boolean>(false);
 
 	const { description, image } = templatesInformation[template];
 
@@ -89,11 +87,11 @@ const CreateProjectModal: React.FC<Props> = ({ children }) => {
 			return;
 		}
 
-		setIsModalOpened(false);
+		dispatch(actions.closeModal());
 	};
 
 	const onModalOpen = () => {
-		setIsModalOpened(true);
+		dispatch(actions.openModal());
 		dispatch(actions.startGettingKeys());
 	};
 
