@@ -1,6 +1,6 @@
 import { Team } from './state';
 
-export const LOADING = 'TEAM:LOADING';
+export const SET_IS_LOADING = 'TEAM:SET_IS_LOADING';
 export const START_LOADING = 'TEAM:START_LOADING';
 export const SUCCESS_TEAM_LOADING = 'TEAM:SUCCESS_TEAM_LOADING';
 export const SUCCESS_TEAM_USERS_LOADING = 'TEAM:SUCCESS_TEAM_USERS_LOADING';

@@ -1,7 +1,7 @@
 import { createAction } from 'helpers/createAction.helper';
 import * as actionTypes from './actionTypes';
 
-export const spinner = createAction(actionTypes.LOADING);
+export const spinner = createAction(actionTypes.SET_IS_LOADING);
 export const startLoading = createAction<actionTypes.StartLoadingArgs>(actionTypes.START_LOADING);
 export const updateTeam = createAction<actionTypes.SuccessLoadingTeam>(actionTypes.SUCCESS_TEAM_LOADING);
 export const updateUsers = createAction<actionTypes.SuccessLoadingUsers>(actionTypes.SUCCESS_TEAM_USERS_LOADING);

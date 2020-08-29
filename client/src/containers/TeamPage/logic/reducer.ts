@@ -96,7 +96,7 @@ export const teamReducer = createReducer<TeamState>(initialState, {
 		return initialState
 	},
 
-	[actionTypes.LOADING](state: TeamState) {
+	[actionTypes.SET_IS_LOADING](state: TeamState) {
 		return {
 			...state,
 			team: {

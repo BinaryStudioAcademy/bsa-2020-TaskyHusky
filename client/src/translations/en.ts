@@ -338,7 +338,7 @@ export const en = {
 	there_are_no_projects_which_have_been_started_yet:
 		'There are no projects which have been started yet. When it&apos;ll happen you can get quick access to one you need',
 	team_owner: 'Team owner',
-	you_are_the_first: 'You are the first member of this team',
+	you_are_the_first: 'Team leader is the first member of this team',
 	you_are_going_to_remove_user: 'You are going to remove user',
 	from_team: 'from team',
 	once_it_happend_he_will_lose_access_to_teamwork: 'Once it happend, he will lose access to team materials and projects',
