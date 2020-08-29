@@ -14,9 +14,10 @@
 }
 
 .sidebar__body {
+  max-height: 100%;
   padding: 12px;
   position: relative;
-  overflow-y: auto;
+  overflow: auto;
 }
 
 .header__item, 
