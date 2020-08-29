@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Header, Image, Button } from 'semantic-ui-react';
 import linksImg from 'assets/images/team-page-links.svg';
 import styles from 'containers/TeamPage/styles.module.scss';
@@ -24,12 +24,18 @@ const TeamLinks = ({ addLinks, currentLinks, edit, deleteLink }: Props) => {
 	const { t } = useTranslation();
 	const authUser = useSelector((rootState: RootState) => rootState.auth.user);
 	const teamOwner = useSelector((rootState: RootState) => rootState.team.team.createdBy);
+	const teamUsers = useSelector((rootState: RootState) => rootState.team.team.users);
+	const isUserConsistsInTeam = useMemo(() => {
+		const checkInTeammates = teamUsers?.find((user: WebApi.Entities.UserProfile) => user.id === authUser?.id);
+		const checkAsTeamOwner = authUser?.id === teamOwner?.id;
+		return checkAsTeamOwner || checkInTeammates ? true : false;
+	}, [teamUsers, authUser, teamOwner]);
 
 	return (
 		<>
 			<div className={styles.link_header}>
 				<Header as="h3">{t('links')}</Header>
-				{teamOwner && teamOwner.id === authUser?.id && (
+				{isUserConsistsInTeam && (
 					<Button compact basic className={styles.btn_borderless} icon="plus" onClick={addLinks} />
 				)}
 			</div>
@@ -42,8 +48,7 @@ const TeamLinks = ({ addLinks, currentLinks, edit, deleteLink }: Props) => {
 								link={el}
 								edit={edit}
 								deleteLink={deleteLink}
-								authUser={authUser}
-								teamOwner={teamOwner}
+								isUserConsistsInTeam={isUserConsistsInTeam}
 							/>
 						);
 					})
