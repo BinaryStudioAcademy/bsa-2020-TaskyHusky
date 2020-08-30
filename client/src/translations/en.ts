@@ -347,7 +347,8 @@ export const en = {
 	you_are_the_first: 'Team leader is the first member of this team',
 	you_are_going_to_remove_user: 'You are going to remove user',
 	from_team: 'from team',
-	once_it_happend_he_will_lose_access_to_teamwork: 'Once it happend, he will lose access to team materials and projects',
+	once_it_happend_he_will_lose_access_to_teamwork:
+		'Once it happend, he will lose access to team materials and projects',
 	but_you_can_still_add_him_in_future: 'But you can still add him to this team again in future if it need',
 	error_load_data: 'Error load data',
 	data_updated_succesful: 'Data has been updated successful',
@@ -361,4 +362,8 @@ export const en = {
 	success: 'Success',
 	error: 'Error',
 	info: 'Info',
+	delete_user_qstn: 'Are you shure you want to delete your account?',
+	delete_user_text:
+		'Deleting this account will result to the loss of all data which is associated with this account.',
+	delete_btn: 'Delete',
 };
