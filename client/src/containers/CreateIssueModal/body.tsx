@@ -2,15 +2,15 @@ import React, { useState } from 'react';
 import { Modal, Form, Button, Header, Icon, Divider, InputOnChangeData } from 'semantic-ui-react';
 import { useCreateIssueModalContext } from './logic/context';
 import TagsInput from 'components/common/TagsInput';
-import { connect, useDispatch, useSelector } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { RootState } from 'typings/rootState';
 import { createIssue } from 'pages/IssuePage/logic/actions';
-import { generateRandomString } from 'helpers/randomString.helper';
-import { KeyGenerate } from 'constants/KeyGenerate';
 import { useTranslation } from 'react-i18next';
 import { getUsername } from 'helpers/getUsername.helper';
 import { isNumber } from 'util';
 import { ISSUE_CONSTANTS } from 'constants/Issue';
+import IssueFileInput from 'components/IssueFileInput';
+import { initialState } from './logic/initalState';
 
 interface Props {
 	children: JSX.Element;
@@ -47,15 +47,11 @@ const CreateIssueModalBody: React.FC<Props> = ({
 	boardID,
 }) => {
 	const { t } = useTranslation();
+	const context = useCreateIssueModalContext();
 	const [isOpened, setIsOpened] = useState<boolean>(false);
 	const [isStoryPointValid, setIsStoryPointValid] = useState(true);
+	const [attachments, setAttachments] = useState<File[]>([]);
 	const dispatch = useDispatch();
-	const context = useCreateIssueModalContext();
-	const user = useSelector((state: RootState) => state.auth.user);
-
-	if (projectsLoading || !user) {
-		return null;
-	}
 
 	const typeOpts: SelectOption[] = issueTypes.map((type) => ({
 		key: type.id,
@@ -107,7 +103,7 @@ const CreateIssueModalBody: React.FC<Props> = ({
 
 	const submit = async (event: React.FormEvent) => {
 		event.preventDefault();
-		const projectCond = !projectID && !boardColumnID ? context.data.project : true;
+		const projectCond = !projectID ? context.data.project : true;
 		const allFields = context.data.type && context.data.summary && context.data.priority && projectCond;
 
 		if (!allFields || !isStoryPointValid) {
@@ -120,11 +116,10 @@ const CreateIssueModalBody: React.FC<Props> = ({
 			sprint: sprintID,
 			board: boardID,
 			project: projectID ?? context.data.project,
-			issueKey: generateRandomString(KeyGenerate.LENGTH),
 			assigned: context.data.assigned,
 		};
 
-		dispatch(createIssue({ data }));
+		dispatch(createIssue({ data, files: attachments }));
 
 		if (onClose) {
 			onClose(data);
@@ -149,6 +144,15 @@ const CreateIssueModalBody: React.FC<Props> = ({
 		}
 	};
 
+	const clearContext = () => {
+		// Can't do it without any
+		Object.keys(context.data).forEach((key) => context.set(key as any, (initialState as any)[key]));
+	};
+
+	if (projectsLoading) {
+		return null;
+	}
+
 	return (
 		<Modal
 			as="form"
@@ -158,6 +162,7 @@ const CreateIssueModalBody: React.FC<Props> = ({
 			closeOnEscape
 			closeOnDimmerClick
 			onClose={getSetOpenFunc(false)}
+			onOpen={clearContext}
 			openOnTriggerClick
 			trigger={<div onClick={getSetOpenFunc(true)}>{children}</div>}
 			style={{ maxWidth: 700, height: '70%' }}
@@ -170,7 +175,6 @@ const CreateIssueModalBody: React.FC<Props> = ({
 					<Form.Field>
 						<label className="required">{t('type')}</label>
 						<Form.Dropdown
-							clearable
 							selection
 							style={{ maxWidth: 200 }}
 							options={typeOpts}
@@ -181,7 +185,6 @@ const CreateIssueModalBody: React.FC<Props> = ({
 					<Form.Field>
 						<label className="required">{t('priority')}</label>
 						<Form.Dropdown
-							clearable
 							selection
 							style={{ maxWidth: 200 }}
 							options={priorityOpts}
@@ -197,7 +200,7 @@ const CreateIssueModalBody: React.FC<Props> = ({
 							onChange={(event, data) => context.set('summary', data.value)}
 						/>
 					</Form.Field>
-					{!projectID && !boardColumnID ? (
+					{!projectID ? (
 						<Form.Field>
 							<label className="required">{t('project')}</label>
 							<Form.Dropdown
@@ -252,10 +255,9 @@ const CreateIssueModalBody: React.FC<Props> = ({
 					</Form.Field>
 					<Form.Field>
 						<label>{t('attachments')}</label>
-						<TagsInput
-							placeholder={t('add_attachment')}
-							tags={context.data.attachments ?? []}
-							onChange={(tags) => context.set('attachments', [...tags])}
+						<IssueFileInput
+							onChange={(attachments: File[]) => setAttachments(attachments)}
+							currentFiles={attachments}
 						/>
 					</Form.Field>
 					<Form.Field>

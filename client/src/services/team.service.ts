@@ -1,4 +1,5 @@
 import callWebApi from 'helpers/callApi.helper';
+import history from 'helpers/history.helper';
 
 export const getTeam = async (id: string): Promise<WebApi.Entities.Team[] | undefined> => {
 	try {
@@ -8,7 +9,7 @@ export const getTeam = async (id: string): Promise<WebApi.Entities.Team[] | unde
 		});
 		return (await res.json()) as WebApi.Entities.Team[];
 	} catch (error) {
-		window.location.replace('/not-found-404');
+		history.push('/not-found-404');
 	}
 };
 
@@ -114,4 +115,24 @@ export const addUsersToTeam = async (id: string, users?: WebApi.Entities.UserPro
 		},
 	});
 	return (await result.json()) as WebApi.Entities.UserProfile[];
+};
+
+export const deleteTeamRequest = async (id: string) => {
+	const result = await callWebApi({
+		method: 'DELETE',
+		endpoint: `team/${id}`,
+	});
+	return await result.json();
+};
+
+export const removeUserFromTeamRequest = async (userId: string, teamId: string) => {
+	const result = await callWebApi({
+		method: 'POST',
+		endpoint: `team/users`,
+		body: {
+			userId,
+			teamId,
+		},
+	});
+	return await result.json();
 };

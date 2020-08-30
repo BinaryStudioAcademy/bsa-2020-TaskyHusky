@@ -7,11 +7,12 @@ import { extractIdFormDragDropId } from 'helpers/extractId.helper';
 import { getByKey, updateIssueByKey } from 'services/issue.service';
 import { Header, Form, Button, Breadcrumb } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
+import { convertIssueResultToPartialIssue } from 'helpers/issueResultToPartialIssue';
 
 const Kanban: BoardComponent = ({ board }) => {
 	const [search, setSearch] = useState<string>('');
 	const { t } = useTranslation();
-	const leftPadded = { marginLeft: 20 };
+	const leftPadded = { marginLeft: 60 };
 	const onDragEndFuncs: Map<string, OnDragEndResponder> = new Map<string, OnDragEndResponder>();
 
 	const onDragEnd: OnDragEndResponder = (event, provided) => {
@@ -28,27 +29,17 @@ const Kanban: BoardComponent = ({ board }) => {
 		getByKey(cardKey).then((issue) => {
 			const { watchers, ...issueToSend } = issue;
 
-			return updateIssueByKey(cardKey, {
-				...issueToSend,
-				boardColumn: destinationId,
-				type: issue.type.id,
-				priority: issue.priority.id,
-				board: issue.board?.id,
-				sprint: issue.sprint?.id,
-				project: issue.project?.id,
-				creator: issue.creator.id,
-				assigned: issue.assigned?.id,
-				status: issue.status?.id,
-			});
+			return updateIssueByKey(
+				cardKey,
+				convertIssueResultToPartialIssue(issueToSend, { boardColumn: destinationId }),
+			);
 		});
 	};
 
 	return (
 		<>
-			<div className={styles.inlineContainer}>
-				<Header as="h2" style={leftPadded}>
-					{board.name}
-				</Header>
+			<div className={styles.inlineContainer} style={leftPadded}>
+				<Header as="h2">{board.name}</Header>
 				<Form.Input
 					placeholder={t('search')}
 					icon="search"
@@ -70,7 +61,7 @@ const Kanban: BoardComponent = ({ board }) => {
 			<DragDropContext onDragEnd={onDragEnd}>
 				<div
 					className={styles.columnsGrid}
-					style={{ gridTemplateColumns: '300px '.repeat(board.columns.length).trim() }}
+					style={{ gridTemplateColumns: '300px '.repeat(board.columns.length).trim(), marginLeft: 40 }}
 				>
 					{board.columns.map((column, i) => (
 						<BoardColumn

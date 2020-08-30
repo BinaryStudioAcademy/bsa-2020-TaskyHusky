@@ -7,6 +7,7 @@ import {
 	UpdateDateColumn,
 	ManyToMany,
 	JoinTable,
+	OneToMany,
 } from 'typeorm';
 
 import { IsNotEmpty, IsString, IsArray, IsInt, Min, Max } from 'class-validator';
@@ -44,7 +45,7 @@ export class Issue {
 	@Column({ array: true })
 	labels?: string;
 
-	@Column({ array: true })
+	@Column({ array: true, nullable: true })
 	@IsArray()
 	attachments?: string;
 

@@ -13,6 +13,8 @@ import ProjectsTable from './table';
 const Projects: React.FC = () => {
 	const { t } = useTranslation();
 	const { projects, isLoading } = useSelector((rootState: RootState) => rootState.projects);
+
+	const currentUser = useSelector((rootState: RootState) => rootState.auth.user);
 	const { isLoading: isDeleting } = useSelector((rootState: RootState) => rootState.projectCommon);
 
 	const [searchName, setSearchName] = useState<string>('');
@@ -48,7 +50,7 @@ const Projects: React.FC = () => {
 				) : (
 					<>
 						{filteredProjects.length > 0 ? (
-							<ProjectsTable projects={filteredProjects} />
+							<ProjectsTable projects={filteredProjects} currentUser={currentUser} />
 						) : (
 							<div className={styles.imgWrapper}>
 								<div className={styles.content}>

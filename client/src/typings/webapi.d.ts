@@ -177,7 +177,7 @@ namespace WebApi.Sprint {
 
 namespace WebApi.Team {
 	interface TeamModel {
-		id?: string;
+		id: string;
 		name?: string;
 		description?: string;
 		color?: string;
@@ -271,8 +271,8 @@ namespace WebApi.Entities {
 		boardColumn?: BoardColumn;
 		board?: Board;
 		labels?: string;
-		attachments?: string;
-		links?: string;
+		attachments?: string[];
+		links?: string[];
 		priority?: Priority;
 		description?: string;
 		sprint?: Sprint;

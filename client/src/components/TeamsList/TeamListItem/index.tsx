@@ -17,7 +17,7 @@ const TeamListItem: React.FC<Props> = ({ team, handlerClick }): ReactElement => 
 	return (
 		<Card onClick={() => handlerClick && handlerClick()} className={style.card}>
 			<div className={style.colorBlock} style={{ background: color }} />
-			<Card.Content>
+			<Card.Content className={style.teamBlock}>
 				<Card.Header>{name}</Card.Header>
 				<Image src={avatar} size={'tiny'} circular />
 			</Card.Content>

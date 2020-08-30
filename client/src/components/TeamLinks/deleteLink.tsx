@@ -14,11 +14,11 @@ const DeleteLink = ({ onClose, link, onDelete }: Props) => {
 	const { t } = useTranslation();
 
 	return (
-		<Modal onClose={onClose} open size="tiny">
+		<Modal onClose={onClose} dimmer="inverted" open size="tiny">
 			<Modal.Header>{t('delete_link')}</Modal.Header>
 			<Modal.Content>
-				<p className={styles.link_description}>
-					{t('link_to')} <span className={styles.link_title}>{link.name}</span>{' '}
+				<p className={styles.linkDescription}>
+					{t('link_to')} <span className={styles.linkTitle}>{link.name}</span>{' '}
 					{t('will_be_deleted_from_section')}
 				</p>
 			</Modal.Content>
@@ -30,8 +30,8 @@ const DeleteLink = ({ onClose, link, onDelete }: Props) => {
 					icon="checkmark"
 					onClick={() => onDelete(link)}
 				/>
-				<Button color="grey" onClick={onClose}>
-					{t('cancel')}
+				<Button basic className={styles.editBtn} onClick={onClose}>
+					<span className={styles.editBtnValue}>{t('cancel')}</span>
 				</Button>
 			</Modal.Actions>
 		</Modal>

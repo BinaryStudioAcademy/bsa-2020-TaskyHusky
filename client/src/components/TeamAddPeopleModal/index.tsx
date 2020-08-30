@@ -2,7 +2,7 @@ import React, { MouseEvent, useState } from 'react';
 import { Button, Modal, Search, SearchProps } from 'semantic-ui-react';
 import styles from './styles.module.scss';
 import ResultPeople from './ResultPeople';
-import ChosenPeople from './ResultPeople/chosenPeople';
+import ChosenPeople from './ResultPeople/СhosenPeople';
 import { useTranslation } from 'react-i18next';
 
 type Props = {
@@ -59,7 +59,7 @@ const TeamAddPeopleModal = ({ onConfirm, onClose, search, searchLoading, people,
 	};
 
 	return (
-		<Modal onClose={() => onClose(false)} open size="small">
+		<Modal onClose={() => onClose(false)} dimmer="inverted" open size="small">
 			<Modal.Header>{t('add_teammates')}</Modal.Header>
 			<Modal.Content>
 				{chosenUsers.length > 0 && <ChosenPeople users={chosenUsers} />}
@@ -76,12 +76,12 @@ const TeamAddPeopleModal = ({ onConfirm, onClose, search, searchLoading, people,
 					minCharacters={2}
 					value={searchText}
 				/>
-				<p className={styles.description_p}>{t('no_more_4_people_can_ba_added')}</p>
+				<p className={styles.descriptionP}>{t('no_more_4_people_can_ba_added')}</p>
 			</Modal.Content>
 			<Modal.Actions>
 				<Button content={t('accept')} primary labelPosition="left" icon="checkmark" onClick={handlerAccept} />
-				<Button color="grey" onClick={() => onClose(false)}>
-					{t('cancel')}
+				<Button basic className={styles.editBtn} onClick={() => onClose(false)}>
+					<span className={styles.editBtnValue}>{t('cancel')}</span>
 				</Button>
 			</Modal.Actions>
 		</Modal>
