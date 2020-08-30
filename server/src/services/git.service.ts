@@ -19,7 +19,12 @@ export const getMessages = async (message: string, githubUrl = 'https://github.c
 	})).filter(
 		commit => commit.commit.message.toLowerCase().startsWith(`${message} `) ||
 			commit.commit.message.toLowerCase() === message)
-		.map(commit => commit.sha);
+		.map(commit => ({
+			hash: commit.sha,
+			message: commit.commit.message,
+			author: commit.commit.author.name,
+			time: commit.commit.author.date,
+		}));
 
 	return data;
 };
