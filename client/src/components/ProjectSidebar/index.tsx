@@ -5,8 +5,13 @@ import { Link, useLocation } from 'react-router-dom';
 import classNames from 'classnames';
 
 import styles from './styles.module.scss';
+import { sidebarItems } from './config/sidebarItems';
 
-const ProjectSidebar = (project: WebApi.Entities.Projects, ProjectComponent: JSX.Element) => {
+interface Props {
+	project: WebApi.Entities.Projects;
+}
+
+const ProjectSidebar: React.FC<Props> = ({ project }) => {
 	const projectsLink = '/projects';
 	const { pathname } = useLocation();
 
@@ -18,94 +23,31 @@ const ProjectSidebar = (project: WebApi.Entities.Projects, ProjectComponent: JSX
 						<img className={styles.header__img} src={project.icon} alt="Project avatar" />
 						<div className={styles.header__info_container}>
 							<span className={styles.header__name}>{project.name}</span>
-							<span className={styles.header__type}>Classic software project</span>
+							<span className={styles.header__type}>Software project</span>
 						</div>
 					</div>
-					<Link
-						to={`/project/${project.id}/issues`}
-						className={[styles.header__item, styles.header__item_back, styles.header__link].join(' ')}
-					>
-						<Icon
-							className={styles.header__link_icon}
-							disabled
-							name="arrow alternate circle left"
-							size={'large'}
-						/>
-						<span className={styles.header__text}>{i18n.t('back_to_project')}</span>
-					</Link>
 				</div>
 				<div className={styles.sidebar__body}>
-					<p className={styles.body__title}>{i18n.t('project_settings')}</p>
-
 					<div className={styles.body__group}>
-						<Link
-							to={`${projectsLink}/projectSettings/${project.id}`}
-							className={classNames(styles.body__link, styles.body__group_item, {
-								[styles.nav__link__active]: pathname.includes('projectSettings'),
-							})}
-						>
-							{i18n.t('details')}
-						</Link>
-						<Link
-							to={`${projectsLink}/projectPeople/${project.id}`}
-							className={classNames(styles.body__link, styles.body__group_item, {
-								[styles.nav__link__active]: pathname.includes('projectPeople'),
-							})}
-						>
-							{i18n.t('people')}
-						</Link>
-					</div>
-					<div className={styles.body__group}>
-						<Link
-							to={`${projectsLink}/projectIssueTypes/${project.id}`}
-							className={classNames(styles.body__link, styles.body__group_item, {
-								[styles.nav__link__active]: pathname.includes('projectIssueTypes'),
-							})}
-						>
-							{i18n.t('issue_types')}
-						</Link>
-					</div>
-
-					<div className={styles.body__group}>
-						<Link
-							to={`${projectsLink}/projectVersions/${project.id}`}
-							className={classNames(styles.body__link, styles.body__group_item, {
-								[styles.nav__link__active]: pathname.includes('projectVersions'),
-							})}
-						>
-							{i18n.t('versions')}
-						</Link>
-						<Link
-							to={`${projectsLink}/projectComponents/${project.id}`}
-							className={classNames(styles.body__link, styles.body__group_item, {
-								[styles.nav__link__active]: pathname.includes('projectComponents'),
-							})}
-						>
-							{i18n.t('components')}
-						</Link>
-					</div>
-					<div className={styles.body__group}>
-						<Link
-							to={`${projectsLink}/projectPermissions/${project.id}`}
-							className={classNames(styles.body__link, styles.body__group_item, {
-								[styles.nav__link__active]: pathname.includes('projectPermissions'),
-							})}
-						>
-							{i18n.t('permissions')}
-						</Link>
-						<Link
-							to={`${projectsLink}/projectNotifications/${project.id}`}
-							className={classNames(styles.body__link, styles.body__group_item, {
-								[styles.nav__link__active]: pathname.includes('projectNotifications'),
-							})}
-						>
-							{i18n.t('notifications')}
-						</Link>
+						{sidebarItems.map(({ section, icon, title }: any) => (
+							<Link
+								key={section}
+								to={`${projectsLink}/${section}/${project.id}`}
+								className={[styles.body__link, styles.body__group_item].join(' ')}
+							>
+								<span
+									className={classNames(styles.nav__link_content, {
+										[styles.nav__link__active]: pathname.includes(section),
+									})}
+								>
+									<Icon name={icon} />
+									{i18n.t(title)}
+								</span>
+							</Link>
+						))}
 					</div>
 				</div>
 			</div>
-
-			<div className={styles.content__container}>{ProjectComponent}</div>
 		</aside>
 	);
 };

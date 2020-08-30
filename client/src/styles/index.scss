@@ -86,6 +86,11 @@ label {
 	box-sizing: border-box;
 }
 
+#root {
+	max-height: 100vh;
+	overflow: hidden;
+}
+
 #root,
 .fill {
 	width: 100%;
