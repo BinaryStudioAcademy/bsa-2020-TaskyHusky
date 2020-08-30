@@ -1,6 +1,6 @@
 import { Team } from './state';
 
-export const LOADING = 'TEAM:LOADING';
+export const SET_IS_LOADING = 'TEAM:SET_IS_LOADING';
 export const START_LOADING = 'TEAM:START_LOADING';
 export const SUCCESS_TEAM_LOADING = 'TEAM:SUCCESS_TEAM_LOADING';
 export const SUCCESS_TEAM_USERS_LOADING = 'TEAM:SUCCESS_TEAM_USERS_LOADING';
@@ -26,7 +26,12 @@ export const CLEAR_FOUND_USERS = 'TEAM:CLEAR_FOUND_USERS';
 export const CLEAR_FOUND_USERS_DONE = 'TEAM:CLEAR_FOUND_USERS_DONE';
 
 export const ADD_PEOPLE_TO_TEAM_LOADING = 'TEAM:ADD_PEOPLE_TO_TEAM_LOADING';
-export const ADD_PEOPLE_TO_TEAM_SUCCESS = 'TEAM:ADD_PEOPLE_TO_TEAM_SUCCESS';
+export const UPDATE_TEAM_USERS_SECCESS = 'TEAM:UPDATE_TEAM_USERS_SECCESS';
+
+export const DELETE_PEOPLE_FROM_TEAM_LOADING = 'TEAM:DELETE_PEOPLE_FROM_TEAM_LOADING';
+
+export const DELETE_TEAM_LOADING = 'TEAM:DELETE_TEAM_LOADING';
+export const DELETE_TEAM_SUCCESS = 'TEAM:DELETE_TEAM_SUCCESS';
 
 export type startAddingUsers = {
 	id: string;
@@ -85,9 +90,19 @@ export type EditFieldLoadingArgs = {
 	id: string;
 	field: { [key: string]: string | [] };
 };
+
 export type EditFieldSuccess = {
 	field: {
 		name: string,
 		description: string
 	};
 };
+
+export type DeleteTeamLoading = {
+	id: string;
+}
+
+export type DeletePeopleLoading = {
+	teamId: string;
+	userId: string;
+}

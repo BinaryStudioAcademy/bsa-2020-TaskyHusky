@@ -157,6 +157,17 @@ class TeamsController {
 			res.status(HttpStatusCode.NOT_FOUND).send(getWebError(error, HttpStatusCode.NOT_FOUND));
 		}
 	};
+
+	removeOneUser = async (req: Request, res: Response): Promise<void> => {
+		const teamRepository = getCustomRepository(TeamRepository);
+		const { userId, teamId } = req.body;
+		try {
+			const result = await teamRepository.removeUserFromTeam(userId, teamId);
+			res.send(result);
+		} catch (error) {
+			res.status(HttpStatusCode.NOT_FOUND).send(getWebError(error, HttpStatusCode.NOT_FOUND));
+		}
+	};
 }
 
 export default TeamsController;

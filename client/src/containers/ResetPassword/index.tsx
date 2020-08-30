@@ -31,7 +31,6 @@ const ResetPassword: React.FC = () => {
 	};
 
 	useEffect(() => {
-		console.log(user);
 		setIsTokenNull(!user?.resetEmailToken && !!user?.email);
 	}, [user]);
 	return (

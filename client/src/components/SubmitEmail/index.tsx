@@ -20,7 +20,7 @@ const SubmitEmail: React.FC<Props> = (props: Props) => {
 	const [errorMessage, setErrorMessage] = useState<string>('');
 	const [isSubmit, setIsSumbit] = useState<boolean>(false);
 
-	const handleChange = (event: any) => {
+	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setEmailData((event.target as HTMLInputElement).value);
 	};
 

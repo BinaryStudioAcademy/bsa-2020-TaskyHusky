@@ -8,14 +8,14 @@ type Props = {
 
 const ChosenPeople = ({ users }: Props) => {
 	return (
-		<div className={styles.users_wrapper}>
+		<div className={styles.usersWrapper}>
 			{users.map((el: WebApi.Entities.UserProfile) => (
-				<div key={el.id} className={styles.user_block}>
-					<div className={styles.main_info}>
+				<div key={el.id} className={styles.userBlock}>
+					<div className={styles.mainInfo}>
 						<span className={styles.fullname}> {`${el.firstName} ${el.lastName}`} </span>
 						<span className={styles.email}>{el.email}</span>
 					</div>
-					<div className={styles.user_avatar}>
+					<div className={styles.userAvatar}>
 						<Avatar fullName={`${el.firstName} ${el.lastName}`} imgSrc={el?.avatar} />
 					</div>
 				</div>

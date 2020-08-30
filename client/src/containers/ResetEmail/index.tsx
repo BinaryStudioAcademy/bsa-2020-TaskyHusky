@@ -19,7 +19,7 @@ const ResetPassword = () => {
 	const email = Buffer.from(emailBtoa, 'base64').toString();
 	const currentEmail = useSelector((state: RootState) => state.user.email);
 
-	const handleChange = (e: any) => {
+	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setPassword(e.target.value);
 	};
 
