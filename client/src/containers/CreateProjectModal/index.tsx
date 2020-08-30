@@ -25,10 +25,11 @@ const CreateProjectModal: React.FC<Props> = ({ children }) => {
 	const dispatch = useDispatch();
 	const { t } = useTranslation();
 
-	const { isLoading, isModalOpened, isProjectCreated, keys, isError } = useSelector(
+	const { isLoading, isProjectCreated, keys, isError } = useSelector(
 		(rootState: RootState) => rootState.createProject,
 	);
 
+	const [isModalOpened, setIsModalOpened] = useState<boolean>(false);
 	const [isKeyTouched, setIsKeyTouched] = useState(false);
 	const [isTemplatesView, setIsTemplatesView] = useState(false);
 
@@ -82,16 +83,17 @@ const CreateProjectModal: React.FC<Props> = ({ children }) => {
 
 	const onModalClose = () => {
 		setIsTemplatesView(false);
+
 		if (isError) {
 			dispatch(actions.resetState());
 			return;
 		}
 
-		dispatch(actions.closeModal());
+		setIsModalOpened(false);
 	};
 
 	const onModalOpen = () => {
-		dispatch(actions.openModal());
+		setIsModalOpened(true);
 		dispatch(actions.startGettingKeys());
 	};
 
