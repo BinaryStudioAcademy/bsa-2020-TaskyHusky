@@ -3,16 +3,11 @@ import { Dropdown, Icon } from 'semantic-ui-react';
 import styles from 'styles/headerDropDown.module.scss';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import * as actions from 'containers/CreateProjectModal/logic/actions';
+import CreateProjectModal from 'containers/CreateProjectModal';
 
 export const ProjectsMenu = () => {
 	const { t } = useTranslation();
-	const dispatch = useDispatch();
 
-	const onCreateProject = () => {
-		dispatch(actions.openModal());
-	};
 	return (
 		<Dropdown text={t('projects')} className={`${styles.media_query} link item`}>
 			<Dropdown.Menu className={styles.dropDownMenu}>
@@ -29,7 +24,9 @@ export const ProjectsMenu = () => {
 				<Dropdown.Item as={Link} to="/projects">
 					{t('view_all_projects')}
 				</Dropdown.Item>
-				<Dropdown.Item onClick={onCreateProject}>{t('create_project')}</Dropdown.Item>
+				<CreateProjectModal>
+					<Dropdown.Item>{t('create_project')}</Dropdown.Item>
+				</CreateProjectModal>
 			</Dropdown.Menu>
 		</Dropdown>
 	);
