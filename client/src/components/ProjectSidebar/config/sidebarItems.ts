@@ -1,37 +1,40 @@
+export const SETTINGS_SECTION = {
+	details: 'details',
+	people: 'people',
+	issue_types: 'issue_types',
+	versions: 'versions',
+	labels: 'labels',
+	permissions: 'permissions',
+	notifications: 'notifications',
+};
+
 export const sidebarItems = [
 	{
-		section: 'projectSettings',
+		section: SETTINGS_SECTION.details,
 		icon: 'setting',
-		title: 'details',
 	},
 	{
-		section: 'projectPeople',
+		section: SETTINGS_SECTION.people,
 		icon: 'street view',
-		title: 'people',
 	},
 	{
-		section: 'projectIssueTypes',
+		section: SETTINGS_SECTION.issue_types,
 		icon: 'check square',
-		title: 'issue_types',
 	},
 	{
-		section: 'projectVersions',
+		section: SETTINGS_SECTION.versions,
 		icon: 'random',
-		title: 'versions',
 	},
 	{
-		section: 'projectLabels',
+		section: SETTINGS_SECTION.labels,
 		icon: 'tags',
-		title: 'labels',
 	},
 	{
-		section: 'projectPermissions',
+		section: SETTINGS_SECTION.permissions,
 		icon: 'key',
-		title: 'permissions',
 	},
 	{
-		section: 'projectNotifications',
+		section: SETTINGS_SECTION.notifications,
 		icon: 'bell',
-		title: 'notifications',
 	},
 ];
