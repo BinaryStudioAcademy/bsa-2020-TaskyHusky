@@ -23,9 +23,15 @@ export class ProjectsRepository extends Repository<Projects> {
 		return this.findOne({ key }, { withDeleted: true });
 	}
 
-	getAllByUserId(id: string): Promise<Projects[]> {
+	async getAllByUserId(id: string): Promise<Projects[]> {
 		return getRepository(Projects)
 			.createQueryBuilder('project')
+			.leftJoin('project.issues', 'issue')
+			.addSelect('issue.id')
+			.leftJoin('issue.status', 'issueStatus')
+			.addSelect('issueStatus.title')
+			.leftJoin('issue.assigned', 'user')
+			.addSelect('user.id')
 			.leftJoinAndSelect('project.lead', 'lead')
 			.leftJoinAndSelect('project.boards', 'boards')
 			.leftJoin('project.users', 'users')

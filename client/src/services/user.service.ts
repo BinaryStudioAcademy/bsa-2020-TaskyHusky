@@ -41,6 +41,15 @@ export const requestGetUserProjects = async (id: string): Promise<any> => {
 	return (await res.json()) as Array<WebApi.Entities.Projects>;
 };
 
+export const requestGetUserIssues = async (id: string): Promise<any> => {
+	const res = await callWebApi({
+		method: 'GET',
+		endpoint: `user/issues/${id}`,
+		skipAuthorization: false,
+	});
+	return (await res.json()) as Array<Partial<WebApi.Entities.Issue>>;
+};
+
 export const requestGetUserTeams = async (id: string): Promise<any> => {
 	const res = await callWebApi({
 		method: 'GET',

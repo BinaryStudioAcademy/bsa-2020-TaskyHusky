@@ -7,7 +7,6 @@ import {
 	UpdateDateColumn,
 	ManyToMany,
 	JoinTable,
-	OneToMany,
 } from 'typeorm';
 
 import { IsNotEmpty, IsString, IsArray } from 'class-validator';

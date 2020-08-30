@@ -109,6 +109,16 @@
   color: $primary-text !important;
 }
 
+@mixin work-page-secondary {
+  font-family: Poppins, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 15px;
+  line-height: 24px;
+  letter-spacing: 0.44px;
+  color: $medium-gray;
+}
+
 @mixin manager-header {
   font-family: Poppins, sans-serif;
   font-style: normal;
