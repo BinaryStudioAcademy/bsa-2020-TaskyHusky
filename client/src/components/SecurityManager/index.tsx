@@ -1,29 +1,32 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styles from './styles.module.scss';
 import { useTranslation } from 'react-i18next';
-import { requestChangePassword } from 'containers/ProfilePage/logiс/actions';
+import { RootState } from 'typings/rootState';
+import { requestChangePassword, sendPassResetLink } from 'containers/ProfilePage/logiс/actions';
 import { Button, Form } from 'semantic-ui-react';
 import SubmitedInput from 'components/SubmitedInput';
 import PasswordCheck from 'components/PasswordCheck';
 import CustomValidator from 'helpers/validation.helper';
 import ConfirmPassModal from 'components/ConfirmPassModal';
+import SubmitEmail from 'components/SubmitEmail';
 
 const SecurityManager = () => {
 	const { t } = useTranslation();
 	const dispatch = useDispatch();
 	const acceptLength = 6;
+
 	const [passwords, setPasswords] = useState({
 		oldPassword: '',
 		newPassword: '',
 		repeatedPassword: '',
 	});
-
 	const [isRepeatedPassValid, setIsRepeatedPassValid] = useState<boolean>(false);
 	const [isPasswordValid, setIsPasswordValid] = useState<boolean>(true);
 	const [errorMessage, setErrorMessage] = useState<string>('');
 	const [isPasswordSecure, setIsPasswordSecure] = useState<boolean>(false);
 	const [isFormSubmited, setIsFormSubmited] = useState<boolean>(false);
+	const [isShowHidden, setIsShowHidden] = useState<boolean>(false);
 
 	const isSubmitPossible =
 		isRepeatedPassValid &&
@@ -31,6 +34,12 @@ const SecurityManager = () => {
 		passwords.oldPassword &&
 		passwords.repeatedPassword &&
 		passwords.newPassword;
+
+	const email = useSelector((state: RootState) => state.user.email);
+
+	const showHiddenContent = () => {
+		setIsShowHidden(!isShowHidden);
+	};
 
 	const handleChange = (event: any) => {
 		setPasswords({
@@ -78,6 +87,11 @@ const SecurityManager = () => {
 				updatePassword();
 			}
 		}
+	};
+
+	const sendEmail = (emailData: string) => {
+		dispatch(sendPassResetLink({ email: emailData }));
+		setIsShowHidden(false);
 	};
 
 	const onClose = () => {
@@ -131,6 +145,12 @@ const SecurityManager = () => {
 						{t('save_changes')}
 					</Button>
 				</Form>
+				<Button className={styles.forgotPass} onClick={showHiddenContent}>
+					{t('forgot_pass')}
+				</Button>
+				{isShowHidden && (
+					<SubmitEmail sendEmail={sendEmail} email={email} newEmail={true} title={t('email_confirm_pass')} />
+				)}
 			</div>
 		</section>
 	);

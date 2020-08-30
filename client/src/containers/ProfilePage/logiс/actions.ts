@@ -10,3 +10,6 @@ export const requestDeleteUser = createAction<actionTypes.RequestDeleteUser>(act
 export const requestChangePassword = createAction<actionTypes.RequestChangePassword>(
 	actionTypes.REQUEST_CHANGE_PASSWORD,
 );
+export const sendEmailResetLink = createAction<actionTypes.SendResetLink>(actionTypes.SEND_EMAIL_RESET_LINK);
+export const requestChangeEmail = createAction<actionTypes.RequestChangeEmail>(actionTypes.RESET_EMAIL);
+export const sendPassResetLink = createAction<actionTypes.SendResetLink>(actionTypes.SEND_PASS_RESET_LINK);

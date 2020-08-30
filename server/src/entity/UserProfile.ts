@@ -62,6 +62,12 @@ export class UserProfile {
 	@Column({ type: 'timestamp without time zone', name: 'resetPasswordExpires', nullable: true })
 	public resetPasswordExpires?: Date | null;
 
+	@Column({ type: 'character varying', name: 'resetEmailToken', nullable: true })
+	public resetEmailToken?: string | null;
+
+	@Column({ type: 'timestamp without time zone', name: 'resetEmailExpires', nullable: true })
+	public resetEmailExpires?: Date | null;
+
 	@OneToMany((type) => Filter, (filter) => filter.owner)
 	filters?: Filter[];
 
