@@ -25,6 +25,11 @@ interface SelectOption {
 	style?: any;
 }
 
+const STORY_POINT_NUMBER_VALIDATION = {
+	max: 9999,
+	min: 0,
+};
+
 const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, priorities, users, onSubmit }) => {
 	const context = useCreateIssueModalContext();
 	const [opened, setOpened] = useState<boolean>(false);
@@ -102,7 +107,11 @@ const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, p
 		const { value } = data;
 		const number = parseInt(value, 10);
 
-		if (isNumber(number) && number < 99999 && number >= 0) {
+		if (
+			isNumber(number) &&
+			number < STORY_POINT_NUMBER_VALIDATION.max &&
+			number >= STORY_POINT_NUMBER_VALIDATION.min
+		) {
 			context.set('storyPoint', data.value);
 			setIsStoryPointValid(true);
 		} else {
