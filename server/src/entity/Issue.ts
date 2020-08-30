@@ -35,10 +35,10 @@ export class Issue {
 	@IsString()
 	summary!: string;
 
-	@ManyToOne((type) => BoardColumn, (boardColumn) => boardColumn.issues)
+	@ManyToOne((type) => BoardColumn, (boardColumn) => boardColumn.issues, { onDelete: 'CASCADE' })
 	boardColumn?: BoardColumn;
 
-	@ManyToOne((type) => Board, (board) => board.issues)
+	@ManyToOne((type) => Board, (board) => board.issues, { onDelete: 'CASCADE' })
 	board?: Board;
 
 	@Column({ array: true })
@@ -61,7 +61,7 @@ export class Issue {
 	@ManyToOne((type) => Sprint, (sprint) => sprint.issues, { onDelete: 'SET NULL' })
 	sprint?: Sprint;
 
-	@ManyToOne((type) => Projects, (projects) => projects.issues)
+	@ManyToOne((type) => Projects, (projects) => projects.issues, { onDelete: 'CASCADE' })
 	project?: Projects;
 
 	@Column()
@@ -69,10 +69,10 @@ export class Issue {
 	@IsString()
 	issueKey?: string;
 
-	@ManyToOne((type) => UserProfile, (userProfile) => userProfile.assignedIssues, { eager: true })
+	@ManyToOne((type) => UserProfile, (userProfile) => userProfile.assignedIssues, { eager: true, onDelete: 'CASCADE' })
 	assigned?: UserProfile;
 
-	@ManyToOne((type) => UserProfile, (userProfile) => userProfile.createdIssues)
+	@ManyToOne((type) => UserProfile, (userProfile) => userProfile.createdIssues, { onDelete: 'CASCADE' })
 	creator!: UserProfile;
 
 	@ManyToMany((type) => UserProfile, (user) => user.watchingIssues)
