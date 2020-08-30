@@ -8,6 +8,7 @@ import { updateIssue } from 'pages/IssuePage/logic/actions';
 import { useTranslation } from 'react-i18next';
 import { getUsername } from 'helpers/getUsername.helper';
 import { isNumber } from 'util';
+import { ISSUE_CONSTANTS } from 'constants/Issue';
 
 interface Props {
 	current: WebApi.Issue.PartialIssue;
@@ -24,11 +25,6 @@ interface SelectOption {
 	value: string;
 	style?: any;
 }
-
-const STORY_POINT_NUMBER_VALIDATION = {
-	max: 9999,
-	min: 0,
-};
 
 const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, priorities, users, onSubmit }) => {
 	const context = useCreateIssueModalContext();
@@ -106,13 +102,13 @@ const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, p
 	const handleStoryPointChange = (event: React.ChangeEvent<HTMLInputElement>, data: InputOnChangeData) => {
 		const { value } = data;
 		const number = parseInt(value, 10);
-
-		if (
-			isNumber(number) &&
-			number < STORY_POINT_NUMBER_VALIDATION.max &&
-			number >= STORY_POINT_NUMBER_VALIDATION.min
-		) {
-			context.set('storyPoint', data.value);
+		if (value.length === 0) {
+			context.set('storyPoint', value);
+			setIsStoryPointValid(true);
+			return;
+		}
+		if (isNumber(number) && number <= ISSUE_CONSTANTS.maxStoryPoint && number >= ISSUE_CONSTANTS.minStoryPoint) {
+			context.set('storyPoint', value);
 			setIsStoryPointValid(true);
 		} else {
 			setIsStoryPointValid(false);
@@ -198,6 +194,7 @@ const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, p
 					<Form.Field>
 						<label>{t('storyPoint')}</label>
 						<Form.Input
+							type="number"
 							error={!isStoryPointValid}
 							placeholder={t('storyPoint')}
 							fluid

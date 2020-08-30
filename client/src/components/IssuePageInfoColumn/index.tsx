@@ -169,7 +169,11 @@ const IssuePageInfoColumn: React.FC<Props> = ({
 					{issue.priority.title}
 				</Label>
 				<h4>{t('storyPoint')}</h4>
-				{<Label style={{ borderRadius: '40%' }}>{issue.storyPoint || 0}</Label>}
+				{issue.storyPoint ? (
+					<Label style={{ borderRadius: '30%' }}>{issue.storyPoint}</Label>
+				) : (
+					<span>{t('no')}</span>
+				)}
 			</div>
 			<ContextProvider customInitalState={initialIssue}>
 				<UpdateIssueModal current={initialIssue} getOpenFunc={(open) => (openEditModal = open)} />

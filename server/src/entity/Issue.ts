@@ -88,6 +88,7 @@ export class Issue {
 	@Column({ nullable: true })
 	@IsInt()
 	@Min(0)
-	@Max(99999)
+	// max int postgres value
+	@Max(2147483647)
 	storyPoint?: number;
 }

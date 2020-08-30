@@ -10,6 +10,7 @@ import { KeyGenerate } from 'constants/KeyGenerate';
 import { useTranslation } from 'react-i18next';
 import { getUsername } from 'helpers/getUsername.helper';
 import { isNumber } from 'util';
+import { ISSUE_CONSTANTS } from 'constants/Issue';
 
 interface Props {
 	children: JSX.Element;
@@ -135,8 +136,12 @@ const CreateIssueModalBody: React.FC<Props> = ({
 	const handleStoryPointChange = (event: React.ChangeEvent<HTMLInputElement>, data: InputOnChangeData) => {
 		const { value } = data;
 		const number = parseInt(value, 10);
-
-		if (isNumber(number) && number < 99999 && number >= 0) {
+		if (value.length === 0) {
+			context.set('storyPoint', data.value);
+			setIsStoryPointValid(true);
+			return;
+		}
+		if (isNumber(number) && number <= ISSUE_CONSTANTS.maxStoryPoint && number >= ISSUE_CONSTANTS.minStoryPoint) {
 			context.set('storyPoint', data.value);
 			setIsStoryPointValid(true);
 		} else {
@@ -230,6 +235,7 @@ const CreateIssueModalBody: React.FC<Props> = ({
 					<Form.Field>
 						<label>{t('storyPoint')}</label>
 						<Form.Input
+							type="number"
 							error={!isStoryPointValid}
 							placeholder={t('storyPoint')}
 							fluid
