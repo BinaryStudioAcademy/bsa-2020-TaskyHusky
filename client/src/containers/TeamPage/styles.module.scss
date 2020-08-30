@@ -3,46 +3,46 @@
 	height: 40px;
 }
 
-.meta_header {
+.metaHeader {
 	margin-left: 14px;
 }
-.margin_1 {
+.margin1 {
 	margin-right: 5px !important;
 }
 
-.flex_row {
+.flexRow {
 	display: flex;
 	flex-direction: row;
 }
 
-.link_header {
+.linkHeader {
 	padding: 2rem 0 1rem 0;
 	display: flex;
 	justify-content: space-between;
 }
-.btn_borderless {
+.btnBorderless {
 	border: none !important;
 	box-shadow: none !important;
 }
-.worked_block_wrapper {
+.workedBlockWrapper {
 	display: flex;
 	flex-direction: column;
 	padding: 20px 10px;
 	box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
-.shadow_top {
+.shadowTop {
 	box-shadow: 1px -1px 2px rgba(0, 0, 0, 0.5);
 }
-.align_center {
+.alignCenter {
 	align-items: center;
 	justify-content: center;
 }
-.card_header {
+.cardHeader {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 }
-.input_focus {
+.inputFocus {
 	width: calc(100% - 30px);
 	box-sizing: border-box;
 	padding: 10px;
@@ -57,7 +57,7 @@
 		border-radius: 6px;
 	}
 }
-.input_area {
+.inputArea {
 	width: 100%;
 	height: 100%;
 	max-width: 100%;
@@ -75,7 +75,7 @@
 	}
 }
 
-.input_borders {
+.inputBorders {
 	border-color: #9e9e9e;
 	border-radius: 6px;
 	background-color: #ffffff;
@@ -85,27 +85,27 @@
 	}
 }
 
-.main_row {
+.mainRow {
 	padding: 0 80px !important;
-	.col_media {
+	.colMedia {
 		flex-grow: 0 !important;
 		.ui.card {
 			width: 100% !important;
 		}
 	}
-	.col_left {
+	.colLeft {
 		width: 35% !important;
 		min-width: 270px !important;
 	}
-	.col_right {
+	.colRight {
 		width: 60% !important;
 		max-width: 700px;
 	}
 }
-.media_btns {
+.mediaBtns {
 	flex-shrink: 0.5 !important;
 }
-.edit_field_btn {
+.editFieldBtn {
 	display: flex !important;
 	width: 100% !important;
 	box-sizing: border-box;
@@ -117,27 +117,27 @@
 		margin-top: 5px !important;
 	}
 }
-.delete_btn {
+.deleteBtn {
 	border: 1px solid #2185d0 !important;
-	.delete_btn_value {
+	.deleteBtnValue {
 		color: #2185d0 !important;
 	}
 }
-.edit_btn {
+.editBtn {
 	border: 1px solid #4d4c4c !important;
-	.edit_btn_value {
+	.editBtnValue {
 		color: #4d4c4c;
 	}
 }
 @media (max-width: 950px) {
-	.main_row {
+	.mainRow {
 		padding: 0 20px !important;
 	}
 }
 @media (max-width: 710px) {
-	.main_row {
+	.mainRow {
 		padding: 0 20px !important;
-		.col_left {
+		.colLeft {
 			flex-wrap: wrap !important;
 			display: flex !important;
 			flex-direction: row !important;
@@ -147,7 +147,7 @@
 				margin: 0 10px 10px 0 !important;
 			}
 		}
-		.col_right {
+		.colRight {
 			width: 90% !important;
 		}
 	}

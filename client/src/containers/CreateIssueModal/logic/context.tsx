@@ -33,7 +33,7 @@ export const useCreateIssueModalContext = () => {
 		throw new Error('useCreateIssueModalContext must be used inside a ContextProvider');
 	}
 
-	const { state: data, dispatch } = context as WebApi.Issue.PartialIssue & {
+	const { state: data, dispatch } = context as {
 		state: WebApi.Issue.PartialIssue;
 		dispatch: (action: any) => void;
 	};

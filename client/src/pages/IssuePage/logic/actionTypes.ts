@@ -23,13 +23,19 @@ export type SetStatuses = {
 	data: WebApi.Entities.IssueStatus[];
 };
 
+export type CreateIssueSuccess = {
+	data: WebApi.Issue.PartialIssue;
+};
+
 export type CreateIssue = {
 	data: WebApi.Issue.PartialIssue;
+	files: File[];
 };
 
 export type UpdateIssue = {
 	id: string;
 	data: WebApi.Issue.PartialIssue;
+	files?: File[];
 };
 
 export type UpdateIssueSuccess = {

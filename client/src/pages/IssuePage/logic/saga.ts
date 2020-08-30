@@ -8,6 +8,7 @@ import {
 	deleteIssue,
 	getStatuses,
 	watch,
+	bulkAttach,
 } from 'services/issue.service';
 
 import { setTypes, setPriorities, setStatuses, createIssueSuccess, updateIssueSuccess } from './actions';
@@ -42,8 +43,9 @@ function* watchLoadStatuses() {
 }
 
 function* fetchCreateIssue(action: AnyAction) {
-	yield call(createIssue, action.data);
-	yield put(createIssueSuccess({ data: action.data }));
+	const result = yield call(createIssue, action.data);
+	const links = yield call(bulkAttach, action.files, result.issueKey);
+	yield put(createIssueSuccess({ data: { ...action.data, attachments: links } }));
 }
 
 function* watchCreateIssue() {
@@ -52,7 +54,8 @@ function* watchCreateIssue() {
 
 function* fetchUpdateIssue(action: AnyAction) {
 	const response: WebApi.Entities.Issue = yield call(updateIssue, action.id, action.data);
-	yield put(updateIssueSuccess({ data: response }));
+	const links = yield call(bulkAttach, action.files ?? [], response.issueKey as string);
+	yield put(updateIssueSuccess({ data: { ...response, attachments: [...(response.attachments ?? []), ...links] } }));
 }
 
 function* deleteIssueSaga(action: AnyAction) {

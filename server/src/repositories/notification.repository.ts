@@ -1,7 +1,7 @@
 import { EntityRepository, Repository } from 'typeorm';
 import { Notification } from '../entity/Notification';
 import { Issue } from '../entity/Issue';
-import { appHost, frontendPort } from '../../config/app.config';
+import { frontendURL } from '../../config/app.config';
 import { UserProfile } from '../entity/UserProfile';
 import { NotificationActions } from '../models/IO';
 import notificationHandler from '../socketConnectionHandlers/notification.handler';
@@ -81,7 +81,7 @@ export class NotificationRepository extends Repository<Notification> {
 					this.createOne({
 						user: { ...watcher },
 						text: customText ? actionOrText : `Issue ${issueKey} was ${actionOrText}.`,
-						link: !noLink ? `http://${appHost}:${frontendPort}/issue/${issueKey}` : undefined,
+						link: !noLink ? `${frontendURL}/issue/${issueKey}` : undefined,
 						title: issueKey,
 					}),
 			),

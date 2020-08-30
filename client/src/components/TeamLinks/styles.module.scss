@@ -1,4 +1,4 @@
-.link_card_wrapper {
+.linkCardWrapper {
   position: relative;
   margin-top: 10px;
   box-shadow: 0 0 3px #a3a3a3;
@@ -7,12 +7,12 @@
   padding: 20px;
   cursor: grab;
 
-  .link_header {
+  .linkHeader {
     color: #3d3c3c;
     margin-bottom: 5px !important;
   }
 
-  .link_href {
+  .linkHref {
     color: #9b9999;
     font-size: 1.1rem;
     cursor: pointer;
@@ -21,33 +21,33 @@
     }
   }
 
-  .btns_block {
+  .btnsBlock {
     position: absolute;
     right: 0;
     bottom: 5px;
   }
 }
 
-.link_title {
+.linkTitle {
   color: #000000;
   font-weight: 700;
   font-size: 1.1rem;
 }
-.link_description {
+.linkDescription {
   color: #888686;
   font-size: 1.1rem;
   margin-bottom: 8px;
 }
 
-.delete_btn {
+.deleteBtn {
   border: 1px solid #2185d0 !important;
-  .delete_btn_value {
+  .deleteBtnValue {
     color: #2185d0 !important;
   }
 }
-.edit_btn {
+.editBtn {
   border: 1px solid #4d4c4c !important;
-  .edit_btn_value {
+  .editBtnValue {
     color: #4d4c4c;
   }
 }

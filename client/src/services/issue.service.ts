@@ -164,5 +164,9 @@ export const attachFile = async (file: File, issueKey: string): Promise<string> 
 		},
 	});
 
-	return ((await res.json()) as { link: string }).link;
+	return ((await res.json()) as { newLink: string }).newLink;
+};
+
+export const bulkAttach = (files: File[], issueKey: string): Promise<string[]> => {
+	return Promise.all(files.map((file) => attachFile(file, issueKey)));
 };

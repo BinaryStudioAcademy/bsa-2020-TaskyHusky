@@ -105,4 +105,19 @@ export class TeamRepository extends Repository<Team> {
 
 		return this.save(team);
 	}
+
+	async removeUserFromTeam(userId: string, teamId: string) {
+		const team = await this.createQueryBuilder('Team')
+			.where('Team.id = :id', { id: teamId })
+			.leftJoinAndSelect('Team.users', 'Users')
+			.getOne();
+
+		if (!team) {
+			throw new Error('Team was not found');
+		}
+
+		team.users = team.users?.filter((user: any) => user.id !== userId);
+
+		return this.save(team);
+	}
 }
