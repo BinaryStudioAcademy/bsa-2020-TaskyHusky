@@ -40,6 +40,7 @@ type Sort = {
 };
 
 export type Filter = {
+	id?: string[];
 	issueType?: string[];
 	priority?: string[];
 	sprint?: string[];
@@ -65,8 +66,8 @@ export interface CreateIssueArgs {
 
 @EntityRepository(Issue)
 export class IssueRepository extends Repository<Issue> {
-	findAll(from: number, to: number) {
-		return this.find({ relations: RELS, skip: from, take: to - from });
+	findAll() {
+		return this.find({ relations: RELS });
 	}
 
 	getFilteredIssues(filter: Filter | undefined, from: number, to: number, sort: Sort) {
