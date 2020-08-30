@@ -37,7 +37,9 @@ const People: React.FC = (): ReactElement => {
 	return (
 		<main className={style.main}>
 			<div className={style.btnContainer}>
-				<Button onClick={() => setIsOpenAddNewTeamPopup(true)}>{t('create_team')}</Button>
+				<Button onClick={() => setIsOpenAddNewTeamPopup(true)} basic className={style.editBtn}>
+					<span className={style.editBtnValue}>{t('create_team')} </span>
+				</Button>
 				<Button primary onClick={() => setIsAddPeople(true)}>
 					{t('add_people')}
 				</Button>

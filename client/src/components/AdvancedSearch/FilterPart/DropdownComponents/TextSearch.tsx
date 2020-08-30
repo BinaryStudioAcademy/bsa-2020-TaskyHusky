@@ -4,6 +4,7 @@ import styles from './styles.module.scss';
 import { useDispatch } from 'react-redux';
 import { FilterPartState } from 'containers/AdvancedSearch/logic/state';
 import { updateFilterPart } from 'containers/AdvancedSearch/logic/actions';
+import { useTranslation } from 'react-i18next';
 
 interface DropdownTextSearchProps {
 	filterPart: FilterPartState;
@@ -13,6 +14,7 @@ const DropdownTextSearch = ({ filterPart }: DropdownTextSearchProps) => {
 	const dispatch = useDispatch();
 	const { filterDef, searchText: text } = filterPart;
 	const { title } = filterDef;
+	const { t } = useTranslation();
 
 	const [searchText, setSearchText] = useState(text);
 
@@ -55,10 +57,10 @@ const DropdownTextSearch = ({ filterPart }: DropdownTextSearchProps) => {
 				/>
 				<div className={styles.dropdownBtns}>
 					<Button compact onClick={onUpdate}>
-						Update
+						{t('update')}
 					</Button>
 					<Button compact onClick={onCancel} as="a">
-						Cancel
+						{t('cancel')}
 					</Button>
 				</div>
 			</Dropdown.Menu>

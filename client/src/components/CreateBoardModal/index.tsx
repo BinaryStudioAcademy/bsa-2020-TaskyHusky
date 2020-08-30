@@ -5,6 +5,7 @@ import BoardModalMenuType from '../BoardModalMenuType';
 import BoardModalMenuAlgorithm from '../BoardModalMenuAlgorithm';
 import BoardModalFinal from '../BoardModalFinal';
 import { createBoard } from '../../containers/Boards/logic/actionTypes';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
 	setIsModalShown(params: boolean): void;
@@ -22,6 +23,8 @@ const CreateBoardModal = (props: Props) => {
 	const [modalWindowName, selectModalWindowName] = useState<ModalNames>(ModalNames.selectType);
 	const [isCreateDisabled, setCreateButtonDisabled] = useState(true);
 	const { setIsModalShown, onCreateBoard } = props;
+
+	const { t } = useTranslation();
 
 	const [board, setBoard] = useState<IBoard>({
 		boardType: boardTypes.scrum,
@@ -61,7 +64,7 @@ const CreateBoardModal = (props: Props) => {
 			dimmer="inverted"
 		>
 			<Modal.Header>
-				{modalWindowName !== ModalNames.createBoard ? 'Create a board' : 'Name this board'}
+				{modalWindowName !== ModalNames.createBoard ? t('create_a_board') : t('name_this_board')}
 			</Modal.Header>
 			<Modal.Content>
 				{modalWindowName === ModalNames.selectType ? (
@@ -85,12 +88,12 @@ const CreateBoardModal = (props: Props) => {
 							selectModalWindowName(modalWindowName - 1);
 						}}
 					>
-						Back
+						{t('back')}
 					</Button>
 				) : null}
 				{modalWindowName === ModalNames.selectAlgorithm ? (
 					<Button color={'facebook'} onClick={() => selectModalWindowName(ModalNames.createBoard)}>
-						Next
+						{t('next')}
 					</Button>
 				) : null}
 				{modalWindowName === ModalNames.createBoard ? (
@@ -110,11 +113,11 @@ const CreateBoardModal = (props: Props) => {
 							onCancelClick();
 						}}
 					>
-						Create board
+						{t('create_a_board')}
 					</Button>
 				) : null}
 				<Button color="blue" basic onClick={onCancelClick}>
-					Cancel
+					{t('cancel')}
 				</Button>
 			</Modal.Actions>
 		</Modal>
