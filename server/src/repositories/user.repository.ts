@@ -56,6 +56,7 @@ export class UserRepository extends Repository<UserProfile> {
 			.where('user.id = :id', { id })
 			.leftJoin('user.assignedIssues', 'issue')
 			.addSelect(['issue.id', 'issue.issueKey', 'issue.summary'])
+			.leftJoinAndSelect('issue.type', 'issueType')
 			.getOne();
 
 		if (!user) {

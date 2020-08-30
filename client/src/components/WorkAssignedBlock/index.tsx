@@ -7,7 +7,9 @@ import styles from './styles.module.scss';
 
 const WorkAssignedBlock: React.FC = () => {
 	const id = useSelector((state: RootState) => state.auth.user?.id) ?? '';
-	const [issues, setIssues] = useState<Array<{ issueKey: string; id: string; summary: string }>>([]);
+	const [issues, setIssues] = useState<
+		Array<{ issueKey: string; id: string; summary: string; type: WebApi.Entities.IssueType }>
+	>([]);
 	const getIssues = async (id: string): Promise<void> => {
 		const issues = await requestGetUserIssues(id);
 		setIssues(issues);
@@ -25,7 +27,7 @@ const WorkAssignedBlock: React.FC = () => {
 				<p className={styles.headerSummary}>Summary</p>
 			</div>
 			{issues.map((item) => (
-				<WorkIssueCard key={item.id} issueKey={item.issueKey} description={item.summary} />
+				<WorkIssueCard key={item.id} issueKey={item.issueKey} description={item.summary} type={item.type} />
 			))}
 		</div>
 	);
