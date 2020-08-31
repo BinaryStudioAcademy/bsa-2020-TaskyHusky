@@ -129,12 +129,12 @@ const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, p
 			as="form"
 			onSubmit={submit}
 			open={opened}
-			closeIcon
 			closeOnDimmerClick
 			closeOnEscape
 			onOpen={clearContext}
 			onClose={() => setOpened(false)}
 			style={{ maxWidth: 700, height: '70%' }}
+			dimmer="inverted"
 		>
 			<Modal.Header>
 				<Header as="h1">{t('edit_issue')}</Header>

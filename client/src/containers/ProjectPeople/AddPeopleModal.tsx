@@ -49,7 +49,7 @@ const AddPeopleModal = (props: Props) => {
 	return (
 		<Modal
 			dimmer="inverted"
-			size={'mini'}
+			size="mini"
 			open={isOpen}
 			onClose={() => setIsOpen(false)}
 			trigger={

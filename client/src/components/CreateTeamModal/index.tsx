@@ -12,7 +12,7 @@ const CreateTeamModal = () => {
 	const onAddPeople = (e: React.BaseSyntheticEvent) => setTeamMembers(e.target.value);
 
 	return (
-		<Modal onClose={() => 'setOpen(false)'} open size="large">
+		<Modal onClose={() => 'setOpen(false)'} open size="large" dimmer="inverted">
 			<Modal.Header>{t('Start a new team')}</Modal.Header>
 			<Modal.Content image>
 				<Image size="medium" src={createImg} wrapped />
