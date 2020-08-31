@@ -12,7 +12,7 @@ import { convertIssueResultToPartialIssue } from 'helpers/issueResultToPartialIs
 const Kanban: BoardComponent = ({ board }) => {
 	const [search, setSearch] = useState<string>('');
 	const { t } = useTranslation();
-	const leftPadded = { marginLeft: 20 };
+	const leftPadded = { marginLeft: 60 };
 	const onDragEndFuncs: Map<string, OnDragEndResponder> = new Map<string, OnDragEndResponder>();
 
 	const onDragEnd: OnDragEndResponder = (event, provided) => {
@@ -38,10 +38,8 @@ const Kanban: BoardComponent = ({ board }) => {
 
 	return (
 		<>
-			<div className={styles.inlineContainer}>
-				<Header as="h2" style={leftPadded}>
-					{board.name}
-				</Header>
+			<div className={styles.inlineContainer} style={leftPadded}>
+				<Header as="h2">{board.name}</Header>
 				<Form.Input
 					placeholder={t('search')}
 					icon="search"
@@ -63,7 +61,7 @@ const Kanban: BoardComponent = ({ board }) => {
 			<DragDropContext onDragEnd={onDragEnd}>
 				<div
 					className={styles.columnsGrid}
-					style={{ gridTemplateColumns: '300px '.repeat(board.columns.length).trim() }}
+					style={{ gridTemplateColumns: '300px '.repeat(board.columns.length).trim(), marginLeft: 40 }}
 				>
 					{board.columns.map((column, i) => (
 						<BoardColumn

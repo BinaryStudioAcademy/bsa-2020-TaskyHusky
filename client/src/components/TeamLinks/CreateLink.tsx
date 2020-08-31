@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Button, Modal, Form } from 'semantic-ui-react';
 import { CurrentLink } from './index';
 import { useTranslation } from 'react-i18next';
+import styles from './styles.module.scss';
 
 type Props = {
 	onClose: () => void;
@@ -26,7 +27,7 @@ const CreateLink = ({ onClose, currentLink, onConfirm }: Props) => {
 		});
 	};
 	return (
-		<Modal onClose={onClose} open size="tiny">
+		<Modal onClose={onClose} dimmer="inverted" open size="tiny">
 			<Modal.Header>{t('add_link')}</Modal.Header>
 			<Modal.Content>
 				<Form size="big">
@@ -67,8 +68,8 @@ const CreateLink = ({ onClose, currentLink, onConfirm }: Props) => {
 					icon="checkmark"
 					onClick={() => onConfirm(newLink)}
 				/>
-				<Button color="grey" onClick={onClose}>
-					{t('cancel')}
+				<Button basic className={styles.editBtn} onClick={onClose}>
+					<span className={styles.editBtnValue}>{t('cancel')}</span>
 				</Button>
 			</Modal.Actions>
 		</Modal>

@@ -29,6 +29,10 @@
   @include text-data;
 }
 
+.addText {
+  margin-bottom: 0 !important;
+}
+
 .submitButton {
   margin-top: 20px !important;
   @include content-btn;

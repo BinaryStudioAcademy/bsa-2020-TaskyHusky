@@ -9,8 +9,8 @@ import TeamWorkedProjects from 'components/TeamWorkedProjects';
 import TeamLinks from 'components/TeamLinks';
 import * as actions from './logic/actions';
 import TeamAddPeopleModal from 'components/TeamAddPeopleModal';
-import CreateLink from 'components/TeamLinks/createLink';
-import DeleteLink from 'components/TeamLinks/deleteLink';
+import CreateLink from 'components/TeamLinks/CreateLink';
+import DeleteLink from 'components/TeamLinks/DeleteLink';
 import Spinner from 'components/common/Spinner';
 import { RootState } from 'typings/rootState';
 import { User } from 'containers/LoginPage/logic/state';
@@ -112,19 +112,22 @@ const TeamPage = ({
 	const onAddPeopleToTeamConfirm = (users: WebApi.Entities.UserProfile[]) => {
 		dispatch(actions.addPeopleToTeamLoading({ id: params.id, users }));
 	};
-	const handlerRemoveFromTeam = (id: string) => {
-		console.log('deleted');
-	};
+	const handlerRemoveFromTeam = (userId: string) =>
+		dispatch(actions.deletePeopleFromTeamLoading({ userId, teamId: team.id }));
+
+	const confirmDeleteTeam = () => dispatch(actions.deleteTeamLoading({ id: team.id }));
+
 	return loading ? (
 		<Spinner />
 	) : (
-		<Grid columns="equal" centered className={styles.page_main}>
+		<Grid columns="equal" centered className={styles.pageMain}>
 			<Grid.Row>
 				<div className={styles.header}></div>
 			</Grid.Row>
-			<Grid.Row className={styles.main_row}>
-				<Grid.Column className={`${styles.col_media} ${styles.col_left}`}>
+			<Grid.Row className={styles.mainRow}>
+				<Grid.Column className={`${styles.colMedia} ${styles.colLeft}`}>
 					<TeamDevsCard
+						confirmDelete={confirmDeleteTeam}
 						currentProfile={currentProfile}
 						teamOwner={team.createdBy}
 						changeMainFields={changeMainFields}
@@ -132,10 +135,20 @@ const TeamPage = ({
 						name={team.name}
 						showAddPeopleModal={showAddPeopleModal}
 					/>
-					<TeamsMembersCard teammates={[{ ...team.createdBy }]} title={'team_owner'} />
-					<TeamsMembersCard teammates={team.users} title={'members'} removeFromTeam={handlerRemoveFromTeam} />
+					<TeamsMembersCard
+						teammates={[{ ...team.createdBy }]}
+						teamOwner={team.createdBy}
+						title={'team_owner'}
+						removeUserFromTeam={handlerRemoveFromTeam}
+					/>
+					<TeamsMembersCard
+						teammates={team.users}
+						title={'members'}
+						teamOwner={team.createdBy}
+						removeUserFromTeam={handlerRemoveFromTeam}
+					/>
 				</Grid.Column>
-				<Grid.Column className={`${styles.col_media}, ${styles.col_right}`}>
+				<Grid.Column className={`${styles.colMedia}, ${styles.colRight}`}>
 					<TeamWorkedProjects projects={team.projects} />
 					<TeamLinks
 						currentLinks={team.links ?? []}

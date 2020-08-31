@@ -11,7 +11,7 @@ export class UserRepository extends Repository<UserProfile> {
 		return this.findAll();
 	}
 
-	async getById(id: string): Promise<UserProfile> {
+	async getById(id: string) {
 		const user = await this.findOne({ where: { id } });
 		if (!user) {
 			throw new Error('Can not find user');
@@ -50,7 +50,7 @@ export class UserRepository extends Repository<UserProfile> {
 		return this.findOne({ where: { email } });
 	}
 
-	getByToken(token: string): Promise<UserProfile | undefined> {
+	getByPassToken(token: string): Promise<UserProfile | undefined> {
 		return this.findOne({
 			where: {
 				resetPasswordToken: token,
@@ -59,7 +59,16 @@ export class UserRepository extends Repository<UserProfile> {
 		});
 	}
 
-	async createNew(data: UserProfile): Promise<UserProfile> {
+	async getByEmailToken(token: string): Promise<UserProfile | undefined> {
+		return this.findOne({
+			where: {
+				resetEmailToken: token,
+				resetEmailExpires: Between(new Date(), new Date(Date.now() + expirationTime)),
+			},
+		});
+	}
+
+	async createNew(data: UserProfile) {
 		const user = this.create(data);
 		const newUser = await this.save(user);
 		if (!newUser) {
@@ -69,7 +78,7 @@ export class UserRepository extends Repository<UserProfile> {
 		return rest;
 	}
 
-	async updateById(id: string, user: Partial<UserProfile>): Promise<UserProfile> {
+	async updateById(id: string, user: Partial<UserProfile>) {
 		this.update(id, user);
 		const updatedUser = await this.findOne(id);
 		if (!updatedUser) {

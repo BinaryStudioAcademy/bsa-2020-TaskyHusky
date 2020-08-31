@@ -1,5 +1,6 @@
 import React, { ReactElement } from 'react';
-import { Card, Image } from 'semantic-ui-react';
+import { Card } from 'semantic-ui-react';
+import UserAvatar from 'components/common/UserAvatar';
 import style from './style.module.scss';
 
 interface Props {
@@ -8,15 +9,15 @@ interface Props {
 }
 
 const PeopleListItem: React.FC<Props> = ({ person, handlerClick }): ReactElement => {
-	const { firstName, lastName, avatar, jobTitle } = person;
-
+	const { firstName, lastName, jobTitle } = person;
+	const fullname = () => `${firstName} ${lastName}`;
 	return (
 		<Card onClick={() => handlerClick && handlerClick()} className={style.card}>
 			<Card.Content>
-				<Image size="tiny" src={avatar} circular centered className={style.avatar} />
-				<Card.Header>
-					{firstName} {lastName}
-				</Card.Header>
+				<div className={style.avatarWrapper}>
+					<UserAvatar user={person} />
+				</div>
+				<Card.Header>{fullname()}</Card.Header>
 				<Card.Meta>{jobTitle}</Card.Meta>
 			</Card.Content>
 		</Card>

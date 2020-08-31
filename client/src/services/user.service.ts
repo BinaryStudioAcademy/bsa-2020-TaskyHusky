@@ -11,6 +11,16 @@ export const requestGetUser = async (id: string): Promise<WebApi.Entities.UserPr
 	return (await res.json()) as WebApi.Entities.UserProfile;
 };
 
+export const requestSendEmailResetLink = async (email: string) => {
+	const res = await callWebApi({
+		endpoint: 'user/reset-email',
+		method: 'POST',
+		body: { email },
+	});
+
+	return (await res.json()) as Partial<WebApi.Entities.UserProfile>;
+};
+
 export const requestUdateAvatar = async (image: File): Promise<WebApi.Entities.UserProfile> => {
 	const res = await callWebApi({
 		method: 'POST',
@@ -60,6 +70,21 @@ export const requestChangePassword = async (oldPassword: string, newPassword: st
 	});
 
 	return await res.json();
+};
+
+export const requestChangeEmail = async (
+	password: string,
+	email: string,
+	token: string,
+): Promise<Partial<UserProfileState>> => {
+	const res = await callWebApi({
+		method: 'PUT',
+		endpoint: `user/email/${token}`,
+		body: { email, password },
+		skipAuthorization: false,
+	});
+
+	return (await res.json()) as WebApi.Entities.UserProfile;
 };
 
 export const requestDeleteUser = async (): Promise<void> => {

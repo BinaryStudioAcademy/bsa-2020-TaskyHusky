@@ -69,6 +69,7 @@ const IssuePageInfoColumn: React.FC<Props> = ({
 				style={{
 					...(leftAligned ? {} : { position: 'absolute', right: 10, top: -5 }),
 					width: 400,
+					paddingBottom: 10,
 				}}
 			>
 				<Button.Group style={{ marginTop: 10 }} fluid>

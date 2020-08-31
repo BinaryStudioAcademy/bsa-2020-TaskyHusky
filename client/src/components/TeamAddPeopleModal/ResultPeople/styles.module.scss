@@ -1,15 +1,18 @@
-.users_wrapper,
-.user_block,
-.main_info {
+.usersWrapper,
+.userBlock,
+.mainInfo {
   display: flex;
-  max-width: 200px;
+  justify-content: center;
+  flex-wrap: wrap;
 }
-.user_block {
+.userBlock {
+  flex-shrink: 0.5;
+  width: 190px;
   margin: 5px;
   border-right: 1px solid #cccccc;
   border-radius: 6px;
 }
-.main_info {
+.mainInfo {
   flex-direction: column;
   span {
     white-space: nowrap;
@@ -23,7 +26,7 @@
     color: #cccccc;
   }
 }
-.user_avatar img {
+.userAvatar img {
   width: 35px;
   height: 35px;
 }
@@ -34,6 +37,6 @@
   word-wrap: none;
   overflow-x: hidden;
 }
-.search_result {
+.searchResult {
   width: 100%;
 }

@@ -6,5 +6,15 @@
 		margin-left: 0;
 		margin-right: 0;
 		background-color: #fff;
+		overflow: hidden;
 	}
+}
+
+.content_flow {
+	overflow: auto;
+	min-height: calc(100vh - 70px);
+}
+
+.content_flow__hidden {
+	overflow: hidden;
 }

@@ -29,6 +29,7 @@ const CreateProjectModal: React.FC<Props> = ({ children }) => {
 		(rootState: RootState) => rootState.createProject,
 	);
 
+	const [isModalOpened, setIsModalOpened] = useState<boolean>(false);
 	const [isKeyTouched, setIsKeyTouched] = useState(false);
 	const [isTemplatesView, setIsTemplatesView] = useState(false);
 
@@ -41,8 +42,6 @@ const CreateProjectModal: React.FC<Props> = ({ children }) => {
 	const [isKeyValid, setIsKeyValid] = useState<boolean>(true);
 	const [isGithubUrlValid, setIsGithubUrlValid] = useState<boolean>(true);
 	const [isValidErrorShown, setIsValidErrorShown] = useState<boolean>(false);
-
-	const [isModalOpened, setIsModalOpened] = useState<boolean>(false);
 
 	const { description, image } = templatesInformation[template];
 
@@ -84,6 +83,7 @@ const CreateProjectModal: React.FC<Props> = ({ children }) => {
 
 	const onModalClose = () => {
 		setIsTemplatesView(false);
+
 		if (isError) {
 			dispatch(actions.resetState());
 			return;

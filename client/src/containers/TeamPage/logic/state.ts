@@ -3,6 +3,7 @@ export type Team = {
 	name: string;
 	description: string;
 	links: [];
+	color: string;
 	users?: WebApi.Entities.UserProfile[];
 	projects?: WebApi.Entities.Projects[];
 	createdBy: WebApi.Entities.UserProfile | undefined;
@@ -24,6 +25,7 @@ export const initialState: TeamState = {
 		id: '',
 		name: '',
 		description: '',
+		color: '#fffffff',
 		links: [],
 		users: [],
 		projects: [],

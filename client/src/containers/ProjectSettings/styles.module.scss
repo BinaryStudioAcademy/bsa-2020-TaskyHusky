@@ -1,8 +1,15 @@
+.container {
+    display: flex;
+    overflow: hidden;
+    height: 100%;
+}
+
 .header_inner__container {
-    position: relative;
     padding: 25px 25px 20px;
+    width: 100%;
     position: relative;
     background-color: #fff;
+    overflow: auto;
 }
 
 .header_inner__breadcrumbs {
