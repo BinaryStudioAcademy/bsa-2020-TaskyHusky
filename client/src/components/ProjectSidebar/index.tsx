@@ -12,7 +12,7 @@ interface Props {
 }
 
 const ProjectSidebar: React.FC<Props> = ({ project }) => {
-	const projectsLink = '/projects';
+	const projectsLink = '/projects/projectSettings';
 	const { pathname } = useLocation();
 
 	return (
@@ -29,10 +29,10 @@ const ProjectSidebar: React.FC<Props> = ({ project }) => {
 				</div>
 				<div className={styles.sidebar__body}>
 					<div className={styles.body__group}>
-						{sidebarItems.map(({ section, icon, title }: any) => (
+						{sidebarItems.map(({ section, icon }: any) => (
 							<Link
 								key={section}
-								to={`${projectsLink}/${section}/${project.id}`}
+								to={`${projectsLink}/${project.id}/${section}`}
 								className={[styles.body__link, styles.body__group_item].join(' ')}
 							>
 								<span
@@ -41,7 +41,7 @@ const ProjectSidebar: React.FC<Props> = ({ project }) => {
 									})}
 								>
 									<Icon name={icon} />
-									{i18n.t(title)}
+									{i18n.t(section)}
 								</span>
 							</Link>
 						))}

@@ -5,13 +5,14 @@ import { orderBy } from 'lodash-es';
 
 import { setProjectActions } from './config/projectActions';
 
-import { useHistory, Link } from 'react-router-dom';
+import { useHistory, Link, useLocation } from 'react-router-dom';
 import Options from 'components/common/Options';
 import { useDispatch } from 'react-redux';
 import * as generalProjectActions from 'components/ProjectsCommon/logic/actions';
 import styles from './styles.module.scss';
 import UserAvatar from 'components/common/UserAvatar';
 import { User } from 'containers/LoginPage/logic/state';
+import { SETTINGS_SECTION } from 'components/ProjectSidebar/config/sidebarItems';
 
 type SortByColumn = 'name' | 'key' | 'lead';
 type SortDirections = 'ascending' | 'descending';
@@ -25,6 +26,7 @@ const ProjectsTable = ({ projects, currentUser }: Props) => {
 	const { t } = useTranslation();
 	const dispatch = useDispatch();
 	const history = useHistory();
+	const { pathname } = useLocation();
 
 	const [sortByColumn, setSortByColumn] = useState<SortByColumn>('lead');
 	const [sortDirection, setSortDirection] = useState<SortDirections>('ascending');
@@ -37,7 +39,7 @@ const ProjectsTable = ({ projects, currentUser }: Props) => {
 	}, [projects, sortDirection, sortByColumn]);
 
 	const onOpenSettings = (id: string): void => {
-		history.push(history.location.pathname + '/projectSettings/' + id);
+		history.push(`${pathname}/projectSettings/${id}/${SETTINGS_SECTION.details}`);
 	};
 
 	const onTrash = (id: string): void => {

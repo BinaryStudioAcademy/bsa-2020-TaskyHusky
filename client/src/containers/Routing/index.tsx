@@ -47,7 +47,7 @@ const Routing: React.FC = () => {
 			<PrivateRoute path="/issue/:key" component={IssuePage} />
 			<PrivateRoute exact path="/projects" component={ProjectsPage} />
 			<PrivateRoute exact path="/my-work" component={Work} />
-			<PrivateRoute exact path="/projects/projectSettings/:id" component={ProjectSettings} />
+			<PrivateRoute exact path="/projects/projectSettings/:id/:section" component={ProjectSettings} />
 			<PrivateRoute exact path="/team/:id" component={Team} />
 			<PrivateRoute exact path="/profile/:id" component={Profile} />
 			<PrivateRoute exact path="/filters" component={Filters} />
