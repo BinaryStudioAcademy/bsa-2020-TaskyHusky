@@ -89,6 +89,22 @@ interface BoardProjectsResult {
 	deletedDate?: Date;
 }
 
+interface CommitFileResult {
+	sha: string,
+	additions: number,
+	deletions: number,
+	filename: string
+}
+
+interface CommitResult {
+	hash: string,
+	message: string,
+	author: string,
+	avatar: string,
+	time: Date,
+	files: Array<CommitFileResult>
+}
+
 interface NotificationResult {
 	id: string;
 	title?: string;

@@ -433,4 +433,6 @@ export const en = {
 	choose_scrum_item_3: 'build the product by increments',
 	choose_scrum_item_4: 'save time and money',
 	more_about: 'More about',
+	commits: 'Git commits',
+	commits_view_full: 'View full commit',
 };
