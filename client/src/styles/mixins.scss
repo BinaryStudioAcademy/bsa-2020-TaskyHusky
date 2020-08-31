@@ -129,3 +129,12 @@
   border-bottom: 1px solid $ligth-gray;
   padding: 34px 13% 21px;
 }
+
+@mixin primary-button {
+  color: black !important;
+  background-color: $primary__button__color !important;
+  
+	&:hover {
+		background-color: $primary__button__hovered !important;
+	}
+}
