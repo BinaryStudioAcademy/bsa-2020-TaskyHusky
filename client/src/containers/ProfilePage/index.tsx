@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
 import styles from './styles.module.scss';
 import * as actions from './logiс/actions';
 import ProfileHeader from 'components/ProfileHeader';
@@ -15,14 +14,23 @@ import { NotificationManager } from 'react-notifications';
 
 const ProfilePage = ({ id }: { id: string }) => {
 	const dispatch = useDispatch();
-	const location = useLocation();
-	const navLocation = location.search ? location.search.split('=')[1] : '';
 	const { t } = useTranslation();
 
 	const { userData, currentUser } = useSelector((state: RootState) => ({
 		userData: state.user,
 		currentUser: state.auth.user,
 	}));
+	const { projects, teammates, teams } = useSelector((state: RootState) => ({
+		projects: state.projects.projects,
+		teammates: state.peoplePage.people,
+		teams: state.peoplePage.teams,
+	}));
+
+	const [data, setData] = useState({
+		teammates,
+		teams,
+		projects,
+	});
 	const [user, setUser] = useState(userData);
 	const { editMode, isLoading } = user;
 
@@ -46,22 +54,10 @@ const ProfilePage = ({ id }: { id: string }) => {
 		{ id: 7, project: 'First scrum project', name: 'Fsp-1 Implement dark somethin else very important' },
 	];
 
-	const { projects, teammates, teams } = useSelector((state: RootState) => ({
-		projects: state.projects.projects,
-		teammates: state.peoplePage.people,
-		teams: state.peoplePage.teams,
-	}));
-
-	const [data, setData] = useState({
-		teammates,
-		teams,
-		projects,
-	});
-
 	const getUser = async () => {
 		if (isCurrentUser) {
-			setUser({ ...user, ...currentUser, isLoading: false, editMode: navLocation });
-			dispatch(actions.updateUser({ partialState: { ...currentUser, isLoading: false, editMode: navLocation } }));
+			setUser({ ...user, ...currentUser, isLoading: false});
+			dispatch(actions.updateUser({ partialState: { ...currentUser, isLoading: false } }));
 		} else {
 			dispatch(actions.requestGetUser({ id }));
 			setUser({ ...user, ...userData });
@@ -94,7 +90,7 @@ const ProfilePage = ({ id }: { id: string }) => {
 	useEffect(() => {
 		getUser();
 		//eslint-disable-next-line
-	}, [userData.id, navLocation, id]);
+	}, [userData.id, id]);
 
 	useEffect(() => {
 		if (isCurrentUser) {

@@ -69,7 +69,7 @@ export const HeaderMenu = () => {
 						active={activeItem === 'your-work'}
 						onClick={() => toggleActiveItem('your-work')}
 					>
-						<Link to="#">
+						<Link to="/my-work">
 							<span className={styles.blackLink}>{t('your_work')}</span>
 						</Link>
 					</Menu.Item>
@@ -125,7 +125,7 @@ export const HeaderMenu = () => {
 										<Dropdown.Header>{`${user?.firstName} ${user?.lastName}`}</Dropdown.Header>
 										<Dropdown.Item
 											as={Link}
-											to={{ pathname: `/profile/${user?.id}`, search: '?param=' }}
+												to={`/profile/${user?.id}`}
 										>
 											{t('profile')}
 										</Dropdown.Item>

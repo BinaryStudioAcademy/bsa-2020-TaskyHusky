@@ -4,6 +4,7 @@ import { TeamRepository } from './teams.repository';
 import { UserProfile } from '../entity/UserProfile';
 import { Projects } from '../entity/Projects';
 import { Team } from '../entity/Team';
+import { Issue } from '../entity/Issue';
 
 @EntityRepository(UserProfile)
 export class UserRepository extends Repository<UserProfile> {
@@ -23,7 +24,8 @@ export class UserRepository extends Repository<UserProfile> {
 	async getProjects(id: string): Promise<Projects[] | undefined> {
 		const user = await this.createQueryBuilder('user')
 			.where('user.id = :id', { id })
-			.leftJoinAndSelect('user.projects', 'project')
+			.leftJoin('user.projects', 'project')
+			.addSelect(['project.id', 'project.name', 'project.category'])
 			.getOne();
 
 		if (!user) {
@@ -36,7 +38,10 @@ export class UserRepository extends Repository<UserProfile> {
 	async getTeams(id: string): Promise<Team[] | undefined> {
 		const user = await this.createQueryBuilder('user')
 			.where('user.id = :id', { id })
-			.leftJoinAndSelect('user.teams', 'team')
+			.leftJoin('user.teams', 'team')
+			.addSelect(['team.id', 'team.name', 'team.color'])
+			.leftJoin('team.users', 'teams_people')
+			.addSelect('teams_people.id')
 			.getOne();
 
 		if (!user) {
@@ -44,6 +49,21 @@ export class UserRepository extends Repository<UserProfile> {
 		}
 
 		return user.teams;
+	}
+
+	async getAssignedIssues(id: string): Promise<Issue[] | undefined> {
+		const user = await this.createQueryBuilder('user')
+			.where('user.id = :id', { id })
+			.leftJoin('user.assignedIssues', 'issue')
+			.addSelect(['issue.id', 'issue.issueKey', 'issue.summary'])
+			.leftJoinAndSelect('issue.type', 'issueType')
+			.getOne();
+
+		if (!user) {
+			throw new Error('User with such id does not exist');
+		}
+
+		return user.assignedIssues;
 	}
 
 	getByEmail(email: string): Promise<UserProfile | undefined> {
@@ -94,8 +114,8 @@ export class UserRepository extends Repository<UserProfile> {
 			.leftJoinAndSelect('user.teamsOwner', 'team')
 			.getOne();
 		const teamRepository = getCustomRepository(TeamRepository);
-		user?.teamsOwner?.map((item) => {
-			teamRepository.deleteOneById(item.id);
+		user?.teamsOwner?.forEach(async (item) => {
+			await teamRepository.deleteOneById(item.id);
 		});
 		return this.delete(id);
 	}

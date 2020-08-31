@@ -60,16 +60,22 @@ export class Projects {
 	@ManyToOne((type) => UserProfile, (userProfile) => userProfile.assignedProjects, { cascade: true })
 	defaultAssignee?: UserProfile;
 
-	@ManyToOne((type) => UserProfile, (userProfile) => userProfile.leadedProjects, { cascade: true })
+	@ManyToOne((type) => UserProfile, (userProfile) => userProfile.leadedProjects, {
+		cascade: true,
+		onDelete: 'CASCADE',
+	})
 	lead!: UserProfile;
 
-	@ManyToOne((type) => UserProfile, (userProfile) => userProfile.createdProjects, { cascade: true })
+	@ManyToOne((type) => UserProfile, (userProfile) => userProfile.createdProjects, {
+		cascade: true,
+		onDelete: 'CASCADE',
+	})
 	creator!: UserProfile;
 
-	@ManyToOne((type) => Team, (team) => team.projects, { cascade: true })
+	@ManyToOne((type) => Team, (team) => team.projects, { cascade: true, onDelete: 'CASCADE' })
 	team?: Team;
 
-	@OneToMany((type) => Issue, (issue) => issue.project, { cascade: true })
+	@OneToMany((type) => Issue, (issue) => issue.project, { cascade: true, onDelete: 'CASCADE' })
 	issues?: Issue[];
 
 	@ManyToMany((type) => UserProfile, (userProfile) => userProfile.projects, { cascade: true })
