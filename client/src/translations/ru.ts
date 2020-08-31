@@ -431,4 +431,6 @@ export const ru = {
 	sign_in: 'Войти',
 	create_an_account: 'Создать учетную запись',
 	already_have_a_account: 'У Вас уже есть аккаунт?',
+	label_text_validation: 'Название ярлыка должно быть уникальным и не может быть пустым.',
+	enter_label_text: 'Введите текст ярлыка',
 };

@@ -444,4 +444,6 @@ export const en = {
 	more_about: 'More about',
 	commits: 'Git commits',
 	commits_view_full: 'View full commit',
+	label_text_validation: 'The label name must be unique and must not be empty.',
+	enter_label_text: 'Enter label text',
 };

@@ -423,4 +423,6 @@ export const ua = {
 	sign_in: 'Увійти',
 	create_an_account: 'Створити обліковий запис',
 	already_have_a_account: 'Ви вже маєте обліковий запис?',
+	label_text_validation: 'Назва мітки має бути унікальною та не повинна бути порожньою.',
+	enter_label_text: 'Введіть текст мітки',
 };

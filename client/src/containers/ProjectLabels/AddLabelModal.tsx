@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Modal, Button, Input, Form } from 'semantic-ui-react';
+import { Modal, Button, Form } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 import { ColorResult, SliderPicker } from 'react-color';
 //@ts-ignore
@@ -9,10 +9,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as actions from './logic/actions';
 import { RootState } from 'typings/rootState';
 import Label from 'components/common/Label';
+import CustomInput from 'components/common/Input/CustomInput';
 
 const AddLabelModal: React.FC = () => {
 	const { isLoading, isEditMode, editLabel } = useSelector((rootState: RootState) => rootState.projectLabel);
 	const { project } = useSelector((rootState: RootState) => rootState.project);
+	const { labels } = project;
 
 	const dispatch = useDispatch();
 	const { t } = useTranslation();
@@ -27,8 +29,20 @@ const AddLabelModal: React.FC = () => {
 	);
 	const [textColor, setTextColor] = useState<string>(mainTextColor);
 
-	const onLabelTextChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-		setText(event.target.value);
+	const [isLabelTextValid, setIsLabelTextValid] = useState<boolean>(true);
+	const [isValidErrorShown, setIsValidErrorShown] = useState<boolean>(false);
+
+	const isTextValid = (labelText: string): boolean => {
+		const label = labels.find((label) => label.text.toLowerCase() === labelText.toLowerCase());
+
+		if (label !== undefined || labelText === '') {
+			return false;
+		}
+		return true;
+	};
+
+	const onTextChange = (text: string): void => {
+		setText(text);
 	};
 
 	const onLabelColorChange = (color: ColorResult): void => {
@@ -44,7 +58,8 @@ const AddLabelModal: React.FC = () => {
 	};
 
 	const onAddLabel = (): void => {
-		if (text === '') {
+		if (!isLabelTextValid) {
+			setIsValidErrorShown(true);
 			return;
 		}
 
@@ -57,6 +72,11 @@ const AddLabelModal: React.FC = () => {
 	};
 
 	const onEditLabel = (): void => {
+		if (!isLabelTextValid) {
+			setIsValidErrorShown(true);
+			return;
+		}
+
 		dispatch(
 			actions.startUpdatingLabel({
 				project,
@@ -77,7 +97,16 @@ const AddLabelModal: React.FC = () => {
 					<Form>
 						<Form.Field>
 							<label>{t('label_text')}</label>
-							<Input onChange={onLabelTextChange} value={text} placeholder="Type text" />
+							<CustomInput
+								isValidErrorShown={isValidErrorShown}
+								isDataValid={isLabelTextValid}
+								setIsDataValid={setIsLabelTextValid}
+								data={text}
+								setData={onTextChange}
+								placeholder={t('enter_label_text')}
+								popUpContent={t('label_text_validation')}
+								validation={isTextValid}
+							/>
 						</Form.Field>
 						<Form.Field>
 							<label>{t('label_pick_color')}</label>
