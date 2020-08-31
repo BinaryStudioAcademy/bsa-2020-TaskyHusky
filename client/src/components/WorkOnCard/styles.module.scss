@@ -1,0 +1,70 @@
+@import 'styles/mixins.scss';
+
+.avatar {
+  width: 50px;
+  height: 50px;
+  background: #FF4C60;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 30px;
+  border-radius: 50%;
+}
+
+.avatarTitle {
+  font-family: Inter;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 25.6px;
+  line-height: 51px;
+  letter-spacing: 0.24px;
+  color: $primary-bg;
+}
+
+.issue {
+  margin: 20px 0;
+  display: flex;
+  align-items: flex-end;
+}
+
+.content {
+  width: 80%;
+  border-bottom: 1px solid $border;
+  padding-bottom: 5px;
+}
+
+.mainInfo {
+  display: flex;
+  margin-top: 10px;
+}
+
+.key {
+  @include work-page-secondary;
+  margin-bottom: 0;
+  min-width: 90px;
+}
+
+.date {
+  @include secondary-content;
+  margin: 0;
+  margin-top: 10px;
+}
+
+.summary {
+  width: 70%;
+  margin-bottom: 0;
+  @include primary-content;
+}
+
+.link {
+  margin-top: 10px;
+  margin-left: 20px;
+
+  a {
+    @include primary-content;
+  }
+}
+
+.icon {
+  margin-right: 60px;
+}

@@ -39,7 +39,6 @@ function* changeEmail(action: ReturnType<typeof actions.requestChangeEmail>) {
 	const { password, email, token } = action;
 	try {
 		const user: WebApi.Entities.UserProfile = yield call(requestChangeEmail, password, email, token);
-		console.log(user);
 		yield put(actions.updateUser({ partialState: user }));
 		NotificationManager.success(i18next.t('email_was_updated'), i18next.t('success'), 4000);
 	} catch (error) {

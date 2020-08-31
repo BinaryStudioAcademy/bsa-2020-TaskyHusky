@@ -1,9 +1,9 @@
 import { UserActivityState } from './state';
 
-export const REQUEST_GET_ASSIGNED_ISSUES = 'DATA:REQUEST_GET_ASSIGNED_ISSUES';
+export const REQUEST_GET_ISSUES = 'DATA:REQUEST_GET_ISSUES';
 export const UPDATE_DATA = 'DATA:UPDATE_DATA';
 
-export type RequestGetAssignedIssues = {
+export type RequestGetIssues = {
 	id: string;
 };
 

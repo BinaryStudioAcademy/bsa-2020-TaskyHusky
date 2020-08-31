@@ -18,7 +18,10 @@
 }
 
 .summary {
-  @include primary-content;
   width: 70%;
   margin-bottom: 0;
+
+  a {
+    @include primary-content;
+  }
 }

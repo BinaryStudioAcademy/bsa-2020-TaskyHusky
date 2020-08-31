@@ -1,0 +1,22 @@
+@import 'styles/mixins.scss';
+
+.activityItem {
+  @include primary-box;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  padding: 24px;
+}
+
+.icon {
+  margin-right: 14px;
+}
+
+.content {
+  @include primary-content;
+  margin: 0;
+}
+
+.contentSecondary {
+  @include secondary-content;
+}

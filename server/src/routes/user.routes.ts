@@ -14,7 +14,7 @@ router.get('/teammates', userController.getTeammates);
 router.get('/:id', userController.getUser);
 router.get('/projects/:id', userController.getProjects);
 router.get('/teams/:id', userController.getTeams);
-router.get('/issues/:id', userController.getAssignedIssues);
+router.get('/issues/:id', userController.getIssues);
 router.put('/', userController.updateUser);
 router.put('/password', userController.changePassword);
 router.put('/email/:token', userController.changeEmail);

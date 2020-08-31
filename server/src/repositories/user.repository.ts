@@ -25,7 +25,7 @@ export class UserRepository extends Repository<UserProfile> {
 		const user = await this.createQueryBuilder('user')
 			.where('user.id = :id', { id })
 			.leftJoin('user.projects', 'project')
-			.addSelect(['project.id', 'project.name', 'project.category'])
+			.addSelect(['project.id', 'project.name', 'project.category', 'project.updatedDate'])
 			.getOne();
 
 		if (!user) {
@@ -55,8 +55,10 @@ export class UserRepository extends Repository<UserProfile> {
 		const user = await this.createQueryBuilder('user')
 			.where('user.id = :id', { id })
 			.leftJoin('user.assignedIssues', 'issue')
-			.addSelect(['issue.id', 'issue.issueKey', 'issue.summary'])
+			.addSelect(['issue.id', 'issue.issueKey', 'issue.summary', 'issue.updatedAt'])
 			.leftJoinAndSelect('issue.type', 'issueType')
+			.leftJoin('issue.project', 'project')
+			.addSelect(['project.name', 'project.id', 'project.category'])
 			.getOne();
 
 		if (!user) {
@@ -64,6 +66,23 @@ export class UserRepository extends Repository<UserProfile> {
 		}
 
 		return user.assignedIssues;
+	}
+
+	async getWatchingIssues(id: string): Promise<Issue[] | undefined> {
+		const user = await this.createQueryBuilder('user')
+			.where('user.id = :id', { id })
+			.leftJoin('user.watchingIssues', 'issue')
+			.addSelect(['issue.id', 'issue.issueKey', 'issue.summary', 'issue.updatedAt'])
+			.leftJoinAndSelect('issue.type', 'issueType')
+			.leftJoin('issue.project', 'project')
+			.addSelect(['project.name', 'project.id'])
+			.getOne();
+
+		if (!user) {
+			throw new Error('User with such id does not exist');
+		}
+
+		return user.watchingIssues;
 	}
 
 	getByEmail(email: string): Promise<UserProfile | undefined> {
