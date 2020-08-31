@@ -14,7 +14,7 @@ import CreateSprintModal from 'components/common/SprintModal/CreateSprintModal';
 import getIssuesForSprintId from 'helpers/getIssuesBySearchText.helper';
 import { normalizeText } from 'helpers/normalizeText.helper';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
-import { reorderIssues } from './helpers/reorder';
+import { reorderIssues } from './helpers/reorder.helper';
 import { isEmpty } from 'lodash-es';
 import Sprint from 'components/Sprint';
 import { updateIssue } from 'pages/IssuePage/logic/actions';
@@ -101,7 +101,7 @@ const Scrum: BoardComponent = (props) => {
 	}, [state, matchIssuesToSprint, backlog]);
 
 	const sprintList =
-		!isEmpty(sprints) && !isEmpty(issuesMap) ? (
+		!isEmpty(sprints) || !isEmpty(issuesMap) ? (
 			Object.entries(issuesMap).map(([sprintId, issues]: [string, WebApi.Entities.Issue[]]) => {
 				return (
 					<Sprint

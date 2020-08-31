@@ -57,7 +57,11 @@ export const SprintHeader: React.FC<Props> = ({ id, isActive, name, issues, isCo
 
 				<List.Item>
 					<List.Content className={styles.rightContent}>
-						<CreateIssueModal projectID={projectId} sprintID={id} boardID={boardId}>
+						<CreateIssueModal
+							projectID={projectId}
+							sprintID={id === 'backlog' ? undefined : id}
+							boardID={boardId}
+						>
 							<Button icon="add" className={styles.createIssueButton} title="Create issue" />
 						</CreateIssueModal>
 						{id !== 'backlog' ? <Options config={config} /> : null}
