@@ -5,6 +5,7 @@ import { FilterPartState } from 'containers/AdvancedSearch/logic/state';
 import { updateFilterPart } from 'containers/AdvancedSearch/logic/actions';
 import { useDispatch } from 'react-redux';
 import { DropdownOption } from '../types';
+import { useTranslation } from 'react-i18next';
 
 interface DropdownSearchProps {
 	filterPart: FilterPartState;
@@ -17,6 +18,7 @@ const DropdownSearch = ({ filterPart, data }: DropdownSearchProps) => {
 	const { title } = filterDef;
 	const [selection, setSelection] = useState<string[]>(members);
 	const [searchText, setSearchText] = useState('');
+	const { t } = useTranslation();
 
 	const toggleSelection = (e: React.SyntheticEvent, { value: checkedValue }: DropdownItemProps) => {
 		const value = checkedValue as string;
@@ -58,7 +60,7 @@ const DropdownSearch = ({ filterPart, data }: DropdownSearchProps) => {
 	};
 
 	const getInputPlaceholder = (title: string) => {
-		return `Find ${title}`;
+		return `${t('find_by')} ${t(title)}`;
 	};
 
 	const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>, data: InputOnChangeData) => {
@@ -77,7 +79,7 @@ const DropdownSearch = ({ filterPart, data }: DropdownSearchProps) => {
 				.map(({ text }, index) => (index === 2 ? '...' : text))
 				.join(', ');
 		} else {
-			return title;
+			return t(title);
 		}
 	};
 
@@ -100,7 +102,7 @@ const DropdownSearch = ({ filterPart, data }: DropdownSearchProps) => {
 					onChange={handleSearchChange}
 				/>
 				<Dropdown.Divider />
-				<Dropdown.Header icon="folder open" content={title} />
+				<Dropdown.Header icon="folder open" content={t(title)} />
 				<Dropdown.Menu scrolling>
 					{filteredData.map((option) => (
 						<Dropdown.Item value={option.value} key={option.key} onClick={toggleSelection}>

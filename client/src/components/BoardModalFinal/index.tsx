@@ -55,7 +55,7 @@ const BoardModalFinal = (props: Props) => {
 	return (
 		<Form>
 			<Form.Field width={5}>
-				<label>Board name</label>
+				<label>{t('board_name')}</label>
 				<Input
 					placeholder={t('board_name')}
 					onChange={(e, data) => {
@@ -64,7 +64,7 @@ const BoardModalFinal = (props: Props) => {
 				/>
 			</Form.Field>
 			<Form.Field width={7} className={styles.formField}>
-				<label>Project</label>
+				<label>{t('project')}</label>
 				<Dropdown
 					search={(options, query) =>
 						options.filter((option) => (option.text as string).toLowerCase().includes(query.toLowerCase()))

@@ -32,7 +32,7 @@ const AdvancedFilters: React.FC = () => {
 				<Form.Group className={styles.searchContentContainer}>
 					{getDefaultFilterParts(filterParts).map((part) => (
 						<FilterPart key={part.id} filterPart={part} />
-					))}
+					))} 
 					<MoreFilterPartsDropdown
 						additionalFilterParts={getAdditionalFilterParts(filterParts)}
 						addedFilterParts={addedFilterParts}
