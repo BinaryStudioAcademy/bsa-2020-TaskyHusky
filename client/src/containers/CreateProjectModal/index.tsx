@@ -147,7 +147,7 @@ const CreateProjectModal: React.FC<Props> = ({ children }) => {
 									setIsDataValid={setIsNameValid}
 									data={name}
 									setData={onNameChanged}
-									placeholder="Enter project name"
+									placeholder={t('enter_project_name')}
 									popUpContent={validationMessage.VM_PROJECT_NAME}
 									validation={validProjectName}
 								/>
@@ -160,7 +160,7 @@ const CreateProjectModal: React.FC<Props> = ({ children }) => {
 									setIsDataValid={setIsKeyValid}
 									data={key}
 									setData={onKeyChanged}
-									placeholder="Enter your key"
+									placeholder={t('enter_your_key')}
 									popUpContent={validationMessage.VM_PROJECT_KEY}
 									validation={validProjectKey}
 								/>
@@ -173,7 +173,7 @@ const CreateProjectModal: React.FC<Props> = ({ children }) => {
 									setIsDataValid={setIsGithubUrlValid}
 									data={githubUrl}
 									setData={setGithubUrl}
-									placeholder="Enter your project's GitHub URL"
+									placeholder={t("enter_your_project_URL")}
 									popUpContent={validationMessage.VM_GITHUB_URL}
 									validation={validGitHubUrl}
 								/>

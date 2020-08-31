@@ -37,7 +37,7 @@ const DropdownTextSearch = ({ filterPart }: DropdownTextSearchProps) => {
 	};
 
 	const getInputPlaceholder = (title: string) => {
-		return `Find ${title}`;
+		return `${t('find_by')} ${t(title)}`;
 	};
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>, data: InputOnChangeData) => {
@@ -46,7 +46,7 @@ const DropdownTextSearch = ({ filterPart }: DropdownTextSearchProps) => {
 	};
 
 	return (
-		<Dropdown closeOnChange={false} trigger={<span>{dropdownTitle}</span>} icon="angle down" floating labeled>
+		<Dropdown closeOnChange={false} trigger={<span>{t(dropdownTitle)}</span>} icon="angle down" floating labeled>
 			<Dropdown.Menu onClick={(e: Event) => e.stopPropagation()}>
 				<Input
 					value={searchText}

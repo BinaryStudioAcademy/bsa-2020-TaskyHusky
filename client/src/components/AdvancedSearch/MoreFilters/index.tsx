@@ -47,7 +47,7 @@ const MoreFilterDefsDropdown = ({
 				<Dropdown.Menu scrolling>
 					{additionalFilterParts.map(({ id, filterDef }) => (
 						<Dropdown.Item onClick={handleClick} key={id} value={id}>
-							<Checkbox label={filterDef.title} checked={isAdded(id)} />
+							<Checkbox label={t(filterDef.title)} checked={isAdded(id)} />
 						</Dropdown.Item>
 					))}
 				</Dropdown.Menu>
