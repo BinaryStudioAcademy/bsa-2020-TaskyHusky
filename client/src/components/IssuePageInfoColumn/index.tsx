@@ -69,6 +69,7 @@ const IssuePageInfoColumn: React.FC<Props> = ({
 				style={{
 					...(leftAligned ? {} : { position: 'absolute', right: 10, top: -5 }),
 					width: 400,
+					paddingBottom: 10,
 				}}
 			>
 				<Button.Group style={{ marginTop: 10 }} fluid>
@@ -187,6 +188,12 @@ const IssuePageInfoColumn: React.FC<Props> = ({
 					<Icon name={issue.priority.icon as any} />
 					{issue.priority.title}
 				</Label>
+				<h4>{t('story_point')}</h4>
+				{issue.storyPoint ? (
+					<Label style={{ borderRadius: '30%' }}>{issue.storyPoint}</Label>
+				) : (
+					<span>{t('no')}</span>
+				)}
 			</div>
 			<ContextProvider customInitalState={initialIssue}>
 				<UpdateIssueModal current={initialIssue} getOpenFunc={(open) => (openEditModal = open)} />

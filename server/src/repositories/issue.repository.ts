@@ -52,7 +52,7 @@ export type Filter = {
 	comment?: string;
 };
 
-export interface Create {
+export interface CreateIssueArgs {
 	type: string;
 	priority: string;
 	project: string;
@@ -102,22 +102,14 @@ export class IssueRepository extends Repository<Issue> {
 		return this.findOneOrFail({ where: { issueKey: key }, relations: RELS });
 	}
 
-	async createOne(data: Create) {
+	async createOne(data: CreateIssueArgs) {
 		const { project } = data;
 		const projectReposritory = getCustomRepository(ProjectsRepository);
 		const { key, issues = [] } = (await projectReposritory.getWithIssuesById(project)) as Projects;
 		const e = extractIndexFromIssueKey;
-		const sorted = issues.sort((i0, i1) => (e(i0.issueKey as string) > e(i1.issueKey as string) ? 1 : -1));
-		let lastKey: string;
-
-		if (sorted.length) {
-			const lastIssue = sorted[sorted.length - 1];
-			lastKey = lastIssue.issueKey as string;
-		} else {
-			lastKey = '-0';
-		}
-
-		const newKey = `${key}-${e(lastKey) + 1}`;
+		// eslint-disable-next-line
+		const lastIndex = issues.reduce((acc, current) => (acc = Math.max(acc, e(current.issueKey as string))), 0);
+		const newKey = `${key}-${lastIndex + 1}`;
 		const entity = this.create({ ...data, issueKey: newKey } as any);
 		const result = ((await this.save(entity)) as unknown) as Issue;
 		const newIssue = await this.findOneById(result.id);

@@ -97,7 +97,7 @@ const Boards: React.FC = () => {
 			<div className={[styles.wrapper__filters, styles.filters].join(' ')}>
 				<Input icon="search" placeholder={t('search')} onChange={onSearch} value={searchName} />
 				<Dropdown
-					placeholder="All boards"
+					placeholder={t('all_boards')}
 					options={selectOptions}
 					multiple
 					selection
@@ -110,9 +110,9 @@ const Boards: React.FC = () => {
 					<Table celled fixed>
 						<Table.Header>
 							<Table.Row>
-								<Table.HeaderCell width={5}>Name</Table.HeaderCell>
-								<Table.HeaderCell width={5}>Type</Table.HeaderCell>
-								<Table.HeaderCell width={5}>Admin</Table.HeaderCell>
+								<Table.HeaderCell width={5}>{t('name')}</Table.HeaderCell>
+								<Table.HeaderCell width={5}>{t('type')}</Table.HeaderCell>
+								<Table.HeaderCell width={5}>{t('admin')}</Table.HeaderCell>
 								<Table.HeaderCell width={1} />
 							</Table.Row>
 						</Table.Header>

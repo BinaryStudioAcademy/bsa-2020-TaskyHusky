@@ -3,8 +3,10 @@
 .wrapper {
   width: 100%;
   background-color: $body-bg;
+  min-height: 100%;
+  overflow: hidden;
 }
 
 .container {
-  margin: 22px 13%;
+  margin: 22px 10%;
 }

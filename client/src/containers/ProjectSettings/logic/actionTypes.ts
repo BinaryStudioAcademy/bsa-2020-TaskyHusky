@@ -17,3 +17,5 @@ export type ProjectId = {
 export type UpdatingProject = {
 	project: WebApi.Entities.Projects;
 };
+
+export const UPDATE_PROJECT = 'PROJECTS:UPDATE_PROJECT';

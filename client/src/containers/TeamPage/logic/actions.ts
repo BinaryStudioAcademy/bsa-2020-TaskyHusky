@@ -1,7 +1,7 @@
 import { createAction } from 'helpers/createAction.helper';
 import * as actionTypes from './actionTypes';
 
-export const spinner = createAction(actionTypes.LOADING);
+export const spinner = createAction(actionTypes.SET_IS_LOADING);
 export const startLoading = createAction<actionTypes.StartLoadingArgs>(actionTypes.START_LOADING);
 export const updateTeam = createAction<actionTypes.SuccessLoadingTeam>(actionTypes.SUCCESS_TEAM_LOADING);
 export const updateUsers = createAction<actionTypes.SuccessLoadingUsers>(actionTypes.SUCCESS_TEAM_USERS_LOADING);
@@ -29,4 +29,14 @@ export const clearResultsDone = createAction(actionTypes.CLEAR_FOUND_USERS_DONE)
 export const addPeopleToTeamLoading = createAction<actionTypes.startAddingUsers>(
 	actionTypes.ADD_PEOPLE_TO_TEAM_LOADING,
 );
-export const addPeopleToTeamDone = createAction<actionTypes.successAddingUsers>(actionTypes.ADD_PEOPLE_TO_TEAM_SUCCESS);
+export const addPeopleToTeamDone = createAction<actionTypes.successAddingUsers>(actionTypes.UPDATE_TEAM_USERS_SECCESS);
+
+export const deletePeopleFromTeamLoading = createAction<actionTypes.DeletePeopleLoading>(
+	actionTypes.DELETE_PEOPLE_FROM_TEAM_LOADING,
+);
+export const deletePeopleFromTeamSuccess = createAction<actionTypes.successAddingUsers>(
+	actionTypes.UPDATE_TEAM_USERS_SECCESS,
+);
+
+export const deleteTeamLoading = createAction<actionTypes.DeleteTeamLoading>(actionTypes.DELETE_TEAM_LOADING);
+export const deleteTeamSuccess = createAction(actionTypes.DELETE_TEAM_SUCCESS);

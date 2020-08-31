@@ -1,13 +1,22 @@
 import React from 'react';
 import styles from './styles.module.scss';
+import { useSelector } from 'react-redux';
+import { RootState } from 'typings/rootState';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
 	name: string;
 	category?: string;
+	issues?: Partial<WebApi.Entities.Issue>[];
 }
 
 const ProjectCard: React.FC<Props> = (props: Props) => {
-	const { name, category = '' } = props;
+	const { name, category = '', issues = [] } = props;
+	const { t } = useTranslation();
+	const id = useSelector((state: RootState) => state.auth.user?.id);
+	const myIssues = issues.filter((item) => item.assigned?.id === id);
+	const doneIssues = myIssues.filter((item) => item.status && item.status.title === 'Done').length;
+	const undoneIssues = myIssues.length - doneIssues;
 	return (
 		<div className={styles.card}>
 			<div className={styles.header}>
@@ -19,10 +28,10 @@ const ProjectCard: React.FC<Props> = (props: Props) => {
 			</div>
 			<div className={styles.issues}>
 				<p className={styles.text}>
-					My open issues <span className={styles.count}>0</span>
+					{t('my_open_issues')} <span className={styles.count}>{undoneIssues}</span>
 				</p>
 				<p className={styles.text}>
-					My done issues <span className={styles.count}>0</span>
+					{t('my_done_issues')} <span className={styles.count}>{doneIssues}</span>
 				</p>
 			</div>
 		</div>

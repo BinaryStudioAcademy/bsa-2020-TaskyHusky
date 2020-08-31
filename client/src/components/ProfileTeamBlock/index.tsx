@@ -16,14 +16,16 @@ const ProfileTeamBlock: React.FC<Props> = (props: Props) => {
 			<h3 className={styles.header}>{t('team')}</h3>
 			{teams.map((item: WebApi.Entities.Team) => (
 				<div key={item.id} className={styles.item}>
-					<div className={styles.groupIcon}>
+					<div className={styles.groupIcon} style={{ backgroundColor: item.color }}>
 						<img src={teamIcon} alt="icon" />
 					</div>
 					<div className={styles.content}>
 						<Link to={`/team/${item.id}`}>
 							<span className={styles.contentPrimary}>{item.name}</span>
 						</Link>
-						{item.description && <span className={styles.contentSecondary}>{item.description}</span>}
+						<span className={styles.contentSecondary}>
+							{item.users?.length} {item.users?.length === 1 ? 'member' : 'members'}
+						</span>
 					</div>
 				</div>
 			))}

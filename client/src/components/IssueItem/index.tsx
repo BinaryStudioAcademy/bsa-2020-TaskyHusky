@@ -3,6 +3,8 @@ import { Table, Dropdown, Icon, Popup, Label } from 'semantic-ui-react';
 import styles from './styles.module.scss';
 import { getFullUserName } from './helpers';
 import DeleteIssueModal from 'containers/DeleteIssueModal';
+import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 
 interface Props {
 	issue: WebApi.Entities.Issue;
@@ -69,6 +71,7 @@ const renderStatus = (status: WebApi.Entities.IssueStatus | undefined) => {
 const IssueItem = ({ issue }: Props) => {
 	const [open, setOpen] = React.useState(false);
 	const { id, creator, type, issueKey, summary, assigned, priority, createdAt, updatedAt, status } = issue;
+	const { t } = useTranslation();
 
 	return (
 		<Table.Row key={id}>
@@ -76,13 +79,13 @@ const IssueItem = ({ issue }: Props) => {
 				<IssueTypeIcon type={type} />
 			</Table.Cell>
 			<Table.Cell>
-				<a href={`/issue/${id}`} className={styles.underlinedLink}>
+				<a href={`/issue/${issueKey}`} className={styles.underlinedLink}>
 					{issueKey}
 				</a>
 			</Table.Cell>
 			<Table.Cell>
 				<div className={styles.userCell}>
-					<a href={`/issue/${id}`} className={styles.underlinedLink}>
+					<a href={`/issue/${issueKey}`} className={styles.underlinedLink}>
 						{summary}
 					</a>
 				</div>
@@ -112,9 +115,9 @@ const IssueItem = ({ issue }: Props) => {
 					<Dropdown.Menu direction="left">
 						<Dropdown.Item
 							content={
-								<a className={styles.issueAction} href={`/issue/${issue.issueKey}`}>
-									{'View issue'}
-								</a>
+								<Link className={styles.issueAction} to={`/issue/${issueKey}`}>
+									{t('view_issue')}
+								</Link>
 							}
 						/>
 						<Dropdown.Item

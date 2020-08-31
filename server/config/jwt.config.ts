@@ -6,5 +6,5 @@ export const routesWhiteList = [
 	'/api/auth/google',
 	'/api/auth/forgot-password',
 	'/api/auth/reset-password/*',
-	'/api/auth/check_email',
+	'/api/auth/check_email'
 ];

@@ -1,5 +1,7 @@
 import React, { ReactElement } from 'react';
-import { Card, Image } from 'semantic-ui-react';
+import { Card } from 'semantic-ui-react';
+import UserAvatar from 'components/common/UserAvatar';
+
 import style from './style.module.scss';
 
 interface Props {
@@ -8,18 +10,16 @@ interface Props {
 }
 
 const TeamListItem: React.FC<Props> = ({ team, handlerClick }): ReactElement => {
-	const {
-		color,
-		name,
-		createdBy: { avatar },
-	} = team;
+	const { color, name, createdBy } = team;
 
 	return (
 		<Card onClick={() => handlerClick && handlerClick()} className={style.card}>
 			<div className={style.colorBlock} style={{ background: color }} />
-			<Card.Content className={style.team_block}>
-				<Card.Header>{name}</Card.Header>
-				<Image src={avatar} size={'tiny'} circular />
+			<Card.Content className={style.teamBlock}>
+				<Card.Header className={style.teamTitle}>{name}</Card.Header>
+				<div className={style.avatarWrapper}>
+					<UserAvatar user={createdBy} />
+				</div>
 			</Card.Content>
 		</Card>
 	);

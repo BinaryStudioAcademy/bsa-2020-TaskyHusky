@@ -10,10 +10,12 @@ interface Props {
 	project: WebApi.Entities.Projects;
 }
 
-const AddPeopleModal: React.FC<Props> = ({ project, project: { lead, users: projectUsers } }) => {
+const AddPeopleModal: React.FC<Props> = (props) => {
 	const { t } = useTranslation();
 	const dispatch = useDispatch();
 	const { isPeopleLoading, people, isLoading } = useSelector((rootState: RootState) => rootState.projectPeople);
+	const { project } = props;
+	const { users: projectUsers } = project;
 
 	const [isOpen, setIsOpen] = useState<boolean>(false);
 	const [searchQuery, setSearchQuery] = useState<string>('');
@@ -47,7 +49,7 @@ const AddPeopleModal: React.FC<Props> = ({ project, project: { lead, users: proj
 	return (
 		<Modal
 			dimmer="inverted"
-			size={'mini'}
+			size="mini"
 			open={isOpen}
 			onClose={() => setIsOpen(false)}
 			trigger={

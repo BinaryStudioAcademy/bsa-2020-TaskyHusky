@@ -73,7 +73,7 @@ export class TeamRepository extends Repository<Team> {
 		const userToAdd = await userRepository.getById(user.id);
 		if (!userToAdd) throw new Error('User with current ID not found');
 
-		return this.save({ ...restData, createdBy: userToAdd, color, links });
+		return this.save({ ...restData, createdBy: userToAdd, color, links, users: [userToAdd] });
 	}
 
 	async updateOneById(id: string, data: Team | { [key: string]: string[] }) {
@@ -102,6 +102,21 @@ export class TeamRepository extends Repository<Team> {
 				team?.users?.push(user);
 			}
 		});
+
+		return this.save(team);
+	}
+
+	async removeUserFromTeam(userId: string, teamId: string) {
+		const team = await this.createQueryBuilder('Team')
+			.where('Team.id = :id', { id: teamId })
+			.leftJoinAndSelect('Team.users', 'Users')
+			.getOne();
+
+		if (!team) {
+			throw new Error('Team was not found');
+		}
+
+		team.users = team.users?.filter((user: any) => user.id !== userId);
 
 		return this.save(team);
 	}

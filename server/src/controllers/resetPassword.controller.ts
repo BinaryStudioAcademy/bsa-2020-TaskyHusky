@@ -7,7 +7,8 @@ import { ErrorResponse } from '../helpers/errorHandler.helper';
 import { hashPassword } from '../helpers/password.helper';
 import HttpStatusCode from '../constants/httpStattusCode.constants';
 import { expirationTime } from '../constants/resetPassword.constants';
-import { sendToken } from '../services/email.service';
+import { sendMailWithSes } from '../services/email.service';
+import { resetPasswordTemplate } from '../helpers/emailTemplates.helper';
 
 class ResetPasswordController {
 	forgotPassword = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -30,7 +31,11 @@ class ResetPasswordController {
 				resetPasswordExpires,
 			});
 
-			sendToken(user.email, resetPasswordToken);
+			await sendMailWithSes({
+				to: [user.email],
+				message: resetPasswordTemplate(resetPasswordToken),
+				subject: 'Request to change password',
+			});
 			res.status(200).send(savedUser);
 		} catch (e) {
 			next(new ErrorResponse(HttpStatusCode.NOT_FOUND, e.message));
@@ -43,7 +48,7 @@ class ResetPasswordController {
 		const { token } = req.params;
 
 		try {
-			const user = <UserProfile>await userRepository.getByToken(token);
+			const user = <UserProfile>await userRepository.getByPassToken(token);
 
 			if (!user) throw new Error('Token is expired or invalid');
 

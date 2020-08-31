@@ -15,6 +15,7 @@ router.post('/', projectsController.createProject);
 router.post('/label', projectsController.createLabel);
 router.put('/', projectsController.updateProject);
 router.put('/label', projectsController.updateLabel);
+router.put('/users', projectsController.updateProjectUsersList);
 router.delete('/', projectsController.deleteProject);
 router.delete('/label', projectsController.deleteLabel);
 

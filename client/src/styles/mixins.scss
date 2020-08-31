@@ -4,6 +4,7 @@
   background: #fff !important;
   border: 1px solid #e0b4b4 !important;
   color: #9f3a38 !important;
+  z-index: 0;
 }
 
 @mixin profile-container {
@@ -75,9 +76,19 @@
   font-size: 14px;
   line-height: 24px;
   letter-spacing: 0.44px;
-  color: $medium-gray;
+  color: $secondary-text;
   font-family: "Inter", sans-serif !important;
   word-break: break-word;
+}
+
+@mixin work-page-secondary {
+  font-family: Poppins, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 15px;
+  line-height: 24px;
+  letter-spacing: 0.44px;
+  color: $secondary-text;
 }
 
 @mixin text-data {

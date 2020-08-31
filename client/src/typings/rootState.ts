@@ -18,6 +18,7 @@ import { BoardsState } from '../containers/Boards/logic/state';
 import { HeaderState } from '../containers/Header/logic/state';
 import { ScrumBoardState } from 'containers/Board/Scrum/logic/state';
 import { NotificationsState } from 'components/NotificationsMenu/logic/state';
+import { UserActivityState } from 'containers/WorkPage/logic/state';
 
 export interface RootState {
 	boards: BoardsState;
@@ -40,4 +41,5 @@ export interface RootState {
 	peoplePage: PeoplePageState;
 	header: HeaderState;
 	notifications: NotificationsState;
+	userActivity: UserActivityState;
 }

@@ -17,7 +17,7 @@ const ConfirmPassModal: React.FC<Props> = (props) => {
 	};
 
 	return (
-		<Modal closeIcon onClose={() => onClose()} open={true} size={'tiny'} dimmer="inverted">
+		<Modal onClose={() => onClose()} open={true} size="tiny" dimmer="inverted">
 			<Modal.Header>{t('save_not_secure')}</Modal.Header>
 			<Modal.Content>{t('save_not_secure_text')}</Modal.Content>
 			<Modal.Actions>

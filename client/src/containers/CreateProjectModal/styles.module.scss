@@ -1,82 +1,98 @@
 .form_container {
-  margin-bottom: 20px;
+	margin-bottom: 20px;
 }
 
 .flex_container {
-  display: flex;
+	display: flex;
 }
 
 .modal__title {
-  font-size: 20px;
-  margin-bottom: 5px;
+	font-size: 20px;
+	margin-bottom: 5px;
 }
 
 .modal__description {
-  font-size: 14px;
-  font-weight: normal;
-  color: rgba(0,0,0,.68);
+	font-size: 14px;
+	font-weight: normal;
+	color: rgba(0, 0, 0, 0.68);
 }
 
 .modal__image {
-  width: 220px;
-  margin-right: 15px;
+	width: 220px;
+	margin-right: 15px;
 }
 
 .cards_container {
-  display: flex !important;
-  justify-content: space-around;
-  padding-bottom: 10px;
+	display: flex !important;
+	justify-content: space-around;
+	padding-bottom: 10px;
 }
 
 .card__container {
-  margin: 0 15px !important;
-  transition: all 0.2s ease !important;
+	margin: 0 15px !important;
+	transition: all 0.2s ease !important;
 
+	&:hover {
+		box-shadow: rgb(179, 186, 197) 3px 5px 7px 3px, rgb(179, 186, 197) 0px 0px 5px 1px, rgb(212, 212, 213) 0 0 0 1px !important;
+		transition: box-shadow 0.2s ease !important;
 
-  &:hover {
-    box-shadow: rgb(179, 186, 197) 3px 5px 7px 3px,
-                rgb(179, 186, 197) 0px 0px 5px 1px,
-                rgb(212, 212, 213) 0 0 0 1px  !important;
-    transition: box-shadow 0.2s ease !important;
-
-    & .card__select_template {
-      background-color: rgb(33, 133, 208) ;
-      color: rgb(255, 255, 255);
-      transition: all 0.2s ease;
-
-    }
-  }
+		& .card__select_template {
+			background-color: rgb(33, 133, 208);
+			color: rgb(255, 255, 255);
+			transition: all 0.2s ease;
+		}
+	}
 }
 
 .card__select_template:hover {
-  background-color: rgb(19, 122, 201) !important;
-  color: rgb(255, 255, 255) !important;
+	background-color: rgb(19, 122, 201) !important;
+	color: rgb(255, 255, 255) !important;
 }
 
 .card__actions_container {
-  display: flex;
-  justify-content: flex-end;
-  align-items: baseline;
+	display: flex;
+	justify-content: flex-end;
+	align-items: baseline;
 }
 
 .card__image {
-  padding: 14px;
+	padding: 14px;
 }
 
 .card__link {
-  margin-right: 25px;
+	margin-right: 25px !important;
 
-  &:hover {
-    text-decoration: underline;
-  }
+	&:hover {
+		cursor: help;
+	}
 }
 
 .template__title {
-  padding-left: 5px;
-  display: block;
-  margin: 0 0 .28571429rem 0;
-  color: rgba(0,0,0,.87);
-  font-size: .92857143em;
-  font-weight: 700;
+	padding-left: 5px;
+	display: block;
+	margin: 0 0 0.28571429rem 0;
+	color: rgba(0, 0, 0, 0.87);
+	font-size: 0.92857143em;
+	font-weight: 700;
 }
 
+.whyPopup {
+	display: flex;
+	flex-direction: column;
+	color: rgba(0, 0, 0, 0.68);
+
+	.whyHeader {
+		margin: 0 !important;
+		color: rgba(0, 0, 0, 0.85);
+	}
+
+	.readMore {
+		color: rgba(0, 0, 0, 0.4);
+
+		&:hover {
+			cursor: pointer;
+			text-decoration: underline;
+			color: #1e70bf;
+		}
+	}
+}

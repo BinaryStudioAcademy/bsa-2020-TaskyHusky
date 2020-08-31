@@ -125,7 +125,10 @@ class ProjectsController {
 				return;
 			}
 
+			delete project.users;
+
 			const projectToUpdate = { ...prevProject, ...project };
+
 			delete projectToUpdate.creator;
 			delete projectToUpdate.createdDate;
 			delete projectToUpdate.updatedDate;
@@ -137,6 +140,60 @@ class ProjectsController {
 		} catch (err) {
 			next(new ErrorResponse(HttpStatusCode.INTERNAL_SERVER_ERROR, err.message));
 		}
+	};
+
+	updateProjectUsersList = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+		const projectsRepository = getCustomRepository(ProjectsRepository);
+		const { projectId, usersId } = req.body;
+
+		const prevProject = await projectsRepository.getOne(projectId);
+
+		if (prevProject === undefined) {
+			next(new ErrorResponse(HttpStatusCode.NOT_FOUND, projectsErrorMessages.PROJECT_NOT_FOUND));
+			return;
+		}
+		const { id: prevProjectLeadId } = prevProject.lead;
+		const { users: prevProjectUsers } = prevProject;
+
+		const isLeadInUsers = prevProjectUsers.find((user) => user.id === prevProjectLeadId);
+		const isLead = usersId === prevProjectLeadId;
+
+		if (!isLeadInUsers || isLead) {
+			next(new ErrorResponse(HttpStatusCode.UNPROCESSABLE_ENTITY, projectsErrorMessages.INVALID_DATA));
+			return;
+		}
+
+		const { id: userId } = req.user;
+
+		const isForbiddenResult = this.isForbidden(userId, prevProjectLeadId, next);
+
+		if (isForbiddenResult) {
+			return;
+		}
+
+		if (usersId?.length === 0) {
+			next(new ErrorResponse(HttpStatusCode.UNPROCESSABLE_ENTITY, projectsErrorMessages.INVALID_DATA));
+			return;
+		}
+
+		const dataToUpdate = { ...prevProject };
+
+		if (typeof usersId === 'string') {
+			dataToUpdate.users = prevProject.users.filter((user) => user.id !== usersId);
+		} else {
+			const users = usersId?.map((data: string) => {
+				if (typeof data === 'string') {
+					const user = new UserProfile();
+					user.id = data;
+					return user;
+				}
+				return data;
+			});
+			dataToUpdate.users = [...prevProject.users, ...users];
+		}
+
+		const updatedProject = await projectsRepository.updateOne(dataToUpdate);
+		res.send(updatedProject);
 	};
 
 	deleteProject = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
