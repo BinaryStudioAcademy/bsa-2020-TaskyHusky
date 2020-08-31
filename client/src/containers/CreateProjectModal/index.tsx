@@ -235,7 +235,7 @@ const CreateProjectModal: React.FC<Props> = ({ children }) => {
 												content={
 													<div className={styles.whyPopup}>
 														<Header as="h5" className={styles.whyHeader}>
-															{whyHeader}
+															{whyHeader}:
 														</Header>
 														<List bulleted>
 															{whyItems.map((item) => (
@@ -250,7 +250,7 @@ const CreateProjectModal: React.FC<Props> = ({ children }) => {
 															rel="noopener noreferrer"
 															className={styles.readMore}
 														>
-															More about {name}
+															{`${t('more_about')} ${name}`}
 														</a>
 													</div>
 												}

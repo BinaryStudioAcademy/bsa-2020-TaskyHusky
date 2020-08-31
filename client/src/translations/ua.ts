@@ -311,8 +311,10 @@ export const ua = {
 	you_are_the_first: 'Власник команди перший і поки що єдиний учасник команди',
 	you_are_going_to_remove_user: 'Ви плануєте видалити користувача',
 	from_team: 'з команди',
-	once_it_happend_he_will_lose_access_to_teamwork: 'Коли ви це зробите, даний користувач втратить доступ до матеріалів та проектів команди',
-	but_you_can_still_add_him_in_future: 'Але ви зможете долучити його знову до команди у майбутньому, якщо це необхідно',
+	once_it_happend_he_will_lose_access_to_teamwork:
+		'Коли ви це зробите, даний користувач втратить доступ до матеріалів та проектів команди',
+	but_you_can_still_add_him_in_future:
+		'Але ви зможете долучити його знову до команди у майбутньому, якщо це необхідно',
 	error_load_data: 'Помилка завантаження даних',
 	data_updated_succesful: 'Інформація успішно оновлена',
 	error_load_team_links: 'Помилка завантаження посилань команди',
@@ -326,4 +328,15 @@ export const ua = {
 	success: 'Успіх',
 	error: 'Помилка',
 	info: 'Інформація',
+	choose_kanban: 'Виберіть Kanban, якщо хочете',
+	choose_kanban_item_1: 'підвищити продуктивність та ефективність',
+	choose_kanban_item_2: 'мати гнучкість у розробці',
+	choose_kanban_item_3: 'обмежити кількість неазкінченої роботи',
+	choose_kanban_item_4: 'уникати багатозадачності',
+	choose_scrum: 'Виберіть Scrum, якщо хочете',
+	choose_scrum_item_1: 'забезпечити гнучкість при зміні вимог',
+	choose_scrum_item_2: 'оцінювати обсяг роботи, яку потрібно виконати',
+	choose_scrum_item_3: 'будувати продукт крок за кроком',
+	choose_scrum_item_4: 'заощадити час і гроші',
+	more_about: 'Докладніше про',
 };

@@ -318,8 +318,10 @@ export const ru = {
 	you_are_the_first: 'Создатель команды первый и пока что единственный участник команды',
 	you_are_going_to_remove_user: 'Ви намерены удалить пользователя',
 	from_team: 'из команды',
-	once_it_happend_he_will_lose_access_to_teamwork: 'Если вы это сделаете, этот пользователь потеряет доступ к материалам и проектам этой команды',
-	but_you_can_still_add_him_in_future: 'но ви все еще сможете добавить его в команду снова в будущем, если это понадобится',
+	once_it_happend_he_will_lose_access_to_teamwork:
+		'Если вы это сделаете, этот пользователь потеряет доступ к материалам и проектам этой команды',
+	but_you_can_still_add_him_in_future:
+		'но ви все еще сможете добавить его в команду снова в будущем, если это понадобится',
 	error_load_data: 'Ошибка загрузки данных',
 	data_updated_succesful: 'Информация успешно обновлена',
 	error_load_team_links: 'Ошибка загрузки ссылок на материалы команды',
@@ -333,4 +335,15 @@ export const ru = {
 	success: 'Успех',
 	error: 'Ошибка',
 	info: 'Информация',
+	choose_kanban: 'Выберите Kanban, если хотите',
+	choose_kanban_item_1: 'повысить производительность и эффективность',
+	choose_kanban_item_2: 'иметь гибкость в разработке',
+	choose_kanban_item_3: 'ограничить кол-во незавершенной работы',
+	choose_kanban_item_4: 'избегать многозадачности',
+	choose_scrum: 'Выберите Scrum, если хотите',
+	choose_scrum_item_1: 'обеспечить гибкость при изменении требований',
+	choose_scrum_item_2: 'оценивать объем работы, которую нужно сделать',
+	choose_scrum_item_3: 'строить продукт постепенно',
+	choose_scrum_item_4: 'сэкономить время и деньги',
+	more_about: 'Больше о',
 };
