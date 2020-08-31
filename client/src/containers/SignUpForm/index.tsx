@@ -40,7 +40,7 @@ const SignUpForm: React.FC = () => {
 	};
 
 	return (
-		<Form onSubmit={submit}>
+		<Form onSubmit={submit} className={styles.registerForm}>
 			{redirecting ? <Redirect to="/" /> : ''}
 			<Popup
 				className={styles.errorPopup}
@@ -50,6 +50,7 @@ const SignUpForm: React.FC = () => {
 				position="top center"
 				trigger={
 					<Form.Input
+						className={styles.inputField}
 						placeholder={t('first_name')}
 						onChange={(event, data) => {
 							setFirstName(data.value);
@@ -60,7 +61,11 @@ const SignUpForm: React.FC = () => {
 					/>
 				}
 			/>
-			<Form.Input placeholder={t('last_name')} onChange={(event, data) => setLastName(data.value)} />
+			<Form.Input
+				className={styles.inputField}
+				placeholder={t('last_name')}
+				onChange={(event, data) => setLastName(data.value)}
+			/>
 			<Popup
 				className={styles.errorPopup}
 				on={[]}
@@ -69,6 +74,7 @@ const SignUpForm: React.FC = () => {
 				content={t('invalid_email')}
 				trigger={
 					<Form.Input
+						className={styles.inputField}
 						type="text"
 						icon="at"
 						placeholder={t('email')}
@@ -90,7 +96,7 @@ const SignUpForm: React.FC = () => {
 				content={t('invalid_password')}
 				trigger={<PasswordInput onChange={setPassword} onChangeValid={setPasswordValid} />}
 			/>
-			<Button disabled={buttonDisabled} fluid positive type="submit">
+			<Button disabled={buttonDisabled} fluid className={styles.continueButton} type="submit">
 				{t('sign_up')}
 			</Button>
 		</Form>

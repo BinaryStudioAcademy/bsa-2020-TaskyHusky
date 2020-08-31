@@ -1,7 +1,8 @@
 @import "styles/mixins.scss";
+$mainTextColor: #ffffff;
+$yellow: #fece2f;
 
 .grid {
-	height: 100vh;
 	justify-content: center;
 }
 
@@ -13,7 +14,12 @@
 .column {
 	max-width: 450px;
 }
-
+.loginBody {
+	padding-left: 0 !important;
+	padding-right: 0 !important;
+	background-color: transparent !important;
+	color: $mainTextColor !important;
+}
 .list {
 	display: flex !important;
 	justify-content: center;
@@ -23,10 +29,21 @@
 	font-size: 13px !important;
 }
 
-.continueButton {
-	width: 100%;
+.inputField {
+	margin-bottom: 30px !important;
 }
 
+.continueButton {
+	width: 100%;
+	background-color: $yellow !important;
+	color: #000000 !important;
+	&:hover {
+		box-shadow: 0 0 5px inset $mainTextColor !important;
+	}
+}
+.divider {
+	color: $mainTextColor !important;
+}
 .errorPopup {
 	@include error-popup;
 }
@@ -47,21 +64,23 @@
 }
 
 .google_btn {
+	color: $mainTextColor;
 	display: flex;
 	width: 100%;
 	justify-content: center;
 	background-color: transparent;
-	border: 1px solid #ccc;
+	border: 1px solid rgb(124, 124, 124);
 	outline: none;
 	align-items: center;
 	border-radius: 5px;
 	cursor: pointer;
 	animation: all 1s;
-
+	padding: 4px 7px;
 	&:hover {
-		transition: background-color 0.5s;
-		background-color: rgb(247, 247, 247);
-		box-shadow: 0 0 2px #ccc, 0 0 13px inset #ffff;
+		transition: background-color 0.3s;
+		box-shadow: 0 0 1px rgb(199, 178, 122), 0 0 4px inset $yellow;
+		color: inherit;
+		border: 1px solid transparent;
 	}
 
 	.google_title {

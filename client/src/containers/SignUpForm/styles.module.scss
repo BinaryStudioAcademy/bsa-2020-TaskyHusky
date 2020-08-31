@@ -1,5 +1,20 @@
 @import "styles/mixins.scss";
+$mainTextColor: #ffffff;
 
 :local(.errorPopup) {
 	@include error-popup;
+}
+.registerForm {
+	padding: 10px 0;
+}
+.continueButton {
+	width: 100%;
+	background-color: $yellow !important;
+	color: #000000 !important;
+	&:hover {
+		box-shadow: 0 0 5px inset $mainTextColor !important;
+	}
+}
+.inputField {
+	margin-bottom: 30px !important;
 }

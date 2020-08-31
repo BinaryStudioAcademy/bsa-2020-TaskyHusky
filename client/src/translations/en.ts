@@ -365,4 +365,8 @@ export const en = {
 	success: 'Success',
 	error: 'Error',
 	info: 'Info',
+	user_does_not_exist: 'User does not exist',
+	sign_in: 'Sign In',
+	create_an_account: 'Create an account',
+	already_have_a_account: 'Already have an account?',
 };
