@@ -1,16 +1,14 @@
-$mainColor: #19191d;
-$mainTextColor: #ffffff;
-$yellow: #fece2f;
+@import "styles/variables.scss";
 
 .pageWrapper {
   margin: 0 !important;
   overflow-y: auto;
   box-sizing: border-box;
   height: 100vh !important;
-  background-color: $mainColor;
+  background-color: $header-text;
   position: relative !important;
   & > * {
-    color: $mainTextColor !important;
+    color: $primary-bg !important;
   }
   .mainImgWrapper {
     display: flex !important;
@@ -19,7 +17,7 @@ $yellow: #fece2f;
   }
   .formWrapper {
     .title {
-      color: $mainTextColor !important;
+      color: $primary-bg !important;
       margin-bottom: 20px;
     }
     .formSegment {
@@ -46,7 +44,7 @@ $yellow: #fece2f;
           color: $yellow !important;
           & a:hover,
           & span:hover {
-            color: $mainTextColor !important;
+            color: $primary-bg !important;
           }
         }
       }

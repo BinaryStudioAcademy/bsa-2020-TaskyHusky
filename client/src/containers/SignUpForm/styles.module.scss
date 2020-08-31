@@ -1,5 +1,5 @@
 @import "styles/mixins.scss";
-$mainTextColor: #ffffff;
+@import "styles/variables.scss";
 
 :local(.errorPopup) {
 	@include error-popup;
@@ -12,7 +12,7 @@ $mainTextColor: #ffffff;
 	background-color: $yellow !important;
 	color: #000000 !important;
 	&:hover {
-		box-shadow: 0 0 5px inset $mainTextColor !important;
+		box-shadow: 0 0 5px inset $primary-bg !important;
 	}
 }
 .inputField {

@@ -36,13 +36,18 @@ const MainPage = ({ isLoginForm, setLoginForm }: Props) => {
 							</List.Item>
 						)}
 						<List.Item>
-							<div onClick={() => setLoginForm(!isLoginForm)}>
+							<div>
 								{isLoginForm ? (
-									<span className={styles.listItem}>{t('sign_up')}</span>
+									<span className={styles.listItem} onClick={() => setLoginForm(!isLoginForm)}>
+										{t('sign_up')}
+									</span>
 								) : (
 									<>
 										<span className={styles.title}>{t('already_have_a_account')}</span>
-										<span className={`${styles.listItem} ${styles.marginLeft}`}>
+										<span
+											className={`${styles.listItem} ${styles.marginLeft}`}
+											onClick={() => setLoginForm(!isLoginForm)}
+										>
 											{t('sign_in')}
 										</span>
 									</>

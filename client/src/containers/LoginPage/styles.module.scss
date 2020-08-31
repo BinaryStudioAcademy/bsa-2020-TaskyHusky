@@ -1,6 +1,4 @@
 @import "styles/mixins.scss";
-$mainTextColor: #ffffff;
-$yellow: #fece2f;
 
 .grid {
 	justify-content: center;
@@ -18,7 +16,7 @@ $yellow: #fece2f;
 	padding-left: 0 !important;
 	padding-right: 0 !important;
 	background-color: transparent !important;
-	color: $mainTextColor !important;
+	color: $primary-bg !important;
 }
 .list {
 	display: flex !important;
@@ -38,11 +36,11 @@ $yellow: #fece2f;
 	background-color: $yellow !important;
 	color: #000000 !important;
 	&:hover {
-		box-shadow: 0 0 5px inset $mainTextColor !important;
+		box-shadow: 0 0 5px inset $primary-bg !important;
 	}
 }
 .divider {
-	color: $mainTextColor !important;
+	color: $primary-bg !important;
 }
 .errorPopup {
 	@include error-popup;
@@ -64,7 +62,7 @@ $yellow: #fece2f;
 }
 
 .google_btn {
-	color: $mainTextColor;
+	color: $primary-bg;
 	display: flex;
 	width: 100%;
 	justify-content: center;
