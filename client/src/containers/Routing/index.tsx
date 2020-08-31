@@ -41,8 +41,7 @@ const Routing: React.FC = () => {
 
 	return (
 		<Switch>
-			<PublicRoute restricted exact path="/" component={Landing} />
-			<PublicRoute restricted path="/login" component={Landing} />
+			<PublicRoute restricted exact path={['/', '/login', '/signup']} component={Landing} />
 			<PublicRoute exact restricted path="/forgot-password" component={ForgotPassword} />
 			<Route exact path="/reset-password/:token" component={ResetPassword} />
 			<PrivateRoute path="/reset-email/:token/:emailBtoa" component={ResetEmail} />

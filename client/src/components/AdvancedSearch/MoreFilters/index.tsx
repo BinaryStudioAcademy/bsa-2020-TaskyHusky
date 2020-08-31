@@ -2,6 +2,7 @@ import React from 'react';
 import { Dropdown, Checkbox, Icon, DropdownItemProps } from 'semantic-ui-react';
 import styles from './styles.module.scss';
 import { FilterPartState } from 'containers/AdvancedSearch/logic/state';
+import { useTranslation } from 'react-i18next';
 
 interface MoreFilterDefsDropdownProps {
 	additionalFilterParts: FilterPartState[];
@@ -26,12 +27,13 @@ const MoreFilterDefsDropdown = ({
 		const filterPart = addedFilterParts.find(({ id }) => id === filterPartId);
 		return Boolean(filterPart);
 	};
+	const { t } = useTranslation();
 
 	return (
 		<Dropdown
 			trigger={
 				<span className={styles.moreText}>
-					<Icon color="blue" name="plus" /> More
+					<Icon color="blue" name="plus" /> {t('more')}
 				</span>
 			}
 			icon={null}
@@ -41,11 +43,11 @@ const MoreFilterDefsDropdown = ({
 			className={styles.moreFilterDropdown}
 		>
 			<Dropdown.Menu className={styles.dropdownMenu} onClick={(e: Event) => e.stopPropagation()}>
-				<Dropdown.Header icon="filter" content={'Criteria'} />
+				<Dropdown.Header icon="filter" content={t('criteria')} />
 				<Dropdown.Menu scrolling>
 					{additionalFilterParts.map(({ id, filterDef }) => (
 						<Dropdown.Item onClick={handleClick} key={id} value={id}>
-							<Checkbox label={filterDef.title} checked={isAdded(id)} />
+							<Checkbox label={t(filterDef.title)} checked={isAdded(id)} />
 						</Dropdown.Item>
 					))}
 				</Dropdown.Menu>

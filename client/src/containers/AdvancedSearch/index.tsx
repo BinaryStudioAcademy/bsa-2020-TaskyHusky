@@ -9,7 +9,7 @@ const AdvancedSearch: React.FC = () => {
 		<div className={styles.filtersContainer}>
 			<div className={styles.outer}>
 				<SearchTitle />
-				<AdvancedFilters />
+				<AdvancedFilters /> 
 			</div>
 			<IssueTable />
 		</div>

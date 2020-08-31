@@ -82,13 +82,13 @@ const SearchTitle: React.FC = () => {
 					<List.Item>
 						<div className={styles.actionItem}>
 							<Icon name="share alternate" />
-							<List.Content>Share</List.Content>
+							<List.Content>{t('share')}</List.Content>
 						</div>
 					</List.Item>
 					<List.Item>
 						<div className={styles.actionItem}>
 							<Icon name="external share" />
-							<List.Content>Export</List.Content>
+							<List.Content>{t('export')}</List.Content>
 						</div>
 					</List.Item>
 					<List.Item>

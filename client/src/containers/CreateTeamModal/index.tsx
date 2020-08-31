@@ -81,7 +81,7 @@ const AddTeamPopup: React.FC<Props> = ({ isOpen = false, closeClb }): ReactEleme
 					{t('cancel')}
 				</Button>
 				<Button primary onClick={handlerSubmit}>
-					{t('start')}
+					{t('accept')}
 				</Button>
 			</Modal.Actions>
 		</Modal>
