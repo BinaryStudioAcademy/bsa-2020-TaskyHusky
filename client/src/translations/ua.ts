@@ -310,8 +310,6 @@ export const ua = {
 	project_key: 'Ідентифікатор проекту',
 	there_are_no_projects_which_have_been_started_yet:
 		'У вас ще немає проектів, які були розпочаті. Коли це станеться, ви зможете швидко отримати доступ до потрібної Вам роботи',
-	team_owner: 'Творець команди',
-	you_are_the_first: 'Ви перший і поки що єдиний учасник команди',
 	add_label: 'Додати мітку',
 	label_text: 'Текст мітки',
 	label_pick_color: 'Підберіть колір',
