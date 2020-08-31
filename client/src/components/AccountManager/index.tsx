@@ -15,12 +15,14 @@ const AccountManager = () => {
 	const dispatch = useDispatch();
 	const [isDelete, setIsDelete] = useState(false);
 
+	const toggleModal = () => setIsDelete(!isDelete);
+
 	const onClose = () => {
-		setIsDelete(false);
+		toggleModal();
 	};
 
 	const showDeleteModal = () => {
-		setIsDelete(true);
+		toggleModal();
 	};
 
 	const deleteUser = () => {
