@@ -10,6 +10,7 @@ export const en = {
 	sign_up_header: 'Sign up to TaskyHusky',
 	already_with_us: 'Already with us?',
 	first_name_required: 'First name is required',
+	last_name_required: 'Last name is required',
 	invalid_password: 'Password must be at least 6 characters long',
 	google_log_in: 'Log in with Google',
 	or: 'or',

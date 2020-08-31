@@ -10,6 +10,7 @@ export const ru = {
 	sign_up_header: 'Регистрация в TaskyHusky',
 	already_with_us: 'Уже с нами?',
 	first_name_required: 'Имя обязательно',
+	last_name_required: 'Фамилия обязательна',
 	invalid_password: 'Пароль должен быть длинной минимум 6 символов',
 	google_log_in: 'Войти с помощью Google',
 	or: 'или',
