@@ -339,4 +339,11 @@ export const en = {
 		'There are no projects which have been started yet. When it&apos;ll happen you can get quick access to one you need',
 	team_owner: 'Team owner',
 	you_are_the_first: 'You are the first member of this team',
+	add_label: 'Add label',
+	label_text: 'Label text',
+	label_pick_color: 'Pick color',
+	result: 'Result:',
+	no_label: 'There are no labels to see here',
+	delete_label: 'Delete label',
+	delete_label_confirm: 'Do you really want to remove this label?',
 };
