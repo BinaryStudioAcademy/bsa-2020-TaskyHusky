@@ -13,6 +13,7 @@ import styles from './styles.module.scss';
 import UserAvatar from 'components/common/UserAvatar';
 import { User } from 'containers/LoginPage/logic/state';
 import { SETTINGS_SECTION } from 'components/ProjectSidebar/config/sidebarItems';
+import Label from 'components/common/Label';
 
 type SortByColumn = 'name' | 'key' | 'lead';
 type SortDirections = 'ascending' | 'descending';
@@ -89,21 +90,32 @@ const ProjectsTable = ({ projects, currentUser }: Props) => {
 				</Table.Header>
 
 				<Table.Body>
-					{sortedProjects.map(({ id, name, key, icon, lead }) => (
+					{sortedProjects.map(({ id, name, key, icon, lead, labels }) => (
 						<Table.Row key={id}>
 							<Table.Cell>
 								<Link to={`/project/${id}/issues`} className={styles.project__name_container}>
 									{icon && <img className={styles.project__img} src={icon} alt="Avatar" />}
 									<span className={styles.project__name}>{name}</span>
+									{labels?.map(({ text, textColor, backgroundColor }) => (
+										<span className={styles.project__label}>
+											<Label
+												key={text}
+												text={text}
+												textColor={textColor}
+												backgroundColor={backgroundColor}
+											/>
+										</span>
+									))}
 								</Link>
 							</Table.Cell>
 							<Table.Cell>{key}</Table.Cell>
 							<Table.Cell>Software</Table.Cell>
-							<Table.Cell className={styles.project__lead_container}>
-								<UserAvatar user={lead} small />
-								<span>{`${lead.firstName} ${lead.lastName}`}</span>
+							<Table.Cell className={styles.project__lead_wrapper}>
+								<span className={styles.project__lead_container}>
+									<UserAvatar user={lead} small />
+									<span>{`${lead.firstName} ${lead.lastName}`}</span>
+								</span>
 							</Table.Cell>
-
 							<Table.Cell>
 								{currentUser?.id === lead.id && (
 									<Options
