@@ -1,3 +1,5 @@
+import { Label } from 'containers/ProjectLabels/logic/actionTypes';
+import * as actionTypes from 'containers/ProjectPeople/logic/actionTypes';
 import { ProjectId } from '../containers/ProjectSettings/logic/actionTypes';
 import callWebApi from './../helpers/callApi.helper';
 import { InitialProject, Keys } from './../containers/CreateProjectModal/logic/actionTypes';
@@ -72,4 +74,62 @@ export const getAllKeys = async (): Promise<Keys[]> => {
 	});
 
 	return (await res.json()) as Keys[];
+};
+
+export const updateProjectUsersList = async ({ usersId, projectId }: actionTypes.UpdatingUsers): Promise<Keys[]> => {
+	const res: Response = await callWebApi({
+		method: 'PUT',
+		endpoint: 'projects/users',
+		body: {
+			usersId,
+			projectId,
+		},
+	});
+
+	return (await res.json()) as Keys[];
+};
+
+export const addLabel = async ({ project, label }: Label): Promise<WebApi.Entities.ProjectLabel> => {
+	const res: Response = await callWebApi({
+		method: 'POST',
+		endpoint: 'projects/label',
+		body: {
+			projectId: project.id,
+			label,
+		},
+	});
+
+	return (await res.json()) as WebApi.Entities.ProjectLabel;
+};
+
+export const updateLabel = async ({ project, label }: Label): Promise<WebApi.Entities.ProjectLabel> => {
+	const res: Response = await callWebApi({
+		method: 'PUT',
+		endpoint: 'projects/label',
+		body: {
+			projectId: project.id,
+			label,
+		},
+	});
+
+	return (await res.json()) as WebApi.Entities.ProjectLabel;
+};
+
+export const deleteLabel = async ({
+	projectId,
+	labelId,
+}: {
+	projectId: string;
+	labelId: string;
+}): Promise<WebApi.Entities.ProjectLabel> => {
+	const res: Response = await callWebApi({
+		method: 'DELETE',
+		endpoint: 'projects/label',
+		body: {
+			projectId,
+			labelId,
+		},
+	});
+
+	return (await res.json()) as WebApi.Entities.ProjectLabel;
 };
