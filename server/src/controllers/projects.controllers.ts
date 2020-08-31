@@ -258,7 +258,7 @@ class ProjectsController {
 					}
 
 					if (labelItem.id === label.id) {
-						return label;
+						return { ...labelItem, ...label };
 					}
 
 					return labelItem;
