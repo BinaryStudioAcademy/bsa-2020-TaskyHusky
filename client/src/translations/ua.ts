@@ -267,6 +267,8 @@ export const ua = {
 	mark_all_as_read: 'Відмітити все як прочитане',
 	watching: 'Відстежуєтся',
 	not_watching: 'Не відстежуєтся',
+	add: 'Додати',
+	search_name_email: 'Пошук по імені або email адресою',
 	send_confirm_link: 'Відправити посилання для підтвердження e-mail',
 	confirm_email_change: 'Підтвердіть змінення email',
 	type_pass_confirm_email: 'Введіть пароль для підтвердження зміни email',
@@ -311,8 +313,10 @@ export const ua = {
 	you_are_the_first: 'Власник команди перший і поки що єдиний учасник команди',
 	you_are_going_to_remove_user: 'Ви плануєте видалити користувача',
 	from_team: 'з команди',
-	once_it_happend_he_will_lose_access_to_teamwork: 'Коли ви це зробите, даний користувач втратить доступ до матеріалів та проектів команди',
-	but_you_can_still_add_him_in_future: 'Але ви зможете долучити його знову до команди у майбутньому, якщо це необхідно',
+	once_it_happend_he_will_lose_access_to_teamwork:
+		'Коли ви це зробите, даний користувач втратить доступ до матеріалів та проектів команди',
+	but_you_can_still_add_him_in_future:
+		'Але ви зможете долучити його знову до команди у майбутньому, якщо це необхідно',
 	error_load_data: 'Помилка завантаження даних',
 	data_updated_succesful: 'Інформація успішно оновлена',
 	error_load_team_links: 'Помилка завантаження посилань команди',

@@ -268,6 +268,8 @@ export const ru = {
 	mark_all_as_read: 'Отметить всё как прочитаное',
 	watching: 'Отслеживается',
 	not_watching: 'Не отслеживается',
+	add: 'Добавить',
+	search_name_email: 'Поиск по имени или email адресу',
 	sorry_alert: undefined,
 	not_suported_push_alert: 'Ваш браузер не поддерживает push-уведомления.',
 	denied_push_alert: 'Разрешение на push-уведомления не предоставлено.',
@@ -318,8 +320,10 @@ export const ru = {
 	you_are_the_first: 'Создатель команды первый и пока что единственный участник команды',
 	you_are_going_to_remove_user: 'Ви намерены удалить пользователя',
 	from_team: 'из команды',
-	once_it_happend_he_will_lose_access_to_teamwork: 'Если вы это сделаете, этот пользователь потеряет доступ к материалам и проектам этой команды',
-	but_you_can_still_add_him_in_future: 'но ви все еще сможете добавить его в команду снова в будущем, если это понадобится',
+	once_it_happend_he_will_lose_access_to_teamwork:
+		'Если вы это сделаете, этот пользователь потеряет доступ к материалам и проектам этой команды',
+	but_you_can_still_add_him_in_future:
+		'но ви все еще сможете добавить его в команду снова в будущем, если это понадобится',
 	error_load_data: 'Ошибка загрузки данных',
 	data_updated_succesful: 'Информация успешно обновлена',
 	error_load_team_links: 'Ошибка загрузки ссылок на материалы команды',

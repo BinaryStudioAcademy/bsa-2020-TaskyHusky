@@ -34,7 +34,9 @@ export const addPeopleToTeamDone = createAction<actionTypes.successAddingUsers>(
 export const deletePeopleFromTeamLoading = createAction<actionTypes.DeletePeopleLoading>(
 	actionTypes.DELETE_PEOPLE_FROM_TEAM_LOADING,
 );
-export const deletePeopleFromTeamSuccess = createAction<actionTypes.successAddingUsers>(actionTypes.UPDATE_TEAM_USERS_SECCESS);
+export const deletePeopleFromTeamSuccess = createAction<actionTypes.successAddingUsers>(
+	actionTypes.UPDATE_TEAM_USERS_SECCESS,
+);
 
 export const deleteTeamLoading = createAction<actionTypes.DeleteTeamLoading>(actionTypes.DELETE_TEAM_LOADING);
 export const deleteTeamSuccess = createAction(actionTypes.DELETE_TEAM_SUCCESS);

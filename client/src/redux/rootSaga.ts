@@ -17,13 +17,16 @@ import peoplePageSaga from 'containers/People/logic/saga';
 import issueCommentSaga from 'components/IssueCommentForm/logic/saga';
 import headerSaga from '../containers/Header/logic/saga';
 import projectCommonSaga from 'components/ProjectsCommon/logic/saga';
+import projectPeopleSaga from 'containers/ProjectPeople/logic/saga';
 import notificationsSaga from 'components/NotificationsMenu/logic/saga';
+
 
 export default function* rootSaga() {
 	yield all([
 		boardsSaga(),
 		projectsSaga(),
 		projectSaga(),
+		projectPeopleSaga(),
 		projectCommonSaga(),
 		createProjectSaga(),
 		authSaga(),
