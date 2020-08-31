@@ -102,7 +102,7 @@ const TeamDevsCard = ({
 							fluid={lockEditFields}
 							color="blue"
 							onClick={() => submitEditFields()}
-							disabled={!isTitleValid}
+							disabled={!lockEditFields && !isTitleValid}
 						>
 							{t(lockEditFields ? 'edit_fields' : 'save_changes')}
 						</Button>
