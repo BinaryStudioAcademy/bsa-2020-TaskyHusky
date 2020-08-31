@@ -332,4 +332,5 @@ export const ua = {
 	error: 'Помилка',
 	info: 'Інформація',
 	min4_max40_length_message: 'Має містити принаймні 4 і максимум 40 символів.',
+	story_point: 'Оцінка складності',
 };

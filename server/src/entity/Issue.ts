@@ -10,7 +10,7 @@ import {
 	OneToMany,
 } from 'typeorm';
 
-import { IsNotEmpty, IsString, IsArray } from 'class-validator';
+import { IsNotEmpty, IsString, IsArray, IsInt, Min, Max } from 'class-validator';
 import { IssueStatus } from './IssueStatus';
 import { UserProfile } from './UserProfile';
 import { IssueType } from './IssueType';
@@ -85,4 +85,11 @@ export class Issue {
 
 	@UpdateDateColumn({ type: 'date' })
 	updatedAt?: Date;
+
+	@Column({ nullable: true })
+	@IsInt()
+	@Min(0)
+	// max int postgres value
+	@Max(2147483647)
+	storyPoint?: number;
 }

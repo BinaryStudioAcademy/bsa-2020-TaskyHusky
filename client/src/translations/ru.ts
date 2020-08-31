@@ -339,4 +339,5 @@ export const ru = {
 	error: 'Ошибка',
 	info: 'Информация',
 	min4_max40_length_message: 'Должено содержать от 4 до 40 символов.',
+	story_point: 'Оценка сложности',
 };
