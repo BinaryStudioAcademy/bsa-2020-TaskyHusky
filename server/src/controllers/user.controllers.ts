@@ -68,6 +68,17 @@ class UserController {
 		}
 	};
 
+	getAssignedIssues = async (req: Request, res: Response): Promise<void> => {
+		const userRepository = getCustomRepository(UserRepository);
+		const { id } = req.params;
+		try {
+			const assignedIssues = await userRepository.getAssignedIssues(id);
+			res.send(assignedIssues);
+		} catch (error) {
+			res.status(404).send(error.message);
+		}
+	};
+
 	getTeams = async (req: Request, res: Response): Promise<void> => {
 		const userRepository = getCustomRepository(UserRepository);
 		const { id } = req.params;

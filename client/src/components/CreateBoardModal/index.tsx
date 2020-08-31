@@ -53,11 +53,10 @@ const CreateBoardModal = (props: Props) => {
 
 	return (
 		<Modal
-			closeIcon
 			onClose={() => setIsModalShown(false)}
 			onOpen={() => setIsModalShown(true)}
 			open={true}
-			size={'small'}
+			size="small"
 			dimmer="inverted"
 		>
 			<Modal.Header>
