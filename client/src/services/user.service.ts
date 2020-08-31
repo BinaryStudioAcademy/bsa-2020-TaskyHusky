@@ -41,6 +41,15 @@ export const requestGetUserProjects = async (id: string): Promise<any> => {
 	return (await res.json()) as Array<WebApi.Entities.Projects>;
 };
 
+export const requestGetUserIssues = async (id: string): Promise<any> => {
+	const res = await callWebApi({
+		method: 'GET',
+		endpoint: `user/issues/${id}`,
+		skipAuthorization: false,
+	});
+	return (await res.json()) as Array<Partial<WebApi.Entities.Issue>>;
+};
+
 export const requestGetUserTeams = async (id: string): Promise<any> => {
 	const res = await callWebApi({
 		method: 'GET',
@@ -112,4 +121,13 @@ export const requestTeammates = async (id: string): Promise<WebApi.Entities.User
 	});
 
 	return (await res.json()) as WebApi.Entities.UserProfile[];
+};
+
+export const getPeople = async (): Promise<Partial<WebApi.Entities.UserProfile>> => {
+	const res = await callWebApi({
+		method: 'GET',
+		endpoint: `user/teammates`,
+	});
+
+	return (await res.json()) as Promise<Partial<WebApi.Entities.UserProfile>>;
 };

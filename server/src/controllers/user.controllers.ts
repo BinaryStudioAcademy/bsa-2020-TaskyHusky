@@ -6,6 +6,7 @@ import { UserRepository } from '../repositories/user.repository';
 import uploadS3 from '../services/file.service';
 import { avatarFolder } from '../../config/aws.config';
 import { ErrorResponse } from '../helpers/errorHandler.helper';
+import HttpStatusCode from '../constants/httpStattusCode.constants';
 import { UserProfile } from '../entity/UserProfile';
 import { expirationTime } from '../constants/resetPassword.constants';
 import { sendMailWithSes } from '../services/email.service';
@@ -62,6 +63,17 @@ class UserController {
 		try {
 			const projects = await userRepository.getProjects(id);
 			res.send(projects);
+		} catch (error) {
+			res.status(404).send(error.message);
+		}
+	};
+
+	getAssignedIssues = async (req: Request, res: Response): Promise<void> => {
+		const userRepository = getCustomRepository(UserRepository);
+		const { id } = req.params;
+		try {
+			const assignedIssues = await userRepository.getAssignedIssues(id);
+			res.send(assignedIssues);
 		} catch (error) {
 			res.status(404).send(error.message);
 		}
@@ -174,6 +186,18 @@ class UserController {
 			res.status(200).send({ message: 'User was deleted' });
 		} catch (error) {
 			res.status(400).send(error.message);
+		}
+	};
+
+	getTeammates = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+		const userRepository = getCustomRepository(UserRepository);
+		const { id: userId } = req.user;
+
+		try {
+			const user = await userRepository.getUserTeammates(userId);
+			res.status(200).send(user);
+		} catch (error) {
+			next(new ErrorResponse(HttpStatusCode.UNPROCESSABLE_ENTITY, error.message));
 		}
 	};
 }

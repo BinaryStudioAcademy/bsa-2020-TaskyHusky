@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FormInput, Icon } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
-
+import styles from 'containers/LoginPage/styles.module.scss';
 interface Props {
 	onChange: (text: string) => void;
 	onChangeValid?: (isValid: boolean) => void;
@@ -21,6 +21,7 @@ const PasswordInput: React.FC<Props> = ({ onChange, onChangeValid }) => {
 	return (
 		<FormInput
 			icon={<Icon name={eyeIconName} link onClick={toggleShown} />}
+			className={styles.inputField}
 			placeholder={t('password')}
 			type={inputType}
 			onChange={(event, data: { value: string }) => {

@@ -5,7 +5,7 @@ import ProjectDetails from 'containers/ProjectDetails';
 
 const ProjectSettingsPage: React.FC = () => {
 	return (
-		<DefaultPageWrapper>
+		<DefaultPageWrapper isOverflowHidden>
 			<ProjectSettings>
 				<ProjectDetails />
 			</ProjectSettings>

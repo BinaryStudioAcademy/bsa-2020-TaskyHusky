@@ -131,8 +131,8 @@ export const removeUserFromTeamRequest = async (userId: string, teamId: string) 
 		endpoint: `team/users`,
 		body: {
 			userId,
-			teamId
-		}
+			teamId,
+		},
 	});
 	return await result.json();
 };
