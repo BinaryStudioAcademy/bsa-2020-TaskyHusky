@@ -49,7 +49,7 @@ export const LoginPage: React.FC = () => {
 			setIsEmailSubmitted(false);
 			checkEmailReset();
 		}
-	}, [authState.isEmailInDB, isEmailSubmitted, history, checkEmailReset]);
+	}, [authState.isEmailInDB, isEmailSubmitted, history, checkEmailReset, t]);
 
 	const handleSubmit: (event: SyntheticEvent) => void = (event) => {
 		event.preventDefault();
