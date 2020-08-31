@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 import styles from './styles.module.scss';
 import { Icon } from 'semantic-ui-react';
 import projectIcon from 'icons/profile/projectIcon.svg';
@@ -18,8 +19,7 @@ interface Props {
 
 const WorkOnCard: React.FC<Props> = (props: Props) => {
 	const { issueKey, description, type, project, updated } = props;
-	const date = new Date(updated);
-	const parsedDate = `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
+
 	return (
 		<div className={styles.issue}>
 			<div className={styles.avatar}>
@@ -33,7 +33,7 @@ const WorkOnCard: React.FC<Props> = (props: Props) => {
 				</div>
 				<div className={styles.mainInfo}>
 					<img src={projectIcon} alt="icon" className={styles.icon} />
-					<p className={styles.date}>{parsedDate}</p>
+					<p className={styles.date}>{moment(updated).format('LLL')}</p>
 					<p className={styles.link}>
 						<Link to={`issue/${issueKey}`}>watch</Link>
 					</p>

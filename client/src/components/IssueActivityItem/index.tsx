@@ -1,9 +1,10 @@
 import React from 'react';
 import styles from './styles.module.scss';
 import projectIcon from 'icons/profile/projectIcon.svg';
+import {ActivityIssue} from 'containers/WorkPage/logic/state';
 
 interface Props {
-	item: WebApi.Entities.Projects | WebApi.Entities.UserProfile | any;
+	item: ActivityIssue
 }
 
 const IssueActivityItem: React.FC<Props> = (props: Props) => {
