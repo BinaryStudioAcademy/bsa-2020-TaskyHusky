@@ -56,7 +56,7 @@ const ProfilePage = ({ id }: { id: string }) => {
 
 	const getUser = async () => {
 		if (isCurrentUser) {
-			setUser({ ...user, ...currentUser, isLoading: false});
+			setUser({ ...user, ...currentUser, isLoading: false });
 			dispatch(actions.updateUser({ partialState: { ...currentUser, isLoading: false } }));
 		} else {
 			dispatch(actions.requestGetUser({ id }));

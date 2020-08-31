@@ -123,10 +123,7 @@ export const HeaderMenu = () => {
 								>
 									<Dropdown.Menu className={styles.circularDropdownMenu}>
 										<Dropdown.Header>{`${user?.firstName} ${user?.lastName}`}</Dropdown.Header>
-										<Dropdown.Item
-											as={Link}
-												to={`/profile/${user?.id}`}
-										>
+										<Dropdown.Item as={Link} to={`/profile/${user?.id}`}>
 											{t('profile')}
 										</Dropdown.Item>
 										<Dropdown.Divider />

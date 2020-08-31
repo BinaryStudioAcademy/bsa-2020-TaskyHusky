@@ -10,6 +10,7 @@ export const en = {
 	sign_up_header: 'Sign up to TaskyHusky',
 	already_with_us: 'Already with us?',
 	first_name_required: 'First name is required',
+	last_name_required: 'Last name is required',
 	invalid_password: 'Password must be at least 6 characters long',
 	google_log_in: 'Log in with Google',
 	or: 'or',
@@ -365,6 +366,7 @@ export const en = {
 	success: 'Success',
 	error: 'Error',
 	info: 'Info',
+	min4_max40_length_message: 'Should contain at least 4 and at max 40 chars.',
 	delete_user_qstn: 'Are you shure you want to delete your account?',
 	delete_user_text:
 		'Deleting this account will result to the loss of all data which is associated with this account.',
