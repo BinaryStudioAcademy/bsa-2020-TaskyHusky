@@ -365,4 +365,5 @@ export const en = {
 	success: 'Success',
 	error: 'Error',
 	info: 'Info',
+	min4_max40_length_message: 'Should contain at least 4 and at max 40 chars.',
 };
