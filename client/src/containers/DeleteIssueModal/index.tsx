@@ -34,6 +34,7 @@ const DeleteIssueModal: React.FC<Props> = ({ open, onOpen, onClose, currentIssue
 			onClose={onClose}
 			onOpen={onOpen}
 			trigger={<span className={styles.trigger}>{t('delete')}</span>}
+			dimmer="inverted"
 		>
 			<Modal.Header>{t('delete_issue')}</Modal.Header>
 			<Modal.Content>
