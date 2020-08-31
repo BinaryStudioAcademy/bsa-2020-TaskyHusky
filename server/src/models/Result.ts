@@ -39,7 +39,7 @@ export interface IssueResult {
 	watchers?: UserModel[];
 	assigned?: UserModel;
 	creator: UserModel;
-	storyPoint: number;
+	storyPoint?: number;
 }
 
 interface IssueCommentResult {

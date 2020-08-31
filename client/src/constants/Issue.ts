@@ -1,4 +1,6 @@
-export const ISSUE_CONSTANTS = {
-	maxStoryPoint: 2147483647,
-	minStoryPoint: 0,
-};
+export enum IssueConstants {
+	// max int postgres value
+	maxStoryPoint = 2147483647,
+	// story point can't be less then 0
+	minStoryPoint = 0,
+}

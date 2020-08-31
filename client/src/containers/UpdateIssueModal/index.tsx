@@ -8,7 +8,7 @@ import { updateIssue } from 'pages/IssuePage/logic/actions';
 import { useTranslation } from 'react-i18next';
 import { getUsername } from 'helpers/getUsername.helper';
 import { isNumber } from 'util';
-import { ISSUE_CONSTANTS } from 'constants/Issue';
+import { IssueConstants } from 'constants/Issue';
 import IssueFileInput from 'components/IssueFileInput';
 import { initialState } from 'containers/CreateIssueModal/logic/initalState';
 
@@ -112,7 +112,7 @@ const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, p
 			setIsStoryPointValid(true);
 			return;
 		}
-		if (isNumber(number) && number <= ISSUE_CONSTANTS.maxStoryPoint && number >= ISSUE_CONSTANTS.minStoryPoint) {
+		if (isNumber(number) && number <= IssueConstants.maxStoryPoint && number >= IssueConstants.minStoryPoint) {
 			context.set('storyPoint', value);
 			setIsStoryPointValid(true);
 		} else {
@@ -202,11 +202,11 @@ const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, p
 						/>
 					</Form.Field>
 					<Form.Field>
-						<label>{t('storyPoint')}</label>
+						<label>{t('story_point')}</label>
 						<Form.Input
 							type="number"
 							error={!isStoryPointValid}
-							placeholder={t('storyPoint')}
+							placeholder={t('story_point')}
 							fluid
 							defaultValue={current.storyPoint}
 							onChange={handleStoryPointChange}

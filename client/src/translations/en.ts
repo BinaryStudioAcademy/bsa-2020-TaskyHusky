@@ -338,7 +338,7 @@ export const en = {
 	there_are_no_projects_which_have_been_started_yet:
 		'There are no projects which have been started yet. When it&apos;ll happen you can get quick access to one you need',
 	team_owner: 'Team owner',
-	storyPoint: 'Story point',
+	story_point: 'Story point',
 	you_are_the_first: 'Team leader is the first member of this team',
 	you_are_going_to_remove_user: 'You are going to remove user',
 	from_team: 'from team',

@@ -329,4 +329,5 @@ export const ru = {
 	success: 'Успех',
 	error: 'Ошибка',
 	info: 'Информация',
+	story_point: 'Оценка сложности',
 };

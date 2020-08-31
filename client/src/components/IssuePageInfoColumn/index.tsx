@@ -188,7 +188,7 @@ const IssuePageInfoColumn: React.FC<Props> = ({
 					<Icon name={issue.priority.icon as any} />
 					{issue.priority.title}
 				</Label>
-				<h4>{t('storyPoint')}</h4>
+				<h4>{t('story_point')}</h4>
 				{issue.storyPoint ? (
 					<Label style={{ borderRadius: '30%' }}>{issue.storyPoint}</Label>
 				) : (

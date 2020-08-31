@@ -106,7 +106,7 @@ namespace WebApi.Result {
 		watchers?: UserModel[];
 		assigned?: UserModel;
 		creator: UserModel;
-		storyPoint: number;
+		storyPoint?: number;
 	}
 	interface IssueCommentResult {
 		id: string;
