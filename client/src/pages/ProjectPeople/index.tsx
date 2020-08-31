@@ -1,13 +1,13 @@
 import React from 'react';
 import DefaultPageWrapper from 'containers/DefaultPageWrapper';
 import ProjectSettings from 'containers/ProjectSettings';
-import ProjectDetails from 'containers/ProjectDetails';
+import ProjectPeople from 'containers/ProjectPeople';
 
 const ProjectSettingsPage: React.FC = () => {
 	return (
-		<DefaultPageWrapper isOverflowHidden>
+		<DefaultPageWrapper>
 			<ProjectSettings>
-				<ProjectDetails />
+				<ProjectPeople />
 			</ProjectSettings>
 		</DefaultPageWrapper>
 	);

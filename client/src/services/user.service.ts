@@ -122,3 +122,12 @@ export const requestTeammates = async (id: string): Promise<WebApi.Entities.User
 
 	return (await res.json()) as WebApi.Entities.UserProfile[];
 };
+
+export const getPeople = async (): Promise<Partial<WebApi.Entities.UserProfile>> => {
+	const res = await callWebApi({
+		method: 'GET',
+		endpoint: `user/teammates`,
+	});
+
+	return (await res.json()) as Promise<Partial<WebApi.Entities.UserProfile>>;
+};
