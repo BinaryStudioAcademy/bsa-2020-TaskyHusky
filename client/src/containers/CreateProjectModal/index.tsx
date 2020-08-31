@@ -217,7 +217,7 @@ const CreateProjectModal: React.FC<Props> = ({ children }) => {
 					<Modal.Content className={styles.cards_container}>
 						{Object.entries(templatesInformation).map(
 							([name, { image, description, whyHeader, whyItems, readMoreLink }]: [
-								any,
+								string,
 								MethodologyInfo,
 							]) => (
 								<Card
@@ -257,7 +257,7 @@ const CreateProjectModal: React.FC<Props> = ({ children }) => {
 											/>
 											<Button
 												className={styles.card__select_template}
-												onClick={() => selectTemplate(name)}
+												onClick={() => selectTemplate(name as Template)}
 											>
 												{t('select')}
 											</Button>
