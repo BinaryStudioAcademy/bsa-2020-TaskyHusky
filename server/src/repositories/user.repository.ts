@@ -114,7 +114,7 @@ export class UserRepository extends Repository<UserProfile> {
 			.leftJoinAndSelect('user.teamsOwner', 'team')
 			.getOne();
 		const teamRepository = getCustomRepository(TeamRepository);
-		user?.teamsOwner?.map(async (item) => {
+		user?.teamsOwner?.forEach(async (item) => {
 			await teamRepository.deleteOneById(item.id);
 		});
 		return this.delete(id);

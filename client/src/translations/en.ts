@@ -366,4 +366,17 @@ export const en = {
 	delete_user_text:
 		'Deleting this account will result to the loss of all data which is associated with this account.',
 	delete_btn: 'Delete',
+	my_open_issues: 'My open issues',
+	my_done_issues: 'My done issues',
+	user_was_updated: 'User was updated',
+	could_not_update_user: 'Could not update user',
+	pass_was_updated: 'Password was updated',
+	could_not_update_pass: 'Could not update password',
+	email_was_updated: 'Email was updated',
+	could_not_update_email: 'Could not update email',
+	cold_not_get_user: 'Could not get user',
+	avatar_was_updated: 'Avatar was updated',
+	could_not_update_avatar: 'Could not update avatar',
+	could_not_send_email: 'Could not send email',
+	email_was_send: 'Email was send',
 };

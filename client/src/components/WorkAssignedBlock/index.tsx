@@ -18,7 +18,6 @@ const WorkAssignedBlock: React.FC = () => {
 		getIssues(id);
 	}, [id]);
 
-	console.log(issues);
 	return (
 		<div className={styles.container}>
 			<div className={styles.header}>

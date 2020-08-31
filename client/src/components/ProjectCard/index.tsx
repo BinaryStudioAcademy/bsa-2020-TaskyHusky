@@ -2,6 +2,8 @@ import React from 'react';
 import styles from './styles.module.scss';
 import { useSelector } from 'react-redux';
 import { RootState } from 'typings/rootState';
+import { useTranslation } from 'react-i18next';
+
 interface Props {
 	name: string;
 	category?: string;
@@ -10,6 +12,7 @@ interface Props {
 
 const ProjectCard: React.FC<Props> = (props: Props) => {
 	const { name, category = '', issues = [] } = props;
+	const { t } = useTranslation();
 	const id = useSelector((state: RootState) => state.auth.user?.id);
 	const myIssues = issues.filter((item) => item.assigned?.id === id);
 	const doneIssues = myIssues.filter((item) => item.status && item.status.title === 'Done').length;
@@ -25,10 +28,10 @@ const ProjectCard: React.FC<Props> = (props: Props) => {
 			</div>
 			<div className={styles.issues}>
 				<p className={styles.text}>
-					My open issues <span className={styles.count}>{undoneIssues}</span>
+					{t('my_open_issues')} <span className={styles.count}>{undoneIssues}</span>
 				</p>
 				<p className={styles.text}>
-					My done issues <span className={styles.count}>{doneIssues}</span>
+					{t('my_done_issues')} <span className={styles.count}>{doneIssues}</span>
 				</p>
 			</div>
 		</div>
