@@ -9,8 +9,13 @@ import ProfileSection from 'components/ProfileSection';
 import ProfileManagerSection from 'components/ProfileManagerSection';
 import Spinner from 'components/common/Spinner';
 import { useTranslation } from 'react-i18next';
-import { requestGetUserProjects, requestGetUserTeams, requestTeammates } from 'services/user.service';
 import { NotificationManager } from 'react-notifications';
+import {
+	requestGetUserProjects,
+	requestGetUserTeams,
+	requestTeammates,
+	requestGetUserIssues,
+} from 'services/user.service';
 
 const ProfilePage = ({ id }: { id: string }) => {
 	const dispatch = useDispatch();
@@ -20,16 +25,18 @@ const ProfilePage = ({ id }: { id: string }) => {
 		userData: state.user,
 		currentUser: state.auth.user,
 	}));
-	const { projects, teammates, teams } = useSelector((state: RootState) => ({
+	const { projects, teammates, teams, activity } = useSelector((state: RootState) => ({
 		projects: state.projects.projects,
 		teammates: state.peoplePage.people,
 		teams: state.peoplePage.teams,
+		activity: state.userActivity.recentActivity,
 	}));
 
 	const [data, setData] = useState({
 		teammates,
 		teams,
 		projects,
+		activity,
 	});
 	const [user, setUser] = useState(userData);
 	const { editMode, isLoading } = user;
@@ -44,16 +51,6 @@ const ProfilePage = ({ id }: { id: string }) => {
 		dispatch(actions.updateUser({ partialState: { editMode: modeToShow } }));
 	};
 
-	const activity = [
-		{ id: 1, project: 'First scrum project', name: 'Homepage footer uses an inline style-should use a class' },
-		{ id: 2, project: 'First scrum project', name: 'Homepage footer uses an inline style-should use a class' },
-		{ id: 3, project: 'First scrum project', name: 'Homepage footer uses an inline style-should use a class' },
-		{ id: 4, project: 'First scrum project', name: 'Homepage footer uses an inline style-should use a class' },
-		{ id: 5, project: 'First scrum project', name: 'Homepage footer uses an inline style-should use a class' },
-		{ id: 6, project: 'First scrum project', name: 'Homepage footer uses an inline style-should use a class' },
-		{ id: 7, project: 'First scrum project', name: 'Fsp-1 Implement dark somethin else very important' },
-	];
-
 	const getUser = async () => {
 		if (isCurrentUser) {
 			setUser({ ...user, ...currentUser, isLoading: false });
@@ -61,9 +58,15 @@ const ProfilePage = ({ id }: { id: string }) => {
 		} else {
 			dispatch(actions.requestGetUser({ id }));
 			setUser({ ...user, ...userData });
-			Promise.all([requestGetUserTeams(id), requestGetUserProjects(id), requestTeammates(id)])
+			Promise.all([
+				requestGetUserTeams(id),
+				requestGetUserProjects(id),
+				requestTeammates(id),
+				requestGetUserIssues(id),
+			])
 				.then((arr) => {
-					setData({ ...data, teams: arr[0], projects: arr[1], teammates: arr[2] });
+					const { recentActivity } = arr[3];
+					setData({ ...data, teams: arr[0], projects: arr[1], teammates: arr[2], activity: recentActivity });
 				})
 				.catch((error) => {
 					NotificationManager.error('Could not load data', 'Error', 4000);
@@ -72,7 +75,7 @@ const ProfilePage = ({ id }: { id: string }) => {
 	};
 
 	const getCurrentUserData = async () => {
-		setData({ ...data, projects, teammates, teams });
+		setData({ ...data, projects, teammates, teams, activity });
 		if (!teams.length) {
 			const teams = await requestGetUserTeams(id);
 			setData((data) => ({ ...data, teams }));
@@ -80,6 +83,11 @@ const ProfilePage = ({ id }: { id: string }) => {
 		if (!teammates.length) {
 			const teammates = await requestTeammates(id);
 			setData((data) => ({ ...data, teammates }));
+		}
+		if (!activity.length) {
+			const { recentActivity } = await requestGetUserIssues(id);
+			console.log(recentActivity);
+			setData((data) => ({ ...data, activity: recentActivity }));
 		}
 	};
 
@@ -97,7 +105,7 @@ const ProfilePage = ({ id }: { id: string }) => {
 			getCurrentUserData();
 		}
 		//eslint-disable-next-line
-	}, [projects, teammates, teams]);
+	}, [projects, teammates, teams, activity]);
 
 	return (
 		<>
@@ -118,7 +126,7 @@ const ProfilePage = ({ id }: { id: string }) => {
 						) : (
 							<ProfileSection
 								isCurrentUser={isCurrentUser}
-								activity={activity}
+								activity={data.activity}
 								projects={data.projects}
 								teammates={data.teammates}
 							/>

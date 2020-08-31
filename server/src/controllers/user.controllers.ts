@@ -68,12 +68,18 @@ class UserController {
 		}
 	};
 
-	getAssignedIssues = async (req: Request, res: Response): Promise<void> => {
+	getIssues = async (req: Request, res: Response): Promise<void> => {
 		const userRepository = getCustomRepository(UserRepository);
 		const { id } = req.params;
 		try {
-			const assignedIssues = await userRepository.getAssignedIssues(id);
-			res.send(assignedIssues);
+			const assignedIssues = (await userRepository.getAssignedIssues(id)) ?? [];
+			const watchingIssues = (await userRepository.getWatchingIssues(id)) ?? [];
+			const recentActivity = [...assignedIssues, ...watchingIssues]
+				.sort(({ updatedAt: firstDate = '' }, { updatedAt: secondDate = '' }) => {
+					return Number(new Date(secondDate)) - Number(new Date(firstDate));
+				})
+				.slice(0, 10);
+			res.send({ assignedIssues, recentActivity });
 		} catch (error) {
 			res.status(404).send(error.message);
 		}

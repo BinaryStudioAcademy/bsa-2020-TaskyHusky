@@ -6,7 +6,7 @@ import i18next from 'i18next';
 import { UserActivityState } from './state';
 import { NotificationManager } from 'react-notifications';
 
-function* getIssue(action: ReturnType<typeof actions.requestGetAssignedIssues>) {
+function* getIssues(action: ReturnType<typeof actions.requestGetIssues>) {
 	const { id } = action;
 	try {
 		const issues: Partial<UserActivityState> = yield call(requestGetUserIssues, id);
@@ -17,9 +17,9 @@ function* getIssue(action: ReturnType<typeof actions.requestGetAssignedIssues>) 
 }
 
 function* watchGetIssue() {
-	yield takeEvery(actionTypes.REQUEST_GET_ASSIGNED_ISSUES, getIssue);
+	yield takeEvery(actionTypes.REQUEST_GET_ISSUES, getIssues);
 }
 
-export default function* userSaga() {
+export default function* userActivitySaga() {
 	yield all([watchGetIssue()]);
 }

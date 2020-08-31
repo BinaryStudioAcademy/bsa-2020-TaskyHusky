@@ -76,9 +76,19 @@
   font-size: 14px;
   line-height: 24px;
   letter-spacing: 0.44px;
-  color: $medium-gray;
+  color: $secondary-text;
   font-family: "Inter", sans-serif !important;
   word-break: break-word;
+}
+
+@mixin work-page-secondary {
+  font-family: Poppins, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 15px;
+  line-height: 24px;
+  letter-spacing: 0.44px;
+  color: $secondary-text;
 }
 
 @mixin text-data {
@@ -107,16 +117,6 @@
   line-height: 32px !important;
   letter-spacing: 0.15px !important;
   color: $primary-text !important;
-}
-
-@mixin work-page-secondary {
-  font-family: Poppins, sans-serif;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 15px;
-  line-height: 24px;
-  letter-spacing: 0.44px;
-  color: $medium-gray;
 }
 
 @mixin manager-header {
