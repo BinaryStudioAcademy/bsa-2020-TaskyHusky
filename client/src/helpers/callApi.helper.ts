@@ -12,6 +12,7 @@ interface RequestArgs {
 	query?: Record<string, any>;
 	body?: any;
 	attachment?: File;
+	attachmentFieldName?: string;
 }
 
 type Body =
@@ -62,22 +63,27 @@ const getArgs = (args: RequestArgs): RequestInit => {
 		headers.Authorization = `Bearer ${token}`;
 	}
 
-	if (args.body) {
+	if (args.attachment) {
+		if (args.method === 'GET') {
+			throw new Error('GET request does not support attachments.');
+		}
+		const formData = new FormData();
+		formData.append(args.attachmentFieldName ?? 'image', args.attachment);
+
+		if (args.body) {
+			Object.entries(args.body).forEach(([key, value]) => {
+				formData.append(key, String(value));
+			});
+		}
+
+		body = formData;
+	} else if (args.body) {
 		if (args.method === 'GET') {
 			throw new Error('GET request does not support request body.');
 		}
 		body = JSON.stringify(args.body);
 		headers['Content-Type'] = 'application/json';
 		headers.Accept = 'application/json';
-	}
-
-	if (args.attachment) {
-		if (args.method === 'GET') {
-			throw new Error('GET request does not support attachments.');
-		}
-		const formData = new FormData();
-		formData.append('image', args.attachment);
-		body = formData;
 	}
 
 	return {

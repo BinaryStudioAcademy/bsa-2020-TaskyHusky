@@ -1,6 +1,6 @@
 import { Team } from './state';
 
-export const LOADING = 'TEAM:LOADING';
+export const SET_IS_LOADING = 'TEAM:SET_IS_LOADING';
 export const START_LOADING = 'TEAM:START_LOADING';
 export const SUCCESS_TEAM_LOADING = 'TEAM:SUCCESS_TEAM_LOADING';
 export const SUCCESS_TEAM_USERS_LOADING = 'TEAM:SUCCESS_TEAM_USERS_LOADING';
@@ -17,10 +17,46 @@ export const UPDATE_LINK_FIELD_SUCCESS = 'TEAM:UPDATE_LINK_FIELD_SUCCESS';
 export const UPDATE_FIELD_LOADING = 'TEAM:UPDATE_FIELD_LOADING';
 export const UPDATE_FIELD_SUCCESS = 'TEAM:UPDATE_FIELD_SUCCESS';
 
+export const START_SEARCHING_PEOPLE = 'TEAM:START_SEARCHING_PEOPLE';
+export const SUCCESS_SEARCHING_PEOPLE = 'TEAM:SUCCESS_SEARCHING_PEOPLE';
+export const SEARCH_PEOPLE_LOADER = 'TEAM:SEARCH_PEOPLE_LOADER';
+export const FAIL_SEARCHING_PEOPLE = 'TEAM:FAIL_SEARCHING_PEOPLE';
+
+export const CLEAR_FOUND_USERS = 'TEAM:CLEAR_FOUND_USERS';
+export const CLEAR_FOUND_USERS_DONE = 'TEAM:CLEAR_FOUND_USERS_DONE';
+
+export const ADD_PEOPLE_TO_TEAM_LOADING = 'TEAM:ADD_PEOPLE_TO_TEAM_LOADING';
+export const UPDATE_TEAM_USERS_SECCESS = 'TEAM:UPDATE_TEAM_USERS_SECCESS';
+
+export const DELETE_PEOPLE_FROM_TEAM_LOADING = 'TEAM:DELETE_PEOPLE_FROM_TEAM_LOADING';
+
+export const DELETE_TEAM_LOADING = 'TEAM:DELETE_TEAM_LOADING';
+export const DELETE_TEAM_SUCCESS = 'TEAM:DELETE_TEAM_SUCCESS';
+
+export type startAddingUsers = {
+	id: string;
+	users: WebApi.Entities.UserProfile[];
+};
+
+export type successAddingUsers = {
+	users: WebApi.Entities.UserProfile[];
+};
+
+export type startsearchingPeople = {
+	id: string;
+	match: string;
+};
+
+export type successSearchPeople = {
+	results: any; //semantic-ui structure for result render
+	loading?: boolean;
+};
+
 export type AddLinkSuccess = {
 	links?: any;
 	id?: string;
 };
+
 export type FetchLinksLoading = {
 	link?: {
 		id?: string;
@@ -54,6 +90,19 @@ export type EditFieldLoadingArgs = {
 	id: string;
 	field: { [key: string]: string | [] };
 };
+
 export type EditFieldSuccess = {
-	field: { [key: string]: string | [] };
+	field: {
+		name: string;
+		description: string;
+	};
+};
+
+export type DeleteTeamLoading = {
+	id: string;
+};
+
+export type DeletePeopleLoading = {
+	teamId: string;
+	userId: string;
 };

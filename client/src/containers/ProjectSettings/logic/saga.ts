@@ -1,5 +1,5 @@
 import { NotificationManager } from 'react-notifications';
-import { updateProject } from './../../../services/projects.service';
+import { updateProject } from '../../../services/projects.service';
 import { getProjectById } from 'services/projects.service';
 import { all, put, takeEvery, call } from 'redux-saga/effects';
 import * as actionTypes from './actionTypes';

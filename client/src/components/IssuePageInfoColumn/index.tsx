@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
-import { Label, Icon, Button, Dropdown } from 'semantic-ui-react';
+import { Label, Icon, Button, Dropdown, Popup, Image } from 'semantic-ui-react';
 import { getUsername } from 'helpers/getUsername.helper';
 import { ContextProvider } from 'containers/CreateIssueModal/logic/context';
 import UpdateIssueModal from 'containers/UpdateIssueModal';
 import { useTranslation } from 'react-i18next';
+import { useIO } from 'hooks/useIO';
+import { NotificationManager } from 'react-notifications';
 import { useDispatch, useSelector } from 'react-redux';
 import { watchIssue } from 'pages/IssuePage/logic/actions';
 import { RootState } from 'typings/rootState';
+import { isImage } from 'helpers/isImage.helper';
 
 interface Props {
 	issue: WebApi.Result.IssueResult;
@@ -16,10 +19,36 @@ interface Props {
 	toPageLink?: boolean;
 }
 
-const IssuePageInfoColumn: React.FC<Props> = ({ issue, initialIssue, leftAligned, withDescrtiption, toPageLink }) => {
+const IssuePageInfoColumn: React.FC<Props> = ({
+	issue: givenIssue,
+	initialIssue,
+	leftAligned,
+	withDescrtiption,
+	toPageLink,
+}) => {
+	const [issue, setIssue] = useState<WebApi.Result.IssueResult>(givenIssue);
 	let openEditModal: () => void = () => {};
-	const [issueWatchers, setIssueWatchers] = useState<WebApi.User.UserModel[]>(issue.watchers ?? []);
+	const issueWatchers = issue.watchers ?? [];
 	const { t } = useTranslation();
+
+	useIO(WebApi.IO.Types.Issue, (io) => {
+		io.on(WebApi.IO.IssueActions.UpdateIssue, (id: string, data: WebApi.Result.IssueResult) => {
+			if (id === issue.id) {
+				setIssue(data);
+			}
+		});
+
+		io.on(WebApi.IO.IssueActions.DeleteIssue, (id: string) => {
+			if (id === issue.id) {
+				NotificationManager.warning(
+					`${t('issue')} ${issue.issueKey} ${t('issue_was_deleted_message_part_2')}`,
+					t('warning'),
+					6000,
+				);
+			}
+		});
+	});
+
 	const dispatch = useDispatch();
 	const user = useSelector((state: RootState) => state.auth.user);
 
@@ -32,18 +61,6 @@ const IssuePageInfoColumn: React.FC<Props> = ({ issue, initialIssue, leftAligned
 
 	const watch = () => {
 		dispatch(watchIssue({ id: issue.id }));
-		const newWatchers = [...issueWatchers];
-
-		if (watching) {
-			newWatchers.splice(
-				newWatchers.findIndex((watcher) => watcher.id === user.id),
-				1,
-			);
-		} else {
-			newWatchers.push(user);
-		}
-
-		setIssueWatchers(newWatchers);
 	};
 
 	return (
@@ -52,10 +69,19 @@ const IssuePageInfoColumn: React.FC<Props> = ({ issue, initialIssue, leftAligned
 				style={{
 					...(leftAligned ? {} : { position: 'absolute', right: 10, top: -5 }),
 					width: 400,
+					paddingBottom: 10,
 				}}
 			>
 				<Button.Group style={{ marginTop: 10 }} fluid>
-					<Dropdown button className="icon" labeled floating icon="eye" text={String(issueWatchers.length)}>
+					<Dropdown
+						button
+						className="icon"
+						labeled
+						title={watching ? t('watching') : t('not_watching')}
+						floating
+						icon={<Icon name={watching ? 'eye' : 'eye slash'} color={watching ? 'green' : 'grey'} />}
+						text={String(issueWatchers.length)}
+					>
 						<Dropdown.Menu>
 							<Dropdown.Header>{t('watchers')}</Dropdown.Header>
 							<Dropdown.Item onClick={watch}>{watchButtonText}</Dropdown.Item>
@@ -86,7 +112,7 @@ const IssuePageInfoColumn: React.FC<Props> = ({ issue, initialIssue, leftAligned
 				{toPageLink ? (
 					<h4>
 						<a rel="noopener noreferrer" target="_blank" href={`/issue/${issue.issueKey}`}>
-							Go to issue page
+							Go to issue page #{issue.issueKey}
 						</a>
 					</h4>
 				) : (
@@ -116,19 +142,37 @@ const IssuePageInfoColumn: React.FC<Props> = ({ issue, initialIssue, leftAligned
 				{issue.sprint ? issue.sprint.sprintName : t('no')}
 				<h4>{t('links')}</h4>
 				{issue.links && issue.links.length
-					? issue.links.map((l, i) => (
-							<a rel="noopener noreferrer" target="_blank" href={l} key={i} style={{ marginRight: 10 }}>
-								{l}
+					? issue.links.map((link, i) => (
+							<a
+								rel="noopener noreferrer"
+								target="_blank"
+								href={link}
+								key={i}
+								style={{ marginRight: 10 }}
+							>
+								{link}
 							</a>
 					  ))
 					: t('no')}
 				<h4>{t('attachments')}</h4>
 				{issue.attachments && issue.attachments.length
-					? issue.attachments.map((a, i) => (
-							<a rel="noopener noreferrer" target="_blank" href={a} key={i} style={{ marginRight: 10 }}>
-								{a}
-							</a>
-					  ))
+					? issue.attachments.map((link, i) => {
+							const fname = link.slice(link.lastIndexOf('/') + 1);
+
+							return (
+								<Popup
+									key={i}
+									openOnTriggerMouseEnter
+									closeOnPortalMouseLeave
+									trigger={<span style={{ marginRight: 10 }}>{fname}</span>}
+								>
+									{isImage(fname) ? <Image src={link} alt="Image" /> : ''}
+									<a href={link} download>
+										{t('click_to_download')}
+									</a>
+								</Popup>
+							);
+					  })
 					: t('no')}
 				<h4>{t('labels')}</h4>
 				{issue.labels && issue.labels.length
@@ -146,11 +190,7 @@ const IssuePageInfoColumn: React.FC<Props> = ({ issue, initialIssue, leftAligned
 				</Label>
 			</div>
 			<ContextProvider customInitalState={initialIssue}>
-				<UpdateIssueModal
-					onSubmit={() => window.location.reload()}
-					current={initialIssue}
-					getOpenFunc={(open) => (openEditModal = open)}
-				/>
+				<UpdateIssueModal current={initialIssue} getOpenFunc={(open) => (openEditModal = open)} />
 			</ContextProvider>
 		</>
 	);

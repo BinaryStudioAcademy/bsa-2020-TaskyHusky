@@ -11,7 +11,7 @@ import styles from './styles.module.scss';
 import CustomInput from 'components/common/Input/CustomInput';
 import { generateKey } from 'commonLogic/keyGenerator';
 import * as validationMessage from 'constants/ValidationMessages';
-import { validProjectName, validProjectKey, validGitHiubUrl } from 'helpers/validationRules';
+import { validProjectName, validProjectKey, validGitHubUrl } from 'helpers/validationRules';
 import icons from 'assets/images/project';
 
 type Template = keyof typeof WebApi.Board.BoardType;
@@ -29,6 +29,7 @@ const CreateProjectModal: React.FC<Props> = ({ children }) => {
 		(rootState: RootState) => rootState.createProject,
 	);
 
+	const [isModalOpened, setIsModalOpened] = useState<boolean>(false);
 	const [isKeyTouched, setIsKeyTouched] = useState(false);
 	const [isTemplatesView, setIsTemplatesView] = useState(false);
 
@@ -41,8 +42,6 @@ const CreateProjectModal: React.FC<Props> = ({ children }) => {
 	const [isKeyValid, setIsKeyValid] = useState<boolean>(true);
 	const [isGithubUrlValid, setIsGithubUrlValid] = useState<boolean>(true);
 	const [isValidErrorShown, setIsValidErrorShown] = useState<boolean>(false);
-
-	const [isModalOpened, setIsModalOpened] = useState<boolean>(false);
 
 	const { description, image } = templatesInformation[template];
 
@@ -84,6 +83,7 @@ const CreateProjectModal: React.FC<Props> = ({ children }) => {
 
 	const onModalClose = () => {
 		setIsTemplatesView(false);
+
 		if (isError) {
 			dispatch(actions.resetState());
 			return;
@@ -177,7 +177,7 @@ const CreateProjectModal: React.FC<Props> = ({ children }) => {
 									setData={setGithubUrl}
 									placeholder="Enter your project's GitHub URL"
 									popUpContent={validationMessage.VM_GITHUB_URL}
-									validation={validGitHiubUrl}
+									validation={validGitHubUrl}
 								/>
 							</Form.Field>
 						</Form>

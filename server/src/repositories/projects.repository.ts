@@ -12,9 +12,18 @@ export class ProjectsRepository extends Repository<Projects> {
 			.createQueryBuilder('project')
 			.leftJoinAndSelect('project.lead', 'lead')
 			.leftJoinAndSelect('project.users', 'users')
+			.leftJoinAndSelect('project.boards', 'boards')
 			.leftJoin('project.users', 'user')
 			.where('project.id = :id', { id })
 			.andWhere('user.id = :userId', { userId })
+			.getOne();
+	}
+
+	getWithIssuesById(id: string): Promise<Projects | undefined> {
+		return getRepository(Projects)
+			.createQueryBuilder('project')
+			.leftJoinAndSelect('project.issues', 'issues')
+			.where('project.id = :id', { id })
 			.getOne();
 	}
 
@@ -26,6 +35,7 @@ export class ProjectsRepository extends Repository<Projects> {
 		return getRepository(Projects)
 			.createQueryBuilder('project')
 			.leftJoinAndSelect('project.lead', 'lead')
+			.leftJoinAndSelect('project.boards', 'boards')
 			.leftJoin('project.users', 'users')
 			.where('users.id = :id', { id })
 			.getMany();

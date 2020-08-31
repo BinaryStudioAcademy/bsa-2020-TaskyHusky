@@ -1,5 +1,5 @@
 import React from 'react';
-import { Input, Dropdown, Checkbox, Icon, DropdownItemProps } from 'semantic-ui-react';
+import { Dropdown, Checkbox, Icon, DropdownItemProps } from 'semantic-ui-react';
 import styles from './styles.module.scss';
 import { FilterPartState } from 'containers/AdvancedSearch/logic/state';
 
@@ -41,8 +41,6 @@ const MoreFilterDefsDropdown = ({
 			className={styles.moreFilterDropdown}
 		>
 			<Dropdown.Menu className={styles.dropdownMenu} onClick={(e: Event) => e.stopPropagation()}>
-				<Input placeholder={'Search criteria'} icon="search" iconPosition="left" />
-				<Dropdown.Divider />
 				<Dropdown.Header icon="filter" content={'Criteria'} />
 				<Dropdown.Menu scrolling>
 					{additionalFilterParts.map(({ id, filterDef }) => (

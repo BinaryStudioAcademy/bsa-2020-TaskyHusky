@@ -2,11 +2,7 @@ import React from 'react';
 import WorkProjectBlock from 'components/WorkProjectBlock';
 
 interface Props {
-	projects: Array<{
-		name: string;
-		id: string;
-		category?: string;
-	}>;
+	projects: Array<WebApi.Entities.Projects>;
 	modeToShow: string;
 }
 

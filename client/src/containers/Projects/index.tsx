@@ -1,24 +1,22 @@
 import React, { useState, ChangeEvent, useMemo } from 'react';
 import { Input, Button } from 'semantic-ui-react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { RootState } from 'typings/rootState';
 import CreateProjectModal from '../CreateProjectModal';
 import styles from './styles.module.scss';
 import Spinner from 'components/common/Spinner';
 
 import { useTranslation } from 'react-i18next';
-import * as generalProjectActions from 'components/ProjectsCommon/logic/actions';
-import * as actions from './logic/actions';
 import searchResult from 'assets/images/search-result.svg';
 import ProjectsTable from './table';
 
 const Projects: React.FC = () => {
 	const { t } = useTranslation();
-	const dispatch = useDispatch();
 	const { projects, isLoading } = useSelector((rootState: RootState) => rootState.projects);
-	const { isDeleted: isProjectDeleted, isLoading: isDeleting } = useSelector(
-		(rootState: RootState) => rootState.projectCommon,
-	);
+
+	const currentUser = useSelector((rootState: RootState) => rootState.auth.user);
+	const { isLoading: isDeleting } = useSelector((rootState: RootState) => rootState.projectCommon);
+
 	const [searchName, setSearchName] = useState<string>('');
 
 	const filteredProjects = useMemo(() => {
@@ -29,11 +27,6 @@ const Projects: React.FC = () => {
 		const searchString = new RegExp(searchName, 'i');
 		return projects.filter(({ name }) => searchString.test(name));
 	}, [searchName, projects]);
-
-	if (isProjectDeleted) {
-		dispatch(generalProjectActions.resetProjectDeletingState());
-		dispatch(actions.startLoading());
-	}
 
 	const onSearch = (event: ChangeEvent<HTMLInputElement>) => {
 		const searchValue = event.target.value;
@@ -57,7 +50,7 @@ const Projects: React.FC = () => {
 				) : (
 					<>
 						{filteredProjects.length > 0 ? (
-							<ProjectsTable projects={filteredProjects} />
+							<ProjectsTable projects={filteredProjects} currentUser={currentUser} />
 						) : (
 							<div className={styles.imgWrapper}>
 								<div className={styles.content}>

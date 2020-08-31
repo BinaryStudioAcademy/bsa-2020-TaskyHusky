@@ -1,6 +1,7 @@
 import { MigrationInterface, QueryRunner, getRepository, getCustomRepository } from 'typeorm';
 import { UserRepository } from '../repositories/user.repository';
 import { Projects } from '../entity/Projects';
+import { UserProfile } from '../entity/UserProfile';
 
 export class ProjectsPeople1597700889853 implements MigrationInterface {
 	public async up(queryRunner: QueryRunner): Promise<void> {
@@ -19,8 +20,8 @@ export class ProjectsPeople1597700889853 implements MigrationInterface {
 			},
 		});
 
-		const user1 = await userRepository.getByEmail('test@test.com');
-		const user2 = await userRepository.getByEmail('test1@test.com');
+		const user1 = (await userRepository.getByEmail('test@test.com')) as UserProfile;
+		const user2 = (await userRepository.getByEmail('test1@test.com')) as UserProfile;
 
 		user1.projects = [project2, project1];
 		user2.projects = [project1, project2];

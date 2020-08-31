@@ -1,10 +1,11 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToMany, JoinTable } from 'typeorm';
-import { MinLength, IsEmail, IsString, IsNotEmpty, IsUUID, Length, IsLowercase } from 'class-validator';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToMany, JoinTable, ManyToOne } from 'typeorm';
+import { MinLength, IsEmail, IsNotEmpty, Length, IsLowercase } from 'class-validator';
 import { Issue } from './Issue';
 import { Board } from './Board';
 import { Filter } from './Filter';
 import { Projects } from './Projects';
 import { Team } from './Team';
+import { Notification } from './Notification';
 
 @Entity()
 export class UserProfile {
@@ -61,6 +62,12 @@ export class UserProfile {
 	@Column({ type: 'timestamp without time zone', name: 'resetPasswordExpires', nullable: true })
 	public resetPasswordExpires?: Date | null;
 
+	@Column({ type: 'character varying', name: 'resetEmailToken', nullable: true })
+	public resetEmailToken?: string | null;
+
+	@Column({ type: 'timestamp without time zone', name: 'resetEmailExpires', nullable: true })
+	public resetEmailExpires?: Date | null;
+
 	@OneToMany((type) => Filter, (filter) => filter.owner)
 	filters?: Filter[];
 
@@ -104,6 +111,9 @@ export class UserProfile {
 
 	@ManyToMany((type) => Issue, (issue) => issue.watchers)
 	watchingIssues?: Issue[];
+
+	@OneToMany((type) => Notification, (notification) => notification.user)
+	notifications?: Notification[];
 
 	constructor(userData?: Partial<UserProfile>) {
 		if (userData) {

@@ -10,5 +10,6 @@ router.post('/:id/incoming-invites', teammatesController.changeInviteStatus);
 router.get('/:id/pending-invites', teammatesController.getPendingInvitation);
 router.get('/:id/teammates', teammatesController.getTeammates);
 router.post('/:id/pending-invites', teammatesController.createInvite);
+router.post('/search', teammatesController.getOneTeammate);
 
 export default router;

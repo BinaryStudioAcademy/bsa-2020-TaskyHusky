@@ -6,21 +6,9 @@ import { UserProfile } from '../entity/UserProfile';
 import { ErrorResponse } from '../helpers/errorHandler.helper';
 import { hashPassword } from '../helpers/password.helper';
 import HttpStatusCode from '../constants/httpStattusCode.constants';
-import { transporter } from '../../config/nodeMailer.config';
 import { expirationTime } from '../constants/resetPassword.constants';
-import { sendToken } from '../services/email.service';
-
-async function wrappedVerify() {
-	return new Promise((resolve, reject) => {
-		transporter.verify((error, success) => {
-			if (error) {
-				reject(error);
-			} else {
-				resolve(true);
-			}
-		});
-	});
-}
+import { sendMailWithSes } from '../services/email.service';
+import { resetPasswordTemplate } from '../helpers/emailTemplates.helper';
 
 class ResetPasswordController {
 	forgotPassword = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -28,8 +16,6 @@ class ResetPasswordController {
 		const { email } = req.body;
 
 		try {
-			await wrappedVerify();
-
 			const user = <UserProfile>await userRepository.getByEmail(email);
 			if (!user) throw new Error('User with this email does not exist');
 
@@ -45,7 +31,11 @@ class ResetPasswordController {
 				resetPasswordExpires,
 			});
 
-			sendToken(user.email, resetPasswordToken);
+			await sendMailWithSes({
+				to: [user.email],
+				message: resetPasswordTemplate(resetPasswordToken),
+				subject: 'Request to change password',
+			});
 			res.status(200).send(savedUser);
 		} catch (e) {
 			next(new ErrorResponse(HttpStatusCode.NOT_FOUND, e.message));
@@ -58,7 +48,7 @@ class ResetPasswordController {
 		const { token } = req.params;
 
 		try {
-			const user = <UserProfile>await userRepository.getByToken(token);
+			const user = <UserProfile>await userRepository.getByPassToken(token);
 
 			if (!user) throw new Error('Token is expired or invalid');
 

@@ -1,4 +1,5 @@
 import callWebApi from 'helpers/callApi.helper';
+import history from 'helpers/history.helper';
 
 export const getTeam = async (id: string): Promise<WebApi.Entities.Team[] | undefined> => {
 	try {
@@ -8,9 +9,10 @@ export const getTeam = async (id: string): Promise<WebApi.Entities.Team[] | unde
 		});
 		return (await res.json()) as WebApi.Entities.Team[];
 	} catch (error) {
-		window.location.replace('/not-found-404');
+		history.push('/not-found-404');
 	}
 };
+
 export const getTeamsUsers = async (id: string): Promise<WebApi.Entities.Team[] | undefined> => {
 	try {
 		const res: Response = await callWebApi({
@@ -22,6 +24,7 @@ export const getTeamsUsers = async (id: string): Promise<WebApi.Entities.Team[] 
 		console.log(error);
 	}
 };
+
 export const getTeamsProjects = async (id: string): Promise<WebApi.Entities.Team[] | undefined> => {
 	try {
 		const res: Response = await callWebApi({
@@ -79,4 +82,57 @@ export const fetchTeams = async () => {
 	});
 
 	return (await res.json()) as WebApi.Entities.Team[];
+};
+
+export const findUsersColleagues = async (id: string, match?: string) => {
+	const result = await callWebApi({
+		method: 'POST',
+		endpoint: 'user/search',
+		body: {
+			id,
+			match,
+		},
+	});
+	const searchResult: { data: WebApi.Entities.UserProfile; key: string; title?: string }[] = [];
+	const users = await result.json();
+	users.forEach((el: WebApi.Entities.UserProfile) => {
+		searchResult.push({
+			data: el,
+			key: el.id,
+			title: el.firstName,
+		});
+	});
+	return searchResult;
+};
+
+export const addUsersToTeam = async (id: string, users?: WebApi.Entities.UserProfile[]) => {
+	const result = await callWebApi({
+		method: 'POST',
+		endpoint: 'team/connect-to-team',
+		body: {
+			id,
+			users,
+		},
+	});
+	return (await result.json()) as WebApi.Entities.UserProfile[];
+};
+
+export const deleteTeamRequest = async (id: string) => {
+	const result = await callWebApi({
+		method: 'DELETE',
+		endpoint: `team/${id}`,
+	});
+	return await result.json();
+};
+
+export const removeUserFromTeamRequest = async (userId: string, teamId: string) => {
+	const result = await callWebApi({
+		method: 'POST',
+		endpoint: `team/users`,
+		body: {
+			userId,
+			teamId,
+		},
+	});
+	return await result.json();
 };

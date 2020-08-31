@@ -18,6 +18,15 @@
   font-size: 14px;
 }
 
+.forgotPass {
+  @include content-btn;
+  border: none !important;
+  color: #2185d0 !important;
+  display: block !important;
+  margin-top: 10px !important;
+  padding-left: 0 !important;
+}
+
 .submitButton {
   margin-top: 20px !important;
   @include content-btn;

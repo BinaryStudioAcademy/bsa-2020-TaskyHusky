@@ -1,4 +1,5 @@
 import { UserModel } from './User';
+import { Sprint } from '../entity/Sprint';
 import { Projects } from '../entity/Projects';
 
 interface UserAuthResult {
@@ -6,7 +7,7 @@ interface UserAuthResult {
 	jwtToken: string;
 }
 
-interface IssueResult {
+export interface IssueResult {
 	id: string;
 	type: {
 		id: string;
@@ -14,11 +15,17 @@ interface IssueResult {
 		title: string;
 		icon: string;
 	};
+	status?: {
+		id: string;
+		color: string;
+		title: string;
+	};
 	summary?: string;
-	boardColumn?: string;
+	boardColumn?: BoardColumnResult;
 	labels?: string[];
 	attachments?: string[];
 	links?: string[];
+	board?: BoardResult;
 	priority: {
 		id: string;
 		color: string;
@@ -26,7 +33,7 @@ interface IssueResult {
 		icon: string;
 	};
 	description?: string;
-	sprint?: SprintModel;
+	sprint?: Sprint;
 	project?: Projects;
 	issueKey?: string;
 	watchers?: UserModel[];
@@ -79,4 +86,14 @@ interface BoardProjectsResult {
 	createdDate?: Date;
 	updatedDate?: Date;
 	deletedDate?: Date;
+}
+
+interface NotificationResult {
+	id: string;
+	title?: string;
+	link?: string;
+	user: UserModel;
+	text: string;
+	isViewed: boolean;
+	createdAt: Date;
 }
