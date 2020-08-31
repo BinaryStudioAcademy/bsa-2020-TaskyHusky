@@ -367,4 +367,8 @@ export const ru = {
 	choose_scrum_item_4: 'сэкономить время и деньги',
 	more_about: 'Больше о',
 	story_point: 'Оценка сложности',
+	user_does_not_exist: 'Пользователя не существует',
+	sign_in: 'Войти',
+	create_an_account: 'Создать учетную запись',
+	already_have_a_account: 'У Вас уже есть аккаунт?',
 };

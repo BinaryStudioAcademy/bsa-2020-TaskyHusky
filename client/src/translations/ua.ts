@@ -360,4 +360,8 @@ export const ua = {
 	choose_scrum_item_4: 'заощадити час і гроші',
 	more_about: 'Докладніше про',
 	story_point: 'Оцінка складності',
+	user_does_not_exist: 'Такого користувача не існує',
+	sign_in: 'Увійти',
+	create_an_account: 'Створити обліковий запис',
+	already_have_a_account: 'Ви вже маєте обліковий запис?',
 };
