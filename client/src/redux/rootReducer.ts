@@ -1,3 +1,5 @@
+import { projectLabelReducer } from './../containers/ProjectLabels/logic/reducer';
+import { projectPeopleReducer } from './../containers/ProjectPeople/logic/reducer';
 import { projectCommonReducer } from 'components/ProjectsCommon/logic/reducer';
 import { projectReducer } from 'containers/ProjectSettings/logic/reducer';
 import { createProjectReducer } from 'containers/CreateProjectModal/logic/reducer';
@@ -24,6 +26,8 @@ const rootReducer: Reducer<RootState> = combineReducers({
 	user: userProfileReducer,
 	projects: projectsReducer,
 	project: projectReducer,
+	projectLabel: projectLabelReducer,
+	projectPeople: projectPeopleReducer,
 	projectCommon: projectCommonReducer,
 	createProject: createProjectReducer,
 	auth: authReducer,
