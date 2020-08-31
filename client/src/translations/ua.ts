@@ -330,4 +330,5 @@ export const ua = {
 	success: 'Успіх',
 	error: 'Помилка',
 	info: 'Інформація',
+	story_point: 'Оцінка складності',
 };

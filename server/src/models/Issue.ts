@@ -16,6 +16,7 @@ export interface PartialIssue {
 	assigned?: string;
 	creator?: string;
 	watchers?: string[];
+	storyPoint?: number;
 }
 
 export interface PartialIssueComment {
