@@ -16,7 +16,13 @@ export class ProjectLabel {
 	@IsNotEmpty()
 	@IsString()
 	@IsHexColor()
-	color!: string;
+	textColor!: string;
+
+	@Column()
+	@IsNotEmpty()
+	@IsString()
+	@IsHexColor()
+	backgroundColor!: string;
 
 	@ManyToOne((type) => Projects, (project) => project.labels)
 	project!: Projects;
