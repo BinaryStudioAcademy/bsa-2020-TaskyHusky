@@ -1,6 +1,5 @@
 import React, { useState, memo } from 'react';
-import { Modal, Button, Form, Image, Card } from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
+import { Modal, Button, Form, Image, Card, Popup, Header, List } from 'semantic-ui-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { RootState } from 'typings/rootState';
@@ -217,7 +216,10 @@ const CreateProjectModal: React.FC<Props> = ({ children }) => {
 					</Modal.Header>
 					<Modal.Content className={styles.cards_container}>
 						{Object.entries(templatesInformation).map(
-							([name, { image, description }]: [any, MethodologyInfo]) => (
+							([name, { image, description, whyHeader, whyItems, readMoreLink }]: [
+								any,
+								MethodologyInfo,
+							]) => (
 								<Card
 									key={name}
 									className={styles.card__container}
@@ -226,9 +228,33 @@ const CreateProjectModal: React.FC<Props> = ({ children }) => {
 									description={description}
 									extra={
 										<div className={styles.card__actions_container}>
-											<Link className={styles.card__link} to={''}>
-												{t('whats_this')}
-											</Link>
+											<Popup
+												trigger={<p className={styles.card__link}>{t('whats_this')}</p>}
+												flowing
+												hoverable
+												content={
+													<div className={styles.whyPopup}>
+														<Header as="h5" className={styles.whyHeader}>
+															{whyHeader}
+														</Header>
+														<List bulleted>
+															{whyItems.map((item) => (
+																<List.Item key="item">
+																	<List.Content>{item}</List.Content>
+																</List.Item>
+															))}
+														</List>
+														<a
+															href={readMoreLink}
+															target="_blank"
+															rel="noopener noreferrer"
+															className={styles.readMore}
+														>
+															More about {name}
+														</a>
+													</div>
+												}
+											/>
 											<Button
 												className={styles.card__select_template}
 												onClick={() => selectTemplate(name)}
