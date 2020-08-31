@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Modal, Form, Button, Header, Icon, Divider } from 'semantic-ui-react';
+import { Modal, Form, Button, Header, Icon, Divider, InputOnChangeData } from 'semantic-ui-react';
 import { useCreateIssueModalContext } from './logic/context';
 import TagsInput from 'components/common/TagsInput';
 import { connect, useDispatch } from 'react-redux';
@@ -7,6 +7,8 @@ import { RootState } from 'typings/rootState';
 import { createIssue } from 'pages/IssuePage/logic/actions';
 import { useTranslation } from 'react-i18next';
 import { getUsername } from 'helpers/getUsername.helper';
+import { isNumber } from 'util';
+import { IssueConstants } from 'constants/Issue';
 import IssueFileInput from 'components/IssueFileInput';
 import { initialState } from './logic/initalState';
 
@@ -47,6 +49,7 @@ const CreateIssueModalBody: React.FC<Props> = ({
 	const { t } = useTranslation();
 	const context = useCreateIssueModalContext();
 	const [isOpened, setIsOpened] = useState<boolean>(false);
+	const [isStoryPointValid, setIsStoryPointValid] = useState(true);
 	const [attachments, setAttachments] = useState<File[]>([]);
 	const dispatch = useDispatch();
 
@@ -103,7 +106,7 @@ const CreateIssueModalBody: React.FC<Props> = ({
 		const projectCond = !projectID ? context.data.project : true;
 		const allFields = context.data.type && context.data.summary && context.data.priority && projectCond;
 
-		if (!allFields) {
+		if (!allFields || !isStoryPointValid) {
 			return;
 		}
 
@@ -123,6 +126,22 @@ const CreateIssueModalBody: React.FC<Props> = ({
 		}
 
 		setIsOpened(false);
+	};
+
+	const handleStoryPointChange = (event: React.ChangeEvent<HTMLInputElement>, data: InputOnChangeData) => {
+		const { value } = data;
+		const number = parseInt(value, 10);
+		if (value.length === 0) {
+			context.set('storyPoint', data.value);
+			setIsStoryPointValid(true);
+			return;
+		}
+		if (isNumber(number) && number <= IssueConstants.maxStoryPoint && number >= IssueConstants.minStoryPoint) {
+			context.set('storyPoint', data.value);
+			setIsStoryPointValid(true);
+		} else {
+			setIsStoryPointValid(false);
+		}
 	};
 
 	const clearContext = () => {
@@ -214,6 +233,16 @@ const CreateIssueModalBody: React.FC<Props> = ({
 							placeholder={t('assigned')}
 							options={usersOpts}
 							onChange={(event, data) => context.set('assigned', data.value)}
+						/>
+					</Form.Field>
+					<Form.Field>
+						<label>{t('story_point')}</label>
+						<Form.Input
+							type="number"
+							error={!isStoryPointValid}
+							placeholder={t('story_point')}
+							fluid
+							onChange={handleStoryPointChange}
 						/>
 					</Form.Field>
 					<Form.Field>

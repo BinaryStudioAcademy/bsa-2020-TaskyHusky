@@ -268,6 +268,8 @@ export const ru = {
 	mark_all_as_read: 'Отметить всё как прочитаное',
 	watching: 'Отслеживается',
 	not_watching: 'Не отслеживается',
+	add: 'Добавить',
+	search_name_email: 'Поиск по имени или email адресу',
 	sorry_alert: undefined,
 	not_suported_push_alert: 'Ваш браузер не поддерживает push-уведомления.',
 	denied_push_alert: 'Разрешение на push-уведомления не предоставлено.',
@@ -346,4 +348,5 @@ export const ru = {
 	choose_scrum_item_3: 'строить продукт постепенно',
 	choose_scrum_item_4: 'сэкономить время и деньги',
 	more_about: 'Больше о',
+	story_point: 'Оценка сложности',
 };

@@ -8,7 +8,7 @@ import {
 	findUsersColleagues,
 	addUsersToTeam,
 	deleteTeamRequest,
-	removeUserFromTeamRequest
+	removeUserFromTeamRequest,
 } from 'services/team.service';
 
 import { all, put, takeEvery, call } from 'redux-saga/effects';
@@ -29,11 +29,10 @@ type Props = {
 };
 
 type RemoveUserFromTeam = {
-	userId: string,
-	teamId: string,
-	type: string
-}
-
+	userId: string;
+	teamId: string;
+	type: string;
+};
 
 export function* fetchTeam(props: Props) {
 	try {
@@ -173,6 +172,6 @@ export default function* teamSaga() {
 		watchSearchPeopleLoading(),
 		watchAddPeopleToTeam(),
 		watchDeleteTeam(),
-		watchDeletePeopleFromTeam()
+		watchDeletePeopleFromTeam(),
 	]);
 }

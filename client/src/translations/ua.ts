@@ -267,6 +267,8 @@ export const ua = {
 	mark_all_as_read: 'Відмітити все як прочитане',
 	watching: 'Відстежуєтся',
 	not_watching: 'Не відстежуєтся',
+	add: 'Додати',
+	search_name_email: 'Пошук по імені або email адресою',
 	send_confirm_link: 'Відправити посилання для підтвердження e-mail',
 	confirm_email_change: 'Підтвердіть змінення email',
 	type_pass_confirm_email: 'Введіть пароль для підтвердження зміни email',
@@ -339,4 +341,5 @@ export const ua = {
 	choose_scrum_item_3: 'будувати продукт крок за кроком',
 	choose_scrum_item_4: 'заощадити час і гроші',
 	more_about: 'Докладніше про',
+	story_point: 'Оцінка складності',
 };
