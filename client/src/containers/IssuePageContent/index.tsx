@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Card, Comment, List } from 'semantic-ui-react';
+import { Button, Comment } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 import IssueCommentForm from 'components/IssueCommentForm';
 import { getComments, getCommits } from 'services/issue.service';
@@ -9,9 +9,7 @@ import { RootState } from 'typings/rootState';
 import styles from './styles.module.scss';
 import IssuePageInfoColumn from 'components/IssuePageInfoColumn';
 import { useIO } from 'hooks/useIO';
-import { Link } from 'react-router-dom';
-import { IGitCommit } from '../../typings/gitTypes';
-import { getDateString } from '../../helpers/time.helper';
+import IssueCommit from '../../components/IssueCommit/issueCommit';
 
 interface Props {
 	issue: WebApi.Result.IssueResult;
@@ -28,7 +26,7 @@ const IssuePageContent: React.FC<Props> = ({ issue: givenIssue }) => {
 
 	const [issue, setIssue] = useState<WebApi.Result.IssueResult>(givenIssue);
 	const [comments, setComments] = useState<WebApi.Result.IssueCommentResult[]>([]);
-	const [commits, setCommits] = useState<IGitCommit[]>([]);
+	const [commits, setCommits] = useState<WebApi.Result.CommitResult[]>([]);
 	const [mustFetchComments, setMustFetchComments] = useState<boolean>(true);
 	const { t } = useTranslation();
 	const authData = useSelector((state: RootState) => state.auth);
@@ -103,36 +101,19 @@ const IssuePageContent: React.FC<Props> = ({ issue: givenIssue }) => {
 				<Button onClick={() => setMenuState(MenuStates.commentsShown)}>{t('comments')}</Button>
 				<Button onClick={() => setMenuState(MenuStates.commitsShown)}>{t('commits')}</Button>
 				{menuState === MenuStates.commitsShown && (
-					<List>
-						{commits.map((commit, index) => (
-							<List.Item key={index}>
-								<Card>
-									<Card.Content>
-										<Card.Header>
-											<Link
-												to={{ pathname: `https://github.com/${commit.author}` }}
-												target="_blank"
-											>
-												{commit.author}
-											</Link>
-										</Card.Header>
-										<Card.Meta>{getDateString(new Date(commit.time))}</Card.Meta>
-										<Card.Description>{commit.message}</Card.Description>
-									</Card.Content>
-									<Card.Content extra>
-										<Link
-											to={{
-												pathname: `https://github.com/witcher1359/testFeature/commit/${commit.hash}`,
-											}}
-											target="_blank"
-										>
-											{commit.hash.slice(0, 6)}
-										</Link>
-									</Card.Content>
-								</Card>
-							</List.Item>
+					<Comment.Group
+						style={{
+							maxHeight: '50vh',
+							overflowY: 'auto',
+							width: '100%',
+							maxWidth: '100%',
+							marginBottom: 20,
+						}}
+					>
+						{commits.map((commit) => (
+							<IssueCommit commit={commit} key={commit.hash} />
 						))}
-					</List>
+					</Comment.Group>
 				)}
 				{menuState === MenuStates.commentsShown && (
 					<Comment.Group

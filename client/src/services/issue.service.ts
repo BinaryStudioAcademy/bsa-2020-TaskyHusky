@@ -1,7 +1,6 @@
 import { Sort } from 'containers/AdvancedSearch/IssueTable/index';
 import callWebApi from 'helpers/callApi.helper';
 import { IssueFilter } from 'containers/AdvancedSearch/logic/actionTypes';
-import { IGitCommit } from '../typings/gitTypes';
 
 export const createIssue = async (params: WebApi.Entities.Issue): Promise<WebApi.Entities.Issue> => {
 	const res: Response = await callWebApi({
@@ -138,13 +137,13 @@ export const getComments = async (id: string): Promise<WebApi.Result.IssueCommen
 	return (await res.json()) as WebApi.Result.IssueCommentResult[];
 };
 
-export const getCommits = async (issue: string): Promise<IGitCommit[]> => {
+export const getCommits = async (issue: string): Promise<WebApi.Result.CommitResult[]> => {
 	const res: Response = await callWebApi({
 		method: 'GET',
 		endpoint: `commits/${issue}`,
 	});
 
-	return (await res.json()) as IGitCommit[];
+	return (await res.json()) as WebApi.Result.CommitResult[];
 };
 
 export const getBacklogByBoardId = async (id: string): Promise<WebApi.Entities.Issue[]> => {

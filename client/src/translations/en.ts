@@ -291,4 +291,5 @@ export const en = {
 	watch: 'Watch',
 	unwatch: 'Unwatch',
 	commits: 'Git commits',
+	commits_view_full: 'View full commit',
 };

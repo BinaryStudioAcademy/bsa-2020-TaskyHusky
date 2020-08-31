@@ -37,6 +37,7 @@ export const getMessages = async (message: string, githubUrl = 'https://github.c
 				hash: commit.sha,
 				message: commit.commit.message,
 				author: commit.commit.author.name,
+				avatar:commit.author.avatar_url,
 				time: commit.commit.author.date,
 				files:filesToReturn
 			};
