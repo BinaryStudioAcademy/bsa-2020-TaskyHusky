@@ -42,8 +42,9 @@ export function* loadIssuesRequest(action: ReturnType<typeof actions.loadIssuesT
 export function* updateSprintRequest(action: ReturnType<typeof actions.updateSprintDataTrigger>) {
 	try {
 		const { sprint } = action;
-		const response: any = yield call(updateSprint, sprint);
+		const response: WebApi.Entities.Sprint = yield call(updateSprint, sprint);
 		yield put(actions.updateSprintDataSuccess({ sprint: response }));
+		yield put(actions.loadBacklogTrigger({ boardId: response.board?.id as string }));
 		NotificationManager.success('Sprint was successfully updated', 'Success');
 	} catch (error) {
 		NotificationManager.error(error.clientException.message, 'Error');
@@ -75,7 +76,7 @@ export function* createIssueSuccess(action: ReturnType<typeof createIssue>) {
 	try {
 		const {
 			data: { sprint: sprintId, board: boardId },
-		}: { data: { sprint?: string; board?: string } } = action;
+		} = action;
 
 		if (sprintId) {
 			yield put(actions.loadIssuesTrigger({ sprintId }));

@@ -2,27 +2,29 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './styles.module.scss';
 import teamIcon from 'icons/profile/teamIcon.svg';
+import { Link } from 'react-router-dom';
 
 interface Props {
-	mockData: any;
+	teams: Array<WebApi.Entities.Team>;
 }
 
 const ProfileTeamBlock: React.FC<Props> = (props: Props) => {
 	const { t } = useTranslation();
-	const { mockData } = props;
+	const { teams } = props;
 	return (
 		<div>
 			<h3 className={styles.header}>{t('team')}</h3>
-			{mockData.teams.map((item: any) => (
+			{teams.map((item: WebApi.Entities.Team) => (
 				<div key={item.id} className={styles.item}>
-					<div className={styles.groupIcon}>
+					<div className={styles.groupIcon} style={{ backgroundColor: item.color }}>
 						<img src={teamIcon} alt="icon" />
 					</div>
 					<div className={styles.content}>
-						<span className={styles.contentPrimary}>{item.name}</span>
+						<Link to={`/team/${item.id}`}>
+							<span className={styles.contentPrimary}>{item.name}</span>
+						</Link>
 						<span className={styles.contentSecondary}>
-							{item.members}
-							{item.members === 1 ? ' member' : ' members'}
+							{item.users?.length} {item.users?.length === 1 ? 'member' : 'members'}
 						</span>
 					</div>
 				</div>

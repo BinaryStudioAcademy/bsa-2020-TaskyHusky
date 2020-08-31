@@ -7,7 +7,7 @@ interface UserAuthResult {
 	jwtToken: string;
 }
 
-interface IssueResult {
+export interface IssueResult {
 	id: string;
 	type: {
 		id: string;
@@ -15,11 +15,17 @@ interface IssueResult {
 		title: string;
 		icon: string;
 	};
+	status?: {
+		id: string;
+		color: string;
+		title: string;
+	};
 	summary?: string;
 	boardColumn?: BoardColumnResult;
 	labels?: string[];
 	attachments?: string[];
 	links?: string[];
+	board?: BoardResult;
 	priority: {
 		id: string;
 		color: string;
@@ -33,6 +39,7 @@ interface IssueResult {
 	watchers?: UserModel[];
 	assigned?: UserModel;
 	creator: UserModel;
+	storyPoint?: number;
 }
 
 interface IssueCommentResult {
@@ -96,4 +103,14 @@ interface CommitResult {
 	avatar: string,
 	time: Date,
 	files: Array<CommitFileResult>
+}
+
+interface NotificationResult {
+	id: string;
+	title?: string;
+	link?: string;
+	user: UserModel;
+	text: string;
+	isViewed: boolean;
+	createdAt: Date;
 }

@@ -4,6 +4,7 @@ export const FAIL_DELETING_PROJECT = 'PROJECTS:FAIL_DELETING_PROJECT';
 
 export const RESET_STATE = 'PROJECTS:RESET_STATE';
 
-export type ProjectId = {
+export type Project = {
 	id: string;
+	projects: WebApi.Entities.Projects[];
 };

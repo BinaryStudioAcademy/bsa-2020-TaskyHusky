@@ -2,8 +2,8 @@ export const START_LOADING = 'PROJECTS:START_LOADING';
 export const SUCCESS_LOADING = 'PROJECTS:SUCCESS_LOADING';
 export const FAIL_LOADING = 'PROJECTS:FAIL_LOADING';
 
-export const CHANGE_SORT = 'PROJECTS:CHANGE_SORT';
+export const UPDATE_PROJECTS_LIST = 'PROJECTS:UPDATE_PROJECTS_LIST';
 
-export type SuccessLoading = {
+export type ProjectsList = {
 	projects: WebApi.Entities.Projects[];
 };

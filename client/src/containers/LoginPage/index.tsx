@@ -1,18 +1,18 @@
 import React, { useState, SyntheticEvent, useEffect, useCallback } from 'react';
 import styles from './styles.module.scss';
-import { Header, Form, Divider, Segment, Button, Grid, List, Popup, Image } from 'semantic-ui-react';
-import { Link, useHistory } from 'react-router-dom';
+import { Form, Divider, Segment, Button, Grid, Popup, Image } from 'semantic-ui-react';
+import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import * as actions from './logic/actions';
 import PasswordInput from 'components/common/PasswordInput';
 import { useTranslation } from 'react-i18next';
 import validator from 'validator';
 import { normalizeEmail } from 'helpers/email.helper';
-import { NotificationManager } from 'react-notifications';
 import iconGoogle from 'assets/images/icon-google.svg';
 import GoogleLogin, { GoogleLoginResponse, GoogleLoginResponseOffline } from 'react-google-login';
-
 import { RootState } from 'typings/rootState';
+import { GoogleAuth } from 'constants/GoogleLogin';
+import { NotificationManager } from 'react-notifications';
 
 export const LoginPage: React.FC = () => {
 	const history = useHistory();
@@ -44,11 +44,12 @@ export const LoginPage: React.FC = () => {
 
 	useEffect(() => {
 		if (!authState.isEmailInDB && authState.isEmailInDB !== null && isEmailSubmitted) {
-			history.push('/signup');
+			NotificationManager.error(t('user_does_not_exist'), t('error'), 4000);
+			setEmail('');
 			setIsEmailSubmitted(false);
 			checkEmailReset();
 		}
-	}, [authState.isEmailInDB, isEmailSubmitted, history, checkEmailReset]);
+	}, [authState.isEmailInDB, isEmailSubmitted, history, checkEmailReset, t]);
 
 	const handleSubmit: (event: SyntheticEvent) => void = (event) => {
 		event.preventDefault();
@@ -67,10 +68,6 @@ export const LoginPage: React.FC = () => {
 		dispatch(actions.sendGoogleAuth({ user }));
 	};
 
-	const googleAuthFailed = () => {
-		NotificationManager.error('Error google authentication', 'Error', 4000);
-	};
-
 	const googleBtn = (props: { onClick: () => void; disabled?: boolean }) => (
 		<button onClick={props.onClick} className={styles.google_btn}>
 			<Image src={iconGoogle} className={styles.google_logo} />
@@ -81,10 +78,7 @@ export const LoginPage: React.FC = () => {
 	return (
 		<Grid verticalAlign="middle" className={styles.grid}>
 			<Grid.Column className={styles.column}>
-				<Header as="h1" color="blue" className={styles.mainHeader}>
-					{t('login_header')}
-				</Header>
-				<Segment>
+				<Segment className={styles.loginBody}>
 					<Form onSubmit={handleSubmit}>
 						<Popup
 							className={styles.errorPopup}
@@ -93,6 +87,7 @@ export const LoginPage: React.FC = () => {
 							on={[]}
 							trigger={
 								<Form.Input
+									className={styles.inputField}
 									error={!(isEmailValid || !isEmailSubmitted)}
 									placeholder={t('email')}
 									type="text"
@@ -110,29 +105,20 @@ export const LoginPage: React.FC = () => {
 						/>
 
 						{passwordInput}
-						<Button positive className={styles.continueButton} disabled={authState.loading}>
+						<Button className={styles.continueButton} disabled={authState.loading}>
 							{isEmailValid ? t('log_in') : t('continue')}
 						</Button>
-						<Divider horizontal>{t('or')}</Divider>
+						<Divider horizontal className={styles.divider}>
+							{t('or')}
+						</Divider>
 						<GoogleLogin
-							// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-							clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID!}
+							clientId={GoogleAuth.CLIENT_ID}
 							buttonText="Login"
 							render={(props) => googleBtn(props)}
 							onSuccess={googleAuth}
-							onFailure={googleAuthFailed}
-							cookiePolicy={'single_host_origin'}
+							cookiePolicy={GoogleAuth.COOKIE_POLICY}
 						/>
 					</Form>
-					<Divider />
-					<List bulleted horizontal link className={styles.list}>
-						<List.Item className={styles.listItem}>
-							<Link to="/forgot-password" children={t('cant_login')} />
-						</List.Item>
-						<List.Item className={styles.listItem}>
-							<Link to="/signup" children={t('sign_up_for_an_account')} />
-						</List.Item>
-					</List>
 				</Segment>
 			</Grid.Column>
 		</Grid>

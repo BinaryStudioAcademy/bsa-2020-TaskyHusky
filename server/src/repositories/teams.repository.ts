@@ -1,5 +1,6 @@
 import { EntityRepository, Repository, getCustomRepository } from 'typeorm';
 import { Team } from '../entity/Team';
+import { UserProfile } from '../entity/UserProfile';
 import { getRandomColor } from '../services/colorGenerator.service';
 import { UserRepository } from './user.repository';
 
@@ -72,7 +73,7 @@ export class TeamRepository extends Repository<Team> {
 		const userToAdd = await userRepository.getById(user.id);
 		if (!userToAdd) throw new Error('User with current ID not found');
 
-		return this.save({ ...restData, createdBy: userToAdd, color, links });
+		return this.save({ ...restData, createdBy: userToAdd, color, links, users: [userToAdd] });
 	}
 
 	async updateOneById(id: string, data: Team | { [key: string]: string[] }) {
@@ -82,5 +83,41 @@ export class TeamRepository extends Repository<Team> {
 
 	deleteOneById(id: string) {
 		return this.delete(id);
+	}
+
+	// eslint-disable-next-line consistent-return
+	async addPeopleToTeam(id: string, users: UserProfile[]) {
+		const team = await this.createQueryBuilder('Team')
+			.where('Team.id = :id', { id })
+			.leftJoinAndSelect('Team.users', 'Users')
+			.getOne();
+
+		if (!team) {
+			throw new Error('Team was not found');
+		}
+
+		users.forEach((user: UserProfile): void => {
+			const isExist = team.users?.find((el) => el.id === user.id);
+			if (!isExist) {
+				team?.users?.push(user);
+			}
+		});
+
+		return this.save(team);
+	}
+
+	async removeUserFromTeam(userId: string, teamId: string) {
+		const team = await this.createQueryBuilder('Team')
+			.where('Team.id = :id', { id: teamId })
+			.leftJoinAndSelect('Team.users', 'Users')
+			.getOne();
+
+		if (!team) {
+			throw new Error('Team was not found');
+		}
+
+		team.users = team.users?.filter((user: any) => user.id !== userId);
+
+		return this.save(team);
 	}
 }

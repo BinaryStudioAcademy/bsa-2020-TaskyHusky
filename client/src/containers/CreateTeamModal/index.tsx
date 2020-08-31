@@ -7,7 +7,8 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import * as actions from 'containers/People/logic/actions';
 import { RootState } from '../../typings/rootState';
-
+import CustomValidator from 'helpers/validation.helper';
+import { NotificationManager } from 'react-notifications';
 interface Props {
 	isOpen: boolean;
 	closeClb: () => void;
@@ -15,7 +16,7 @@ interface Props {
 
 const AddTeamPopup: React.FC<Props> = ({ isOpen = false, closeClb }): ReactElement => {
 	const [teamName, setTeamName] = useState<string>('');
-	const [errorTeamName, setErrorTeamName] = useState<null | string>(null);
+	const [isErrorShown, setErrorShown] = useState<boolean>(false);
 	const authStore = useSelector((state: RootState) => state.auth);
 	const userId = authStore.user?.id || '';
 
@@ -23,22 +24,40 @@ const AddTeamPopup: React.FC<Props> = ({ isOpen = false, closeClb }): ReactEleme
 	const dispatch = useDispatch();
 
 	const handlerChange = (e: ChangeEvent<HTMLInputElement>) => {
-		setErrorTeamName(null);
 		setTeamName(e.target.value);
 	};
 
-	const handlerSubmit = async () => {
-		if (!teamName) {
-			return setErrorTeamName('Type team name please!');
-		}
+	const nameValidation = (title: string) => {
+		const validator = new CustomValidator(title);
+		const checkName = validator.checkSimpleField();
 
-		dispatch(actions.createTeam({ name: teamName, id: userId }));
-		setTeamName('');
-		closeClb();
+		if (checkName.errors.length > 0) {
+			const timeout = 6000;
+			const setErrorView = () => {
+				setErrorShown(true);
+				return setTimeout(() => setErrorShown(false), timeout);
+			};
+
+			if (!isErrorShown) {
+				NotificationManager.error(t(checkName.errors[0]), t('error'), timeout, undefined, true);
+				setErrorView();
+				return null;
+			}
+		}
+		return title;
+	};
+
+	const handlerSubmit = async () => {
+		const isValid = nameValidation(teamName);
+		if (isValid) {
+			dispatch(actions.createTeam({ name: teamName, id: userId }));
+			setTeamName('');
+			closeClb();
+		}
 	};
 
 	return (
-		<Modal open={isOpen} onClose={closeClb} closeIcon size="small">
+		<Modal open={isOpen} onClose={closeClb} size="small" dimmer="inverted">
 			<Modal.Header>{t('create_team_modal_header')}</Modal.Header>
 			<Modal.Content image scrolling>
 				<Image size="big" src={linksImg} wrapped className={style.img} />
@@ -49,7 +68,6 @@ const AddTeamPopup: React.FC<Props> = ({ isOpen = false, closeClb }): ReactEleme
 						placeholder={t('create_team_modal_placeholder')}
 						value={teamName}
 						onChange={handlerChange}
-						error={errorTeamName}
 					/>
 				</Form>
 			</Modal.Content>

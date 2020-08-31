@@ -161,3 +161,21 @@ export const watch = async (id: string): Promise<void> => {
 		endpoint: `issue/${id}/watch`,
 	});
 };
+
+export const attachFile = async (file: File, issueKey: string): Promise<string> => {
+	const res: Response = await callWebApi({
+		method: 'POST',
+		endpoint: 'issue/attachment',
+		attachment: file,
+		attachmentFieldName: 'file',
+		query: {
+			issueKey,
+		},
+	});
+
+	return ((await res.json()) as { newLink: string }).newLink;
+};
+
+export const bulkAttach = (files: File[], issueKey: string): Promise<string[]> => {
+	return Promise.all(files.map((file) => attachFile(file, issueKey)));
+};

@@ -5,14 +5,15 @@ import { Types } from '../src/models/IO';
 
 export class ConnectionHandler {
 	public sockets: IO.Socket[] = [];
-	protected _type: string;
+
+	public type: string;
 
 	public constructor(type: Types) {
-		this._type = type;
+		this.type = type;
 	}
 
 	public handle(io: IO.Server, socket: IO.Socket) {
-		if (socket.handshake.query.type === this._type) {
+		if (socket.handshake.query.type === this.type) {
 			this.sockets.push(socket);
 
 			socket.on('disconnect', () => {

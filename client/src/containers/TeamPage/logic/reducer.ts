@@ -32,7 +32,18 @@ export const teamReducer = createReducer<TeamState>(initialState, {
 		};
 	},
 
-	[actionTypes.UPDATE_FIELD_SUCCESS](state: TeamState, action: actionTypes.SuccessLoadingProjects) {
+	[actionTypes.UPDATE_FIELD_SUCCESS](state: TeamState, action: actionTypes.EditFieldSuccess) {
+		return {
+			...state,
+			team: {
+				...state.team,
+				name: action.field.name,
+				description: action.field.description,
+			},
+		};
+	},
+
+	[actionTypes.UPDATE_TEAM_USERS_SECCESS](state: TeamState, action: actionTypes.successAddingUsers) {
 		return {
 			...state,
 			team: {
@@ -52,7 +63,40 @@ export const teamReducer = createReducer<TeamState>(initialState, {
 		};
 	},
 
-	[actionTypes.LOADING](state: TeamState) {
+	[actionTypes.SUCCESS_SEARCHING_PEOPLE](state: TeamState, action: actionTypes.successSearchPeople) {
+		return {
+			...state,
+			results: {
+				users: {
+					results: [...action.results],
+				},
+				loading: false,
+			},
+		};
+	},
+	[actionTypes.FAIL_SEARCHING_PEOPLE](state: TeamState) {
+		return {
+			...state,
+			results: {
+				...state.results,
+				loading: false,
+			},
+		};
+	},
+	[actionTypes.SEARCH_PEOPLE_LOADER](state: TeamState) {
+		return {
+			...state,
+			results: {
+				...state.results,
+				loading: true,
+			},
+		};
+	},
+	[actionTypes.DELETE_TEAM_SUCCESS](state: TeamState) {
+		return initialState;
+	},
+
+	[actionTypes.SET_IS_LOADING](state: TeamState) {
 		return {
 			...state,
 			team: {

@@ -1,12 +1,9 @@
 import React from 'react';
 import WorkProjectBlock from 'components/WorkProjectBlock';
+import WorkAssignedBlock from 'components/WorkAssignedBlock';
 
 interface Props {
-	projects: Array<{
-		name: string;
-		id: string;
-		category?: string;
-	}>;
+	projects: Array<WebApi.Entities.Projects>;
 	modeToShow: string;
 }
 
@@ -16,7 +13,7 @@ const ManagerWorkSection: React.FC<Props> = (props: Props) => {
 		case 'worked-on':
 			return <WorkProjectBlock projects={projects} />;
 		case 'assigned':
-			return <WorkProjectBlock projects={projects} />;
+			return <WorkAssignedBlock />;
 		case 'starred':
 			return <WorkProjectBlock projects={projects} />;
 		case 'projects':

@@ -16,6 +16,7 @@ class SprintController {
 
 		try {
 			const result = await sprintRepository.findAll();
+
 			res.send(result);
 		} catch (error) {
 			next(new ErrorResponse(HttpStatusCode.INTERNAL_SERVER_ERROR, error.message));

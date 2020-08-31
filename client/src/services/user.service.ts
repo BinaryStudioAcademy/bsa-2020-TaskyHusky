@@ -11,6 +11,16 @@ export const requestGetUser = async (id: string): Promise<WebApi.Entities.UserPr
 	return (await res.json()) as WebApi.Entities.UserProfile;
 };
 
+export const requestSendEmailResetLink = async (email: string) => {
+	const res = await callWebApi({
+		endpoint: 'user/reset-email',
+		method: 'POST',
+		body: { email },
+	});
+
+	return (await res.json()) as Partial<WebApi.Entities.UserProfile>;
+};
+
 export const requestUdateAvatar = async (image: File): Promise<WebApi.Entities.UserProfile> => {
 	const res = await callWebApi({
 		method: 'POST',
@@ -28,8 +38,25 @@ export const requestGetUserProjects = async (id: string): Promise<any> => {
 		endpoint: `user/projects/${id}`,
 		skipAuthorization: false,
 	});
+	return (await res.json()) as Array<WebApi.Entities.Projects>;
+};
 
-	return (await res.json()) as WebApi.Entities.UserProfile;
+export const requestGetUserIssues = async (id: string): Promise<any> => {
+	const res = await callWebApi({
+		method: 'GET',
+		endpoint: `user/issues/${id}`,
+		skipAuthorization: false,
+	});
+	return (await res.json()) as Array<Partial<WebApi.Entities.Issue>>;
+};
+
+export const requestGetUserTeams = async (id: string): Promise<any> => {
+	const res = await callWebApi({
+		method: 'GET',
+		endpoint: `user/teams/${id}`,
+		skipAuthorization: false,
+	});
+	return (await res.json()) as Array<WebApi.Entities.Team>;
 };
 
 export const requestUpdateUser = async (userData: Partial<UserProfileState>): Promise<WebApi.Entities.UserProfile> => {
@@ -47,11 +74,26 @@ export const requestChangePassword = async (oldPassword: string, newPassword: st
 	const res = await callWebApi({
 		method: 'PUT',
 		endpoint: 'user/password',
-		body: { oldPassword, newPassword },
+		body: { oldPassword, password: newPassword },
 		skipAuthorization: false,
 	});
 
 	return await res.json();
+};
+
+export const requestChangeEmail = async (
+	password: string,
+	email: string,
+	token: string,
+): Promise<Partial<UserProfileState>> => {
+	const res = await callWebApi({
+		method: 'PUT',
+		endpoint: `user/email/${token}`,
+		body: { email, password },
+		skipAuthorization: false,
+	});
+
+	return (await res.json()) as WebApi.Entities.UserProfile;
 };
 
 export const requestDeleteUser = async (): Promise<void> => {
@@ -79,4 +121,13 @@ export const requestTeammates = async (id: string): Promise<WebApi.Entities.User
 	});
 
 	return (await res.json()) as WebApi.Entities.UserProfile[];
+};
+
+export const getPeople = async (): Promise<Partial<WebApi.Entities.UserProfile>> => {
+	const res = await callWebApi({
+		method: 'GET',
+		endpoint: `user/teammates`,
+	});
+
+	return (await res.json()) as Promise<Partial<WebApi.Entities.UserProfile>>;
 };

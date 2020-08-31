@@ -6,7 +6,6 @@ import { Link, Redirect } from 'react-router-dom';
 import ProjectsMenu from 'components/ProjectsMenu';
 import FiltersMenu from 'components/FiltersMenu';
 import BoardsMenu from '../../components/BoardsMenu';
-import DashboardsMenu from 'components/DashboardsMenu';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'typings/rootState';
 import { removeToken } from 'helpers/setToken.helper';
@@ -19,6 +18,7 @@ import { useTranslation } from 'react-i18next';
 import CreateIssueModal from 'containers/CreateIssueModal';
 import { getUsername } from 'helpers/getUsername.helper';
 import InviteNotification from '../../components/InviteNotification';
+import NotificationsMenu from 'components/NotificationsMenu';
 import UserAvatar from 'components/common/UserAvatar';
 
 export const HeaderMenu = () => {
@@ -63,20 +63,21 @@ export const HeaderMenu = () => {
 						<span className={`${styles.logoText} site-logo-text`}>TaskyHusky</span>
 					</Menu.Item>
 					<Menu.Item
+						className={styles.media_query}
 						as="span"
 						name="your-work"
 						active={activeItem === 'your-work'}
 						onClick={() => toggleActiveItem('your-work')}
 					>
-						<Link to="#">
+						<Link to="/my-work">
 							<span className={styles.blackLink}>{t('your_work')}</span>
 						</Link>
 					</Menu.Item>
 					<ProjectsMenu />
 					<FiltersMenu />
-					<DashboardsMenu />
 					<BoardsMenu onCreateBoard={onCreateBoard} />
 					<Menu.Item
+						className={styles.media_query}
 						as="span"
 						name="people"
 						active={activeItem === 'people'}
@@ -99,7 +100,7 @@ export const HeaderMenu = () => {
 					</CreateIssueModal>
 					<Menu.Item position="right" className={styles.rightMenu}>
 						<Dropdown icon="users" className={styles.circularIcon} direction="left">
-							<Dropdown.Menu>
+							<Dropdown.Menu className={styles.circularDropdownMenu}>
 								{incomingInvites.map((invite) => (
 									<InviteNotification
 										id={invite.id}
@@ -111,15 +112,7 @@ export const HeaderMenu = () => {
 								))}
 							</Dropdown.Menu>
 						</Dropdown>
-						<Dropdown icon="bell outline" className={styles.circularIcon} direction="left">
-							<Dropdown.Menu className={styles.circularDropdownMenu}>
-								<Dropdown.Header>{t('notifications')}</Dropdown.Header>
-								<Dropdown.Item>Notification item #1</Dropdown.Item>
-								<Dropdown.Item>Notification item #2</Dropdown.Item>
-								<Dropdown.Item>Notification item #3</Dropdown.Item>
-								<Dropdown.Item>Notification item #4</Dropdown.Item>
-							</Dropdown.Menu>
-						</Dropdown>
+						<NotificationsMenu />
 						{user ? (
 							<div className={styles.userBlock}>
 								<UserAvatar user={user} />
@@ -130,11 +123,8 @@ export const HeaderMenu = () => {
 								>
 									<Dropdown.Menu className={styles.circularDropdownMenu}>
 										<Dropdown.Header>{`${user?.firstName} ${user?.lastName}`}</Dropdown.Header>
-										<Dropdown.Item as="a" href={`/profile/${user?.id}`}>
+										<Dropdown.Item as={Link} to={`/profile/${user?.id}`}>
 											{t('profile')}
-										</Dropdown.Item>
-										<Dropdown.Item as="a" href={`/profile/${user?.id}`}>
-											{t('acc_settings')}
 										</Dropdown.Item>
 										<Dropdown.Divider />
 										<Dropdown.Item onClick={logOutHandler}>{t('log_out')}</Dropdown.Item>

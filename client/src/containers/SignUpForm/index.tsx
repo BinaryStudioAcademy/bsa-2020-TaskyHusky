@@ -22,8 +22,18 @@ const SignUpForm: React.FC = () => {
 	const [firstName, setFirstName] = useState<string>('');
 	const [firstNameValid, setFirstNameValid] = useState<boolean>(true);
 	const [lastName, setLastName] = useState<string>('');
+	const [lastNameValid, setLastNameValid] = useState<boolean>(true);
 	const [redirecting, setRedirecting] = useState<boolean>(false);
-	const buttonDisabled = !(password && passwordValid && email && emailValid && firstName && firstNameValid);
+	const buttonDisabled = !(
+		password &&
+		passwordValid &&
+		email &&
+		emailValid &&
+		firstName &&
+		firstNameValid &&
+		lastName &&
+		lastNameValid
+	);
 
 	useEffect(() => {
 		if (authState.isAuthorized) {
@@ -40,16 +50,17 @@ const SignUpForm: React.FC = () => {
 	};
 
 	return (
-		<Form onSubmit={submit}>
+		<Form onSubmit={submit} className={styles.registerForm}>
 			{redirecting ? <Redirect to="/" /> : ''}
 			<Popup
 				className={styles.errorPopup}
 				on={[]}
 				open={!firstNameValid}
 				content={t('first_name_required')}
-				position="top center"
+				position="top left"
 				trigger={
 					<Form.Input
+						className={styles.inputField}
 						placeholder={t('first_name')}
 						onChange={(event, data) => {
 							setFirstName(data.value);
@@ -60,15 +71,35 @@ const SignUpForm: React.FC = () => {
 					/>
 				}
 			/>
-			<Form.Input placeholder={t('last_name')} onChange={(event, data) => setLastName(data.value)} />
+			<Popup
+				className={styles.errorPopup}
+				on={[]}
+				open={!lastNameValid}
+				content={t('last_name_required')}
+				position="top left"
+				trigger={
+					<Form.Input
+						className={styles.inputField}
+						placeholder={t('last_name')}
+						onChange={(event, data) => {
+							setLastName(data.value);
+							setLastNameValid(true);
+						}}
+						onBlur={() => setLastNameValid(Boolean(lastName))}
+						error={!lastNameValid}
+					/>
+				}
+			/>
+
 			<Popup
 				className={styles.errorPopup}
 				on={[]}
 				open={!emailValid}
-				position="top center"
+				position="top left"
 				content={t('invalid_email')}
 				trigger={
 					<Form.Input
+						className={styles.inputField}
 						type="text"
 						icon="at"
 						placeholder={t('email')}
@@ -86,11 +117,11 @@ const SignUpForm: React.FC = () => {
 				className={styles.errorPopup}
 				on={[]}
 				open={!passwordValid}
-				position="bottom center"
+				position="bottom left"
 				content={t('invalid_password')}
 				trigger={<PasswordInput onChange={setPassword} onChangeValid={setPasswordValid} />}
 			/>
-			<Button disabled={buttonDisabled} fluid positive type="submit">
+			<Button disabled={buttonDisabled} fluid className={styles.continueButton} type="submit">
 				{t('sign_up')}
 			</Button>
 		</Form>

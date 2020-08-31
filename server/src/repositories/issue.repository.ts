@@ -1,8 +1,16 @@
-import { EntityRepository, Repository } from 'typeorm';
+import { EntityRepository, Repository, getCustomRepository } from 'typeorm';
+import _ from 'lodash';
 import { Issue } from '../entity/Issue';
 import { getConditions } from '../helpers/issue.helper';
+import { NotificationRepository } from './notification.repository';
+import { PartialIssue } from '../models/Issue';
+import { chooseMessage } from '../AI/selectUpdateIssueWatchNotificationMessage.ai';
 import issueHandler from '../socketConnectionHandlers/issue.handler';
 import { IssueActions } from '../models/IO';
+import { getDiffPropNames } from '../helpers/objectsDiff.helper';
+import { ProjectsRepository } from './projects.repository';
+import { Projects } from '../entity/Projects';
+import { extractIndexFromIssueKey } from '../helpers/extractIndex.helper';
 
 const RELS = [
 	'priority',
@@ -44,6 +52,17 @@ export type Filter = {
 	comment?: string;
 };
 
+export interface CreateIssueArgs {
+	type: string;
+	priority: string;
+	project: string;
+	summary: string;
+	labels?: string[];
+	links?: string[];
+	attachments?: string;
+	description?: string;
+}
+
 @EntityRepository(Issue)
 export class IssueRepository extends Repository<Issue> {
 	findAll(from: number, to: number) {
@@ -71,13 +90,28 @@ export class IssueRepository extends Repository<Issue> {
 		return this.findOneOrFail({ where: { id }, relations: RELS });
 	}
 
+	findByIdWithRelIds(id: string): Promise<PartialIssue> {
+		return this.findOneOrFail({ where: { id }, loadRelationIds: { relations: RELS } }) as Promise<any>;
+	}
+
+	findByKeyWithRelIds(key: string): Promise<PartialIssue> {
+		return this.findOneOrFail({ where: { issueKey: key }, loadRelationIds: { relations: RELS } }) as Promise<any>;
+	}
+
 	findOneByKey(key: string) {
 		return this.findOneOrFail({ where: { issueKey: key }, relations: RELS });
 	}
 
-	async createOne(data: Issue) {
-		const entity = this.create(data);
-		const result = await this.save(entity);
+	async createOne(data: CreateIssueArgs) {
+		const { project } = data;
+		const projectReposritory = getCustomRepository(ProjectsRepository);
+		const { key, issues = [] } = (await projectReposritory.getWithIssuesById(project)) as Projects;
+		const e = extractIndexFromIssueKey;
+		// eslint-disable-next-line
+		const lastIndex = issues.reduce((acc, current) => (acc = Math.max(acc, e(current.issueKey as string))), 0);
+		const newKey = `${key}-${lastIndex + 1}`;
+		const entity = this.create({ ...data, issueKey: newKey } as any);
+		const result = ((await this.save(entity)) as unknown) as Issue;
 		const newIssue = await this.findOneById(result.id);
 		issueHandler.emit(IssueActions.CreateIssue, newIssue);
 
@@ -95,22 +129,52 @@ export class IssueRepository extends Repository<Issue> {
 		return result;
 	}
 
-	async updateOneById(id: string, data: Issue) {
-		const result = await this.update(id, data);
+	notify(partialIssue: PartialIssue, data: PartialIssue, issue: Issue, senderId: string) {
+		const notification = getCustomRepository(NotificationRepository);
+
+		const difference = getDiffPropNames<PartialIssue, PartialIssue>(
+			partialIssue,
+			{ ...partialIssue, ...data },
+			_.isEqual,
+		);
+
+		if (difference.length) {
+			notification.notifyIssueWatchers({
+				issue,
+				senderId,
+				actionOrText: chooseMessage(partialIssue, { ...partialIssue, ...data }),
+				customText: true,
+			});
+		}
+	}
+
+	async updateOneById(id: string, data: PartialIssue, senderId: string) {
+		const partialIssue = await this.findByIdWithRelIds(id);
+		await this.update(id, data as any);
 		const newIssue = await this.findOneById(id);
 		issueHandler.emit(IssueActions.UpdateIssue, id, newIssue);
-		return result;
+		this.notify(partialIssue, data, newIssue, senderId);
+
+		return newIssue;
 	}
 
-	async updateOneByKey(key: string, data: Issue) {
-		const result = await this.update({ issueKey: key }, data);
+	async updateOneByKey(key: string, data: PartialIssue, senderId: string) {
+		await this.update({ issueKey: key }, data as any);
+		const partialIssue = await this.findByKeyWithRelIds(key);
 		const newIssue = await this.findOneByKey(key);
 		issueHandler.emit(IssueActions.UpdateIssue, newIssue.id, newIssue);
-		return result;
+		this.notify(partialIssue, data, newIssue, senderId);
+
+		return newIssue;
 	}
 
-	deleteOneById(id: string) {
+	async deleteOneById(id: string, senderId: string) {
+		const issue = await this.findOneById(id);
+		const notification = getCustomRepository(NotificationRepository);
 		issueHandler.emit(IssueActions.DeleteIssue, id);
-		return this.delete(id);
+		notification.notifyIssueWatchers({ issue, actionOrText: 'deleted', noLink: true, senderId });
+
+		const result = await this.delete(id);
+		return result;
 	}
 }

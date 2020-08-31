@@ -31,28 +31,38 @@ namespace WebApi.IO {
 		UpdateIssueComment = 'ISSUE:COMMENT:UPDATE',
 		DeleteIssueComment = 'ISSUE:COMMENT:DELETE',
 	}
+	export enum NotificationActions {
+		CreateNotification = 'NOTIFICATION:CREATE',
+		ViewNotification = 'NOTIFICATION:VIEW',
+		UnviewNotification = 'NOTIFICATION:UNVIEW',
+		ViewAllNotifications = 'NOTIFICATION:ALL:VIEW',
+	}
 	export enum Types {
 		Issue = 'ISSUE',
+		Notification = 'NOTIFICATION',
 	}
 }
 
 namespace WebApi.Issue {
 	interface PartialIssue {
 		id?: string;
-		type: string;
+		type?: string;
+		status?: string;
 		summary?: string;
 		boardColumn?: string;
 		labels?: string[];
 		attachments?: string[];
 		links?: string[];
-		priority: string;
+		priority?: string;
 		description?: string;
-		sprint?: string;
+		board?: string;
+		sprint?: string | null;
 		project?: string;
 		issueKey?: string;
 		assigned?: string;
-		creator: string;
+		creator?: string;
 		watchers?: string[];
+		storyPoint?: number;
 	}
 	interface PartialIssueComment {
 		text?: string;
@@ -72,11 +82,17 @@ namespace WebApi.Result {
 			title: string;
 			icon: string;
 		};
+		status?: {
+			id: string;
+			color: string;
+			title: string;
+		};
 		summary?: string;
 		boardColumn?: BoardColumnResult;
 		labels?: string[];
 		attachments?: string[];
 		links?: string[];
+		board?: BoardResult;
 		priority: {
 			id: string;
 			color: string;
@@ -90,6 +106,7 @@ namespace WebApi.Result {
 		watchers?: UserModel[];
 		assigned?: UserModel;
 		creator: UserModel;
+		storyPoint?: number;
 	}
 	interface IssueCommentResult {
 		id: string;
@@ -133,6 +150,15 @@ namespace WebApi.Result {
 		updatedDate?: Date;
 		deletedDate?: Date;
 	}
+	interface NotificationResult {
+		id: string;
+		title?: string;
+		link?: string;
+		user: UserModel;
+		text: string;
+		isViewed: boolean;
+		createdAt: Date;
+	}
 	interface CommitFileResult {
 		sha: string;
 		additions: number;
@@ -158,12 +184,14 @@ namespace WebApi.Sprint {
 		project: string;
 		board: string;
 		issues: string[];
+		startDate: Date;
+		endDate: Date;
 	}
 }
 
 namespace WebApi.Team {
 	interface TeamModel {
-		id?: string;
+		id: string;
 		name?: string;
 		description?: string;
 		color?: string;
@@ -175,6 +203,12 @@ namespace WebApi.Team {
 }
 
 namespace WebApi.User {
+	export enum jobTitle {
+		dbAdmin = 'Database administrator',
+		backEndDev = 'Back-end developer',
+		frontEndDev = 'Front-end developer',
+		fullStackDev = 'Full-Stack developer',
+	}
 	interface UserModel {
 		googleId?: string;
 		id: string;
@@ -187,7 +221,7 @@ namespace WebApi.User {
 		location?: string;
 		department?: string;
 		organization?: string;
-		jobTitle?: string;
+		jobTitle?: jobTitle;
 		userSettingsId?: string;
 		teams?: Team[];
 		resetPasswordToken?: string | null;
@@ -245,14 +279,14 @@ namespace WebApi.Entities {
 
 	interface Issue {
 		id: string;
-		type?: IssueType;
+		type: IssueType;
 		status?: IssueStatus;
-		summary?: string;
+		summary: string;
 		boardColumn?: BoardColumn;
 		board?: Board;
 		labels?: string;
-		attachments?: string;
-		links?: string;
+		attachments?: string[];
+		links?: string[];
 		priority?: Priority;
 		description?: string;
 		sprint?: Sprint;
@@ -263,6 +297,7 @@ namespace WebApi.Entities {
 		watchers?: UserProfile[];
 		createdAt?: Date;
 		updatedAt?: Date;
+		storyPoint?: number;
 	}
 
 	interface IssueComment {
@@ -276,17 +311,27 @@ namespace WebApi.Entities {
 
 	interface IssueStatus {
 		id: string;
-		color?: string;
-		title?: string;
+		color: string;
+		title: string;
 		issues?: Issue[];
 	}
 
 	interface IssueType {
 		id: string;
-		icon?: string;
-		color?: string;
-		title?: string;
+		icon: string;
+		color: string;
+		title: string;
 		issues?: Issue[];
+	}
+
+	interface Notification {
+		id: string;
+		title?: string;
+		link?: string;
+		text: string;
+		isViewed: boolean;
+		user: UserProfile;
+		createdAt: Date;
 	}
 
 	interface Priority {
@@ -327,6 +372,8 @@ namespace WebApi.Entities {
 		isActive: boolean;
 		isCompleted: boolean;
 		issues: Issue[];
+		startDate?: Date;
+		endDate?: Date;
 	}
 
 	interface Team {
@@ -370,5 +417,6 @@ namespace WebApi.Entities {
 		pendingInvites?: UserProfile[];
 		teammates?: UserProfile[];
 		watchingIssues?: Issue[];
+		notifications?: Notification[];
 	}
 }

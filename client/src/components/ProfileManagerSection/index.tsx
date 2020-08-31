@@ -13,12 +13,12 @@ interface Props {
 
 const ProfileManagerSection: React.FC<Props> = (props: Props) => {
 	const { user, showManager, updateUser } = props;
-	const { editMode, email } = user;
+	const { editMode } = user;
 	switch (editMode) {
 		case 'profile':
 			return <ProfileManager showManager={showManager} updateUser={updateUser} user={user} />;
 		case 'email':
-			return <EmailManager updateUser={updateUser} email={email} />;
+			return <EmailManager />;
 		case 'security':
 			return <SecurityManager />;
 		case 'account':

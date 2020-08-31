@@ -1,11 +1,17 @@
 :global(#root) {
 	.issueItem {
+		box-sizing: border-box;
 		display: flex;
 		flex-direction: row;
 		align-items: stretch;
 		height: 45px;
+		border-bottom: 1px solid rgb(210, 210, 210);
+		border-top: 1px solid rgb(210, 210, 210);
+		margin-top: -1px;
+		background-color: #f5f7f9;
 
-		&:hover {
+		&:hover,
+		&:active {
 			background-color: #fff;
 		}
 	}
@@ -16,6 +22,8 @@
 		justify-content: center;
 		height: 45px;
 		color: #00000069;
+		border-bottom: 1px solid rgb(210, 210, 210);
+		border-top: 1px solid rgb(210, 210, 210);
 	}
 
 	.leftContent {
@@ -46,7 +54,23 @@
 		width: auto;
 	}
 
+	.issueKeyItemCompleted {
+		@extend .issueKeyItem;
+		text-decoration: line-through;
+	}
+
 	.priorityItem {
 		width: 15px;
+	}
+
+	.backLight {
+		box-shadow: 0px 0px 10px #c3c3c3;
+		transition: box-shadow 0.2s ease;
+	}
+
+	.issuesList {
+		margin-top: 14px;
+		margin-bottom: 14px;
+		padding: 10px;
 	}
 }

@@ -1,0 +1,42 @@
+.usersWrapper,
+.userBlock,
+.mainInfo {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.userBlock {
+  flex-shrink: 0.5;
+  width: 190px;
+  margin: 5px;
+  border-right: 1px solid #cccccc;
+  border-radius: 6px;
+}
+.mainInfo {
+  flex-direction: column;
+  span {
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 140px;
+  }
+  .fulname {
+    font-weight: 600;
+  }
+  .email {
+    color: #cccccc;
+  }
+}
+.userAvatar img {
+  width: 35px;
+  height: 35px;
+}
+
+.email {
+  max-width: 170px;
+  color: #cccccc;
+  word-wrap: none;
+  overflow-x: hidden;
+}
+.searchResult {
+  width: 100%;
+}

@@ -1,5 +1,12 @@
 import { Team } from '../entity/Team';
 
+export enum jobTitle {
+	dbAdmin = 'Database administrator',
+	backEndDev = 'Back-end developer',
+	frontEndDev = 'Front-end developer',
+	fullStackDev = 'Full-Stack developer',
+}
+
 export interface UserModel {
 	googleId?: string;
 	id: string;
@@ -12,7 +19,7 @@ export interface UserModel {
 	location?: string;
 	department?: string;
 	organization?: string;
-	jobTitle?: string;
+	jobTitle?: jobTitle;
 	userSettingsId?: string;
 	teams?: Team[];
 	resetPasswordToken?: string | null;
