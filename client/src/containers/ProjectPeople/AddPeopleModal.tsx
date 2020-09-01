@@ -81,7 +81,9 @@ const AddPeopleModal = (props: Props) => {
 				/>
 			</Modal.Content>
 			<Modal.Actions>
-				<Button onClick={() => setIsOpen(false)}>{t('cancel')}</Button>
+				<Button className={styles.secondary__button} onClick={() => setIsOpen(false)}>
+					{t('cancel')}
+				</Button>
 				<Button className={styles.primary__button} onClick={onAddSelectedUsers} loading={isLoading}>
 					{t('add')}
 				</Button>

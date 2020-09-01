@@ -64,5 +64,9 @@
 }
 
 .primary__button {
-	@include primary-button
+	@include primary-btn
+}
+
+.secondary__button {
+	@include cancel-btn
 }
