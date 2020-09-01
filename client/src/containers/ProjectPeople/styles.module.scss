@@ -1,3 +1,5 @@
+@import 'styles/mixins.scss';
+
 .header_inner__container {
     padding: 10px 0px 20px ;
     position: relative;
@@ -59,4 +61,8 @@
 			text-align: center;
 		}
 	}
+}
+
+.primary__button {
+	@include primary-button
 }
