@@ -1,6 +1,6 @@
 import amqplib from 'amqplib';
 import { QUEUE } from '../constants/email.constants';
-import { EmailArgs } from '../services/email.service';
+import { EmailArgs, EmailService } from '../services/email.service';
 
 const open = amqplib.connect(process.env.AMQP_URL ?? '');
 
@@ -21,9 +21,9 @@ export function consumeMessageFromQueue() {
 				return channel.consume(QUEUE, (msg) => {
 					if (msg !== null) {
 						const args: EmailArgs = JSON.parse(msg.content.toString());
-						// EmailService.sendEmail(args).then(() => {
-						// channel.ack(msg);
-						// });
+						EmailService.sendEmail(args).then(() => {
+							channel.ack(msg);
+						});
 					}
 				});
 			}),
