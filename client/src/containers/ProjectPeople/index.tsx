@@ -64,7 +64,7 @@ const ProjectPeople = () => {
 				{filteredUsers.length === 0 ? (
 					<div className={styles.imgWrapper}>
 						<div className={styles.content}>
-							<img className={styles.img} src={searchResult} alt="No people" />
+							<img className={styles.img} src={searchResult} alt={t('no_people')} />
 							<span className={styles.text}>{t('no_people')}</span>
 						</div>
 					</div>

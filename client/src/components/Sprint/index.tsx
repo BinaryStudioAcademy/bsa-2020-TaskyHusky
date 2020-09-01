@@ -4,8 +4,9 @@ import { SprintHeader } from './SprintHeader';
 import { SprintIssues } from './SprintIssues';
 
 interface Props {
-	sprint: WebApi.Entities.Sprint;
-	issues: WebApi.Entities.Issue[];
+	sprint?: WebApi.Entities.Sprint;
+	issues: WebApi.Result.IssueResult[];
+	boardId: string;
 }
 
 interface DragProps {
@@ -26,15 +27,17 @@ export const Sprint: React.FC<Props & DragProps> = (props: Props & DragProps) =>
 		<>
 			<SprintHeader
 				id={props.sprint?.id ?? 'backlog'}
-				isActive={props.sprint?.isActive}
+				isActive={props.sprint?.isActive ?? false}
 				name={props.sprint?.sprintName ?? t('backlog')}
 				issues={props.issues}
-				isCompleted={props.sprint?.isCompleted}
+				isCompleted={props.sprint?.isCompleted ?? false}
 				startDate={props.sprint?.startDate}
 				endDate={props.sprint?.endDate}
 			/>
 			<SprintIssues
 				issues={props.issues}
+				sprintId={props.sprint?.id}
+				boardId={props.boardId}
 				sprintName={props.sprint?.sprintName ?? t('backlog')}
 				listId={props.listId}
 				listType={props.listType}
