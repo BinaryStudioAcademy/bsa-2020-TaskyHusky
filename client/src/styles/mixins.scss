@@ -106,7 +106,33 @@
   box-sizing: border-box;
   border-radius: 5px !important;
   @include text-data;
-  background-color: #FFFFFF !important;
+  background-color: $primary-bg !important;
+
+  &:hover {
+    box-shadow: 0 0 3px inset $dark-black !important;
+  }
+}
+
+@mixin cancel-btn {
+  border: 1px solid $dark-black !important;
+  box-sizing: border-box;
+  border-radius: 5px !important;
+  @include text-data;
+  color: $primary-bg !important;
+  background-color: $dark-black !important;
+
+  &:hover {
+    box-shadow: 0 0 3px inset $primary-bg !important;
+  }
+}
+
+@mixin primary-btn {
+  background-color: $yellow !important;
+  color: $dark-black !important;
+
+  &:hover {
+    box-shadow: 0 0 3px inset $dark-black !important;
+  }
 }
 
 @mixin info-block-header {
@@ -148,4 +174,27 @@
 	&:hover {
 		background-color: $primary__button__hovered !important;
 	}
+}
+@mixin dropdown {
+  border-radius: 6px;
+  outline: none;
+  cursor: text;
+
+
+  & div {
+    @include text-data;
+  }
+
+  &>div:last-child {
+    border: 1px solid $yellow !important;
+    border-top: none;
+  }
+
+  &:hover {
+    background-color: $ligth-gray;
+  }
+
+  &:focus {
+    border: 1px solid $yellow !important;
+  }
 }
