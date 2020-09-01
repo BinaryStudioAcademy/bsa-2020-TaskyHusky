@@ -20,6 +20,12 @@ namespace WebApi.Board {
 		id: string;
 		name: string;
 	}
+	interface CreateBoardColumn {
+		columnName: string;
+		status: string;
+		board: string;
+		isResolutionSet: boolean;
+	}
 }
 
 namespace WebApi.IO {

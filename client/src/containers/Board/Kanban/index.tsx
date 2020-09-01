@@ -8,6 +8,7 @@ import { getByKey, updateIssueByKey } from 'services/issue.service';
 import { Header, Form, Button, Breadcrumb } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 import { convertIssueResultToPartialIssue } from 'helpers/issueResultToPartialIssue';
+import CreateColumnModal from 'containers/CreateColumnModal';
 
 const Kanban: BoardComponent = ({ board }) => {
 	const [search, setSearch] = useState<string>('');
@@ -50,6 +51,11 @@ const Kanban: BoardComponent = ({ board }) => {
 				<Button onClick={() => setSearch('')} className="cancelBtn" compact>
 					{t('clear')}
 				</Button>
+				<CreateColumnModal boardId={board.id}>
+					<Button className="primaryBtn" style={{ position: 'absolute', right: 40, top: 0 }}>
+						{t('create_column')}
+					</Button>
+				</CreateColumnModal>
 			</div>
 			<Breadcrumb style={{ ...leftPadded, marginBottom: 20 }}>
 				<Breadcrumb.Section href="/projects">{t('projects')}</Breadcrumb.Section>
