@@ -30,6 +30,13 @@ const ProjectsTable = ({ projects, currentUser }: Props) => {
 	const [sortDirection, setSortDirection] = useState<SortDirections>('ascending');
 
 	const sortedProjects = useMemo(() => {
+		if (sortByColumn === 'lead') {
+			if (sortDirection === 'descending') {
+				return orderBy(projects, (project) => project.lead.firstName, ['desc']);
+			}
+			return orderBy(projects, (project) => project.lead.firstName, ['asc']);
+		}
+
 		if (sortDirection === 'descending') {
 			return orderBy(projects, [sortByColumn], ['desc']);
 		}
