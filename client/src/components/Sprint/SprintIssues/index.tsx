@@ -36,13 +36,15 @@ export const SprintIssues: React.FC<Props & DragProps> = (props: Props & DragPro
 			if (index > -1) {
 				const newIssues = [...issues];
 
-				if (newIssue.sprint?.id !== props.sprintId) {
+				if (newIssue.sprint?.id === props.sprintId) {
 					newIssues[index] = newIssue;
 				} else {
 					newIssues.splice(index, 1);
 				}
 
 				setIssues(newIssues);
+			} else if (newIssue.sprint?.id === props.sprintId) {
+				setIssues([...issues, newIssue]);
 			}
 		});
 
