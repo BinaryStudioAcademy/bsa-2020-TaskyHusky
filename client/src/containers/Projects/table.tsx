@@ -13,7 +13,6 @@ import styles from './styles.module.scss';
 import UserAvatar from 'components/common/UserAvatar';
 import { User } from 'containers/LoginPage/logic/state';
 import { SETTINGS_SECTION } from 'components/ProjectSidebar/config/sidebarItems';
-import Label from 'components/common/Label';
 
 type SortByColumn = 'name' | 'key' | 'lead';
 type SortDirections = 'ascending' | 'descending';
@@ -90,22 +89,12 @@ const ProjectsTable = ({ projects, currentUser }: Props) => {
 				</Table.Header>
 
 				<Table.Body>
-					{sortedProjects.map(({ id, name, key, icon, lead, labels }) => (
+					{sortedProjects.map(({ id, name, key, icon, lead }) => (
 						<Table.Row key={id}>
 							<Table.Cell>
 								<Link to={`/project/${id}/issues`} className={styles.project__name_container}>
 									{icon && <img className={styles.project__img} src={icon} alt="Avatar" />}
 									<span className={styles.project__name}>{name}</span>
-									{labels?.map(({ text, textColor, backgroundColor }) => (
-										<span className={styles.project__label}>
-											<Label
-												key={text}
-												text={text}
-												textColor={textColor}
-												backgroundColor={backgroundColor}
-											/>
-										</span>
-									))}
 								</Link>
 							</Table.Cell>
 							<Table.Cell>{key}</Table.Cell>
