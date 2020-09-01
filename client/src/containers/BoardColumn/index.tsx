@@ -102,7 +102,7 @@ const BoardColumn: React.FC<Props> = ({ column, className, search, getOnDragEndF
 							{column.columnName}
 						</Header>
 						<CreateIssueModal boardColumnID={column.id}>
-							<Button floated="right" compact>
+							<Button floated="right" compact className="contentBtn">
 								<Icon name="plus circle" />
 								{t('create_issue')}
 							</Button>
