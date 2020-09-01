@@ -166,3 +166,27 @@
   border-bottom: 1px solid $ligth-gray;
   padding: 34px 13% 21px;
 }
+
+@mixin dropdown {
+  border-radius: 6px;
+  outline: none;
+  cursor: text;
+
+
+  & div {
+    @include text-data;
+  }
+
+  &>div:last-child {
+    border: 1px solid $yellow !important;
+    border-top: none;
+  }
+
+  &:hover {
+    background-color: $ligth-gray;
+  }
+
+  &:focus {
+    border: 1px solid $yellow !important;
+  }
+}

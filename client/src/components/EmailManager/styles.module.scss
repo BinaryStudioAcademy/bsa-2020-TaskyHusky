@@ -40,7 +40,7 @@
 
 .select {
   margin: 20px 0 !important;
-  @include text-data;
+  @include dropdown;
 }
 
 @media screen and (max-width: $less-than-medium-screen) {
