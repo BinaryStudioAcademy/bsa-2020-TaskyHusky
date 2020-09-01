@@ -25,7 +25,11 @@ export const SprintIssues: React.FC<Props & DragProps> = (props: Props & DragPro
 
 	useIO(WebApi.IO.Types.Issue, (io) => {
 		io.on(WebApi.IO.IssueActions.CreateIssue, (newIssue: WebApi.Result.IssueResult) => {
-			if (newIssue.sprint ? newIssue.sprint?.id === props.sprintId : newIssue.board?.id === props.boardId) {
+			const forThisSprint = newIssue.sprint?.id === props.sprintId;
+			const forThisBoard = newIssue.board?.id === props.boardId;
+			const canAddIssue = newIssue.sprint ? forThisSprint : forThisBoard;
+
+			if (canAddIssue) {
 				setIssues([...issues, newIssue]);
 			}
 		});
