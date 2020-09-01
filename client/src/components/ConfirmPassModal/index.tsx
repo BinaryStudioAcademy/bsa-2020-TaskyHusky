@@ -7,7 +7,7 @@ interface Props {
 	updatePassword: () => void;
 }
 
-const ConfirmPassModal: React.FC<Props> = (props) => {
+const ConfirmPassModal: React.FC<Props> = (props: Props) => {
 	const { updatePassword, onClose } = props;
 	const { t } = useTranslation();
 

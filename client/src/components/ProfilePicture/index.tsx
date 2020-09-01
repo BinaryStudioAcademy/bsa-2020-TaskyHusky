@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useCallback } from 'react';
+import 'react-image-crop/lib/ReactCrop.scss';
+import { Crop } from 'react-image-crop';
 import { useDispatch } from 'react-redux';
 import { requestUpdateAvatar } from 'containers/ProfilePage/logiс/actions';
 import { useTranslation } from 'react-i18next';
 import { Header, Button, Icon } from 'semantic-ui-react';
 import styles from './styles.module.scss';
 import { getInitials } from 'helpers/getInitials.helper';
+import CropModal from 'components/CropModal';
+import { base64StringtoFile, extractImageFileExtensionFromBase64, image64toCanvasRef } from 'helpers/canvas.helper';
 
 interface Props {
 	firstName: string;
@@ -19,9 +23,11 @@ interface Props {
 const ProfilePicture: React.FC<Props> = (props: Props) => {
 	const dispatch = useDispatch();
 	const { t } = useTranslation();
+
+	const [crop, setCrop] = useState<Crop>({ aspect: 1 / 1, height: 50, unit: 'px', width: 50, x: 0, y: 0 });
 	const { firstName, lastName, username, avatar, editMode, isCurrentUser, showManager } = props;
 	const [uploadUrl, setUploadUrl] = useState<ArrayBuffer | string | null>('');
-	const [formData, setFormData] = useState<File | null>(null);
+	const [imgSrcExt, setImgSrcExt] = useState<any>(null);
 	const uploadPhoto = async (e: any) => {
 		const reader = new FileReader();
 		if (e.target.files[0]) {
@@ -29,25 +35,71 @@ const ProfilePicture: React.FC<Props> = (props: Props) => {
 			reader.onloadend = () => {
 				const { result } = reader;
 				setUploadUrl(result);
+				setImgSrcExt(extractImageFileExtensionFromBase64(result as string));
 			};
 		}
-		setFormData(e.target.files[0]);
 	};
 
-	if (formData) {
-		dispatch(requestUpdateAvatar({ image: formData }));
-		setFormData(null);
-	}
+	const imgRef = useRef<HTMLImageElement | null>(null);
+	const imagePreviewCanvasRef = useRef<HTMLCanvasElement | null>(null);
+
+	const onClose = () => {
+		setUploadUrl(null);
+	};
+
+	const onChangeCrop = (c: Crop) => {
+		setCrop(c);
+	};
+
+	const onLoad = useCallback((img) => {
+		imgRef.current = img;
+	}, []);
+
+	const handleOnCropComplete = (crop: Crop) => {
+		const canvasRef = imagePreviewCanvasRef.current;
+		console.log(crop);
+		console.log(canvasRef);
+		image64toCanvasRef(canvasRef as HTMLCanvasElement, uploadUrl as string, crop);
+	};
+
+	const saveCrop = () => {
+		if (uploadUrl) {
+			const canvasRef = imagePreviewCanvasRef.current;
+
+			if (canvasRef) {
+				console.log(canvasRef);
+				const imageData64 = canvasRef.toDataURL('image/' + imgSrcExt);
+
+				const myFilename = 'previewFile.' + imgSrcExt;
+
+				const myNewCroppedFile = base64StringtoFile(imageData64, myFilename);
+				console.log(myNewCroppedFile);
+				dispatch(requestUpdateAvatar({ image: myNewCroppedFile }));
+			}
+		}
+	};
 
 	return (
 		<>
 			<div className={styles.container}>
+				{uploadUrl && (
+					<CropModal
+						uploadUrl={uploadUrl as string}
+						crop={crop}
+						onClose={onClose}
+						onLoad={onLoad}
+						onChange={onChangeCrop}
+						handleOnCropComplete={handleOnCropComplete}
+						saveCrop={saveCrop}
+					/>
+				)}
 				<div className={styles.mainInfo}>
 					<div className={styles.avatarContainer}>
 						<div className={styles.borderHelper}>
 							{uploadUrl ? (
-								<img src={uploadUrl as string} className={styles.avatar} alt="Avatar" />
-							) : avatar ? (
+								<canvas ref={imagePreviewCanvasRef}></canvas>
+							) : // <img src={uploadUrl as string} className={styles.avatar} alt="Avatar" />
+							avatar ? (
 								<img src={avatar} className={styles.avatar} alt="Avatar" />
 							) : (
 								<h1 className={styles.initials}>
