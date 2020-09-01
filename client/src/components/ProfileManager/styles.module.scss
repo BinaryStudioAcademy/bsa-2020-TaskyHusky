@@ -20,15 +20,12 @@
 }
 
 .submitButton {
-  @include content-btn;
+  @include primary-btn;
   margin-right: 20px !important;
-  background-color: #2185d0 !important;
-  color: $primary-bg !important;
-  border: none !important;
 }
 
 .secondaryButton {
-  @include content-btn;
+  @include cancel-btn;
 }
 
 @media screen and (max-width: $less-than-medium-screen) {
