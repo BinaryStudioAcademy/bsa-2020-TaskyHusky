@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import * as actions from './logic/actions';
 import { RootState } from 'typings/rootState';
 import { useTranslation } from 'react-i18next';
+import styles from './styles.module.scss';
 
 interface Props {
 	project: WebApi.Entities.Projects;
@@ -53,7 +54,7 @@ const AddPeopleModal: React.FC<Props> = (props) => {
 			open={isOpen}
 			onClose={() => setIsOpen(false)}
 			trigger={
-				<Button primary onClick={() => setIsOpen(true)}>
+				<Button className={styles.primary__button} onClick={() => setIsOpen(true)}>
 					{t('add_people')}
 				</Button>
 			}
@@ -81,7 +82,7 @@ const AddPeopleModal: React.FC<Props> = (props) => {
 			</Modal.Content>
 			<Modal.Actions>
 				<Button onClick={() => setIsOpen(false)}>{t('cancel')}</Button>
-				<Button primary onClick={onAddSelectedUsers} loading={isLoading}>
+				<Button className={styles.primary__button} onClick={onAddSelectedUsers} loading={isLoading}>
 					{t('add')}
 				</Button>
 			</Modal.Actions>
