@@ -248,9 +248,9 @@ namespace WebApi.Entities {
 
 	interface BoardColumn {
 		id: string;
-		columnName?: string;
-		status?: string;
-		isResolutionSet?: boolean;
+		columnName: string;
+		status: string;
+		isResolutionSet: boolean;
 		board: Board;
 		issues: Issue[];
 	}
