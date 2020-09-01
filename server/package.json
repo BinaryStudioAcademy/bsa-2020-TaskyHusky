@@ -19,6 +19,7 @@
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
+		"@octokit/rest": "^18.0.3",
 		"@types/amqplib": "^0.5.13",
 		"@types/lodash": "^4.14.160",
 		"@types/nodemailer": "^6.4.0",

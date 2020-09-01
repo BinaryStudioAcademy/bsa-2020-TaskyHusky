@@ -1,6 +1,6 @@
 import amqplib from 'amqplib';
 import { QUEUE } from '../constants/email.constants';
-import { EmailService, EmailArgs } from '../services/email.service';
+import { EmailArgs, EmailService } from '../services/email.service';
 
 const open = amqplib.connect(process.env.AMQP_URL ?? '');
 
