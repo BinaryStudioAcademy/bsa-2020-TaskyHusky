@@ -12,12 +12,12 @@ import {
 } from 'typeorm';
 
 import { IsNotEmpty, IsString, Length, IsUppercase, Matches, ValidateIf } from 'class-validator';
+import _ from 'lodash';
 import { Issue } from './Issue';
 import { Sprint } from './Sprint';
 import { Board } from './Board';
 import { UserProfile } from './UserProfile';
 import { Team } from './Team';
-import _ from 'lodash';
 
 @Entity()
 export class Projects {
