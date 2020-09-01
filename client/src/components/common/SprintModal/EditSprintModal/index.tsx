@@ -19,7 +19,7 @@ type Props = {
 	sprintIsCompleted: boolean;
 	isOpen: boolean;
 	clickAction: any;
-	sprintIssues: WebApi.Entities.Issue[];
+	sprintIssues: WebApi.Result.IssueResult[];
 	startDate: Date | undefined;
 	endDate: Date | undefined;
 };

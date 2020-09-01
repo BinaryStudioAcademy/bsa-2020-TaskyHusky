@@ -32,7 +32,7 @@ export function* deleteSprintRequest(action: ReturnType<typeof actions.deleteSpr
 export function* loadIssuesRequest(action: ReturnType<typeof actions.loadIssuesTrigger>) {
 	try {
 		const { sprintId } = action;
-		const response: WebApi.Entities.Issue[] = yield call(getSprintIssues, sprintId);
+		const response: WebApi.Result.IssueResult[] = yield call(getSprintIssues, sprintId);
 		yield put(actions.loadIssuesSuccess({ issues: response, sprintId }));
 	} catch (error) {
 		NotificationManager.error(error.clientException.message, 'Error');
@@ -93,7 +93,7 @@ export function* createIssueSuccess(action: ReturnType<typeof createIssue>) {
 export function* loadBacklogRequest(action: ReturnType<typeof actions.loadBacklogTrigger>) {
 	try {
 		const { boardId } = action;
-		const response: WebApi.Entities.Issue[] = yield call(getBacklogByBoardId, boardId);
+		const response: WebApi.Result.IssueResult[] = yield call(getBacklogByBoardId, boardId);
 		yield put(actions.loadBacklogSuccess({ backlog: response }));
 	} catch (error) {
 		NotificationManager.error(error.clientException.message, 'Error');

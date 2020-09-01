@@ -26,7 +26,7 @@ const Scrum: BoardComponent = (props) => {
 	const { t } = useTranslation();
 	const [search, setSearch] = useState<string>('');
 	const [isCreateModalOpened, setIsCreateModalOpened] = useState<boolean>(false);
-	const [issuesMap, setIssuesMap] = useState<{ [sprintId: string]: WebApi.Entities.Issue[] }>({});
+	const [issuesMap, setIssuesMap] = useState<{ [sprintId: string]: WebApi.Result.IssueResult[] }>({});
 	const state = useSelector((rootState: RootState) => rootState.scrumBoard);
 
 	const { sprints, project, matchIssuesToSprint, backlog } = useSelector(
@@ -102,11 +102,12 @@ const Scrum: BoardComponent = (props) => {
 
 	const sprintList =
 		!isEmpty(sprints) && !isEmpty(issuesMap) ? (
-			Object.entries(issuesMap).map(([sprintId, issues]: [string, WebApi.Entities.Issue[]]) => {
+			Object.entries(issuesMap).map(([sprintId, issues]: [string, WebApi.Result.IssueResult[]]) => {
 				return (
 					<Sprint
 						key={sprintId}
 						listId={sprintId}
+						boardId={board.id}
 						listType="CARD"
 						sprint={sprints.filter((sprint) => sprint.id === sprintId)[0]}
 						issues={getIssuesForSprintId(normalizeText(search), issues)}

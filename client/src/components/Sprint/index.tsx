@@ -5,7 +5,8 @@ import { SprintIssues } from './SprintIssues';
 
 interface Props {
 	sprint: WebApi.Entities.Sprint;
-	issues: WebApi.Entities.Issue[];
+	issues: WebApi.Result.IssueResult[];
+	boardId: string;
 }
 
 interface DragProps {
@@ -18,7 +19,7 @@ interface DragProps {
 export const Sprint: React.FC<Props & DragProps> = (props: Props & DragProps) => {
 	const { t } = useTranslation();
 
-	if (!props.issues || props.sprint?.isCompleted) {
+	if (!props.sprint || !props.issues || props.sprint?.isCompleted) {
 		return null;
 	}
 
@@ -35,6 +36,8 @@ export const Sprint: React.FC<Props & DragProps> = (props: Props & DragProps) =>
 			/>
 			<SprintIssues
 				issues={props.issues}
+				sprintId={props.sprint?.id}
+				boardId={props.boardId}
 				sprintName={props.sprint?.sprintName ?? t('backlog')}
 				listId={props.listId}
 				listType={props.listType}
