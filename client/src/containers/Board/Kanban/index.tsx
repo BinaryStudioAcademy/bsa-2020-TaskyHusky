@@ -13,7 +13,6 @@ import CreateColumnModal from 'containers/CreateColumnModal';
 const Kanban: BoardComponent = ({ board }) => {
 	const [search, setSearch] = useState<string>('');
 	const { t } = useTranslation();
-	const leftPadded = { marginLeft: 60 };
 	const onDragEndFuncs: Map<string, OnDragEndResponder> = new Map<string, OnDragEndResponder>();
 
 	const onDragEnd: OnDragEndResponder = (event, provided) => {
@@ -38,26 +37,28 @@ const Kanban: BoardComponent = ({ board }) => {
 	};
 
 	return (
-		<>
-			<div className={styles.inlineContainer} style={leftPadded}>
-				<Header as="h2">{board.name}</Header>
-				<Form.Input
-					placeholder={t('search')}
-					icon="search"
-					value={search}
-					onChange={(event, data) => setSearch(data.value)}
-					style={{ ...leftPadded, marginRight: 60, maxWidth: 250 }}
-				/>
-				<Button onClick={() => setSearch('')} className="cancelBtn" compact>
-					{t('clear')}
-				</Button>
+		<div className={styles.wrapper}>
+			<div className={styles.header}>
+				<div className={styles.inlineContainer}>
+					<Header as="h2">{board.name}</Header>
+					<Form.Input
+						placeholder={t('search')}
+						icon="search"
+						value={search}
+						onChange={(event, data) => setSearch(data.value)}
+						style={{ marginRight: 60, maxWidth: 250 }}
+					/>
+					<Button onClick={() => setSearch('')} className="cancelBtn" compact>
+						{t('clear')}
+					</Button>
+				</div>
 				<CreateColumnModal boardId={board.id}>
-					<Button className="primaryBtn" style={{ position: 'absolute', right: 40, top: 0 }}>
+					<Button className="primaryBtn" style={{ height: 40 }}>
 						{t('create_column')}
 					</Button>
 				</CreateColumnModal>
 			</div>
-			<Breadcrumb style={{ ...leftPadded, marginBottom: 20 }}>
+			<Breadcrumb style={{ marginBottom: 20 }}>
 				<Breadcrumb.Section href="/projects">{t('projects')}</Breadcrumb.Section>
 				<Breadcrumb.Divider icon="right chevron" />
 				<Breadcrumb.Section link>Test project name</Breadcrumb.Section>
@@ -67,7 +68,7 @@ const Kanban: BoardComponent = ({ board }) => {
 			<DragDropContext onDragEnd={onDragEnd}>
 				<div
 					className={styles.columnsGrid}
-					style={{ gridTemplateColumns: '300px '.repeat(board.columns.length).trim(), marginLeft: 40 }}
+					style={{ gridTemplateColumns: '300px '.repeat(board.columns.length).trim() }}
 				>
 					{board.columns.map((column, i) => (
 						<BoardColumn
@@ -80,7 +81,7 @@ const Kanban: BoardComponent = ({ board }) => {
 					))}
 				</div>
 			</DragDropContext>
-		</>
+		</div>
 	);
 };
 

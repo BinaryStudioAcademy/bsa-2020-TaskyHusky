@@ -1,7 +1,6 @@
 :local(.columnsGrid) {
 	display: grid;
 	width: 100%;
-	padding: 0 20px;
 	overflow-x: auto;
 	gap: 20px;
 	height: 75%;
@@ -16,8 +15,7 @@
 :local(.inlineContainer) {
 	display: flex;
 	align-items: center;
-	margin: 20px 0 10px 0;
-	position: relative;
+	margin: 0 0 10px 0;
 
 	*:not(h2) {
 		margin: 0 5px 0 0 !important;
@@ -26,4 +24,14 @@
 	h2 {
 		margin: 0 30px 0 0 !important;
 	}
+}
+
+:local(.header) {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+}
+
+:local(.wrapper) {
+	padding: 20px 40px;
 }
