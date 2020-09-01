@@ -78,6 +78,7 @@ const CreateProjectModal: React.FC<Props> = ({ children }) => {
 		}
 
 		startCreatingProject();
+		setIsModalOpened(false);
 	};
 
 	const onModalClose = () => {
@@ -174,7 +175,7 @@ const CreateProjectModal: React.FC<Props> = ({ children }) => {
 									setIsDataValid={setIsGithubUrlValid}
 									data={githubUrl}
 									setData={setGithubUrl}
-									placeholder={t("enter_your_project_URL")}
+									placeholder={t('enter_your_project_URL')}
 									popUpContent={validationMessage.VM_GITHUB_URL}
 									validation={validGitHubUrl}
 								/>
