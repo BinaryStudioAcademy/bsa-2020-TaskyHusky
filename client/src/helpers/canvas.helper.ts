@@ -16,18 +16,19 @@ export function extractImageFileExtensionFromBase64(base64Data: string) {
 	return base64Data.substring('data:image/'.length, base64Data.indexOf(';base64'));
 }
 
-export function image64toCanvasRef(canvasRef: HTMLCanvasElement, image64: string, pixelCrop: Crop) {
+export function image64toCanvasRef(canvasRef: any, image64: string, pixelCrop: Crop) {
 	const canvas = canvasRef;
 	console.log(canvas, pixelCrop);
-	canvas.width = pixelCrop.width ?? 0;
-	canvas.height = pixelCrop.height ?? 0;
 	const ctx = canvas.getContext('2d');
-	const image = new Image();
 
+	const image = new Image();
+	image.src = image64;
 	const scaleX = (pixelCrop.width ?? 0) / 144;
 	const scaleY = (pixelCrop.height ?? 0) / 144;
-
+	console.log(scaleX, scaleY);
 	image.onload = function () {
+		// ctx.setTransform(scaleX, 0, 0, scaleX, 0, 0);
+		ctx.imageSmoothingEnabled = false;
 		if (ctx !== null) {
 			ctx.drawImage(
 				image,

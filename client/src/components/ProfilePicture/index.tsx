@@ -24,7 +24,7 @@ const ProfilePicture: React.FC<Props> = (props: Props) => {
 	const dispatch = useDispatch();
 	const { t } = useTranslation();
 
-	const [crop, setCrop] = useState<Crop>({ aspect: 1 / 1, height: 50, unit: 'px', width: 50, x: 0, y: 0 });
+	const [crop, setCrop] = useState<Crop>({ aspect: 1 / 1, height: 144, unit: 'px', width: 144, x: 0, y: 0 });
 	const { firstName, lastName, username, avatar, editMode, isCurrentUser, showManager } = props;
 	const [uploadUrl, setUploadUrl] = useState<ArrayBuffer | string | null>('');
 	const [imgSrcExt, setImgSrcExt] = useState<any>(null);
@@ -97,9 +97,8 @@ const ProfilePicture: React.FC<Props> = (props: Props) => {
 					<div className={styles.avatarContainer}>
 						<div className={styles.borderHelper}>
 							{uploadUrl ? (
-								<canvas ref={imagePreviewCanvasRef}></canvas>
-							) : // <img src={uploadUrl as string} className={styles.avatar} alt="Avatar" />
-							avatar ? (
+								<canvas ref={imagePreviewCanvasRef} className={styles.canvas}></canvas>
+							) : avatar ? (
 								<img src={avatar} className={styles.avatar} alt="Avatar" />
 							) : (
 								<h1 className={styles.initials}>
