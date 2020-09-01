@@ -5,7 +5,7 @@ interface ProjectValidationTemplate {
 	description: string;
 	icon: string;
 	url: string;
-	githubUrl?: string;
+	githubUrl?: string | null;
 }
 
 const projectValidationTemplate: ProjectValidationTemplate = {
@@ -19,5 +19,6 @@ export const validateProject = async (data: Projects): Promise<ValidationError[]
 	const project = Object.assign(projectInstance, projectValidationTemplate, data);
 
 	const validationErrors: ValidationError[] = await validate(project);
+	console.log(validationErrors);
 	return validationErrors;
 };
