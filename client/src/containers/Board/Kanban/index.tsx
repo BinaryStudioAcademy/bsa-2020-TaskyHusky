@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BoardComponent } from '../';
 import BoardColumn from 'containers/BoardColumn';
 import { DragDropContext, OnDragEndResponder } from 'react-beautiful-dnd';
@@ -9,11 +9,27 @@ import { Header, Form, Button, Breadcrumb } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 import { convertIssueResultToPartialIssue } from 'helpers/issueResultToPartialIssue';
 import CreateColumnModal from 'containers/CreateColumnModal';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from 'typings/rootState';
+import { setColumnCreated } from 'containers/BoardColumn/logic/actions';
 
 const Kanban: BoardComponent = ({ board }) => {
 	const [search, setSearch] = useState<string>('');
+	const [columns, setColumns] = useState<WebApi.Result.BoardColumnResult[]>(board.columns);
 	const { t } = useTranslation();
+	const dispatch = useDispatch();
+	const { columnCreated, recentlyCreatedColumn } = useSelector((state: RootState) => state.boardColumn);
 	const onDragEndFuncs: Map<string, OnDragEndResponder> = new Map<string, OnDragEndResponder>();
+
+	useEffect(() => {
+		if (columnCreated) {
+			dispatch(setColumnCreated({ created: false }));
+
+			if (recentlyCreatedColumn) {
+				setColumns([...columns, recentlyCreatedColumn]);
+			}
+		}
+	}, [dispatch, columnCreated, recentlyCreatedColumn, columns]);
 
 	const onDragEnd: OnDragEndResponder = (event, provided) => {
 		const { destination, draggableId } = event;
@@ -68,9 +84,9 @@ const Kanban: BoardComponent = ({ board }) => {
 			<DragDropContext onDragEnd={onDragEnd}>
 				<div
 					className={styles.columnsGrid}
-					style={{ gridTemplateColumns: '300px '.repeat(board.columns.length).trim() }}
+					style={{ gridTemplateColumns: '300px '.repeat(columns.length).trim() }}
 				>
-					{board.columns.map((column, i) => (
+					{columns.map((column, i) => (
 						<BoardColumn
 							getOnDragEndFunc={(id, responder) => onDragEndFuncs.set(id, responder)}
 							search={search}

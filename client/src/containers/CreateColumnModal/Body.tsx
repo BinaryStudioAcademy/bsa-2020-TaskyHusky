@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Modal, Form, Button } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 import { useBoardColumnContext } from './logic/context';
+import { useDispatch } from 'react-redux';
+import { createColumn } from 'containers/BoardColumn/logic/actions';
 
 export interface Props {
 	boardId: string;
@@ -11,11 +13,28 @@ export interface Props {
 
 const Body: React.FC<Props> = ({ boardId, children, onClose = () => {} }) => {
 	const { t } = useTranslation();
+	const dispatch = useDispatch();
 	const context = useBoardColumnContext();
 	const [isModalOpened, setIsModalOpened] = useState<boolean>(false);
 
 	const curryOpen = (isOpened: boolean) => () => {
 		setIsModalOpened(isOpened);
+	};
+
+	const submit = (event: React.FormEvent) => {
+		event.preventDefault();
+		const allFields = context.data.columnName && context.data.status;
+
+		if (allFields) {
+			const data = {
+				...context.data,
+				board: boardId,
+			};
+
+			dispatch(createColumn({ data }));
+			onClose(data);
+			setIsModalOpened(false);
+		}
 	};
 
 	return (
@@ -28,20 +47,21 @@ const Body: React.FC<Props> = ({ boardId, children, onClose = () => {} }) => {
 			closeOnEscape
 			closeIcon
 			as="form"
+			onSubmit={submit}
 			size="tiny"
 			dimmer="inverted"
 			open={isModalOpened}
 		>
 			<Modal.Header>{t('create_column')}</Modal.Header>
 			<Modal.Content scrolling>
-				<Form>
+				<Form as="div">
 					<Form.Field>
 						<label className="required">{t('name')}</label>
 						<Form.Input
 							placeholder={t('name')}
 							fluid
 							icon="users"
-							value={context.data.columnName}
+							value={context.data.columnName ?? ''}
 							onChange={(event, data) => context.set('columnName', data.value)}
 						/>
 					</Form.Field>
@@ -51,7 +71,7 @@ const Body: React.FC<Props> = ({ boardId, children, onClose = () => {} }) => {
 							placeholder={t('status')}
 							fluid
 							icon="tag"
-							value={context.data.status}
+							value={context.data.status ?? ''}
 							onChange={(event, data) => context.set('status', data.value)}
 						/>
 					</Form.Field>
@@ -60,14 +80,14 @@ const Body: React.FC<Props> = ({ boardId, children, onClose = () => {} }) => {
 						<Form.Checkbox
 							onChange={(event, data) => context.set('isResolutionSet', data.checked)}
 							toggle
-							checked={context.data.isResolutionSet}
+							checked={context.data.isResolutionSet ?? false}
 							label={t('is_resolution_set')}
 						/>
 					</Form.Field>
 				</Form>
 			</Modal.Content>
 			<Modal.Actions>
-				<Button className="primaryBtn" onClick={curryOpen(true)}>
+				<Button className="primaryBtn" type="submit" onClick={curryOpen(true)}>
 					{t('submit')}
 				</Button>
 				<Button className="cancelBtn" compact onClick={curryOpen(false)}>

@@ -45,7 +45,6 @@ const Board: React.FC<Props> = ({ boardId }) => {
 	}
 
 	const BoardComponent = getBoardComponent(board.boardType);
-
 	return <BoardComponent board={board} />;
 };
 
