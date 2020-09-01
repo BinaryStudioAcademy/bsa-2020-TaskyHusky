@@ -38,13 +38,13 @@ createConnection()
 		app.use(passport.initialize());
 		app.use(injectIO(io));
 
-		app.use('/', (req, res, next) => (req.path === '/' ? res.sendStatus(200) : next())); // health check
 		app.use('/api', authenticateJwt(routesWhiteList), routes);
 
 		app.use(errorHandlerMiddleware);
+		app.use('/', (req, res, next) => res.sendStatus(200)); // health check
+
 		consumeMessageFromQueue();
 
-		// No express app here!!!
 		http.listen(appPort, () => {
 			// eslint-disable-next-line no-console
 			console.log(`Server is running on port ${appPort}`);

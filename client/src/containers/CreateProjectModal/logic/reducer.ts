@@ -13,7 +13,6 @@ export const createProjectReducer = createReducer<CreateProjectsState>(initialSt
 		return {
 			...state,
 			isLoading: false,
-			isModalOpened: false,
 			isProjectCreated: true,
 		};
 	},
@@ -36,8 +35,6 @@ export const createProjectReducer = createReducer<CreateProjectsState>(initialSt
 		};
 	},
 	[actionTypes.RESET_STATE]() {
-		return {
-			...initialState,
-		};
+		return { ...initialState };
 	},
 });

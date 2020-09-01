@@ -11,7 +11,5 @@
 }
 
 .primaryBtn {
-  background-color: #2185d0 !important;
-  color: $primary-bg !important;
-  border: none !important;
+  @include cancel-btn;
 }

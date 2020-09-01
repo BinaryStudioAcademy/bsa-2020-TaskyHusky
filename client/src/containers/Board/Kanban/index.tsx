@@ -47,7 +47,7 @@ const Kanban: BoardComponent = ({ board }) => {
 					onChange={(event, data) => setSearch(data.value)}
 					style={{ ...leftPadded, marginRight: 60, maxWidth: 250 }}
 				/>
-				<Button onClick={() => setSearch('')} secondary>
+				<Button onClick={() => setSearch('')} className="cancelBtn" compact>
 					{t('clear')}
 				</Button>
 			</div>

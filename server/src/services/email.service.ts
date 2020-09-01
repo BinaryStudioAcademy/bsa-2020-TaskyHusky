@@ -38,3 +38,7 @@ export function sendMailWithSes(args: EmailArgs) {
 		});
 	});
 }
+
+export const EmailService = {
+	sendEmail: sendMailWithSes,
+};
