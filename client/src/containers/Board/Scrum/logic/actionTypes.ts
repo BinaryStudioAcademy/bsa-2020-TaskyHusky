@@ -28,7 +28,7 @@ export type LoadIssuesTrigger = {
 };
 
 export type LoadIssuesSuccess = {
-	issues: WebApi.Entities.Issue[];
+	issues: WebApi.Result.IssueResult[];
 	sprintId: string;
 };
 
@@ -79,5 +79,5 @@ export type LoadBacklogTrigger = {
 };
 
 export type LoadBacklogSuccess = {
-	backlog: WebApi.Entities.Issue[];
+	backlog: WebApi.Result.IssueResult[];
 };
