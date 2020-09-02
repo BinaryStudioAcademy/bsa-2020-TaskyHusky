@@ -425,5 +425,5 @@ export const ru = {
 	create_an_account: 'Создать учетную запись',
 	already_have_a_account: 'У Вас уже есть аккаунт?',
 	create_column: 'Создать колонку',
-	is_resolution_set: 'is_resolution_set',
+	is_resolution_set: 'Is resolution set',
 };

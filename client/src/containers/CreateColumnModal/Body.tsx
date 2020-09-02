@@ -11,11 +11,24 @@ export interface Props {
 	onClose?: (data: WebApi.Board.CreateBoardColumn) => void;
 }
 
+interface Option {
+	key: string | number;
+	value: any;
+	text: string | JSX.Element | JSX.Element[];
+}
+
 const Body: React.FC<Props> = ({ boardId, children, onClose = () => {} }) => {
 	const { t } = useTranslation();
 	const dispatch = useDispatch();
 	const context = useBoardColumnContext();
 	const [isModalOpened, setIsModalOpened] = useState<boolean>(false);
+
+	const statusOpts: Option[] = [
+		{ key: 0, value: 'backlog', text: 'Backlog' },
+		{ key: 1, value: 'todo', text: 'Todo' },
+		{ key: 2, value: 'in progress', text: 'In progress' },
+		{ key: 3, value: 'done', text: 'Done' },
+	];
 
 	const curryOpen = (isOpened: boolean) => () => {
 		setIsModalOpened(isOpened);
@@ -56,6 +69,16 @@ const Body: React.FC<Props> = ({ boardId, children, onClose = () => {} }) => {
 			<Modal.Content scrolling>
 				<Form as="div">
 					<Form.Field>
+						<label className="required">{t('status')}</label>
+						<Form.Select
+							placeholder={t('status')}
+							options={statusOpts}
+							fluid
+							value={context.data.status ?? ''}
+							onChange={(event, data) => context.set('status', data.value)}
+						/>
+					</Form.Field>
+					<Form.Field>
 						<label className="required">{t('name')}</label>
 						<Form.Input
 							placeholder={t('name')}
@@ -63,16 +86,6 @@ const Body: React.FC<Props> = ({ boardId, children, onClose = () => {} }) => {
 							icon="users"
 							value={context.data.columnName ?? ''}
 							onChange={(event, data) => context.set('columnName', data.value)}
-						/>
-					</Form.Field>
-					<Form.Field>
-						<label className="required">{t('status')}</label>
-						<Form.Input
-							placeholder={t('status')}
-							fluid
-							icon="tag"
-							value={context.data.status ?? ''}
-							onChange={(event, data) => context.set('status', data.value)}
 						/>
 					</Form.Field>
 					<Form.Field>
