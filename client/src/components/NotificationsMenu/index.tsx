@@ -95,12 +95,12 @@ const NotificationsMenu: React.FC = () => {
 			onOpen={() => setIsOpened(true)}
 			open={isOpened}
 		>
-			<Dropdown.Menu className={styles.circularDropdownMenu}>
+			<Dropdown.Menu className={styles.circularDropdownMenu} style={{ maxHeight: 700, overflowY: 'auto' }}>
 				<Dropdown.Header>
 					{t('notifications')}
 					{isThereUnread ? (
 						<Button
-							positive
+							className="primaryBtn"
 							compact
 							size="mini"
 							style={{ color: 'white', marginLeft: 20 }}

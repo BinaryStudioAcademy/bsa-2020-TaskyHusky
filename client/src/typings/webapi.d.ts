@@ -20,6 +20,12 @@ namespace WebApi.Board {
 		id: string;
 		name: string;
 	}
+	interface CreateBoardColumn {
+		columnName: string;
+		status: string;
+		board: string;
+		isResolutionSet: boolean;
+	}
 }
 
 namespace WebApi.IO {
@@ -248,9 +254,9 @@ namespace WebApi.Entities {
 
 	interface BoardColumn {
 		id: string;
-		columnName?: string;
-		status?: string;
-		isResolutionSet?: boolean;
+		columnName: string;
+		status: string;
+		isResolutionSet: boolean;
 		board: Board;
 		issues: Issue[];
 	}
