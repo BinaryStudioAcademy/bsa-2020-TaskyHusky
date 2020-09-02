@@ -14,20 +14,21 @@ type ChartPoint = {
 };
 
 // const issues = [
-// 	{ storyPoint: 0, completedAt: new Date(2000, 1, 2) },
-// 	{ storyPoint: 10, completedAt: new Date(2000, 1, 4) },
-// 	{ storyPoint: 5, completedAt: new Date(2000, 1, 4) },
-// 	{ storyPoint: 15, completedAt: new Date(2000, 1, 4) },
-// 	{ storyPoint: 5, completedAt: new Date(2000, 1, 4) },
-// 	{ storyPoint: 5, completedAt: new Date(2000, 1, 4) },
-// 	{ storyPoint: 15, completedAt: new Date(2000, 1, 8) },
-// 	{ storyPoint: 5, completedAt: new Date(2000, 1, 8) },
-// 	{ storyPoint: 10, completedAt: new Date(2000, 1, 12) },
+// 	{ storyPoint: undefined, completedAt: new Date(2020, 1, 2) },
+// 	{ storyPoint: 10, completedAt: new Date(2020, 1, 1) },
+// 	{ storyPoint: 5, completedAt: new Date(2020, 1, 4) },
+// 	{ completedAt: new Date(2020, 1, 4) },
+// 	{ storyPoint: 5, completedAt: new Date(2020, 1, 4) },
+// 	{ storyPoint: 5, completedAt: new Date(2020, 1, 4) },
+// 	{ storyPoint: 15, completedAt: new Date(2020, 1, 8) },
+// 	{ storyPoint: 5, completedAt: new Date(2020, 1, 8) },
+// 	{ storyPoint: 10, completedAt: new Date(2020, 1, 12) },
 // ];
 
 const BurndownChart: React.FC<Props> = ({ sprint }) => {
 	const { startDate, endDate, issues } = sprint;
-	const sortedIssuesByDate = _.orderBy(issues, 'completedAt');
+	const sortedIssuesByDate = _.orderBy(issues, 'completedAt').filter(({ completedAt }) => completedAt);
+
 	const lastCompletedIssue = sortedIssuesByDate[sortedIssuesByDate.length - 1];
 
 	const start = new Date(
@@ -36,8 +37,8 @@ const BurndownChart: React.FC<Props> = ({ sprint }) => {
 			.format(),
 	);
 	const end =
-		lastCompletedIssue.completedAt > new Date(endDate as Date)
-			? lastCompletedIssue.completedAt
+		(lastCompletedIssue.completedAt as Date) > new Date(endDate as Date)
+			? (lastCompletedIssue.completedAt as Date)
 			: new Date(
 					moment(new Date(endDate as Date))
 						.startOf('day')
@@ -46,25 +47,27 @@ const BurndownChart: React.FC<Props> = ({ sprint }) => {
 
 	const maxPoint = _.sumBy(issues, 'storyPoint');
 
-	const datum = [] as ChartPoint[];
+	const datum = [
+		{
+			storyPoint: maxPoint,
+			date: start,
+		},
+	] as ChartPoint[];
 
 	sortedIssuesByDate
 		.map((issue) => ({
 			...issue,
-			completedAt: new Date(moment(new Date(issue['completedAt'])).startOf('day').format()),
+			completedAt: new Date(
+				moment(new Date(issue['completedAt'] as Date))
+					.startOf('day')
+					.format(),
+			),
 		}))
-		.forEach((issue, index) => {
-			if (index === 0) {
-				datum.push({
-					storyPoint: maxPoint - issue.storyPoint,
-					date: issue.completedAt,
-				});
-				return;
-			}
+		.forEach((issue) => {
 			const prevPoint = datum[datum.length - 1];
 
 			const nextPoint = {
-				storyPoint: prevPoint.storyPoint - issue.storyPoint,
+				storyPoint: prevPoint.storyPoint - (issue.storyPoint || 0),
 				date: issue.completedAt,
 			};
 
@@ -104,20 +107,19 @@ const BurndownChart: React.FC<Props> = ({ sprint }) => {
 			0,
 		);
 
-		const allDays = days.length - 1;
+		const allDays = days.length;
 
 		const reduceStoryPointPerDay = Math.round(maxPoint / (allDays - weekdaysCount));
-		const guideLineData = [] as ChartPoint[];
+		const guideLineData = [
+			{
+				storyPoint: maxPoint,
+				date: start,
+			},
+		] as ChartPoint[];
 
 		days.forEach((day, index) => {
 			const weekday = moment(day).weekday();
-			if (index === 0) {
-				guideLineData.push({
-					storyPoint: maxPoint,
-					date: day,
-				});
-				return;
-			}
+
 			const prevPoint = guideLineData[guideLineData.length - 1];
 
 			if (weekday === 6 || weekday === 0) {
@@ -164,7 +166,7 @@ const BurndownChart: React.FC<Props> = ({ sprint }) => {
 			.datum(datum)
 			.attr('fill', 'none')
 			.attr('stroke', 'red')
-			.attr('stroke-width', 1.5)
+			.attr('stroke-width', 0.8)
 			.attr('stroke-linejoin', 'round')
 			.attr('stroke-linecap', 'round')
 			.attr('d', line as any);
@@ -172,7 +174,7 @@ const BurndownChart: React.FC<Props> = ({ sprint }) => {
 			.datum(guideLineData)
 			.attr('fill', 'none')
 			.attr('stroke', 'grey')
-			.attr('stroke-width', 1.5)
+			.attr('stroke-width', 3.8)
 			.attr('stroke-linejoin', 'round')
 			.attr('stroke-linecap', 'round')
 			.attr('d', line as any);

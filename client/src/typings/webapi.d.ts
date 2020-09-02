@@ -63,6 +63,7 @@ namespace WebApi.Issue {
 		creator?: string;
 		watchers?: string[];
 		storyPoint?: number;
+		completedAt?: Date;
 	}
 	interface PartialIssueComment {
 		text?: string;
@@ -271,8 +272,8 @@ namespace WebApi.Entities {
 		boardColumn?: BoardColumn;
 		board?: Board;
 		labels?: string;
-		attachments?: string[];
-		links?: string[];
+		attachments?: string;
+		links?: string;
 		priority?: Priority;
 		description?: string;
 		sprint?: Sprint;
@@ -283,6 +284,7 @@ namespace WebApi.Entities {
 		watchers?: UserProfile[];
 		createdAt?: Date;
 		updatedAt?: Date;
+		completedAt?: Date;
 		storyPoint?: number;
 	}
 
@@ -390,6 +392,8 @@ namespace WebApi.Entities {
 		boards?: Board[];
 		public resetPasswordToken?: string | null;
 		public resetPasswordExpires?: Date | null;
+		public resetEmailToken?: string | null;
+		public resetEmailExpires?: Date | null;
 		filters?: Filter[];
 		assignedProjects?: Projects[];
 		leadedProjects?: Projects[];

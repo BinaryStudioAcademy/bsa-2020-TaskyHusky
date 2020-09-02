@@ -55,6 +55,7 @@ function* watchCreateIssue() {
 function* fetchUpdateIssue(action: AnyAction) {
 	const response: WebApi.Entities.Issue = yield call(updateIssue, action.id, action.data);
 	const links = yield call(bulkAttach, action.files ?? [], response.issueKey as string);
+	//@ts-ignore
 	yield put(updateIssueSuccess({ data: { ...response, attachments: [...(response.attachments ?? []), ...links] } }));
 }
 

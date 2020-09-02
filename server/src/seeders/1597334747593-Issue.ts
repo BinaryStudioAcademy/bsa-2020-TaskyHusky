@@ -241,7 +241,111 @@ export class Issue1597334747593 implements MigrationInterface {
 		issue9.status = issueStatus4;
 		issue9.sprint = sprint3;
 
-		await getRepository('Issue').save([issue1, issue2, issue3, issue4, issue5, issue6, issue7, issue8, issue9]);
+		// start/end date of sprint1 must '2020-02-01'/'2020-02-08'
+		// completedAt must be beetwen this dates
+		const issue10 = new Issue();
+		issue10.id = '44b274eb-301b-4192-a6b6-9f55a67b6cf4';
+		issue10.project = project;
+		issue10.board = scrumBoard;
+		issue10.createdAt = new Date('2020-02-12');
+		issue10.updatedAt = new Date('2020-03-12');
+		issue10.summary = 'Think of code improvement';
+		issue10.description =
+			'Mutley, you snickering, floppy eared hound. When courage is needed, you’re never around.';
+		issue10.creator = user2;
+		issue10.assigned = user2;
+		issue10.labels = '{label}';
+		issue10.attachments = '{attachments4}';
+		issue10.links = '{link/toSpace}';
+		issue10.issueKey = 'IK-10';
+		issue10.type = issueType2;
+		issue10.priority = priority2;
+		issue10.status = issueStatus3;
+		issue10.sprint = sprint1;
+		issue10.completedAt = new Date('2020-02-02');
+		issue10.storyPoint = 10;
+
+		const issue11 = new Issue();
+		issue11.id = '44b274eb-301b-4192-a6b6-9f55a67b6cf3';
+		issue11.project = project;
+		issue11.board = scrumBoard;
+		issue11.createdAt = new Date('2020-02-12');
+		issue11.updatedAt = new Date('2020-03-12');
+		issue11.summary = 'Implemented backend';
+		issue11.description =
+			'Mutley, you snickering, floppy eared hound. When courage is needed, you’re never around.';
+		issue11.creator = user2;
+		issue11.assigned = user2;
+		issue11.labels = '{label}';
+		issue11.attachments = '{attachments4}';
+		issue11.links = '{link/toSpace}';
+		issue11.issueKey = 'IK-11';
+		issue11.type = issueType2;
+		issue11.priority = priority2;
+		issue11.status = issueStatus3;
+		issue11.sprint = sprint1;
+		issue11.completedAt = new Date('2020-02-03');
+		issue11.storyPoint = 5;
+
+		const issue12 = new Issue();
+		issue12.id = '44b274eb-301b-4192-a6b6-9f55a67b6cf2';
+		issue12.project = project;
+		issue12.board = scrumBoard;
+		issue12.createdAt = new Date('2020-02-12');
+		issue12.updatedAt = new Date('2020-03-12');
+		issue12.summary = 'Implemented frontend';
+		issue12.description =
+			'Mutley, you snickering, floppy eared hound. When courage is needed, you’re never around.';
+		issue12.creator = user2;
+		issue12.assigned = user2;
+		issue12.labels = '{label}';
+		issue12.attachments = '{attachments4}';
+		issue12.links = '{link/toSpace}';
+		issue12.issueKey = 'IK-12';
+		issue12.type = issueType2;
+		issue12.priority = priority;
+		issue12.status = issueStatus;
+		issue12.sprint = sprint1;
+		issue12.completedAt = new Date('2020-02-04');
+		issue12.storyPoint = 5;
+
+		const issue13 = new Issue();
+		issue13.id = '44b274eb-301b-4192-a6b6-9f55a67b6cf1';
+		issue13.project = project;
+		issue13.board = scrumBoard;
+		issue13.createdAt = new Date('2020-02-12');
+		issue13.updatedAt = new Date('2020-03-12');
+		issue13.summary = 'Implemented burndown chart';
+		issue13.description =
+			'Mutley, you snickering, floppy eared hound. When courage is needed, you’re never around.';
+		issue13.creator = user2;
+		issue13.assigned = user2;
+		issue13.labels = '{label}';
+		issue13.attachments = '{attachments4}';
+		issue13.links = '{link/toSpace}';
+		issue13.issueKey = 'IK-13';
+		issue13.type = issueType;
+		issue13.priority = priority;
+		issue13.status = issueStatus2;
+		issue13.sprint = sprint1;
+		issue13.completedAt = new Date('2020-02-04');
+		issue10.storyPoint = 10;
+
+		await getRepository('Issue').save([
+			issue1,
+			issue2,
+			issue3,
+			issue4,
+			issue5,
+			issue6,
+			issue7,
+			issue8,
+			issue9,
+			issue10,
+			issue11,
+			issue12,
+			issue13,
+		]);
 	}
 
 	public async down(queryRunner: QueryRunner): Promise<void> {}
