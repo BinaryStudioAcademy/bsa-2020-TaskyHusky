@@ -59,7 +59,7 @@ const IssueCard: React.FC<Props> = ({ issue, index, noDrag, noRedirect, selectab
 	const content = (
 		<Segment
 			onClick={onClick}
-			style={{ backgroundColor: selected ? '#EFF' : 'white' }}
+			style={{ backgroundColor: selected ? '#ffeeb4' : 'white' }}
 			className={styles.card_margin}
 		>
 			{redirecting ? <Redirect to={`/issue/${issue.issueKey}`} /> : ''}

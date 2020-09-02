@@ -98,15 +98,24 @@ const BoardColumn: React.FC<Props> = ({ column, className, search, getOnDragEndF
 			<Droppable droppableId={`board-column__${column.id}`}>
 				{(provided, snapshot) => (
 					<Segment style={{ backgroundColor: snapshot.isDraggingOver ? '#CCC' : '#EEE' }} className="fill">
-						<Header as="h3" floated="left" className={styles.columnHeader}>
-							{column.columnName}
-						</Header>
-						<CreateIssueModal boardColumnID={column.id}>
-							<Button floated="right" compact className="contentBtn">
-								<Icon name="plus circle" />
-								{t('create_issue')}
-							</Button>
-						</CreateIssueModal>
+						<div
+							style={{
+								display: 'flex',
+								width: '100%',
+								justifyContent: 'space-between',
+								alignItems: 'center',
+							}}
+						>
+							<Header as="h3" className={styles.columnHeader}>
+								{column.columnName}
+							</Header>
+							<CreateIssueModal boardColumnID={column.id}>
+								<Button compact className="contentBtn" style={{ whiteSpace: 'nowrap' }}>
+									<Icon name="plus circle" />
+									{t('create_issue')}
+								</Button>
+							</CreateIssueModal>
+						</div>
 						<div style={{ clear: 'both' }} />
 						<div style={{ marginTop: 10 }}>
 							<div

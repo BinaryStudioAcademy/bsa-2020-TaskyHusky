@@ -21,6 +21,7 @@ import projectPeopleSaga from 'containers/ProjectPeople/logic/saga';
 import notificationsSaga from 'components/NotificationsMenu/logic/saga';
 import projectLabelSaga from 'containers/ProjectLabels/logic/saga';
 import userActivitySaga from 'containers/WorkPage/logic/saga';
+import boardColumnSaga from 'containers/BoardColumn/logic/saga';
 
 export default function* rootSaga() {
 	yield all([
@@ -46,5 +47,6 @@ export default function* rootSaga() {
 		peoplePageSaga(),
 		notificationsSaga(),
 		userActivitySaga(),
+		boardColumnSaga(),
 	]);
 }

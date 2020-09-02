@@ -446,4 +446,10 @@ export const en = {
 	commits_view_full: 'View full commit',
 	label_text_validation: 'The label name must be unique and must not be empty.',
 	enter_label_text: 'Enter label text',
+	create_column: 'Create column',
+	is_resolution_set: 'Is resolution set',
+	todo: 'Todo',
+	in_progress: 'In progress',
+	done: 'Done',
+	team_has_been_deleted: 'Team has been deleted',
 };

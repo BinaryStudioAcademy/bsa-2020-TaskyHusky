@@ -26,11 +26,22 @@ const UserNotification: React.FC<Props> = ({ notification }) => {
 	const renderTitle = title ? <h3 style={{ marginBottom: 10 }}>{title}</h3> : null;
 
 	const renderButton = !isViewed ? (
-		<Button onClick={view} secondary compact size="mini" style={{ marginTop: 10 }}>
+		<Button
+			onClick={view}
+			className="cancelBtn"
+			size="mini"
+			style={{ marginTop: 10, paddingTop: 3, paddingBottom: 3 }}
+		>
 			{t('mark_notif_as_read')}
 		</Button>
 	) : (
-		<Button onClick={unview} secondary inverted compact size="mini" style={{ marginTop: 10 }}>
+		<Button
+			onClick={unview}
+			className="contentBtn"
+			compact
+			size="mini"
+			style={{ marginTop: 10, paddingTop: 3, paddingBottom: 3 }}
+		>
 			{t('mark_notif_as_unread')}
 		</Button>
 	);

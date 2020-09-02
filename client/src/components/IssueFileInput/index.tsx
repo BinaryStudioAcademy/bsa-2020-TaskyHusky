@@ -68,7 +68,7 @@ const IssueFileInput: React.FC<Props> = ({
 					attributes={{ accept: ALLOWED_ISSUE_ATTACHMENT_EXTNAMES, multiple: true }}
 					onChange={handleChange}
 				>
-					<Button secondary compact style={{ marginTop: 5, marginBottom: 5 }} type="button">
+					<Button className="contentBtn" compact style={{ marginTop: 5, marginBottom: 5 }} type="button">
 						{t('click_to_browse')}
 					</Button>
 				</FileInput>

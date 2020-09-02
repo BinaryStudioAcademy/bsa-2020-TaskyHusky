@@ -433,4 +433,9 @@ export const ru = {
 	already_have_a_account: 'У Вас уже есть аккаунт?',
 	label_text_validation: 'Название ярлыка должно быть уникальным и не может быть пустым.',
 	enter_label_text: 'Введите текст ярлыка',
+	create_column: 'Создать колонку',
+	is_resolution_set: 'Is resolution set',
+	todo: 'К выполнению',
+	in_progress: 'Выполняется',
+	done: 'Выполнено',
 };

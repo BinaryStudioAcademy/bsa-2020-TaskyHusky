@@ -425,4 +425,9 @@ export const ua = {
 	already_have_a_account: 'Ви вже маєте обліковий запис?',
 	label_text_validation: 'Назва мітки має бути унікальною та не повинна бути порожньою.',
 	enter_label_text: 'Введіть текст мітки',
+	create_column: 'Створити колонку',
+	is_resolution_set: 'Is resolution set',
+	todo: 'До виконання',
+	in_progress: 'Виконується',
+	done: 'Виконано',
 };

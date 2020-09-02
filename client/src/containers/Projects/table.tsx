@@ -32,6 +32,13 @@ const ProjectsTable = ({ projects, currentUser }: Props) => {
 	const [sortDirection, setSortDirection] = useState<SortDirections>('ascending');
 
 	const sortedProjects = useMemo(() => {
+		if (sortByColumn === 'lead') {
+			if (sortDirection === 'descending') {
+				return orderBy(projects, (project) => project.lead.firstName, ['desc']);
+			}
+			return orderBy(projects, (project) => project.lead.firstName, ['asc']);
+		}
+
 		if (sortDirection === 'descending') {
 			return orderBy(projects, [sortByColumn], ['desc']);
 		}
@@ -62,14 +69,14 @@ const ProjectsTable = ({ projects, currentUser }: Props) => {
 					<Table.Row>
 						<Table.HeaderCell
 							className={[styles.column__name, styles.table__header_cell].join(' ')}
-							sorted={sortDirection}
+							sorted={sortByColumn === 'name' ? sortDirection : undefined}
 							onClick={() => changeSort('name')}
 						>
 							{t('name')}
 						</Table.HeaderCell>
 						<Table.HeaderCell
 							className={[styles.column__key, styles.table__header_cell].join(' ')}
-							sorted={sortDirection}
+							sorted={sortByColumn === 'key' ? sortDirection : undefined}
 							onClick={() => changeSort('key')}
 						>
 							{t('key')}
@@ -77,7 +84,7 @@ const ProjectsTable = ({ projects, currentUser }: Props) => {
 						<Table.HeaderCell className={styles.table__header_cell}>{t('type')}</Table.HeaderCell>
 						<Table.HeaderCell
 							className={[styles.table__header_cell, styles.column__lead].join(' ')}
-							sorted={sortDirection}
+							sorted={sortByColumn === 'lead' ? sortDirection : undefined}
 							onClick={() => changeSort('lead')}
 						>
 							{t('lead')}

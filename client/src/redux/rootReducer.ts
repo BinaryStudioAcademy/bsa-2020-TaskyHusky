@@ -21,6 +21,7 @@ import { headerReducer } from '../containers/Header/logic/reducer';
 import { scrumBoardReducer } from 'containers/Board/Scrum/logic/reducer';
 import { notificationsReducer } from 'components/NotificationsMenu/logic/reducer';
 import { userActivityReducer } from 'containers/WorkPage/logic/reducer';
+import { boardColumnReducer } from 'containers/BoardColumn/logic/reducer';
 
 const rootReducer: Reducer<RootState> = combineReducers({
 	boards: boardReducer,
@@ -44,6 +45,7 @@ const rootReducer: Reducer<RootState> = combineReducers({
 	header: headerReducer,
 	notifications: notificationsReducer,
 	userActivity: userActivityReducer,
+	boardColumn: boardColumnReducer,
 });
 
 export default rootReducer;
