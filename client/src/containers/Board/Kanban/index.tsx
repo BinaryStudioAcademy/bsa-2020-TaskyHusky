@@ -82,10 +82,7 @@ const Kanban: BoardComponent = ({ board }) => {
 				<Breadcrumb.Section active>{board.name}</Breadcrumb.Section>
 			</Breadcrumb>
 			<DragDropContext onDragEnd={onDragEnd}>
-				<div
-					className={styles.columnsGrid}
-					style={{ gridTemplateColumns: '300px '.repeat(columns.length).trim() }}
-				>
+				<div className={styles.columnsFlex}>
 					{columns.map((column, i) => (
 						<BoardColumn
 							getOnDragEndFunc={(id, responder) => onDragEndFuncs.set(id, responder)}
