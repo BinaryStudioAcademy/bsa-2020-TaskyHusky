@@ -19,6 +19,7 @@ import { boardReducer } from '../containers/Boards/logic/reducer';
 import { headerReducer } from '../containers/Header/logic/reducer';
 import { scrumBoardReducer } from 'containers/Board/Scrum/logic/reducer';
 import { notificationsReducer } from 'components/NotificationsMenu/logic/reducer';
+import { reportReducer } from 'containers/Report/logic/reducer';
 
 const rootReducer: Reducer<RootState> = combineReducers({
 	boards: boardReducer,
@@ -40,6 +41,7 @@ const rootReducer: Reducer<RootState> = combineReducers({
 	peoplePage: peoplePageReducer,
 	header: headerReducer,
 	notifications: notificationsReducer,
+	report: reportReducer,
 });
 
 export default rootReducer;

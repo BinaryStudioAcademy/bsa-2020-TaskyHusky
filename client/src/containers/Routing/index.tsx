@@ -21,6 +21,7 @@ import ProjectIssues from 'pages/ProjectIssues';
 import NotFound from 'pages/404';
 import Search from 'pages/AdvancedSearch';
 import Work from 'pages/Work';
+import ReportPage from 'pages/ReportPage';
 import ResetPassword from '../ResetPassword';
 import ForgotPassword from '../ForgotPassword';
 import ResetEmail from '../ResetEmail';
@@ -55,6 +56,7 @@ const Routing: React.FC = () => {
 			<PrivateRoute exact path="/team/:id" component={Team} />
 			<PrivateRoute exact path="/profile/:id" component={Profile} />
 			<PrivateRoute exact path="/filters" component={Filters} />
+			<PrivateRoute path="/report/:id" component={ReportPage} />
 			<PrivateRoute path="/board/:id" component={BoardPage} />
 			<PrivateRoute path="/project/:id/issues" component={ProjectIssues} />
 			<PrivateRoute exact path="/people" component={PeoplePage} />
