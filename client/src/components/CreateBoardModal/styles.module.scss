@@ -1,0 +1,11 @@
+@import 'styles/mixins.scss';
+
+.contentBtn {
+	@include content-btn;
+}
+.primaryBtn {
+	@include primary-btn;
+}
+.cancelBtn {
+	@include cancel-btn;
+}
