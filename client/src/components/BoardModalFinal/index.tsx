@@ -42,7 +42,7 @@ const BoardModalFinal = (props: Props) => {
 		}
 
 		setCreateButtonDisabled(isCreateButtonHidden);
-	}, [selectedProjects, selectedName, authData.user, setBoard, setCreateButtonDisabled, algorithm, boardType]);
+	}, [selectedProjects, selectedName, authData.user, setBoard, setCreateButtonDisabled, boardType]);
 
 	const projectData = useSelector((rootState: RootState) => rootState.projects.projects);
 
