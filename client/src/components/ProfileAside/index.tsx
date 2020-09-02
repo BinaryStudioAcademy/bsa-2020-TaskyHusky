@@ -11,17 +11,17 @@ interface Props {
 	isCurrentUser: boolean;
 	teams: Array<WebApi.Entities.Team>;
 	user: Partial<UserProfileState>;
+	editMode: string;
 	showManager: (modeToShow: string) => void;
 }
 
 const ProfileAside: React.FC<Props> = (props: Props) => {
-	const { user, isCurrentUser, teams, showManager } = props;
+	const { user, isCurrentUser, teams, showManager, editMode } = props;
 	const {
 		avatar = '',
 		firstName = '',
 		lastName = '',
 		username = '',
-		editMode = '',
 		jobTitle = '',
 		department = '',
 		organization = '',

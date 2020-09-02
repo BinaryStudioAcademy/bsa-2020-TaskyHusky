@@ -118,12 +118,10 @@ export const en = {
 	acc_pref: 'Account preferences',
 	ctrl_settings: 'Control settings related to your account.',
 	lang_reg: 'Language and Region',
-	content_lang:
-		'Changes to your language and timezone will be reflected across Confluence, Jira and directory. Update your language and timezone for other products from your ',
-	product_settings: 'product settings.',
+	content_lang: 'Changes to your language and timezone will be reflected across directory.',
 	del_acc: 'Delete your account',
 	content_del:
-		'When you delete your account, you lose access to Atlassian account services, and we permanently delete your personal data. You can cancel the deletion for 14 days. This page is protected by reCAPTCHA and the Google Privacy Policy and Terms of Service apply.',
+		'When you delete your account, you lose access to Tasky-Husky account services, and we permanently delete your personal data. This page is protected by Privacy Policy and Terms of Service apply.',
 	del_btn: 'Delete account',
 	change_email: 'Change Email',
 	current_email: 'Your current email adress is ',
@@ -256,7 +254,7 @@ export const en = {
 	your_teams: 'Your teams',
 	create_team: 'Create new Team',
 	add_people_text:
-		'Missing someone on gmail.com? Add their email below – if permissions allow we\'ll add them, or else send a request to your admin.',
+		"Missing someone on gmail.com? Add their email below – if permissions allow we'll add them, or else send a request to your admin.",
 	send: 'Send',
 	add_people_email_placeholder: 'Add email address gmail.com',
 	my_work: 'My work',
@@ -369,8 +367,10 @@ export const en = {
 	scrum: 'SCRUM',
 	kanban: 'Kanban',
 	create_a_board: 'Create a board',
-	scrum_focuses_on_planning: 'Scrum focuses on planning, committing and delivering time-boxed chunks of work called	Sprints',
-	kanban_focuses_on_planning: 'Kanban focuses on visualising your workflow and limiting work-in-progress to facilitate incremental improvements to your existing process',
+	scrum_focuses_on_planning:
+		'Scrum focuses on planning, committing and delivering time-boxed chunks of work called	Sprints',
+	kanban_focuses_on_planning:
+		'Kanban focuses on visualising your workflow and limiting work-in-progress to facilitate incremental improvements to your existing process',
 	create_scrum_board: 'Create a SCRUM board',
 	create_kanban_board: 'Create a Kanban board',
 	board_created_with_new_software_project: 'Board created with new Software Project',
@@ -399,7 +399,7 @@ export const en = {
 	P: 'P',
 	enter_project_name: 'Enter project name',
 	enter_your_key: 'Enter your key',
-	enter_your_project_URL: 'Enter your project\'s GitHub URL',
+	enter_your_project_URL: "Enter your project's GitHub URL",
 	user_does_not_exist: 'User does not exist',
 	sign_in: 'Sign In',
 	create_an_account: 'Create an account',

@@ -40,7 +40,6 @@ const AccountManager = () => {
 				<h4 className={styles.cardHeader}>{t('lang_reg')}</h4>
 				<p className={styles.textData}>
 					{t('content_lang')}
-					<Link to="#">{t('product_settings')}</Link>.
 				</p>
 				<LanguageSelect />
 				<h4 className={styles.cardHeader}>{t('del_acc')}</h4>
