@@ -426,4 +426,7 @@ export const ru = {
 	already_have_a_account: 'У Вас уже есть аккаунт?',
 	create_column: 'Создать колонку',
 	is_resolution_set: 'Is resolution set',
+	todo: 'К выполнению',
+	in_progress: 'Выполняется',
+	done: 'Выполнено',
 };

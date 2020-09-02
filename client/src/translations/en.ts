@@ -439,4 +439,7 @@ export const en = {
 	commits_view_full: 'View full commit',
 	create_column: 'Create column',
 	is_resolution_set: 'Is resolution set',
+	todo: 'Todo',
+	in_progress: 'In progress',
+	done: 'Done',
 };

@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useBoardColumnContext } from './logic/context';
 import { useDispatch } from 'react-redux';
 import { createColumn } from 'containers/BoardColumn/logic/actions';
+import initialState from './logic/initialState';
 
 export interface Props {
 	boardId: string;
@@ -24,14 +25,22 @@ const Body: React.FC<Props> = ({ boardId, children, onClose = () => {} }) => {
 	const [isModalOpened, setIsModalOpened] = useState<boolean>(false);
 
 	const statusOpts: Option[] = [
-		{ key: 0, value: 'backlog', text: 'Backlog' },
-		{ key: 1, value: 'todo', text: 'Todo' },
-		{ key: 2, value: 'in progress', text: 'In progress' },
-		{ key: 3, value: 'done', text: 'Done' },
+		{ key: 0, value: 'backlog', text: t('backlog') },
+		{ key: 1, value: 'todo', text: t('todo') },
+		{ key: 2, value: 'in progress', text: t('in_progress') },
+		{ key: 3, value: 'done', text: t('done') },
 	];
+
+	const clearContext = () => {
+		Object.keys(context.data).forEach((key) => context.set(key as any, (initialState as any)[key]));
+	};
 
 	const curryOpen = (isOpened: boolean) => () => {
 		setIsModalOpened(isOpened);
+
+		if (isOpened) {
+			clearContext();
+		}
 	};
 
 	const submit = (event: React.FormEvent) => {
