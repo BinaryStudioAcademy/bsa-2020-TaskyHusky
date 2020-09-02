@@ -5,7 +5,7 @@ interface ProjectValidationTemplate {
 	description: string;
 	icon: string;
 	url: string;
-	githubUrl?: string;
+	githubUrl?: string | null;
 }
 
 const projectValidationTemplate: ProjectValidationTemplate = {

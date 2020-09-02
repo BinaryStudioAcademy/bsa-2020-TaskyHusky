@@ -53,30 +53,31 @@
 
 .project__img {
 	width: 30px;
-	height: 30px;  
-	border-radius: 3px;     
-	margin-right: 14px; 
-  }
+	height: 30px;
+	border-radius: 3px;
+	margin-right: 14px;
+}
 
-  .project__name_container,
-  .project__lead_container {
+.project__name_container,
+.project__lead_container {
 	display: flex;
 	align-items: center;
-	width: 100%; 
-  }
+	width: 100%;
+}
 
-  .column__name {
-	  width: 30%
-  }
+.column__name {
+	width: 30%;
+}
 
-  .column__lead {
-	  width: 25%
-  }
+.column__lead {
+	width: 25%;
+}
 
-  .column__settings {
-	  width: 40px;
-  }
+.column__key {
+  width: 10%;
+}
 
-  .column__key {
-	  width: 10%;
-  }
+.column__settings {
+	width: 40px;
+}
+
