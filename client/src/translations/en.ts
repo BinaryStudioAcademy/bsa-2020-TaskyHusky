@@ -443,4 +443,5 @@ export const en = {
 	in_progress: 'In progress',
 	done: 'Done',
 	team_has_been_deleted: 'Team has been deleted',
+	the_comments_text_is_copied_to_clipboard: "This comment's text is copied to clipboard.",
 };
