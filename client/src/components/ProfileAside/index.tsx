@@ -40,7 +40,7 @@ const ProfileAside: React.FC<Props> = (props: Props) => {
 			/>
 			<div>
 				{editMode ? (
-					<ManagerAsideBlock showManager={showManager} />
+					<ManagerAsideBlock showManager={showManager} editMode={editMode} />
 				) : (
 					<>
 						<ProfileAboutBlock
