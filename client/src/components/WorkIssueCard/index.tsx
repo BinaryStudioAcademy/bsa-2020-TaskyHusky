@@ -16,7 +16,7 @@ const WorkIssueCard: React.FC<Props> = (props: Props) => {
 			<Icon name={type.icon as any} color={type.color as any} title={type.title} />
 			<p className={styles.key}>{issueKey}</p>
 			<p className={styles.summary}>
-				<Link to={`issue/${issueKey}`}>{description}</Link>
+				<Link to={`/issue/${issueKey}`}>{description}</Link>
 			</p>
 		</div>
 	);

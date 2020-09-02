@@ -96,6 +96,7 @@ const ProfilePage = ({ id }: { id: string }) => {
 
 	useEffect(() => {
 		getUser();
+		setIsLoadAdditional(true);
 		//eslint-disable-next-line
 	}, [userData.id, id]);
 
@@ -104,7 +105,7 @@ const ProfilePage = ({ id }: { id: string }) => {
 			getCurrentUserData();
 		}
 		//eslint-disable-next-line
-	}, [projects, teammates, teams, activity]);
+	}, [projects, teammates, teams, activity, isCurrentUser]);
 
 	return (
 		<>

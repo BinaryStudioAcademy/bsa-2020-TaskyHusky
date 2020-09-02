@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Icon, Popup } from 'semantic-ui-react';
 import styles from './styles.module.scss';
 import { ActivityIssue } from 'containers/WorkPage/logic/state';
@@ -9,7 +10,7 @@ interface Props {
 
 const IssueActivityItem: React.FC<Props> = (props: Props) => {
 	const {
-		item: { type, summary, project },
+		item: { type, summary, project, issueKey },
 	} = props;
 
 	return (
@@ -26,8 +27,12 @@ const IssueActivityItem: React.FC<Props> = (props: Props) => {
 				}
 			/>
 			<div className={styles.block}>
-				<p className={styles.content}>{summary}</p>
-				<p className={styles.contentSecondary}>{project.category} project</p>
+				<Link to={`/issue/${issueKey}`}>
+					<p className={styles.content}>{summary}</p>
+				</Link>
+				<Link to={`/project/${project.id}/issues`}>
+					<p className={styles.contentSecondary}>{project.category} project</p>
+				</Link>
 			</div>
 		</div>
 	);
