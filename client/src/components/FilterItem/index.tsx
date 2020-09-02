@@ -4,6 +4,7 @@ import styles from './styles.module.scss';
 import { useTranslation } from 'react-i18next';
 import UserAvatar from 'components/common/UserAvatar';
 import Options, { ConfigItem } from 'components/common/Options';
+import { Link } from 'react-router-dom';
 
 interface Props {
 	filter: WebApi.Entities.Filter;
@@ -59,7 +60,7 @@ const FilterItem: React.FC<Props> = (props: Props) => {
 				children={
 					<>
 						<UserAvatar user={owner as WebApi.Entities.UserProfile} small />
-						<span>{fullName}</span>
+						<Link to={`/profile/${owner?.id}`}>{fullName}</Link>
 					</>
 				}
 			/>
