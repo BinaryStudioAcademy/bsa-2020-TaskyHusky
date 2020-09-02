@@ -109,7 +109,7 @@ const Body: React.FC<Props> = ({ boardId, children, onClose = () => {} }) => {
 				</Form>
 			</Modal.Content>
 			<Modal.Actions>
-				<Button className="primaryBtn" type="submit" onClick={curryOpen(true)}>
+				<Button className="primaryBtn" type="submit">
 					{t('submit')}
 				</Button>
 				<Button className="cancelBtn" compact onClick={curryOpen(false)}>
