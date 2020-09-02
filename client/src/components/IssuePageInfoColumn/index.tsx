@@ -116,9 +116,12 @@ const IssuePageInfoColumn: React.FC<Props> = ({
 						onClose={() => setIsDeleteModalOpened(false)}
 						open={isDeleteModalOpened}
 					>
-						<Button className="contentBtn" onClick={() => setIsDeleteModalOpened(true)}>
-							{t('delete')}
-						</Button>
+						<Button
+							className="contentBtn"
+							onClick={() => setIsDeleteModalOpened(true)}
+							icon="trash alternate"
+							title={t('delete')}
+						/>
 					</DeleteIssueModal>
 				</div>
 				{toPageLink ? (
