@@ -36,6 +36,10 @@
 .content {
   @include primary-content;
   margin: 0;
+
+  &:hover {
+    border-bottom: 2px solid $yellow;
+  }
 }
 
 .contentSecondary {

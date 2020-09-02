@@ -28,10 +28,10 @@ const IssueActivityItem: React.FC<Props> = (props: Props) => {
 			/>
 			<div className={styles.block}>
 				<Link to={`/issue/${issueKey}`}>
-					<p className={styles.content}>{summary}</p>
+					<span className={styles.content}>{summary}</span>
 				</Link>
 				<Link to={`/project/${project.id}/issues`}>
-					<p className={styles.contentSecondary}>{project.category} project</p>
+					<span className={styles.contentSecondary}>{project.name}</span>
 				</Link>
 			</div>
 		</div>

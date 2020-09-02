@@ -14,11 +14,13 @@ export type ActivityIssue = {
 	issueKey: string;
 	id: string;
 	summary: string;
+	priority: WebApi.Entities.Priority;
 	updatedAt: Date;
 	type: WebApi.Entities.IssueType;
 	project: {
 		id: string;
 		name: string;
 		category: string;
+		users: Array<{ id: string }>;
 	};
 };
