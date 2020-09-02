@@ -5,7 +5,7 @@ import { DragDropContext, OnDragEndResponder } from 'react-beautiful-dnd';
 import styles from './styles.module.scss';
 import { extractIdFormDragDropId } from 'helpers/extractId.helper';
 import { getByKey, updateIssueByKey } from 'services/issue.service';
-import { Header, Form, Button, Breadcrumb } from 'semantic-ui-react';
+import { Header, Form, Button, Breadcrumb, Segment, Icon } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 import { convertIssueResultToPartialIssue } from 'helpers/issueResultToPartialIssue';
 import CreateColumnModal from 'containers/CreateColumnModal';
@@ -54,25 +54,18 @@ const Kanban: BoardComponent = ({ board }) => {
 
 	return (
 		<div className={styles.wrapper}>
-			<div className={styles.header}>
-				<div className={styles.inlineContainer}>
-					<Header as="h2">{board.name}</Header>
-					<Form.Input
-						placeholder={t('search')}
-						icon="search"
-						value={search}
-						onChange={(event, data) => setSearch(data.value)}
-						style={{ marginRight: 60, maxWidth: 250 }}
-					/>
-					<Button onClick={() => setSearch('')} className="cancelBtn" compact>
-						{t('clear')}
-					</Button>
-				</div>
-				<CreateColumnModal boardId={board.id}>
-					<Button className="primaryBtn" style={{ height: 40 }}>
-						{t('create_column')}
-					</Button>
-				</CreateColumnModal>
+			<div className={styles.inlineContainer}>
+				<Header as="h2">{board.name}</Header>
+				<Form.Input
+					placeholder={t('search')}
+					icon="search"
+					value={search}
+					onChange={(event, data) => setSearch(data.value)}
+					style={{ marginRight: 60, maxWidth: 250 }}
+				/>
+				<Button onClick={() => setSearch('')} className="cancelBtn" compact>
+					{t('clear')}
+				</Button>
 			</div>
 			<Breadcrumb style={{ marginBottom: 20 }}>
 				<Breadcrumb.Section href="/projects">{t('projects')}</Breadcrumb.Section>
@@ -92,6 +85,12 @@ const Kanban: BoardComponent = ({ board }) => {
 							key={i}
 						/>
 					))}
+					<CreateColumnModal boardId={board.id}>
+						<Segment className={`${styles.column} contentBtn`} style={{ position: 'relative', top: -14 }}>
+							<Icon name="plus" size="large" />
+							{t('create_column')}
+						</Segment>
+					</CreateColumnModal>
 				</div>
 			</DragDropContext>
 		</div>
