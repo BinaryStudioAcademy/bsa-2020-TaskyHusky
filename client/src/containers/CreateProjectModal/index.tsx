@@ -1,4 +1,4 @@
-import React, { useState, memo } from 'react';
+import React, { useState, memo, useEffect } from 'react';
 import { Modal, Button, Form, Image, Card, Popup, Header, List } from 'semantic-ui-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -44,15 +44,18 @@ const CreateProjectModal: React.FC<Props> = ({ children }) => {
 
 	const { description, image } = templatesInformation[template];
 
-	if (isProjectCreated) {
-		dispatch(actions.resetState());
-		setName('');
-		setKey('');
-		setTemplate('Scrum');
-		setIsNameValid(false);
-		setIsKeyValid(true);
-		setIsValidErrorShown(false);
-	}
+	useEffect(() => {
+		if (isProjectCreated) {
+			dispatch(actions.resetState());
+			setName('');
+			setKey('');
+			setTemplate('Scrum');
+			setIsNameValid(false);
+			setIsKeyValid(true);
+			setIsValidErrorShown(false);
+			setIsModalOpened(false);
+		}
+	}, [dispatch, isProjectCreated]);
 
 	const startCreatingProject = () => {
 		dispatch(
@@ -174,7 +177,7 @@ const CreateProjectModal: React.FC<Props> = ({ children }) => {
 									setIsDataValid={setIsGithubUrlValid}
 									data={githubUrl}
 									setData={setGithubUrl}
-									placeholder={t("enter_your_project_URL")}
+									placeholder={t('enter_your_project_URL')}
 									popUpContent={validationMessage.VM_GITHUB_URL}
 									validation={validGitHubUrl}
 								/>

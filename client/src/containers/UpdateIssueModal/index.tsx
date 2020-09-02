@@ -273,14 +273,14 @@ const UpdateIssueModal: React.FC<Props> = ({
 				</Form>
 			</Modal.Content>
 			<Modal.Actions style={{ height: 67 }}>
-				<Button.Group floated="right">
-					<Button primary type="submit">
+				<div style={{ float: 'right' }}>
+					<Button className="primaryBtn" type="submit">
 						{t('submit')}
 					</Button>
-					<Button onClick={() => setOpened(false)} basic>
-						<span>{t('cancel')}</span>
+					<Button onClick={() => setOpened(false)} className="cancelBtn" compact>
+						{t('cancel')}
 					</Button>
-				</Button.Group>
+				</div>
 			</Modal.Actions>
 		</Modal>
 	);

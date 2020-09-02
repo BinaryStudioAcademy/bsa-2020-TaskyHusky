@@ -281,14 +281,14 @@ const CreateIssueModalBody: React.FC<Props> = ({
 				</Form>
 			</Modal.Content>
 			<Modal.Actions style={{ height: 67 }}>
-				<Button.Group floated="right">
-					<Button primary type="submit">
+				<div style={{ float: 'right' }}>
+					<Button className="primaryBtn" type="submit">
 						{t('submit')}
 					</Button>
-					<Button onClick={getSetOpenFunc(false)} basic>
-						<span>{t('cancel')}</span>
+					<Button onClick={getSetOpenFunc(false)} className="cancelBtn" compact>
+						{t('cancel')}
 					</Button>
-				</Button.Group>
+				</div>
 			</Modal.Actions>
 		</Modal>
 	);

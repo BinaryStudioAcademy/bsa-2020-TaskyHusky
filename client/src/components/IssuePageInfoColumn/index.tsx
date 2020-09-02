@@ -73,10 +73,11 @@ const IssuePageInfoColumn: React.FC<Props> = ({
 					paddingBottom: 10,
 				}}
 			>
-				<Button.Group style={{ marginTop: 10 }} fluid>
+				<div style={{ marginTop: 10 }}>
 					<Dropdown
 						button
-						className="icon"
+						className="contentBtn icon"
+						compact
 						labeled
 						title={watching ? t('watching') : t('not_watching')}
 						floating
@@ -106,10 +107,10 @@ const IssuePageInfoColumn: React.FC<Props> = ({
 							)}
 						</Dropdown.Menu>
 					</Dropdown>
-					<Button secondary onClick={() => openEditModal()}>
+					<Button className="primaryBtn" onClick={() => openEditModal()}>
 						{t('edit_issue')}
 					</Button>
-				</Button.Group>
+				</div>
 				{toPageLink ? (
 					<h4>
 						<a rel="noopener noreferrer" target="_blank" href={`/issue/${issue.issueKey}`}>

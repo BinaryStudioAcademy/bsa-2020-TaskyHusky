@@ -57,7 +57,7 @@ const ProfilePage = ({ id }: { id: string }) => {
 			dispatch(actions.updateUser({ partialState: { ...currentUser, isLoading: false } }));
 		} else {
 			dispatch(actions.requestGetUser({ id }));
-			setUser({ ...user, ...userData });
+			setUser({ ...user, ...userData, editMode: '' });
 			Promise.all([
 				requestGetUserTeams(id),
 				requestGetUserProjects(id),
