@@ -10,7 +10,9 @@ import {
 	CreateDateColumn,
 	UpdateDateColumn,
 } from 'typeorm';
-import { IsNotEmpty, IsString, Length, IsUppercase, Matches } from 'class-validator';
+
+import { IsNotEmpty, IsString, Length, IsUppercase, Matches, ValidateIf } from 'class-validator';
+import _ from 'lodash';
 import { Issue } from './Issue';
 import { Sprint } from './Sprint';
 import { Board } from './Board';
@@ -83,6 +85,7 @@ export class Projects {
 	users!: UserProfile[];
 
 	@Column({ nullable: true })
+	@ValidateIf((o) => !_.isEmpty(o.githubUrl))
 	@IsString()
 	@Matches(/(https:\/\/github\.com\/.+\/.+\.git)|/)
 	githubUrl?: string;

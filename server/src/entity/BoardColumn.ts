@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany } from 'typeorm';
-import { IsBoolean, IsDefined, IsString, IsNotEmpty, IsUUID } from 'class-validator';
+import { IsBoolean, IsString, IsNotEmpty } from 'class-validator';
 import { Board } from './Board';
 import { Issue } from './Issue';
 
@@ -11,21 +11,21 @@ export class BoardColumn {
 	@Column()
 	@IsString()
 	@IsNotEmpty()
-	columnName?: string;
+	columnName!: string;
 
 	@Column()
 	@IsString()
 	@IsNotEmpty()
-	status?: string;
+	status!: string;
 
-	@Column()
+	@Column({ default: false })
 	@IsBoolean()
-	isResolutionSet?: boolean;
+	isResolutionSet!: boolean;
 
 	@ManyToOne((type) => Board, (board) => board.columns, {
 		onDelete: 'CASCADE',
 	})
-	@IsDefined()
+	@IsNotEmpty()
 	board!: Board;
 
 	@OneToMany((type) => Issue, (issue) => issue.boardColumn, {

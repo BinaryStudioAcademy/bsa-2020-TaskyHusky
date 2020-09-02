@@ -20,6 +20,12 @@ namespace WebApi.Board {
 		id: string;
 		name: string;
 	}
+	interface CreateBoardColumn {
+		columnName: string;
+		status: string;
+		board: string;
+		isResolutionSet: boolean;
+	}
 }
 
 namespace WebApi.IO {
@@ -107,6 +113,8 @@ namespace WebApi.Result {
 		assigned?: UserModel;
 		creator: UserModel;
 		storyPoint?: number;
+		createdAt: Date;
+		updatedAt?: Date;
 	}
 	interface IssueCommentResult {
 		id: string;
@@ -150,15 +158,6 @@ namespace WebApi.Result {
 		updatedDate?: Date;
 		deletedDate?: Date;
 	}
-	interface NotificationResult {
-		id: string;
-		title?: string;
-		link?: string;
-		user: UserModel;
-		text: string;
-		isViewed: boolean;
-		createdAt: Date;
-	}
 	interface CommitFileResult {
 		sha: string;
 		additions: number;
@@ -172,6 +171,15 @@ namespace WebApi.Result {
 		avatar: string;
 		time: Date;
 		files: Array<CommitFileResult>;
+	}
+	interface NotificationResult {
+		id: string;
+		title?: string;
+		link?: string;
+		user: UserModel;
+		text: string;
+		isViewed: boolean;
+		createdAt: Date;
 	}
 }
 
@@ -246,9 +254,9 @@ namespace WebApi.Entities {
 
 	interface BoardColumn {
 		id: string;
-		columnName?: string;
-		status?: string;
-		isResolutionSet?: boolean;
+		columnName: string;
+		status: string;
+		isResolutionSet: boolean;
 		board: Board;
 		issues: Issue[];
 	}
@@ -285,8 +293,8 @@ namespace WebApi.Entities {
 		boardColumn?: BoardColumn;
 		board?: Board;
 		labels?: string;
-		attachments?: string[];
-		links?: string[];
+		attachments?: string;
+		links?: string;
 		priority?: Priority;
 		description?: string;
 		sprint?: Sprint;
@@ -404,6 +412,8 @@ namespace WebApi.Entities {
 		boards?: Board[];
 		public resetPasswordToken?: string | null;
 		public resetPasswordExpires?: Date | null;
+		public resetEmailToken?: string | null;
+		public resetEmailExpires?: Date | null;
 		filters?: Filter[];
 		assignedProjects?: Projects[];
 		leadedProjects?: Projects[];

@@ -414,4 +414,9 @@ export const ua = {
 	sign_in: 'Увійти',
 	create_an_account: 'Створити обліковий запис',
 	already_have_a_account: 'Ви вже маєте обліковий запис?',
+	create_column: 'Створити колонку',
+	is_resolution_set: 'Is resolution set',
+	todo: 'До виконання',
+	in_progress: 'Виконується',
+	done: 'Виконано',
 };

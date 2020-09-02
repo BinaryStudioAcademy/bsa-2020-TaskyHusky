@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 interface Props {
-	issue: WebApi.Entities.Issue;
+	issue: WebApi.Result.IssueResult;
 }
 interface PriorityIconProps {
 	priority: WebApi.Entities.Priority | undefined;

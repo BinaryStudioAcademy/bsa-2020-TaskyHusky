@@ -40,6 +40,8 @@ export interface IssueResult {
 	assigned?: UserModel;
 	creator: UserModel;
 	storyPoint?: number;
+	createdAt: Date;
+	updatedAt?: Date;
 }
 
 interface IssueCommentResult {
@@ -90,19 +92,19 @@ interface BoardProjectsResult {
 }
 
 interface CommitFileResult {
-	sha: string,
-	additions: number,
-	deletions: number,
-	filename: string
+	sha: string;
+	additions: number;
+	deletions: number;
+	filename: string;
 }
 
 interface CommitResult {
-	hash: string,
-	message: string,
-	author: string,
-	avatar: string,
-	time: Date,
-	files: Array<CommitFileResult>
+	hash: string;
+	message: string;
+	author: string;
+	avatar: string;
+	time: Date;
+	files: Array<CommitFileResult>;
 }
 
 interface NotificationResult {
