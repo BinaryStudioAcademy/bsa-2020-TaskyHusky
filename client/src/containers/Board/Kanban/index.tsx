@@ -87,7 +87,7 @@ const Kanban: BoardComponent = ({ board }) => {
 					))}
 					<CreateColumnModal boardId={board.id}>
 						<Segment className={`${styles.column} contentBtn`} style={{ position: 'relative', top: -14 }}>
-							<Icon name="plus" size="large" />
+							<Icon name="plus" />
 							{t('create_column')}
 						</Segment>
 					</CreateColumnModal>
