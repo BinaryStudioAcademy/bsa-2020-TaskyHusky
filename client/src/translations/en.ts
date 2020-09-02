@@ -442,4 +442,5 @@ export const en = {
 	todo: 'Todo',
 	in_progress: 'In progress',
 	done: 'Done',
+	team_has_been_deleted: 'Team has been deleted',
 };
