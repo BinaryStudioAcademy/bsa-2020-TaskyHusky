@@ -21,3 +21,10 @@ export interface IReducedBoard {
 	id: string;
 	name: string;
 }
+
+interface CreateBoardColumn {
+	columnName: string;
+	status: string;
+	board: string;
+	isResolutionSet: boolean;
+}

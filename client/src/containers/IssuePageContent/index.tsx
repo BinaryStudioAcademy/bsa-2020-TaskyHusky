@@ -91,9 +91,13 @@ const IssuePageContent: React.FC<Props> = ({ issue: givenIssue }) => {
 				</h4>
 				<h1>{issue.summary}</h1>
 				<h4>{t('description')}</h4>
-				<p>{issue.description}</p>
-				<Button onClick={() => setMenuState(MenuStates.commentsShown)}>{t('comments')}</Button>
-				<Button onClick={() => setMenuState(MenuStates.commitsShown)}>{t('commits')}</Button>
+				<p>{issue.description || t('no')}</p>
+				<Button onClick={() => setMenuState(MenuStates.commentsShown)} className="contentBtn">
+					{t('comments')}
+				</Button>
+				<Button onClick={() => setMenuState(MenuStates.commitsShown)} className="contentBtn">
+					{t('commits')}
+				</Button>
 				{menuState === MenuStates.commitsShown && (
 					<Comment.Group
 						style={{
@@ -104,9 +108,9 @@ const IssuePageContent: React.FC<Props> = ({ issue: givenIssue }) => {
 							marginBottom: 20,
 						}}
 					>
-						{commits.map((commit) => (
-							<IssueCommit commit={commit} key={commit.hash} />
-						))}
+						{commits.length
+							? commits.map((commit) => <IssueCommit commit={commit} key={commit.hash} />)
+							: t('no')}
 					</Comment.Group>
 				)}
 				{menuState === MenuStates.commentsShown && (

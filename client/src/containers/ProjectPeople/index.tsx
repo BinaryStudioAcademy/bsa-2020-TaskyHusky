@@ -54,69 +54,67 @@ const ProjectPeople = () => {
 					<h1 className={styles.header_inner__title}>{t('people')}</h1>
 					<AddPeopleModal project={project} />
 				</div>
+				<Input
+					icon="search"
+					placeholder={t('search_name_email')}
+					className={styles.body_inner__find}
+					onChange={onSearchChange}
+					value={searchData}
+				/>
 				{filteredUsers.length === 0 ? (
 					<div className={styles.imgWrapper}>
 						<div className={styles.content}>
-							<img className={styles.img} src={searchResult} alt="No people" />
+							<img className={styles.img} src={searchResult} alt={t('no_people')} />
 							<span className={styles.text}>{t('no_people')}</span>
 						</div>
 					</div>
 				) : (
-					<>
-						<Input
-							icon="search"
-							placeholder={t('search_name_email')}
-							className={styles.body_inner__find}
-							onChange={onSearchChange}
-							value={searchData}
-						/>
-						<Table sortable unstackable className={styles.table}>
-							<Table.Header>
-								<Table.Row>
-									<Table.HeaderCell
-										className={[styles.column__name, styles.table__header_cell].join(' ')}
-									>
-										{t('name')}
-									</Table.HeaderCell>
-									<Table.HeaderCell
-										className={[styles.column__email, styles.table__header_cell].join(' ')}
-									>
-										{t('email')}
-									</Table.HeaderCell>
-									<Table.HeaderCell
-										className={[styles.table__header_cell, styles.user__action].join(' ')}
-									>
-										{' '}
-										&nbsp;
-									</Table.HeaderCell>
+					<Table sortable unstackable className={styles.table}>
+						<Table.Header>
+							<Table.Row>
+								<Table.HeaderCell
+									className={[styles.column__name, styles.table__header_cell].join(' ')}
+								>
+									{t('name')}
+								</Table.HeaderCell>
+								<Table.HeaderCell
+									className={[styles.column__email, styles.table__header_cell].join(' ')}
+								>
+									{t('email')}
+								</Table.HeaderCell>
+								<Table.HeaderCell
+									className={[styles.table__header_cell, styles.user__action].join(' ')}
+								>
+									{' '}
+									&nbsp;
+								</Table.HeaderCell>
+							</Table.Row>
+						</Table.Header>
+						<Table.Body>
+							{filteredUsers.map((user) => (
+								<Table.Row key={user.id}>
+									<Table.Cell className={styles.user__username}>
+										<UserAvatar user={user} small />
+										<span>{`${user.firstName} ${user.lastName}`}</span>
+									</Table.Cell>
+									<Table.Cell className={styles.user__email}>
+										<span>{user.email}</span>
+									</Table.Cell>
+									<Table.Cell className={styles.user__action}>
+										<Button
+											basic
+											color="black"
+											onClick={() => onDeleteUser(user.id)}
+											loading={idAction === user.id}
+											disabled={Boolean(idAction) && idAction !== user.id}
+										>
+											{t('delete')}
+										</Button>
+									</Table.Cell>
 								</Table.Row>
-							</Table.Header>
-							<Table.Body>
-								{filteredUsers.map((user) => (
-									<Table.Row key={user.id}>
-										<Table.Cell className={styles.user__username}>
-											<UserAvatar user={user} small />
-											<span>{`${user.firstName} ${user.lastName}`}</span>
-										</Table.Cell>
-										<Table.Cell className={styles.user__email}>
-											<span>{user.email}</span>
-										</Table.Cell>
-										<Table.Cell className={styles.user__action}>
-											<Button
-												basic
-												color="blue"
-												onClick={() => onDeleteUser(user.id)}
-												loading={idAction === user.id}
-												disabled={Boolean(idAction) && idAction !== user.id}
-											>
-												{t('delete')}
-											</Button>
-										</Table.Cell>
-									</Table.Row>
-								))}
-							</Table.Body>
-						</Table>
-					</>
+							))}
+						</Table.Body>
+					</Table>
 				)}
 			</div>
 		</>

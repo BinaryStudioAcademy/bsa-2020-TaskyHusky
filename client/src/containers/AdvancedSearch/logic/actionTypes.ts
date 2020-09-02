@@ -30,7 +30,7 @@ export type UpdateFilterPartArgs = {
 };
 
 export type LoadIssuesSuccessArgs = {
-	issues: WebApi.Entities.Issue[];
+	issues: WebApi.Result.IssueResult[];
 	issuesCount: number;
 };
 

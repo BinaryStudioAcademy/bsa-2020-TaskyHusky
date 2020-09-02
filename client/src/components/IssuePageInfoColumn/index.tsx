@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { watchIssue } from 'pages/IssuePage/logic/actions';
 import { RootState } from 'typings/rootState';
 import { isImage } from 'helpers/isImage.helper';
+import DeleteIssueModal from 'containers/DeleteIssueModal';
 
 interface Props {
 	issue: WebApi.Result.IssueResult;
@@ -28,6 +29,7 @@ const IssuePageInfoColumn: React.FC<Props> = ({
 }) => {
 	const [issue, setIssue] = useState<WebApi.Result.IssueResult>(givenIssue);
 	let openEditModal: () => void = () => {};
+	const [isDeleteModalOpened, setIsDeleteModalOpened] = useState<boolean>(false);
 	const issueWatchers = issue.watchers ?? [];
 	const { t } = useTranslation();
 
@@ -39,7 +41,7 @@ const IssuePageInfoColumn: React.FC<Props> = ({
 		});
 
 		io.on(WebApi.IO.IssueActions.DeleteIssue, (id: string) => {
-			if (id === issue.id) {
+			if (id === issue.id && !toPageLink) {
 				NotificationManager.warning(
 					`${t('issue')} ${issue.issueKey} ${t('issue_was_deleted_message_part_2')}`,
 					t('warning'),
@@ -72,10 +74,10 @@ const IssuePageInfoColumn: React.FC<Props> = ({
 					paddingBottom: 10,
 				}}
 			>
-				<Button.Group style={{ marginTop: 10 }} fluid>
+				<div style={{ marginTop: 10 }}>
 					<Dropdown
 						button
-						className="icon"
+						className="contentBtn icon"
 						labeled
 						title={watching ? t('watching') : t('not_watching')}
 						floating
@@ -105,10 +107,23 @@ const IssuePageInfoColumn: React.FC<Props> = ({
 							)}
 						</Dropdown.Menu>
 					</Dropdown>
-					<Button secondary onClick={() => openEditModal()}>
+					<Button className="primaryBtn" onClick={() => openEditModal()}>
 						{t('edit_issue')}
 					</Button>
-				</Button.Group>
+					<DeleteIssueModal
+						currentIssueId={issue.id}
+						onOpen={() => setIsDeleteModalOpened(true)}
+						onClose={() => setIsDeleteModalOpened(false)}
+						open={isDeleteModalOpened}
+					>
+						<Button
+							className="contentBtn"
+							onClick={() => setIsDeleteModalOpened(true)}
+							icon="trash alternate"
+							title={t('delete')}
+						/>
+					</DeleteIssueModal>
+				</div>
 				{toPageLink ? (
 					<h4>
 						<a rel="noopener noreferrer" target="_blank" href={`/issue/${issue.issueKey}`}>

@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap');
-@import './variables.scss';
+@import './mixins.scss';
 
 body {
 	margin: 0;
@@ -102,4 +102,16 @@ label {
 		margin-left: 0 !important;
 		margin-right: 0 !important;
 	}
+}
+
+.contentBtn {
+	@include content-btn;
+}
+
+.primaryBtn {
+	@include primary-btn;
+}
+
+.cancelBtn {
+	@include cancel-btn;
 }

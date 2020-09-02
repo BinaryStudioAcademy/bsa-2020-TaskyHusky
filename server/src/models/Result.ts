@@ -40,6 +40,8 @@ export interface IssueResult {
 	assigned?: UserModel;
 	creator: UserModel;
 	storyPoint?: number;
+	createdAt: Date;
+	updatedAt?: Date;
 }
 
 interface IssueCommentResult {

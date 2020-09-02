@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { List, Item } from 'semantic-ui-react';
 import styles from './styles.module.scss';
 import AssigneeAvatar from './AssigneeAvatar/index';
 import { DroppableProvided, Draggable, Droppable } from 'react-beautiful-dnd';
 import { useTranslation } from 'react-i18next';
+import { useIO } from 'hooks/useIO';
 
 interface Props {
-	issues: WebApi.Entities.Issue[];
+	issues: WebApi.Result.IssueResult[];
+	sprintId?: string;
+	boardId: string;
 	sprintName: string;
 }
 interface DragProps {
@@ -18,13 +21,54 @@ interface DragProps {
 
 export const SprintIssues: React.FC<Props & DragProps> = (props: Props & DragProps) => {
 	const { t } = useTranslation();
+	const [issues, setIssues] = useState<WebApi.Result.IssueResult[]>(props.issues);
+
+	useIO(WebApi.IO.Types.Issue, (io) => {
+		io.on(WebApi.IO.IssueActions.CreateIssue, (newIssue: WebApi.Result.IssueResult) => {
+			const forThisSprint = newIssue.sprint?.id === props.sprintId;
+			const forThisBoard = newIssue.board?.id === props.boardId;
+			const canAddIssue = newIssue.sprint ? forThisSprint : forThisBoard;
+
+			if (canAddIssue) {
+				setIssues([...issues, newIssue]);
+			}
+		});
+
+		io.on(WebApi.IO.IssueActions.UpdateIssue, (id: string, newIssue: WebApi.Result.IssueResult) => {
+			const index = issues.findIndex((issue) => issue.id === id);
+
+			if (index > -1) {
+				const newIssues = [...issues];
+
+				if (newIssue.sprint?.id === props.sprintId) {
+					newIssues[index] = newIssue;
+				} else {
+					newIssues.splice(index, 1);
+				}
+
+				setIssues(newIssues);
+			} else if (newIssue.sprint?.id === props.sprintId) {
+				setIssues([...issues, newIssue]);
+			}
+		});
+
+		io.on(WebApi.IO.IssueActions.DeleteIssue, (id: string) => {
+			const index = issues.findIndex((issue) => issue.id === id);
+
+			if (index > -1) {
+				const newIssues = [...issues];
+				newIssues.splice(index, 1);
+				setIssues(newIssues);
+			}
+		});
+	});
 
 	const renderIssues = (dropProvided: DroppableProvided) => {
 		return (
 			<div ref={dropProvided.innerRef}>
-				<List selection={!!props.issues?.length} verticalAlign="middle" className={styles.issuesList}>
-					{!!props.issues?.length ? (
-						props.issues.map((issue, index) => (
+				<List selection={!!issues.length} verticalAlign="middle" className={styles.issuesList}>
+					{!!issues.length ? (
+						issues.map((issue, index) => (
 							<Draggable key={issue.id} draggableId={issue.id} index={index}>
 								{(dragProvided) => (
 									<div
