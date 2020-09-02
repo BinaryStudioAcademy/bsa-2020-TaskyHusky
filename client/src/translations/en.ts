@@ -256,7 +256,7 @@ export const en = {
 	your_teams: 'Your teams',
 	create_team: 'Create new Team',
 	add_people_text:
-		'Missing someone on gmail.com? Add their email below – if permissions allow we\'ll add them, or else send a request to your admin.',
+		"Missing someone on gmail.com? Add their email below – if permissions allow we'll add them, or else send a request to your admin.",
 	send: 'Send',
 	add_people_email_placeholder: 'Add email address gmail.com',
 	my_work: 'My work',
@@ -369,8 +369,10 @@ export const en = {
 	scrum: 'SCRUM',
 	kanban: 'Kanban',
 	create_a_board: 'Create a board',
-	scrum_focuses_on_planning: 'Scrum focuses on planning, committing and delivering time-boxed chunks of work called	Sprints',
-	kanban_focuses_on_planning: 'Kanban focuses on visualising your workflow and limiting work-in-progress to facilitate incremental improvements to your existing process',
+	scrum_focuses_on_planning:
+		'Scrum focuses on planning, committing and delivering time-boxed chunks of work called	Sprints',
+	kanban_focuses_on_planning:
+		'Kanban focuses on visualising your workflow and limiting work-in-progress to facilitate incremental improvements to your existing process',
 	create_scrum_board: 'Create a SCRUM board',
 	create_kanban_board: 'Create a Kanban board',
 	board_created_with_new_software_project: 'Board created with new Software Project',
@@ -399,7 +401,7 @@ export const en = {
 	P: 'P',
 	enter_project_name: 'Enter project name',
 	enter_your_key: 'Enter your key',
-	enter_your_project_URL: 'Enter your project\'s GitHub URL',
+	enter_your_project_URL: "Enter your project's GitHub URL",
 	user_does_not_exist: 'User does not exist',
 	sign_in: 'Sign In',
 	create_an_account: 'Create an account',
@@ -435,4 +437,5 @@ export const en = {
 	more_about: 'More about',
 	commits: 'Git commits',
 	commits_view_full: 'View full commit',
+	team_has_been_deleted: 'Team has been deleted',
 };
