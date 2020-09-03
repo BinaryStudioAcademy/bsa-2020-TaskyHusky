@@ -13,3 +13,7 @@
 .primaryBtn {
   @include cancel-btn;
 }
+
+.active {
+  background-color: $border !important;
+}

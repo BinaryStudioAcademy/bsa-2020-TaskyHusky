@@ -51,14 +51,8 @@ export class BoardColumnRepository extends Repository<BoardColumn> {
 	}
 
 	async post(data: any) {
-		const boardRepository = getCustomRepository(BoardRepository);
-		const { board, ...dataToCreate } = data;
-		const boardToAdd = await boardRepository.getOne(board.id);
-
-		let boardColumn = new BoardColumn();
-		boardColumn = { ...boardColumn, ...dataToCreate, board: boardToAdd };
-
-		return this.save([boardColumn]);
+		const instance = this.create(data);
+		return this.save(instance);
 	}
 
 	async deleteColumn(id: string) {
