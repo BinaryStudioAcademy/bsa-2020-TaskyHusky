@@ -19,9 +19,9 @@
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
-		"@elastic/elasticsearch": "^7.9.0",
 		"@types/amqplib": "^0.5.13",
 		"@types/lodash": "^4.14.160",
+		"@elastic/elasticsearch": "^7.9.0",
 		"@types/nodemailer": "^6.4.0",
 		"@types/socket.io": "^2.1.11",
 		"amqplib": "^0.6.0",

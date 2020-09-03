@@ -2,10 +2,10 @@ import { Request, Response } from 'express';
 import { getCustomRepository } from 'typeorm';
 import { getWebError } from '../helpers/error.helper';
 import { IssueRepository } from '../repositories/issue.repository';
-import Elastic from '../services/elasticsearch.service';
 import { UserModel } from '../models/User';
 import { issueAttachmentFolder } from '../../config/aws.config';
 import uploadS3 from '../services/file.service';
+import Elastic from '../services/elasticsearch.service';
 
 const elastic = new Elastic('issue');
 class IssueController {
@@ -165,8 +165,8 @@ class IssueController {
 		const repository = getCustomRepository(IssueRepository);
 
 		try {
-			await elastic.addData(data);
 			const result = await repository.updateOneById(id, data, userId);
+			await elastic.addData(data);
 			res.send(result);
 		} catch (err) {
 			res.status(404).send(getWebError(err, 404));
@@ -183,8 +183,8 @@ class IssueController {
 		const repository = getCustomRepository(IssueRepository);
 
 		try {
-			await elastic.addData(data);
 			const result = await repository.updateOneByKey(key, data, userId);
+			await elastic.addData(data);
 			res.send(result);
 		} catch (err) {
 			res.status(404).send(getWebError(err, 404));
