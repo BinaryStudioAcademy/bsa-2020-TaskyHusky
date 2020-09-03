@@ -75,15 +75,21 @@ const ProfilePicture: React.FC<Props> = (props: Props) => {
 					</Header>
 					{username && <p className={styles.username}>{username}</p>}
 				</div>
-				{isCurrentUser && showManager && (
-					<Button
-						className={styles.managerButton}
-						onClick={() => showManager(ModeManager.profile)}
-						disabled={!editMode ? false : true}
-					>
-						{t('manage_account')}
-					</Button>
-				)}
+				{isCurrentUser &&
+					showManager &&
+					(editMode ? (
+						<Button className={`cancelBtn ${styles.button}`} onClick={() => showManager(ModeManager.main)}>
+							{t('back')}
+						</Button>
+					) : (
+						<Button
+							className={`contentBtn ${styles.button}`}
+							onClick={() => showManager(ModeManager.profile)}
+							disabled={!editMode ? false : true}
+						>
+							{t('manage_account')}
+						</Button>
+					))}
 			</div>
 		</>
 	);

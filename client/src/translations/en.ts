@@ -48,6 +48,7 @@ export const en = {
 	type: 'Type',
 	priority: 'Priority',
 	summary: 'Summary',
+	p: 'P',
 	labels: 'Labels',
 	links: 'Links',
 	attachments: 'Attachments',
@@ -457,4 +458,5 @@ export const en = {
 	could_not_save_filter: "Can't save filter",
 	could_not_update_filter: "Can't update filter",
 	no_filters: 'No filters found',
+	add_changes: 'Please, add changes to enable button',
 };

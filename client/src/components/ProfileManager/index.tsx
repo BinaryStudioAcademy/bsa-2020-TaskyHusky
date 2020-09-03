@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './styles.module.scss';
-import { Form, Button } from 'semantic-ui-react';
+import { Form, Button, Popup } from 'semantic-ui-react';
 import SubmitedInput from 'components/SubmitedInput';
 import { requestUpdateUser } from 'containers/ProfilePage/logiс/actions';
 import { UserProfileState } from 'containers/ProfilePage/logiс/state';
@@ -95,8 +95,8 @@ const ProfileManager: React.FC<Props> = (props: Props) => {
 
 	return (
 		<section className={styles.container}>
-			<h3 className={styles.header}>{t('about_you')}</h3>
 			<div className={styles.card}>
+				<h3 className={styles.header}>{t('about_you')}</h3>
 				<Form onSubmit={onSubmit}>
 					<SubmitedInput
 						handleChange={handleChange}
@@ -172,9 +172,17 @@ const ProfileManager: React.FC<Props> = (props: Props) => {
 						onBlur={onBlur}
 					/>
 					<Form.Field className={styles.formFooter}>
-						<Button className={styles.submitButton} type="submit" disabled={!isSubmit}>
-							{t('save_changes')}
-						</Button>
+						<Popup
+							content={t('add_changes')}
+							disabled={isSubmit}
+							trigger={
+								<span>
+									<Button className={styles.submitButton} type="submit" disabled={!isSubmit}>
+										{t('save_changes')}
+									</Button>
+								</span>
+							}
+						/>
 						<Button type="text" onClick={onCancel} className={styles.secondaryButton}>
 							{t('cancel')}
 						</Button>

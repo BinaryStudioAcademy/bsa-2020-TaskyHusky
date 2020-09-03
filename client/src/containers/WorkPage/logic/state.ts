@@ -21,6 +21,5 @@ export type ActivityIssue = {
 		id: string;
 		name: string;
 		category: string;
-		users: Array<{ id: string }>;
 	};
 };
