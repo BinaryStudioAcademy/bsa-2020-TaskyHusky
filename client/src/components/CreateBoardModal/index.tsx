@@ -5,7 +5,6 @@ import BoardModalMenuType from '../BoardModalMenuType';
 import BoardModalFinal from '../BoardModalFinal';
 import { createBoard } from '../../containers/Boards/logic/actionTypes';
 import { useTranslation } from 'react-i18next';
-import styles from './styles.module.scss';
 
 interface Props {
 	setIsModalShown(params: boolean): void;
@@ -72,7 +71,7 @@ const CreateBoardModal = (props: Props) => {
 			<Modal.Actions>
 				{modalWindowName !== ModalNames.selectType ? (
 					<Button
-						className={styles.contentBtn}
+						className="contentBtn"
 						onClick={() => {
 							selectModalWindowName(modalWindowName - 1);
 						}}
@@ -82,7 +81,7 @@ const CreateBoardModal = (props: Props) => {
 				) : null}
 				{modalWindowName === ModalNames.createBoard ? (
 					<Button
-						className={styles.primaryBtn}
+						className="primaryBtn"
 						disabled={isCreateDisabled}
 						onClick={() => {
 							const { admin, ...boardData } = board;
@@ -100,7 +99,7 @@ const CreateBoardModal = (props: Props) => {
 						{t('create_a_board')}
 					</Button>
 				) : null}
-				<Button className={styles.cancelBtn} onClick={onCancelClick}>
+				<Button className="cancelBtn" onClick={onCancelClick}>
 					{t('cancel')}
 				</Button>
 			</Modal.Actions>
