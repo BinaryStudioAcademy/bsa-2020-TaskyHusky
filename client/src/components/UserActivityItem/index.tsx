@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styles from './styles.module.scss';
 
 interface Props {
@@ -14,7 +15,9 @@ const UserActivityItem: React.FC<Props> = (props: Props) => {
 		<div className={styles.activityItem}>
 			<div className={styles.avatar}>{abbr && <p className={styles.avatarTitle}>{abbr}</p>}</div>
 			<div className={styles.block}>
-				<p className={styles.content}>{item.name ? item.name : item.firstName + ' ' + item.lastName}</p>
+				<Link to={`${item.firstName ? item.id : `/project/${item.id}/issues`}`}>
+					<p className={styles.content}>{item.name ? item.name : item.firstName + ' ' + item.lastName}</p>
+				</Link>
 				<p className={styles.contentSecondary}>{secondaryContent}</p>
 			</div>
 		</div>

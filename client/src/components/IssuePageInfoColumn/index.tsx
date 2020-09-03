@@ -11,6 +11,7 @@ import { watchIssue } from 'pages/IssuePage/logic/actions';
 import { RootState } from 'typings/rootState';
 import { isImage } from 'helpers/isImage.helper';
 import { SemanticCOLORS, SemanticICONS } from 'semantic-ui-react/dist/commonjs/generic';
+import DeleteIssueModal from 'containers/DeleteIssueModal';
 
 interface Props {
 	issue: WebApi.Result.IssueResult;
@@ -29,6 +30,7 @@ const IssuePageInfoColumn: React.FC<Props> = ({
 }) => {
 	const [issue, setIssue] = useState<WebApi.Result.IssueResult>(givenIssue);
 	let openEditModal: () => void = () => {};
+	const [isDeleteModalOpened, setIsDeleteModalOpened] = useState<boolean>(false);
 	const issueWatchers = issue.watchers ?? [];
 	const { t } = useTranslation();
 
@@ -40,7 +42,7 @@ const IssuePageInfoColumn: React.FC<Props> = ({
 		});
 
 		io.on(WebApi.IO.IssueActions.DeleteIssue, (id: string) => {
-			if (id === issue.id) {
+			if (id === issue.id && !toPageLink) {
 				NotificationManager.warning(
 					`${t('issue')} ${issue.issueKey} ${t('issue_was_deleted_message_part_2')}`,
 					t('warning'),
@@ -77,7 +79,6 @@ const IssuePageInfoColumn: React.FC<Props> = ({
 					<Dropdown
 						button
 						className="contentBtn icon"
-						compact
 						labeled
 						title={watching ? t('watching') : t('not_watching')}
 						floating
@@ -110,6 +111,19 @@ const IssuePageInfoColumn: React.FC<Props> = ({
 					<Button className="primaryBtn" onClick={() => openEditModal()}>
 						{t('edit_issue')}
 					</Button>
+					<DeleteIssueModal
+						currentIssueId={issue.id}
+						onOpen={() => setIsDeleteModalOpened(true)}
+						onClose={() => setIsDeleteModalOpened(false)}
+						open={isDeleteModalOpened}
+					>
+						<Button
+							className="contentBtn"
+							onClick={() => setIsDeleteModalOpened(true)}
+							icon="trash alternate"
+							title={t('delete')}
+						/>
+					</DeleteIssueModal>
 				</div>
 				{toPageLink ? (
 					<h4>

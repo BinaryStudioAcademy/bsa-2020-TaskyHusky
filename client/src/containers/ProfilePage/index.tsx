@@ -39,16 +39,13 @@ const ProfilePage = ({ id }: { id: string }) => {
 		activity,
 	});
 	const [user, setUser] = useState(userData);
-	const { editMode, isLoading } = user;
-
+	const { isLoading } = user;
+	const [editMode, setEditMode] = useState<string>('');
+	const [isLoadAdditioanl, setIsLoadAdditional] = useState<boolean>(true);
 	const isCurrentUser = currentUser ? id === currentUser.id : false;
 
 	const showManager = (modeToShow: string) => {
-		setUser({
-			...user,
-			editMode: modeToShow,
-		});
-		dispatch(actions.updateUser({ partialState: { editMode: modeToShow } }));
+		setEditMode(modeToShow);
 	};
 
 	const getUser = async () => {
@@ -57,7 +54,7 @@ const ProfilePage = ({ id }: { id: string }) => {
 			dispatch(actions.updateUser({ partialState: { ...currentUser, isLoading: false } }));
 		} else {
 			dispatch(actions.requestGetUser({ id }));
-			setUser({ ...user, ...userData, editMode: '' });
+			setUser({ ...user, ...userData });
 			Promise.all([
 				requestGetUserTeams(id),
 				requestGetUserProjects(id),
@@ -66,6 +63,7 @@ const ProfilePage = ({ id }: { id: string }) => {
 			])
 				.then((arr) => {
 					const { recentActivity } = arr[3];
+					setIsLoadAdditional(false);
 					setData({ ...data, teams: arr[0], projects: arr[1], teammates: arr[2], activity: recentActivity });
 				})
 				.catch((error) => {
@@ -89,6 +87,7 @@ const ProfilePage = ({ id }: { id: string }) => {
 			console.log(recentActivity);
 			setData((data) => ({ ...data, activity: recentActivity }));
 		}
+		setIsLoadAdditional(false);
 	};
 
 	const updateUser = (changedUser: Partial<WebApi.Entities.UserProfile>) => {
@@ -97,6 +96,7 @@ const ProfilePage = ({ id }: { id: string }) => {
 
 	useEffect(() => {
 		getUser();
+		setIsLoadAdditional(true);
 		//eslint-disable-next-line
 	}, [userData.id, id]);
 
@@ -105,11 +105,11 @@ const ProfilePage = ({ id }: { id: string }) => {
 			getCurrentUserData();
 		}
 		//eslint-disable-next-line
-	}, [projects, teammates, teams, activity]);
+	}, [projects, teammates, teams, activity, isCurrentUser]);
 
 	return (
 		<>
-			{isLoading ? (
+			{isLoading || isLoadAdditioanl ? (
 				<Spinner />
 			) : (
 				<div className={styles.wrapper}>
@@ -120,9 +120,15 @@ const ProfilePage = ({ id }: { id: string }) => {
 							isCurrentUser={isCurrentUser}
 							teams={data.teams}
 							showManager={showManager}
+							editMode={editMode}
 						/>
 						{editMode ? (
-							<ProfileManagerSection user={user} showManager={showManager} updateUser={updateUser} />
+							<ProfileManagerSection
+								user={user}
+								editMode={editMode}
+								showManager={showManager}
+								updateUser={updateUser}
+							/>
 						) : (
 							<ProfileSection
 								isCurrentUser={isCurrentUser}
