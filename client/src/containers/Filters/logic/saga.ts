@@ -5,7 +5,7 @@ import * as actions from './actions';
 
 export function* fetchAllFilters(action: ReturnType<typeof actions.fetchFilters>) {
 	try {
-		const filters: WebApi.Entities.Filter[] = yield call(fetchFilters);
+		const filters: WebApi.Entities.Filter[] = yield call(fetchFilters, action.userId);
 		yield put(actions.fetchFiltersSuccess({ partialState: { filters } }));
 	} catch (e) {
 		console.error(e.message);

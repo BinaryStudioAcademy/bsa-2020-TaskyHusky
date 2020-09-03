@@ -20,6 +20,7 @@ import { getUsername } from 'helpers/getUsername.helper';
 import InviteNotification from '../../components/InviteNotification';
 import NotificationsMenu from 'components/NotificationsMenu';
 import UserAvatar from 'components/common/UserAvatar';
+import NotificationsCount from 'components/common/NotificationsCount';
 
 export const HeaderMenu = () => {
 	const authStore = useSelector((rootStore: RootState) => rootStore.auth);
@@ -99,7 +100,15 @@ export const HeaderMenu = () => {
 						</Menu.Item>
 					</CreateIssueModal>
 					<Menu.Item position="right" className={styles.rightMenu}>
-						<Dropdown icon="users" className={styles.circularIcon} direction="left">
+						<Dropdown
+							icon={
+								<NotificationsCount noWiggle count={incomingInvites.length}>
+									<Icon name="users" />
+								</NotificationsCount>
+							}
+							className={styles.circularIcon}
+							direction="left"
+						>
 							<Dropdown.Menu className={styles.circularDropdownMenu}>
 								{incomingInvites.map((invite) => (
 									<InviteNotification

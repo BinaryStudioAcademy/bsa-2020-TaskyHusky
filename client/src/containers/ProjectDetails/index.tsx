@@ -2,7 +2,6 @@ import React from 'react';
 import Form from './form';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-
 import { RootState } from 'typings/rootState';
 import Options from 'components/common/Options';
 import { setProjectActions } from './config/projectActions';

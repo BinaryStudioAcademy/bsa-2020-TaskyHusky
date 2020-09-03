@@ -45,6 +45,7 @@ export const advancedSearchReducer = createReducer<AdvancedSearch>(initialState,
 			addedFilterParts,
 			filterParts: updatedFilterParts,
 			isFilterEdited: false,
+			filterPartsLoaded: true,
 		};
 	},
 	[actionTypes.UPDATE_FILTER_PART_SUCCESS](state, action: actionTypes.UpdateFilterPartArgs) {

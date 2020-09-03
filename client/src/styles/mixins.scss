@@ -192,3 +192,21 @@
 		border: 1px solid $yellow !important;
 	}
 }
+
+@mixin input {
+	border-radius: 6px;
+	outline: none !important;
+	cursor: text;
+
+	& input {
+		@include text-data;
+
+		&:focus {
+			border: 1px solid $yellow !important;
+		}
+	}
+
+	&:hover {
+		background-color: $ligth-gray;
+	}
+}

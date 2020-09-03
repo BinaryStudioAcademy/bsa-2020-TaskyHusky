@@ -351,6 +351,16 @@ namespace WebApi.Entities {
 		issues?: Issue[];
 	}
 
+	interface ProjectLabel {
+		id: string;
+		text: string;
+		textColor: string;
+		backgroundColor: string;
+		project: Projects;
+		createdDate?: Date;
+		deletedDate?: Date;
+	}
+
 	interface Projects {
 		id: string;
 		name: string;
@@ -366,6 +376,7 @@ namespace WebApi.Entities {
 		creator: UserProfile;
 		team?: Team;
 		issues?: Issue[];
+		labels: ProjectLabel[];
 		users: UserProfile[];
 		githubUrl?: string;
 		createdDate?: Date;

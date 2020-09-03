@@ -1,10 +1,10 @@
 import callWebApi from 'helpers/callApi.helper';
 import { InitialFilter } from './../containers/SaveFilterModal/logic/actionTypes';
 
-export const fetchFilters = async (): Promise<WebApi.Entities.Filter[]> => {
+export const fetchFilters = async (userId: string | undefined): Promise<WebApi.Entities.Filter[]> => {
 	const res = await callWebApi({
 		method: 'GET',
-		endpoint: 'filter/',
+		endpoint: userId ? `filter/?userId=${userId}` : 'filter/',
 	});
 
 	return (await res.json()) as WebApi.Entities.Filter[];
