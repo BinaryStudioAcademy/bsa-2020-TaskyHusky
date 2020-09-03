@@ -191,7 +191,7 @@ const CreateProjectModal: React.FC<Props> = ({ children }) => {
 								<h2>{template}</h2>
 								<p>{description}</p>
 								<Button
-									className="primaryBtn"
+									className="contentBtn"
 									onClick={() => setIsTemplatesView(true)}
 									disabled={isLoading}
 								>
