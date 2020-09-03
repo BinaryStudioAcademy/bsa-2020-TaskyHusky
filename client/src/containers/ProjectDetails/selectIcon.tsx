@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Modal, Button } from 'semantic-ui-react';
 import i18n from 'i18next';
-
 import styles from './styles.module.scss';
 import icons from 'assets/images/project';
 

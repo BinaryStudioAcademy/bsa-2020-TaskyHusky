@@ -10,6 +10,7 @@ import {
 	CreateDateColumn,
 	UpdateDateColumn,
 } from 'typeorm';
+import { ProjectLabel } from './ProjectLabel';
 
 import { IsNotEmpty, IsString, Length, IsUppercase, Matches, ValidateIf } from 'class-validator';
 import _ from 'lodash';
@@ -79,6 +80,9 @@ export class Projects {
 
 	@OneToMany((type) => Issue, (issue) => issue.project, { cascade: true, onDelete: 'CASCADE' })
 	issues?: Issue[];
+
+	@OneToMany((type) => ProjectLabel, (labels) => labels.project, { cascade: true })
+	labels!: ProjectLabel[];
 
 	@ManyToMany((type) => UserProfile, (userProfile) => userProfile.projects, { cascade: true })
 	@JoinTable({ name: 'projects_people' })
