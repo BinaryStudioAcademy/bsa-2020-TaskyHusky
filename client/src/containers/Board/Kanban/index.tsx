@@ -56,9 +56,9 @@ const Kanban: BoardComponent = ({ board }) => {
 		<div className={styles.wrapper}>
 			<Breadcrumb style={{ marginBottom: 20 }}>
 				<Breadcrumb.Section href="/projects">{t('projects')}</Breadcrumb.Section>
-				<Breadcrumb.Divider icon="right chevron" />
-				<Breadcrumb.Section link>Test project name</Breadcrumb.Section>
-				<Breadcrumb.Divider icon="right arrow" />
+				<Breadcrumb.Divider />
+				<Breadcrumb.Section link>{(board.projects ?? [])[0].name}</Breadcrumb.Section>
+				<Breadcrumb.Divider />
 				<Breadcrumb.Section active>{board.name}</Breadcrumb.Section>
 			</Breadcrumb>
 			<div className={styles.inlineContainer}>

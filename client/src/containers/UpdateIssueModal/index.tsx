@@ -26,7 +26,7 @@ interface Props {
 interface SelectOption {
 	key: string | number;
 	text: string | JSX.Element;
-	value: string;
+	value: any;
 	style?: any;
 }
 
