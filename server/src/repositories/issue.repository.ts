@@ -72,7 +72,14 @@ export class IssueRepository extends Repository<Issue> {
 
 	getFilteredIssues(filter: Filter | undefined, from: number, to: number, sort: Sort) {
 		const where = filter ? getConditions(filter) : {};
-		return this.findAndCount({ relations: RELS, where, skip: from, take: to - from, order: sort });
+
+		return this.findAndCount({
+			relations: RELS,
+			where,
+			skip: from,
+			take: to - from,
+			order: sort,
+		});
 	}
 
 	findAllByColumnId(id: string) {
