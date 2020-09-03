@@ -12,6 +12,7 @@ export interface AdvancedSearch {
 	filter?: WebApi.Entities.Filter;
 	isFilterEdited: boolean;
 	issuesCount: number;
+	inputText: string;
 }
 
 export const initialState: AdvancedSearch = {
@@ -20,4 +21,5 @@ export const initialState: AdvancedSearch = {
 	addedFilterParts: [],
 	isFilterEdited: false,
 	issuesCount: 0,
+	inputText: '',
 };

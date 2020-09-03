@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Input, Button, InputOnChangeData } from 'semantic-ui-react';
 import styles from './styles.module.scss';
-import { loadIssues } from 'containers/AdvancedSearch/logic/actions';
+import { setContainTextInput } from 'containers/AdvancedSearch/logic/actions';
 
 const ContainTextInput: React.FC = () => {
 	const dispatch = useDispatch();
@@ -13,7 +13,7 @@ const ContainTextInput: React.FC = () => {
 	};
 
 	const onSearch = () => {
-		dispatch(loadIssues({ inputText }));
+		dispatch(setContainTextInput({ inputText }));
 	};
 
 	return (
