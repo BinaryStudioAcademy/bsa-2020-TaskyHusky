@@ -16,6 +16,13 @@ export const filtersReducer = createReducer<FilterState>(initialState, {
 		return {
 			...state,
 			...action.partialState,
+			isLoading: false,
+		};
+	},
+	[actionTypes.FETCH_FILTERS](state) {
+		return {
+			...state,
+			isLoading: true,
 		};
 	},
 });

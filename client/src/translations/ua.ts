@@ -424,4 +424,5 @@ export const ua = {
 	filter_was_updated: 'Filter was updated',
 	could_not_save_filter: "Can't save filter",
 	could_not_update_filter: "Can't update filter",
+	no_filters: 'Фільтрів не знайдено',
 };
