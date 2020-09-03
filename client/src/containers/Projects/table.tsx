@@ -62,6 +62,9 @@ const ProjectsTable = ({ projects, currentUser }: Props) => {
 		setSortDirection('ascending');
 		setSortByColumn(column);
 	};
+
+	const getUsername = (lead: WebApi.Entities.UserProfile): string => `${lead.firstName} ${lead.lastName}`;
+
 	return (
 		<div>
 			<Table selectable sortable unstackable>
@@ -109,7 +112,7 @@ const ProjectsTable = ({ projects, currentUser }: Props) => {
 							<Table.Cell className={styles.project__lead_wrapper}>
 								<span className={styles.project__lead_container}>
 									<UserAvatar user={lead} small />
-									<span>{`${lead.firstName} ${lead.lastName}`}</span>
+									<span> {getUsername(lead)} </span>
 								</span>
 							</Table.Cell>
 							<Table.Cell>

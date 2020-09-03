@@ -1,4 +1,4 @@
-import { Label } from 'containers/ProjectLabels/logic/actionTypes';
+import { Label, DeleteLabel } from 'containers/ProjectLabels/logic/actionTypes';
 import * as actionTypes from 'containers/ProjectPeople/logic/actionTypes';
 import { ProjectId } from '../containers/ProjectSettings/logic/actionTypes';
 import callWebApi from './../helpers/callApi.helper';
@@ -115,13 +115,7 @@ export const updateLabel = async ({ project, label }: Label): Promise<WebApi.Ent
 	return (await res.json()) as WebApi.Entities.ProjectLabel;
 };
 
-export const deleteLabel = async ({
-	projectId,
-	labelId,
-}: {
-	projectId: string;
-	labelId: string;
-}): Promise<WebApi.Entities.ProjectLabel> => {
+export const deleteLabel = async ({ projectId, labelId }: DeleteLabel): Promise<WebApi.Entities.ProjectLabel> => {
 	const res: Response = await callWebApi({
 		method: 'DELETE',
 		endpoint: 'projects/label',

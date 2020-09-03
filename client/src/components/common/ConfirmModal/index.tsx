@@ -1,6 +1,5 @@
 import React from 'react';
 import { Modal, Button } from 'semantic-ui-react';
-import styles from './styles.module.scss';
 
 interface Props {
 	isOpened: boolean;
@@ -18,7 +17,7 @@ const ConfirmModal = ({ isOpened, setIsOpened, confirmAction, header, content }:
 		</Modal.Content>
 		<Modal.Actions>
 			<Button onClick={() => setIsOpened(false)}>No</Button>
-			<Button primary onClick={confirmAction} className={styles.primary__button}>
+			<Button primary onClick={confirmAction} className={'primaryBtn'}>
 				Yes
 			</Button>
 		</Modal.Actions>

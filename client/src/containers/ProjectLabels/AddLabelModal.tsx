@@ -121,14 +121,16 @@ const AddLabelModal: React.FC = () => {
 					</Form>
 				</Modal.Content>
 				<Modal.Actions>
-					<Button onClick={onModalClose}>{t('cancel')}</Button>
+					<Button onClick={onModalClose} className="cancelBtn">
+						{t('cancel')}
+					</Button>
 					<>
 						{!isEditMode ? (
-							<Button className={styles.primary__button} onClick={onAddLabel} loading={isLoading}>
+							<Button className={'primaryBtn'} onClick={onAddLabel} loading={isLoading}>
 								{t('add')}
 							</Button>
 						) : (
-							<Button className={styles.primary__button} onClick={onEditLabel} loading={isLoading}>
+							<Button className={'primaryBtn'} onClick={onEditLabel} loading={isLoading}>
 								{t('edit')}
 							</Button>
 						)}
