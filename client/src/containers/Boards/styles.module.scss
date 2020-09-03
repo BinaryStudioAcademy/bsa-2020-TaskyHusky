@@ -45,4 +45,19 @@
 		margin-left: 5px;
 		user-select: none;
 	}
+
+	.header__cell {
+		background-color: #f9fafb;
+		border-left: none;
+	}
+
+	.options__cell {
+		text-align: center;
+	}
+
+	.user_cell {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+	}
 }
