@@ -419,4 +419,5 @@ export const ua = {
 	todo: 'До виконання',
 	in_progress: 'Виконується',
 	done: 'Виконано',
+	the_comments_text_is_copied_to_clipboard: 'Tекст цього коментаря збережений у буфер обміну.',
 };

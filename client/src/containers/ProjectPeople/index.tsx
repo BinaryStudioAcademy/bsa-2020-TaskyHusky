@@ -103,7 +103,7 @@ const ProjectPeople = () => {
 									<Table.Cell className={styles.user__action}>
 										<Button
 											basic
-											color="blue"
+											color="black"
 											onClick={() => onDeleteUser(user.id)}
 											loading={idAction === user.id}
 											disabled={Boolean(idAction) && idAction !== user.id}

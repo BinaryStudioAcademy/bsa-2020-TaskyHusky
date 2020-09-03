@@ -427,4 +427,5 @@ export const ru = {
 	todo: 'К выполнению',
 	in_progress: 'Выполняется',
 	done: 'Выполнено',
+	the_comments_text_is_copied_to_clipboard: 'Tекст этого комментария скопирован в буфер обмена.',
 };
