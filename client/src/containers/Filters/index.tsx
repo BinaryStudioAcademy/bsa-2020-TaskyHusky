@@ -1,32 +1,40 @@
-import React, { useEffect, useState, useMemo, ChangeEvent } from 'react';
+import React, { useEffect, useState, ChangeEvent } from 'react';
 import styles from './styles.module.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import * as actions from './logic/actions';
 import { RootState } from 'typings/rootState';
-import { Button, Table, Input } from 'semantic-ui-react';
-import FilterItem from 'components/FilterItem';
-import { getFullUserName } from './logic/helpers';
+import { Button, Input } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import searchResult from 'assets/images/search-result.svg';
+import Spinner from 'components/common/Spinner';
+import Table from './table';
 
 const Filters: React.FC = () => {
 	const { t } = useTranslation();
 	const dispatch = useDispatch();
 	const history = useHistory();
-	const { filters } = useSelector((rootState: RootState) => rootState.filters);
+	const { filters, isLoading } = useSelector((rootState: RootState) => rootState.filters);
 	const { user } = useSelector((rootState: RootState) => rootState.auth);
+	const [isTableEmpty, setIsTableEmpty] = useState(false);
 
 	const [searchName, setSearchName] = useState('');
 
-	const filteredFilters = useMemo(() => {
+	const filterFilters = () => {
 		if (searchName === '') {
 			return filters;
 		}
 
 		const searchString = new RegExp(searchName, 'i');
-		return filters.filter(({ name }) => searchString.test(name));
-	}, [searchName, filters]);
+		const filteredFilters = filters.filter(({ name }) => searchString.test(name));
+		return filteredFilters;
+	};
+
+	const filteredFilters = filterFilters();
+
+	useEffect(() => {
+		setIsTableEmpty(filteredFilters.length === 0);
+	}, [filteredFilters.length]);
 
 	const onSearch = (event: ChangeEvent<HTMLInputElement>) => {
 		event.stopPropagation();
@@ -64,35 +72,21 @@ const Filters: React.FC = () => {
 					<Input icon="search" placeholder={t('search')} onChange={onSearch} value={searchName} />
 				</div>
 			</div>
-			<div>
-				{filteredFilters.length > 0 ? (
-					<Table selectable sortable>
-						<Table.Header>
-							<Table.Row>
-								<Table.HeaderCell width={4} className={styles.headerCell} children={t('name')} />
-								<Table.HeaderCell width={4} className={styles.headerCell} children={t('owner')} />
-								<Table.HeaderCell width={4} className={styles.headerCell} children={t('favorite')} />
-								<Table.HeaderCell width={1} className={styles.headerCell} />
-							</Table.Row>
-						</Table.Header>
-
-						<Table.Body>
-							{filteredFilters.map((filter) => (
-								<FilterItem
-									fullName={getFullUserName(filter.owner)}
-									updateFilter={updateFilter}
-									key={filter.id}
-									filter={filter}
-								/>
-							))}
-						</Table.Body>
-					</Table>
+			<div className={styles.wrapper__table}>
+				{isLoading ? (
+					<Spinner />
 				) : (
-					<div className={styles.imgWrapper}>
-						<div className={styles.content}>
-							<img className={styles.img} src={searchResult} alt="No results" />
-							<span className={styles.text}>{t('no_filters')}</span>
-						</div>
+					<div>
+						{!isTableEmpty ? (
+							<Table filters={filteredFilters} updateFilter={updateFilter} />
+						) : (
+							<div className={styles.imgWrapper}>
+								<div className={styles.content}>
+									<img className={styles.img} src={searchResult} alt="No results" />
+									<span className={styles.text}>{t('no_filters')}</span>
+								</div>
+							</div>
+						)}
 					</div>
 				)}
 			</div>

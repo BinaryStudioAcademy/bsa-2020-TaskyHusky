@@ -1,6 +1,10 @@
 @import 'styles/mixins.scss';
 
 :global(#root) {
+	.wrapper__table {
+		position: relative;
+	}
+
 	.wrapperFilters {
 		margin-bottom: 20px;
 	}
