@@ -37,7 +37,7 @@ const Filters: React.FC = () => {
 						<h1 className={styles.title}>{t('filters')}</h1>
 					</div>
 					<div className={styles.actionWrapper}>
-						<Button className={styles.createBtn} onClick={() => history.push('/advancedSearch')} primary>
+						<Button className="primaryBtn" onClick={() => history.push('/advancedSearch')}>
 							{t('create_filter')}
 						</Button>
 					</div>
