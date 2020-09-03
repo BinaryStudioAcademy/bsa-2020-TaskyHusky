@@ -24,7 +24,7 @@ export class Team1597345244377 implements MigrationInterface {
 			},
 			{
 				id: 'Office Assistant I',
-				color: 'Fuscia',
+				color: 'Fuchsia',
 				name: 'Orn-Aufderhar',
 				creator: {
 					id: '474d2249-4d17-4f88-88ab-08ed22fe8723',
@@ -47,7 +47,7 @@ export class Team1597345244377 implements MigrationInterface {
 					avatar: 'https://robohash.org/eumidvoluptas.jpg?size=200x200&set=set1',
 					jobTitle: 'Editor',
 				},
-			}
+			},
 		].map(async (team) => {
 			const { creator, id, ...teamDataToAdd } = team;
 

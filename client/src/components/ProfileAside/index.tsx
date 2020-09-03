@@ -6,22 +6,23 @@ import ProfileContacntBlock from 'components/ProfileContactBlock';
 import ProfileTeamBlock from 'components/ProfileTeamBlock';
 import ManagerAsideBlock from 'components/ManagerAsideBlock';
 import { UserProfileState } from 'containers/ProfilePage/logiс/state';
+import { ModeManager } from 'containers/ProfilePage';
 
 interface Props {
 	isCurrentUser: boolean;
 	teams: Array<WebApi.Entities.Team>;
 	user: Partial<UserProfileState>;
-	showManager: (modeToShow: string) => void;
+	editMode: string;
+	showManager: (modeToShow: ModeManager) => void;
 }
 
 const ProfileAside: React.FC<Props> = (props: Props) => {
-	const { user, isCurrentUser, teams, showManager } = props;
+	const { user, isCurrentUser, teams, showManager, editMode } = props;
 	const {
 		avatar = '',
 		firstName = '',
 		lastName = '',
 		username = '',
-		editMode = '',
 		jobTitle = '',
 		department = '',
 		organization = '',
@@ -40,7 +41,7 @@ const ProfileAside: React.FC<Props> = (props: Props) => {
 			/>
 			<div>
 				{editMode ? (
-					<ManagerAsideBlock showManager={showManager} />
+					<ManagerAsideBlock showManager={showManager} editMode={editMode} />
 				) : (
 					<>
 						<ProfileAboutBlock

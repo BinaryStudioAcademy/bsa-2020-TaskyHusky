@@ -100,6 +100,7 @@ export const loadIssuesAndCount = async (
 	from: number | undefined,
 	to: number | undefined,
 	sort: Sort,
+	inputText: string | undefined,
 ): Promise<WebApi.Result.IssueResult[]> => {
 	const res: Response = await callWebApi({
 		method: 'POST',
@@ -109,6 +110,7 @@ export const loadIssuesAndCount = async (
 			from,
 			to,
 			sort,
+			inputText,
 		},
 	});
 
@@ -126,6 +128,13 @@ export const addComment = async (id: string, text: string): Promise<WebApi.Resul
 	});
 
 	return (await res.json()) as WebApi.Result.IssueCommentResult;
+};
+
+export const deleteComment = async (id: string): Promise<void> => {
+	await callWebApi({
+		method: 'DELETE',
+		endpoint: `issue/comment/${id}`,
+	});
 };
 
 export const getComments = async (id: string): Promise<WebApi.Result.IssueCommentResult[]> => {

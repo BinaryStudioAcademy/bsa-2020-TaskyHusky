@@ -30,12 +30,12 @@ const BoardModalMenuType = (props: Props) => {
 			</Grid.Row>
 			<Grid.Row>
 				<Grid.Column className={styles.buttonContainer}>
-					<Button onClick={() => props.onTypeSelection(boardTypes.scrum)} basic className={styles.createBtn}>
+					<Button onClick={() => props.onTypeSelection(boardTypes.scrum)} className={styles.contentBtn}>
 						{t('create_scrum_board')}
 					</Button>
 				</Grid.Column>
 				<Grid.Column className={styles.buttonContainer}>
-					<Button onClick={() => props.onTypeSelection(boardTypes.kanban)} basic className={styles.createBtn}>
+					<Button onClick={() => props.onTypeSelection(boardTypes.kanban)} className={styles.contentBtn}>
 						{t('create_kanban_board')}
 					</Button>
 				</Grid.Column>

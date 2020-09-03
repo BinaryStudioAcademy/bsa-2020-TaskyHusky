@@ -9,6 +9,7 @@ import { fetchFilterParts, setAddedFilterParts } from '../logic/actions';
 import { FilterPartState } from '../logic/state';
 import { useParams } from 'react-router';
 import { getDefaultFilterParts, getAdditionalFilterParts } from '../logic/helpers';
+import ContainTextInput from 'components/ContainTextInput';
 
 const AdvancedFilters: React.FC = () => {
 	const dispatch = useDispatch();
@@ -32,12 +33,13 @@ const AdvancedFilters: React.FC = () => {
 				<Form.Group className={styles.searchContentContainer}>
 					{getDefaultFilterParts(filterParts).map((part) => (
 						<FilterPart key={part.id} filterPart={part} />
-					))} 
+					))}
 					<MoreFilterPartsDropdown
 						additionalFilterParts={getAdditionalFilterParts(filterParts)}
 						addedFilterParts={addedFilterParts}
 						setAddedFilterParts={(data) => setAddedFilterPartsHandler(data)}
 					/>
+					<ContainTextInput />
 				</Form.Group>
 				<Form.Group>
 					{addedFilterParts.map((part) => (

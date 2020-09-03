@@ -8,7 +8,9 @@ import * as actions from './actions';
 import { FilterPartState } from './state';
 import { AnyAction } from 'redux';
 import { getFilterOptionsFromFilterParts } from './helpers';
+
 const PAGE_SIZE = 25;
+
 export function* fetchFilterPartsSaga(action: AnyAction) {
 	const {
 		filterDefs: { filterDefs },
@@ -25,6 +27,7 @@ export function* fetchFilterPartsSaga(action: AnyAction) {
 		const filter: WebApi.Entities.Filter = yield call(loadFilterById, action.id);
 
 		yield put(actions.loadFilterByIdSuccess({ filter }));
+		yield put(actions.loadIssues({}));
 	}
 }
 
@@ -35,22 +38,19 @@ export function* updateFilterPartSaga(action: AnyAction) {
 
 export function* loadIssuesSaga(action: AnyAction) {
 	const { from = 0, to = PAGE_SIZE, sort } = action;
-
 	const {
-		advancedSearch: { filterParts },
+		advancedSearch: { filterParts, inputText, filter },
 	}: RootState = yield select();
 
-	const filterOption = getFilterOptionsFromFilterParts(filterParts);
-	const result = yield call(loadIssuesAndCount, filterOption, from, to, sort);
+	const updatedFilterParts = filterParts.map((filterPart) => {
+		const updatedFilterPart = filter?.filterParts?.find(({ filterDef: { id } }) => id === filterPart.filterDef.id);
+		return updatedFilterPart ? updatedFilterPart : filterPart;
+	}) as FilterPartState[];
+
+	const filterOption = getFilterOptionsFromFilterParts(updatedFilterParts);
+	const result = yield call(loadIssuesAndCount, filterOption, from, to, sort, inputText);
 
 	yield put(actions.loadIssuesSuccess({ issues: result[0], issuesCount: result[1] }));
-}
-
-export function* loadFilterByIdSaga(action: AnyAction) {
-	const filter: WebApi.Entities.Filter = yield call(loadFilterById, action.id);
-
-	yield put(actions.loadFilterByIdSuccess({ filter }));
-	yield put(actions.loadIssues({}));
 }
 
 export function* setAddedFilterPartsSaga(action: AnyAction) {
@@ -74,6 +74,14 @@ export function* updateFilterSaga(action: AnyAction) {
 	yield put(actions.updateFilterSuccess());
 }
 
+export function* setInputTextSaga(action: AnyAction) {
+	yield put(actions.loadIssues({}));
+}
+
+export function* watchSetInputText() {
+	yield takeEvery(actionTypes.SET_INPUT_TEXT, setInputTextSaga);
+}
+
 export function* watchFetchFilterParts() {
 	yield takeEvery(actionTypes.FETCH_FILTER_PARTS, fetchFilterPartsSaga);
 }
@@ -84,10 +92,6 @@ export function* watchUpdateFilterPart() {
 
 export function* watchLoadIssues() {
 	yield takeEvery(actionTypes.LOAD_ISSUES, loadIssuesSaga);
-}
-
-export function* watchLoadFilterById() {
-	yield takeEvery(actionTypes.LOAD_FILTER, loadFilterByIdSaga);
 }
 
 export function* watchSetAddedFilterParts() {
@@ -107,9 +111,9 @@ export default function* advancedSearchSaga() {
 		watchFetchFilterParts(),
 		watchUpdateFilterPart(),
 		watchLoadIssues(),
-		watchLoadFilterById(),
 		watchSetAddedFilterParts(),
 		watchResetState(),
 		watchUpdateFilter(),
+		watchSetInputText(),
 	]);
 }

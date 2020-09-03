@@ -9,7 +9,7 @@ interface Props {
 const WorkAssignedBlock: React.FC<Props> = (props: Props) => {
 	const { assignedIssues } = props;
 	return (
-		<div className={styles.container}>
+		<div className="workBlock">
 			<div className={styles.header}>
 				<p className={styles.headerIcon}>T</p>
 				<p className={styles.headerKey}>Key</p>

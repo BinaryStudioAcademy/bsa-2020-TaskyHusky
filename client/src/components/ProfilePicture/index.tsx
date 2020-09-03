@@ -9,6 +9,7 @@ import { RootState } from 'typings/rootState';
 import { getInitials } from 'helpers/getInitials.helper';
 import CropModal from 'components/CropModal';
 import { base64StringtoFile, extractImageFileExtensionFromBase64 } from 'helpers/canvas.helper';
+import { ModeManager } from 'containers/ProfilePage';
 
 interface Props {
 	firstName: string;
@@ -17,7 +18,7 @@ interface Props {
 	avatar: string;
 	editMode: string;
 	isCurrentUser: boolean;
-	showManager: (modeToShow: string) => void;
+	showManager: (modeToShow: ModeManager) => void;
 }
 
 const ProfilePicture: React.FC<Props> = (props: Props) => {
@@ -93,7 +94,7 @@ const ProfilePicture: React.FC<Props> = (props: Props) => {
 				{isCurrentUser && showManager && (
 					<Button
 						className={styles.managerButton}
-						onClick={() => showManager('profile')}
+						onClick={() => showManager(ModeManager.profile)}
 						disabled={!editMode ? false : true}
 					>
 						{t('manage_account')}

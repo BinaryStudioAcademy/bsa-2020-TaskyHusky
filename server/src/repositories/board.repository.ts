@@ -15,6 +15,7 @@ export class BoardRepository extends Repository<Board> {
 			(<unknown>(
 				await this.createQueryBuilder('board')
 					.innerJoin('board.createdBy', 'user')
+					.leftJoinAndSelect('board.projects', 'projects')
 					.addSelect(['user.id', 'user.firstName', 'user.lastName', 'user.avatar'])
 					.getMany()
 			))

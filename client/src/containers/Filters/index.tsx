@@ -3,15 +3,16 @@ import styles from './styles.module.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import * as actions from './logic/actions';
 import { RootState } from 'typings/rootState';
-import { Button, Table, Input, Dropdown, Form } from 'semantic-ui-react';
-import { ReactComponent as HeaderStar } from './headerStart.svg';
+import { Button, Table, Input, Dropdown, Form, Icon } from 'semantic-ui-react';
 import FilterItem from 'components/FilterItem';
 import { getFullUserName } from './logic/helpers';
 import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router-dom';
 
 const Filters: React.FC = () => {
 	const { t } = useTranslation();
 	const dispatch = useDispatch();
+	const history = useHistory();
 	const { filters } = useSelector((rootState: RootState) => rootState.filters);
 
 	const updateFilter = (data: WebApi.Entities.Filter) => {
@@ -36,7 +37,9 @@ const Filters: React.FC = () => {
 						<h1 className={styles.title}>{t('filters')}</h1>
 					</div>
 					<div className={styles.actionWrapper}>
-						<Button primary>{t('create_filter')}</Button>
+						<Button className={styles.createBtn} onClick={() => history.push('/advancedSearch')} primary>
+							{t('create_filter')}
+						</Button>
 					</div>
 				</div>
 				<div className={styles.bottomBarWrapper}>
@@ -51,17 +54,18 @@ const Filters: React.FC = () => {
 				</div>
 			</div>
 			<div>
-				<Table selectable padded={'very'} compact>
+				<Table selectable sortable>
 					<Table.Header>
 						<Table.Row>
-							<Table.HeaderCell>
-								{' '}
-								<HeaderStar />{' '}
-							</Table.HeaderCell>
-							<Table.HeaderCell>{t('name')}</Table.HeaderCell>
-							<Table.HeaderCell>{t('owner')}</Table.HeaderCell>
-							<Table.HeaderCell>{t('favorite')}</Table.HeaderCell>
-							<Table.HeaderCell> </Table.HeaderCell>
+							<Table.HeaderCell
+								width={1}
+								className={`${styles.headerCell} ${styles.starCell}`}
+								children={<Icon name="star" />}
+							/>
+							<Table.HeaderCell width={4} className={styles.headerCell} children={t('name')} />
+							<Table.HeaderCell width={4} className={styles.headerCell} children={t('owner')} />
+							<Table.HeaderCell width={4} className={styles.headerCell} children={t('favorite')} />
+							<Table.HeaderCell width={1} className={styles.headerCell} />
 						</Table.Row>
 					</Table.Header>
 
