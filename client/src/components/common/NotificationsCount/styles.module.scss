@@ -36,17 +36,17 @@
 
 @keyframes grow {
 	from {
-		width: 15px;
-		height: 15px;
+		width: 12px;
+		height: 12px;
 		top: -5px;
 		right: -5px;
 	}
 
 	50% {
-		width: 25px;
-		height: 25px;
-		top: -10px;
-		right: -10px;
+		width: 20px;
+		height: 20px;
+		top: -9px;
+		right: -9px;
 	}
 }
 
@@ -64,10 +64,10 @@
 
 .counter {
 	background-color: $yellow;
-	width: 15px;
-	height: 15px;
+	width: 12px;
+	height: 12px;
 	border-radius: 50%;
-	font-size: 12px;
+	font-size: 10px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
