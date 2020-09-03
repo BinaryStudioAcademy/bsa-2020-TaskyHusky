@@ -28,11 +28,10 @@
 			.actionWrapper {
 				margin-left: 10px;
 				flex: 0 0 auto;
+				.createBtn {
+					@include primary-btn;
+				}
 			}
 		}
-	}
-
-	.createButton {
-		@include primary-btn;
 	}
 }
