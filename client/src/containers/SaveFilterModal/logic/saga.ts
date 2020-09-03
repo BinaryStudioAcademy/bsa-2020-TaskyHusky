@@ -3,6 +3,8 @@ import { all, put, takeEvery, call } from 'redux-saga/effects';
 import * as actionTypes from './actionTypes';
 import * as actions from './actions';
 import { fetchFilters } from '../../Filters/logic/actions';
+import { NotificationManager } from 'react-notifications';
+import i18next from 'i18next';
 
 export function* saveNewFilter(action: ReturnType<typeof actions.startSavingFilter>) {
 	const { name, owner, filterParts } = action;
@@ -13,8 +15,9 @@ export function* saveNewFilter(action: ReturnType<typeof actions.startSavingFilt
 		yield put(actions.setRedirecting({ redirecting: true }));
 		yield put(actions.resetState());
 		yield put(fetchFilters());
+		NotificationManager.success(i18next.t('filter_was_saved'), i18next.t('success'), 4000);
 	} catch (error) {
-		console.log('error', error);
+		NotificationManager.error(i18next.t('could_not_save_filter'), i18next.t('error'), 4000);
 	}
 }
 
