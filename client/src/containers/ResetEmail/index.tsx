@@ -43,7 +43,7 @@ const ResetPassword = () => {
 					<Grid.Column className={styles.column}>
 						<h1 className={styles.mainHeader}>{t('confirm_email_change')}</h1>
 						<Segment>
-							<Form onSubmit={handleSubmit}>
+							<Form className={styles.form} onSubmit={handleSubmit}>
 								<SubmitedInput
 									text={password}
 									propKey="password"
