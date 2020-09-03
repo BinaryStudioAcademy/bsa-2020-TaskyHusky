@@ -1,5 +1,5 @@
 import React, { useState, ChangeEvent, useEffect, SyntheticEvent } from 'react';
-import { Button, Input, Table, Dropdown, DropdownProps } from 'semantic-ui-react';
+import { Button, Input, Table, Dropdown, DropdownProps, Popup } from 'semantic-ui-react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'typings/rootState';
 import * as actions from './logic/actions';
@@ -84,6 +84,10 @@ const Boards: React.FC = () => {
 		};
 	};
 
+	const projectsShown = 2;
+	const cellProjects = (board: WebApi.Board.IBoardModel) => (board.projects ?? []).slice(0, projectsShown);
+	const portalProjects = (board: WebApi.Board.IBoardModel) => (board.projects ?? []).slice(projectsShown);
+
 	return (
 		<div className={styles.wrapper}>
 			{isModalShown ? <CreateBoardModal setIsModalShown={setIsModalShown} onCreateBoard={onCreateBoard} /> : ''}
@@ -112,6 +116,7 @@ const Boards: React.FC = () => {
 							<Table.Row>
 								<Table.HeaderCell width={5}>{t('name')}</Table.HeaderCell>
 								<Table.HeaderCell width={5}>{t('type')}</Table.HeaderCell>
+								<Table.HeaderCell width={5}>{t('projects')}</Table.HeaderCell>
 								<Table.HeaderCell width={5}>{t('admin')}</Table.HeaderCell>
 								<Table.HeaderCell width={1} />
 							</Table.Row>
@@ -125,6 +130,59 @@ const Boards: React.FC = () => {
 											<Link to={`/board/${id}`}>{name}</Link>
 										</Table.Cell>
 										<Table.Cell>{boardType}</Table.Cell>
+										<Table.Cell>
+											{board.projects && board.projects.length ? (
+												<>
+													<span>
+														{cellProjects(board).map((project, i) => (
+															<span key={i}>
+																<a
+																	target="_blank"
+																	rel="noopener noreferrer"
+																	href={`/project/${project.id}/issues`}
+																>
+																	{project.name}
+																</a>
+																{cellProjects(board).length - 1 === i ? '' : ', '}
+															</span>
+														))}
+													</span>
+													<span>
+														{board.projects.length > projectsShown ? (
+															<Popup
+																openOnTriggerMouseEnter
+																closeOnPortalMouseLeave
+																trigger={
+																	<span className={styles.moreProjects}>, ...</span>
+																}
+																content={
+																	<div>
+																		{portalProjects(board).map((project, i) => (
+																			<span key={i}>
+																				<a
+																					target="_blank"
+																					rel="noopener noreferrer"
+																					href={`/project/${project.id}/issues`}
+																				>
+																					{project.name}
+																				</a>
+																				{portalProjects(board).length - 1 === i
+																					? ''
+																					: ', '}
+																			</span>
+																		))}
+																	</div>
+																}
+															/>
+														) : (
+															''
+														)}
+													</span>
+												</>
+											) : (
+												t('no')
+											)}
+										</Table.Cell>
 										<Table.Cell>
 											<Link
 												to={`/profile/${user.id}`}
