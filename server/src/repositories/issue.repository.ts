@@ -133,11 +133,7 @@ export class IssueRepository extends Repository<Issue> {
 	notify(partialIssue: PartialIssue, data: PartialIssue, issue: Issue, senderId: string) {
 		const notification = getCustomRepository(NotificationRepository);
 
-		const difference = getDiffPropNames<PartialIssue, PartialIssue>(
-			partialIssue,
-			{ ...partialIssue, ...data },
-			_.isEqual,
-		);
+		const difference = getDiffPropNames<any, any>(partialIssue, { ...partialIssue, ...data }, _.isEqual);
 
 		if (difference.length) {
 			notification.notifyIssueWatchers({
