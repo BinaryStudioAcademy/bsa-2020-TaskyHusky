@@ -1,3 +1,5 @@
+@import 'styles/mixins.scss';
+
 .filtersContainer {
 	display: flex;
 	flex-direction: column;
@@ -15,6 +17,14 @@
 		.actionWrapper {
 			margin-left: 10px;
 			flex: 0 0 auto;
+			.createBtn {
+				width: 100%;
+				background-color: $yellow !important;
+				color: #000000 !important;
+				&:hover {
+					box-shadow: 0 0 5px inset $primary-bg !important;
+				}
+			}
 		}
 	}
 }
