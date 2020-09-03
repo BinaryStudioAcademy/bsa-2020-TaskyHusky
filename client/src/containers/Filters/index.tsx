@@ -8,10 +8,12 @@ import { ReactComponent as HeaderStar } from './headerStart.svg';
 import FilterItem from 'components/FilterItem';
 import { getFullUserName } from './logic/helpers';
 import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router-dom';
 
 const Filters: React.FC = () => {
 	const { t } = useTranslation();
 	const dispatch = useDispatch();
+	const history = useHistory();
 	const { filters } = useSelector((rootState: RootState) => rootState.filters);
 
 	const updateFilter = (data: WebApi.Entities.Filter) => {
@@ -36,7 +38,9 @@ const Filters: React.FC = () => {
 						<h1 className={styles.title}>{t('filters')}</h1>
 					</div>
 					<div className={styles.actionWrapper}>
-						<Button primary>{t('create_filter')}</Button>
+						<Button className="primaryBtn" onClick={() => history.push('/advancedSearch')}>
+							{t('create_filter')}
+						</Button>
 					</div>
 				</div>
 				<div className={styles.bottomBarWrapper}>
