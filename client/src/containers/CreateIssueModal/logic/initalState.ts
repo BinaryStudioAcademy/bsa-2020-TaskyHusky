@@ -5,6 +5,6 @@ export const initialState: WebApi.Issue.PartialIssue = {
 	labels: [],
 	description: '',
 	type: '',
-	priority: '',
+	priority: 0,
 	creator: '',
 };
