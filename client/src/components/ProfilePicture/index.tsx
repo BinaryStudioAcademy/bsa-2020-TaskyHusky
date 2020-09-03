@@ -1,14 +1,14 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState } from 'react';
 import 'react-image-crop/lib/ReactCrop.scss';
-import { Crop } from 'react-image-crop';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { requestUpdateAvatar } from 'containers/ProfilePage/logiс/actions';
 import { useTranslation } from 'react-i18next';
 import { Header, Button, Icon } from 'semantic-ui-react';
 import styles from './styles.module.scss';
+import { RootState } from 'typings/rootState';
 import { getInitials } from 'helpers/getInitials.helper';
 import CropModal from 'components/CropModal';
-import { base64StringtoFile, extractImageFileExtensionFromBase64, image64toCanvasRef } from 'helpers/canvas.helper';
+import { base64StringtoFile, extractImageFileExtensionFromBase64 } from 'helpers/canvas.helper';
 
 interface Props {
 	firstName: string;
@@ -23,11 +23,11 @@ interface Props {
 const ProfilePicture: React.FC<Props> = (props: Props) => {
 	const dispatch = useDispatch();
 	const { t } = useTranslation();
-
-	const [crop, setCrop] = useState<Crop>({ aspect: 1 / 1, height: 144, unit: 'px', width: 144, x: 0, y: 0 });
-	const { firstName, lastName, username, avatar, editMode, isCurrentUser, showManager } = props;
+	const { avatar } = useSelector((state: RootState) => state.user);
+	const { firstName, lastName, username, editMode, isCurrentUser, showManager } = props;
 	const [uploadUrl, setUploadUrl] = useState<ArrayBuffer | string | null>('');
 	const [imgSrcExt, setImgSrcExt] = useState<any>(null);
+
 	const uploadPhoto = async (e: any) => {
 		const reader = new FileReader();
 		if (e.target.files[0]) {
@@ -36,44 +36,22 @@ const ProfilePicture: React.FC<Props> = (props: Props) => {
 				const { result } = reader;
 				setUploadUrl(result);
 				setImgSrcExt(extractImageFileExtensionFromBase64(result as string));
+				// e.currentTarget.value = null;
 			};
 		}
 	};
-
-	const imgRef = useRef<HTMLImageElement | null>(null);
-	const imagePreviewCanvasRef = useRef<HTMLCanvasElement | null>(null);
 
 	const onClose = () => {
 		setUploadUrl(null);
 	};
 
-	const onChangeCrop = (c: Crop) => {
-		setCrop(c);
-	};
-
-	const onLoad = useCallback((img) => {
-		imgRef.current = img;
-	}, []);
-
-	const handleOnCropComplete = (crop: Crop) => {
-		const canvasRef = imagePreviewCanvasRef.current;
-		console.log(crop);
-		console.log(canvasRef);
-		image64toCanvasRef(canvasRef as HTMLCanvasElement, uploadUrl as string, crop);
-	};
-
-	const saveCrop = () => {
+	const saveCrop = (imagePreviewCanvasRef: any) => {
 		if (uploadUrl) {
 			const canvasRef = imagePreviewCanvasRef.current;
-
 			if (canvasRef) {
-				console.log(canvasRef);
 				const imageData64 = canvasRef.toDataURL('image/' + imgSrcExt);
-
 				const myFilename = 'previewFile.' + imgSrcExt;
-
 				const myNewCroppedFile = base64StringtoFile(imageData64, myFilename);
-				console.log(myNewCroppedFile);
 				dispatch(requestUpdateAvatar({ image: myNewCroppedFile }));
 			}
 		}
@@ -82,23 +60,11 @@ const ProfilePicture: React.FC<Props> = (props: Props) => {
 	return (
 		<>
 			<div className={styles.container}>
-				{uploadUrl && (
-					<CropModal
-						uploadUrl={uploadUrl as string}
-						crop={crop}
-						onClose={onClose}
-						onLoad={onLoad}
-						onChange={onChangeCrop}
-						handleOnCropComplete={handleOnCropComplete}
-						saveCrop={saveCrop}
-					/>
-				)}
+				{uploadUrl && <CropModal uploadUrl={uploadUrl as string} onClose={onClose} saveCrop={saveCrop} />}
 				<div className={styles.mainInfo}>
 					<div className={styles.avatarContainer}>
 						<div className={styles.borderHelper}>
-							{uploadUrl ? (
-								<canvas ref={imagePreviewCanvasRef} className={styles.canvas}></canvas>
-							) : avatar ? (
+							{avatar ? (
 								<img src={avatar} className={styles.avatar} alt="Avatar" />
 							) : (
 								<h1 className={styles.initials}>
@@ -111,9 +77,8 @@ const ProfilePicture: React.FC<Props> = (props: Props) => {
 									<input
 										accept=".jpg, .jpeg, .png, .bmp"
 										id="contained-button-file"
-										multiple
 										type="file"
-										onChange={uploadPhoto}
+										onInput={uploadPhoto}
 										className={styles.hidden}
 									/>
 								</>
