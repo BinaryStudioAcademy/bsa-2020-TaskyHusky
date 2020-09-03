@@ -118,12 +118,10 @@ export const en = {
 	acc_pref: 'Account preferences',
 	ctrl_settings: 'Control settings related to your account.',
 	lang_reg: 'Language and Region',
-	content_lang:
-		'Changes to your language and timezone will be reflected across Confluence, Jira and directory. Update your language and timezone for other products from your ',
-	product_settings: 'product settings.',
+	content_lang: 'Changes to your language and timezone will be reflected across directory.',
 	del_acc: 'Delete your account',
 	content_del:
-		'When you delete your account, you lose access to Atlassian account services, and we permanently delete your personal data. You can cancel the deletion for 14 days. This page is protected by reCAPTCHA and the Google Privacy Policy and Terms of Service apply.',
+		'When you delete your account, you lose access to Tasky-Husky account services, and we permanently delete your personal data. This page is protected by Privacy Policy and Terms of Service apply.',
 	del_btn: 'Delete account',
 	change_email: 'Change Email',
 	current_email: 'Your current email adress is ',
@@ -437,5 +435,11 @@ export const en = {
 	more_about: 'More about',
 	commits: 'Git commits',
 	commits_view_full: 'View full commit',
+	create_column: 'Create column',
+	is_resolution_set: 'Is resolution set',
+	todo: 'Todo',
+	in_progress: 'In progress',
+	done: 'Done',
 	team_has_been_deleted: 'Team has been deleted',
+	the_comments_text_is_copied_to_clipboard: "This comment's text is copied to clipboard.",
 };
