@@ -42,4 +42,20 @@
 			}
 		}
 	}
+	.imgWrapper {
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		.content {
+			display: flex;
+			flex-direction: column;
+			.img {
+				width: 200px;
+				margin: 10px;
+			}
+			.text {
+				text-align: center;
+			}
+		}
+	}
 }

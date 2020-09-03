@@ -3,11 +3,12 @@ import styles from './styles.module.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import * as actions from './logic/actions';
 import { RootState } from 'typings/rootState';
-import { Button, Table, Input, Icon } from 'semantic-ui-react';
+import { Button, Table, Input } from 'semantic-ui-react';
 import FilterItem from 'components/FilterItem';
 import { getFullUserName } from './logic/helpers';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
+import searchResult from 'assets/images/search-result.svg';
 
 const Filters: React.FC = () => {
 	const { t } = useTranslation();
@@ -64,32 +65,36 @@ const Filters: React.FC = () => {
 				</div>
 			</div>
 			<div>
-				<Table selectable sortable>
-					<Table.Header>
-						<Table.Row>
-							<Table.HeaderCell
-								width={1}
-								className={`${styles.headerCell} ${styles.starCell}`}
-								children={<Icon name="star" />}
-							/>
-							<Table.HeaderCell width={4} className={styles.headerCell} children={t('name')} />
-							<Table.HeaderCell width={4} className={styles.headerCell} children={t('owner')} />
-							<Table.HeaderCell width={4} className={styles.headerCell} children={t('favorite')} />
-							<Table.HeaderCell width={1} className={styles.headerCell} />
-						</Table.Row>
-					</Table.Header>
+				{filteredFilters.length > 0 ? (
+					<Table selectable sortable>
+						<Table.Header>
+							<Table.Row>
+								<Table.HeaderCell width={4} className={styles.headerCell} children={t('name')} />
+								<Table.HeaderCell width={4} className={styles.headerCell} children={t('owner')} />
+								<Table.HeaderCell width={4} className={styles.headerCell} children={t('favorite')} />
+								<Table.HeaderCell width={1} className={styles.headerCell} />
+							</Table.Row>
+						</Table.Header>
 
-					<Table.Body>
-						{filteredFilters.map((filter) => (
-							<FilterItem
-								fullName={getFullUserName(filter.owner)}
-								updateFilter={updateFilter}
-								key={filter.id}
-								filter={filter}
-							/>
-						))}
-					</Table.Body>
-				</Table>
+						<Table.Body>
+							{filteredFilters.map((filter) => (
+								<FilterItem
+									fullName={getFullUserName(filter.owner)}
+									updateFilter={updateFilter}
+									key={filter.id}
+									filter={filter}
+								/>
+							))}
+						</Table.Body>
+					</Table>
+				) : (
+					<div className={styles.imgWrapper}>
+						<div className={styles.content}>
+							<img className={styles.img} src={searchResult} alt="No results" />
+							<span className={styles.text}>{t('no_filters')}</span>
+						</div>
+					</div>
+				)}
 			</div>
 		</div>
 	);
