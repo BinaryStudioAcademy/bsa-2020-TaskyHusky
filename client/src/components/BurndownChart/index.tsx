@@ -145,18 +145,23 @@ const BurndownChart: React.FC<Props> = ({ sprint }) => {
 		const svg = d3.select('.svg').attr('preserveAspectRatio', 'xMinYMin meet').classed('svg-content', true);
 		svg.append('g')
 			.attr('class', 'axis')
-			.attr('transform', 'translate(0,' + height + ')')
-			.call(xaxis);
+			// .attr('transform', 'translate(' + 70 + ',' + height + ')')
+			.attr('transform', 'translate(' + 0 + ',' + height + ')')
+			.call(xaxis)
+			.style('font-size', 12);
 		svg.append('g')
 			.attr('class', 'axis')
+			// .attr('transform', 'translate(70)')
 			.call(yaxis)
+			.style('font-size', 12)
 			.append('text')
 			.attr('transform', 'rotate(-90)')
-			.attr('dy', '.75em')
+			.attr('y', 0 - 50)
+			.attr('x', 0 - height / 2)
+			.attr('dy', '1em')
+			.style('text-anchor', 'middle')
 			.attr('fill', 'red')
-			.attr('y', 6)
-			.style('text-anchor', 'end')
-			.text('Frequency');
+			.text('Value');
 		const line = d3
 			.line()
 			.defined((d: any) => !isNaN(d.storyPoint))
