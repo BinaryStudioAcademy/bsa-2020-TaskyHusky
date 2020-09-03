@@ -1,36 +1,44 @@
 .wrapper {
-  padding: 30px 60px;
-  :global(.ui.celled.fixed.table){
-    td:last-child{
-      overflow: visible;
-      padding: 2px 11px;
-    }
-  }
-
+	padding: 30px 60px;
+	:global(.ui.celled.fixed.table) {
+		td:last-child {
+			overflow: visible;
+			padding: 2px 11px;
+		}
+	}
 }
 
 .wrapper__title {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 20px;
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 20px;
 }
 
 .title {
-  margin: 0;
-  font-size: 24px;
+	margin: 0;
+	font-size: 24px;
 }
 
 .wrapper__filters {
-  margin-bottom: 20px;
-  div{
-    margin-right: 10px;
-  }
+	margin-bottom: 20px;
+	div {
+		margin-right: 10px;
+	}
 }
 
 .filters {
-  display: flex;
+	display: flex;
 }
 
 .wrapper__table {
-  position: relative;
+	position: relative;
+}
+
+.moreProjects {
+	background-color: #ddd;
+	color: grey;
+	border-radius: 3px;
+	padding: 0 5px;
+	margin-left: 5px;
+	user-select: none;
 }

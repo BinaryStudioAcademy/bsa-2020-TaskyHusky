@@ -9,6 +9,7 @@ namespace WebApi.Board {
 		name: string;
 		location: string;
 		createdAt: Date;
+		projects?: BoardProjectsResult[];
 		createdBy: {
 			id: string;
 			firstName: string;

@@ -108,7 +108,7 @@
 	background-color: $primary-bg !important;
 
 	&:hover {
-		box-shadow: 0 0 3px inset $dark-black !important;
+		background-color: $border !important;
 	}
 }
 
@@ -121,7 +121,7 @@
 	background-color: $dark-black !important;
 
 	&:hover {
-		box-shadow: 0 0 3px inset $primary-bg !important;
+		background-color: $primary-text !important;
 	}
 }
 
@@ -134,7 +134,7 @@
 	color: $dark-black !important;
 
 	&:hover {
-		box-shadow: 0 0 3px inset $dark-black !important;
+		background-color: #f1c122 !important;
 	}
 }
 
@@ -187,7 +187,7 @@
 		@include text-data;
 	}
 
-	& > div:last-child {
+	&>div:last-child {
 		border: 1px solid $yellow !important;
 		border-top: none;
 	}
