@@ -63,13 +63,13 @@ const CreateLink = ({ onClose, currentLink, onConfirm }: Props) => {
 			<Modal.Actions>
 				<Button
 					content={t('accept')}
-					primary
 					labelPosition="left"
 					icon="checkmark"
+					className={styles.editBtn}
 					onClick={() => onConfirm(newLink)}
 				/>
-				<Button basic className={styles.editBtn} onClick={onClose}>
-					<span className={styles.editBtnValue}>{t('cancel')}</span>
+				<Button className={styles.cancelBtn} onClick={onClose}>
+					{t('cancel')}
 				</Button>
 			</Modal.Actions>
 		</Modal>

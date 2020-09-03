@@ -1,3 +1,5 @@
+@import "styles/mixins.scss";
+
 .linkCardWrapper {
   position: relative;
   margin-top: 10px;
@@ -5,7 +7,6 @@
   border: 1px solid rgb(231, 231, 231);
   width: 100%;
   padding: 20px;
-  cursor: grab;
 
   .linkHeader {
     color: #3d3c3c;
@@ -38,16 +39,21 @@
   font-size: 1.1rem;
   margin-bottom: 8px;
 }
-
+.paddingBtn {
+  padding: 6px 8px !important;
+}
 .deleteBtn {
-  border: 1px solid #2185d0 !important;
+  @include cancel-btn;
   .deleteBtnValue {
     color: #2185d0 !important;
   }
 }
 .editBtn {
-  border: 1px solid #4d4c4c !important;
+  @include primary-btn;
   .editBtnValue {
     color: #4d4c4c;
   }
+}
+.cancelBtn {
+  @include cancel-btn;
 }

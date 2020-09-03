@@ -21,10 +21,10 @@ const AditionalModal = ({ setShowDelete, confirmDelete }: Props) => {
 				<p className={styles.textModal}>{t('deleting_team_cannot_be_prevented')}</p>
 			</Modal.Content>
 			<Modal.Actions>
-				<Button basic className={styles.editBtn} onClick={() => setShowDelete(false)}>
-					<span className={styles.editBtnValue}> {t('cancel')} </span>
+				<Button className={styles.cancelBtn} onClick={() => setShowDelete(false)}>
+					{t('cancel')}
 				</Button>
-				<Button icon="check" primary onClick={confirmDelete}>
+				<Button icon="check" className={styles.editBtn} onClick={confirmDelete}>
 					{t('Im_sure')}
 				</Button>
 			</Modal.Actions>

@@ -100,14 +100,14 @@ const TeamDevsCard = ({
 						<Button
 							compact
 							fluid={lockEditFields}
-							color="blue"
+							className={styles.primaryBtn}
 							onClick={() => submitEditFields()}
 							disabled={!lockEditFields && !isTitleValid}
 						>
 							{t(lockEditFields ? 'edit_fields' : 'save_changes')}
 						</Button>
 						{!lockEditFields && (
-							<Button compact basic className={styles.editBtn} onClick={abortChhange}>
+							<Button compact className={styles.cancelBtn} onClick={abortChhange}>
 								{t('cancel')}
 							</Button>
 						)}
@@ -115,16 +115,15 @@ const TeamDevsCard = ({
 					<Card.Content extra>
 						<Button.Group fluid>
 							<Button
-								basic
 								compact
 								className={`${styles.margin1} ${styles.mediaBtns} ${styles.editBtn}`}
 								onClick={showAddPeopleModal}
 								disabled={currentProfile?.id !== teamOwner?.id}
 							>
-								<span className={styles.editBtnValue}>{t('add_people')}</span>
+								{t('add_people')}
 							</Button>
-							<Button compact basic className={styles.deleteBtn} onClick={() => setShowDelete(true)}>
-								<span className={styles.deleteBtnValue}>{t('delete_team')}</span>
+							<Button compact className={styles.deleteBtn} onClick={() => setShowDelete(true)}>
+								{t('delete_team')}
 							</Button>
 						</Button.Group>
 					</Card.Content>

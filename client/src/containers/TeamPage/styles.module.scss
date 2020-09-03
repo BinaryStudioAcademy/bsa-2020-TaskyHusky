@@ -1,3 +1,5 @@
+@import "styles/mixins.scss";
+
 .header {
 	width: 100%;
 	height: 40px;
@@ -58,12 +60,10 @@
 	}
 }
 .inputArea {
-	width: 100%;
-	height: 100%;
 	max-width: 100%;
 	min-width: 100%;
 	min-height: 100px;
-	max-height: 200px;
+	max-height: 100px;
 	font-size: 1.2rem;
 	padding: 6px;
 	border: 1px solid transparent;
@@ -76,9 +76,8 @@
 }
 
 .inputBorders {
-	border-color: #9e9e9e;
-	border-radius: 6px;
-	background-color: #ffffff;
+	border: 1px solid rgb(233, 233, 233);
+	@include dropdown;
 	&:hover,
 	&:focus {
 		background-color: #fcfcfc;
@@ -113,22 +112,29 @@
 	flex-shrink: 0.5;
 	border-top: none !important;
 	button {
-		margin: 0;
+		padding: 4px !important;
+		width: 55%;
 		margin-top: 5px !important;
+		margin: 0 !important;
+		&:first-child {
+			margin-right: 5px !important;
+			width: 65%;
+		}
 	}
 }
 .deleteBtn {
-	border: 1px solid #2185d0 !important;
-	.deleteBtnValue {
-		color: #2185d0 !important;
-	}
+	@include cancel-btn;
 }
 .editBtn {
-	border: 1px solid #4d4c4c !important;
-	.editBtnValue {
-		color: #4d4c4c;
-	}
+	@include primary-btn;
 }
+.cancelBtn {
+	@include cancel-btn;
+}
+.primaryBtn {
+	@include primary-btn;
+}
+
 @media (max-width: 950px) {
 	.mainRow {
 		padding: 0 20px !important;

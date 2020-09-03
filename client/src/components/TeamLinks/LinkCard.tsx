@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Icon, Button } from 'semantic-ui-react';
 import styles from './styles.module.scss';
 import { CurrentLink } from './index';
-import { useTranslation } from 'react-i18next';
 
 export type Props = {
 	edit: (arg: CurrentLink) => void;
@@ -16,8 +15,6 @@ const LinkCard = ({ link, edit, deleteLink, isUserConsistsInTeam }: Props) => {
 	const showBtns = () => setShowButtons(true);
 	const hideBtns = () => setShowButtons(false);
 
-	const { t } = useTranslation();
-
 	return (
 		<div className={styles.linkCardWrapper} onMouseEnter={showBtns} onMouseLeave={hideBtns}>
 			<h3 className={styles.linkHeader}>{link.name}</h3>
@@ -28,12 +25,18 @@ const LinkCard = ({ link, edit, deleteLink, isUserConsistsInTeam }: Props) => {
 			</a>
 			{showButtons && isUserConsistsInTeam && (
 				<div className={styles.btnsBlock}>
-					<Button size="medium" basic className={styles.editBtn} onClick={() => edit(link)}>
-						<span className={styles.editBtnValue}> {t('edit')}</span>
-					</Button>
-					<Button size="medium" basic className={styles.deleteBtn} onClick={() => deleteLink(link)}>
-						<span className={styles.deleteBtnValue}>{t('delete')}</span>
-					</Button>
+					<Button
+						size="mini"
+						icon="edit"
+						className={`${styles.editBtn} ${styles.paddingBtn}`}
+						onClick={() => edit(link)}
+					/>
+					<Button
+						size="mini"
+						icon="trash alternate outline"
+						className={`${styles.deleteBtn} ${styles.paddingBtn}`}
+						onClick={() => deleteLink(link)}
+					/>
 				</div>
 			)}
 		</div>
