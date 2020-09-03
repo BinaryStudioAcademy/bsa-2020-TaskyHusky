@@ -28,6 +28,18 @@ class Elastic implements ElasticI {
 		});
 	}
 
+	async deleteIndexIfExist(index: string) {
+		const indexExists = await this.indexExists(index);
+		if (indexExists.body) {
+			return client.indices.delete({
+				index,
+			});
+		}
+		return {
+			deleted: true,
+		};
+	}
+
 	indexExists(index: string) {
 		return client.indices.exists({
 			index,
@@ -42,8 +54,20 @@ class Elastic implements ElasticI {
 		return client.bulk({ refresh: true, body });
 	}
 
+	update(issue: Issue) {
+		return client.update({
+			index: 'issue',
+			id: issue.id,
+			body: {
+				doc: {
+					...issue,
+				},
+			},
+		});
+	}
+
 	addData(issue: Issue) {
-		return client.index({
+		return client.create({
 			index: this.index,
 			id: issue.id,
 			body: issue,
