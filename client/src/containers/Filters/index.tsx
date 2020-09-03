@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, useMemo, ChangeEvent } from 'react';
 import styles from './styles.module.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import * as actions from './logic/actions';
 import { RootState } from 'typings/rootState';
-import { Button, Table, Input, Dropdown, Form, Icon } from 'semantic-ui-react';
+import { Button, Table, Input, Icon } from 'semantic-ui-react';
 import FilterItem from 'components/FilterItem';
 import { getFullUserName } from './logic/helpers';
 import { useTranslation } from 'react-i18next';
@@ -16,6 +16,23 @@ const Filters: React.FC = () => {
 	const { filters } = useSelector((rootState: RootState) => rootState.filters);
 	const { user } = useSelector((rootState: RootState) => rootState.auth);
 
+	const [searchName, setSearchName] = useState('');
+
+	const filteredFilters = useMemo(() => {
+		if (searchName === '') {
+			return filters;
+		}
+
+		const searchString = new RegExp(searchName, 'i');
+		return filters.filter(({ name }) => searchString.test(name));
+	}, [searchName, filters]);
+
+	const onSearch = (event: ChangeEvent<HTMLInputElement>) => {
+		event.stopPropagation();
+		const searchValue = event.target.value;
+		setSearchName(searchValue);
+	};
+
 	const updateFilter = (data: WebApi.Entities.Filter) => {
 		dispatch(
 			actions.updateFilter({
@@ -23,6 +40,7 @@ const Filters: React.FC = () => {
 			}),
 		);
 	};
+
 	const userId = user?.id;
 	useEffect(() => {
 		dispatch(actions.fetchFilters({ userId }));
@@ -41,15 +59,8 @@ const Filters: React.FC = () => {
 						</Button>
 					</div>
 				</div>
-				<div className={styles.bottomBarWrapper}>
-					<Form>
-						<Form.Group>
-							<Form.Field control={Input} icon="search" placeholder={t('search')} />
-							<Form.Field control={Dropdown} placeholder={t('owner')} search selection options={[]} />
-							<Form.Field control={Dropdown} placeholder={t('project')} search selection options={[]} />
-							<Form.Field control={Dropdown} placeholder={t('group')} search selection options={[]} />
-						</Form.Group>
-					</Form>
+				<div className={[styles.wrapperFilters, styles.filters].join(' ')}>
+					<Input icon="search" placeholder={t('search')} onChange={onSearch} value={searchName} />
 				</div>
 			</div>
 			<div>
@@ -69,7 +80,7 @@ const Filters: React.FC = () => {
 					</Table.Header>
 
 					<Table.Body>
-						{filters.map((filter) => (
+						{filteredFilters.map((filter) => (
 							<FilterItem
 								fullName={getFullUserName(filter.owner)}
 								updateFilter={updateFilter}

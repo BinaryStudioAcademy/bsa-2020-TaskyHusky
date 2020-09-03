@@ -1,6 +1,14 @@
 @import 'styles/mixins.scss';
 
 :global(#root) {
+	.wrapperFilters {
+		margin-bottom: 20px;
+	}
+
+	.filters {
+		display: flex;
+	}
+
 	.filtersContainer {
 		display: flex;
 		flex-direction: column;
@@ -21,7 +29,7 @@
 		.titleWrapper {
 			display: flex;
 			flex-direction: row;
-			margin-bottom: 5px;
+			margin-bottom: 20px;
 			.titleContainer {
 				flex: 1 1 auto;
 			}
