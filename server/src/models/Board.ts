@@ -1,3 +1,5 @@
+import { BoardProjectsResult } from './Result';
+
 export enum BoardType {
 	Scrum = 'Scrum',
 	Kanban = 'Kanban',
@@ -9,6 +11,7 @@ export interface IBoardModel {
 	name: string;
 	location: string;
 	createdAt: Date;
+	projects?: BoardProjectsResult[];
 	createdBy: {
 		id: string;
 		firstName: string;
