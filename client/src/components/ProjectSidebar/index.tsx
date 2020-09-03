@@ -3,7 +3,6 @@ import i18n from 'i18next';
 import { Icon } from 'semantic-ui-react';
 import { Link, useLocation } from 'react-router-dom';
 import classNames from 'classnames';
-
 import styles from './styles.module.scss';
 import { sidebarItems } from './config/sidebarItems';
 
