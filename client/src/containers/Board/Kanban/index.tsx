@@ -54,6 +54,13 @@ const Kanban: BoardComponent = ({ board }) => {
 
 	return (
 		<div className={styles.wrapper}>
+			<Breadcrumb style={{ marginBottom: 20 }}>
+				<Breadcrumb.Section href="/projects">{t('projects')}</Breadcrumb.Section>
+				<Breadcrumb.Divider icon="right chevron" />
+				<Breadcrumb.Section link>Test project name</Breadcrumb.Section>
+				<Breadcrumb.Divider icon="right arrow" />
+				<Breadcrumb.Section active>{board.name}</Breadcrumb.Section>
+			</Breadcrumb>
 			<div className={styles.inlineContainer}>
 				<Header as="h2">{board.name}</Header>
 				<Form.Input
@@ -67,13 +74,6 @@ const Kanban: BoardComponent = ({ board }) => {
 					{t('clear')}
 				</Button>
 			</div>
-			<Breadcrumb style={{ marginBottom: 20 }}>
-				<Breadcrumb.Section href="/projects">{t('projects')}</Breadcrumb.Section>
-				<Breadcrumb.Divider icon="right chevron" />
-				<Breadcrumb.Section link>Test project name</Breadcrumb.Section>
-				<Breadcrumb.Divider icon="right arrow" />
-				<Breadcrumb.Section active>{board.name}</Breadcrumb.Section>
-			</Breadcrumb>
 			<DragDropContext onDragEnd={onDragEnd}>
 				<div className={styles.columnsFlex}>
 					{columns.map((column, i) => (
