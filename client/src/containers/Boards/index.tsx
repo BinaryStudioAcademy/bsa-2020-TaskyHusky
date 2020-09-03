@@ -1,5 +1,5 @@
 import React, { useState, ChangeEvent, useEffect, SyntheticEvent } from 'react';
-import { Button, Input, Table, Dropdown, DropdownProps } from 'semantic-ui-react';
+import { Button, Input, Table, Dropdown, DropdownProps, Popup } from 'semantic-ui-react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'typings/rootState';
 import * as actions from './logic/actions';
@@ -12,7 +12,6 @@ import styles from './styles.module.scss';
 import DeleteBoardModal from '../../components/deleteBoardModal';
 import { useTranslation } from 'react-i18next';
 import Spinner from '../../components/common/Spinner';
-import UserAvatar from 'components/common/UserAvatar';
 
 const Boards: React.FC = () => {
 	const { t } = useTranslation();
@@ -75,6 +74,10 @@ const Boards: React.FC = () => {
 		};
 	};
 
+	const projectsShown = 2;
+	const cellProjects = (board: WebApi.Board.IBoardModel) => (board.projects ?? []).slice(0, projectsShown);
+	const portalProjects = (board: WebApi.Board.IBoardModel) => (board.projects ?? []).slice(projectsShown);
+
 	return (
 		<div className={styles.wrapper}>
 			{isModalShown ? <CreateBoardModal setIsModalShown={setIsModalShown} onCreateBoard={onCreateBoard} /> : ''}
@@ -101,10 +104,11 @@ const Boards: React.FC = () => {
 					<Table selectable sortable>
 						<Table.Header>
 							<Table.Row>
-								<Table.HeaderCell width={4} className={styles.header__cell} children={t('name')} />
-								<Table.HeaderCell width={4} className={styles.header__cell} children={t('type')} />
-								<Table.HeaderCell width={5} className={styles.header__cell} children={t('admin')} />
-								<Table.HeaderCell width={1} className={styles.header__cell} />
+								<Table.HeaderCell width={5}>{t('name')}</Table.HeaderCell>
+								<Table.HeaderCell width={5}>{t('type')}</Table.HeaderCell>
+								<Table.HeaderCell width={5}>{t('projects')}</Table.HeaderCell>
+								<Table.HeaderCell width={5}>{t('admin')}</Table.HeaderCell>
+								<Table.HeaderCell width={1} />
 							</Table.Row>
 						</Table.Header>
 						<Table.Body>
@@ -112,28 +116,71 @@ const Boards: React.FC = () => {
 								const { name, id, boardType, createdBy: user } = board;
 								return (
 									<Table.Row key={id}>
-										<Table.Cell children={<Link to={`/board/${id}`}>{name}</Link>} />
-										<Table.Cell children={boardType} />
-										<Table.Cell
-											className={styles.user_cell}
-											children={
+										<Table.Cell>
+											<Link to={`/board/${id}`}>{name}</Link>
+										</Table.Cell>
+										<Table.Cell>{boardType}</Table.Cell>
+										<Table.Cell>
+											{board.projects && board.projects.length ? (
 												<>
-													<UserAvatar user={user as WebApi.Entities.UserProfile} small />
-													<Link
-														to={`/profile/${user.id}`}
-													>{`${user.firstName} ${user.lastName}`}</Link>
+													<span>
+														{cellProjects(board).map((project, i) => (
+															<span key={i}>
+																<a
+																	target="_blank"
+																	rel="noopener noreferrer"
+																	href={`/project/${project.id}/issues`}
+																>
+																	{project.name}
+																</a>
+																{cellProjects(board).length - 1 === i ? '' : ', '}
+															</span>
+														))}
+													</span>
+													<span>
+														{board.projects.length > projectsShown ? (
+															<Popup
+																openOnTriggerMouseEnter
+																closeOnPortalMouseLeave
+																trigger={
+																	<span className={styles.moreProjects}>, ...</span>
+																}
+																content={
+																	<div>
+																		{portalProjects(board).map((project, i) => (
+																			<span key={i}>
+																				<a
+																					target="_blank"
+																					rel="noopener noreferrer"
+																					href={`/project/${project.id}/issues`}
+																				>
+																					{project.name}
+																				</a>
+																				{portalProjects(board).length - 1 === i
+																					? ''
+																					: ', '}
+																			</span>
+																		))}
+																	</div>
+																}
+															/>
+														) : (
+															''
+														)}
+													</span>
 												</>
-											}
-										/>
-										<Table.Cell
-											className={styles.options__cell}
-											children={
-												<Options
-													config={getBoardMenuActions(board)}
-													isBackgroundShown={false}
-												/>
-											}
-										/>
+											) : (
+												t('no')
+											)}
+										</Table.Cell>
+										<Table.Cell>
+											<Link
+												to={`/profile/${user.id}`}
+											>{`${user.firstName} ${user.lastName}`}</Link>
+										</Table.Cell>
+										<Table.Cell>
+											<Options config={getBoardMenuActions(board)} />
+										</Table.Cell>
 									</Table.Row>
 								);
 							})}

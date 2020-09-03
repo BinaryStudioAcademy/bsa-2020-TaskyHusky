@@ -78,7 +78,7 @@ interface ComposedBoardResult extends BoardResult {
 	columns: BoardColumnResult[];
 }
 
-interface BoardProjectsResult {
+export interface BoardProjectsResult {
 	id: string;
 	name: string;
 	key: string;

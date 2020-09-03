@@ -8,7 +8,9 @@ import * as actions from './actions';
 import { FilterPartState } from './state';
 import { AnyAction } from 'redux';
 import { getFilterOptionsFromFilterParts } from './helpers';
+
 const PAGE_SIZE = 25;
+
 export function* fetchFilterPartsSaga(action: AnyAction) {
 	const {
 		filterDefs: { filterDefs },
@@ -37,11 +39,11 @@ export function* loadIssuesSaga(action: AnyAction) {
 	const { from = 0, to = PAGE_SIZE, sort } = action;
 
 	const {
-		advancedSearch: { filterParts },
+		advancedSearch: { filterParts, inputText },
 	}: RootState = yield select();
 
 	const filterOption = getFilterOptionsFromFilterParts(filterParts);
-	const result = yield call(loadIssuesAndCount, filterOption, from, to, sort);
+	const result = yield call(loadIssuesAndCount, filterOption, from, to, sort, inputText);
 
 	yield put(actions.loadIssuesSuccess({ issues: result[0], issuesCount: result[1] }));
 }
@@ -72,6 +74,14 @@ export function* updateFilterSaga(action: AnyAction) {
 	}
 	yield call(updateFilter, filter as WebApi.Entities.Filter);
 	yield put(actions.updateFilterSuccess());
+}
+
+export function* setInputTextSaga(action: AnyAction) {
+	yield put(actions.loadIssues({}));
+}
+
+export function* watchSetInputText() {
+	yield takeEvery(actionTypes.SET_INPUT_TEXT, setInputTextSaga);
 }
 
 export function* watchFetchFilterParts() {
@@ -111,5 +121,6 @@ export default function* advancedSearchSaga() {
 		watchSetAddedFilterParts(),
 		watchResetState(),
 		watchUpdateFilter(),
+		watchSetInputText(),
 	]);
 }

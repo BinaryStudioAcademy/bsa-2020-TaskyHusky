@@ -4,6 +4,12 @@ import { createReducer } from 'helpers/createReducer.helper';
 import { getAdditionalFilterParts } from './helpers';
 
 export const advancedSearchReducer = createReducer<AdvancedSearch>(initialState, {
+	[actionTypes.SET_INPUT_TEXT](state, action: actionTypes.SetInputText) {
+		return {
+			...state,
+			inputText: action.inputText,
+		};
+	},
 	[actionTypes.UPDATE_SEARCH_SUCCESS](state, action: actionTypes.UpdateSearchArgs) {
 		return {
 			...state,

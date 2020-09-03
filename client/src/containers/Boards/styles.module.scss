@@ -37,22 +37,12 @@
 		position: relative;
 	}
 
-	.header__cell {
-		background-color: #f9fafb;
-		border-left: none;
-	}
-
-	.options__cell {
-		text-align: center;
-	}
-
-	.user_cell {
-		display: flex;
-		flex-direction: row;
-		align-items: center;
-	}
-
-	.create__button {
-		@include primary-btn;
+	.moreProjects {
+		background-color: #ddd;
+		color: grey;
+		border-radius: 3px;
+		padding: 0 5px;
+		margin-left: 5px;
+		user-select: none;
 	}
 }
