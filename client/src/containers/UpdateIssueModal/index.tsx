@@ -18,6 +18,7 @@ interface Props {
 	getOpenFunc: (open: () => void) => void;
 	issueTypes: WebApi.Entities.IssueType[];
 	priorities: WebApi.Entities.Priority[];
+	statuses: WebApi.Entities.IssueStatus[];
 	users: WebApi.Entities.UserProfile[];
 	onSubmit?: (data: WebApi.Issue.PartialIssue) => void;
 }
@@ -29,7 +30,15 @@ interface SelectOption {
 	style?: any;
 }
 
-const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, priorities, users, onSubmit }) => {
+const UpdateIssueModal: React.FC<Props> = ({
+	current,
+	getOpenFunc,
+	issueTypes,
+	priorities,
+	users,
+	onSubmit,
+	statuses,
+}) => {
 	const context = useCreateIssueModalContext();
 	const [opened, setOpened] = useState<boolean>(false);
 	const [attachments, setAttachments] = useState<File[]>([]);
@@ -76,6 +85,16 @@ const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, p
 		key: user.id,
 		value: user.id,
 		text: getUsername(user),
+	}));
+
+	const statusesOpts: SelectOption[] = statuses.map(({ id, title, color }) => ({
+		key: id,
+		value: id,
+		text: (
+			<>
+				<span style={{ color: color, fontWeight: 'bold' }}>{title ?? 'untitled'}</span>
+			</>
+		),
 	}));
 
 	const submit = async (event: React.FormEvent) => {
@@ -144,6 +163,18 @@ const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, p
 					as="div"
 					onKeyDown={(event: React.KeyboardEvent) => event.key === 'Enter' && event.preventDefault()}
 				>
+					<Form.Field>
+						<label className="required">{t('Status')}</label>
+						<Form.Dropdown
+							clearable
+							selection
+							style={{ maxWidth: 200 }}
+							options={statusesOpts}
+							defaultValue={current.status}
+							placeholder={t('Status')}
+							onChange={(event, data) => context.set('status', data.value)}
+						/>
+					</Form.Field>
 					<Form.Field>
 						<label className="required">{t('type')}</label>
 						<Form.Dropdown
@@ -258,6 +289,7 @@ const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, p
 const mapStateToProps = (state: RootState) => ({
 	issueTypes: state.issues.types,
 	priorities: state.issues.priorities,
+	statuses: state.issues.statuses,
 	users: state.users.users,
 });
 
