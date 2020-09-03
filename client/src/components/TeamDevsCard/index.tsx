@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { Card, Icon, Button, TextArea, TextAreaProps } from 'semantic-ui-react';
+import { Card, Icon, Button, TextArea, TextAreaProps, Popup } from 'semantic-ui-react';
 import styles from 'containers/TeamPage/styles.module.scss';
 import AditionalModal from 'components/TeamAddPeopleModal/aditionalModal';
 import { useTranslation } from 'react-i18next';
 import { User } from 'containers/LoginPage/logic/state';
 import { useSelector } from 'react-redux';
 import { RootState } from 'typings/rootState';
+import { validTeamName } from 'helpers/validationRules';
 
 type CardProps = {
 	teamOwner: WebApi.Entities.UserProfile;
@@ -31,13 +32,17 @@ const TeamDevsCard = ({
 	const [showDelete, setShowDelete] = useState<boolean>(false);
 	const [lockEditFields, setEditFields] = useState<boolean>(true);
 	const [title, setTitle] = useState<string>(name);
+	const [isTitleValid, setIsTitleValid] = useState<boolean>(true);
 	const [teamDescription, setTeamDescription] = useState<string>(description);
 	const { t } = useTranslation();
 	const submitEditFields = () => {
 		setEditFields(!lockEditFields);
+		setIsTitleValid(validTeamName(title.trim()));
+
 		if (lockEditFields) {
 			return;
 		}
+
 		if (name === title.trim() && description === teamDescription) {
 			return;
 		}
@@ -58,12 +63,24 @@ const TeamDevsCard = ({
 		<Card>
 			<Card.Content className={styles.cardHeader}>
 				<Icon name="group" size="large" />
-				<input
-					disabled={lockEditFields}
-					value={title}
-					type="text"
-					onChange={(e) => setTitle(e.target.value)}
-					className={lockEditFields ? styles.inputFocus : `${styles.inputFocus} ${styles.inputBorders}`}
+				<Popup
+					open={!lockEditFields && !isTitleValid}
+					content={t('min4_max40_length_message')}
+					position="bottom left"
+					trigger={
+						<input
+							disabled={lockEditFields}
+							value={title}
+							type="text"
+							onChange={(e) => {
+								setTitle(e.target.value.trim());
+								setIsTitleValid(validTeamName(e.target.value.trim()));
+							}}
+							className={
+								lockEditFields ? styles.inputFocus : `${styles.inputFocus} ${styles.inputBorders}`
+							}
+						/>
+					}
 				/>
 			</Card.Content>
 			<Card.Content>
@@ -80,7 +97,13 @@ const TeamDevsCard = ({
 			{teamOwner && teamOwner.id === authUser?.id && (
 				<>
 					<Card.Content className={styles.editFieldBtn}>
-						<Button compact fluid={lockEditFields} color="blue" onClick={() => submitEditFields()}>
+						<Button
+							compact
+							fluid={lockEditFields}
+							color="blue"
+							onClick={() => submitEditFields()}
+							disabled={!lockEditFields && !isTitleValid}
+						>
 							{t(lockEditFields ? 'edit_fields' : 'save_changes')}
 						</Button>
 						{!lockEditFields && (

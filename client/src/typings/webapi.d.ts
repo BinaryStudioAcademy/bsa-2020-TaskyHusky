@@ -20,6 +20,12 @@ namespace WebApi.Board {
 		id: string;
 		name: string;
 	}
+	interface CreateBoardColumn {
+		columnName: string;
+		status: string;
+		board: string;
+		isResolutionSet: boolean;
+	}
 }
 
 namespace WebApi.IO {
@@ -62,6 +68,7 @@ namespace WebApi.Issue {
 		assigned?: string;
 		creator?: string;
 		watchers?: string[];
+		storyPoint?: number;
 	}
 	interface PartialIssueComment {
 		text?: string;
@@ -105,6 +112,9 @@ namespace WebApi.Result {
 		watchers?: UserModel[];
 		assigned?: UserModel;
 		creator: UserModel;
+		storyPoint?: number;
+		createdAt: Date;
+		updatedAt?: Date;
 	}
 	interface IssueCommentResult {
 		id: string;
@@ -147,6 +157,20 @@ namespace WebApi.Result {
 		createdDate?: Date;
 		updatedDate?: Date;
 		deletedDate?: Date;
+	}
+	interface CommitFileResult {
+		sha: string;
+		additions: number;
+		deletions: number;
+		filename: string;
+	}
+	interface CommitResult {
+		hash: string;
+		message: string;
+		author: string;
+		avatar: string;
+		time: Date;
+		files: Array<CommitFileResult>;
 	}
 	interface NotificationResult {
 		id: string;
@@ -230,9 +254,9 @@ namespace WebApi.Entities {
 
 	interface BoardColumn {
 		id: string;
-		columnName?: string;
-		status?: string;
-		isResolutionSet?: boolean;
+		columnName: string;
+		status: string;
+		isResolutionSet: boolean;
 		board: Board;
 		issues: Issue[];
 	}
@@ -269,8 +293,8 @@ namespace WebApi.Entities {
 		boardColumn?: BoardColumn;
 		board?: Board;
 		labels?: string;
-		attachments?: string[];
-		links?: string[];
+		attachments?: string;
+		links?: string;
 		priority?: Priority;
 		description?: string;
 		sprint?: Sprint;
@@ -281,6 +305,7 @@ namespace WebApi.Entities {
 		watchers?: UserProfile[];
 		createdAt?: Date;
 		updatedAt?: Date;
+		storyPoint?: number;
 	}
 
 	interface IssueComment {
@@ -387,6 +412,8 @@ namespace WebApi.Entities {
 		boards?: Board[];
 		public resetPasswordToken?: string | null;
 		public resetPasswordExpires?: Date | null;
+		public resetEmailToken?: string | null;
+		public resetEmailExpires?: Date | null;
 		filters?: Filter[];
 		assignedProjects?: Projects[];
 		leadedProjects?: Projects[];

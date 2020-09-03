@@ -10,7 +10,6 @@ export interface UserProfileState {
 	organization: string;
 	jobTitle: string;
 	userSettingsId?: string;
-	editMode: string;
 	isLoading: boolean;
 }
 
@@ -26,6 +25,5 @@ export const initialState: UserProfileState = {
 	organization: '',
 	jobTitle: '',
 	userSettingsId: '',
-	editMode: '',
 	isLoading: true,
 };

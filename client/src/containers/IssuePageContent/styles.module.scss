@@ -13,6 +13,10 @@ $screen-offset: 100;
 	min-width: 500px;
 }
 
+.commitsContainer{
+	margin-top: 20px;
+}
+
 @media screen and (max-width: $medium-screen + $screen-offset * 2.2) {
 	.container {
 		justify-content: flex-start;

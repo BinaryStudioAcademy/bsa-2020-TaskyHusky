@@ -2,7 +2,8 @@ import React from 'react';
 import styles from './styles.module.scss';
 import { useTranslation } from 'react-i18next';
 import ProfileActivityBlock from 'components/ProfileActivityBlock';
-import projectIcon from 'icons/profile/projectIcon.svg';
+import UserActivityItem from 'components/UserActivityItem';
+import IssueActivityItem from 'components/IssueActivityItem';
 
 interface Props {
 	isCurrentUser: boolean;
@@ -37,17 +38,22 @@ const ProfileSection: React.FC<Props> = (props: Props) => {
 			<ProfileActivityBlock
 				data={activity}
 				countItem={countActivity}
-				icon={projectIcon}
 				emptyContent={emptyActivityCard}
+				component={IssueActivityItem}
 			/>
 			{Boolean(projects.length) && (
 				<>
 					<h3 className={styles.header}>{t('work_places')}</h3>
-					<ProfileActivityBlock data={projects} countItem={countProject} />
+					<ProfileActivityBlock data={projects} countItem={countProject} component={UserActivityItem} />
 				</>
 			)}
 			<h3 className={styles.header}>{t('work_with')}</h3>
-			<ProfileActivityBlock data={teammates} countItem={countColleagues} emptyContent={emptyColleaguesCard} />
+			<ProfileActivityBlock
+				data={teammates}
+				countItem={countColleagues}
+				emptyContent={emptyColleaguesCard}
+				component={UserActivityItem}
+			/>
 		</section>
 	);
 };

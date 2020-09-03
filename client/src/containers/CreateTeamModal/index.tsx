@@ -57,7 +57,7 @@ const AddTeamPopup: React.FC<Props> = ({ isOpen = false, closeClb }): ReactEleme
 	};
 
 	return (
-		<Modal open={isOpen} onClose={closeClb} size="small">
+		<Modal open={isOpen} onClose={closeClb} size="small" dimmer="inverted">
 			<Modal.Header>{t('create_team_modal_header')}</Modal.Header>
 			<Modal.Content image scrolling>
 				<Image size="big" src={linksImg} wrapped className={style.img} />
@@ -81,7 +81,7 @@ const AddTeamPopup: React.FC<Props> = ({ isOpen = false, closeClb }): ReactEleme
 					{t('cancel')}
 				</Button>
 				<Button primary onClick={handlerSubmit}>
-					{t('start')}
+					{t('accept')}
 				</Button>
 			</Modal.Actions>
 		</Modal>

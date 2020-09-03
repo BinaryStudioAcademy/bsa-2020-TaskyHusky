@@ -1,6 +1,5 @@
-import React, { useState, memo } from 'react';
-import { Modal, Button, Form, Image, Card } from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
+import React, { useState, memo, useEffect } from 'react';
+import { Modal, Button, Form, Image, Card, Popup, Header, List } from 'semantic-ui-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { RootState } from 'typings/rootState';
@@ -45,15 +44,18 @@ const CreateProjectModal: React.FC<Props> = ({ children }) => {
 
 	const { description, image } = templatesInformation[template];
 
-	if (isProjectCreated) {
-		dispatch(actions.resetState());
-		setName('');
-		setKey('');
-		setTemplate('Scrum');
-		setIsNameValid(false);
-		setIsKeyValid(true);
-		setIsValidErrorShown(false);
-	}
+	useEffect(() => {
+		if (isProjectCreated) {
+			dispatch(actions.resetState());
+			setName('');
+			setKey('');
+			setTemplate('Scrum');
+			setIsNameValid(false);
+			setIsKeyValid(true);
+			setIsValidErrorShown(false);
+			setIsModalOpened(false);
+		}
+	}, [dispatch, isProjectCreated]);
 
 	const startCreatingProject = () => {
 		dispatch(
@@ -149,7 +151,7 @@ const CreateProjectModal: React.FC<Props> = ({ children }) => {
 									setIsDataValid={setIsNameValid}
 									data={name}
 									setData={onNameChanged}
-									placeholder="Enter project name"
+									placeholder={t('enter_project_name')}
 									popUpContent={validationMessage.VM_PROJECT_NAME}
 									validation={validProjectName}
 								/>
@@ -162,7 +164,7 @@ const CreateProjectModal: React.FC<Props> = ({ children }) => {
 									setIsDataValid={setIsKeyValid}
 									data={key}
 									setData={onKeyChanged}
-									placeholder="Enter your key"
+									placeholder={t('enter_your_key')}
 									popUpContent={validationMessage.VM_PROJECT_KEY}
 									validation={validProjectKey}
 								/>
@@ -175,7 +177,7 @@ const CreateProjectModal: React.FC<Props> = ({ children }) => {
 									setIsDataValid={setIsGithubUrlValid}
 									data={githubUrl}
 									setData={setGithubUrl}
-									placeholder="Enter your project's GitHub URL"
+									placeholder={t('enter_your_project_URL')}
 									popUpContent={validationMessage.VM_GITHUB_URL}
 									validation={validGitHubUrl}
 								/>
@@ -217,7 +219,10 @@ const CreateProjectModal: React.FC<Props> = ({ children }) => {
 					</Modal.Header>
 					<Modal.Content className={styles.cards_container}>
 						{Object.entries(templatesInformation).map(
-							([name, { image, description }]: [any, MethodologyInfo]) => (
+							([name, { image, description, whyHeader, whyItems, readMoreLink }]: [
+								string,
+								MethodologyInfo,
+							]) => (
 								<Card
 									key={name}
 									className={styles.card__container}
@@ -226,12 +231,36 @@ const CreateProjectModal: React.FC<Props> = ({ children }) => {
 									description={description}
 									extra={
 										<div className={styles.card__actions_container}>
-											<Link className={styles.card__link} to={''}>
-												{t('whats_this')}
-											</Link>
+											<Popup
+												trigger={<p className={styles.card__link}>{t('whats_this')}</p>}
+												flowing
+												hoverable
+												content={
+													<div className={styles.whyPopup}>
+														<Header as="h5" className={styles.whyHeader}>
+															{whyHeader}:
+														</Header>
+														<List bulleted>
+															{whyItems.map((item) => (
+																<List.Item key="item">
+																	<List.Content>{item}</List.Content>
+																</List.Item>
+															))}
+														</List>
+														<a
+															href={readMoreLink}
+															target="_blank"
+															rel="noopener noreferrer"
+															className={styles.readMore}
+														>
+															{`${t('more_about')} ${name}`}
+														</a>
+													</div>
+												}
+											/>
 											<Button
 												className={styles.card__select_template}
-												onClick={() => selectTemplate(name)}
+												onClick={() => selectTemplate(name as Template)}
 											>
 												{t('select')}
 											</Button>

@@ -8,7 +8,7 @@ export interface FilterPartState {
 export interface AdvancedSearch {
 	filterParts: FilterPartState[];
 	addedFilterParts: FilterPartState[];
-	issues: WebApi.Entities.Issue[];
+	issues: WebApi.Result.IssueResult[];
 	filter?: WebApi.Entities.Filter;
 	isFilterEdited: boolean;
 	issuesCount: number;

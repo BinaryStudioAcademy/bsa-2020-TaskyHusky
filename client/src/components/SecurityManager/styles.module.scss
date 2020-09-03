@@ -19,7 +19,8 @@
 }
 
 .forgotPass {
-  @include content-btn;
+  @include text-data;
+  background-color: $primary-bg !important;
   border: none !important;
   color: #2185d0 !important;
   display: block !important;
@@ -29,10 +30,7 @@
 
 .submitButton {
   margin-top: 20px !important;
-  @include content-btn;
-  background-color: #2185d0 !important;
-  color: $primary-bg !important;
-  border: none !important;
+  @include primary-btn;
 }
 
 .errorPopup {

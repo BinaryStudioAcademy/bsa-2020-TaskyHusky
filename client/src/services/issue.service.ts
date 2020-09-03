@@ -2,14 +2,14 @@ import { Sort } from 'containers/AdvancedSearch/IssueTable/index';
 import callWebApi from 'helpers/callApi.helper';
 import { IssueFilter } from 'containers/AdvancedSearch/logic/actionTypes';
 
-export const createIssue = async (params: WebApi.Entities.Issue): Promise<WebApi.Entities.Issue> => {
+export const createIssue = async (params: WebApi.Result.IssueResult): Promise<WebApi.Result.IssueResult> => {
 	const res: Response = await callWebApi({
 		method: 'POST',
 		endpoint: 'issue',
 		body: params,
 	});
 
-	return (await res.json()) as WebApi.Entities.Issue;
+	return (await res.json()) as WebApi.Result.IssueResult;
 };
 
 export const getTypes = async (): Promise<WebApi.Entities.IssueType[]> => {
@@ -130,6 +130,13 @@ export const addComment = async (id: string, text: string): Promise<WebApi.Resul
 	return (await res.json()) as WebApi.Result.IssueCommentResult;
 };
 
+export const deleteComment = async (id: string): Promise<void> => {
+	await callWebApi({
+		method: 'DELETE',
+		endpoint: `issue/comment/${id}`,
+	});
+};
+
 export const getComments = async (id: string): Promise<WebApi.Result.IssueCommentResult[]> => {
 	const res: Response = await callWebApi({
 		method: 'GET',
@@ -139,7 +146,16 @@ export const getComments = async (id: string): Promise<WebApi.Result.IssueCommen
 	return (await res.json()) as WebApi.Result.IssueCommentResult[];
 };
 
-export const getBacklogByBoardId = async (id: string): Promise<WebApi.Entities.Issue[]> => {
+export const getCommits = async (issue: string): Promise<WebApi.Result.CommitResult[]> => {
+	const res: Response = await callWebApi({
+		method: 'GET',
+		endpoint: `commits/${issue}`,
+	});
+
+	return (await res.json()) as WebApi.Result.CommitResult[];
+};
+
+export const getBacklogByBoardId = async (id: string): Promise<WebApi.Result.IssueResult[]> => {
 	const res: Response = await callWebApi({
 		method: 'GET',
 		endpoint: `issue/${id}/boardIssues`,

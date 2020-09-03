@@ -1,4 +1,5 @@
 import { UserProfileState } from 'containers/ProfilePage/logiс/state';
+import { ActivityIssue } from 'containers/WorkPage/logic/state';
 import callWebApi from 'helpers/callApi.helper';
 
 export const requestGetUser = async (id: string): Promise<WebApi.Entities.UserProfile> => {
@@ -39,6 +40,15 @@ export const requestGetUserProjects = async (id: string): Promise<any> => {
 		skipAuthorization: false,
 	});
 	return (await res.json()) as Array<WebApi.Entities.Projects>;
+};
+
+export const requestGetUserIssues = async (id: string): Promise<any> => {
+	const res = await callWebApi({
+		method: 'GET',
+		endpoint: `user/issues/${id}`,
+		skipAuthorization: false,
+	});
+	return (await res.json()) as Array<ActivityIssue>;
 };
 
 export const requestGetUserTeams = async (id: string): Promise<any> => {

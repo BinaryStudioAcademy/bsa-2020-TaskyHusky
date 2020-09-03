@@ -1,6 +1,7 @@
 import { Form, Radio } from 'semantic-ui-react';
 import { creatingAlgorithms } from '../../typings/boardTypes';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
 	algorithm: creatingAlgorithms;
@@ -10,6 +11,7 @@ interface Props {
 
 const BoardModalMenuAlgorithm = (props: Props) => {
 	const { algorithm, onRadioChange } = props;
+	const { t } = useTranslation();
 
 	return (
 		<Form>
@@ -17,7 +19,7 @@ const BoardModalMenuAlgorithm = (props: Props) => {
 				<Radio
 					disabled
 					checked={algorithm === creatingAlgorithms.newProject}
-					label="Board created with new Software project"
+					label={t('board_created_with_new_software_project')}
 					name={creatingAlgorithms.newProject}
 					value={creatingAlgorithms.newProject}
 					onChange={() => onRadioChange(creatingAlgorithms.newProject)}
@@ -26,7 +28,7 @@ const BoardModalMenuAlgorithm = (props: Props) => {
 			<Form.Field>
 				<Radio
 					checked={algorithm === creatingAlgorithms.existingProject}
-					label="Board from an existing project"
+					label={t('board_from_an_existing_project')}
 					name={creatingAlgorithms.existingProject}
 					value={creatingAlgorithms.existingProject}
 					onChange={() => onRadioChange(creatingAlgorithms.existingProject)}
@@ -36,7 +38,7 @@ const BoardModalMenuAlgorithm = (props: Props) => {
 				<Radio
 					disabled
 					checked={algorithm === creatingAlgorithms.savedFilter}
-					label="Board from an existing Saved Filter"
+					label={t('board_from_an_existing_saved_filter')}
 					name={creatingAlgorithms.savedFilter}
 					value={creatingAlgorithms.savedFilter}
 					onChange={() => onRadioChange(creatingAlgorithms.savedFilter)}

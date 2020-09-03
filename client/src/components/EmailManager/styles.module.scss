@@ -35,15 +35,13 @@
 
 .submitButton {
   margin-top: 20px !important;
-  @include content-btn;
-  background-color: #2185d0 !important;
-  color: $primary-bg !important;
-  border: none !important;
+  @include primary-btn;
 }
 
 .select {
+  width: 300px;
   margin: 20px 0 !important;
-  @include text-data;
+  @include dropdown;
 }
 
 @media screen and (max-width: $less-than-medium-screen) {

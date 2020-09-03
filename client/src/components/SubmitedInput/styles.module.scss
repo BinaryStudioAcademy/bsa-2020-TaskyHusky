@@ -9,6 +9,10 @@
 
   & input {
     @include text-data;
+
+    &:focus {
+      border: 1px solid $yellow !important;
+    }
   }
 
   &:hover {
