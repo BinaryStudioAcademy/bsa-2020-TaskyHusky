@@ -8,6 +8,8 @@ import * as actions from './actions';
 import { FilterPartState } from './state';
 import { AnyAction } from 'redux';
 import { getFilterOptionsFromFilterParts } from './helpers';
+import { NotificationManager } from 'react-notifications';
+import i18next from 'i18next';
 
 const PAGE_SIZE = 25;
 
@@ -67,11 +69,17 @@ export function* updateFilterSaga(action: AnyAction) {
 	const {
 		advancedSearch: { filter, filterParts },
 	}: RootState = yield select();
+
 	if (filter) {
 		filter.filterParts = filterParts.filter(({ members, searchText }) => members.length > 0 || searchText);
 	}
-	yield call(updateFilter, filter as WebApi.Entities.Filter);
-	yield put(actions.updateFilterSuccess());
+	try {
+		yield call(updateFilter, filter as WebApi.Entities.Filter);
+		yield put(actions.updateFilterSuccess());
+		NotificationManager.success(i18next.t('filter_was_updated'), i18next.t('success'), 4000);
+	} catch (error) {
+		NotificationManager.error(i18next.t('could_not_update_filter'), i18next.t('error'), 4000);
+	}
 }
 
 export function* setInputTextSaga(action: AnyAction) {

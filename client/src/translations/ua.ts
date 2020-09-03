@@ -420,4 +420,8 @@ export const ua = {
 	in_progress: 'Виконується',
 	done: 'Виконано',
 	the_comments_text_is_copied_to_clipboard: 'Tекст цього коментаря збережений у буфер обміну.',
+	filter_was_saved: 'Filter was saved',
+	filter_was_updated: 'Filter was updated',
+	could_not_save_filter: "Can't save filter",
+	could_not_update_filter: "Can't update filter",
 };

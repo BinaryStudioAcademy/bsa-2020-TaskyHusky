@@ -442,4 +442,8 @@ export const en = {
 	done: 'Done',
 	team_has_been_deleted: 'Team has been deleted',
 	the_comments_text_is_copied_to_clipboard: "This comment's text is copied to clipboard.",
+	filter_was_saved: 'Filter was saved',
+	filter_was_updated: 'Filter was updated',
+	could_not_save_filter: "Can't save filter",
+	could_not_update_filter: "Can't update filter",
 };
