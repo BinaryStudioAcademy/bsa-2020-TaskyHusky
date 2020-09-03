@@ -1,11 +1,11 @@
 export interface FilterState {
 	filters: WebApi.Entities.Filter[];
 	filterParts: WebApi.Entities.FilterPart[];
-	filterDefs: WebApi.Entities.FilterDefinition[];
+	isLoading: boolean;
 }
 
 export const initialState: FilterState = {
 	filters: [],
 	filterParts: [],
-	filterDefs: [],
+	isLoading: false,
 };

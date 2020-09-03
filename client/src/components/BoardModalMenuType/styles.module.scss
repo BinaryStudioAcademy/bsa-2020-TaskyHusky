@@ -1,13 +1,23 @@
-.buttonContainer {
-  :global(.ui.button) {
-    margin-bottom: 10px;
-  }
+@import 'styles/mixins.scss';
+
+.contentBtn {
+	@include content-btn;
 }
 
 .buttonContainer {
-  :global(.ui.button) {
-    background-color: #f4f5f7;
-    color: #505f79;
-    font-size: 14px;
-  }
+	:global(.ui.button) {
+		margin-bottom: 10px;
+	}
+}
+
+.buttonContainer {
+	:global(.ui.button) {
+		background-color: #f4f5f7;
+		color: #505f79;
+		font-size: 14px;
+	}
+}
+
+.createBtn {
+	border: 1px solid #4d4c4c !important;
 }

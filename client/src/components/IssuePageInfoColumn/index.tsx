@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { watchIssue } from 'pages/IssuePage/logic/actions';
 import { RootState } from 'typings/rootState';
 import { isImage } from 'helpers/isImage.helper';
+import { SemanticCOLORS, SemanticICONS } from 'semantic-ui-react/dist/commonjs/generic';
 import DeleteIssueModal from 'containers/DeleteIssueModal';
 
 interface Props {
@@ -141,6 +142,8 @@ const IssuePageInfoColumn: React.FC<Props> = ({
 				) : (
 					''
 				)}
+				<h4>{t('Status')}</h4>
+				<Label color={issue.status?.color as SemanticCOLORS}>{issue.status?.title}</Label>
 				<h4>{t('assigned_by')}</h4>
 				{issue.assigned ? (
 					<a href={`/profile/${issue.assigned.id}`} target="_blank" rel="noopener noreferrer">
@@ -194,13 +197,13 @@ const IssuePageInfoColumn: React.FC<Props> = ({
 					? issue.labels.map((label, index) => <Label key={index}>{label}</Label>)
 					: t('no')}
 				<h4>{t('type')}</h4>
-				<Label color={issue.type.color as any}>
-					<Icon name={issue.type.icon as any} />
+				<Label color={issue.type.color as SemanticCOLORS}>
+					<Icon name={issue.type.icon as SemanticICONS} />
 					{issue.type.title}
 				</Label>
 				<h4>{t('priority')}</h4>
-				<Label color={issue.priority.color as any}>
-					<Icon name={issue.priority.icon as any} />
+				<Label color={issue.priority.color as SemanticCOLORS}>
+					<Icon name={issue.priority.icon as SemanticICONS} />
 					{issue.priority.title}
 				</Label>
 				<h4>{t('story_point')}</h4>

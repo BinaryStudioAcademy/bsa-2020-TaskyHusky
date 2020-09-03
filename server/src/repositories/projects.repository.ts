@@ -13,6 +13,7 @@ export class ProjectsRepository extends Repository<Projects> {
 			.leftJoinAndSelect('project.lead', 'lead')
 			.leftJoinAndSelect('project.users', 'users')
 			.leftJoinAndSelect('project.boards', 'boards')
+			.leftJoinAndSelect('project.labels', 'labels')
 			.leftJoin('project.users', 'user')
 			.where('project.id = :id', { id })
 			.andWhere('user.id = :userId', { userId })
@@ -42,6 +43,7 @@ export class ProjectsRepository extends Repository<Projects> {
 			.addSelect('user.id')
 			.leftJoinAndSelect('project.lead', 'lead')
 			.leftJoinAndSelect('project.boards', 'boards')
+			.leftJoinAndSelect('project.labels', 'labels')
 			.leftJoin('project.users', 'users')
 			.where('users.id = :id', { id })
 			.getMany();

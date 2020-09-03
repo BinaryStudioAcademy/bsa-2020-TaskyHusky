@@ -1,20 +1,65 @@
-.filtersContainer {
-	display: flex;
-	flex-direction: column;
-	margin: 50px 50px 0 50px;
-}
-.outer {
-	margin-bottom: 10px;
-	.titleWrapper {
+@import 'styles/mixins.scss';
+
+:global(#root) {
+	.wrapper__table {
+		position: relative;
+	}
+
+	.wrapperFilters {
+		margin-bottom: 20px;
+	}
+
+	.filters {
+		display: flex;
+	}
+
+	.filtersContainer {
+		display: flex;
+		flex-direction: column;
+		padding: 30px 60px;
+	}
+
+	.headerCell {
+		background-color: #f9fafb;
+		border-left: none;
+	}
+
+	.starCell {
+		text-align: center;
+	}
+
+	.outer {
+		margin-bottom: 10px;
+		.titleWrapper {
+			display: flex;
+			flex-direction: row;
+			margin-bottom: 20px;
+			.titleContainer {
+				flex: 1 1 auto;
+			}
+			.actionWrapper {
+				margin-left: 10px;
+				flex: 0 0 auto;
+				.createBtn {
+					@include primary-btn;
+				}
+			}
+		}
+	}
+	.imgWrapper {
 		display: flex;
 		flex-direction: row;
-		margin-bottom: 5px;
-		.titleContainer {
-			flex: 1 1 auto;
-		}
-		.actionWrapper {
-			margin-left: 10px;
-			flex: 0 0 auto;
+		justify-content: center;
+		.content {
+			display: flex;
+			flex-direction: column;
+			.img {
+				width: 200px;
+				margin: 10px;
+			}
+			.text {
+				text-align: center;
+			}
 		}
 	}
 }

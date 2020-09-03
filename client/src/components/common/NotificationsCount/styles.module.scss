@@ -1,0 +1,77 @@
+@import '../../../styles/variables.scss';
+
+@keyframes wiggle {
+	from {
+		transform: rotateZ(0);
+	}
+
+	2% {
+		transform: rotateZ(-30deg);
+	}
+
+	6% {
+		transform: rotateZ(30deg);
+	}
+
+	10% {
+		transform: rotateZ(-30deg);
+	}
+
+	14% {
+		transform: rotateZ(30deg);
+	}
+
+	18% {
+		transform: rotateZ(-30deg);
+	}
+
+	22% {
+		transform: rotateZ(30deg);
+	}
+
+	24% {
+		transform: rotateZ(0);
+	}
+}
+
+@keyframes grow {
+	from {
+		width: 15px;
+		height: 15px;
+		top: -5px;
+		right: -5px;
+	}
+
+	50% {
+		width: 25px;
+		height: 25px;
+		top: -10px;
+		right: -10px;
+	}
+}
+
+.notificationsIcon {
+	position: relative;
+}
+
+.animatedWiggle {
+	animation: wiggle 2s linear 0.5s infinite;
+}
+
+.animatedGrow {
+	animation: grow 1s linear 0s infinite;
+}
+
+.counter {
+	background-color: $yellow;
+	width: 15px;
+	height: 15px;
+	border-radius: 50%;
+	font-size: 12px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: absolute;
+	top: -5px;
+	right: -5px;
+}

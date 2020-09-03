@@ -5,7 +5,9 @@ import { IssueRepository } from '../repositories/issue.repository';
 import { UserModel } from '../models/User';
 import { issueAttachmentFolder } from '../../config/aws.config';
 import uploadS3 from '../services/file.service';
+import Elastic from '../services/elasticsearch.service';
 
+const elastic = new Elastic('issue');
 class IssueController {
 	async uploadAttachment(req: Request, res: Response) {
 		const {
@@ -40,7 +42,7 @@ class IssueController {
 		const { from, to } = req.body;
 
 		try {
-			const result = await repository.findAll(Number(from), Number(to));
+			const result = await repository.findAll();
 			res.send(result);
 		} catch (err) {
 			res.status(500).send(getWebError(err, 500));
@@ -49,9 +51,13 @@ class IssueController {
 
 	async getFilteredIssues(req: Request, res: Response) {
 		const repository = getCustomRepository(IssueRepository);
-		const { filter, from, to, sort } = req.body;
+		const { filter = {}, from, to, sort, inputText } = req.body;
 
 		try {
+			const matchedIDs = await elastic.getMatchedIssueIDs(inputText);
+			if (inputText) {
+				filter.id = matchedIDs;
+			}
 			const result = await repository.getFilteredIssues(filter, Number(from), Number(to), sort);
 			res.send(result);
 		} catch (err) {
@@ -139,12 +145,13 @@ class IssueController {
 		const repository = getCustomRepository(IssueRepository);
 
 		try {
-			const result = await repository.createOne({
+			const issue = await repository.createOne({
 				...data,
 				creator: (req.user as UserModel).id,
 			});
+			await elastic.addData(issue);
 
-			res.status(201).send(result);
+			res.status(201).send(issue);
 		} catch (err) {
 			res.status(422).send(getWebError(err, 422));
 		}
@@ -161,6 +168,7 @@ class IssueController {
 
 		try {
 			const result = await repository.updateOneById(id, data, userId);
+			await elastic.update(result);
 			res.send(result);
 		} catch (err) {
 			res.status(404).send(getWebError(err, 404));
@@ -174,11 +182,11 @@ class IssueController {
 		} = req;
 
 		const { body: data } = req;
-
 		const repository = getCustomRepository(IssueRepository);
 
 		try {
 			const result = await repository.updateOneByKey(key, data, userId);
+			await elastic.update(result);
 			res.send(result);
 		} catch (err) {
 			res.status(404).send(getWebError(err, 404));
@@ -194,6 +202,7 @@ class IssueController {
 		const repository = getCustomRepository(IssueRepository);
 
 		try {
+			await elastic.delete(id);
 			const result = await repository.deleteOneById(id, userId);
 			res.send(result);
 		} catch (err) {
