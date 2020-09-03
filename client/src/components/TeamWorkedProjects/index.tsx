@@ -15,37 +15,35 @@ const TeamWorkedProjects = ({ projects }: Props) => {
 	return (
 		<>
 			<Header as="h3">{t('worked_on')}</Header>
-			<div className={styles.worked_block_wrapper}>
-				<div className={styles.flex_row}>
+			<div className={styles.workedBlockWrapper}>
+				<div className={styles.flexRow}>
 					{projects?.length ? (
 						projects.map((project): JSX.Element | null => (
 							<Link
 								target="_blank"
-								className={styles.team_project}
+								className={styles.teamProject}
 								key={project.id}
 								to={`/project/${project.id}/issues`}
 							>
-								<Header as="h5" className={styles.project_title}>
+								<Header as="h5" className={styles.projectTitle}>
 									{project.name}
 								</Header>
 								<p>
-									{t('Project key')}:<span className={styles.team_key}> {project.key}</span>
+									{t('project_key')}:<span className={styles.teamKey}> {project.key}</span>
 								</p>
 								<p>
-									{t('Project category')}:
-									<span className={styles.team_category}>{project.category}</span>
+									{t('project_category')}:
+									<span className={styles.teamCategory}>{project.category}</span>
 								</p>
 							</Link>
 						))
 					) : (
 						<>
 							<Image src={worksImg} size="small" />
-							<div className={styles.worked_block}>
+							<div className={styles.workedBlock}>
 								<Header as="h4">{t('no_works')}</Header>
-								<p className={styles.p_descr}>
-									{t(
-										'There are no projects which have been started yet. When it&apos;ll happen you can get quick access to one you need',
-									)}
+								<p className={styles.pDescr}>
+									{t('there_are_no_projects_which_have_been_started_yet')}
 								</p>
 							</div>
 						</>

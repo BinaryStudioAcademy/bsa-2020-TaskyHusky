@@ -43,6 +43,17 @@ class TeammatesController {
 		}
 	};
 
+	getOneTeammate = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+		const teammatesRepository = getCustomRepository(TeammatesRepository);
+		const { match, id } = req.body;
+		try {
+			const teammates = await teammatesRepository.getTeammate(id, match);
+			res.send(teammates);
+		} catch (error) {
+			next(new ErrorResponse(HttpStatusCode.NOT_FOUND, error.message));
+		}
+	};
+
 	changeInviteStatus = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
 		const teammatesRepository = getCustomRepository(TeammatesRepository);
 		const { id } = req.params;
@@ -72,7 +83,6 @@ class TeammatesController {
 			next(new ErrorResponse(HttpStatusCode.NOT_FOUND, error.message));
 		}
 	};
-
 }
 
 export default TeammatesController;

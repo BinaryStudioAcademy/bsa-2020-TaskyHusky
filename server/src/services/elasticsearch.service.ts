@@ -1,7 +1,8 @@
 import { Client } from '@elastic/elasticsearch';
 import { Issue } from '../entity/Issue';
+import { elasticSearchHost } from '../../config/es.config';
 
-const client = new Client({ node: 'http://localhost:9200' });
+const client = new Client({ node: elasticSearchHost });
 
 interface ElasticI {
 	index: string;

@@ -1,5 +1,6 @@
 import React, { ReactElement } from 'react';
 import { Image } from 'semantic-ui-react';
+import classNames from 'classnames';
 
 import styles from './styles.module.scss';
 import { getInitials } from 'helpers/getInitials.helper';
@@ -10,12 +11,13 @@ interface Props {
 }
 
 function UserAvatar({ user, small }: Props): ReactElement {
+	const avatarStyle = classNames(styles.avatarImage, { [styles.smallIcon]: small });
 	return (
 		<>
 			{user.avatar ? (
-				<Image src={user.avatar} className={[small && styles.small, styles.avatarImage].join(' ')} circular />
+				<Image src={user.avatar} className={avatarStyle} circular />
 			) : (
-				<span className={[small && styles.small, styles.avatar].join(' ')}>{getInitials(user)}</span>
+				<span className={avatarStyle}>{getInitials(user)}</span>
 			)}
 		</>
 	);

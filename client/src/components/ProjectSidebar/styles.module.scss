@@ -3,10 +3,6 @@
 }
 
 .sidebar__container {
-  position: fixed;
-  left: 0;
-  top: 70px;
-  bottom: 0;
   width: 270px;
   margin: 0;
   border-right: 2px solid rgba(9,30,66,0.08);
@@ -62,8 +58,16 @@
 
 .header__item_back,
 .body__link  {
+  color: rgb(66, 82, 110) !important;
+  
   &:hover {
-  background-color: rgb(235,236,240);}
+    background-color: rgb(235,236,240);
+  }
+}
+
+.nav__link__active {
+  background-color: rgb(235,236,240);
+  color: rgb(0, 82, 204) !important;
 }
 
 .header__img {

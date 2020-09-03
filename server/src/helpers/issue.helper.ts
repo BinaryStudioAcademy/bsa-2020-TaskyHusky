@@ -35,7 +35,7 @@ export const getConditions = (filter: Filter) => {
 		comment,
 	} = filter;
 
-	if (id) {
+	if (id && id.length > 0) {
 		where.id = Any(id);
 	}
 	if (issueType) {

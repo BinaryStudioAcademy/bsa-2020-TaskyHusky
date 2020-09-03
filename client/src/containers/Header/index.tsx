@@ -6,7 +6,6 @@ import { Link, Redirect } from 'react-router-dom';
 import ProjectsMenu from 'components/ProjectsMenu';
 import FiltersMenu from 'components/FiltersMenu';
 import BoardsMenu from '../../components/BoardsMenu';
-import DashboardsMenu from 'components/DashboardsMenu';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'typings/rootState';
 import { removeToken } from 'helpers/setToken.helper';
@@ -64,6 +63,7 @@ export const HeaderMenu = () => {
 						<span className={`${styles.logoText} site-logo-text`}>TaskyHusky</span>
 					</Menu.Item>
 					<Menu.Item
+						className={styles.media_query}
 						as="span"
 						name="your-work"
 						active={activeItem === 'your-work'}
@@ -75,9 +75,9 @@ export const HeaderMenu = () => {
 					</Menu.Item>
 					<ProjectsMenu />
 					<FiltersMenu />
-					<DashboardsMenu />
 					<BoardsMenu onCreateBoard={onCreateBoard} />
 					<Menu.Item
+						className={styles.media_query}
 						as="span"
 						name="people"
 						active={activeItem === 'people'}
@@ -100,7 +100,7 @@ export const HeaderMenu = () => {
 					</CreateIssueModal>
 					<Menu.Item position="right" className={styles.rightMenu}>
 						<Dropdown icon="users" className={styles.circularIcon} direction="left">
-							<Dropdown.Menu>
+							<Dropdown.Menu className={styles.circularDropdownMenu}>
 								{incomingInvites.map((invite) => (
 									<InviteNotification
 										id={invite.id}
@@ -123,11 +123,11 @@ export const HeaderMenu = () => {
 								>
 									<Dropdown.Menu className={styles.circularDropdownMenu}>
 										<Dropdown.Header>{`${user?.firstName} ${user?.lastName}`}</Dropdown.Header>
-										<Dropdown.Item as="a" href={`/profile/${user?.id}`}>
+										<Dropdown.Item
+											as={Link}
+											to={{ pathname: `/profile/${user?.id}`, search: '?param=' }}
+										>
 											{t('profile')}
-										</Dropdown.Item>
-										<Dropdown.Item as="a" href={`/profile/${user?.id}`}>
-											{t('acc_settings')}
 										</Dropdown.Item>
 										<Dropdown.Divider />
 										<Dropdown.Item onClick={logOutHandler}>{t('log_out')}</Dropdown.Item>

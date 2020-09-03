@@ -1,0 +1,27 @@
+@mixin button($border, $background: white) {
+	padding: 10px 20px;
+	border: $border;
+	color: #333;
+	font-size: 22px;
+	text-align: center;
+	background-color: $background;
+	border-radius: 5px;
+}
+
+:local(.button) {
+	@include button(1px dashed #888);
+}
+
+:local(.dragOverButton) {
+	@include button(1px solid #000, #0f06);
+}
+
+:local(.controlsContainer) {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+:local(.smallText) {
+	font-size: 13px;
+}

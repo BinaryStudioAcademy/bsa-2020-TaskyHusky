@@ -7,6 +7,8 @@ import { useCreateIssueModalContext } from 'containers/CreateIssueModal/logic/co
 import { updateIssue } from 'pages/IssuePage/logic/actions';
 import { useTranslation } from 'react-i18next';
 import { getUsername } from 'helpers/getUsername.helper';
+import IssueFileInput from 'components/IssueFileInput';
+import { initialState } from 'containers/CreateIssueModal/logic/initalState';
 
 interface Props {
 	current: WebApi.Issue.PartialIssue;
@@ -27,6 +29,7 @@ interface SelectOption {
 const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, priorities, users, onSubmit }) => {
 	const context = useCreateIssueModalContext();
 	const [opened, setOpened] = useState<boolean>(false);
+	const [attachments, setAttachments] = useState<File[]>([]);
 	const dispatch = useDispatch();
 	const { t } = useTranslation();
 	getOpenFunc(() => setOpened(true));
@@ -86,6 +89,7 @@ const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, p
 				// This field exists always
 				id: current.id as string,
 				data: data,
+				files: attachments,
 			}),
 		);
 
@@ -96,6 +100,11 @@ const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, p
 		}
 	};
 
+	const clearContext = () => {
+		// Can't do it without any
+		Object.keys(context.data).forEach((key) => context.set(key as any, (initialState as any)[key]));
+	};
+
 	return (
 		<Modal
 			as="form"
@@ -104,6 +113,7 @@ const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, p
 			closeIcon
 			closeOnDimmerClick
 			closeOnEscape
+			onOpen={clearContext}
 			onClose={() => setOpened(false)}
 			style={{ maxWidth: 700, height: '70%' }}
 		>
@@ -182,10 +192,11 @@ const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, p
 					</Form.Field>
 					<Form.Field>
 						<label>{t('attachments')}</label>
-						<TagsInput
-							placeholder={t('add_attachment')}
-							tags={context.data.attachments ?? []}
-							onChange={(tags) => context.set('attachments', [...tags])}
+						<IssueFileInput
+							currentFiles={attachments}
+							onChange={(newFiles) => setAttachments(newFiles)}
+							onDeleteAlreadyAttached={(newLinks) => context.set('attachments', newLinks)}
+							alreadyAttached={context.data.attachments}
 						/>
 					</Form.Field>
 					<Form.Field>

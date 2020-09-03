@@ -1,10 +1,10 @@
-.meta_header {
+.metaHeader {
 	margin-left: 14px;
 }
-.margin_1 {
+.margin1 {
 	margin-right: 5px !important;
 }
-.card_body {
+.cardBody {
 	display: flex;
 	position: relative;
 	.icon {
@@ -26,10 +26,27 @@
 			}
 		}
 	}
-	.user_info {
+	.userInfo {
 		justify-content: flex-start;
 		.metainfo {
 			color: #cccccc;
 		}
 	}
+}
+.infoMessage {
+	color: #777777 !important;
+	font-size: 1.2rem !important;
+	line-height: 2rem !important;
+	text-align: center;
+}
+
+.userDeleteBtn {
+	position: absolute !important;
+	right: 0;
+	top: 45%;
+	cursor: pointer;
+	color: #2185d0;
+	font-size: 1.3rem !important;
+	margin: 0 !important;
+	padding: 0 !important;
 }

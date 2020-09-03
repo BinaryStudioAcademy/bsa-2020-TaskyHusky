@@ -10,6 +10,7 @@ export interface User {
 	jobTitle?: string;
 	userSettingsId?: string;
 	password?: string;
+	resetEmailToken?: string;
 }
 
 export interface AuthState {

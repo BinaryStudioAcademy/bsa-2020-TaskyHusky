@@ -10,11 +10,15 @@ const userController = new UserController();
 router.use('/', teamMates);
 router.use('/notification', notifications);
 router.get('/', userController.getAllUser);
+router.get('/teammates', userController.getTeammates);
 router.get('/:id', userController.getUser);
 router.get('/projects/:id', userController.getProjects);
+router.get('/teams/:id', userController.getTeams);
 router.put('/', userController.updateUser);
 router.put('/password', userController.changePassword);
+router.put('/email/:token', userController.changeEmail);
 router.delete('/', userController.deleteUser);
 router.post('/avatar', uploadImage, validateImage, userController.uploadAvatar);
+router.post('/reset-email', userController.sendResetEmail);
 
 export default router;

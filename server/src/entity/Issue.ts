@@ -7,6 +7,7 @@ import {
 	UpdateDateColumn,
 	ManyToMany,
 	JoinTable,
+	OneToMany,
 } from 'typeorm';
 
 import { IsNotEmpty, IsString, IsArray } from 'class-validator';
@@ -27,7 +28,7 @@ export class Issue {
 	@ManyToOne((type) => IssueType, (issueType) => issueType.issues, { eager: true })
 	type!: IssueType;
 
-	@ManyToOne((type) => IssueStatus, (issueStatus) => issueStatus.issues)
+	@ManyToOne((type) => IssueStatus, (issueStatus) => issueStatus.issues, { eager: true })
 	status?: IssueStatus;
 
 	@Column()
@@ -44,7 +45,7 @@ export class Issue {
 	@Column({ array: true })
 	labels?: string;
 
-	@Column({ array: true })
+	@Column({ array: true, nullable: true })
 	@IsArray()
 	attachments?: string;
 

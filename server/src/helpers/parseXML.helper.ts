@@ -1,7 +1,8 @@
 import { getCustomRepository } from 'typeorm';
-import { sendMentionedInComment } from '../services/email.service';
+import { sendMailWithSes } from '../services/email.service';
 import { parseDataFromXML } from './getMentionUsers.helper';
 import { UserRepository } from '../repositories/user.repository';
+import { issueMentionTemplate } from './emailTemplates.helper';
 
 export const parseMentionsXMLAndSendEmails = async (text: string, issueKey: string): Promise<void> => {
 	const userDataSet = parseDataFromXML(text);
@@ -10,11 +11,10 @@ export const parseMentionsXMLAndSendEmails = async (text: string, issueKey: stri
 		userDataSet.map(async (data) => {
 			const userRepository = getCustomRepository(UserRepository);
 			const user = await userRepository.getById(data.id);
-
-			sendMentionedInComment({
-				email: user.email,
-				issueKey,
-				userName: data.userName,
+			await sendMailWithSes({
+				to: [user.email],
+				subject: 'You has been mentioned',
+				message: issueMentionTemplate(issueKey, data.userName),
 			});
 		}),
 	);

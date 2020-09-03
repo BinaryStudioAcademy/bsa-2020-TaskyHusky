@@ -1,16 +1,15 @@
-import path from 'path';
-import { awsTeam } from '../../config/aws.config';
+import { awsConfig } from '../../config/aws.config';
 import AWS from '../../libs/aws';
 
 const s3 = new AWS.S3();
 
-export default (folder: string, file: Express.Multer.File, fileName: string): Promise<string> =>
-	new Promise((resolve, reject) => {
+export default function uploadS3(folder: string, file: Express.Multer.File, fileName: string): Promise<string> {
+	return new Promise((resolve, reject) => {
 		const filename = `${folder}/${fileName}`;
-		if (awsTeam) {
+		if (awsConfig.bucketName) {
 			s3.upload(
 				{
-					Bucket: awsTeam,
+					Bucket: awsConfig.bucketName,
 					Key: filename,
 					Body: file.buffer,
 				},
@@ -23,3 +22,4 @@ export default (folder: string, file: Express.Multer.File, fileName: string): Pr
 			);
 		}
 	});
+}

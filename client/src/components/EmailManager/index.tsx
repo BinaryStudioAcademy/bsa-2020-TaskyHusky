@@ -1,42 +1,19 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import styles from './styles.module.scss';
-import { Button, Checkbox, Select, Form } from 'semantic-ui-react';
-import { requestUpdateUser } from 'containers/ProfilePage/logiс/actions';
-import { UserProfileState } from 'containers/ProfilePage/logiс/state';
-import SubmitedInput from 'components/SubmitedInput';
-import CustomValidator from 'helpers/validation.helper';
+import { RootState } from 'typings/rootState';
+import { Checkbox, Select } from 'semantic-ui-react';
+import { sendEmailResetLink } from 'containers/ProfilePage/logiс/actions';
+import SubmitEmail from 'components/SubmitEmail';
 
-interface Props {
-	updateUser: (changedUser: Partial<UserProfileState>) => void;
-	email: string;
-}
-const EmailManager: React.FC<Props> = (props: Props) => {
-	const { updateUser, email } = props;
-	const dispatch = useDispatch();
+const EmailManager = () => {
 	const { t } = useTranslation();
-	const [emailData, setEmailData] = useState<string>('');
-	const [isEmailValid, setIsEmailValid] = useState<boolean>(true);
-	const [errorMessage, setErrorMessage] = useState<string>('');
-	const handleChange = (event: any) => {
-		setEmailData((event.target as HTMLInputElement).value);
-	};
-	const onBlur = () => {
-		const customValidator = new CustomValidator(emailData, 'Email');
-		const isntValid = customValidator.checkMinLength(6).checkMaxLength(321).checkEmailField().validate();
-		if (isntValid) {
-			setErrorMessage(isntValid);
-			setIsEmailValid(false);
-		} else {
-			setIsEmailValid(true);
-		}
-	};
-	const updateUserField = () => {
-		if (emailData !== email && isEmailValid) {
-			updateUser({ email: emailData.trim() });
-			dispatch(requestUpdateUser({ email: emailData.trim() } as Partial<UserProfileState>));
-		}
+	const dispatch = useDispatch();
+	const email = useSelector((state: RootState) => state.user.email);
+
+	const sendEmail = (emailData: string) => {
+		dispatch(sendEmailResetLink({ email: emailData }));
 	};
 
 	const notifaictionsOptions = [
@@ -53,22 +30,7 @@ const EmailManager: React.FC<Props> = (props: Props) => {
 					{t('current_email')}
 					{email}
 				</p>
-				<Form onSubmit={updateUserField}>
-					<SubmitedInput
-						text={emailData}
-						propKey="email"
-						title={t('email_title')}
-						placeholder={t('email_placeholder')}
-						type="text"
-						handleChange={handleChange}
-						isValid={isEmailValid}
-						onBlur={onBlur}
-						errorText={errorMessage}
-					/>
-					<Button type="submit" className={styles.submitButton}>
-						{t('save_changes')}
-					</Button>
-				</Form>
+				<SubmitEmail sendEmail={sendEmail} email={email} newEmail={false} title={t('new_email_title')} />
 				<h4 className={styles.cardHeader}>{t('email_notif')}</h4>
 				<p className={styles.textData}>{t('content_notif')}</p>
 				<Select

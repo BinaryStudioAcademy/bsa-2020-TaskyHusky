@@ -2,14 +2,44 @@ import { Request, Response } from 'express';
 import { getCustomRepository } from 'typeorm';
 import { getWebError } from '../helpers/error.helper';
 import { IssueRepository } from '../repositories/issue.repository';
-import Elastic from '../services/elasticsearch.service';
 import { UserModel } from '../models/User';
+import { issueAttachmentFolder } from '../../config/aws.config';
+import uploadS3 from '../services/file.service';
+import Elastic from '../services/elasticsearch.service';
 
 const elastic = new Elastic('issue');
-
 class IssueController {
+	async uploadAttachment(req: Request, res: Response) {
+		const {
+			file,
+			query: { issueKey },
+			user: { id: userId },
+		} = req;
+
+		const { originalname } = file;
+		const repository = getCustomRepository(IssueRepository);
+
+		try {
+			const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
+			const awsName = `${originalname}`;
+			const link = await uploadS3(`${issueAttachmentFolder}/${issueKey}/${uniqueSuffix}`, file, awsName);
+			const prevIssue = await repository.findOneByKey(issueKey as string);
+
+			const result = await repository.updateOneByKey(
+				issueKey as string,
+				{ attachments: [...(prevIssue.attachments ?? []), link] },
+				userId,
+			);
+
+			res.status(201).send({ ...result, newLink: link });
+		} catch (err) {
+			res.status(400).send(getWebError(err, 400));
+		}
+	}
+
 	async getAll(req: Request, res: Response) {
 		const repository = getCustomRepository(IssueRepository);
+		const { from, to } = req.body;
 
 		try {
 			const result = await repository.findAll();
@@ -128,12 +158,16 @@ class IssueController {
 	}
 
 	async update(req: Request, res: Response) {
-		const { id } = req.params;
+		const {
+			params: { id },
+			user: { id: userId },
+		} = req;
+
 		const { body: data } = req;
 		const repository = getCustomRepository(IssueRepository);
 
 		try {
-			const result = await repository.updateOneById(id, data);
+			const result = await repository.updateOneById(id, data, userId);
 			await elastic.addData(data);
 			res.send(result);
 		} catch (err) {
@@ -142,12 +176,16 @@ class IssueController {
 	}
 
 	async updateByKey(req: Request, res: Response) {
-		const { key } = req.params;
+		const {
+			params: { key },
+			user: { id: userId },
+		} = req;
+
 		const { body: data } = req;
 		const repository = getCustomRepository(IssueRepository);
 
 		try {
-			const result = await repository.updateOneByKey(key, data);
+			const result = await repository.updateOneByKey(key, data, userId);
 			await elastic.addData(data);
 			res.send(result);
 		} catch (err) {
@@ -156,12 +194,16 @@ class IssueController {
 	}
 
 	async delete(req: Request, res: Response) {
-		const { id } = req.params;
+		const {
+			params: { id },
+			user: { id: userId },
+		} = req;
+
 		const repository = getCustomRepository(IssueRepository);
 
 		try {
 			await elastic.delete(id);
-			const result = await repository.deleteOneById(id);
+			const result = await repository.deleteOneById(id, userId);
 			res.send(result);
 		} catch (err) {
 			res.status(404).send(getWebError(err, 404));

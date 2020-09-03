@@ -23,4 +23,10 @@ export const projectsReducer = createReducer<ProjectsState>(initialState, {
 			isLoading: false,
 		};
 	},
+	[actionTypes.UPDATE_PROJECTS_LIST](state, { projects }) {
+		return {
+			...state,
+			projects,
+		};
+	},
 });
