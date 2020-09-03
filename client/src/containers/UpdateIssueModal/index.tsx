@@ -257,7 +257,7 @@ const UpdateIssueModal: React.FC<Props> = ({
 							currentFiles={attachments}
 							onChange={(newFiles) => setAttachments(newFiles)}
 							onDeleteAlreadyAttached={(newLinks) => context.set('attachments', newLinks)}
-							alreadyAttached={context.data.attachments}
+							alreadyAttached={context.data.attachments ?? []}
 						/>
 					</Form.Field>
 					<Form.Field>
