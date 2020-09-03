@@ -1,28 +1,35 @@
 @import 'styles/mixins.scss';
 
-.filtersContainer {
-	display: flex;
-	flex-direction: column;
-	margin: 50px 50px 0 50px;
-}
-.outer {
-	margin-bottom: 10px;
-	.titleWrapper {
+:global(#root) {
+	.filtersContainer {
 		display: flex;
-		flex-direction: row;
-		margin-bottom: 5px;
-		.titleContainer {
-			flex: 1 1 auto;
-		}
-		.actionWrapper {
-			margin-left: 10px;
-			flex: 0 0 auto;
-			.createBtn {
-				width: 100%;
-				background-color: $yellow !important;
-				color: #000000 !important;
-				&:hover {
-					box-shadow: 0 0 5px inset $primary-bg !important;
+		flex-direction: column;
+		padding: 30px 60px;
+	}
+
+	.headerCell {
+		background-color: #f9fafb;
+		border-left: none;
+	}
+
+	.starCell {
+		text-align: center;
+	}
+
+	.outer {
+		margin-bottom: 10px;
+		.titleWrapper {
+			display: flex;
+			flex-direction: row;
+			margin-bottom: 5px;
+			.titleContainer {
+				flex: 1 1 auto;
+			}
+			.actionWrapper {
+				margin-left: 10px;
+				flex: 0 0 auto;
+				.createBtn {
+					@include primary-btn;
 				}
 			}
 		}
