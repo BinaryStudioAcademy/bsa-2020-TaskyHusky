@@ -8,9 +8,10 @@ import { UserProfileState } from 'containers/ProfilePage/logiс/state';
 import { useDispatch } from 'react-redux';
 import CustomValidator from 'helpers/validation.helper';
 import JobTitleSelect from 'components/JobTitleSelect';
+import { ModeManager } from 'containers/ProfilePage';
 
 interface Props {
-	showManager: (modeToShow: string) => void;
+	showManager: (modeToShow: ModeManager) => void;
 	updateUser: (changedUser: Partial<UserProfileState>) => void;
 	user: UserProfileState;
 }
@@ -89,7 +90,7 @@ const ProfileManager: React.FC<Props> = (props: Props) => {
 	};
 
 	const onCancel = () => {
-		showManager('');
+		showManager(ModeManager.main);
 	};
 
 	return (
