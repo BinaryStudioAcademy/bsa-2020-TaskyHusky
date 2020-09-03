@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, RefObject } from 'react';
 import 'react-image-crop/lib/ReactCrop.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { requestUpdateAvatar } from 'containers/ProfilePage/logiс/actions';
@@ -27,7 +27,7 @@ const ProfilePicture: React.FC<Props> = (props: Props) => {
 	const { avatar } = useSelector((state: RootState) => state.user);
 	const { firstName, lastName, username, editMode, isCurrentUser, showManager } = props;
 	const [uploadUrl, setUploadUrl] = useState<ArrayBuffer | string | null>('');
-	const [imgSrcExt, setImgSrcExt] = useState<any>(null);
+	const [imgSrcExt, setImgSrcExt] = useState<string | null>(null);
 
 	const uploadPhoto = async (e: any) => {
 		const reader = new FileReader();
@@ -37,7 +37,6 @@ const ProfilePicture: React.FC<Props> = (props: Props) => {
 				const { result } = reader;
 				setUploadUrl(result);
 				setImgSrcExt(extractImageFileExtensionFromBase64(result as string));
-				// e.currentTarget.value = null;
 			};
 		}
 	};
@@ -46,7 +45,7 @@ const ProfilePicture: React.FC<Props> = (props: Props) => {
 		setUploadUrl(null);
 	};
 
-	const saveCrop = (imagePreviewCanvasRef: any) => {
+	const saveCrop = (imagePreviewCanvasRef: RefObject<HTMLCanvasElement>) => {
 		if (uploadUrl) {
 			const canvasRef = imagePreviewCanvasRef.current;
 			if (canvasRef) {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback, RefObject } from 'react';
 import ReactCrop, { Crop } from 'react-image-crop';
 import { Button } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
@@ -8,7 +8,7 @@ import Portal from 'components/common/Portal';
 interface Props {
 	onClose: () => void;
 	uploadUrl: string;
-	saveCrop: (img: any) => void;
+	saveCrop: (img: RefObject<HTMLCanvasElement>) => void;
 }
 
 const CropModal: React.FC<Props> = (props: Props) => {
