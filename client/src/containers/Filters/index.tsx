@@ -14,6 +14,7 @@ const Filters: React.FC = () => {
 	const dispatch = useDispatch();
 	const history = useHistory();
 	const { filters } = useSelector((rootState: RootState) => rootState.filters);
+	const { user } = useSelector((rootState: RootState) => rootState.auth);
 
 	const updateFilter = (data: WebApi.Entities.Filter) => {
 		dispatch(
@@ -22,12 +23,10 @@ const Filters: React.FC = () => {
 			}),
 		);
 	};
-
+	const userId = user?.id;
 	useEffect(() => {
-		dispatch(actions.fetchFilterParts());
-		dispatch(actions.fetchFilters());
-		dispatch(actions.fetchFilterDefs());
-	}, [dispatch]);
+		dispatch(actions.fetchFilters({ userId }));
+	}, [dispatch, userId]);
 
 	return (
 		<div className={styles.filtersContainer}>
