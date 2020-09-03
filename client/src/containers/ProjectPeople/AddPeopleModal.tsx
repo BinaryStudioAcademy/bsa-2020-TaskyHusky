@@ -1,7 +1,6 @@
 import React, { useState, memo, useEffect } from 'react';
 import { Modal, Button, Dropdown, DropdownOnSearchChangeData } from 'semantic-ui-react';
 import { useSelector, useDispatch } from 'react-redux';
-
 import * as actions from './logic/actions';
 import { RootState } from 'typings/rootState';
 import { useTranslation } from 'react-i18next';

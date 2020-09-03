@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Button } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-
 import { RootState } from 'typings/rootState';
 import AddLabelModal from './AddLabelModal';
 import * as actions from './logic/actions';
