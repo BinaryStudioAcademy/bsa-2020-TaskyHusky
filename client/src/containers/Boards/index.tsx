@@ -12,6 +12,7 @@ import styles from './styles.module.scss';
 import DeleteBoardModal from '../../components/deleteBoardModal';
 import { useTranslation } from 'react-i18next';
 import Spinner from '../../components/common/Spinner';
+import UserAvatar from 'components/common/UserAvatar';
 
 const Boards: React.FC = () => {
 	const { t } = useTranslation();
@@ -62,16 +63,6 @@ const Boards: React.FC = () => {
 			text: t('edit_settings'),
 		},
 		{
-			onClickAction: () => {},
-			id: board.id,
-			text: t('copy'),
-		},
-		{
-			onClickAction: () => {},
-			id: board.id,
-			text: t('move'),
-		},
-		{
 			onClickAction: getDeleteAction(board),
 			id: board.id,
 			text: t('delete'),
@@ -94,7 +85,7 @@ const Boards: React.FC = () => {
 			{boardToDelete && <DeleteBoardModal board={boardToDelete} onClose={() => setBoardToDelete(null)} />}
 			<div className={styles.wrapper__title}>
 				<h1 className={styles.title}>{t('boards')}</h1>
-				<Button primary onClick={() => setIsModalShown(true)}>
+				<Button className="primaryBtn" onClick={() => setIsModalShown(true)}>
 					{t('create_board')}
 				</Button>
 			</div>
@@ -111,14 +102,22 @@ const Boards: React.FC = () => {
 			</div>
 			<div className={styles.wrapper__table}>
 				{!isLoading && (
-					<Table celled fixed>
+					<Table selectable sortable>
 						<Table.Header>
 							<Table.Row>
-								<Table.HeaderCell width={5}>{t('name')}</Table.HeaderCell>
-								<Table.HeaderCell width={5}>{t('type')}</Table.HeaderCell>
-								<Table.HeaderCell width={5}>{t('projects')}</Table.HeaderCell>
-								<Table.HeaderCell width={5}>{t('admin')}</Table.HeaderCell>
-								<Table.HeaderCell width={1} />
+								<Table.HeaderCell width={4} className={styles.header__cell}>
+									{t('name')}
+								</Table.HeaderCell>
+								<Table.HeaderCell width={4} className={styles.header__cell}>
+									{t('type')}
+								</Table.HeaderCell>
+								<Table.HeaderCell width={4} className={styles.header__cell}>
+									{t('projects')}
+								</Table.HeaderCell>
+								<Table.HeaderCell width={4} className={styles.header__cell}>
+									{t('admin')}
+								</Table.HeaderCell>
+								<Table.HeaderCell width={1} className={styles.header__cell} />
 							</Table.Row>
 						</Table.Header>
 						<Table.Body>
@@ -183,13 +182,14 @@ const Boards: React.FC = () => {
 												t('no')
 											)}
 										</Table.Cell>
-										<Table.Cell>
-											<Link
-												to={`/profile/${user.id}`}
-											>{`${user.firstName} ${user.lastName}`}</Link>
+										<Table.Cell className={styles.user_cell}>
+											<UserAvatar user={user as WebApi.Entities.UserProfile} small />
+											<Link to={`/profile/${user.id}`}>
+												{`${user.firstName} ${user.lastName}`}
+											</Link>
 										</Table.Cell>
-										<Table.Cell>
-											<Options config={getBoardMenuActions(board)} />
+										<Table.Cell className={styles.options__cell}>
+											<Options config={getBoardMenuActions(board)} isBackgroundShown={false} />
 										</Table.Cell>
 									</Table.Row>
 								);

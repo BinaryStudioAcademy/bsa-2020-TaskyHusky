@@ -28,7 +28,11 @@ export class ConnectionHandler {
 	}
 }
 
-export const injectIO = (io: IO.Server) => (req: Request, res: Response, next: NextFunction) => {
+export const injectIO = (io: IO.Server) => (
+	req: Request & { [key: string]: unknown },
+	res: Response,
+	next: NextFunction,
+) => {
 	req.io = io;
 	next();
 };

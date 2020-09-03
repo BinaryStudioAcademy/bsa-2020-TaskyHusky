@@ -168,7 +168,7 @@ class IssueController {
 
 		try {
 			const result = await repository.updateOneById(id, data, userId);
-			await elastic.addData(data);
+			await elastic.update(result);
 			res.send(result);
 		} catch (err) {
 			res.status(404).send(getWebError(err, 404));
@@ -186,7 +186,7 @@ class IssueController {
 
 		try {
 			const result = await repository.updateOneByKey(key, data, userId);
-			await elastic.addData(data);
+			await elastic.update(result);
 			res.send(result);
 		} catch (err) {
 			res.status(404).send(getWebError(err, 404));

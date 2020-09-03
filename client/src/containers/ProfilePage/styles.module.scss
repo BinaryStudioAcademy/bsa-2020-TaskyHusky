@@ -11,6 +11,12 @@
 	display: flex;
 }
 
+@media screen and (max-width: $medium-screen) {
+	.container {
+		margin: 22px 8%;
+	}
+}
+
 @media screen and (max-width: $less-than-medium-screen) {
 	.container {
 		display: block;
