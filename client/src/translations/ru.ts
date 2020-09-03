@@ -437,4 +437,8 @@ export const ru = {
 	in_progress: 'Выполняется',
 	done: 'Выполнено',
 	the_comments_text_is_copied_to_clipboard: 'Tекст этого комментария скопирован в буфер обмена.',
+	filter_was_saved: 'Фильтр сохранен',
+	filter_was_updated: 'Фильтр изменен',
+	could_not_save_filter: 'Невозможно сохранить фильтр',
+	could_not_update_filter: 'Невозможно изменить фильтр',
 };

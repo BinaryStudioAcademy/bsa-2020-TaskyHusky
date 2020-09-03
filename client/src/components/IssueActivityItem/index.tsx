@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Icon, Popup } from 'semantic-ui-react';
 import styles from './styles.module.scss';
-import projectIcon from 'icons/profile/projectIcon.svg';
 import { ActivityIssue } from 'containers/WorkPage/logic/state';
 
 interface Props {
@@ -29,10 +28,10 @@ const IssueActivityItem: React.FC<Props> = (props: Props) => {
 			/>
 			<div className={styles.block}>
 				<Link to={`/issue/${issueKey}`}>
-					<p className={styles.content}>{summary}</p>
+					<span className={styles.content}>{summary}</span>
 				</Link>
 				<Link to={`/project/${project.id}/issues`}>
-					<p className={styles.contentSecondary}>{project.category} project</p>
+					<span className={styles.contentSecondary}>{project.name}</span>
 				</Link>
 			</div>
 		</div>

@@ -38,7 +38,7 @@ const Projects: React.FC = () => {
 			<div className={styles.wrapper__title}>
 				<h1 className={styles.title}>{t('projects')}</h1>
 				<CreateProjectModal>
-					<Button primary>{t('create_project')}</Button>
+					<Button className={styles.create__button}>{t('create_project')}</Button>
 				</CreateProjectModal>
 			</div>
 			<div className={[styles.wrapper__filters, styles.filters].join(' ')}>

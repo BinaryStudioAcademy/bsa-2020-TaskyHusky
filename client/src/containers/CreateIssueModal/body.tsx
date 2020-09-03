@@ -24,6 +24,7 @@ interface Props {
 	projects: WebApi.Entities.Projects[];
 	projectsLoading: boolean;
 	users: WebApi.Entities.UserProfile[];
+	statuses: WebApi.Entities.IssueStatus[];
 }
 
 interface SelectOption {
@@ -45,6 +46,7 @@ const CreateIssueModalBody: React.FC<Props> = ({
 	users,
 	sprintID,
 	boardID,
+	statuses,
 }) => {
 	const { t } = useTranslation();
 	const context = useCreateIssueModalContext();
@@ -117,6 +119,7 @@ const CreateIssueModalBody: React.FC<Props> = ({
 			board: boardID,
 			project: projectID ?? context.data.project,
 			assigned: context.data.assigned,
+			status: getToDoStatusId(statuses),
 		};
 
 		dispatch(createIssue({ data, files: attachments }));
@@ -126,6 +129,11 @@ const CreateIssueModalBody: React.FC<Props> = ({
 		}
 
 		setIsOpened(false);
+	};
+
+	const getToDoStatusId = (statuses: WebApi.Entities.IssueStatus[]) => {
+		const toDoStatus = statuses.find((status) => status.title === 'To do');
+		return toDoStatus?.id;
 	};
 
 	const handleStoryPointChange = (event: React.ChangeEvent<HTMLInputElement>, data: InputOnChangeData) => {
@@ -289,6 +297,7 @@ const CreateIssueModalBody: React.FC<Props> = ({
 const mapStateToProps = (state: RootState) => ({
 	issueTypes: state.issues.types,
 	priorities: state.issues.priorities,
+	statuses: state.issues.statuses,
 	projects: state.projects.projects,
 	projectsLoading: state.projects.isLoading,
 	users: state.users.users,

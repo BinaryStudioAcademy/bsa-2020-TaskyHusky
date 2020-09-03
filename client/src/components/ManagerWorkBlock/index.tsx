@@ -41,7 +41,7 @@ const ManagerWorkBlock: React.FC<Props> = (props: Props) => {
 					className={styles.item}
 					onClick={() => changeMode('starred')}
 				>
-					Starred
+					Favourites
 				</Menu.Item>
 			</Menu>
 		</div>

@@ -64,34 +64,34 @@ const ProjectsTable = ({ projects, currentUser }: Props) => {
 	};
 	return (
 		<div>
-			<Table sortable unstackable className={styles.table}>
+			<Table selectable sortable unstackable>
 				<Table.Header>
 					<Table.Row>
 						<Table.HeaderCell
-							className={[styles.column__name, styles.table__header_cell].join(' ')}
+							width={4}
+							className={styles.table__header_cell}
 							sorted={sortByColumn === 'name' ? sortDirection : undefined}
 							onClick={() => changeSort('name')}
-						>
-							{t('name')}
-						</Table.HeaderCell>
+							children={t('name')}
+						/>
 						<Table.HeaderCell
-							className={[styles.column__key, styles.table__header_cell].join(' ')}
+							width={2}
+							className={styles.table__header_cell}
 							sorted={sortByColumn === 'key' ? sortDirection : undefined}
 							onClick={() => changeSort('key')}
-						>
-							{t('key')}
+							children={t('key')}
+						/>
+						<Table.HeaderCell width={3} className={styles.table__header_cell}>
+							{t('type')}
 						</Table.HeaderCell>
-						<Table.HeaderCell className={styles.table__header_cell}>{t('type')}</Table.HeaderCell>
 						<Table.HeaderCell
-							className={[styles.table__header_cell, styles.column__lead].join(' ')}
+							width={4}
+							className={styles.table__header_cell}
 							sorted={sortByColumn === 'lead' ? sortDirection : undefined}
 							onClick={() => changeSort('lead')}
-						>
-							{t('lead')}
-						</Table.HeaderCell>
-						<Table.HeaderCell
-							className={[styles.column__settings, styles.table__header_cell].join(' ')}
-						></Table.HeaderCell>
+							children={t('lead')}
+						/>
+						<Table.HeaderCell width={1} className={styles.table__header_cell} />
 					</Table.Row>
 				</Table.Header>
 

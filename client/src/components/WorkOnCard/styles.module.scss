@@ -9,6 +9,7 @@
   align-items: center;
   margin-right: 30px;
   border-radius: 50%;
+  position: relative;
 }
 
 .avatarTitle {
@@ -19,6 +20,7 @@
   line-height: 51px;
   letter-spacing: 0.24px;
   color: $primary-bg;
+  margin: 0;
 }
 
 .issue {
@@ -35,7 +37,7 @@
 
 .mainInfo {
   display: flex;
-  margin-top: 10px;
+  align-items: center;
 }
 
 .key {
@@ -56,15 +58,20 @@
   @include primary-content;
 }
 
-.link {
-  margin-top: 10px;
-  margin-left: 20px;
-
-  a {
-    @include primary-content;
-  }
+.icon {
+  margin-right: 74px !important;
 }
 
-.icon {
-  margin-right: 60px;
+@media screen and (max-width: $less-than-medium-screen) {
+  .hidden {
+    display: none;
+  }
+
+  .key {
+    min-width: 50px
+  }
+
+  .avatar {
+    margin-right: 10px;
+  }
 }

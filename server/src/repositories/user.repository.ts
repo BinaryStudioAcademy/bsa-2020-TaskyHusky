@@ -56,9 +56,12 @@ export class UserRepository extends Repository<UserProfile> {
 			.where('user.id = :id', { id })
 			.leftJoin('user.assignedIssues', 'issue')
 			.addSelect(['issue.id', 'issue.issueKey', 'issue.summary', 'issue.updatedAt'])
+			.leftJoinAndSelect('issue.priority', 'priority')
 			.leftJoinAndSelect('issue.type', 'issueType')
 			.leftJoin('issue.project', 'project')
 			.addSelect(['project.name', 'project.id', 'project.category'])
+			.leftJoin('project.users', 'projects_people')
+			.addSelect('projects_people.id')
 			.getOne();
 
 		if (!user) {
@@ -72,10 +75,13 @@ export class UserRepository extends Repository<UserProfile> {
 		const user = await this.createQueryBuilder('user')
 			.where('user.id = :id', { id })
 			.leftJoin('user.watchingIssues', 'issue')
-			.addSelect(['issue.id', 'issue.issueKey', 'issue.summary', 'issue.updatedAt'])
+			.addSelect(['issue.id', 'issue.issueKey', 'issue.summary', 'issue.updatedAt', 'issue.priority'])
 			.leftJoinAndSelect('issue.type', 'issueType')
+			.leftJoinAndSelect('issue.priority', 'priority')
 			.leftJoin('issue.project', 'project')
 			.addSelect(['project.name', 'project.id'])
+			.leftJoin('project.users', 'projects_people')
+			.addSelect('projects_people.id')
 			.getOne();
 
 		if (!user) {
