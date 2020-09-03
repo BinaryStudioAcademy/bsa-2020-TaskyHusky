@@ -2,12 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Form, TextArea, Button, Icon, Popup, Dropdown } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 import * as actions from '../ProjectSettings/logic/actions';
-
 import styles from './styles.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import CustomInput from 'components/common/Input/CustomInput';
-
 import SelectIcon from './selectIcon';
 import { RootState } from 'typings/rootState';
 import { startGettingKeys } from 'containers/CreateProjectModal/logic/actions';

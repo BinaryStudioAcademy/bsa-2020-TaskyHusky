@@ -60,7 +60,7 @@ namespace WebApi.Issue {
 		labels?: string[];
 		attachments?: string[];
 		links?: string[];
-		priority?: string;
+		priority?: number;
 		description?: string;
 		board?: string;
 		sprint?: string | null;
@@ -101,7 +101,7 @@ namespace WebApi.Result {
 		links?: string[];
 		board?: BoardResult;
 		priority: {
-			id: string;
+			id: number;
 			color: string;
 			title: string;
 			icon: string;
@@ -130,6 +130,7 @@ namespace WebApi.Result {
 		boardType: 'Kanban' | 'Scrum';
 		name: string;
 		location: string;
+		projects?: BoardProjectsResult[];
 		createdAt: {
 			firstName: string;
 			lastName?: string;
@@ -344,11 +345,21 @@ namespace WebApi.Entities {
 	}
 
 	interface Priority {
-		id: string;
+		id: number;
 		icon: string;
 		color: string;
 		title: string;
 		issues?: Issue[];
+	}
+
+	interface ProjectLabel {
+		id: string;
+		text: string;
+		textColor: string;
+		backgroundColor: string;
+		project: Projects;
+		createdDate?: Date;
+		deletedDate?: Date;
 	}
 
 	interface Projects {
@@ -366,6 +377,7 @@ namespace WebApi.Entities {
 		creator: UserProfile;
 		team?: Team;
 		issues?: Issue[];
+		labels: ProjectLabel[];
 		users: UserProfile[];
 		githubUrl?: string;
 		createdDate?: Date;

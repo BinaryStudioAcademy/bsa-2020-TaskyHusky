@@ -92,7 +92,6 @@ const ProfilePage = ({ id }: { id: string }) => {
 		}
 		if (!activity.length) {
 			const { recentActivity } = await requestGetUserIssues(id);
-			console.log(recentActivity);
 			setData((data) => ({ ...data, activity: recentActivity }));
 		}
 		setIsLoadAdditional(false);

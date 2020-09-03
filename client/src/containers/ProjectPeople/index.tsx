@@ -2,7 +2,6 @@ import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { Input, Table, Button } from 'semantic-ui-react';
-
 import { RootState } from 'typings/rootState';
 import AddPeopleModal from './AddPeopleModal';
 import UserAvatar from 'components/common/UserAvatar';

@@ -8,7 +8,9 @@ import { definitionTypesToDropdownData } from './helpers';
 const PriorityFilter = ({ filterPart }: FilterProps) => {
 	const { priorities } = useSelector((rootState: RootState) => rootState.issues);
 
-	const data = (priorities as DefinitionEntity[]).map(definitionTypesToDropdownData);
+	const data = (priorities.map((p) => ({ ...p, id: p.id.toString() })) as DefinitionEntity[]).map(
+		definitionTypesToDropdownData,
+	);
 
 	return <DropdownCheckboxSearch data={data} filterPart={filterPart} />;
 };

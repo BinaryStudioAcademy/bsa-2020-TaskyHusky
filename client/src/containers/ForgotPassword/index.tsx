@@ -45,9 +45,7 @@ export const ForgotPassword: React.FC = () => {
 										setEmail(normalizeEmail(event.target.value));
 									}}
 								/>
-								<Button positive className={styles.continueButton}>
-									{t('forgot_password_button')}
-								</Button>
+								<Button className={styles.continueButton}>{t('forgot_password_button')}</Button>
 							</Form>
 						)}
 						{isEmailSent && (

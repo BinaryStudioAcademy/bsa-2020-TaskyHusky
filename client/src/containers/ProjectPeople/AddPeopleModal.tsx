@@ -1,7 +1,6 @@
 import React, { useState, memo, useEffect } from 'react';
 import { Modal, Button, Dropdown, DropdownOnSearchChangeData } from 'semantic-ui-react';
 import { useSelector, useDispatch } from 'react-redux';
-
 import * as actions from './logic/actions';
 import { RootState } from 'typings/rootState';
 import { useTranslation } from 'react-i18next';
@@ -11,7 +10,7 @@ interface Props {
 	project: WebApi.Entities.Projects;
 }
 
-const AddPeopleModal = (props: Props) => {
+const AddPeopleModal: React.FC<Props> = (props) => {
 	const { t } = useTranslation();
 	const dispatch = useDispatch();
 	const { isPeopleLoading, people, isLoading } = useSelector((rootState: RootState) => rootState.projectPeople);
@@ -54,7 +53,7 @@ const AddPeopleModal = (props: Props) => {
 			open={isOpen}
 			onClose={() => setIsOpen(false)}
 			trigger={
-				<Button className={styles.primary__button} onClick={() => setIsOpen(true)}>
+				<Button className={'primaryBtn'} onClick={() => setIsOpen(true)}>
 					{t('add_people')}
 				</Button>
 			}
@@ -84,7 +83,7 @@ const AddPeopleModal = (props: Props) => {
 				<Button className={styles.secondary__button} onClick={() => setIsOpen(false)}>
 					{t('cancel')}
 				</Button>
-				<Button className={styles.primary__button} onClick={onAddSelectedUsers} loading={isLoading}>
+				<Button className={'primaryBtn'} onClick={onAddSelectedUsers} loading={isLoading}>
 					{t('add')}
 				</Button>
 			</Modal.Actions>
