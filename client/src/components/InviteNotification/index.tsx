@@ -48,10 +48,10 @@ const InviteNotification: React.FC<Props> = (props: Props) => {
 			</Card.Content>
 			<Card.Content extra>
 				<div className="ui two buttons">
-					<Button basic color="green" onClick={handleApprove}>
+					<Button className="primaryBtn" onClick={handleApprove}>
 						{t('approve')}
 					</Button>
-					<Button basic color="red" onClick={handleDecline}>
+					<Button className="cancelBtn" onClick={handleDecline}>
 						{t('decline')}
 					</Button>
 				</div>

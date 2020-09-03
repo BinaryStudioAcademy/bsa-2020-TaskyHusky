@@ -71,6 +71,7 @@ export const en = {
 	add_people: 'Add people',
 	learn_more: 'Learn more',
 	next_tip: 'Next tip',
+	next: 'Next',
 	devs: 'Devs',
 	members: 'Members',
 	members_lower: 'members',

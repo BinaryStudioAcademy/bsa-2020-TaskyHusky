@@ -90,7 +90,7 @@ const Boards: React.FC = () => {
 			{boardToDelete && <DeleteBoardModal board={boardToDelete} onClose={() => setBoardToDelete(null)} />}
 			<div className={styles.wrapper__title}>
 				<h1 className={styles.title}>{t('boards')}</h1>
-				<Button primary onClick={() => setIsModalShown(true)}>
+				<Button className="primaryBtn" onClick={() => setIsModalShown(true)}>
 					{t('create_board')}
 				</Button>
 			</div>

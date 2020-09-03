@@ -16,8 +16,10 @@ const ConfirmModal = ({ isOpened, setIsOpened, confirmAction, header, content }:
 			<p>{content}</p>
 		</Modal.Content>
 		<Modal.Actions>
-			<Button onClick={() => setIsOpened(false)}>No</Button>
-			<Button primary onClick={confirmAction}>
+			<Button className="cancelBtn" onClick={() => setIsOpened(false)}>
+				No
+			</Button>
+			<Button className="primaryBtn" onClick={confirmAction}>
 				Yes
 			</Button>
 		</Modal.Actions>

@@ -190,14 +190,18 @@ const CreateProjectModal: React.FC<Props> = ({ children }) => {
 							<div>
 								<h2>{template}</h2>
 								<p>{description}</p>
-								<Button color="grey" onClick={() => setIsTemplatesView(true)} disabled={isLoading}>
+								<Button
+									className="primaryBtn"
+									onClick={() => setIsTemplatesView(true)}
+									disabled={isLoading}
+								>
 									{t('change_template')}
 								</Button>
 							</div>
 						</div>
 					</Modal.Content>
 					<Modal.Actions>
-						<Button color="grey" onClick={onModalClose}>
+						<Button className="cancelBtn" onClick={onModalClose}>
 							{t('cancel')}
 						</Button>
 						<Button
@@ -205,7 +209,7 @@ const CreateProjectModal: React.FC<Props> = ({ children }) => {
 							labelPosition="right"
 							icon="checkmark"
 							onClick={onCreateProject}
-							primary
+							className="primaryBtn"
 							loading={isLoading}
 							disabled={isLoading}
 						/>

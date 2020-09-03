@@ -83,6 +83,7 @@ const CreateBoardModal = (props: Props) => {
 			<Modal.Actions>
 				{modalWindowName !== ModalNames.selectType ? (
 					<Button
+						className="cancelBtn"
 						onClick={() => {
 							selectModalWindowName(modalWindowName - 1);
 						}}
@@ -91,13 +92,13 @@ const CreateBoardModal = (props: Props) => {
 					</Button>
 				) : null}
 				{modalWindowName === ModalNames.selectAlgorithm ? (
-					<Button color={'facebook'} onClick={() => selectModalWindowName(ModalNames.createBoard)}>
+					<Button className="primaryBtn" onClick={() => selectModalWindowName(ModalNames.createBoard)}>
 						{t('next')}
 					</Button>
 				) : null}
 				{modalWindowName === ModalNames.createBoard ? (
 					<Button
-						color={'facebook'}
+						className="primaryBtn"
 						disabled={isCreateDisabled}
 						onClick={() => {
 							const { algorithm, admin, ...boardData } = board;
@@ -115,7 +116,7 @@ const CreateBoardModal = (props: Props) => {
 						{t('create_a_board')}
 					</Button>
 				) : null}
-				<Button color="blue" basic onClick={onCancelClick}>
+				<Button className="contentBtn" onClick={onCancelClick}>
 					{t('cancel')}
 				</Button>
 			</Modal.Actions>
