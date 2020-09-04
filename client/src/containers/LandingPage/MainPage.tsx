@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import LoginPage from 'containers/LoginPage';
 import SignUpForm from 'containers/SignUpForm';
 import manIcon from 'assets/images/landingPage/spaceMen.svg';
-import landingTitle from 'assets/images/landingPage/logo.svg';
+import logo from 'assets/logo192.png';
 import landingCircleIcon from 'assets/images/landingPage/mainPageLogo.svg';
 import styles from './styles.module.scss';
 import { useTranslation } from 'react-i18next';
@@ -24,7 +24,11 @@ const MainPage = ({ isLoginForm, setLoginForm }: Props) => {
 			</Grid.Column>
 			<Grid.Column mobile={16} tablet={8} computer={8} className={styles.formWrapper}>
 				<Segment className={styles.formSegment}>
-					<Image src={landingTitle} className={styles.title} />
+					<div className={styles.logoArea}>
+						<Image src={logo} alt={t('taskyhusky_logo')} className={styles.logoImage} />
+						<span className={`${styles.logoText}`}>TaskyHusky</span>
+					</div>
+
 					<Header as="h1" className={styles.title}>
 						{isLoginForm ? t('sign_in') : t('create_an_account')}
 					</Header>

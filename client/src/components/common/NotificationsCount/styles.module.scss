@@ -1,0 +1,20 @@
+@import '../../../styles/variables.scss';
+
+.notificationsIcon {
+	position: relative;
+}
+
+.counter {
+	background-color: $yellow;
+	width: 17px;
+	height: 17px;
+	border-radius: 50%;
+	font-size: 10px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: absolute;
+	top: -8px;
+	right: -8px;
+	color: #000;
+}

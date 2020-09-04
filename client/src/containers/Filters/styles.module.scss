@@ -1,6 +1,18 @@
 @import 'styles/mixins.scss';
 
 :global(#root) {
+	.wrapper__table {
+		position: relative;
+	}
+
+	.wrapperFilters {
+		margin-bottom: 20px;
+	}
+
+	.filters {
+		display: flex;
+	}
+
 	.filtersContainer {
 		display: flex;
 		flex-direction: column;
@@ -21,7 +33,7 @@
 		.titleWrapper {
 			display: flex;
 			flex-direction: row;
-			margin-bottom: 5px;
+			margin-bottom: 20px;
 			.titleContainer {
 				flex: 1 1 auto;
 			}
@@ -31,6 +43,22 @@
 				.createBtn {
 					@include primary-btn;
 				}
+			}
+		}
+	}
+	.imgWrapper {
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		.content {
+			display: flex;
+			flex-direction: column;
+			.img {
+				width: 200px;
+				margin: 10px;
+			}
+			.text {
+				text-align: center;
 			}
 		}
 	}

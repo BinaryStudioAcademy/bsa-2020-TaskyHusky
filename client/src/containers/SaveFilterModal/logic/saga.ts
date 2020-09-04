@@ -14,7 +14,7 @@ export function* saveNewFilter(action: ReturnType<typeof actions.startSavingFilt
 		yield put(actions.successSavingFilter({ id }));
 		yield put(actions.setRedirecting({ redirecting: true }));
 		yield put(actions.resetState());
-		yield put(fetchFilters());
+		yield put(fetchFilters({}));
 		NotificationManager.success(i18next.t('filter_was_saved'), i18next.t('success'), 4000);
 	} catch (error) {
 		NotificationManager.error(i18next.t('could_not_save_filter'), i18next.t('error'), 4000);

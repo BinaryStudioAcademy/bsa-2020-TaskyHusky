@@ -1,35 +1,35 @@
 @import 'styles/mixins.scss';
 
 .activityItem {
-  @include primary-box;
-  margin-bottom: 10px;
-  display: flex;
-  align-items: center;
-  padding: 24px;
+	@include primary-box;
+	margin-bottom: 10px;
+	display: flex;
+	align-items: center;
+	padding: 15px;
 }
 
 .icon {
-  margin-right: 14px !important;
+	margin-right: 14px !important;
 }
 
 .content {
-  @include primary-content;
-  margin: 0;
+	@include primary-content;
+	margin: 0;
 
-  &:hover {
-    border-bottom: 2px solid $yellow;
-  }
+	&:hover {
+		border-bottom: 2px solid $yellow;
+	}
 }
 
 .contentSecondary {
-  @include secondary-content;
+	@include secondary-content;
 
-  &:hover {
-    border-bottom: 2px solid $secondary-text;
-  }
+	&:hover {
+		border-bottom: 2px solid $secondary-text;
+	}
 }
 
 .block {
-  display: flex;
-  flex-direction: column;
+	display: flex;
+	flex-direction: column;
 }

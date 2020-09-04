@@ -1,5 +1,6 @@
 import React from 'react';
 import { Dropdown, Icon } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 import styles from 'styles/headerDropDown.module.scss';
 import { useTranslation } from 'react-i18next';
 
@@ -28,10 +29,10 @@ export const FiltersMenu = () => {
 					FavFilter #2
 				</Dropdown.Item>
 				<Dropdown.Divider />
-				<Dropdown.Item as="a" href="/filters">
+				<Dropdown.Item as={Link} to="/filters">
 					{t('view_all_filters')}
 				</Dropdown.Item>
-				<Dropdown.Item as="a" href="/advancedSearch">
+				<Dropdown.Item as={Link} to="/advancedSearch">
 					{t('advanced_search')}
 				</Dropdown.Item>
 			</Dropdown.Menu>

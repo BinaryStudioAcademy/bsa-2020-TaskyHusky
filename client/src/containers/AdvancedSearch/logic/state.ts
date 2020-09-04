@@ -13,6 +13,7 @@ export interface AdvancedSearch {
 	isFilterEdited: boolean;
 	issuesCount: number;
 	inputText: string;
+	filterPartsLoaded: boolean;
 }
 
 export const initialState: AdvancedSearch = {
@@ -22,4 +23,5 @@ export const initialState: AdvancedSearch = {
 	isFilterEdited: false,
 	issuesCount: 0,
 	inputText: '',
+	filterPartsLoaded: false,
 };

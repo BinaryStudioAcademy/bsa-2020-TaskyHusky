@@ -4,11 +4,10 @@ import PeopleListItem from './PeopleListItem';
 interface Props {
 	people: WebApi.Entities.UserProfile[];
 	handlerClickItem: (id: string) => void;
-	className?: string;
 }
 
-const PeopleList: React.FC<Props> = ({ people, handlerClickItem, className }): ReactElement => (
-	<div className={className}>
+const PeopleList: React.FC<Props> = ({ people, handlerClickItem }): ReactElement => (
+	<div className="cardContainer">
 		{people.map((person: WebApi.Entities.UserProfile) => (
 			<PeopleListItem person={person} handlerClick={() => handlerClickItem(person.id)} key={person.id} />
 		))}

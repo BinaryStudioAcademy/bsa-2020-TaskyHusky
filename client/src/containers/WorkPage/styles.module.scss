@@ -1,12 +1,18 @@
 @import 'styles/mixins.scss';
 
 .wrapper {
-  width: 100%;
-  background-color: $body-bg;
-  min-height: 100%;
-  overflow: hidden;
+	width: 100%;
+	background-color: $body-bg;
+	min-height: 100%;
+	overflow: hidden;
 }
 
 .container {
-  margin: 22px 10%;
+	margin: 22px 10%;
+}
+
+@media screen and (max-width: $medium-screen) {
+	.container {
+		margin: 22px 8%;
+	}
 }

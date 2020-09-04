@@ -10,10 +10,10 @@ import {
 	CreateDateColumn,
 	UpdateDateColumn,
 } from 'typeorm';
-import { ProjectLabel } from './ProjectLabel';
 
 import { IsNotEmpty, IsString, Length, IsUppercase, Matches, ValidateIf } from 'class-validator';
 import _ from 'lodash';
+import { ProjectLabel } from './ProjectLabel';
 import { Issue } from './Issue';
 import { Sprint } from './Sprint';
 import { Board } from './Board';
