@@ -17,6 +17,14 @@ import {
 	requestGetUserIssues,
 } from 'services/user.service';
 
+export enum ModeManager {
+	main = '',
+	email = 'emailManager',
+	account = 'accountManager',
+	profile = 'profileManager',
+	security = 'securityManager',
+}
+
 const ProfilePage = ({ id }: { id: string }) => {
 	const dispatch = useDispatch();
 	const { t } = useTranslation();
@@ -40,11 +48,11 @@ const ProfilePage = ({ id }: { id: string }) => {
 	});
 	const [user, setUser] = useState(userData);
 	const { isLoading } = user;
-	const [editMode, setEditMode] = useState<string>('');
+	const [editMode, setEditMode] = useState<ModeManager>(ModeManager.main);
 	const [isLoadAdditioanl, setIsLoadAdditional] = useState<boolean>(true);
 	const isCurrentUser = currentUser ? id === currentUser.id : false;
 
-	const showManager = (modeToShow: string) => {
+	const showManager = (modeToShow: ModeManager) => {
 		setEditMode(modeToShow);
 	};
 
@@ -84,7 +92,6 @@ const ProfilePage = ({ id }: { id: string }) => {
 		}
 		if (!activity.length) {
 			const { recentActivity } = await requestGetUserIssues(id);
-			console.log(recentActivity);
 			setData((data) => ({ ...data, activity: recentActivity }));
 		}
 		setIsLoadAdditional(false);

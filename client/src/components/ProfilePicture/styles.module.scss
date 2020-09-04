@@ -5,9 +5,8 @@
   text-align: center;
 }
 
-.managerButton {
+.button {
   width: 100%;
-  @include primary-btn;
   margin-bottom: 40px !important;
 }
 
@@ -78,4 +77,9 @@
   &:hover {
     opacity: 0.6;
   }
+}
+
+.canvas {
+  width: 144px;
+  height: 144px;
 }

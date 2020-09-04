@@ -1,7 +1,5 @@
 export enum creatingAlgorithms {
-	newProject = 'newProject',
 	existingProject = 'existingProject',
-	savedFilter = 'savedFilter',
 }
 
 export enum boardTypes {

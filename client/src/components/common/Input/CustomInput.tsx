@@ -43,6 +43,7 @@ const CustomInput = ({
 			wide="very"
 			trigger={
 				<Input
+					className={styles.input}
 					placeholder={placeholder}
 					onChange={onInputChange}
 					value={data}

@@ -126,7 +126,7 @@
 }
 
 @mixin primary-btn {
-	border: 1px solid $dark-black !important;
+	border: 1px solid $yellow !important;
 	box-sizing: border-box;
 	border-radius: 5px !important;
 	@include text-data;
@@ -190,5 +190,23 @@
 
 	&:focus {
 		border: 1px solid $yellow !important;
+	}
+}
+
+@mixin input {
+	border-radius: 6px;
+	outline: none !important;
+	cursor: text;
+
+	& input {
+		@include text-data;
+
+		&:focus {
+			border: 1px solid $yellow !important;
+		}
+	}
+
+	&:hover {
+		background-color: $ligth-gray;
 	}
 }

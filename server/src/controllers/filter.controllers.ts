@@ -2,12 +2,20 @@ import { Request, Response } from 'express';
 import { getCustomRepository } from 'typeorm';
 import { FilterRepository } from '../repositories/filter.repository';
 
+export type FilterBy = {
+	userId: string;
+};
+
 class FilterController {
 	getFilters = async (req: Request, res: Response): Promise<void> => {
 		const filterRepository = getCustomRepository(FilterRepository);
-
+		const filter = {} as FilterBy;
+		const { userId } = req.query;
+		if (userId) {
+			filter.userId = userId as string;
+		}
 		try {
-			const filters = await filterRepository.getAll();
+			const filters = await filterRepository.getAll(filter);
 			res.send(filters);
 		} catch (error) {
 			const { status }: { status: number } = error;

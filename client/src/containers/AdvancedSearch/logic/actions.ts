@@ -19,3 +19,4 @@ export const setAddedFilterParts = createAction<actionTypes.SetAddedFilterPartsA
 );
 export const resetState = createAction<actionTypes.LoadFilterByIdArgs>(actionTypes.RESET_STATE);
 export const setRedirectFilterId = createAction<actionTypes.RedirectId>(actionTypes.SET_REDIRECT);
+export const setContainTextInput = createAction<actionTypes.SetInputText>(actionTypes.SET_INPUT_TEXT);

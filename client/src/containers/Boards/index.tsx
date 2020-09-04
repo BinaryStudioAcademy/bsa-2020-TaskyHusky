@@ -1,5 +1,5 @@
 import React, { useState, ChangeEvent, useEffect, SyntheticEvent } from 'react';
-import { Button, Input, Table, Dropdown, DropdownProps } from 'semantic-ui-react';
+import { Button, Input, Table, Dropdown, DropdownProps, Popup } from 'semantic-ui-react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'typings/rootState';
 import * as actions from './logic/actions';
@@ -12,6 +12,7 @@ import styles from './styles.module.scss';
 import DeleteBoardModal from '../../components/deleteBoardModal';
 import { useTranslation } from 'react-i18next';
 import Spinner from '../../components/common/Spinner';
+import UserAvatar from 'components/common/UserAvatar';
 
 const Boards: React.FC = () => {
 	const { t } = useTranslation();
@@ -62,16 +63,6 @@ const Boards: React.FC = () => {
 			text: t('edit_settings'),
 		},
 		{
-			onClickAction: () => {},
-			id: board.id,
-			text: t('copy'),
-		},
-		{
-			onClickAction: () => {},
-			id: board.id,
-			text: t('move'),
-		},
-		{
 			onClickAction: getDeleteAction(board),
 			id: board.id,
 			text: t('delete'),
@@ -84,13 +75,17 @@ const Boards: React.FC = () => {
 		};
 	};
 
+	const projectsShown = 2;
+	const cellProjects = (board: WebApi.Board.IBoardModel) => (board.projects ?? []).slice(0, projectsShown);
+	const portalProjects = (board: WebApi.Board.IBoardModel) => (board.projects ?? []).slice(projectsShown);
+
 	return (
 		<div className={styles.wrapper}>
 			{isModalShown ? <CreateBoardModal setIsModalShown={setIsModalShown} onCreateBoard={onCreateBoard} /> : ''}
 			{boardToDelete && <DeleteBoardModal board={boardToDelete} onClose={() => setBoardToDelete(null)} />}
 			<div className={styles.wrapper__title}>
 				<h1 className={styles.title}>{t('boards')}</h1>
-				<Button primary onClick={() => setIsModalShown(true)}>
+				<Button className="primaryBtn" onClick={() => setIsModalShown(true)}>
 					{t('create_board')}
 				</Button>
 			</div>
@@ -107,13 +102,22 @@ const Boards: React.FC = () => {
 			</div>
 			<div className={styles.wrapper__table}>
 				{!isLoading && (
-					<Table celled fixed>
+					<Table selectable sortable>
 						<Table.Header>
 							<Table.Row>
-								<Table.HeaderCell width={5}>{t('name')}</Table.HeaderCell>
-								<Table.HeaderCell width={5}>{t('type')}</Table.HeaderCell>
-								<Table.HeaderCell width={5}>{t('admin')}</Table.HeaderCell>
-								<Table.HeaderCell width={1} />
+								<Table.HeaderCell width={4} className={styles.header__cell}>
+									{t('name')}
+								</Table.HeaderCell>
+								<Table.HeaderCell width={4} className={styles.header__cell}>
+									{t('type')}
+								</Table.HeaderCell>
+								<Table.HeaderCell width={4} className={styles.header__cell}>
+									{t('projects')}
+								</Table.HeaderCell>
+								<Table.HeaderCell width={4} className={styles.header__cell}>
+									{t('admin')}
+								</Table.HeaderCell>
+								<Table.HeaderCell width={1} className={styles.header__cell} />
 							</Table.Row>
 						</Table.Header>
 						<Table.Body>
@@ -126,12 +130,66 @@ const Boards: React.FC = () => {
 										</Table.Cell>
 										<Table.Cell>{boardType}</Table.Cell>
 										<Table.Cell>
-											<Link
-												to={`/profile/${user.id}`}
-											>{`${user.firstName} ${user.lastName}`}</Link>
+											{board.projects && board.projects.length ? (
+												<>
+													<span>
+														{cellProjects(board).map((project, i) => (
+															<span key={i}>
+																<a
+																	target="_blank"
+																	rel="noopener noreferrer"
+																	href={`/project/${project.id}/issues`}
+																>
+																	{project.name}
+																</a>
+																{cellProjects(board).length - 1 === i ? '' : ', '}
+															</span>
+														))}
+													</span>
+													<span>
+														{board.projects.length > projectsShown ? (
+															<Popup
+																openOnTriggerMouseEnter
+																closeOnPortalMouseLeave
+																trigger={
+																	<span className={styles.moreProjects}>, ...</span>
+																}
+																content={
+																	<div>
+																		{portalProjects(board).map((project, i) => (
+																			<span key={i}>
+																				<a
+																					target="_blank"
+																					rel="noopener noreferrer"
+																					href={`/project/${project.id}/issues`}
+																				>
+																					{project.name}
+																				</a>
+																				{portalProjects(board).length - 1 === i
+																					? ''
+																					: ', '}
+																			</span>
+																		))}
+																	</div>
+																}
+															/>
+														) : (
+															''
+														)}
+													</span>
+												</>
+											) : (
+												t('no')
+											)}
 										</Table.Cell>
-										<Table.Cell>
-											<Options config={getBoardMenuActions(board)} />
+										<Table.Cell className={styles.user_cell}>
+											<UserAvatar user={user as WebApi.Entities.UserProfile} small />
+											<Link to={`/profile/${user.id}`}>
+												{`${user.firstName} ${user.lastName}`}
+											</Link>
+										</Table.Cell>
+										<Table.Cell className={styles.options__cell}>
+											<Options config={getBoardMenuActions(board)} isBackgroundShown={false} />
 										</Table.Cell>
 									</Table.Row>
 								);

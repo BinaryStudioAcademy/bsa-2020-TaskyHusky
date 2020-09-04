@@ -1,0 +1,93 @@
+@import 'styles/mixins.scss';
+@import 'styles/variables.scss';
+
+.header_inner__container {
+    padding: 10px 0px 20px ;
+    position: relative;
+    display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+}
+
+.header_inner__title {
+    font-size: 24px;
+	margin: 0;
+	line-height: 1;
+}
+
+.body_inner__container {
+    margin: 0 20%;
+}
+
+.body_inner__find,
+.modal__find {
+    width: 100%;
+}
+
+.table__header_cell {
+	background-color: #f9fafb !important;
+	border-left: none !important;
+}
+
+.user__username {
+	display: flex;
+	align-items: center;
+	width: 100%; 
+}
+
+.user__email {
+    width: 44%;
+}
+
+.user__action {
+    width: 84px;
+}
+
+.column__name, 
+.column__email {
+    width: 40%;
+}
+
+
+.imgWrapper {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	.content {
+		display: flex;
+		flex-direction: column;
+		.img {
+			width: 200px;
+			margin: 10px;
+		}
+		.text {
+			text-align: center;
+		}
+	}
+}
+.label__example_title {
+	margin-right: 5px;
+}
+
+.primary__button {
+	@include primary-btn
+}
+
+.labels__list {
+	margin: 0 auto;
+	padding: 0;
+	padding-top: 20px;
+	list-style: none;
+	max-width: 500px;
+}
+
+.labels__list_item {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 10px;
+}
+
+.labels__list_actions {
+	display: flex;
+}

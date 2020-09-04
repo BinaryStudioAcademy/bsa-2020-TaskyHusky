@@ -63,6 +63,7 @@ const AddPeopleModal: React.FC<Props> = ({ isOpen = false, closeClb }): ReactEle
 			</Modal.Content>
 			<Modal.Actions>
 				<Button
+					className="cancelBtn"
 					onClick={() => {
 						setEmail('');
 						setEmailValid(true);
@@ -71,7 +72,7 @@ const AddPeopleModal: React.FC<Props> = ({ isOpen = false, closeClb }): ReactEle
 				>
 					{t('cancel')}
 				</Button>
-				<Button primary onClick={handlerSubmit} disabled={!(emailValid && !!email)}>
+				<Button className="primaryBtn" onClick={handlerSubmit} disabled={!(emailValid && !!email)}>
 					{t('send')}
 				</Button>
 			</Modal.Actions>

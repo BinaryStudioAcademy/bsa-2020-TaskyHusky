@@ -34,13 +34,11 @@ const AccountManager = () => {
 	return (
 		<section className={styles.container}>
 			{isDelete && <DeleteUserModal onClose={onClose} deleteUser={deleteUser} />}
-			<h3 className={styles.header}>{t('acc_pref')}</h3>
 			<div className={styles.card}>
+				<h3 className={styles.header}>{t('acc_pref')}</h3>
 				<p className={styles.textData}>{t('ctrl_settings')}</p>
 				<h4 className={styles.cardHeader}>{t('lang_reg')}</h4>
-				<p className={styles.textData}>
-					{t('content_lang')}
-				</p>
+				<p className={styles.textData}>{t('content_lang')}</p>
 				<LanguageSelect />
 				<h4 className={styles.cardHeader}>{t('del_acc')}</h4>
 				<p className={styles.textData}>{t('content_del')}</p>

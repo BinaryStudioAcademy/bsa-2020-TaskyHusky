@@ -100,6 +100,7 @@ export const loadIssuesAndCount = async (
 	from: number | undefined,
 	to: number | undefined,
 	sort: Sort,
+	inputText: string | undefined,
 ): Promise<WebApi.Result.IssueResult[]> => {
 	const res: Response = await callWebApi({
 		method: 'POST',
@@ -109,6 +110,7 @@ export const loadIssuesAndCount = async (
 			from,
 			to,
 			sort,
+			inputText,
 		},
 	});
 

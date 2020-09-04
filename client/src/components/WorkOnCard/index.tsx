@@ -1,44 +1,65 @@
 import React from 'react';
 import moment from 'moment';
 import styles from './styles.module.scss';
-import { Icon } from 'semantic-ui-react';
-import projectIcon from 'icons/profile/projectIcon.svg';
+import { Icon, Popup } from 'semantic-ui-react';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
+import { ActivityIssue } from 'containers/WorkPage/logic/state';
 
 interface Props {
-	issueKey: string;
-	description: string;
-	type: WebApi.Entities.IssueType;
-	project: {
-		id: string;
-		name: string;
-		category: string;
-	};
-	updated: Date;
+	issue: ActivityIssue;
 }
 
 const WorkOnCard: React.FC<Props> = (props: Props) => {
-	const { issueKey, description, type, project, updated } = props;
-
+	const {
+		issue: { issueKey, summary, type, project, updatedAt, priority },
+	} = props;
+	const { t } = useTranslation();
 	return (
 		<div className={styles.issue}>
-			<div className={styles.avatar}>
-				<p className={styles.avatarTitle}>{project.name[0]}</p>
-			</div>
-			<div className={styles.content}>
+			<Popup
+				content={`${t('project')}: ${project.name}`}
+				trigger={
+					<Link to={`/project/${project.id}/issues`}>
+						<div className={styles.avatar}>
+							<p className={styles.avatarTitle}>{project.name[0]}</p>
+						</div>
+					</Link>
+				}
+			/>
+			<Link to={`issue/${issueKey}`} className={styles.content}>
 				<div className={styles.mainInfo}>
 					<p className={styles.key}>{issueKey}</p>
-					<p className={styles.summary}>{description}</p>
-					<Icon name={type.icon as any} color={type.color as any} title={type.title} />
+					{priority && (
+						<Popup
+							content={`Priority: ${priority.title}`}
+							trigger={
+								<Icon
+									className={styles.priorityIcon}
+									key={`priorityIc-${priority.id}`}
+									color={priority.color as any}
+									name={priority.icon as any}
+								/>
+							}
+						/>
+					)}
+					<p className={styles.summary}>{summary}</p>
 				</div>
-				<div className={styles.mainInfo}>
-					<img src={projectIcon} alt="icon" className={styles.icon} />
-					<p className={styles.date}>{moment(updated).format('LLL')}</p>
-					<p className={styles.link}>
-						<Link to={`issue/${issueKey}`}>watch</Link>
-					</p>
+				<div className={`${styles.mainInfo} ${styles.hidden}`}>
+					<Popup
+						content={`Type: ${type.title}`}
+						trigger={
+							<Icon
+								name={type.icon as any}
+								color={type.color as any}
+								title={type.title}
+								className={styles.icon}
+							/>
+						}
+					/>
+					<p className={styles.date}>{moment(updatedAt).format('LLL')}</p>
 				</div>
-			</div>
+			</Link>
 		</div>
 	);
 };

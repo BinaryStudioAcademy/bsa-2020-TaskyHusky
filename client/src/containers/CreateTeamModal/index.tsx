@@ -73,6 +73,7 @@ const AddTeamPopup: React.FC<Props> = ({ isOpen = false, closeClb }): ReactEleme
 			</Modal.Content>
 			<Modal.Actions>
 				<Button
+					className="cancelBtn"
 					onClick={() => {
 						setTeamName('');
 						closeClb();
@@ -80,7 +81,7 @@ const AddTeamPopup: React.FC<Props> = ({ isOpen = false, closeClb }): ReactEleme
 				>
 					{t('cancel')}
 				</Button>
-				<Button primary onClick={handlerSubmit}>
+				<Button className="primaryBtn" onClick={handlerSubmit}>
 					{t('accept')}
 				</Button>
 			</Modal.Actions>

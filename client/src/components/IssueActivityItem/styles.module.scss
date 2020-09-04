@@ -5,7 +5,7 @@
   margin-bottom: 10px;
   display: flex;
   align-items: center;
-  padding: 24px;
+  padding: 17px 24px;
 }
 
 .icon {
@@ -15,8 +15,21 @@
 .content {
   @include primary-content;
   margin: 0;
+
+  &:hover {
+    border-bottom: 2px solid $yellow;
+  }
 }
 
 .contentSecondary {
   @include secondary-content;
+
+  &:hover {
+    border-bottom: 2px solid $secondary-text;
+  }
+}
+
+.block {
+  display: flex;
+  flex-direction: column;
 }

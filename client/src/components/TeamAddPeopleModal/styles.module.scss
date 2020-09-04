@@ -2,7 +2,6 @@
 
 .descriptionP {
   color: #cccccc;
-  margin: 20px 0;
 }
 
 .textModal {
@@ -22,6 +21,10 @@
 .field {
   width: 100%;
   margin: 1rem auto;
+  input {
+    border-radius: 0 !important;
+    width: 300px !important;
+  }
 }
 
 .border {
