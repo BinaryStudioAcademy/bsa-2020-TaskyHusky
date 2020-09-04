@@ -54,7 +54,7 @@ export const HeaderMenu = () => {
 		setRedirectToDashboards(!redirectToDashboards);
 	};
 
-	const renderDashboards = redirectToDashboards ? <Redirect to="/dashboards" /> : null;
+	const renderDashboards = redirectToDashboards ? <Redirect to="/my-work" /> : null;
 
 	return (
 		<>
