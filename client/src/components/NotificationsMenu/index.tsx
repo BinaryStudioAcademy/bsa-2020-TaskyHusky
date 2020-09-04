@@ -102,7 +102,7 @@ const NotificationsMenu: React.FC = () => {
 			onOpen={() => setIsOpened(true)}
 			open={isOpened}
 		>
-			<Dropdown.Menu className={styles.circularDropdownMenu} style={{ maxHeight: 700, overflowY: 'auto' }}>
+			<Dropdown.Menu className={styles.circularDropdownMenu}>
 				<Dropdown.Header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
 					{t('notifications')}
 					{isThereUnread ? (
@@ -111,6 +111,17 @@ const NotificationsMenu: React.FC = () => {
 						</Button>
 					) : null}
 				</Dropdown.Header>
+				<div style={{ maxHeight: 700, overflowY: 'auto' }}>
+					{displayNotifications.length ? (
+						displayNotifications.map((notif) => (
+							<div style={{ paddingLeft: 10, paddingRight: 10 }} key={notif.id}>
+								<UserNotification notification={notif} />
+							</div>
+						))
+					) : (
+						<ClosingItem>{t('no')}</ClosingItem>
+					)}
+				</div>
 				<Dropdown.Item>
 					<Checkbox
 						toggle
@@ -121,15 +132,6 @@ const NotificationsMenu: React.FC = () => {
 						label={t('show_notifs_during_last_10_days')}
 					/>
 				</Dropdown.Item>
-				{displayNotifications.length ? (
-					displayNotifications.map((notif) => (
-						<div style={{ paddingLeft: 10, paddingRight: 10 }} key={notif.id}>
-							<UserNotification notification={notif} />
-						</div>
-					))
-				) : (
-					<ClosingItem>{t('no')}</ClosingItem>
-				)}
 			</Dropdown.Menu>
 		</Dropdown>
 	);
