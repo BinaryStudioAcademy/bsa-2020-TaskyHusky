@@ -61,7 +61,7 @@ export const HeaderMenu = () => {
 			<div className={`${styles.segmentWrapper} site-header site-header-wrapper`}>
 				<Menu secondary className={styles.menuWrapper}>
 					<Menu.Item onClick={logoClickHandler} className={`${styles.logoItem} site-logo`}>
-						<Image src={logo} size="mini" alt={t('taskyhusky_logo')} />
+						<Image src={logo} alt={t('taskyhusky_logo')} className={styles.logoImage} />
 						<span className={`${styles.logoText} site-logo-text`}>TaskyHusky</span>
 					</Menu.Item>
 					<Menu.Item
