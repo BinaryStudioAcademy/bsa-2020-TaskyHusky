@@ -1,6 +1,6 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Header, Button, Loader } from 'semantic-ui-react';
+import { Button, Loader } from 'semantic-ui-react';
 import PeopleList from '../../components/PeopleList';
 import TeamsList from '../../components/TeamsList';
 import AddTeamPopup from '../../containers/CreateTeamModal';
@@ -36,26 +36,25 @@ const People: React.FC = (): ReactElement => {
 
 	return (
 		<main className={style.main}>
-			<div className={style.btnContainer}>
-				<Button onClick={() => setIsOpenAddNewTeamPopup(true)} className="contentBtn">
-					<span className={style.editBtnValue}>{t('create_team')} </span>
-				</Button>
-				<Button className="primaryBtn" onClick={() => setIsAddPeople(true)}>
-					{t('add_people')}
-				</Button>
+			<div className={style.mainHeader}>
+				<h1 className={style.header}>{t('people_and_teams')}</h1>
+				<div className={style.btnContainer}>
+					<Button onClick={() => setIsOpenAddNewTeamPopup(true)} className="contentBtn">
+						<span className={style.editBtnValue}>{t('create_team')} </span>
+					</Button>
+					<Button className={`primaryBtn ${style.button}`} onClick={() => setIsAddPeople(true)}>
+						{t('add_people')}
+					</Button>
+				</div>
 			</div>
 			<SearchField />
 			{isLoading && <Loader active inline={'centered'} />}
 			{!isLoading && (
 				<>
-					<Header as="h3">{t('people')}</Header>
-					<PeopleList
-						people={people}
-						handlerClickItem={redirectToPersonProfile}
-						className={style.listContainer}
-					/>
-					<Header as="h3">{t('your_teams')}</Header>
-					<TeamsList teams={teams} handlerClickItem={redirectToTeamPage} className={style.listContainer} />
+					<h3 className={style.contentHeader}>{t('people')}</h3>
+					<PeopleList people={people} handlerClickItem={redirectToPersonProfile} />
+					<h3 className={style.contentHeader}>{t('your_teams')}</h3>
+					<TeamsList teams={teams} handlerClickItem={redirectToTeamPage} />
 					<AddTeamPopup isOpen={isOpenAddNewTeamPopup} closeClb={() => setIsOpenAddNewTeamPopup(false)} />
 					<AddPeopleModal isOpen={isAddPeople} closeClb={() => setIsAddPeople(false)} />
 				</>

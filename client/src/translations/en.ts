@@ -74,6 +74,7 @@ export const en = {
 	next_tip: 'Next tip',
 	next: 'Next',
 	devs: 'Devs',
+	member: 'member',
 	members: 'Members',
 	members_lower: 'members',
 	worked_on: 'Worked on',
@@ -459,4 +460,5 @@ export const en = {
 	could_not_update_filter: "Can't update filter",
 	no_filters: 'No filters found',
 	add_changes: 'Please, add changes to enable button',
+	people_and_teams: 'People and Teams',
 };

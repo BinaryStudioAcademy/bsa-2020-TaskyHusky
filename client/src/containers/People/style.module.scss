@@ -1,14 +1,40 @@
-.listContainer {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  grid-gap: 20px;
-}
+@import 'styles/mixins.scss';
 
 .main {
-  padding: 1rem 2rem;
+  width: 100%;
+  background-color: #f5f7f9;
+  min-height: 100%;
+  overflow: hidden;
+  padding: 30px 10%;
 }
 
-.btnContainer {
+.button {
+  margin-left: 20px !important;
+}
+
+.header {
+  @include primary-header;
+  color: #000000de !important;
+}
+
+.contentHeader {
+  @include info-block-header;
+}
+
+.mainHeader {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+@media screen and (max-width: $medium-screen) {
+  .main {
+    padding: 30px 8%;
+  }
+}
+
+@media screen and (max-width: $less-than-medium-screen) {
+  .mainHeader {
+    display: block;
+  }
 }

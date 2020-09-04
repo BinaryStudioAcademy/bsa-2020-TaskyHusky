@@ -1,4 +1,14 @@
+@import 'styles/mixins.scss';
+
 .field {
-  width: 100%;
-  margin: 1rem auto;
+  @include input;
+  width: 243px !important;
+
+  div:hover {
+    background-color: none !important;
+  }
+
+  & input {
+    border-radius: 6px !important;
+  }
 }

@@ -76,7 +76,6 @@ const SearchField: React.FC = (): ReactElement => {
 				category
 				onSearchChange={handlerChange}
 				className={style.field}
-				size="large"
 				input={{ fluid: true, placeholder: t('search_people_page_placeholder') }}
 				results={results}
 				resultRenderer={resultRender}

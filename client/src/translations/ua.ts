@@ -74,7 +74,9 @@ export const ua = {
 	next_tip: 'Наступна порада',
 	devs: 'Розробки',
 	members: 'Учасники',
+	member: 'учасник',
 	members_lower: 'учасників',
+	people_and_teams: 'Люди и команди',
 	worked_on: 'Виконувалася робота',
 	no_works: 'Тут ще нема робіт',
 	kanban_description:
