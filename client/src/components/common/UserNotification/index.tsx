@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './styles.module.scss';
 import { useDispatch } from 'react-redux';
 import * as actions from 'components/NotificationsMenu/logic/actions';
-import { Button } from 'semantic-ui-react';
+import { Button, Icon } from 'semantic-ui-react';
 import moment from 'moment';
 import { useTranslation } from 'react-i18next';
 
@@ -28,31 +28,32 @@ const UserNotification: React.FC<Props> = ({ notification }) => {
 	const renderButton = !isViewed ? (
 		<Button
 			onClick={view}
-			className="cancelBtn"
 			size="mini"
-			style={{ marginTop: 10, paddingTop: 3, paddingBottom: 3 }}
-		>
-			{t('mark_notif_as_read')}
-		</Button>
+			icon={<Icon name="close" style={{ color: '#fece2f' }} />}
+			title={t('mark_notif_as_read')}
+			style={{ backgroundColor: 'black', paddingTop: 0, paddingBottom: 0, height: 20 }}
+		/>
 	) : (
 		<Button
 			onClick={unview}
-			className="contentBtn"
-			compact
+			icon="eye slash"
+			title={t('mark_notif_as_unread')}
+			basic
 			size="mini"
-			style={{ marginTop: 10, paddingTop: 3, paddingBottom: 3 }}
-		>
-			{t('mark_notif_as_unread')}
-		</Button>
+			style={{ paddingTop: 0, paddingBottom: 0, height: 20 }}
+		/>
 	);
 
 	return (
 		<div className={styles.container}>
-			<div style={{ display: 'flex' }}>
-				{renderTitle}
-				<div style={{ marginLeft: 10, position: 'relative', top: 5 }}>
-					{moment(notification.createdAt).fromNow()}
+			<div style={{ display: 'flex', justifyContent: 'space-between' }}>
+				<div style={{ display: 'flex' }}>
+					{renderTitle}
+					<div style={{ marginLeft: 10, position: 'relative', top: 5 }}>
+						{moment(notification.createdAt).fromNow()}
+					</div>
 				</div>
+				{renderButton}
 			</div>
 			<div style={{ width: '100%', whiteSpace: 'pre-wrap', lineHeight: 1.4 }}>
 				{link ? (
@@ -63,7 +64,6 @@ const UserNotification: React.FC<Props> = ({ notification }) => {
 					text
 				)}
 			</div>
-			{renderButton}
 		</div>
 	);
 };
