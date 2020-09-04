@@ -5,10 +5,10 @@
 	overflow-y: auto;
 	box-sizing: border-box;
 	height: 100vh !important;
-	background-color: $primary-bg;
+	background-color: $header-text;
 	position: relative !important;
 	& > * {
-		color: $primary-bg !important;
+		color: $header-text !important;
 	}
 	.mainImgWrapper {
 		display: flex !important;
@@ -17,7 +17,7 @@
 	}
 	.formWrapper {
 		.title {
-			color: $primary-bg !important;
+			color: $header-text !important;
 			margin-bottom: 20px;
 		}
 		.formSegment {
@@ -62,7 +62,7 @@
 					color: $yellow !important;
 					& a:hover,
 					& span:hover {
-						color: $primary-bg !important;
+						color: $header-text !important;
 					}
 				}
 			}
