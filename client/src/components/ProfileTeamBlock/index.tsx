@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './styles.module.scss';
-import teamIcon from 'icons/profile/teamIcon.svg';
+import teamIcon from 'icons/profile/teams.svg';
 import { Link } from 'react-router-dom';
 
 interface Props {

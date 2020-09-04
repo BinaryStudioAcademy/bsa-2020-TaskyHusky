@@ -70,25 +70,26 @@ const CropModal: React.FC<Props> = (props: Props) => {
 	return (
 		<Portal onClose={() => onClose()} open={true} size="tiny" dimmer="inverted" className={styles.modal}>
 			<div className={styles.modalOverlay}>
-				<div className={styles.modal}>
-					<h2>{t('save_not_secure')}</h2>
-					<ReactCrop
-						src={uploadUrl as string}
-						onImageLoaded={onLoad}
-						crop={crop as Crop}
-						onChange={onChange}
-						onComplete={(c: Crop, pxc: Crop) => {
-							setCompletedCrop(c);
-						}}
-					/>
-					<div className={styles.footer}>
-					<Button className="cancelBtn" onClick={onClose}>
-							{t('cancel')}
-						</Button>
-						<Button className={`primaryBtn ${styles.button}`} onClick={submitForm}>
-							{t('save_changes')}
-						</Button>
-
+				<div className={styles.modalContainer}>
+					<div className={styles.modal}>
+						<h2 className={styles.header}>{t('save_not_secure')}</h2>
+						<ReactCrop
+							src={uploadUrl as string}
+							onImageLoaded={onLoad}
+							crop={crop as Crop}
+							onChange={onChange}
+							onComplete={(c: Crop, pxc: Crop) => {
+								setCompletedCrop(c);
+							}}
+						/>
+						<div className={styles.footer}>
+							<Button className="cancelBtn" onClick={onClose}>
+								{t('cancel')}
+							</Button>
+							<Button className={`primaryBtn ${styles.button}`} onClick={submitForm}>
+								{t('save_changes')}
+							</Button>
+						</div>
 					</div>
 				</div>
 				<div className={styles.canvasWrap}>

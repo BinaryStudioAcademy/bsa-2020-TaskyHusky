@@ -6,13 +6,20 @@
 }
 
 .button {
-  @include content-btn;
+  @include text-data;
   border: none !important;
   text-align: left !important;
-  margin: 10px 0 !important;
   padding: 10px;
+  // margin-bottom: 10px !important;
   padding-top: 7px !important;
   padding-bottom: 7px !important;
+  background-color: $primary-bg !important;
+  border-radius: 0 !important;
+  height: 41px;
+
+  &:hover {
+    background-color: $border !important;
+  }
 }
 
 .primaryBtn {
