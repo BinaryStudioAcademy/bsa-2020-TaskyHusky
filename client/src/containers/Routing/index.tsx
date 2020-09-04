@@ -20,7 +20,6 @@ import NotFound from 'pages/404';
 import Search from 'pages/AdvancedSearch';
 import Work from 'pages/Work';
 import ResetPassword from '../ResetPassword';
-import ForgotPassword from '../ForgotPassword';
 import ResetEmail from '../ResetEmail';
 import Landing from 'pages/LandingPage';
 
@@ -42,7 +41,6 @@ const Routing: React.FC = () => {
 	return (
 		<Switch>
 			<PublicRoute restricted exact path={['/', '/login', '/signup']} component={Landing} />
-			<PublicRoute exact restricted path="/forgot-password" component={ForgotPassword} />
 			<Route exact path="/reset-password/:token" component={ResetPassword} />
 			<PrivateRoute path="/reset-email/:token/:emailBtoa" component={ResetEmail} />
 			<PrivateRoute path="/issue/:key" component={IssuePage} />

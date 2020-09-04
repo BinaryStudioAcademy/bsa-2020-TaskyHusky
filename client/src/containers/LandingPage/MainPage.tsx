@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Grid, Image, Segment, List, Header } from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
 import LoginPage from 'containers/LoginPage';
 import SignUpForm from 'containers/SignUpForm';
+import ForgetPassword from 'containers/ForgotPassword';
 import manIcon from 'assets/images/landingPage/spaceMen.svg';
 import landingTitle from 'assets/images/landingPage/logo.svg';
 import landingCircleIcon from 'assets/images/landingPage/mainPageLogo.svg';
@@ -16,7 +16,7 @@ type Props = {
 
 const MainPage = ({ isLoginForm, setLoginForm }: Props) => {
 	const { t } = useTranslation();
-
+	const [forgetPass, setForgetPass] = useState<boolean>(false);
 	return (
 		<Grid className={styles.pageWrapper}>
 			<Grid.Column mobile={16} tablet={8} computer={8} className={styles.mainImgWrapper}>
@@ -31,23 +31,18 @@ const MainPage = ({ isLoginForm, setLoginForm }: Props) => {
 					{isLoginForm ? <LoginPage /> : <SignUpForm />}
 					<List horizontal link className={styles.list}>
 						{isLoginForm && (
-							<List.Item className={styles.listItem}>
-								<Link to="/forgot-password" children={t('cant_login')} />
+							<List.Item className={styles.listItem} onClick={() => setForgetPass(true)}>
+								<span className={styles.title}>{t('cant_login')}</span>
 							</List.Item>
 						)}
-						<List.Item>
-							<div>
+						<List.Item onClick={() => setLoginForm(!isLoginForm)}>
+							<div className={styles.bottomNavigation}>
 								{isLoginForm ? (
-									<span className={styles.listItem} onClick={() => setLoginForm(!isLoginForm)}>
-										{t('sign_up')}
-									</span>
+									<span className={`${styles.listItem} ${styles.padding1}`}>{t('sign_up')}</span>
 								) : (
 									<>
 										<span className={styles.title}>{t('already_have_a_account')}</span>
-										<span
-											className={`${styles.listItem} ${styles.marginLeft}`}
-											onClick={() => setLoginForm(!isLoginForm)}
-										>
+										<span className={`${styles.listItem} ${styles.marginLeft}`}>
 											{t('sign_in')}
 										</span>
 									</>
@@ -55,6 +50,7 @@ const MainPage = ({ isLoginForm, setLoginForm }: Props) => {
 							</div>
 						</List.Item>
 					</List>
+					{forgetPass && <ForgetPassword onClose={setForgetPass} />}
 				</Segment>
 			</Grid.Column>
 			<Image src={landingCircleIcon} className={`${styles.absIcon} ${styles.topRight}`} />

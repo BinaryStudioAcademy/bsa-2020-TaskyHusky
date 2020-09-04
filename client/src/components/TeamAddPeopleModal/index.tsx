@@ -65,7 +65,7 @@ const TeamAddPeopleModal = ({ onConfirm, onClose, search, searchLoading, people,
 				{chosenUsers.length > 0 && <ChosenPeople users={chosenUsers} />}
 				<Search
 					disabled={chosenUsers.length >= 4}
-					input={{ icon: 'search', iconPosition: 'left', fluid: true }}
+					input={{ icon: 'search', iconPosition: 'left' }}
 					onSearchChange={handlerChange}
 					loading={searchLoading}
 					className={styles.field}

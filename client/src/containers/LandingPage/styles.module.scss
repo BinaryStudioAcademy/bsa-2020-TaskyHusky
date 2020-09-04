@@ -34,16 +34,21 @@
     .list {
       width: 100% !important;
       text-align: center !important;
+      .padding1 {
+        padding-bottom: 3px;
+      }
       .listItem {
+        font-size: 1.1rem !important;
         cursor: pointer;
+        color: $yellow !important;
         &:hover {
           border-bottom: 1px solid $yellow;
+          color: $primary-bg !important;
         }
-        &,
-        * {
-          color: $yellow !important;
-          & a:hover,
-          & span:hover {
+        *,
+        .bottomNavigation {
+          color: inherit !important;
+          &:hover {
             color: $primary-bg !important;
           }
         }
@@ -61,6 +66,10 @@
   .leftBottom {
     bottom: 20px;
     left: 20px;
+  }
+  .bottomNavigation {
+    z-index: 100;
+    margin-top: 10px;
   }
 }
 
