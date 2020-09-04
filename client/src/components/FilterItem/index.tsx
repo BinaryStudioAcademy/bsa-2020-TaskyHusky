@@ -1,10 +1,12 @@
-import React from 'react';
-import { Table } from 'semantic-ui-react';
+import React, { useState } from 'react';
+import { Table, Rating } from 'semantic-ui-react';
 import styles from './styles.module.scss';
 import { useTranslation } from 'react-i18next';
 import UserAvatar from 'components/common/UserAvatar';
 import Options, { ConfigItem } from 'components/common/Options';
 import { Link, useHistory } from 'react-router-dom';
+import { RootState } from 'typings/rootState';
+import { useSelector } from 'react-redux';
 
 interface Props {
 	filter: WebApi.Entities.Filter;
@@ -15,8 +17,27 @@ interface Props {
 const FilterItem: React.FC<Props> = (props: Props) => {
 	const { t } = useTranslation();
 	const history = useHistory();
-	const { filter, fullName } = props;
+
+	const { user } = useSelector((rootState: RootState) => rootState.auth);
+	const { filter, fullName, updateFilter } = props;
+
 	const { id, name, owner, staredBy } = filter;
+
+	const [sratedByCount, setSratedByCount] = useState<number>(staredBy?.length || 0);
+	const [isStared, setIsStared] = useState(Boolean(staredBy?.find(({ id }) => user?.id === id)));
+
+	const onSetFavorite = () => {
+		const updated = isStared
+			? staredBy?.filter(({ id }) => id !== user?.id)
+			: ([...(staredBy || []), user] as WebApi.Entities.UserProfile[]);
+		setIsStared(!isStared);
+		updateFilter({
+			...filter,
+			staredBy: updated,
+		});
+		const inc = isStared ? -1 : 1;
+		setSratedByCount(sratedByCount + inc);
+	};
 
 	const config: ConfigItem[] = [
 		{
@@ -38,6 +59,10 @@ const FilterItem: React.FC<Props> = (props: Props) => {
 
 	return (
 		<Table.Row key={id}>
+			<Table.Cell
+				className={styles.starCell}
+				children={<Rating onRate={onSetFavorite} icon="star" defaultRating={isStared ? 1 : 0} maxRating={1} />}
+			/>
 			<Table.Cell className={styles.filterNameCell} children={<a href={`/advancedSearch/${id}`}>{name}</a>} />
 			<Table.Cell
 				className={styles.userCell}
@@ -52,7 +77,7 @@ const FilterItem: React.FC<Props> = (props: Props) => {
 				className={styles.favoriteCell}
 				children={
 					<>
-						{staredBy?.length} {staredBy?.length === 1 ? t('person') : t('people_rating')}
+						{sratedByCount} {sratedByCount === 1 ? t('person') : t('people_rating')}
 					</>
 				}
 			/>

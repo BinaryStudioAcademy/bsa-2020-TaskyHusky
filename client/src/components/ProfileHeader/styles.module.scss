@@ -1,12 +1,13 @@
 @import 'styles/mixins.scss';
 
 .header {
-  background: $body-bg;
-  height: 90px;
-  border-bottom: 1px solid $ligth-gray;
-  padding: 34px 13% 21px;
+	background: $body-bg;
+	height: 90px;
+	border-bottom: 1px solid $ligth-gray;
+	padding: 34px 13% 21px;
 }
 
 .content {
-  @include primary-header;
+	@include primary-header;
+	color: #000000de !important;
 }

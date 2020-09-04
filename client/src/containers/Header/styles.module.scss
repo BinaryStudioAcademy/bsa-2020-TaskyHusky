@@ -1,7 +1,9 @@
 @import '../../styles/variables.scss';
+@import 'styles/mixins.scss';
+
 :global(#root) {
 	.menuWrapper > * {
-		color: $header-text !important;
+		color: $header-text;
 		padding: 7px 13px;
 	}
 
@@ -23,7 +25,7 @@
 		margin: 0 !important;
 		z-index: 1000;
 		background-color: #ffffff;
-		height: 70px;
+		height: 200px;
 		box-shadow: 0 3px 2px 0 #0003;
 		@media (max-width: 660px) {
 			& * {
@@ -40,7 +42,7 @@
 	}
 
 	.logoItem {
-		padding: 5px 7px;
+		padding: 0;
 		@media (max-width: 1080px) {
 			span {
 				display: none;
@@ -55,34 +57,33 @@
 		}
 	}
 
+	.userNameText {
+		font-weight: bold;
+	}
+
 	.createMenuItem {
-		font-weight: 400;
-		font-size: 12px;
-		height: 100%;
-		border-radius: 5px;
-		border: 1px solid $header-text;
+		@include primary-btn;
+
 		@media (max-width: 900px) {
-			font-size: 0;
-			padding: 10px;
-			i {
-				margin: 0 !important;
+			font-size: 0 !important;
+			padding: 7px 9px;
+
+			&:after {
+				font-size: 20px !important;
+				font-weight: bold;
+				content: '+' !important;
 			}
 		}
+	}
 
-		* {
-			font-size: 12px;
-		}
-
-		&:hover {
-			background-color: $header-text;
-			color: white;
-		}
+	.logoImage {
+		width: 45px;
 	}
 
 	.logoText {
 		margin: 0 50px 0 10px;
 		font-weight: 900;
-		font-size: 24px;
+		font-size: 26px;
 	}
 
 	.circularIcon {
@@ -96,7 +97,7 @@
 			display: none;
 		}
 		&:hover {
-			background: rgba(0, 0, 0, 0.05);
+			background: rgba(255, 255, 255, 0.1);
 			padding: 9px;
 		}
 
@@ -136,9 +137,9 @@
 	margin-right: 10px;
 }
 .blackLink {
-	color: #19191d !important;
+	color: $header-text;
 	&:hover {
-		color: #19191d !important;
+		color: $header-text;
 	}
 }
 .userBlock {
