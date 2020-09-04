@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Menu, Image, Dropdown, Button, Icon } from 'semantic-ui-react';
-import logo from 'assets/logo192.png'; // TODO: replace with logo once it is ready
+import logo from 'assets/logo192.png';
 import styles from './styles.module.scss';
 import { Link, Redirect, useRouteMatch, RouteProps } from 'react-router-dom';
 import ProjectsMenu from 'components/ProjectsMenu';
