@@ -1,7 +1,8 @@
 import { v4 } from 'uuid';
-import { EntityRepository, Repository, DeleteResult, getRepository } from 'typeorm';
+import { EntityRepository, Repository, DeleteResult, getCustomRepository, Any } from 'typeorm';
+import { UserProfile } from '../entity/UserProfile';
+import { UserRepository } from './user.repository';
 import { Filter } from '../entity/Filter';
-import { FilterBy } from '../controllers/filter.controllers';
 
 @EntityRepository(Filter)
 export class FilterRepository extends Repository<Filter> {
@@ -9,14 +10,9 @@ export class FilterRepository extends Repository<Filter> {
 		return this.findOneOrFail({ where: { name } });
 	}
 
-	getAll(filter: FilterBy): Promise<Filter[]> {
+	getAll(): Promise<Filter[]> {
 		return this.find({
 			relations: ['owner', 'staredBy', 'filterParts'],
-			where: {
-				owner: {
-					id: filter.userId,
-				},
-			},
 		});
 	}
 
@@ -25,6 +21,24 @@ export class FilterRepository extends Repository<Filter> {
 			relations: ['owner', 'filterParts', 'filterParts.filterDef'],
 			where: {
 				id,
+			},
+		});
+	}
+
+	async getTeammateFilters(userId: string) {
+		const userRepository = getCustomRepository(UserRepository);
+
+		const user = await userRepository.getUserTeammates(userId);
+
+		const teammatesIds = user?.teammates?.map(({ id }) => id);
+		console.log('\n\nteammatesIds\n\n\n\n\n\n\n\n', teammatesIds);
+		const ids = teammatesIds ? [...teammatesIds, userId] : [userId];
+		return this.find({
+			relations: ['owner', 'staredBy'],
+			where: {
+				owner: {
+					id: Any(ids),
+				},
 			},
 		});
 	}
