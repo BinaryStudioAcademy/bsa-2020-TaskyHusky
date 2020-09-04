@@ -1,4 +1,4 @@
-import React, { useEffect, useState, ChangeEvent } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './styles.module.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import * as actions from './logic/actions';
@@ -17,15 +17,14 @@ const Filters: React.FC = () => {
 	const { filters, isLoading } = useSelector((rootState: RootState) => rootState.filters);
 	const { user } = useSelector((rootState: RootState) => rootState.auth);
 	const [isTableEmpty, setIsTableEmpty] = useState(false);
-
-	const [searchName, setSearchName] = useState('');
+	const [searchName, setSearchName] = useState<string>('');
 
 	const filterFilters = () => {
 		if (searchName === '') {
 			return filters;
 		}
 
-		const searchString = new RegExp(searchName, 'i');
+		const searchString = new RegExp(searchName, 'gi');
 		const filteredFilters = filters.filter(({ name }) => searchString.test(name));
 		return filteredFilters;
 	};
@@ -35,12 +34,6 @@ const Filters: React.FC = () => {
 	useEffect(() => {
 		setIsTableEmpty(filteredFilters.length === 0);
 	}, [filteredFilters.length]);
-
-	const onSearch = (event: ChangeEvent<HTMLInputElement>) => {
-		event.stopPropagation();
-		const searchValue = event.target.value;
-		setSearchName(searchValue);
-	};
 
 	const updateFilter = (data: WebApi.Entities.Filter) => {
 		dispatch(
@@ -69,7 +62,12 @@ const Filters: React.FC = () => {
 					</div>
 				</div>
 				<div className={[styles.wrapperFilters, styles.filters].join(' ')}>
-					<Input icon="search" placeholder={t('search')} onChange={onSearch} value={searchName} />
+					<Input
+						icon="search"
+						placeholder={t('search')}
+						onChange={(event, data) => setSearchName(data.value)}
+						value={searchName}
+					/>
 				</div>
 			</div>
 			<div className={styles.wrapper__table}>
