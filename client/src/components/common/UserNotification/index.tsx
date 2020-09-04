@@ -26,7 +26,7 @@ const UserNotification: React.FC<Props> = ({ notification }) => {
 	const renderTitle = title ? <h3 style={{ marginBottom: 10 }}>{title}</h3> : null;
 
 	const renderButton = !isViewed ? (
-		<Icon name="close" title={t('mark_notif_as_read')} onClick={view} link />
+		<Icon name="close" style={{ color: '#deae0f' }} title={t('mark_notif_as_read')} onClick={view} link />
 	) : (
 		<Icon name="eye slash" title={t('mark_notif_as_unread')} onClick={unview} link />
 	);
