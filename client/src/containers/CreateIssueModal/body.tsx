@@ -101,7 +101,13 @@ const CreateIssueModalBody: React.FC<Props> = ({
 		text: getUsername(user),
 	}));
 
-	const getSetOpenFunc = (value: boolean) => () => setIsOpened(value);
+	const getSetOpenFunc = (value: boolean) => () => {
+		if (value) {
+			clearContext();
+		}
+
+		setIsOpened(value);
+	};
 
 	const submit = async (event: React.FormEvent) => {
 		event.preventDefault();
@@ -170,16 +176,15 @@ const CreateIssueModalBody: React.FC<Props> = ({
 			closeOnEscape
 			closeOnDimmerClick
 			onClose={getSetOpenFunc(false)}
-			onOpen={clearContext}
+			onOpen={getSetOpenFunc(true)}
 			openOnTriggerClick
-			trigger={<div onClick={getSetOpenFunc(true)}>{children}</div>}
-			style={{ maxWidth: 700, height: '70%' }}
+			trigger={children}
 		>
 			<Modal.Header>
 				<Header as="h1">{t('create_issue')}</Header>
 			</Modal.Header>
-			<Modal.Content scrolling style={{ maxHeight: '90%', height: '90%' }}>
-				<Form as="div">
+			<Modal.Content scrolling>
+				<Form as="span">
 					<Form.Field>
 						<label className="required">{t('type')}</label>
 						<Form.Dropdown
@@ -281,11 +286,11 @@ const CreateIssueModalBody: React.FC<Props> = ({
 				</Form>
 			</Modal.Content>
 			<Modal.Actions style={{ height: 67 }}>
-				<div style={{ float: 'right' }}>
+				<div style={{ display: 'flex', justifyContent: 'flex-end' }}>
 					<Button className="primaryBtn" type="submit">
 						{t('submit')}
 					</Button>
-					<Button onClick={getSetOpenFunc(false)} className="cancelBtn" compact>
+					<Button onClick={getSetOpenFunc(false)} className="cancelBtn">
 						{t('cancel')}
 					</Button>
 				</div>
