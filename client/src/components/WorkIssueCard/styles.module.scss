@@ -32,11 +32,12 @@
 
 @media screen and (max-width: $mobile-screen) {
   .issue {
+    flex-wrap: wrap;
     border-bottom: 1px solid $border;
   }
 
   .summary {
-    width: auto;
-    margin-top: 10px;
+    min-width: 100%;
+    margin: 10px 0 10px 10px;
   }
 }

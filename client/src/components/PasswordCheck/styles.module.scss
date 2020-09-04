@@ -1,9 +1,11 @@
+@import 'styles/mixins.scss';
+
 .red {
 	background-color: #ef7676;
 }
 
 .yellow {
-	background-color: #e2ef10;
+	background-color: $yellow;
 }
 
 .green {

@@ -126,7 +126,7 @@
 }
 
 @mixin primary-btn {
-	border: 1px solid $dark-black !important;
+	border: 1px solid $yellow !important;
 	box-sizing: border-box;
 	border-radius: 5px !important;
 	@include text-data;

@@ -18,8 +18,6 @@ const ManagerWorkSection: React.FC<Props> = (props: Props) => {
 			return <WorkOnBlock activityIssues={activityIssues} />;
 		case 'assigned':
 			return <WorkAssignedBlock assignedIssues={assignedIssues} />;
-		case 'starred':
-			return <WorkProjectBlock projects={projects} />;
 		case 'projects':
 		default:
 			return <WorkProjectBlock projects={projects} />;

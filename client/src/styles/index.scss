@@ -114,9 +114,9 @@ label {
 
 .workBlock {
 	background-color: $primary-bg;
-	width: 90%;
+	width: 100%;
 	margin-top: 32px;
-	padding: 20px 50px;
+	padding: 50px;
 }
 
 @media screen and (max-width: $less-than-medium-screen) {
