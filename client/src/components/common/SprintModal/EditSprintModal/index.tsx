@@ -237,11 +237,13 @@ const EditSprintModal = (props: Props) => {
 						control={() => (
 							<div style={{ display: 'flex', flexDirection: 'column' }}>
 								<DatePicker
+									popperClassName={styles.popper}
+									popperPlacement="bottom-start"
+									showPopperArrow={false}
 									disabled={startDateDisable}
 									locale={getLocale()}
 									name="StartTime"
-									dateFormat="MM/dd/yyyy h:mm aa"
-									showTimeSelect
+									dateFormat="MM/dd/yyyy"
 									selected={startDate}
 									onChange={handleStartDatePick}
 								/>
@@ -254,11 +256,13 @@ const EditSprintModal = (props: Props) => {
 						control={() => (
 							<div style={{ display: 'flex', flexDirection: 'column' }}>
 								<DatePicker
+									popperClassName={styles.popper}
+									popperPlacement="bottom-start"
+									showPopperArrow={false}
 									locale={getLocale()}
 									disabled={endDateDisable}
 									name="EndTime"
-									dateFormat="MM/dd/yyyy h:mm aa"
-									showTimeSelect
+									dateFormat="MM/dd/yyyy"
 									selected={endDate}
 									onChange={handleEndDatePick}
 								/>
