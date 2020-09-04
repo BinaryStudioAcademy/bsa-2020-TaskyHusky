@@ -82,12 +82,13 @@ const CropModal: React.FC<Props> = (props: Props) => {
 						}}
 					/>
 					<div className={styles.footer}>
-						<Button className="primaryBtn" onClick={submitForm}>
-							{t('save_changes')}
-						</Button>
-						<Button className="cancelBtn" onClick={onClose}>
+					<Button className="cancelBtn" onClick={onClose}>
 							{t('cancel')}
 						</Button>
+						<Button className={`primaryBtn ${styles.button}`} onClick={submitForm}>
+							{t('save_changes')}
+						</Button>
+
 					</div>
 				</div>
 				<div className={styles.canvasWrap}>

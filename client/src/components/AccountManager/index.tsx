@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import styles from './styles.module.scss';
-import { Button, Icon } from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
+import { Button } from 'semantic-ui-react';
 import { removeToken } from 'helpers/setToken.helper';
 import { logOutUserTrigger } from 'containers/LoginPage/logic/actions';
 import { requestDeleteUser } from 'containers/ProfilePage/logiс/actions';
@@ -46,10 +45,6 @@ const AccountManager = () => {
 					<Button className={styles.footerButton} onClick={showDeleteModal}>
 						{t('del_btn')}
 					</Button>
-					<Link to="#" className={styles.footerLink}>
-						{t('learn_more')}
-						<Icon className={styles.footerIcon} disabled name="external alternate" size="small" />
-					</Link>
 				</div>
 			</div>
 		</section>
