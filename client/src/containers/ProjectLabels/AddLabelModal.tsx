@@ -29,7 +29,7 @@ const AddLabelModal: React.FC = () => {
 	);
 	const [textColor, setTextColor] = useState<string>(mainTextColor);
 
-	const [isLabelTextValid, setIsLabelTextValid] = useState<boolean>(true);
+	const [isLabelTextValid, setIsLabelTextValid] = useState<boolean>(false);
 	const [isValidErrorShown, setIsValidErrorShown] = useState<boolean>(false);
 
 	const isTextValid = (labelText: string): boolean => {
