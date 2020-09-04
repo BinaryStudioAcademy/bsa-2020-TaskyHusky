@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table } from 'semantic-ui-react';
+import { Table, Icon } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 import { getFullUserName } from './logic/helpers';
 import FilterItem from 'components/FilterItem';
@@ -18,6 +18,11 @@ const FiltersTable = ({ filters, updateFilter }: Props) => {
 			<Table selectable sortable>
 				<Table.Header>
 					<Table.Row>
+						<Table.HeaderCell
+							width={1}
+							className={`${styles.headerCell} ${styles.starCell}`}
+							children={<Icon name="star" />}
+						/>
 						<Table.HeaderCell width={4} className={styles.headerCell} children={t('name')} />
 						<Table.HeaderCell width={4} className={styles.headerCell} children={t('owner')} />
 						<Table.HeaderCell width={4} className={styles.headerCell} children={t('favorite')} />
