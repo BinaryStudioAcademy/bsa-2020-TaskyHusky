@@ -112,11 +112,11 @@ const AddLabelModal: React.FC = () => {
 							<label>{t('label_pick_color')}</label>
 							<SliderPicker color={backgroundColor} onChange={onLabelColorChange} />
 						</Form.Field>
-						<Form.Field>
+						<Form.Field className={styles.label__example}>
 							<label>
 								<span className={styles.label__example_title}>{t('result')}</span>
-								<Label backgroundColor={backgroundColor} text={text} textColor={textColor} />
 							</label>
+							<Label backgroundColor={backgroundColor} text={text} textColor={textColor} />
 						</Form.Field>
 					</Form>
 				</Modal.Content>
