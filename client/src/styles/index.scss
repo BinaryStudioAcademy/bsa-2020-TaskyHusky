@@ -116,12 +116,15 @@ label {
 	background-color: $primary-bg;
 	width: 100%;
 	margin-top: 32px;
-	padding: 50px;
+	padding: 20px;
+
+	div:first-of-type {
+		margin-top: 0;
+	}
 }
 
 @media screen and (max-width: $less-than-medium-screen) {
 	.workBlock {
-		padding: 20px;
 		width: 100%;
 	}
 }

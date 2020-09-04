@@ -30,12 +30,14 @@ const WorkOnCard: React.FC<Props> = (props: Props) => {
 			<Link to={`issue/${issueKey}`} className={styles.content}>
 				<div className={styles.mainInfo}>
 					<p className={styles.key}>{issueKey}</p>
+					<p className={styles.summary}>{summary}</p>
+				</div>
+				<div className={`${styles.mainInfo} ${styles.hidden}`}>
 					{priority && (
 						<Popup
 							content={`Priority: ${priority.title}`}
 							trigger={
 								<Icon
-									className={styles.priorityIcon}
 									key={`priorityIc-${priority.id}`}
 									color={priority.color as any}
 									name={priority.icon as any}
@@ -43,9 +45,6 @@ const WorkOnCard: React.FC<Props> = (props: Props) => {
 							}
 						/>
 					)}
-					<p className={styles.summary}>{summary}</p>
-				</div>
-				<div className={`${styles.mainInfo} ${styles.hidden}`}>
 					<Popup
 						content={`Type: ${type.title}`}
 						trigger={
