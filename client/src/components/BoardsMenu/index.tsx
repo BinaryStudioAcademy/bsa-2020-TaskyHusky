@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Dropdown } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 import styles from 'styles/headerDropDown.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../typings/rootState';
@@ -27,7 +28,7 @@ export const BoardsMenu = ({ onCreateBoard }: { onCreateBoard(board: actionTypes
 						<Dropdown.Item key={board.id}>{board.name}</Dropdown.Item>
 					))}
 					<Dropdown.Divider />
-					<Dropdown.Item as="a" href="/boards">
+					<Dropdown.Item as={Link} to="/boards">
 						{t('view_all_boards')}
 					</Dropdown.Item>
 					<Dropdown.Item onClick={() => setCreateBoard(true)}>{t('create_board')}</Dropdown.Item>

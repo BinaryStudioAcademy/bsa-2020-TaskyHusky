@@ -15,21 +15,23 @@ const IssueActivityItem: React.FC<Props> = (props: Props) => {
 
 	return (
 		<div className={styles.activityItem}>
-			<Popup
-				content={`Type: ${type.title}`}
-				trigger={
-					<Icon
-						className={styles.icon}
-						color={type.color as 'red'}
-						key={`issueTypeIc-${type.id}`}
-						name={`${type.icon}` as 'folder'}
-					/>
-				}
-			/>
 			<div className={styles.block}>
-				<Link to={`/issue/${issueKey}`}>
-					<span className={styles.content}>{summary}</span>
-				</Link>
+				<div>
+					<Popup
+						content={`Type: ${type.title}`}
+						trigger={
+							<Icon
+								className={styles.icon}
+								color={type.color as 'red'}
+								key={`issueTypeIc-${type.id}`}
+								name={`${type.icon}` as 'folder'}
+							/>
+						}
+					/>
+					<Link to={`/issue/${issueKey}`}>
+						<span className={styles.content}>{summary}</span>
+					</Link>
+				</div>
 				<Link to={`/project/${project.id}/issues`}>
 					<span className={styles.contentSecondary}>{project.name}</span>
 				</Link>

@@ -10,6 +10,8 @@ export class TeamRepository extends Repository<Team> {
 		return this.createQueryBuilder('teamRepository')
 			.innerJoin('teamRepository.createdBy', 'user')
 			.addSelect(['user.id', 'user.firstName', 'user.lastName', 'user.email', 'user.avatar', 'user.jobTitle'])
+			.innerJoin('teamRepository.users', 'userProfile')
+			.addSelect('userProfile.id')
 			.getMany();
 	}
 

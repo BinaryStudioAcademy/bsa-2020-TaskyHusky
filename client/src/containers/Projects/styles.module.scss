@@ -1,119 +1,129 @@
 @import 'styles/mixins.scss';
 
-:global(#root) {
-	.wrapper {
-		padding: 30px 60px;
-	}
+.wrapper {
+	padding: 30px 60px;
+}
 
-	.wrapper__title {
+.input {
+	@include input;
+}
+
+.wrapper__title {
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 20px;
+}
+
+.wrapper__title {
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 20px;
+}
+
+.title {
+	margin: 0;
+	font-size: 24px;
+}
+
+.wrapper__filters {
+	margin-bottom: 20px;
+}
+
+.filters {
+	display: flex;
+}
+
+.wrapper__table {
+	position: relative;
+}
+
+.imgWrapper {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+
+	.content {
 		display: flex;
-		justify-content: space-between;
-		margin-bottom: 20px;
-	}
+		flex-direction: column;
 
-	.title {
-		margin: 0;
-		font-size: 24px;
-	}
+		.img {
+			width: 200px;
+			margin: 10px;
+		}
 
-	.wrapper__filters {
-		margin-bottom: 20px;
-	}
-
-	.filters {
-		display: flex;
-	}
-
-	.wrapper__table {
-		position: relative;
-	}
-
-	.imgWrapper {
-		display: flex;
-		flex-direction: row;
-		justify-content: center;
-		.content {
-			display: flex;
-			flex-direction: column;
-			.img {
-				width: 200px;
-				margin: 10px;
-			}
-			.text {
-				text-align: center;
-			}
+		.text {
+			text-align: center;
 		}
 	}
-
-	.table__header_cell {
-		background-color: #f9fafb;
-		border-left: none;
-	}
-
-	.project__img {
-		width: 30px;
-		height: 30px;
-		border-radius: 3px;
-		margin-right: 14px;
-	}
-
-	.project__lead_container {
-		display: flex;
-		flex-direction: row;
-		align-items: center;
-	}
-
-	.settings__cell {
-		text-align: center;
-	}
-
-  .project__name_container {
-	  display: flex;
-	  flex-wrap: wrap;
-  }
-
-  .project__name {
-	  margin-right: 7px;
-  }
-
-  .column__name {
-	  width: 30%
-  }
-	.project__img {
-		width: 30px;
-		height: 30px;
-		border-radius: 3px;
-		margin-right: 14px;
-	}
-
-	.project__name_container,
-	.project__lead_container {
-		display: flex;
-		align-items: center;
-		width: 100%;
-	}
-
-	.column__name {
-		width: 30%;
-	}
-
-	.column__lead {
-		width: 25%;
-	}
-
-	.column__key {
-		width: 10%;
-	}
-
-	.column__settings {
-		width: 40px;
-	}
-
-	.create__button {
-		@include primary-btn;
-	}
-
-	.table__column_options {
-		text-align: end;
-	}
 }
+
+.table__header_cell {
+	background-color: #f9fafb;
+	border-left: none;
+}
+
+.project__img {
+	width: 30px;
+	height: 30px;
+	border-radius: 3px;
+	margin-right: 14px;
+}
+
+.project__lead_container {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.settings__cell {
+	text-align: center;
+}
+
+.project__name_container {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.project__name {
+	margin-right: 7px;
+}
+
+.column__name {
+	width: 30%
+}
+
+.project__img {
+	width: 30px;
+	height: 30px;
+	border-radius: 3px;
+	margin-right: 14px;
+}
+
+.project__name_container,
+.project__lead_container {
+	display: flex;
+	align-items: center;
+	width: 100%;
+}
+
+.create__button {
+	@include primary-btn;
+}
+
+.table__column_options {
+	text-align: end;
+}
+
+.column__lead {
+	width: 25%;
+}
+
+.column__key {
+	width: 10%;
+}
+
+.column__settings {
+	width: 40px;
+}
+
+

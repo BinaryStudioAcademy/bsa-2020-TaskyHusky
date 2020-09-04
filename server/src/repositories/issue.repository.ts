@@ -72,7 +72,14 @@ export class IssueRepository extends Repository<Issue> {
 
 	getFilteredIssues(filter: Filter | undefined, from: number, to: number, sort: Sort) {
 		const where = filter ? getConditions(filter) : {};
-		return this.findAndCount({ relations: RELS, where, skip: from, take: to - from, order: sort });
+
+		return this.findAndCount({
+			relations: RELS,
+			where,
+			skip: from,
+			take: to - from,
+			order: sort,
+		});
 	}
 
 	findAllByColumnId(id: string) {
@@ -132,7 +139,6 @@ export class IssueRepository extends Repository<Issue> {
 
 	notify(partialIssue: PartialIssue, data: PartialIssue, issue: Issue, senderId: string) {
 		const notification = getCustomRepository(NotificationRepository);
-
 		const difference = getDiffPropNames<any, any>(partialIssue, { ...partialIssue, ...data }, _.isEqual);
 
 		if (difference.length) {
@@ -156,8 +162,8 @@ export class IssueRepository extends Repository<Issue> {
 	}
 
 	async updateOneByKey(key: string, data: PartialIssue, senderId: string) {
-		await this.update({ issueKey: key }, data as any);
 		const partialIssue = await this.findByKeyWithRelIds(key);
+		await this.update({ issueKey: key }, data as any);
 		const newIssue = await this.findOneByKey(key);
 		issueHandler.emit(IssueActions.UpdateIssue, newIssue.id, newIssue);
 		this.notify(partialIssue, data, newIssue, senderId);

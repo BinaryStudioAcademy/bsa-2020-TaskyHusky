@@ -16,7 +16,7 @@ const ManagerAsideBlock: React.FC<Props> = (props: Props) => {
 	return (
 		<div className={styles.container}>
 			<Button
-				className={`${styles.button} ${editMode === 'profile' && styles.active}`}
+				className={`${styles.button} ${editMode === ModeManager.profile && styles.active}`}
 				onClick={() => showManager(ModeManager.profile)}
 			>
 				{t('profile')}
@@ -38,9 +38,6 @@ const ManagerAsideBlock: React.FC<Props> = (props: Props) => {
 				onClick={() => showManager(ModeManager.account)}
 			>
 				{t('acc_pref')}
-			</Button>
-			<Button className={`${styles.button} ${styles.primaryBtn}`} onClick={() => showManager(ModeManager.main)}>
-				{t('back')}
 			</Button>
 		</div>
 	);

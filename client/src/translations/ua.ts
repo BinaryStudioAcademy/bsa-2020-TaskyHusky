@@ -14,6 +14,7 @@ export const ua = {
 	invalid_password: 'Пароль має бути довжіною мінімум 6 символів',
 	google_log_in: 'Увійти за допомогою Google',
 	or: 'або',
+	p: 'П',
 	sign_up: 'Зареєструватися',
 	first_name: "Ім'я",
 	last_name: 'Прізвище',
@@ -73,7 +74,9 @@ export const ua = {
 	next_tip: 'Наступна порада',
 	devs: 'Розробки',
 	members: 'Учасники',
+	member: 'учасник',
 	members_lower: 'учасників',
+	people_and_teams: 'Люди и команди',
 	worked_on: 'Виконувалася робота',
 	no_works: 'Тут ще нема робіт',
 	kanban_description:
@@ -434,4 +437,6 @@ export const ua = {
 	could_not_save_filter: "Can't save filter",
 	could_not_update_filter: "Can't update filter",
 	yes: 'Так',
+	no_filters: 'Фільтрів не знайдено',
+	add_changes: 'Додайте зміни, щоб розблокувати кнопку',
 };

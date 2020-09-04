@@ -1,6 +1,5 @@
 import React from 'react';
 import ProjectCard from 'components/ProjectCard';
-import styles from './styles.module.scss';
 
 interface Props {
 	projects: Array<{
@@ -16,7 +15,7 @@ const WorkProjectBlock: React.FC<Props> = (props: Props) => {
 	const { projects } = props;
 	const stopLoad = 6;
 	return (
-		<div className={styles.container}>
+		<div className="cardContainer">
 			{projects.map(
 				(item, index) =>
 					index < stopLoad && (

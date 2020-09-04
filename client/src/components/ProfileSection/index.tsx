@@ -6,7 +6,6 @@ import UserActivityItem from 'components/UserActivityItem';
 import IssueActivityItem from 'components/IssueActivityItem';
 
 interface Props {
-	isCurrentUser: boolean;
 	activity: any;
 	projects: Array<WebApi.Entities.Projects>;
 	teammates: Array<WebApi.Entities.UserProfile>;
@@ -14,7 +13,7 @@ interface Props {
 
 const ProfileSection: React.FC<Props> = (props: Props) => {
 	const { t } = useTranslation();
-	const { isCurrentUser, activity, projects, teammates } = props;
+	const { activity, projects, teammates } = props;
 	const countActivity = 3;
 	const countProject = 2;
 	const countColleagues = 1;
@@ -34,7 +33,6 @@ const ProfileSection: React.FC<Props> = (props: Props) => {
 	return (
 		<section className={styles.mainInfo}>
 			<h3 className={styles.header}>{t('worked_on')}</h3>
-			{isCurrentUser && <p className={styles.headerSecondary}>{t('content_privat_message')}</p>}
 			<ProfileActivityBlock
 				data={activity}
 				countItem={countActivity}

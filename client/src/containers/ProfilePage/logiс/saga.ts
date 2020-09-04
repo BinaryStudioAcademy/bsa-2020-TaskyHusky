@@ -59,7 +59,8 @@ function* getUser(action: ReturnType<typeof actions.requestGetUser>) {
 function* updateAvatar(action: ReturnType<typeof actions.requestUpdateAvatar>) {
 	const { image } = action;
 	try {
-		yield call(requestUdateAvatar, image);
+		const user: WebApi.Entities.UserProfile = yield call(requestUdateAvatar, image);
+		yield put(actions.updateUser({ partialState: user }));
 		NotificationManager.success(i18next.t('avatar_was_updated'), i18next.t('success'), 4000);
 	} catch (error) {
 		NotificationManager.error(i18next.t('could_not_update_avatar'), i18next.t('error'), 4000);

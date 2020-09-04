@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import moment from 'moment';
 import styles from './styles.module.scss';
 import { Icon, Popup } from 'semantic-ui-react';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import ModalViewProject from 'components/common/ModalViewProject';
 import { ActivityIssue } from 'containers/WorkPage/logic/state';
 
 interface Props {
@@ -14,45 +14,37 @@ const WorkOnCard: React.FC<Props> = (props: Props) => {
 	const {
 		issue: { issueKey, summary, type, project, updatedAt, priority },
 	} = props;
-	const [modal, setModal] = useState<boolean>(false);
-	const hideModal = (e: React.BaseSyntheticEvent) => {
-		if (
-			!e.target.classList.contains('avatar') &&
-			!e.target.classList.contains('blockWrapper') &&
-			!e.target.classList.contains('avatarTitle')
-		) {
-			setModal(false);
-		}
-	};
-	const onHover = () => {
-		setModal(true);
-	};
+	const { t } = useTranslation();
 	return (
 		<div className={styles.issue}>
-			<div className={styles.avatar} onMouseEnter={onHover} onMouseLeave={(e) => hideModal(e)}>
-				<p className={styles.avatarTitle} onMouseEnter={onHover}>
-					{project.name[0]}
-				</p>
-				{modal && <ModalViewProject project={project} onClose={hideModal} />}
-			</div>
+			<Popup
+				content={`${t('project')}: ${project.name}`}
+				trigger={
+					<Link to={`/project/${project.id}/issues`}>
+						<div className={styles.avatar}>
+							<p className={styles.avatarTitle}>{project.name[0]}</p>
+						</div>
+					</Link>
+				}
+			/>
 			<Link to={`issue/${issueKey}`} className={styles.content}>
 				<div className={styles.mainInfo}>
 					<p className={styles.key}>{issueKey}</p>
 					<p className={styles.summary}>{summary}</p>
+				</div>
+				<div className={`${styles.mainInfo} ${styles.hidden}`}>
 					{priority && (
 						<Popup
 							content={`Priority: ${priority.title}`}
 							trigger={
 								<Icon
 									key={`priorityIc-${priority.id}`}
-									color={priority.color as 'red'}
-									name={priority.icon as 'arrow up'}
+									color={priority.color as any}
+									name={priority.icon as any}
 								/>
 							}
 						/>
 					)}
-				</div>
-				<div className={`${styles.mainInfo} ${styles.hidden}`}>
 					<Popup
 						content={`Type: ${type.title}`}
 						trigger={

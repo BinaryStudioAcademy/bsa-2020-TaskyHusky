@@ -35,14 +35,6 @@ const ManagerWorkBlock: React.FC<Props> = (props: Props) => {
 				>
 					Assigned to me
 				</Menu.Item>
-				<Menu.Item
-					name="starred"
-					active={modeToShow === 'starred'}
-					className={styles.item}
-					onClick={() => changeMode('starred')}
-				>
-					Favourites
-				</Menu.Item>
 			</Menu>
 		</div>
 	);

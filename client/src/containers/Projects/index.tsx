@@ -42,7 +42,13 @@ const Projects: React.FC = () => {
 				</CreateProjectModal>
 			</div>
 			<div className={[styles.wrapper__filters, styles.filters].join(' ')}>
-				<Input icon="search" placeholder={t('search')} onChange={onSearch} value={searchName} />
+				<Input
+					icon="search"
+					className={styles.input}
+					placeholder={t('search')}
+					onChange={onSearch}
+					value={searchName}
+				/>
 			</div>
 			<div className={styles.wrapper__table}>
 				{isDeleting || isLoading ? (

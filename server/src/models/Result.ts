@@ -27,7 +27,7 @@ export interface IssueResult {
 	links?: string[];
 	board?: BoardResult;
 	priority: {
-		id: string;
+		id: number;
 		color: string;
 		title: string;
 		icon: string;
@@ -58,6 +58,7 @@ interface BoardResult {
 	boardType: 'Kanban' | 'Scrum';
 	name: string;
 	location: string;
+	projects?: BoardProjectsResult[];
 	createdAt: {
 		firstName: string;
 		lastName?: string;

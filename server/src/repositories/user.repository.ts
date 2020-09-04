@@ -1,4 +1,4 @@
-import { EntityRepository, Repository, Between, getCustomRepository } from 'typeorm';
+import { EntityRepository, Repository, Between, getCustomRepository, Any } from 'typeorm';
 import { expirationTime } from '../constants/resetPassword.constants';
 import { TeamRepository } from './teams.repository';
 import { UserProfile } from '../entity/UserProfile';
@@ -60,8 +60,6 @@ export class UserRepository extends Repository<UserProfile> {
 			.leftJoinAndSelect('issue.type', 'issueType')
 			.leftJoin('issue.project', 'project')
 			.addSelect(['project.name', 'project.id', 'project.category'])
-			.leftJoin('project.users', 'projects_people')
-			.addSelect('projects_people.id')
 			.getOne();
 
 		if (!user) {
@@ -79,9 +77,7 @@ export class UserRepository extends Repository<UserProfile> {
 			.leftJoinAndSelect('issue.type', 'issueType')
 			.leftJoinAndSelect('issue.priority', 'priority')
 			.leftJoin('issue.project', 'project')
-			.addSelect(['project.name', 'project.id'])
-			.leftJoin('project.users', 'projects_people')
-			.addSelect('projects_people.id')
+			.addSelect(['project.name', 'project.id', 'project.category'])
 			.getOne();
 
 		if (!user) {
@@ -150,6 +146,8 @@ export class UserRepository extends Repository<UserProfile> {
 	}
 
 	async getUserTeammates(userId: string) {
+		console.log(userId);
+
 		return this.findOne({
 			where: { id: userId },
 			relations: ['teammates'],

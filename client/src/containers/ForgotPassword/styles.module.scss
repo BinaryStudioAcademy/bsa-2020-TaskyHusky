@@ -5,7 +5,7 @@
 	justify-content: center;
 }
 
-.mainHeader{
+.mainHeader {
 	text-align: center;
 }
 
@@ -23,16 +23,19 @@
 }
 
 .continueButton {
-	width: 100%;
+	@include content-btn;
+	width: 100% !important;
 }
 
-.textBlock{
+.textBlock {
 	margin: 24px 0 22px;
 	text-align: center;
-	p{
+
+	p {
 		margin-bottom: 4px;
 	}
-	p:last-child{
+
+	p:last-child {
 		font-weight: bold;
 	}
 }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Dropdown, Checkbox, DropdownItemProps, Button } from 'semantic-ui-react';
+import { Dropdown, Checkbox, DropdownItemProps, Button, Icon } from 'semantic-ui-react';
 import styles from 'containers/Header/styles.module.scss';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
@@ -9,6 +9,7 @@ import moment from 'moment';
 import * as actions from './logic/actions';
 import { useIO } from 'hooks/useIO';
 import pushNotificationManager from 'config/push.config';
+import NotificationsCount from 'components/common/NotificationsCount';
 
 const NotificationsMenu: React.FC = () => {
 	const [canShowAllNotifications, setCanShowAllNotifications] = useState<boolean>(false);
@@ -59,6 +60,8 @@ const NotificationsMenu: React.FC = () => {
 		});
 	});
 
+	const unviewedCount = notifications.filter((notif) => !notif.isViewed).length;
+
 	const displayNotifications = notifications.filter((notif) =>
 		canShowAllNotifications ? moment(notif.createdAt).isAfter(moment().subtract(10, 'days')) : !notif.isViewed,
 	);
@@ -89,27 +92,36 @@ const NotificationsMenu: React.FC = () => {
 
 	return (
 		<Dropdown
-			icon="bell outline"
+			icon={
+				<NotificationsCount count={unviewedCount}>
+					<Icon name="bell outline" />
+				</NotificationsCount>
+			}
 			className={styles.circularIcon}
 			direction="left"
 			onOpen={() => setIsOpened(true)}
 			open={isOpened}
 		>
-			<Dropdown.Menu className={styles.circularDropdownMenu} style={{ maxHeight: 700, overflowY: 'auto' }}>
-				<Dropdown.Header>
+			<Dropdown.Menu className={styles.circularDropdownMenu}>
+				<Dropdown.Header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
 					{t('notifications')}
 					{isThereUnread ? (
-						<Button
-							className="primaryBtn"
-							compact
-							size="mini"
-							style={{ color: 'white', marginLeft: 20 }}
-							onClick={viewAll}
-						>
+						<Button className="primaryBtn" onClick={viewAll} style={{ paddingTop: 3, paddingBottom: 3 }}>
 							{t('mark_all_as_read')}
 						</Button>
 					) : null}
 				</Dropdown.Header>
+				<div style={{ maxHeight: 700, overflowY: 'auto' }}>
+					{displayNotifications.length ? (
+						displayNotifications.map((notif) => (
+							<div style={{ paddingLeft: 10, paddingRight: 10 }} key={notif.id}>
+								<UserNotification notification={notif} />
+							</div>
+						))
+					) : (
+						<ClosingItem>{t('no')}</ClosingItem>
+					)}
+				</div>
 				<Dropdown.Item>
 					<Checkbox
 						toggle
@@ -120,15 +132,6 @@ const NotificationsMenu: React.FC = () => {
 						label={t('show_notifs_during_last_10_days')}
 					/>
 				</Dropdown.Item>
-				{displayNotifications.length ? (
-					displayNotifications.map((notif) => (
-						<div style={{ paddingLeft: 10, paddingRight: 10 }} key={notif.id}>
-							<UserNotification notification={notif} />
-						</div>
-					))
-				) : (
-					<ClosingItem>{t('no')}</ClosingItem>
-				)}
 			</Dropdown.Menu>
 		</Dropdown>
 	);

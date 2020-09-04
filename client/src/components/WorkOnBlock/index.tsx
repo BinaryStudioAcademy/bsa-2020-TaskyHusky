@@ -9,7 +9,7 @@ interface Props {
 const WorkOnBlock: React.FC<Props> = (props: Props) => {
 	const { activityIssues } = props;
 	return (
-		<div className="workBlock">
+		<div className={'workBlock'}>
 			{activityIssues.map((item) => (
 				<WorkOnCard key={item.id} issue={item} />
 			))}
