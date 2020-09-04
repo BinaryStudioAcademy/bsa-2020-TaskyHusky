@@ -98,7 +98,7 @@ export const HeaderMenu = () => {
 					<Menu.Item position="right" className={styles.rightMenu}>
 						<Dropdown
 							icon={
-								<NotificationsCount noWiggle count={incomingInvites.length}>
+								<NotificationsCount count={incomingInvites.length}>
 									<Icon name="users" />
 								</NotificationsCount>
 							}
