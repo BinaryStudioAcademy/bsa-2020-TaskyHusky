@@ -25,7 +25,7 @@ const MainPage = ({ isLoginForm, setLoginForm }: Props) => {
 			<Grid.Column mobile={16} tablet={8} computer={8} className={styles.formWrapper}>
 				<Segment className={styles.formSegment}>
 					<div className={styles.logoArea}>
-						<Image src={logo} size="mini" alt={t('taskyhusky_logo')} className={styles.logoImage} />
+						<Image src={logo} alt={t('taskyhusky_logo')} className={styles.logoImage} />
 						<span className={`${styles.logoText}`}>TaskyHusky</span>
 					</div>
 
