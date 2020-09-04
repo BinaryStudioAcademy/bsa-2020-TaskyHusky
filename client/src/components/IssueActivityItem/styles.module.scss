@@ -23,6 +23,7 @@
 
 .contentSecondary {
 	@include secondary-content;
+	margin-left: 31px;
 
 	&:hover {
 		border-bottom: 2px solid $secondary-text;

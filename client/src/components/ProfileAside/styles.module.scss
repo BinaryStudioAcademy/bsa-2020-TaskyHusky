@@ -3,6 +3,7 @@
 
 .userInfo {
 	width: 25%;
+	height: fit-content;
 	min-width: 280px;
 	@include primary-box;
 	padding: 50px 40px 25px;

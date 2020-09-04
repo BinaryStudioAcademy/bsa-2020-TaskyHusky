@@ -10,6 +10,7 @@
 @mixin profile-container {
 	width: 70%;
 	padding: 0 0 0 40px;
+	flex-grow: 1;
 }
 
 @mixin info-block-item {
@@ -160,7 +161,7 @@
 @mixin card-container {
 	background: $primary-bg;
 	box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.25);
-	padding: 40px;
+	padding: 20px;
 }
 
 @mixin mainHeader {

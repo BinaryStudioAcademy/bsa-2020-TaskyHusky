@@ -3,7 +3,7 @@
 
 :global(#root) {
 	.menuWrapper > * {
-		color: $header-text;
+		color: $primary-bg;
 		padding: 7px 13px;
 	}
 
@@ -137,9 +137,9 @@
 	margin-right: 10px;
 }
 .blackLink {
-	color: $header-text;
+	color: $primary-bg;
 	&:hover {
-		color: $header-text;
+		color: $primary-bg;
 	}
 }
 .userBlock {

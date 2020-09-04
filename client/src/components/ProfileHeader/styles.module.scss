@@ -11,3 +11,9 @@
 	@include primary-header;
 	color: #000000de !important;
 }
+
+@media screen and (max-width: $medium-screen) {
+	.header {
+		padding: 34px 8% 21px;
+	}
+}
