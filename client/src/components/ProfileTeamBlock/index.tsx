@@ -24,7 +24,8 @@ const ProfileTeamBlock: React.FC<Props> = (props: Props) => {
 							<span className={styles.contentPrimary}>{item.name}</span>
 						</Link>
 						<span className={styles.contentSecondary}>
-							{item.users?.length} {item.users?.length === 1 ? 'member' : 'members'}
+							{item.users?.length}
+							{item.users?.length === 1 ? ` ${t('member')}` : ` ${t('members_lower')}`}
 						</span>
 					</div>
 				</div>

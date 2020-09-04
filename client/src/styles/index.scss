@@ -100,6 +100,12 @@ label {
 	height: 100%;
 }
 
+.cardContainer {
+	margin-top: 32px;
+	display: flex;
+	flex-wrap: wrap;
+}
+
 .contentBtn {
 	@include content-btn;
 }
@@ -134,4 +140,8 @@ label {
 		margin-left: 0 !important;
 		margin-right: 0 !important;
 	}
+}
+
+.standartInput {
+	@include input;
 }

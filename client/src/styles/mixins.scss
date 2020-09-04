@@ -102,13 +102,14 @@
 }
 
 @mixin content-btn {
-	border: 1px solid $dark-black !important;
+	border: 1px solid $primary-bg !important;
 	box-sizing: border-box;
 	border-radius: 5px !important;
 	@include text-data;
 	background-color: $primary-bg !important;
 
 	&:hover {
+		border: 1px solid $border !important;
 		background-color: $border !important;
 	}
 }
