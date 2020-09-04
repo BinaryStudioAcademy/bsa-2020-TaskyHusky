@@ -28,7 +28,7 @@ const ProfileActivityBlock: React.FC<Props> = (props: Props) => {
 
 	return (
 		<>
-			<article className={styles.container}>
+			<article>
 				{data.length ? (
 					<Accordion>
 						{data.map(

@@ -6,13 +6,13 @@
 	height: fit-content;
 	min-width: 280px;
 	@include primary-box;
-	padding: 50px 40px 25px;
+	padding: 20px;
 }
 
 @media screen and (max-width: $less-than-medium-screen) {
 	.userInfo {
 		width: 100%;
 		max-width: 100%;
-		padding: 50px 15% 25px;
+		padding: 20px;
 	}
 }
