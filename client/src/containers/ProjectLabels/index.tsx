@@ -66,7 +66,7 @@ const ProjectLabels = (props: Props) => {
 						<Table className={styles.table} celled>
 							<Table.Header>
 								<Table.Row>
-									<Table.HeaderCell>Label</Table.HeaderCell>
+									<Table.HeaderCell>Labels</Table.HeaderCell>
 									<Table.HeaderCell className={styles.table__column_actions}>
 										Actions
 									</Table.HeaderCell>
