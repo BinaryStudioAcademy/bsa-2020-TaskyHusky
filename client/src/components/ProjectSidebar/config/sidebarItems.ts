@@ -16,10 +16,6 @@ export const sidebarItems = [
 		icon: 'street view',
 	},
 	{
-		section: SETTINGS_SECTION.versions,
-		icon: 'random',
-	},
-	{
 		section: SETTINGS_SECTION.labels,
 		icon: 'tags',
 	},
