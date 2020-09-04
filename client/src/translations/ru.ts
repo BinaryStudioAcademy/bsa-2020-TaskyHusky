@@ -14,6 +14,7 @@ export const ru = {
 	invalid_password: 'Пароль должен быть длинной минимум 6 символов',
 	google_log_in: 'Войти с помощью Google',
 	or: 'или',
+	p: 'П',
 	sign_up: 'Зарегистрироваться',
 	first_name: 'Имя',
 	last_name: 'Фамилия',
@@ -442,4 +443,5 @@ export const ru = {
 	could_not_save_filter: 'Невозможно сохранить фильтр',
 	could_not_update_filter: 'Невозможно изменить фильтр',
 	no_filters: 'Фильтры не найдены',
+	add_changes: 'Внесите изменения, что бы разблокировать кнопку',
 };

@@ -21,3 +21,9 @@
   @include work-page-secondary;
   width: auto;
 }
+
+@media screen and (max-width: $mobile-screen) {
+  .headerSummary {
+    display: none;
+  }
+}

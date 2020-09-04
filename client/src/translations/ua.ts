@@ -14,6 +14,7 @@ export const ua = {
 	invalid_password: 'Пароль має бути довжіною мінімум 6 символів',
 	google_log_in: 'Увійти за допомогою Google',
 	or: 'або',
+	p: 'П',
 	sign_up: 'Зареєструватися',
 	first_name: "Ім'я",
 	last_name: 'Прізвище',
@@ -434,4 +435,5 @@ export const ua = {
 	could_not_save_filter: "Can't save filter",
 	could_not_update_filter: "Can't update filter",
 	no_filters: 'Фільтрів не знайдено',
+	add_changes: 'Додайте зміни, щоб розблокувати кнопку',
 };
