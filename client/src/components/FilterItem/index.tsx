@@ -28,8 +28,8 @@ const FilterItem: React.FC<Props> = (props: Props) => {
 
 	const onSetFavorite = () => {
 		const updated = isStared
-			? staredBy?.filter(({ id }) => id !== owner?.id)
-			: ([...(staredBy || []), owner] as WebApi.Entities.UserProfile[]);
+			? staredBy?.filter(({ id }) => id !== user?.id)
+			: ([...(staredBy || []), user] as WebApi.Entities.UserProfile[]);
 		setIsStared(!isStared);
 		updateFilter({
 			...filter,
