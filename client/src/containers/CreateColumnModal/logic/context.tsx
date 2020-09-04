@@ -9,7 +9,7 @@ const reducer = (state: WebApi.Board.CreateBoardColumn, action: any) => {
 		case CHANGE:
 			return {
 				...state,
-				[action.key]: action.value || null,
+				[action.key]: action.value ?? null,
 			};
 		default:
 			return state;
