@@ -262,7 +262,7 @@ class ProjectsController {
 		const { id: userId } = req.user;
 
 		try {
-			const isLabelDataValid = this.validateLabelData(label, next);
+			const isLabelDataValid = await this.validateLabelData(label, next);
 			if (!isLabelDataValid) {
 				return;
 			}
@@ -356,7 +356,7 @@ class ProjectsController {
 
 	protected validateLabelData = async (label: ProjectLabel, next: NextFunction): Promise<boolean> => {
 		const validationErrors = await validateLabel(label);
-
+		console.log('validationErrors', validationErrors);
 		if (validationErrors.length > 0) {
 			next(new ErrorResponse(HttpStatusCode.UNPROCESSABLE_ENTITY, projectsErrorMessages.INVALID_DATA));
 			return false;
