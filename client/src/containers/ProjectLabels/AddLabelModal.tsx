@@ -66,7 +66,7 @@ const AddLabelModal: React.FC = () => {
 		dispatch(
 			actions.startAddingLabel({
 				project,
-				label: { text, textColor, backgroundColor },
+				label: { text: text.trim(), textColor, backgroundColor },
 			}),
 		);
 	};
