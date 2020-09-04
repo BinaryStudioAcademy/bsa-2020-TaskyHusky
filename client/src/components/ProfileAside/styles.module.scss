@@ -2,17 +2,16 @@
 @import 'styles/mixins.scss';
 
 .userInfo {
-  max-width: 300px;
-  width: 30%;
-  min-width: 200px;
-  @include primary-box;
-  padding: 50px 40px 25px;
+	width: 25%;
+	min-width: 280px;
+	@include primary-box;
+	padding: 50px 40px 25px;
 }
 
 @media screen and (max-width: $less-than-medium-screen) {
-  .userInfo {
-    width: 100%;
-    max-width: 100%;
-    padding: 50px 15% 25px;
-  }
+	.userInfo {
+		width: 100%;
+		max-width: 100%;
+		padding: 50px 15% 25px;
+	}
 }

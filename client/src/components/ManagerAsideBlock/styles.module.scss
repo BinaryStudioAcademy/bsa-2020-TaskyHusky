@@ -6,8 +6,13 @@
 }
 
 .button {
-  margin: 10px 0 !important;
   @include content-btn;
+  border: none !important;
+  text-align: left !important;
+  margin: 10px 0 !important;
+  padding: 10px;
+  padding-top: 7px !important;
+  padding-bottom: 7px !important;
 }
 
 .primaryBtn {
