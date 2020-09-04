@@ -441,4 +441,5 @@ export const ru = {
 	filter_was_updated: 'Фильтр изменен',
 	could_not_save_filter: 'Невозможно сохранить фильтр',
 	could_not_update_filter: 'Невозможно изменить фильтр',
+	yes: 'Да',
 };
