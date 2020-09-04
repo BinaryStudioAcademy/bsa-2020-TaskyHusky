@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Menu, Image, Dropdown, Button, Icon } from 'semantic-ui-react';
 import logo from 'assets/logo192.png'; // TODO: replace with logo once it is ready
 import styles from './styles.module.scss';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Redirect, useRouteMatch, RouteProps } from 'react-router-dom';
 import ProjectsMenu from 'components/ProjectsMenu';
 import FiltersMenu from 'components/FiltersMenu';
 import BoardsMenu from '../../components/BoardsMenu';
@@ -27,10 +27,11 @@ export const HeaderMenu = () => {
 	const incomingInvites = useSelector((rootStore: RootState) => rootStore.header.invites);
 	const dispatch = useDispatch();
 	const { t } = useTranslation();
+	const match: RouteProps = useRouteMatch();
 
 	const user: User | null = authStore.user;
 
-	const [activeItem, setActiveItem] = useState<string>('');
+	const [activeItem, setActiveItem] = useState<string>(match.path as string);
 	const [redirectToDashboards, setRedirectToDashboards] = useState<boolean>(false);
 
 	useEffect(() => {
@@ -57,7 +58,7 @@ export const HeaderMenu = () => {
 
 	return (
 		<>
-			<div className={`${styles.segmentWrapper} site-header`}>
+			<div className={`${styles.segmentWrapper} site-header site-header-wrapper`}>
 				<Menu secondary className={styles.menuWrapper}>
 					<Menu.Item onClick={logoClickHandler} className={`${styles.logoItem} site-logo`}>
 						<Image src={logo} size="mini" alt={t('taskyhusky_logo')} />
@@ -65,29 +66,25 @@ export const HeaderMenu = () => {
 					</Menu.Item>
 					<Menu.Item
 						className={styles.media_query}
-						as="span"
-						name="your-work"
-						active={activeItem === 'your-work'}
-						onClick={() => toggleActiveItem('your-work')}
-					>
-						<Link to="/my-work">
-							<span className={styles.blackLink}>{t('your_work')}</span>
-						</Link>
-					</Menu.Item>
+						as={Link}
+						to="/my-work"
+						name="my-work"
+						active={activeItem === '/my-work'}
+						onClick={() => toggleActiveItem('/my-work')}
+						children={<span className={styles.blackLink}>{t('your_work')}</span>}
+					/>
 					<ProjectsMenu />
 					<FiltersMenu />
 					<BoardsMenu onCreateBoard={onCreateBoard} />
 					<Menu.Item
 						className={styles.media_query}
-						as="span"
+						as={Link}
 						name="people"
-						active={activeItem === 'people'}
-						onClick={() => toggleActiveItem('people')}
-					>
-						<Link to="/people">
-							<span className={styles.blackLink}>{t('people')}</span>
-						</Link>
-					</Menu.Item>
+						active={activeItem === '/people'}
+						onClick={() => toggleActiveItem('/people')}
+						to="/people"
+						children={<span className={styles.blackLink}>{t('people')}</span>}
+					/>
 					<CreateIssueModal>
 						<Menu.Item
 							as={Button}
@@ -96,7 +93,6 @@ export const HeaderMenu = () => {
 							active={activeItem === 'create'}
 						>
 							{t('create')}
-							<Icon name="plus" style={{ marginLeft: 5, marginRight: 1 }} />
 						</Menu.Item>
 					</CreateIssueModal>
 					<Menu.Item position="right" className={styles.rightMenu}>
@@ -126,6 +122,7 @@ export const HeaderMenu = () => {
 							<div className={styles.userBlock}>
 								<UserAvatar user={user} />
 								<Dropdown
+									className={styles.userNameText}
 									text={getUsername(user as WebApi.Entities.UserProfile)}
 									direction="left"
 									id="userProfileMenuItem"
