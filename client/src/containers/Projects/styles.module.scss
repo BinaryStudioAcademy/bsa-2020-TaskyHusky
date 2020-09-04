@@ -112,4 +112,8 @@
 	.create__button {
 		@include primary-btn;
 	}
+
+	.table__column_options {
+		text-align: end;
+	}
 }
