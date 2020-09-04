@@ -285,7 +285,7 @@ const CreateIssueModalBody: React.FC<Props> = ({
 					</Form.Field>
 				</Form>
 			</Modal.Content>
-			<Modal.Actions style={{ height: 67 }}>
+			<Modal.Actions style={{ backgroundColor: '#efefef' }}>
 				<div style={{ display: 'flex', justifyContent: 'flex-end' }}>
 					<Button className="primaryBtn" type="submit">
 						{t('submit')}
