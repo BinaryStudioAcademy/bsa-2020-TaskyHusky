@@ -54,15 +54,15 @@ const UserNotification: React.FC<Props> = ({ notification }) => {
 					{moment(notification.createdAt).fromNow()}
 				</div>
 			</div>
-			<div style={{ width: 250, whiteSpace: 'pre-wrap', float: 'left', lineHeight: 1.4 }}>{text}</div>
-			{link ? (
-				<a target="_blank" rel="noopener noreferrer" href={link} style={{ float: 'right' }}>
-					{t('see_it')}
-				</a>
-			) : (
-				''
-			)}
-			<div style={{ clear: 'both' }} />
+			<div style={{ width: '100%', whiteSpace: 'pre-wrap', lineHeight: 1.4 }}>
+				{link ? (
+					<a href={link} target="_blank" rel="noopener noreferrer">
+						{text}
+					</a>
+				) : (
+					text
+				)}
+			</div>
 			{renderButton}
 		</div>
 	);
