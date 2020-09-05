@@ -269,7 +269,7 @@ export const ua = {
 	watching: 'Відстежуєтся',
 	not_watching: 'Не відстежуєтся',
 	add: 'Додати',
-	search_name_email: 'Пошук по імені або email адресою',
+	search_name_email: 'Пошук по імені або email...',
 	send_confirm_link: 'Відправити посилання для підтвердження e-mail',
 	confirm_email_change: 'Підтвердіть змінення email',
 	type_pass_confirm_email: 'Введіть пароль для підтвердження зміни email',

@@ -17,6 +17,19 @@
     margin: 0 20%;
 }
 
+.body_inner__find {
+	@include input;
+	width: 243px !important;
+  
+	div:hover {
+	  background-color: none !important;
+	}
+  
+	& input {
+	  border-radius: 6px !important;
+	}
+}
+
 .body_inner__find,
 .modal__find {
     width: 100%;

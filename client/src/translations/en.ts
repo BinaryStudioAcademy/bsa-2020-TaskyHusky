@@ -300,7 +300,7 @@ export const en = {
 	watching: 'Watching',
 	not_watching: 'Not watching',
 	add: 'Add',
-	search_name_email: 'Search for names or email addresses',
+	search_name_email: 'Search for names or email...',
 	sorry_alert: 'Sorry!',
 	not_suported_push_alert: 'Sorry, but your browser does not support push notifications.',
 	denied_push_alert: 'Sorry, but push notifications permission is not granted.',
