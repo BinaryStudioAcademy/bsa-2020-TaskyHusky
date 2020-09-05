@@ -270,7 +270,7 @@ export const ru = {
 	watching: 'Отслеживается',
 	not_watching: 'Не отслеживается',
 	add: 'Добавить',
-	search_name_email: 'Поиск по имени или email адресу',
+	search_name_email: 'Поиск по имени или email...',
 	sorry_alert: undefined,
 	not_suported_push_alert: 'Ваш браузер не поддерживает push-уведомления.',
 	denied_push_alert: 'Разрешение на push-уведомления не предоставлено.',
@@ -444,6 +444,7 @@ export const ru = {
 	yes: 'Да',
 	no_filters: 'Фильтры не найдены',
 	add_changes: 'Внесите изменения, что бы разблокировать кнопку',
+	remove_user_from_project: 'Удалить c проекта',
 	team_header: 'Команда',
 	my_team: 'Моя команда',
 };

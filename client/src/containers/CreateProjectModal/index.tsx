@@ -206,8 +206,6 @@ const CreateProjectModal: React.FC<Props> = ({ children }) => {
 						</Button>
 						<Button
 							content={t('create')}
-							labelPosition="right"
-							icon="checkmark"
 							onClick={onCreateProject}
 							className="primaryBtn"
 							loading={isLoading}

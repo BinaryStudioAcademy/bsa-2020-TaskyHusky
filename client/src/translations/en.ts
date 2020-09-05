@@ -301,7 +301,7 @@ export const en = {
 	watching: 'Watching',
 	not_watching: 'Not watching',
 	add: 'Add',
-	search_name_email: 'Search for names or email addresses',
+	search_name_email: 'Search for names or email...',
 	sorry_alert: 'Sorry!',
 	not_suported_push_alert: 'Sorry, but your browser does not support push notifications.',
 	denied_push_alert: 'Sorry, but push notifications permission is not granted.',
@@ -460,6 +460,7 @@ export const en = {
 	no_filters: 'No filters found',
 	add_changes: 'Please, add changes to enable button',
 	people_and_teams: 'People and Teams',
+	remove_user_from_project: 'Remove from project',
 	team_header: 'Team',
 	my_team: 'My team',
 };

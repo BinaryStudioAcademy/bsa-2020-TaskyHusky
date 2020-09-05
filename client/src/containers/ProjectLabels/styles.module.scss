@@ -6,7 +6,6 @@
     position: relative;
     display: flex;
 	justify-content: space-between;
-	align-items: flex-end;
 }
 
 .header_inner__title {
@@ -50,14 +49,13 @@
 
 
 .imgWrapper {
-	display: flex;
-	flex-direction: row;
-	justify-content: center;
+	margin-bottom: 10px;
 	.content {
 		display: flex;
 		flex-direction: column;
+		width: 240px;
 		.img {
-			width: 200px;
+			max-width: 200px;
 			margin: 10px;
 		}
 		.text {
@@ -80,19 +78,50 @@
 	display: flex;
 }
 
+.button__delete_action,
+.button__edit_action {
+	box-shadow: none !important;
+	padding: 0 !important;
+	border: none;
+	background-color: transparent !important;
+	&:hover {
+		background-color: transparent !important;
+		color: black !important;
+	}
+}
+
 .button__delete_action {
 	margin: 0 !important;
 }
 
 .table {
 	table-layout: fixed;
-	text-align: center !important;
+	// text-align: center !important;
 }
 
 .table__column_actions {
-	width: 177px !important;
+	width: 220px !important;
 }
 
 .table__name_container {
 	padding-top: 13px !important;
+}
+
+.label__list {
+	list-style: none;
+	padding-left: 0;
+	width: 300px;
+	margin-bottom: 25px;
+	margin-top: 0;
+}
+
+.label__list_item {
+	display: flex;
+	margin-bottom: 10px;
+}
+
+.button__add_action {
+	width: 240px;
+	padding-top: 4.5px !important;
+	padding-bottom: 4.5px !important;
 }
