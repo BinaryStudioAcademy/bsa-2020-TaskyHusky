@@ -7,6 +7,7 @@ export type Team = {
 	users?: WebApi.Entities.UserProfile[];
 	projects?: WebApi.Entities.Projects[];
 	createdBy: WebApi.Entities.UserProfile | undefined;
+	issue?: WebApi.Entities.Issue;
 };
 
 export interface TeamState {

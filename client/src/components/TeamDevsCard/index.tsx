@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Card, Icon, Button, TextArea, TextAreaProps, Popup } from 'semantic-ui-react';
+import { Icon, Button, TextArea, TextAreaProps, Popup } from 'semantic-ui-react';
 import styles from 'containers/TeamPage/styles.module.scss';
 import AditionalModal from 'components/TeamAddPeopleModal/aditionalModal';
 import { useTranslation } from 'react-i18next';
@@ -60,8 +60,8 @@ const TeamDevsCard = ({
 	};
 
 	return (
-		<Card>
-			<Card.Content className={styles.cardHeader}>
+		<div className={styles.card}>
+			<div className={styles.cardHeader}>
 				<Icon name="group" size="large" />
 				<Popup
 					open={!lockEditFields && !isTitleValid}
@@ -82,8 +82,8 @@ const TeamDevsCard = ({
 						/>
 					}
 				/>
-			</Card.Content>
-			<Card.Content>
+			</div>
+			<div className={styles.cardBody}>
 				<TextArea
 					as="textarea"
 					placeholder={t('add_some_description')}
@@ -93,46 +93,36 @@ const TeamDevsCard = ({
 					rows={3}
 					className={lockEditFields ? styles.inputArea : `${styles.inputArea} ${styles.inputBorders}`}
 				/>
-			</Card.Content>
+			</div>
 			{teamOwner && teamOwner.id === authUser?.id && (
 				<>
-					<Card.Content className={styles.editFieldBtn}>
-						<Button
-							compact
-							fluid={lockEditFields}
-							color="blue"
-							onClick={() => submitEditFields()}
-							disabled={!lockEditFields && !isTitleValid}
-						>
-							{t(lockEditFields ? 'edit_fields' : 'save_changes')}
+					<Button
+						className={styles.editFieldBtn}
+						onClick={() => submitEditFields()}
+						disabled={!lockEditFields && !isTitleValid}
+					>
+						{t(lockEditFields ? 'edit_fields' : 'save_changes')}
+					</Button>
+					{!lockEditFields && (
+						<Button className={styles.editBtn} onClick={abortChhange}>
+							{t('cancel')}
 						</Button>
-						{!lockEditFields && (
-							<Button compact basic className={styles.editBtn} onClick={abortChhange}>
-								{t('cancel')}
-							</Button>
-						)}
-					</Card.Content>
-					<Card.Content extra>
-						<Button.Group fluid>
-							<Button
-								basic
-								compact
-								className={`${styles.margin1} ${styles.mediaBtns} ${styles.editBtn}`}
-								onClick={showAddPeopleModal}
-								disabled={currentProfile?.id !== teamOwner?.id}
-							>
-								<span className={styles.editBtnValue}>{t('add_people')}</span>
-							</Button>
-							<Button compact basic className={styles.deleteBtn} onClick={() => setShowDelete(true)}>
-								<span className={styles.deleteBtnValue}>{t('delete_team')}</span>
-							</Button>
-						</Button.Group>
-					</Card.Content>
+					)}
+					<Button
+						className={styles.addPeople}
+						onClick={showAddPeopleModal}
+						disabled={currentProfile?.id !== teamOwner?.id}
+					>
+						{t('add_people')}
+					</Button>
+					<Button className={styles.deleteBtn} onClick={() => setShowDelete(true)}>
+						{t('delete_team')}
+					</Button>
 				</>
 			)}
 
 			{showDelete && <AditionalModal confirmDelete={confirmDelete} setShowDelete={setShowDelete} />}
-		</Card>
+		</div>
 	);
 };
 

@@ -19,6 +19,10 @@
   display: flex;
 }
 
+.title {
+  @include secondary-content;
+}
+
 .card {
   background: $primary-bg;
   box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.25);
@@ -31,6 +35,7 @@
   max-width: 420px;
   margin-right: 19px;
   margin-bottom: 39px;
+  cursor: pointer;
 }
 
 .avatarWrapper {
