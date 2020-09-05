@@ -10,10 +10,14 @@ import InteractiveColumn from 'containers/InteractiveColumn';
 const ColumnsSettingsPage: React.FC = () => {
 	const { boardId } = useParams();
 	const [board, setBoard] = useState<WebApi.Result.ComposedBoardResult | undefined>();
+	const [columns, setColumns] = useState<WebApi.Result.BoardColumnResult[]>([]);
 
 	useEffect(() => {
 		if (!board) {
-			getBoardById(boardId).then(setBoard);
+			getBoardById(boardId).then((board) => {
+				setBoard(board);
+				setColumns(board.columns);
+			});
 		}
 	}, [board, boardId]);
 
@@ -34,8 +38,14 @@ const ColumnsSettingsPage: React.FC = () => {
 				<Droppable droppableId="0" direction="horizontal">
 					{(provided, snapshot) => (
 						<div className={styles.columnsContainer} ref={provided.innerRef} {...provided.droppableProps}>
-							{board.columns.map((column, i) => (
-								<InteractiveColumn key={i} column={column} index={i} />
+							{columns.map((column, i) => (
+								<InteractiveColumn
+									columns={columns}
+									setColumns={setColumns}
+									key={i}
+									column={column}
+									index={i}
+								/>
 							))}
 							{provided.placeholder}
 						</div>

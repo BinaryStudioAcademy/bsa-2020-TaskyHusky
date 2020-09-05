@@ -1,6 +1,7 @@
 export const CREATE_COLUMN = 'BOARD:COLUMN:CREATE';
 export const SET_CREATED_COLUMN = 'BOARD:COLUMN:CREATE:STATUS:SET';
 export const UPDATE_COLUMN = 'BOARD:COLUMN:UPDATE';
+export const DELETE_COLUMN = 'BOARD:COLUMN:DELETE';
 
 export type CreateColumn = {
 	data: WebApi.Board.CreateBoardColumn;
@@ -14,4 +15,8 @@ export type SetCreatedColumn = {
 export type UpdateColumn = {
 	id: string;
 	data: Partial<WebApi.Board.CreateBoardColumn>;
+};
+
+export type DeleteColumn = {
+	id: string;
 };

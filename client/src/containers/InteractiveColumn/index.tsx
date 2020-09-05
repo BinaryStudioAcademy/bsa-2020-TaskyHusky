@@ -5,15 +5,34 @@ import styles from './styles.module.scss';
 import { useTranslation } from 'react-i18next';
 import EditForm from './EditForm';
 import { ContextProvider } from 'containers/CreateColumnModal/logic/context';
+import { deleteColumn } from 'containers/BoardColumn/logic/actions';
+import { useDispatch } from 'react-redux';
+import ConfirmModal from 'components/common/ConfirmModal';
 
 interface Props {
 	column: WebApi.Result.BoardColumnResult;
 	index: number;
+	setColumns: (value: WebApi.Result.BoardColumnResult[]) => void;
+	columns: WebApi.Result.BoardColumnResult[];
 }
 
-const InteractiveColumn: React.FC<Props> = ({ column: givenColumn, index }) => {
+const InteractiveColumn: React.FC<Props> = ({ column: givenColumn, index, setColumns, columns }) => {
 	const { t } = useTranslation();
+	const dispatch = useDispatch();
 	const [column, setColumn] = useState<WebApi.Result.BoardColumnResult>(givenColumn);
+	const [isConfirmOpened, setIsConfirmOpened] = useState<boolean>(false);
+
+	const confirmRemove = () => {
+		setIsConfirmOpened(true);
+	};
+
+	const remove = () => {
+		dispatch(deleteColumn({ id: column.id }));
+
+		const newColumns = [...columns];
+		newColumns.splice(index, 1);
+		setColumns(newColumns);
+	};
 
 	return (
 		<Draggable draggableId={column.id} index={index}>
@@ -24,11 +43,18 @@ const InteractiveColumn: React.FC<Props> = ({ column: givenColumn, index }) => {
 							<h3 className={styles.uppercase}>{column.columnName}</h3>
 							<div className={styles.columnControls}>
 								<span className={styles.status}>{column.status}</span>
+								<ConfirmModal
+									isOpened={isConfirmOpened}
+									setIsOpened={setIsConfirmOpened}
+									confirmAction={remove}
+									header="Are you sure?"
+									content="Are you sure about deleting this column?"
+								/>
 								<Icon
 									link
 									title={t('delete')}
+									onClick={confirmRemove}
 									name="trash alternate outline"
-									onClick={() => {}}
 									className={styles.redOnHover}
 								/>
 							</div>
