@@ -17,5 +17,6 @@
 		display: inline-block !important;
 		text-align: center !important;
 		@include primary-btn;
+		line-height: 9px !important;
 	}
 }
