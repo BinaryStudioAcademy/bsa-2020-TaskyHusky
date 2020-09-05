@@ -145,6 +145,15 @@ label {
 	@include input;
 }
 
+.sipleTab {
+	margin-top: 22px !important;
+	margin-bottom: 22px;
+}
+
+.bottomTab {
+	margin-bottom: 22px;
+}
+
 @media screen and (max-width: $less-than-medium-screen) {
 	.workBlock {
 		width: 100%;

@@ -443,5 +443,5 @@ export const ru = {
 	could_not_update_filter: 'Невозможно изменить фильтр',
 	no_filters: 'Фильтры не найдены',
 	add_changes: 'Внесите изменения, что бы разблокировать кнопку',
-	my_team: 'Моя команда'
+	my_team: 'Команда',
 };

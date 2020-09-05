@@ -5,6 +5,20 @@
   align-items: center;
 }
 
+.linkBlock {
+  display: flex;
+}
+
+.btnBorderless {
+  border: none !important;
+  box-shadow: none !important;
+  background-color: $body-bg !important;
+
+  &:hover {
+    background-color: $body-bg !important;
+  }
+}
+
 .linkHeader {
   @include info-block-header;
   margin: 0;
@@ -17,29 +31,12 @@
   flex-direction: column;
   padding: 15px;
   position: relative;
+}
 
-  .linkHref {
-    @include primary-content;
-    margin: 0;
-    margin-left: 20px;
-    cursor: poiner;
-
-    &:hover {
-      border-bottom: 2px solid $yellow;
-      position: relative;
-      top: 1px;
-    }
-
-    &>i {
-      font-size: 16px !important;
-    }
-  }
-
-  .btnsBlock {
-    position: absolute;
-    right: 20px;
-    bottom: 20px;
-  }
+.btnsBlock {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
 }
 
 .linkTitle {
@@ -50,9 +47,40 @@
 
 .linkDescription {
   @include secondary-content;
+  margin: 0;
 }
 
 .button {
   margin-left: 10px !important;
   cursor: pointer;
+  color: $secondary-content !important;
+
+  &:hover {
+    color: $primary-text !important;
+  }
+}
+
+
+.linkHref {
+  @include primary-content;
+  margin: 6px 0;
+  cursor: poiner;
+  position: relative;
+  width: fit-content;
+
+  &:hover {
+    @include primary-content;
+
+    &::after {
+      display: block;
+      position: absolute;
+      top: 24px;
+      left: 0;
+      content: '';
+      width: 100%;
+      height: 2px;
+      background-color: #fece2f;
+    }
+
+  }
 }

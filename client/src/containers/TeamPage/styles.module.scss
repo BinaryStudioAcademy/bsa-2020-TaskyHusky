@@ -6,7 +6,7 @@
 }
 
 .container {
-	margin: 13px 10%;
+	margin: 16px 10%;
 	display: flex;
 }
 
@@ -14,6 +14,7 @@
 	width: 25%;
 	height: fit-content;
 	min-width: 280px;
+	margin-top: 12px;
 }
 
 .content {
@@ -24,15 +25,6 @@
 .header {
 	width: 100%;
 	height: 40px;
-}
-
-.linkHeader {
-	display: flex;
-}
-
-.btnBorderless {
-	border: none !important;
-	box-shadow: none !important;
 }
 
 .workedBlockWrapper {
@@ -58,7 +50,7 @@
 
 @media screen and (max-width: $medium-screen) {
 	.container {
-		margin: 13px 8%;
+		margin: 24px 8%;
 	}
 }
 

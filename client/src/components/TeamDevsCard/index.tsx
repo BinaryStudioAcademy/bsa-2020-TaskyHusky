@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Icon, Button, TextArea, TextAreaProps, Popup } from 'semantic-ui-react';
+import { Button, TextArea, TextAreaProps, Popup } from 'semantic-ui-react';
 import styles from './styles.module.scss';
 import AditionalModal from 'components/TeamAddPeopleModal/aditionalModal';
 import { useTranslation } from 'react-i18next';
@@ -61,61 +61,62 @@ const TeamDevsCard = ({
 
 	return (
 		<div className={styles.card}>
-			<div className={styles.cardHeader}>
-				<Icon name="group" size="large" />
-				<Popup
-					open={!lockEditFields && !isTitleValid}
-					content={t('min4_max40_length_message')}
-					position="bottom left"
-					trigger={
-						<input
-							disabled={lockEditFields}
-							value={title}
-							type="text"
-							onChange={(e) => {
-								setTitle(e.target.value.trim());
-								setIsTitleValid(validTeamName(e.target.value.trim()));
-							}}
-							className={
-								lockEditFields ? styles.inputFocus : `${styles.inputFocus} ${styles.inputBorders}`
-							}
-						/>
-					}
-				/>
-			</div>
+			<Popup
+				open={!lockEditFields && !isTitleValid}
+				content={t('min4_max40_length_message')}
+				position="bottom left"
+				trigger={
+					<input
+						disabled={lockEditFields}
+						value={title}
+						type="text"
+						onChange={(e) => {
+							setTitle(e.target.value.trim());
+							setIsTitleValid(validTeamName(e.target.value.trim()));
+						}}
+						className={
+							lockEditFields ? styles.inputFocus : `${styles.inputFocus} ${styles.inputNoneBorders}`
+						}
+					/>
+				}
+			/>
 			<TextArea
 				as="textarea"
 				placeholder={t('add_some_description')}
 				disabled={lockEditFields}
 				onChange={(event: TextAreaProps) => setTeamDescription(event.target.value)}
-				value={teamDescription}
+				value={teamDescription ?? ''}
 				rows={3}
 				className={lockEditFields ? styles.inputArea : `${styles.inputArea} ${styles.inputBorders}`}
 			/>
 			{teamOwner && teamOwner.id === authUser?.id && (
 				<>
-					<Button
-						className={styles.editFieldBtn}
-						onClick={() => submitEditFields()}
-						disabled={!lockEditFields && !isTitleValid}
-					>
-						{t(lockEditFields ? 'edit_fields' : 'save_changes')}
-					</Button>
-					{!lockEditFields && (
-						<Button className={styles.editBtn} onClick={abortChhange}>
-							{t('cancel')}
+					<div className={styles.btnContainer}>
+						<Button
+							className={styles.editFieldBtn}
+							onClick={() => submitEditFields()}
+							disabled={!lockEditFields && !isTitleValid}
+						>
+							{t(lockEditFields ? 'edit_fields' : 'save_changes')}
 						</Button>
-					)}
-					<Button
-						className={styles.addPeople}
-						onClick={showAddPeopleModal}
-						disabled={currentProfile?.id !== teamOwner?.id}
-					>
-						{t('add_people')}
-					</Button>
-					<Button className={styles.deleteBtn} onClick={() => setShowDelete(true)}>
-						{t('delete_team')}
-					</Button>
+						{!lockEditFields && (
+							<Button className={styles.cancelBtn} onClick={abortChhange}>
+								{t('cancel')}
+							</Button>
+						)}
+					</div>
+					<div className={styles.btnContainer}>
+						<Button
+							className={styles.addPeople}
+							onClick={showAddPeopleModal}
+							disabled={currentProfile?.id !== teamOwner?.id}
+						>
+							{t('add_people')}
+						</Button>
+						<Button className={styles.deleteBtn} onClick={() => setShowDelete(true)}>
+							{t('delete_team')}
+						</Button>
+					</div>
 				</>
 			)}
 

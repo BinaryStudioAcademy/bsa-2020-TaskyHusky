@@ -19,7 +19,9 @@ const TeamActivity: React.FC<Props> = ({ issues, projectLength }: Props) => {
 	const count = 3;
 	return (
 		<>
-			{(Boolean(issues?.length) || !projectLength) && <h3 className="managerHeader">{t('worked_on')}</h3>}
+			{(Boolean(issues?.length) || !projectLength) && (
+				<h3 className="managerHeader bottomTab">{t('worked_on')}</h3>
+			)}
 			<ProfileActivityBlock
 				data={issues ?? []}
 				countItem={count}
