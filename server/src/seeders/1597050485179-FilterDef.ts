@@ -40,11 +40,6 @@ export class FilterDef1597050485179 implements MigrationInterface {
 			},
 			{
 				dataType: 'searchText',
-				filterType: 'comment',
-				title: 'Comment',
-			},
-			{
-				dataType: 'searchText',
 				filterType: 'summary',
 				title: 'Summary',
 			},

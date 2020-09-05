@@ -3,9 +3,11 @@ import { useDispatch } from 'react-redux';
 import { Input, Button, InputOnChangeData } from 'semantic-ui-react';
 import styles from './styles.module.scss';
 import { setContainTextInput } from 'containers/AdvancedSearch/logic/actions';
+import { useTranslation } from 'react-i18next';
 
 const ContainTextInput: React.FC = () => {
 	const dispatch = useDispatch();
+	const { t } = useTranslation();
 	const [inputText, setTextInput] = useState('');
 
 	const handleTextInput = (event: React.ChangeEvent<HTMLInputElement>, data: InputOnChangeData) => {
@@ -21,10 +23,10 @@ const ContainTextInput: React.FC = () => {
 			<Input
 				value={inputText}
 				onChange={handleTextInput}
-				placeholder="Contains text"
+				placeholder={t('containText')}
 				className={styles.containTextInput}
 			/>
-			<Button onClick={onSearch} className={styles.searchBtn} primary content="Search" />
+			<Button onClick={onSearch} className={styles.searchBtn} primary content={t('searchIssue')} />
 		</div>
 	);
 };

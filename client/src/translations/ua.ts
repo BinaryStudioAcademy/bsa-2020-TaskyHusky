@@ -48,7 +48,7 @@ export const ua = {
 	create_issue: 'Створити задачу',
 	type: 'Тип',
 	priority: 'Приоритет',
-	summary: 'Назва',
+	summary: 'Сумарно',
 	labels: 'Мітки',
 	links: 'Посилання',
 	attachments: 'Файли',
@@ -436,5 +436,5 @@ export const ua = {
 	yes: 'Так',
 	no_filters: 'Фільтрів не знайдено',
 	add_changes: 'Додайте зміни, щоб розблокувати кнопку',
-	my_team: 'Моя команда'
+	my_team: 'Моя команда',
 };
