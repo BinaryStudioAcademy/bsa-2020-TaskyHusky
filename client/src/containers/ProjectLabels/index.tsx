@@ -88,14 +88,11 @@ const ProjectLabels = (props: Props) => {
 								</li>
 							))}
 						</ul>
-						<Button
-							className={['primaryBtn', styles.button__add_action].join(' ')}
-							onClick={onOpenAddLabelModal}
-						>
-							{t('add_label')}
-						</Button>
 					</>
 				)}
+				<Button className={['primaryBtn', styles.button__add_action].join(' ')} onClick={onOpenAddLabelModal}>
+					{t('add_label')}
+				</Button>
 			</div>
 			{isModalOpen && <AddLabelModal />}
 			{isConfirmModalOpen && (
