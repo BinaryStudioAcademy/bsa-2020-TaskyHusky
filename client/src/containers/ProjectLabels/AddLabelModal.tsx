@@ -35,11 +35,11 @@ const AddLabelModal: React.FC = () => {
 	const isTextValid = (labelText: string): boolean => {
 		const label = labels.find((label) => label.text.toLowerCase() === labelText.toLowerCase());
 
-		if (label?.id === editLabel?.id && labelText !== '') {
+		if (label?.id === editLabel?.id && !labelText) {
 			return true;
 		}
 
-		if (label !== undefined || labelText === '') {
+		if (label !== undefined || !labelText) {
 			return false;
 		}
 
@@ -47,7 +47,9 @@ const AddLabelModal: React.FC = () => {
 	};
 
 	const onTextChange = (text: string): void => {
-		setText(text);
+		const regexp = new RegExp('\\s{1,}', 'g');
+		const removeSpaces = text.replace(regexp, ' ').trimStart();
+		setText(removeSpaces);
 	};
 
 	const onLabelColorChange = (color: ColorResult): void => {
