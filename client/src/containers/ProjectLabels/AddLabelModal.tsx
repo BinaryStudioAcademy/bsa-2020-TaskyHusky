@@ -35,9 +35,14 @@ const AddLabelModal: React.FC = () => {
 	const isTextValid = (labelText: string): boolean => {
 		const label = labels.find((label) => label.text.toLowerCase() === labelText.toLowerCase());
 
+		if (label?.id === editLabel?.id && labelText !== '') {
+			return true;
+		}
+
 		if (label !== undefined || labelText === '') {
 			return false;
 		}
+
 		return true;
 	};
 
@@ -72,11 +77,23 @@ const AddLabelModal: React.FC = () => {
 	};
 
 	const onEditLabel = (): void => {
+		if (editLabel?.text === text) {
+			const isValid = isTextValid(text);
+			if (isValid) {
+				onUpdateLabel();
+				return;
+			}
+		}
+
 		if (!isLabelTextValid) {
 			setIsValidErrorShown(true);
 			return;
 		}
 
+		onUpdateLabel();
+	};
+
+	const onUpdateLabel = (): void => {
 		dispatch(
 			actions.startUpdatingLabel({
 				project,
