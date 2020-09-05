@@ -22,6 +22,7 @@ import ResetPassword from '../ResetPassword';
 import ForgotPassword from '../ForgotPassword';
 import ResetEmail from '../ResetEmail';
 import Landing from 'pages/LandingPage';
+import Spinner from 'components/common/Spinner';
 
 const Routing: React.FC = () => {
 	const dispatch = useDispatch();
@@ -35,7 +36,7 @@ const Routing: React.FC = () => {
 	}, [dispatch, profileLoaded, token]);
 
 	if (!profileLoaded) {
-		return null;
+		return <Spinner />;
 	}
 
 	return (

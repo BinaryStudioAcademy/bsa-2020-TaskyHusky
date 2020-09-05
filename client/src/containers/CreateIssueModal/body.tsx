@@ -11,6 +11,7 @@ import { isNumber } from 'util';
 import { IssueConstants } from 'constants/Issue';
 import IssueFileInput from 'components/IssueFileInput';
 import { initialState } from './logic/initalState';
+import Spinner from 'components/common/Spinner';
 
 interface Props {
 	children: JSX.Element;
@@ -164,7 +165,7 @@ const CreateIssueModalBody: React.FC<Props> = ({
 	};
 
 	if (projectsLoading) {
-		return null;
+		return <Spinner />;
 	}
 
 	return (
