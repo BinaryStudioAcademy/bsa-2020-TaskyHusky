@@ -1,5 +1,41 @@
+@import 'styles/variables.scss';
+
 .container {
   display: flex;
+  position: relative;
+  z-index: 100;
+}
+
+.collapse_button {
+  position: absolute;
+  bottom: 90px;
+  right: -15px;
+  border-radius: 50%;
+  background-color: $yellow;
+  width: 34px;
+  height: 34px;
+  padding: 5px;
+  padding-left: 4px;
+  border: 2px solid #fac71f
+}
+
+.collapse_button__icon {
+  display: block;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+}
+
+.expand__button {
+  transform: rotate(0deg);
+  transition: transform 0.5s ease-out;
+  transform-origin: center;
+}
+
+.collapsed__button {
+  transition: transform 0.5s ease-out;
+  transform-origin: center;
+  transform: rotate(180deg);
 }
 
 .sidebar__container {
@@ -7,6 +43,26 @@
   margin: 0;
   background-color: rgba(0,0,0, 0.9);
   color: rgb(255,255,255);
+  transition: width 0.5s ease-out;
+  overflow: hidden;
+
+    .sidebar__header,
+    .sidebar__body {
+      transition: all 0.2s ease-out 0.2s;
+      opacity: 1;
+    }
+
+  &_collapsed {
+    width: 30px;
+    color: black;
+    transition: width 0.4s ease-out;
+
+    .sidebar__header,
+    .sidebar__body {
+      transition: all 0.1s ease-out;
+      opacity: 0;
+    }
+  }
 }
 
 .sidebar__header {
