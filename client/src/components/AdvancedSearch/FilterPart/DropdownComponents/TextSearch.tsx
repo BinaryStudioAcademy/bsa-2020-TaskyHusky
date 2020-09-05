@@ -19,7 +19,7 @@ const DropdownTextSearch = ({ filterPart }: DropdownTextSearchProps) => {
 	const [searchText, setSearchText] = useState(text);
 
 	const formDropdownTitle = (): string => {
-		return !!searchText ? `${title}: ${searchText}` : title;
+		return !!searchText ? `${t(title)}: ${searchText}` : t(title);
 	};
 
 	const [dropdownTitle, setDropdownTitle] = useState(formDropdownTitle());
@@ -27,13 +27,13 @@ const DropdownTextSearch = ({ filterPart }: DropdownTextSearchProps) => {
 	const onUpdate = (e: React.SyntheticEvent) => {
 		filterPart.searchText = searchText;
 		dispatch(updateFilterPart({ filterPart }));
-		setDropdownTitle(`${title}: ${searchText}`);
+		setDropdownTitle(`${t(title)}: ${searchText}`);
 	};
 
 	const onCancel = (e: React.SyntheticEvent) => {
 		filterPart.searchText = '';
 		dispatch(updateFilterPart({ filterPart }));
-		setDropdownTitle(title);
+		setDropdownTitle(t(title));
 	};
 
 	const getInputPlaceholder = (title: string) => {
@@ -46,7 +46,14 @@ const DropdownTextSearch = ({ filterPart }: DropdownTextSearchProps) => {
 	};
 
 	return (
-		<Dropdown closeOnChange={false} trigger={<span>{t(dropdownTitle)}</span>} icon="angle down" floating labeled>
+		<Dropdown
+			className={styles.dropdown}
+			closeOnChange={false}
+			trigger={<span>{dropdownTitle}</span>}
+			icon="angle down"
+			floating
+			labeled
+		>
 			<Dropdown.Menu onClick={(e: Event) => e.stopPropagation()}>
 				<Input
 					value={searchText}
@@ -56,10 +63,10 @@ const DropdownTextSearch = ({ filterPart }: DropdownTextSearchProps) => {
 					className={styles.textSearch}
 				/>
 				<div className={styles.dropdownBtns}>
-					<Button compact onClick={onUpdate}>
+					<Button className={styles.primatyBtn} compact onClick={onUpdate}>
 						{t('update')}
 					</Button>
-					<Button compact onClick={onCancel} as="a">
+					<Button className={styles.cancelBtn} compact onClick={onCancel}>
 						{t('cancel')}
 					</Button>
 				</div>

@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styles from './styles.module.scss';
-import { List, Icon, Button } from 'semantic-ui-react';
+import { List, Button } from 'semantic-ui-react';
 import SaveFilterModal from 'containers/SaveFilterModal';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -14,13 +14,6 @@ const SearchTitle: React.FC = () => {
 	const dispatch = useDispatch();
 	const { t } = useTranslation();
 	const { filter, isFilterEdited } = useSelector((rootState: RootState) => rootState.advancedSearch);
-	const { user } = useSelector((rootState: RootState) => rootState.auth);
-
-	const [stared, setStared] = useState(true);
-
-	useEffect(() => {
-		setStared(!!filter?.staredBy?.some(({ id }) => id === user?.id));
-	}, [user, filter]);
 
 	const onSaveAs = () => {
 		dispatch(openModal());
@@ -28,9 +21,6 @@ const SearchTitle: React.FC = () => {
 
 	const onSave = () => {
 		dispatch(updateFilter());
-	};
-	const handleSetFavorite = () => {
-		setStared(!stared);
 	};
 	return (
 		<div className={styles.titleWrapper}>
@@ -50,7 +40,7 @@ const SearchTitle: React.FC = () => {
 							</List.Item>
 							<List.Item>
 								<div className={styles.actionItem}>
-									<Button onClick={onSave} compact>
+									<Button className={styles.saveBtn} onClick={onSave} compact>
 										{t('save')}
 									</Button>
 									<Options />
@@ -61,41 +51,11 @@ const SearchTitle: React.FC = () => {
 							</List.Item>
 						</>
 					) : (
-						<Button onClick={onSaveAs} compact>
+						<Button className={styles.saveBtn} onClick={onSaveAs} compact>
 							{t('save_as')}
 						</Button>
 					)}
 					<SaveFilterModal />
-				</List>
-			</div>
-			<div className={styles.actionWrapper}>
-				<List selection horizontal>
-					{filter && (
-						<List.Item>
-							<div onClick={handleSetFavorite} className={styles.actionItem}>
-								<div className={styles.star}>
-									{stared ? <Icon name="star" color="yellow" /> : <Icon name="star outline" />}
-								</div>
-							</div>
-						</List.Item>
-					)}
-					<List.Item>
-						<div className={styles.actionItem}>
-							<Icon name="share alternate" />
-							<List.Content>{t('share')}</List.Content>
-						</div>
-					</List.Item>
-					<List.Item>
-						<div className={styles.actionItem}>
-							<Icon name="external share" />
-							<List.Content>{t('export')}</List.Content>
-						</div>
-					</List.Item>
-					<List.Item>
-						<div className={styles.actionItem}>
-							<Icon name="ellipsis horizontal" />
-						</div>
-					</List.Item>
 				</List>
 			</div>
 		</div>

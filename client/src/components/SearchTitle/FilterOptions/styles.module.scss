@@ -1,3 +1,5 @@
+@import 'styles/mixins.scss';
+
 .icon {
 	padding: 5px 10px !important;
 	border-radius: 3px !important;
@@ -19,4 +21,11 @@
 	border: none !important;
 	width: '30px' !important;
 	padding: 8px 0 8px 8px !important;
+	background: $body-bg !important;
+	&:focus {
+		background: $ligth-gray !important;
+	}
+	&:hover {
+		background: $ligth-gray !important;
+	}
 }

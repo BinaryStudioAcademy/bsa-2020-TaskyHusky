@@ -1,10 +1,7 @@
 import React from 'react';
-import { Table, Dropdown, Icon, Popup, Label } from 'semantic-ui-react';
+import { Table, Icon, Popup, Label } from 'semantic-ui-react';
 import styles from './styles.module.scss';
 import { getFullUserName } from './helpers';
-import DeleteIssueModal from 'containers/DeleteIssueModal';
-import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
 
 interface Props {
 	issue: WebApi.Result.IssueResult;
@@ -69,9 +66,7 @@ const renderStatus = (status: WebApi.Entities.IssueStatus | undefined) => {
 };
 
 const IssueItem = ({ issue }: Props) => {
-	const [open, setOpen] = React.useState(false);
 	const { id, creator, type, issueKey, summary, assigned, priority, createdAt, updatedAt, status } = issue;
-	const { t } = useTranslation();
 
 	return (
 		<Table.Row key={id}>
@@ -110,30 +105,6 @@ const IssueItem = ({ issue }: Props) => {
 			<Table.Cell>{renderStatus(status)}</Table.Cell>
 			<Table.Cell>{createdAt}</Table.Cell>
 			<Table.Cell>{updatedAt}</Table.Cell>
-			<Table.Cell className={styles.editCell}>
-				<Dropdown className={styles.dropdown} compact fluid icon={<Icon name="ellipsis horizontal" />}>
-					<Dropdown.Menu direction="left">
-						<Dropdown.Item
-							content={
-								<Link className={styles.issueAction} to={`/issue/${issueKey}`}>
-									{t('view_issue')}
-								</Link>
-							}
-						/>
-						<Dropdown.Item
-							content={
-								<DeleteIssueModal
-									onClose={() => setOpen(false)}
-									open={open}
-									onOpen={() => setOpen(true)}
-									onDelete={() => window.location.reload()}
-									currentIssueId={issue.id as string}
-								/>
-							}
-						/>
-					</Dropdown.Menu>
-				</Dropdown>
-			</Table.Cell>
 		</Table.Row>
 	);
 };

@@ -1,5 +1,4 @@
 import {
-	CommentFilter,
 	ProjectsFilter,
 	IssueTypeFilter,
 	IssueStatusFilter,
@@ -26,8 +25,6 @@ export const getByFilterType = (filterType: string) => {
 			return CreatorFilter;
 		case 'description':
 			return DescriptionFilter;
-		case 'comment':
-			return CommentFilter;
 		case 'summary':
 			return SummaryFilter;
 		default:
