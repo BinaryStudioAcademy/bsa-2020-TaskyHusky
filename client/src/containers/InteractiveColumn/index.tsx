@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Segment, Icon, Divider } from 'semantic-ui-react';
 import { Draggable } from 'react-beautiful-dnd';
 import styles from './styles.module.scss';
@@ -11,8 +11,9 @@ interface Props {
 	index: number;
 }
 
-const InteractiveColumn: React.FC<Props> = ({ column, index }) => {
+const InteractiveColumn: React.FC<Props> = ({ column: givenColumn, index }) => {
 	const { t } = useTranslation();
+	const [column, setColumn] = useState<WebApi.Result.BoardColumnResult>(givenColumn);
 
 	return (
 		<Draggable draggableId={column.id} index={index}>
@@ -34,7 +35,10 @@ const InteractiveColumn: React.FC<Props> = ({ column, index }) => {
 						</div>
 						<Divider horizontal />
 						<ContextProvider initialState={column}>
-							<EditForm columnId={column.id} />
+							<EditForm
+								columnId={column.id}
+								onSubmit={(data) => setColumn({ ...column, ...data, board: column.board })}
+							/>
 						</ContextProvider>
 					</Segment>
 				</div>
