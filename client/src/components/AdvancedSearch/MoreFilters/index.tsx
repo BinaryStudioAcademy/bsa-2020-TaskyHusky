@@ -33,7 +33,7 @@ const MoreFilterDefsDropdown = ({
 		<Dropdown
 			trigger={
 				<span className={styles.moreText}>
-					<Icon color="yellow" name="plus" /> {t('more')}
+					<Icon color="blue" name="plus" /> {t('more')}
 				</span>
 			}
 			icon={null}

@@ -2,15 +2,28 @@
 @import 'styles/variables.scss';
 
 .moreFilterDropdown {
+	padding: 5px 8px 5px 8px !important;
+
 	.moreText {
-		color: #f1c122;
+		color: 'blue' !important;
 	}
 	&:hover {
+		box-shadow: none;
+		background: #505f79;
+		color: #f4f5f7;
+		border: none;
+		border-radius: 3px 3px;
 		.dropdownMenu {
 			display: none !important;
 		}
 	}
 	&:focus {
+		box-shadow: none;
+		background: #505f79;
+		color: #f4f5f7;
+		border: none;
+		border-radius: 3px 3px;
+
 		.dropdownMenu {
 			display: block !important;
 			min-width: 200px !important;

@@ -26,7 +26,12 @@ const ContainTextInput: React.FC = () => {
 				placeholder={t('containText')}
 				className={styles.containTextInput}
 			/>
-			<Button onClick={onSearch} className={styles.searchBtn} primary content={t('searchIssue')} />
+			<Button
+				onClick={onSearch}
+				className={styles.searchBtn}
+				primary
+				content={<span style={{ marginBottom: '5px' }}>{t('searchIssue')}</span>}
+			/>
 		</div>
 	);
 };
