@@ -4,6 +4,8 @@ import { getBoardById } from 'services/board.service';
 import { useParams } from 'react-router-dom';
 import styles from './styles.module.scss';
 import Spinner from 'components/common/Spinner';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import InteractiveColumn from 'containers/InteractiveColumn';
 
 const ColumnsSettingsPage: React.FC = () => {
 	const { boardId } = useParams();
@@ -23,9 +25,23 @@ const ColumnsSettingsPage: React.FC = () => {
 		return <NotFound />;
 	}
 
+	const onDragEnd = () => {};
+
 	return (
 		<div className={styles.wrapper}>
 			<h1>{board.name}</h1>
+			<DragDropContext onDragEnd={onDragEnd}>
+				<Droppable droppableId="0" direction="horizontal">
+					{(provided, snapshot) => (
+						<div className={styles.columnsContainer} ref={provided.innerRef} {...provided.droppableProps}>
+							{board.columns.map((column, i) => (
+								<InteractiveColumn key={i} column={column} index={i} />
+							))}
+							{provided.placeholder}
+						</div>
+					)}
+				</Droppable>
+			</DragDropContext>
 		</div>
 	);
 };

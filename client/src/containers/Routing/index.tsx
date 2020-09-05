@@ -23,6 +23,7 @@ import ForgotPassword from '../ForgotPassword';
 import ResetEmail from '../ResetEmail';
 import Landing from 'pages/LandingPage';
 import Spinner from 'components/common/Spinner';
+import ColumnsSettings from 'pages/ColumnsSettings';
 
 const Routing: React.FC = () => {
 	const dispatch = useDispatch();
@@ -52,6 +53,7 @@ const Routing: React.FC = () => {
 			<PrivateRoute exact path="/team/:id" component={Team} />
 			<PrivateRoute exact path="/profile/:id" component={Profile} />
 			<PrivateRoute exact path="/filters" component={Filters} />
+			<PrivateRoute exact path="/board/:boardId/columnsSettings" component={ColumnsSettings} />
 			<PrivateRoute path="/board/:id" component={BoardPage} />
 			<PrivateRoute path="/project/:id/issues" component={ProjectIssues} />
 			<PrivateRoute exact path="/people" component={PeoplePage} />

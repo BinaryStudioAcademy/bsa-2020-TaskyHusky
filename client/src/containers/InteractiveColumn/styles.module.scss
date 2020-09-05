@@ -1,0 +1,19 @@
+.column {
+	min-width: 300px;
+	background-color: #eee !important;
+	margin-right: 20px !important;
+}
+
+.columnHeader {
+	display: flex;
+	justify-content: space-between;
+}
+
+.columnControls {
+	display: flex;
+	width: min-content;
+}
+
+.redOnHover:hover {
+	color: red !important;
+}
