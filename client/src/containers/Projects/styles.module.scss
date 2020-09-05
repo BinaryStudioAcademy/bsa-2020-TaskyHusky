@@ -6,24 +6,29 @@
 
 .input {
 	@include input;
+	width: 243px !important;
+  
+	div:hover {
+	  background-color: none !important;
+	}
+  
+	& input {
+	  border-radius: 6px !important;
+	}
 }
+
+
 
 .wrapper__title {
 	display: flex;
 	justify-content: space-between;
-	margin-bottom: 20px;
-}
-
-.wrapper__title {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
+	align-items: flex-start;
 	margin-bottom: 20px;
 }
 
 .title {
-	margin: 0;
 	font-size: 24px;
+	line-height: 36px;
 	font-weight: 600 !important;
 	font-family: 'Poppins', sans-serif !important;
 }
