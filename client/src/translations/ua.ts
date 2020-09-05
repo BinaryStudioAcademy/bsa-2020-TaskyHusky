@@ -436,5 +436,6 @@ export const ua = {
 	yes: 'Так',
 	no_filters: 'Фільтрів не знайдено',
 	add_changes: 'Додайте зміни, щоб розблокувати кнопку',
+	team_header: 'Команда',
 	my_team: 'Моя команда',
 };

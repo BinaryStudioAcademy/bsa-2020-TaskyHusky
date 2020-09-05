@@ -3,20 +3,11 @@
 .card {
   background-color: $primary-bg;
   box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.25);
-  margin-bottom: 10px;
+  margin-bottom: 22px;
   display: flex;
   flex-direction: column;
   padding: 15px;
   position: relative;
-}
-
-.cardHeader {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-bottom: 10px;
-  margin-bottom: 10px;
-  border-bottom: 1px solid $border;
 }
 
 .inputArea {
@@ -35,6 +26,19 @@
   }
 }
 
+.btnContainer {
+  width: 100%;
+  display: flex;
+  margin-top: 10px;
+  flex-direction: row;
+}
+
+.inputNoneBorders {
+  background-color: $primary-bg;
+  border: none !important;
+  outline: none !important;
+}
+
 .inputBorders {
   border-color: $border;
   border-radius: 6px;
@@ -49,30 +53,43 @@
 .inputFocus {
   width: calc(100% - 30px);
   box-sizing: border-box;
-  padding: 10px;
-  @include info-block-header;
+  @include manager-header;
+  font-size: 22px !important;
+  background-color: $primary-bg;
   border: none;
-  border: 1px solid transparent;
+  padding: 0;
+  margin-bottom: 5px;
+}
 
-  &:focus {
-    outline: none;
-    border-radius: 6px;
-    border: 1px solid $yellow;
-  }
+.cancelBtn {
+  @include manager-btn;
+  min-width: 50%;
+  border-radius: 0 !important;
+  margin: 0 !important;
+  padding: 0;
+}
+
+.addPeople {
+  @include primary-btn;
+  min-width: 50%;
+  border-radius: 0 !important;
+  margin: 0 !important;
+  padding: 0;
 }
 
 .editFieldBtn {
-  @include content-btn;
-  width: 100% !important;
-}
-
-.addPeople,
-.editBtn {
-  @include content-btn;
-  width: 100% !important;
-  margin-bottom: 10px !important;
+  @include manager-btn;
+  border-radius: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  min-width: 50%;
+  width: 100%;
 }
 
 .deleteBtn {
   @include cancel-btn;
+  min-width: 50%;
+  border-radius: 0 !important;
+  margin: 0 !important;
+  padding: 0;
 }

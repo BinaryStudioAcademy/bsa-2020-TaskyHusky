@@ -460,5 +460,6 @@ export const en = {
 	no_filters: 'No filters found',
 	add_changes: 'Please, add changes to enable button',
 	people_and_teams: 'People and Teams',
+	team_header: 'Team',
 	my_team: 'My team',
 };

@@ -6,23 +6,31 @@
 	margin-bottom: 10px;
 	display: flex;
 	flex-direction: column;
-	padding: 15px;
+	padding: 5px 15px;
+	margin-bottom: 15px;
+}
+
+.cardWrapper {
+	margin: 10px 0;
 }
 
 .sectionHeader {
 	display: flex;
 	margin-bottom: 10px;
 	align-items: center;
+	justify-content: space-between;
 }
 
 .header {
 	@include info-block-header;
 	margin: 0 !important;
+	margin-bottom: 7px !important;
 }
 
 .metaHeader {
 	@include secondary-content;
 	margin-left: 15px !important;
+	margin-bottom: 7px !important;
 }
 
 .firstName {
@@ -52,7 +60,6 @@
 .cardBody {
 	display: flex;
 	position: relative;
-	margin-bottom: 10px;
 	align-items: center;
 
 	.icon {
@@ -85,11 +92,8 @@
 
 .userDeleteBtn {
 	position: absolute !important;
-	right: 0;
-	top: 45%;
+	right: -5px;
+	top: 3px;
 	cursor: pointer;
-	color: #2185d0;
-	font-size: 1.3rem !important;
-	margin: 0 !important;
-	padding: 0 !important;
+	color: $secondary-content;
 }

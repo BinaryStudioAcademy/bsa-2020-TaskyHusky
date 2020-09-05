@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { Image, Button } from 'semantic-ui-react';
 import linksImg from 'assets/images/team-page-links.svg';
-import styles from 'containers/TeamPage/styles.module.scss';
+import styles from './styles.module.scss';
 import { useTranslation } from 'react-i18next';
 import LinkCard from './LinkCard';
 import { useSelector } from 'react-redux';
@@ -33,13 +33,10 @@ const TeamLinks = ({ addLinks, currentLinks, edit, deleteLink }: Props) => {
 
 	return (
 		<>
-			<div className={styles.linkHeader}>
-				<h3 className="managerHeader">{t('links')}</h3>
-				{isUserConsistsInTeam && (
-					<Button compact basic className={styles.btnBorderless} icon="plus" onClick={addLinks} />
-				)}
+			<div className={styles.linkBlock}>
+				<h3 className="managerHeader sipleTab">{t('links')}</h3>
+				{isUserConsistsInTeam && <Button className={styles.btnBorderless} icon="plus" onClick={addLinks} />}
 			</div>
-
 			{currentLinks.length ? (
 				currentLinks.map((el: any) => {
 					return (

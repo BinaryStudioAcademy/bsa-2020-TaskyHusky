@@ -12,11 +12,11 @@ const TeamWorkedProjects: React.FC<Props> = ({ projects }: Props) => {
 	const countProject = 1;
 	return (
 		<>
-			{projects?.length && (
+			{Boolean(projects?.length) && (
 				<>
-					<h3 className="managerHeader">{t('projects')}</h3>
+					<h3 className="managerHeader sipleTab">{t('projects')}</h3>
 					<ProfileActivityBlock
-						data={projects}
+						data={projects ?? []}
 						countItem={countProject}
 						showEmpty={false}
 						component={UserActivityItem}

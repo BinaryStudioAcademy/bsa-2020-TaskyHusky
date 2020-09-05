@@ -124,7 +124,7 @@ const TeamPage = ({
 		<Spinner />
 	) : (
 		<main className={styles.pageMain}>
-			<ProfileHeader title={t('my_team')} />
+			<ProfileHeader title={t('team_header')} />
 			<section className={styles.container}>
 				<aside className={styles.aside}>
 					<TeamDevsCard
