@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Grid } from 'semantic-ui-react';
 import { useDispatch, connect } from 'react-redux';
 import validator from 'validator';
 import styles from './styles.module.scss';
@@ -15,6 +14,8 @@ import DeleteLink from 'components/TeamLinks/DeleteLink';
 import Spinner from 'components/common/Spinner';
 import { RootState } from 'typings/rootState';
 import { User } from 'containers/LoginPage/logic/state';
+import ProfileHeader from 'components/ProfileHeader';
+import { useTranslation } from 'react-i18next';
 
 interface Match {
 	params: { [key: string]: string };
@@ -61,6 +62,7 @@ const TeamPage = ({
 		description: '',
 	});
 
+	const { t } = useTranslation();
 	const dispatch = useDispatch();
 
 	useEffect(() => {
@@ -121,12 +123,10 @@ const TeamPage = ({
 	return loading ? (
 		<Spinner />
 	) : (
-		<Grid columns="equal" centered className={styles.pageMain}>
-			<Grid.Row>
-				<div className={styles.header}></div>
-			</Grid.Row>
-			<Grid.Row className={styles.mainRow}>
-				<Grid.Column className={`${styles.colMedia} ${styles.colLeft}`}>
+		<main className={styles.pageMain}>
+			<ProfileHeader title={t('my_team')} />
+			<section className={styles.mainRow}>
+				<aside className={styles.colLeft}>
 					<TeamDevsCard
 						confirmDelete={confirmDeleteTeam}
 						currentProfile={currentProfile}
@@ -148,8 +148,8 @@ const TeamPage = ({
 						teamOwner={team.createdBy}
 						removeUserFromTeam={handlerRemoveFromTeam}
 					/>
-				</Grid.Column>
-				<Grid.Column className={`${styles.colMedia}, ${styles.colRight}`}>
+				</aside>
+				<article className={styles.colRight}>
 					<TeamActivity issues={team.issues ?? []} projectLength={team.projects?.length ?? 0} />
 					<TeamLinks
 						currentLinks={team.links ?? []}
@@ -158,8 +158,8 @@ const TeamPage = ({
 						addLinks={toggleAddLinks}
 					/>
 					<TeamWorkedProjects projects={team.projects} />
-				</Grid.Column>
-			</Grid.Row>
+				</article>
+			</section>
 			{addPeopleModal && (
 				<TeamAddPeopleModal
 					clearStateAfterSelect={onSelectUserInAddUsers}
@@ -174,7 +174,7 @@ const TeamPage = ({
 			{deleteLink && (
 				<DeleteLink onClose={toggleDeleteLinkModal} link={linkToDelete} onDelete={onDeleteLinkAccept} />
 			)}
-		</Grid>
+		</main>
 	);
 };
 

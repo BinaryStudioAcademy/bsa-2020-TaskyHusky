@@ -435,4 +435,5 @@ export const ua = {
 	could_not_update_filter: "Can't update filter",
 	no_filters: 'Фільтрів не знайдено',
 	add_changes: 'Додайте зміни, щоб розблокувати кнопку',
+	my_team: 'Моя команда'
 };
