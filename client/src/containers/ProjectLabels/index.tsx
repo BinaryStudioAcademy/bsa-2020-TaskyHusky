@@ -70,7 +70,6 @@ const ProjectLabels = (props: Props) => {
 									/>
 									<span className={styles.labels__list_actions}>
 										<Button
-											basic
 											className={styles.button__edit_action}
 											onClick={() => onOpenEditLabelModal(label)}
 										>
@@ -78,7 +77,6 @@ const ProjectLabels = (props: Props) => {
 										</Button>
 										<Button
 											className={styles.button__delete_action}
-											basic
 											onClick={() => onDeleteLabel(label.id)}
 											loading={labelDeletingId === label.id}
 										>

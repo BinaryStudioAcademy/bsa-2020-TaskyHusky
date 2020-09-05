@@ -81,8 +81,13 @@
 .button__delete_action,
 .button__edit_action {
 	box-shadow: none !important;
-	color: black !important;
 	padding: 0 !important;
+	border: none;
+	background-color: transparent !important;
+	&:hover {
+		background-color: transparent !important;
+		color: black !important;
+	}
 }
 
 .button__delete_action {
