@@ -180,6 +180,7 @@ export const en = {
 	contact: 'Contact',
 	team: 'Teams',
 	save_as: 'Save as',
+	save: 'Save',
 	filter_not_created_by_you:
 		"This filter wasn't created by you . You can save a copy of this filter but you cannot modify the original.",
 	save_filter: 'Save Filter',
@@ -391,7 +392,7 @@ export const en = {
 	more: 'More',
 	update: 'Update',
 	export: 'Export',
-	find_by: 'Find by column',
+	find_by: 'Find by',
 	Projects: 'Projects',
 	Status: 'Status',
 	Type: 'Type',
@@ -455,8 +456,10 @@ export const en = {
 	filter_was_updated: 'Filter was updated',
 	could_not_save_filter: "Can't save filter",
 	could_not_update_filter: "Can't update filter",
+	yes: 'Yes',
 	no_filters: 'No filters found',
 	add_changes: 'Please, add changes to enable button',
 	people_and_teams: 'People and Teams',
-	my_team: 'Team',
+	team_header: 'Team',
+	my_team: 'My team',
 };

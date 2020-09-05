@@ -1,6 +1,9 @@
+@import 'styles/mixins.scss';
+@import 'styles/variables.scss';
+
 .moreFilterDropdown {
 	.moreText {
-		color: #3275a8;
+		color: #f1c122;
 	}
 	&:hover {
 		.dropdownMenu {

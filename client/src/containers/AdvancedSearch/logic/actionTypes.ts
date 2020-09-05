@@ -44,7 +44,7 @@ export type LoadFilterByIdArgs = {
 };
 
 export type LoadFilterSuccessArgs = {
-	filter: WebApi.Entities.Filter;
+	filter: WebApi.Entities.Filter | undefined;
 };
 
 export type SetAddedFilterPartsArgs = {

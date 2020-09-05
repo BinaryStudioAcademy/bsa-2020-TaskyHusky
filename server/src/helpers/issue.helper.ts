@@ -9,7 +9,6 @@ type RequestConditions = {
 	description?: FindOperator<string>;
 	sprint?: FindOperator<string>;
 	project?: FindOperator<string>;
-	comment?: FindOperator<string>;
 	status?: FindOperator<string>;
 	assigned?: FindOperator<string>;
 	creator?: FindOperator<string>;
@@ -21,19 +20,7 @@ const getLikeOperator = (matchValue: string) => {
 
 export const getConditions = (filter: Filter) => {
 	const where = {} as RequestConditions;
-	const {
-		id,
-		issueType,
-		issueStatus,
-		priority,
-		summary,
-		description,
-		sprint,
-		projects,
-		assigned,
-		creator,
-		comment,
-	} = filter;
+	const { id, issueType, issueStatus, priority, summary, description, sprint, projects, assigned, creator } = filter;
 
 	if (id) {
 		where.id = Any(id);
@@ -61,9 +48,6 @@ export const getConditions = (filter: Filter) => {
 	}
 	if (summary) {
 		where.summary = getLikeOperator(summary);
-	}
-	if (comment) {
-		where.comment = getLikeOperator(comment);
 	}
 	if (description) {
 		where.description = getLikeOperator(description);

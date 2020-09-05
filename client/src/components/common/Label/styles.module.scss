@@ -1,13 +1,36 @@
-.label {
+.wrapper {
+	display: block;
+}
+
+.container {
 	border-radius: 3px;
-	padding: 1px 7px;
-	margin-right: 5px;
+	padding: 4px 7px;
+}
+
+.container__label_block {
+	display: block;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	padding: 3px 7px;
+	margin: 0;
+	margin-top: -3px;
+}
+
+.label {
 	font-size: .92857143em;
+	white-space: nowrap;
     font-weight: 700;
 	text-transform: none;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	word-wrap: none;
+}
+
+.full_size__container {
+	height: 36px;
+	padding: 8px 10px;
 }
 
 .full_size {
 	font-size: 1.3em;
-	padding: 7px 10px;
 }
