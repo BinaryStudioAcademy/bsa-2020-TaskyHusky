@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button } from 'semantic-ui-react';
+import { Button, Table } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'typings/rootState';
@@ -50,7 +50,7 @@ const ProjectLabels = (props: Props) => {
 			<div className={styles.body_inner__container}>
 				<div className={styles.header_inner__container}>
 					<h1 className={styles.header_inner__title}>{t('labels')}</h1>
-					<Button className={styles.primary__button} onClick={onOpenAddLabelModal}>
+					<Button className={'primaryBtn'} onClick={onOpenAddLabelModal}>
 						{t('add_label')}
 					</Button>
 				</div>
@@ -62,36 +62,53 @@ const ProjectLabels = (props: Props) => {
 						</div>
 					</div>
 				) : (
-					<ul className={styles.labels__list}>
-						{labels.map((label) => (
-							<li key={label.id} className={styles.labels__list_item}>
-								<Label
-									isFullSize={true}
-									backgroundColor={label.backgroundColor}
-									text={label.text}
-									textColor={label.textColor}
-								/>
-								<span className={styles.labels__list_actions}>
-									<Button
-										basic
-										secondary
-										className={styles.primary__button_basic}
-										onClick={() => onOpenEditLabelModal(label)}
-									>
-										{t('edit')}
-									</Button>
-									<Button
-										color="red"
-										basic
-										onClick={() => onDeleteLabel(label.id)}
-										loading={labelDeletingId === label.id}
-									>
-										{t('delete')}
-									</Button>
-								</span>
-							</li>
-						))}
-					</ul>
+					<>
+						<Table className={styles.table} celled>
+							<Table.Header>
+								<Table.Row>
+									<Table.HeaderCell>Labels</Table.HeaderCell>
+									<Table.HeaderCell className={styles.table__column_actions}>
+										Actions
+									</Table.HeaderCell>
+								</Table.Row>
+							</Table.Header>
+							<Table.Body>
+								{labels.map((label) => (
+									<Table.Row key={label.id}>
+										<Table.Cell className={styles.table__name_container}>
+											<Label
+												isFullSize={true}
+												backgroundColor={label.backgroundColor}
+												text={label.text}
+												textColor={label.textColor}
+											/>
+										</Table.Cell>
+										<Table.Cell className={styles.table__column_actions}>
+											<span className={styles.labels__list_actions}>
+												<Button
+													basic
+													secondary
+													className={styles.primary__button_basic}
+													onClick={() => onOpenEditLabelModal(label)}
+												>
+													{t('edit')}
+												</Button>
+												<Button
+													className={styles.button__delete_action}
+													color="red"
+													basic
+													onClick={() => onDeleteLabel(label.id)}
+													loading={labelDeletingId === label.id}
+												>
+													{t('delete')}
+												</Button>
+											</span>
+										</Table.Cell>
+									</Table.Row>
+								))}
+							</Table.Body>
+						</Table>
+					</>
 				)}
 			</div>
 			{isModalOpen && <AddLabelModal />}
