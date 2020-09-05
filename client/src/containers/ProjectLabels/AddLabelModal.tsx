@@ -34,7 +34,6 @@ const AddLabelModal: React.FC = () => {
 
 	const isTextValid = (labelText: string): boolean => {
 		const label = labels.find((label) => label.text.toLowerCase() === labelText.toLowerCase());
-		console.log(labelText);
 
 		if (label?.id === editLabel?.id && labelText.trim() !== '') {
 			return true;
