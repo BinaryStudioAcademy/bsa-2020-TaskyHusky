@@ -141,6 +141,10 @@ label {
 	margin: 0;
 }
 
+.standartInput {
+	@include input;
+}
+
 @media screen and (max-width: $less-than-medium-screen) {
 	.workBlock {
 		width: 100%;
@@ -152,8 +156,4 @@ label {
 		margin-left: 0 !important;
 		margin-right: 0 !important;
 	}
-}
-
-.standartInput {
-	@include input;
 }
