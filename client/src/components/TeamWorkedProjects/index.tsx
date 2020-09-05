@@ -1,5 +1,4 @@
 import React from 'react';
-import styles from './styles.module.scss';
 import { useTranslation } from 'react-i18next';
 import ProfileActivityBlock from 'components/ProfileActivityBlock';
 import UserActivityItem from 'components/UserActivityItem';
@@ -15,7 +14,7 @@ const TeamWorkedProjects: React.FC<Props> = ({ projects }: Props) => {
 		<>
 			{projects?.length && (
 				<>
-					<h3 className={styles.mainHeader}>{t('projects')}</h3>
+					<h3 className="managerHeader">{t('projects')}</h3>
 					<ProfileActivityBlock
 						data={projects}
 						countItem={countProject}

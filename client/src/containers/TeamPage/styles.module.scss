@@ -5,24 +5,25 @@
 	min-height: calc(100vh - 70px);
 }
 
-.card {
-	background-color: $primary-bg;
-	box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.25);
-	margin-bottom: 10px;
+.container {
+	margin: 22px 10%;
 	display: flex;
-	flex-direction: column;
-	padding: 15px;
-	position: relative;
+}
+
+.aside {
+	width: 25%;
+	height: fit-content;
+	min-width: 280px;
+}
+
+.content {
+	padding: 0 0 0 40px;
+	width: 75%;
 }
 
 .header {
 	width: 100%;
 	height: 40px;
-}
-
-.flexRow {
-	display: flex;
-	flex-direction: row;
 }
 
 .linkHeader {
@@ -55,117 +56,14 @@
 	margin: 0;
 }
 
-.cardHeader {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	padding-bottom: 10px;
-	margin-bottom: 10px;
-	border-bottom: 1px solid $border;
-}
-
-.inputFocus {
-	width: calc(100% - 30px);
-	box-sizing: border-box;
-	padding: 10px;
-	@include info-block-header;
-	border: none;
-	border: 1px solid transparent;
-
-	&:focus {
-		outline: none;
-		border-radius: 6px;
-		border: 1px solid $yellow;
+@media screen and (max-width: $medium-screen) {
+	.container {
+		margin: 22px 8%;
 	}
 }
 
-.inputArea {
-	min-width: 100%;
-	min-height: 100px;
-	resize: none;
-	padding: 6px;
-	@include text-data;
-	border-radius: 6px !important;
-	border: 1px solid transparent;
-
-	&:focus {
-		outline: none;
-		border-radius: 6px;
-		border: 1px solid $yellow;
-	}
-}
-
-.inputBorders {
-	border-color: $border;
-	border-radius: 6px;
-	background-color: $primary-bg;
-
-	&:focus {
-		outline: none;
-		border: 1px solid $yellow;
-	}
-}
-
-.mainRow {
-	margin: 22px 10%;
-	display: flex;
-}
-
-.colLeft {
-	width: 25%;
-	height: fit-content;
-	min-width: 280px;
-}
-
-.colRight {
-	padding: 0 0 0 40px;
-	width: 75%;
-}
-
-.mediaBtns {
-	flex-shrink: 0.5 !important;
-}
-
-.editFieldBtn {
-	@include content-btn;
-	width: 100% !important;
-}
-
-.addPeople,
-.editBtn {
-	@include content-btn;
-	width: 100% !important;
-	margin-bottom: 10px !important;
-}
-
-.deleteBtn {
-	@include cancel-btn;
-}
-
-@media (max-width: 950px) {
-	.mainRow {
-		padding: 0 20px !important;
-	}
-}
-
-@media (max-width: 710px) {
-	.mainRow {
-		padding: 0 20px !important;
-
-		.colLeft {
-			flex-wrap: wrap !important;
-			display: flex !important;
-			flex-direction: row !important;
-			justify-content: center !important;
-			width: 100% !important;
-
-			&>div {
-				margin: 0 10px 10px 0 !important;
-			}
-		}
-
-		.colRight {
-			width: 90% !important;
-		}
+@media screen and (max-width: $less-than-medium-screen) {
+	.container {
+		display: block;
 	}
 }

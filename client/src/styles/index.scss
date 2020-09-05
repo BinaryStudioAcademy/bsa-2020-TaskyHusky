@@ -136,6 +136,11 @@ label {
 	align-items: center;
 }
 
+.managerHeader {
+	@include manager-header;
+	margin: 0;
+}
+
 @media screen and (max-width: $less-than-medium-screen) {
 	.workBlock {
 		width: 100%;
