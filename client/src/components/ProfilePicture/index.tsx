@@ -98,7 +98,7 @@ const ProfilePicture: React.FC<Props> = (props: Props) => {
 						</Button>
 					) : (
 						<Button
-							className={`contentBtn ${styles.button}`}
+							className={styles.managerBtn}
 							onClick={() => showManager(ModeManager.profile)}
 							disabled={!editMode ? false : true}
 						>
