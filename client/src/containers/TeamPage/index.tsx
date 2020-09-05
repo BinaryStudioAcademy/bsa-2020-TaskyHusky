@@ -6,6 +6,7 @@ import styles from './styles.module.scss';
 import TeamDevsCard from 'components/TeamDevsCard';
 import TeamsMembersCard from 'components/TeamsMembersCard';
 import TeamWorkedProjects from 'components/TeamWorkedProjects';
+import TeamActivity from 'components/TeamActivity';
 import TeamLinks from 'components/TeamLinks';
 import * as actions from './logic/actions';
 import TeamAddPeopleModal from 'components/TeamAddPeopleModal';
@@ -23,7 +24,7 @@ interface Match {
 }
 
 type Team = {
-	team: WebApi.Team.TeamModel;
+	team: WebApi.Team.TeamModel | any;
 };
 export interface Link {
 	http: string;
@@ -149,13 +150,14 @@ const TeamPage = ({
 					/>
 				</Grid.Column>
 				<Grid.Column className={`${styles.colMedia}, ${styles.colRight}`}>
-					<TeamWorkedProjects projects={team.projects} />
+					<TeamActivity issues={team.issues ?? []} projectLength={team.projects?.length ?? 0} />
 					<TeamLinks
 						currentLinks={team.links ?? []}
 						edit={editLink}
 						deleteLink={onDeleteLink}
 						addLinks={toggleAddLinks}
 					/>
+					<TeamWorkedProjects projects={team.projects} />
 				</Grid.Column>
 			</Grid.Row>
 			{addPeopleModal && (

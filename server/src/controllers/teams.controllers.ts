@@ -2,6 +2,7 @@ import { v4 } from 'uuid';
 import { Request, Response } from 'express';
 import { getCustomRepository } from 'typeorm';
 import { TeamRepository } from '../repositories/teams.repository';
+import { ProjectsRepository } from '../repositories/projects.repository';
 import { getWebError } from '../helpers/error.helper';
 import HttpStatusCode from '../constants/httpStattusCode.constants';
 import { linksParse } from '../helpers/team.parser';
@@ -55,6 +56,26 @@ class TeamsController {
 		try {
 			const team: any = await teamRepository.findTeamUsersById(id);
 			res.send(team);
+		} catch (error) {
+			res.status(404).send(getWebError(error, 404));
+		}
+	};
+
+	getTeamsIssues = async (req: Request, res: Response): Promise<void> => {
+		const projectsRepository = getCustomRepository(ProjectsRepository);
+		const { id } = req.params;
+		try {
+			const projects: any = await projectsRepository.getProjectWithIssuesByTeamId(id);
+			let issues: any = [];
+			projects.forEach((project: any) => {
+				issues = issues.concat(project.issues.map((item: any) => ({ ...item, project })));
+			});
+			const sortedIssues = issues
+				.sort(({ updatedAt: firstDate = '' }, { updatedAt: secondDate = '' }) => {
+					return Number(new Date(secondDate)) - Number(new Date(firstDate));
+				})
+				.slice(0, 10);
+			res.send(sortedIssues);
 		} catch (error) {
 			res.status(404).send(getWebError(error, 404));
 		}

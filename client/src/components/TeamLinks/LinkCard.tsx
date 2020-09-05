@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { Icon, Button } from 'semantic-ui-react';
+import { Icon } from 'semantic-ui-react';
 import styles from './styles.module.scss';
 import { CurrentLink } from './index';
-import { useTranslation } from 'react-i18next';
 
 export type Props = {
 	edit: (arg: CurrentLink) => void;
@@ -11,29 +10,26 @@ export type Props = {
 	link: CurrentLink;
 };
 
-const LinkCard = ({ link, edit, deleteLink, isUserConsistsInTeam }: Props) => {
+const LinkCard = (props: Props) => {
+	const { link, edit, deleteLink, isUserConsistsInTeam } = props;
 	const [showButtons, setShowButtons] = useState<boolean>(false);
 	const showBtns = () => setShowButtons(true);
 	const hideBtns = () => setShowButtons(false);
 
-	const { t } = useTranslation();
-
 	return (
 		<div className={styles.linkCardWrapper} onMouseEnter={showBtns} onMouseLeave={hideBtns}>
-			<h3 className={styles.linkHeader}>{link.name}</h3>
+			<div className={styles.hederContainer}>
+				<h3 className={styles.linkHeader}>{link.name}</h3>
+				<a className={styles.linkHref} href={link.http} target="_blank" rel="noopener noreferrer">
+					<Icon name="linkify" size="large" />
+					{link.http}
+				</a>
+			</div>
 			<p className={styles.linkDescription}>{link.description}</p>
-			<a className={styles.linkHref} href={link.http} target="_blank" rel="noopener noreferrer">
-				<Icon name="linkify" size="large" />
-				{link.http}
-			</a>
 			{showButtons && isUserConsistsInTeam && (
 				<div className={styles.btnsBlock}>
-					<Button size="medium" basic className={styles.editBtn} onClick={() => edit(link)}>
-						<span className={styles.editBtnValue}> {t('edit')}</span>
-					</Button>
-					<Button size="medium" basic className={styles.deleteBtn} onClick={() => deleteLink(link)}>
-						<span className={styles.deleteBtnValue}>{t('delete')}</span>
-					</Button>
+					<Icon size="large" className={styles.button} name="pencil" onClick={() => edit(link)} />
+					<Icon size="large" className={styles.button} name="trash" onClick={() => deleteLink(link)} />
 				</div>
 			)}
 		</div>
