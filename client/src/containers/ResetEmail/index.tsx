@@ -45,7 +45,7 @@ const ResetEmail = () => {
 						<Segment>
 							<Form className={styles.form} onSubmit={handleSubmit}>
 								<label className={styles.text}>
-									{t('type_pass_confirm_email')} {email}
+									{t('type_pass_confirm_email')} <span className={styles.email}>{email}</span>
 								</label>
 								<SubmitedInput
 									text={password}

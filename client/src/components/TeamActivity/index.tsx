@@ -1,5 +1,4 @@
 import React from 'react';
-import styles from 'containers/TeamPage/styles.module.scss';
 import { useTranslation } from 'react-i18next';
 import ProfileActivityBlock from 'components/ProfileActivityBlock';
 import IssueActivityItem from 'components/IssueActivityItem';
@@ -20,7 +19,7 @@ const TeamActivity: React.FC<Props> = ({ issues, projectLength }: Props) => {
 	const count = 3;
 	return (
 		<>
-			{(Boolean(issues?.length) || !projectLength) && <h3 className={styles.mainHeader}>{t('worked_on')}</h3>}
+			{(Boolean(issues?.length) || !projectLength) && <h3 className="managerHeader">{t('worked_on')}</h3>}
 			<ProfileActivityBlock
 				data={issues ?? []}
 				countItem={count}

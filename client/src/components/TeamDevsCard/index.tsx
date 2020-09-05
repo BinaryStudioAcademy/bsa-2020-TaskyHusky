@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Icon, Button, TextArea, TextAreaProps, Popup } from 'semantic-ui-react';
-import styles from 'containers/TeamPage/styles.module.scss';
+import styles from './styles.module.scss';
 import AditionalModal from 'components/TeamAddPeopleModal/aditionalModal';
 import { useTranslation } from 'react-i18next';
 import { User } from 'containers/LoginPage/logic/state';
@@ -83,17 +83,15 @@ const TeamDevsCard = ({
 					}
 				/>
 			</div>
-			<div className={styles.cardBody}>
-				<TextArea
-					as="textarea"
-					placeholder={t('add_some_description')}
-					disabled={lockEditFields}
-					onChange={(event: TextAreaProps) => setTeamDescription(event.target.value)}
-					value={teamDescription}
-					rows={3}
-					className={lockEditFields ? styles.inputArea : `${styles.inputArea} ${styles.inputBorders}`}
-				/>
-			</div>
+			<TextArea
+				as="textarea"
+				placeholder={t('add_some_description')}
+				disabled={lockEditFields}
+				onChange={(event: TextAreaProps) => setTeamDescription(event.target.value)}
+				value={teamDescription}
+				rows={3}
+				className={lockEditFields ? styles.inputArea : `${styles.inputArea} ${styles.inputBorders}`}
+			/>
 			{teamOwner && teamOwner.id === authUser?.id && (
 				<>
 					<Button

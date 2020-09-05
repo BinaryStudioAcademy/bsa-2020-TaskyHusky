@@ -4,10 +4,11 @@
   background-color: inherit !important;
   border: none !important;
   box-shadow: none !important;
+  margin-bottom: 25px !important;
 }
 
 .menu>.item {
-  margin: 20px 40px 20px 0;
+  margin: 0 20px 0px 0;
   padding: 7px 13px !important;
 
   &:hover:not(.active) {
