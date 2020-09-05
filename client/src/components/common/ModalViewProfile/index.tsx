@@ -64,7 +64,7 @@ const ModalViewProfile = ({ user, onClose }: Props) => {
 									</span>
 								)}
 								<Link to={`/profile/${user.id}`}>
-									<Button className="prmaryBtn">View profile</Button>
+									<Button className={styles.primaryBtn}>View profile</Button>
 								</Link>
 							</div>
 						</div>

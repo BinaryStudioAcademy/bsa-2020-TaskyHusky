@@ -9,7 +9,7 @@ import { useParams } from 'react-router-dom';
 import SubmitedInput from '../../components/SubmitedInput';
 import emailImg from 'icons/profile/emailImg.svg';
 
-const ResetPassword = () => {
+const ResetEmail = () => {
 	const [password, setPassword] = useState('');
 	const { t } = useTranslation();
 	const dispatch = useDispatch();
@@ -44,13 +44,16 @@ const ResetPassword = () => {
 						<h1 className={styles.mainHeader}>{t('confirm_email_change')}</h1>
 						<Segment>
 							<Form className={styles.form} onSubmit={handleSubmit}>
+								<label className={styles.text}>
+									{t('type_pass_confirm_email')} {email}
+								</label>
 								<SubmitedInput
 									text={password}
 									propKey="password"
 									type="password"
 									placeholder="Your password"
 									handleChange={handleChange}
-									title={`${t('type_pass_confirm_email')} ${email}`}
+									title={''}
 								/>
 								<Button className={styles.submitButton} type="submit" disabled={!password}>
 									{t('save_changes')}
@@ -64,4 +67,4 @@ const ResetPassword = () => {
 	);
 };
 
-export default ResetPassword;
+export default ResetEmail;

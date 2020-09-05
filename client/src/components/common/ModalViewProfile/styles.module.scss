@@ -1,3 +1,5 @@
+@import "styles/mixins.scss";
+
 .block_wrapper {
   position: absolute;
   left: 29%;
@@ -84,4 +86,8 @@
   box-sizing: border-box;
   width: 120px;
   min-width: 120px !important;
+}
+
+.primaryBtn {
+  @include primary-btn;
 }

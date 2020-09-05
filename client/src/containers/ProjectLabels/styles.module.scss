@@ -65,29 +65,34 @@
 		}
 	}
 }
+
+.label__example{
+	display: block;
+	min-height: 47px;
+}
+
 .label__example_title {
 	margin-right: 5px;
-}
-
-.primary__button {
-	@include primary-btn
-}
-
-.labels__list {
-	margin: 0 auto;
-	padding: 0;
-	padding-top: 20px;
-	list-style: none;
-	max-width: 500px;
-}
-
-.labels__list_item {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	margin-bottom: 10px;
+	margin-bottom: 0;
 }
 
 .labels__list_actions {
 	display: flex;
+}
+
+.button__delete_action {
+	margin: 0 !important;
+}
+
+.table {
+	table-layout: fixed;
+	text-align: center !important;
+}
+
+.table__column_actions {
+	width: 177px !important;
+}
+
+.table__name_container {
+	padding-top: 13px !important;
 }

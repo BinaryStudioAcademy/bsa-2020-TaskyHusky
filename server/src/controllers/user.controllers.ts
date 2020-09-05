@@ -44,7 +44,8 @@ class UserController {
 	uploadAvatar = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
 		const userRepository = getCustomRepository(UserRepository);
 		const { id, firstName, lastName } = <UserProfile>req.user;
-		const name = `${firstName}_${lastName}_${id}`;
+		const timestamp = +new Date();
+		const name = `${firstName}_${lastName}_${id}_${timestamp}`;
 		try {
 			const avatar = await uploadS3(avatarFolder, req.file, name);
 			if (!avatar) {

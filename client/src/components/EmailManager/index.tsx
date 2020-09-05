@@ -18,8 +18,7 @@ const EmailManager = () => {
 	return (
 		<section className={styles.container}>
 			<div className={styles.card}>
-				<h3 className={styles.header}>{t('email')}</h3>
-				<h4 className={styles.cardHeader}>{t('change_email')}</h4>
+				<h3 className={styles.header}>{t('change_email')}</h3>
 				<p className={styles.textData}>
 					{t('current_email')}
 					{email}

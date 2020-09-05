@@ -138,7 +138,6 @@ const ProfilePage = ({ id }: { id: string }) => {
 							/>
 						) : (
 							<ProfileSection
-								isCurrentUser={isCurrentUser}
 								activity={data.activity}
 								projects={data.projects}
 								teammates={data.teammates}

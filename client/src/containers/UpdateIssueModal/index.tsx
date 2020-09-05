@@ -152,13 +152,12 @@ const UpdateIssueModal: React.FC<Props> = ({
 			closeOnEscape
 			onOpen={clearContext}
 			onClose={() => setOpened(false)}
-			style={{ maxWidth: 700, height: '70%' }}
 			dimmer="inverted"
 		>
 			<Modal.Header>
 				<Header as="h1">{t('edit_issue')}</Header>
 			</Modal.Header>
-			<Modal.Content scrolling style={{ maxHeight: '90%', height: '90%' }}>
+			<Modal.Content scrolling>
 				<Form
 					as="div"
 					onKeyDown={(event: React.KeyboardEvent) => event.key === 'Enter' && event.preventDefault()}
@@ -272,12 +271,12 @@ const UpdateIssueModal: React.FC<Props> = ({
 					</Form.Field>
 				</Form>
 			</Modal.Content>
-			<Modal.Actions style={{ height: 67 }}>
-				<div style={{ float: 'right' }}>
+			<Modal.Actions style={{ backgroundColor: '#efefef' }}>
+				<div style={{ display: 'flex', justifyContent: 'flex-end' }}>
 					<Button className="primaryBtn" type="submit">
 						{t('submit')}
 					</Button>
-					<Button onClick={() => setOpened(false)} className="cancelBtn" compact>
+					<Button onClick={() => setOpened(false)} className="cancelBtn">
 						{t('cancel')}
 					</Button>
 				</div>

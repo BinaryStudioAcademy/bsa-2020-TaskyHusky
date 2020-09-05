@@ -7,8 +7,14 @@
 }
 
 .menu>.item {
-  padding: 0px !important;
   margin: 20px 40px 20px 0;
+  padding: 7px 13px !important;
+
+  &:hover:not(.active) {
+    border-bottom: 2px solid $header-text !important;
+    position: relative;
+    top: 1px;
+  }
 
   &::before {
     background: none !important;

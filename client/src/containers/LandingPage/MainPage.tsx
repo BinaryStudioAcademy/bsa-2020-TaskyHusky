@@ -4,7 +4,7 @@ import LoginPage from 'containers/LoginPage';
 import SignUpForm from 'containers/SignUpForm';
 import ForgetPassword from 'containers/ForgotPassword';
 import manIcon from 'assets/images/landingPage/spaceMen.svg';
-import landingTitle from 'assets/images/landingPage/logo.svg';
+import logo from 'assets/logo192.png';
 import landingCircleIcon from 'assets/images/landingPage/mainPageLogo.svg';
 import styles from './styles.module.scss';
 import { useTranslation } from 'react-i18next';
@@ -24,7 +24,11 @@ const MainPage = ({ isLoginForm, setLoginForm }: Props) => {
 			</Grid.Column>
 			<Grid.Column mobile={16} tablet={8} computer={8} className={styles.formWrapper}>
 				<Segment className={styles.formSegment}>
-					<Image src={landingTitle} className={styles.title} />
+					<div className={styles.logoArea}>
+						<Image src={logo} alt={t('taskyhusky_logo')} className={styles.logoImage} />
+						<span className={`${styles.logoText}`}>TaskyHusky</span>
+					</div>
+
 					<Header as="h1" className={styles.title}>
 						{isLoginForm ? t('sign_in') : t('create_an_account')}
 					</Header>
@@ -35,14 +39,22 @@ const MainPage = ({ isLoginForm, setLoginForm }: Props) => {
 								<span className={styles.title}>{t('cant_login')}</span>
 							</List.Item>
 						)}
-						<List.Item onClick={() => setLoginForm(!isLoginForm)}>
+						<List.Item>
 							<div className={styles.bottomNavigation}>
 								{isLoginForm ? (
-									<span className={`${styles.listItem} ${styles.padding1}`}>{t('sign_up')}</span>
+									<span
+										className={`${styles.listItem} ${styles.padding1}`}
+										onClick={() => setLoginForm(!isLoginForm)}
+									>
+										{t('sign_up')}
+									</span>
 								) : (
 									<>
-										<span className={styles.title}>{t('already_have_a_account')}</span>
-										<span className={`${styles.listItem} ${styles.marginLeft}`}>
+										<span className={styles.toggleDescription}>{t('already_have_a_account')}</span>
+										<span
+											className={`${styles.listItem} ${styles.marginLeft}`}
+											onClick={() => setLoginForm(!isLoginForm)}
+										>
 											{t('sign_in')}
 										</span>
 									</>

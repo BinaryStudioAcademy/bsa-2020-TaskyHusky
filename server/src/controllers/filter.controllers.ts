@@ -9,13 +9,23 @@ export type FilterBy = {
 class FilterController {
 	getFilters = async (req: Request, res: Response): Promise<void> => {
 		const filterRepository = getCustomRepository(FilterRepository);
-		const filter = {} as FilterBy;
-		const { userId } = req.query;
-		if (userId) {
-			filter.userId = userId as string;
-		}
+
 		try {
-			const filters = await filterRepository.getAll(filter);
+			const filters = await filterRepository.getAll();
+			res.send(filters);
+		} catch (error) {
+			const { status }: { status: number } = error;
+			res.status(status);
+		}
+	};
+
+	getTeammateFilters = async (req: Request, res: Response): Promise<void> => {
+		const filterRepository = getCustomRepository(FilterRepository);
+
+		const { userId } = req.params;
+
+		try {
+			const filters = await filterRepository.getTeammateFilters(userId as string);
 			res.send(filters);
 		} catch (error) {
 			const { status }: { status: number } = error;

@@ -4,22 +4,14 @@ import styles from './styles.module.scss';
 interface Props {
 	count: number;
 	children: JSX.Element;
-	noWiggle?: boolean;
 }
 
-const NotificationsCount: React.FC<Props> = ({ count, children, noWiggle }) => {
-	const unreadNotifs = count > 0;
-	const wiggle = unreadNotifs && !noWiggle ? styles.animatedWiggle : '';
-
-	const renderIndicator = unreadNotifs ? (
-		<div className={`${styles.counter} ${styles.animatedGrow}`}>{count}</div>
-	) : (
-		''
-	);
+const NotificationsCount: React.FC<Props> = ({ count, children }) => {
+	const renderIndicator = count > 0 ? <div className={styles.counter}>{count}</div> : '';
 
 	return (
 		<div className={styles.notificationsIcon}>
-			<div className={wiggle}>{children}</div>
+			<div>{children}</div>
 			{renderIndicator}
 		</div>
 	);

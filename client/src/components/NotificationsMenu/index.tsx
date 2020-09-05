@@ -102,21 +102,26 @@ const NotificationsMenu: React.FC = () => {
 			onOpen={() => setIsOpened(true)}
 			open={isOpened}
 		>
-			<Dropdown.Menu className={styles.circularDropdownMenu} style={{ maxHeight: 700, overflowY: 'auto' }}>
-				<Dropdown.Header>
+			<Dropdown.Menu className={styles.circularDropdownMenu}>
+				<Dropdown.Header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
 					{t('notifications')}
 					{isThereUnread ? (
-						<Button
-							className="primaryBtn"
-							compact
-							size="mini"
-							style={{ color: 'white', marginLeft: 20 }}
-							onClick={viewAll}
-						>
+						<Button className="primaryBtn" onClick={viewAll} style={{ paddingTop: 3, paddingBottom: 3 }}>
 							{t('mark_all_as_read')}
 						</Button>
 					) : null}
 				</Dropdown.Header>
+				<div style={{ maxHeight: 700, overflowY: 'auto' }}>
+					{displayNotifications.length ? (
+						displayNotifications.map((notif) => (
+							<div style={{ paddingLeft: 10, paddingRight: 10 }} key={notif.id}>
+								<UserNotification notification={notif} />
+							</div>
+						))
+					) : (
+						<ClosingItem>{t('no')}</ClosingItem>
+					)}
+				</div>
 				<Dropdown.Item>
 					<Checkbox
 						toggle
@@ -127,15 +132,6 @@ const NotificationsMenu: React.FC = () => {
 						label={t('show_notifs_during_last_10_days')}
 					/>
 				</Dropdown.Item>
-				{displayNotifications.length ? (
-					displayNotifications.map((notif) => (
-						<div style={{ paddingLeft: 10, paddingRight: 10 }} key={notif.id}>
-							<UserNotification notification={notif} />
-						</div>
-					))
-				) : (
-					<ClosingItem>{t('no')}</ClosingItem>
-				)}
 			</Dropdown.Menu>
 		</Dropdown>
 	);

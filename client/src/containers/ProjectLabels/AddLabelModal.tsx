@@ -29,7 +29,7 @@ const AddLabelModal: React.FC = () => {
 	);
 	const [textColor, setTextColor] = useState<string>(mainTextColor);
 
-	const [isLabelTextValid, setIsLabelTextValid] = useState<boolean>(true);
+	const [isLabelTextValid, setIsLabelTextValid] = useState<boolean>(false);
 	const [isValidErrorShown, setIsValidErrorShown] = useState<boolean>(false);
 
 	const isTextValid = (labelText: string): boolean => {
@@ -66,7 +66,7 @@ const AddLabelModal: React.FC = () => {
 		dispatch(
 			actions.startAddingLabel({
 				project,
-				label: { text, textColor, backgroundColor },
+				label: { text: text.trim(), textColor, backgroundColor },
 			}),
 		);
 	};
@@ -112,11 +112,11 @@ const AddLabelModal: React.FC = () => {
 							<label>{t('label_pick_color')}</label>
 							<SliderPicker color={backgroundColor} onChange={onLabelColorChange} />
 						</Form.Field>
-						<Form.Field>
+						<Form.Field className={styles.label__example}>
 							<label>
 								<span className={styles.label__example_title}>{t('result')}</span>
-								<Label backgroundColor={backgroundColor} text={text} textColor={textColor} />
 							</label>
+							<Label backgroundColor={backgroundColor} text={text} textColor={textColor} />
 						</Form.Field>
 					</Form>
 				</Modal.Content>

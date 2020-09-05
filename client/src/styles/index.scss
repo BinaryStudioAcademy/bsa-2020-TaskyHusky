@@ -20,13 +20,16 @@ label {
 	left: 5px;
 }
 
+.site-header-wrapper {
+	background-color: $header-text !important;
+}
+
 .site-header>.menu>.item:not(.createMenuItem):not(.right):not(.site-logo) {
 	border-radius: 1px !important;
 	background-color: inherit !important;
 	box-sizing: border-box;
 	font-weight: 700 !important;
 	font-size: 15px;
-	height: 20px;
 
 	* {
 		font-weight: 700;
@@ -44,7 +47,7 @@ label {
 	}
 
 	&:hover:not(.active) {
-		border-bottom: 2px solid #000000 !important;
+		border-bottom: 2px solid #fff;
 		@include onHover();
 	}
 }
@@ -56,7 +59,7 @@ label {
 	}
 
 	&:hover>.site-logo-text {
-		background-color: rgba(0, 0, 0, 0.05) !important;
+		background: rgba(255, 255, 255, 0.1);
 	}
 }
 
@@ -97,6 +100,12 @@ label {
 	height: 100%;
 }
 
+.cardContainer {
+	margin-top: 32px;
+	display: flex;
+	flex-wrap: wrap;
+}
+
 .contentBtn {
 	@include content-btn;
 }
@@ -109,17 +118,19 @@ label {
 	@include cancel-btn;
 }
 
-
 .workBlock {
 	background-color: $primary-bg;
 	width: 100%;
 	margin-top: 32px;
-	padding: 50px;
+	padding: 20px;
+
+	div:first-of-type {
+		margin-top: 0;
+	}
 }
 
 @media screen and (max-width: $less-than-medium-screen) {
 	.workBlock {
-		padding: 20px;
 		width: 100%;
 	}
 }
@@ -129,4 +140,8 @@ label {
 		margin-left: 0 !important;
 		margin-right: 0 !important;
 	}
+}
+
+.standartInput {
+	@include input;
 }

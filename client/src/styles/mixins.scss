@@ -10,6 +10,7 @@
 @mixin profile-container {
 	width: 70%;
 	padding: 0 0 0 40px;
+	flex-grow: 1;
 }
 
 @mixin info-block-item {
@@ -101,13 +102,14 @@
 }
 
 @mixin content-btn {
-	border: 1px solid $dark-black !important;
+	border: 1px solid $primary-bg !important;
 	box-sizing: border-box;
 	border-radius: 5px !important;
 	@include text-data;
 	background-color: $primary-bg !important;
 
 	&:hover {
+		border: 1px solid $border !important;
 		background-color: $border !important;
 	}
 }
@@ -160,14 +162,14 @@
 @mixin card-container {
 	background: $primary-bg;
 	box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.25);
-	padding: 40px;
+	padding: 20px;
 }
 
 @mixin mainHeader {
 	background: $body-bg;
 	height: 90px;
 	border-bottom: 1px solid $ligth-gray;
-	padding: 34px 13% 21px;
+	padding: 34px 10% 21px;
 }
 
 @mixin dropdown {
