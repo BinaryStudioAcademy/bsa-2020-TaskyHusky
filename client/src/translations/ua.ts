@@ -439,4 +439,5 @@ export const ua = {
 	yes: 'Так',
 	no_filters: 'Фільтрів не знайдено',
 	add_changes: 'Додайте зміни, щоб розблокувати кнопку',
+	remove_user_from_project: 'Видалити з проекту',
 };

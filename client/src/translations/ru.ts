@@ -447,4 +447,5 @@ export const ru = {
 	yes: 'Да',
 	no_filters: 'Фильтры не найдены',
 	add_changes: 'Внесите изменения, что бы разблокировать кнопку',
+	remove_user_from_project: 'Удалить c проекта',
 };

@@ -462,4 +462,5 @@ export const en = {
 	no_filters: 'No filters found',
 	add_changes: 'Please, add changes to enable button',
 	people_and_teams: 'People and Teams',
+	remove_user_from_project: 'Remove from project',
 };
