@@ -1,8 +1,10 @@
 import React from 'react';
-import { Segment, Icon } from 'semantic-ui-react';
+import { Segment, Icon, Divider } from 'semantic-ui-react';
 import { Draggable } from 'react-beautiful-dnd';
 import styles from './styles.module.scss';
 import { useTranslation } from 'react-i18next';
+import EditForm from './EditForm';
+import { ContextProvider } from 'containers/CreateColumnModal/logic/context';
 
 interface Props {
 	column: WebApi.Result.BoardColumnResult;
@@ -18,9 +20,9 @@ const InteractiveColumn: React.FC<Props> = ({ column, index }) => {
 				<div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
 					<Segment className={styles.column}>
 						<div className={styles.columnHeader}>
-							<h3 style={{ textTransform: 'uppercase' }}>{column.columnName}</h3>
+							<h3 className={styles.uppercase}>{column.columnName}</h3>
 							<div className={styles.columnControls}>
-								<Icon link name="edit outline" title={t('update')} onClick={() => {}} />
+								<span className={styles.status}>{column.status}</span>
 								<Icon
 									link
 									title={t('delete')}
@@ -30,6 +32,10 @@ const InteractiveColumn: React.FC<Props> = ({ column, index }) => {
 								/>
 							</div>
 						</div>
+						<Divider horizontal />
+						<ContextProvider initialState={column}>
+							<EditForm columnId={column.id} />
+						</ContextProvider>
 					</Segment>
 				</div>
 			)}

@@ -17,7 +17,7 @@ const reducer = (state: WebApi.Board.CreateBoardColumn, action: any) => {
 };
 
 export const ContextProvider: React.FC<any> = (props) => {
-	const [state, dispatch] = React.useReducer(reducer, initialState);
+	const [state, dispatch] = React.useReducer(reducer, props.initialState ?? initialState);
 	const value = { state, dispatch };
 	return <Context.Provider value={value} {...props} />;
 };
