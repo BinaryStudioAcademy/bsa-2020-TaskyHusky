@@ -6,6 +6,7 @@
 
 .header {
   @include manager-header;
+  font-size: 22px !important;
 }
 
 .card {
@@ -42,6 +43,10 @@
   width: 300px;
   margin: 20px 0 !important;
   @include dropdown;
+}
+
+.email {
+  @include manager-header;
 }
 
 @media screen and (max-width: $less-than-medium-screen) {

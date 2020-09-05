@@ -101,10 +101,27 @@
 	word-break: break-word;
 }
 
+@mixin manager-btn {
+	@include text-data;
+	border: none !important;
+	text-align: center !important;
+	padding-top: 10px !important;
+	padding-bottom: 10px !important;
+	background-color: $border !important;
+	border-radius: 6 !important;
+	height: 41px;
+
+	&:hover {
+		background-color: #bdcad0 !important;
+	}
+}
+
 @mixin content-btn {
 	border: 1px solid $primary-bg !important;
 	box-sizing: border-box;
 	border-radius: 5px !important;
+	padding-top: 10px !important;
+	padding-bottom: 10px !important;
 	@include text-data;
 	background-color: $primary-bg !important;
 
@@ -118,6 +135,8 @@
 	border: 1px solid $dark-black !important;
 	box-sizing: border-box;
 	border-radius: 5px !important;
+	padding-top: 10px !important;
+	padding-bottom: 10px !important;
 	@include text-data;
 	color: $primary-bg !important;
 	background-color: $dark-black !important;
@@ -134,6 +153,8 @@
 	@include text-data;
 	background-color: $yellow !important;
 	color: $dark-black !important;
+	padding-top: 10px !important;
+	padding-bottom: 10px !important;
 
 	&:hover {
 		background-color: #f1c122 !important;
@@ -206,9 +227,5 @@
 		&:focus {
 			border: 1px solid $yellow !important;
 		}
-	}
-
-	&:hover {
-		background-color: $ligth-gray;
 	}
 }

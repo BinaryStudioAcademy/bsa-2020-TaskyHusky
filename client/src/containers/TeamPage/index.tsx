@@ -125,8 +125,8 @@ const TeamPage = ({
 	) : (
 		<main className={styles.pageMain}>
 			<ProfileHeader title={t('my_team')} />
-			<section className={styles.mainRow}>
-				<aside className={styles.colLeft}>
+			<section className={styles.container}>
+				<aside className={styles.aside}>
 					<TeamDevsCard
 						confirmDelete={confirmDeleteTeam}
 						currentProfile={currentProfile}
@@ -149,7 +149,7 @@ const TeamPage = ({
 						removeUserFromTeam={handlerRemoveFromTeam}
 					/>
 				</aside>
-				<article className={styles.colRight}>
+				<article className={styles.content}>
 					<TeamActivity issues={team.issues ?? []} projectLength={team.projects?.length ?? 0} />
 					<TeamLinks
 						currentLinks={team.links ?? []}

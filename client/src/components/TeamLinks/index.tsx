@@ -34,7 +34,7 @@ const TeamLinks = ({ addLinks, currentLinks, edit, deleteLink }: Props) => {
 	return (
 		<>
 			<div className={styles.linkHeader}>
-				<h3 className={styles.mainHeader}>{t('links')}</h3>
+				<h3 className="managerHeader">{t('links')}</h3>
 				{isUserConsistsInTeam && (
 					<Button compact basic className={styles.btnBorderless} icon="plus" onClick={addLinks} />
 				)}

@@ -13,7 +13,13 @@ const UserActivityItem: React.FC<Props> = (props: Props) => {
 
 	return (
 		<div className={styles.activityItem}>
-			<div className={styles.avatar}>{abbr && <p className={styles.avatarTitle}>{abbr}</p>}</div>
+			<div className={styles.avatar}>
+				{item.avatar ? (
+					<img src={item.avatar} className={styles.img} alt="avatar" />
+				) : (
+					abbr && <p className={styles.avatarTitle}>{abbr}</p>
+				)}
+			</div>
 			<div className={styles.block}>
 				<Link to={`${item.firstName ? item.id : `/project/${item.id}/issues`}`}>
 					<span className={styles.content}>
