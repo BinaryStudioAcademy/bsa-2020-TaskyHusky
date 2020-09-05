@@ -78,7 +78,6 @@ export const en = {
 	members: 'Members',
 	members_lower: 'members',
 	worked_on: 'Worked on',
-	no_works: 'There is no works to see here',
 	kanban_description:
 		'Monitor work in a continuous flow for agile teams ◦ Suits teams who control work volume from a backlog',
 	scrum_description:
@@ -163,11 +162,11 @@ export const en = {
 	content_privat_message: 'Others will only see what they can access',
 	alt_experience: 'user do not have a work experience',
 	no_work: 'There is no work to see here',
-	content_no_work: 'Things you created, edited or commented on in the last 90 days.',
+	content_no_work: 'There are no projects which have been started yet.',
 	work_with: 'Work with',
 	alt_user_experience: 'user do not have a work experience with other people',
 	no_people: 'There are no people to see here',
-	content_no_people: 'People you collaborated with in the last 90 days will show here.',
+	content_no_people: 'People you collaborated with will show here.',
 	start_team: 'Start a team...',
 	change_pass: 'Change your password',
 	pass_error_length: 'Password should be more than 6 symbols',
@@ -345,8 +344,6 @@ export const en = {
 	link_to: 'Link to',
 	will_be_deleted_from_section: 'will be deleted from team links section',
 	project_key: 'Project key',
-	there_are_no_projects_which_have_been_started_yet:
-		'There are no projects which have been started yet. When it&apos;ll happen you can get quick access to one you need',
 	team_owner: 'Team owner',
 	add_label: 'Add label',
 	label_text: 'Label text',
@@ -462,4 +459,5 @@ export const en = {
 	no_filters: 'No filters found',
 	add_changes: 'Please, add changes to enable button',
 	people_and_teams: 'People and Teams',
+	my_team: 'My team'
 };
