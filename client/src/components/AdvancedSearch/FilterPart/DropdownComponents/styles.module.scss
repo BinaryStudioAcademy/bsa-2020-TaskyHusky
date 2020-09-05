@@ -1,3 +1,28 @@
+@import 'styles/variables.scss';
+@import 'styles/mixins.scss';
+
+.primatyBtn {
+	height: 30px !important;
+	width: auto;
+	display: flex !important;
+	margin: 0 5px auto !important;
+	padding: 0 10px !important;
+	display: inline-block !important;
+	text-align: center !important;
+	@include primary-btn;
+}
+
+.cancelBtn {
+	height: 30px !important;
+	width: auto;
+	display: flex !important;
+	margin: 0 5px auto !important;
+	padding: 0 10px !important;
+	display: inline-block !important;
+	text-align: center !important;
+	@include cancel-btn;
+}
+
 .textSearch {
 	width: 90% !important;
 	border: none;
@@ -6,6 +31,7 @@
 		border: none !important;
 	}
 }
+
 .dropdownBtns {
 	margin: 0 0 10px 10px;
 }

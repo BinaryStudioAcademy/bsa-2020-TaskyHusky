@@ -12,6 +12,7 @@ interface Props {
 		title: string;
 		content: string;
 	};
+	props?: any;
 	showEmpty: boolean;
 }
 
@@ -34,7 +35,7 @@ const ProfileActivityBlock: React.FC<Props> = (props: Props) => {
 					<Accordion>
 						{data.map(
 							(item: any, index: number) =>
-								index <= countItem - 1 && <Component item={item} key={item.id} />,
+								index <= countItem - 1 && <Component item={item} key={item.id} props={props} />,
 						)}
 						{data.length > countItem && (
 							<>

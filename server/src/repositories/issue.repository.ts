@@ -50,7 +50,6 @@ export type Filter = {
 	creator?: string[];
 	summary?: string;
 	description?: string;
-	comment?: string;
 };
 
 export interface CreateIssueArgs {

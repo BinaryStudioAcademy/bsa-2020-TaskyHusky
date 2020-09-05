@@ -8,3 +8,6 @@ export const fetchFilterDefs = createAction(actionTypes.FETCH_FILTER_DEFS);
 
 export const updateFilterSuccess = createAction<actionTypes.UpdateFilterArgs>(actionTypes.UPDATE_FILTER_SUCCESS);
 export const fetchFiltersSuccess = createAction<actionTypes.FetchFiltersSuccessArgs>(actionTypes.FETCH_FILTERS_SUCCESS);
+
+export const deleteFilter = createAction<actionTypes.DeleteFilterArgs>(actionTypes.DELETE_FILTER);
+export const deleteFilterSuccess = createAction<actionTypes.DeleteFilterArgs>(actionTypes.DELETE_FILTER_SUCCESS);

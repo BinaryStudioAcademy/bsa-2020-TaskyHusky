@@ -5,6 +5,11 @@
   text-align: center;
 }
 
+.managerBtn {
+  @include manager-btn;
+  width: 100% !important;
+}
+
 .button {
   width: 100%;
   margin-bottom: 30px !important;

@@ -30,6 +30,8 @@ export function* fetchFilterPartsSaga(action: AnyAction) {
 
 		yield put(actions.loadFilterByIdSuccess({ filter }));
 		yield put(actions.loadIssues({}));
+	} else {
+		yield put(actions.loadFilterByIdSuccess({ filter: undefined }));
 	}
 }
 

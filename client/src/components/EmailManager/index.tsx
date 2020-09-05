@@ -21,7 +21,7 @@ const EmailManager = () => {
 				<h3 className={styles.header}>{t('change_email')}</h3>
 				<p className={styles.textData}>
 					{t('current_email')}
-					{email}
+					<span className={styles.email}> {email}</span>
 				</p>
 				<SubmitEmail sendEmail={sendEmail} email={email} newEmail={false} title={t('new_email_title')} />
 			</div>

@@ -90,10 +90,11 @@ const SaveFilterModal = () => {
 						</Form>
 					</Modal.Content>
 					<Modal.Actions>
-						<Button color="grey" onClick={onModalClose}>
+						<Button className={styles.primatyBtn} color="grey" onClick={onModalClose}>
 							{t('cancel')}
 						</Button>
 						<Button
+							className={styles.cancelBtn}
 							content={t('submit')}
 							labelPosition="right"
 							icon="checkmark"

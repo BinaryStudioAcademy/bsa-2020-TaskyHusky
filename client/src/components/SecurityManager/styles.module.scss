@@ -6,6 +6,7 @@
 
 .header {
   @include manager-header;
+  font-size: 22px !important;
 }
 
 .card {

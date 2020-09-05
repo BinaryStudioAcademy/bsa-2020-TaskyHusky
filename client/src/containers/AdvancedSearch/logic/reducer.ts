@@ -31,7 +31,7 @@ export const advancedSearchReducer = createReducer<AdvancedSearch>(initialState,
 		const { filter } = action;
 
 		const updatedFilterParts = state.filterParts.map((filterPart) => {
-			const loaded = filter.filterParts?.find((el) => el.filterDef.id === filterPart.filterDef.id);
+			const loaded = filter?.filterParts?.find((el) => el.filterDef.id === filterPart.filterDef.id);
 			return loaded ? loaded : filterPart;
 		}) as FilterPartState[];
 

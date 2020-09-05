@@ -8,6 +8,11 @@
 .header {
   @include manager-header;
   margin: 0;
+  margin-bottom: 10px;
+}
+
+.firstHeader {
+  margin-top: -11px !important;
 }
 
 

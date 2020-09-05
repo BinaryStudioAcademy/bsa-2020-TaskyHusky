@@ -445,5 +445,6 @@ export const ru = {
 	no_filters: 'Фильтры не найдены',
 	add_changes: 'Внесите изменения, что бы разблокировать кнопку',
 	remove_user_from_project: 'Удалить c проекта',
+	team_header: 'Команда',
 	my_team: 'Моя команда',
 };

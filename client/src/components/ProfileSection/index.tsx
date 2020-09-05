@@ -32,7 +32,9 @@ const ProfileSection: React.FC<Props> = (props: Props) => {
 
 	return (
 		<section className={styles.mainInfo}>
-			{(Boolean(activity.length) || !projects.length) && <h3 className={styles.header}>{t('worked_on')}</h3>}
+			{(Boolean(activity.length) || !projects.length) && (
+				<h3 className={`${styles.header} ${styles.firstHeader}`}>{t('worked_on')}</h3>
+			)}
 			<ProfileActivityBlock
 				data={activity}
 				countItem={countActivity}
