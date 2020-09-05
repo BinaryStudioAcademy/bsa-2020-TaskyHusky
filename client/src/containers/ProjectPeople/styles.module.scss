@@ -1,4 +1,5 @@
 @import 'styles/mixins.scss';
+@import 'styles/variables.scss';
 
 .header_inner__container {
     padding: 10px 0px 20px ;
@@ -42,7 +43,7 @@
 
 .column__name, 
 .column__email {
-    width: 40%;
+    width: 50%;
 }
 
 
@@ -69,4 +70,17 @@
 
 .secondary__button {
 	@include cancel-btn
+}
+
+.button__remove_action {
+	border: none !important;
+	box-shadow: none !important;
+	text-decoration: underline !important;
+	margin-right: 0 !important;
+	white-space: nowrap;
+	padding: 0 !important;
+
+	&:hover {
+		box-shadow: none !important;
+	}
 }
