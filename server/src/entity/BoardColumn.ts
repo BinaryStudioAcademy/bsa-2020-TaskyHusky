@@ -1,5 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, Generated } from 'typeorm';
-import { IsBoolean, IsString, IsNotEmpty } from 'class-validator';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany } from 'typeorm';
+import { IsBoolean, IsString, IsNotEmpty, IsNumber, IsPositive } from 'class-validator';
 import { Board } from './Board';
 import { Issue } from './Issue';
 
@@ -23,7 +23,9 @@ export class BoardColumn {
 	isResolutionSet!: boolean;
 
 	@Column()
-	@Generated('increment')
+	@IsNumber()
+	@IsPositive()
+	@IsNotEmpty()
 	index?: number;
 
 	@ManyToOne((type) => Board, (board) => board.columns, {

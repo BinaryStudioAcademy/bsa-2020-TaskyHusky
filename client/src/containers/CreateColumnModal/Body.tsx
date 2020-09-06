@@ -3,6 +3,8 @@ import { Modal, Form, Button } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { createColumn } from 'containers/BoardColumn/logic/actions';
+import { useBoardColumnContext } from './logic/context';
+import initialState from './logic/initialState';
 
 export interface Props {
 	boardId: string;
@@ -20,14 +22,10 @@ const Body: React.FC<Props> = ({ boardId, children, onClose = () => {} }) => {
 	const { t } = useTranslation();
 	const dispatch = useDispatch();
 	const [isModalOpened, setIsModalOpened] = useState<boolean>(false);
-	const [status, setStatus] = useState<string>('');
-	const [name, setName] = useState<string>('');
-	const [isResolutionSet, setIsResolutionSet] = useState<boolean>(false);
+	const context = useBoardColumnContext();
 
-	const resetState = () => {
-		setName('');
-		setStatus('');
-		setIsResolutionSet(false);
+	const clearContext = () => {
+		Object.keys(context.data).forEach((k) => context.set(k as any, (initialState as any)[k]));
 	};
 
 	const statusOpts: Option[] = [
@@ -41,19 +39,17 @@ const Body: React.FC<Props> = ({ boardId, children, onClose = () => {} }) => {
 		setIsModalOpened(isOpened);
 
 		if (isOpened) {
-			resetState();
+			clearContext();
 		}
 	};
 
 	const submit = (event: React.FormEvent) => {
 		event.preventDefault();
-		const allFields = name && status;
+		const allFields = context.data.columnName && context.data.status;
 
 		if (allFields) {
 			const data = {
-				columnName: name,
-				status,
-				isResolutionSet,
+				...context.data,
 				board: boardId,
 			};
 
@@ -87,8 +83,8 @@ const Body: React.FC<Props> = ({ boardId, children, onClose = () => {} }) => {
 							placeholder={t('status')}
 							options={statusOpts}
 							fluid
-							value={status}
-							onChange={(event, data) => setStatus(data.value as string)}
+							value={context.data.status}
+							onChange={(event, data) => context.set('status', data.value)}
 						/>
 					</Form.Field>
 					<Form.Field>
@@ -97,16 +93,16 @@ const Body: React.FC<Props> = ({ boardId, children, onClose = () => {} }) => {
 							placeholder={t('name')}
 							fluid
 							icon="users"
-							value={name}
-							onChange={(event, data) => setName(name)}
+							value={context.data.columnName}
+							onChange={(event, data) => context.set('columnName', data.value)}
 						/>
 					</Form.Field>
 					<Form.Field>
 						<label className="required">{t('is_resolution_set')}</label>
 						<Form.Checkbox
-							onChange={(event, data) => setIsResolutionSet(true)}
+							onChange={(event, data) => context.set('isResolutionSet', data.checked)}
 							toggle
-							checked={isResolutionSet}
+							checked={context.data.isResolutionSet}
 							label={t('is_resolution_set')}
 						/>
 					</Form.Field>

@@ -41,10 +41,12 @@ class BoardColumnController {
 	post = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
 		const boardColumnRepository = getCustomRepository(BoardColumnRepository);
 		const { body } = req;
-		try {
-			const board = await boardColumnRepository.post(body);
 
-			res.status(200).send(board);
+		try {
+			const columns = await boardColumnRepository.getBoardColumns(body.board);
+			const maxIndex = columns.pop()?.index ?? 0;
+			const column = await boardColumnRepository.post({ ...body, index: maxIndex + 1 });
+			res.status(200).send(column);
 		} catch (e) {
 			next(new ErrorResponse(HttpStatusCode.NOT_FOUND, e.message));
 		}
@@ -55,9 +57,8 @@ class BoardColumnController {
 		const { id } = req.params;
 
 		try {
-			const board = await boardColumnRepository.deleteColumn(id);
-
-			res.status(200).send(board);
+			const column = await boardColumnRepository.deleteColumn(id);
+			res.status(200).send(column);
 		} catch (e) {
 			next(new ErrorResponse(HttpStatusCode.NOT_FOUND, e.message));
 		}

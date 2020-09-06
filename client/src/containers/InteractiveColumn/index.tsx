@@ -7,6 +7,7 @@ import EditForm from './EditForm';
 import { deleteColumn } from 'containers/BoardColumn/logic/actions';
 import { useDispatch } from 'react-redux';
 import ConfirmModal from 'components/common/ConfirmModal';
+import { ContextProvider } from 'containers/CreateColumnModal/logic/context';
 
 interface Props {
 	column: WebApi.Result.BoardColumnResult;
@@ -65,7 +66,9 @@ const InteractiveColumn: React.FC<Props> = ({ column, index, setColumns, columns
 								/>
 							</div>
 						</div>
-						<EditForm column={column} onSubmit={update} />
+						<ContextProvider initialState={column}>
+							<EditForm columnId={column.id} onSubmit={update} />
+						</ContextProvider>
 					</Segment>
 				</div>
 			)}

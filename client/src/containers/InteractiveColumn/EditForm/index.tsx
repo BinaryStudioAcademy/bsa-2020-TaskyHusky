@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Form, Button } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { updateColumn } from 'containers/BoardColumn/logic/actions';
+import { useBoardColumnContext } from 'containers/CreateColumnModal/logic/context';
 
 interface Props {
-	column: WebApi.Result.BoardColumnResult;
+	columnId: string;
 	onSubmit?: (data: Partial<WebApi.Board.CreateBoardColumn>) => void;
 }
 
@@ -15,12 +16,10 @@ interface Option {
 	text: string | JSX.Element | JSX.Element[];
 }
 
-const EditForm: React.FC<Props> = ({ column, onSubmit }) => {
+const EditForm: React.FC<Props> = ({ columnId, onSubmit }) => {
 	const { t } = useTranslation();
 	const dispatch = useDispatch();
-	const [status, setStatus] = useState<string>(column.status);
-	const [name, setName] = useState<string>(column.columnName);
-	const [isResolutionSet, setIsResolutionSet] = useState<boolean>(column.isResolutionSet);
+	const context = useBoardColumnContext();
 
 	const statusOpts: Option[] = [
 		{ key: 0, value: 'backlog', text: t('backlog') },
@@ -30,22 +29,16 @@ const EditForm: React.FC<Props> = ({ column, onSubmit }) => {
 	];
 
 	const submit = () => {
-		const allFields = name && status;
+		const allFields = context.data.columnName && context.data.status;
 
 		if (!allFields) {
 			return;
 		}
 
-		const data = {
-			columnName: name,
-			status,
-			isResolutionSet,
-		};
-
-		dispatch(updateColumn({ id: column.id, data }));
+		dispatch(updateColumn({ id: columnId, data: context.data }));
 
 		if (onSubmit) {
-			onSubmit(data);
+			onSubmit(context.data);
 		}
 	};
 
@@ -56,22 +49,26 @@ const EditForm: React.FC<Props> = ({ column, onSubmit }) => {
 				<Form.Select
 					options={statusOpts}
 					placeholder={t('status')}
-					value={status}
+					value={context.data.status}
 					closeOnChange
-					onChange={(event, data) => setStatus(data.value as string)}
+					onChange={(event, data) => context.set('status', data.value)}
 				/>
 			</Form.Field>
 			<Form.Field>
 				<label className="required">{t('name')}</label>
-				<Form.Input placeholder={t('name')} value={name} onChange={(event, data) => setName(data.value)} />
+				<Form.Input
+					placeholder={t('name')}
+					value={context.data.columnName}
+					onChange={(event, data) => context.set('columnName', data.value)}
+				/>
 			</Form.Field>
 			<Form.Field>
 				<label className="required">{t('is_resolution_set')}</label>
 				<Form.Checkbox
 					toggle
 					label={t('is_resolution_set')}
-					checked={isResolutionSet}
-					onChange={(event, data) => setIsResolutionSet(data.checked ?? false)}
+					checked={context.data.isResolutionSet}
+					onChange={(event, data) => context.set('isResolutionSet', data.checked)}
 				/>
 			</Form.Field>
 			<Button className="primaryBtn" compact disabled={false}>
