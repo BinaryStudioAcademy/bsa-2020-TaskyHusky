@@ -43,7 +43,7 @@ const DefaultPageWrapper: React.FC<Props> = ({ children, isOverflowHidden = fals
 			) : (
 				<Container className={styles.container + ' fill'}>
 					<Header />
-					<div className={isOverflowHidden ? styles.content_flow : styles.content_flow__hidden}>
+					<div className={isOverflowHidden ? styles.content_flow__hidden : styles.content_flow}>
 						{children}
 					</div>
 				</Container>
