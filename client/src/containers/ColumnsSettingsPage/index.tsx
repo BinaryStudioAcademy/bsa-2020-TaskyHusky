@@ -6,14 +6,30 @@ import styles from './styles.module.scss';
 import Spinner from 'components/common/Spinner';
 import { DragDropContext, Droppable, OnDragEndResponder } from 'react-beautiful-dnd';
 import InteractiveColumn from 'containers/InteractiveColumn';
-import { useDispatch } from 'react-redux';
-import { updateColumn } from 'containers/BoardColumn/logic/actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateColumn, setColumnCreated } from 'containers/BoardColumn/logic/actions';
+import CreateColumnModal from 'containers/CreateColumnModal';
+import { Segment, Icon } from 'semantic-ui-react';
+import { useTranslation } from 'react-i18next';
+import { RootState } from 'typings/rootState';
 
 const ColumnsSettingsPage: React.FC = () => {
 	const { boardId } = useParams();
+	const { t } = useTranslation();
 	const dispatch = useDispatch();
 	const [board, setBoard] = useState<WebApi.Result.ComposedBoardResult | undefined>();
 	const [columns, setColumns] = useState<WebApi.Result.BoardColumnResult[]>([]);
+	const { columnCreated, recentlyCreatedColumn } = useSelector((state: RootState) => state.boardColumn);
+
+	useEffect(() => {
+		if (columnCreated) {
+			dispatch(setColumnCreated({ created: false }));
+
+			if (recentlyCreatedColumn) {
+				setColumns([...columns, recentlyCreatedColumn]);
+			}
+		}
+	}, [dispatch, columnCreated, recentlyCreatedColumn, columns]);
 
 	useEffect(() => {
 		if (!board) {
@@ -85,6 +101,15 @@ const ColumnsSettingsPage: React.FC = () => {
 									index={i}
 								/>
 							))}
+							<CreateColumnModal boardId={board.id}>
+								<Segment
+									className={`${styles.createColumn} contentBtn`}
+									style={{ position: 'relative', top: -14 }}
+								>
+									<Icon name="plus" />
+									{t('create_column')}
+								</Segment>
+							</CreateColumnModal>
 							{provided.placeholder}
 						</div>
 					)}

@@ -26,6 +26,7 @@ const InteractiveColumn: React.FC<Props> = ({ column, index, setColumns, columns
 	};
 
 	const remove = () => {
+		setIsConfirmOpened(false);
 		dispatch(deleteColumn({ id: column.id }));
 
 		const newColumns = [...columns];
