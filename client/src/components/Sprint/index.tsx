@@ -34,9 +34,10 @@ export const Sprint: React.FC<Props & DragProps> = (props: Props & DragProps) =>
 				startDate={props.sprint?.startDate}
 				endDate={props.sprint?.endDate}
 			/>
+
 			<SprintIssues
 				issues={props.issues}
-				sprintId={props.sprint?.id}
+				sprintId={props.sprint?.id ?? 'backlog'}
 				boardId={props.boardId}
 				sprintName={props.sprint?.sprintName ?? t('backlog')}
 				listId={props.listId}

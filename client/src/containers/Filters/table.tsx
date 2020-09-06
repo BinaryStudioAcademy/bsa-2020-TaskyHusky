@@ -47,7 +47,7 @@ const FiltersTable = ({ filters, updateFilter }: Props) => {
 			return orderBy(filters, [sortByColumn], ['desc']);
 		}
 		return orderBy(filters, [sortByColumn], ['asc']);
-	}, [filters, sortDirection, sortByColumn]);
+	}, [filters, sortDirection, sortByColumn, user]);
 
 	const changeSort = (column: SortByColumn) => {
 		if (column === sortByColumn) {
