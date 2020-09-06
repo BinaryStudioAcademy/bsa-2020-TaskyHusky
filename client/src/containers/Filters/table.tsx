@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { orderBy } from 'lodash-es';
 import { getFullUserName } from './logic/helpers';
 import FilterItem from 'components/FilterItem';
-import styles from './styles.module.scss';
+import styles from './filters.module.scss';
 
 interface Props {
 	filters: WebApi.Entities.Filter[];
