@@ -2,7 +2,7 @@
 
 :local(.columnsFlex) {
 	display: flex;
-	height: calc(100vh - 261px);
+	height: calc(100vh - 300px);
 	width: 100%;
 	overflow-x: auto;
 	overflow-y: hidden;
@@ -23,10 +23,6 @@
 	display: flex;
 	align-items: center;
 
-	*:not(h2):not(a) {
-		margin: 0 5px 0 0 !important;
-	}
-
 	h2 {
 		margin: 0 30px 0 0 !important;
 	}
@@ -37,32 +33,22 @@
 }
 
 :local(.wrapper) {
-	width: 100%;
+	max-width: 94vw;
 	margin-top: 0px;
 }
 
 .headerWrapper {
 	display: flex;
-	padding: 25px 10%;
+	margin: 25px 4% 25px 10%;
 	justify-content: space-between;
 }
 
 .breadcrumb {
-
-	div,
-	a {
-		@include info-block-header;
-		color: $secondary-content !important;
-	}
-
-	.active {
-		color: $header-text !important;
-	}
+	margin: 25px 10% 0 !important;
 }
 
 .searchInput {
-	margin-right: 60px;
-	min-width: 250px;
+	margin: 0 20px !important;
 	@include input;
 }
 
@@ -74,15 +60,43 @@
 }
 
 .contentBtn {
-	margin: 0 25px 0 0 !important;
-	min-width: 250px !important;
+	margin: 25px 10% !important;
+	max-width: 250px !important;
 	height: 41px;
 	cursor: pointer;
-	@include content-btn;
+	@include cancel-btn;
 }
 
 @media screen and (max-width: $medium-screen) {
 	.headerWrapper {
-		padding: 25px 8%;
+		margin: 25px 2% 25px 8%;
+	}
+
+	.contentBtn {
+		margin-left: 8% !important;
+	}
+
+	.breadcrumb {
+		margin: 25px 2% 0 8% !important;
+	}
+}
+
+@media screen and (max-width: $mobile-screen) {
+
+	.inlineContainer,
+	.headerWrapper {
+		display: block;
+	}
+
+	.headerWrapper {
+		margin-left: 25px;
+	}
+
+	.inlineContainer {
+		margin-bottom: 20px;
+	}
+
+	.searchInput {
+		margin: 10px 0 !important;
 	}
 }

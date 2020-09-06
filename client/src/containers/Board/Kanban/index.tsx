@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BoardComponent } from '../';
+import { Link } from 'react-router-dom';
 import BoardColumn from 'containers/BoardColumn';
 import { DragDropContext, OnDragEndResponder } from 'react-beautiful-dnd';
 import styles from './styles.module.scss';
@@ -12,7 +13,6 @@ import CreateColumnModal from 'containers/CreateColumnModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'typings/rootState';
 import { setColumnCreated } from 'containers/BoardColumn/logic/actions';
-import ProfileHeader from 'components/ProfileHeader';
 
 const Kanban: BoardComponent = ({ board }) => {
 	const [search, setSearch] = useState<string>('');
@@ -55,20 +55,20 @@ const Kanban: BoardComponent = ({ board }) => {
 
 	return (
 		<div className={styles.wrapper}>
-			<ProfileHeader title={board.name} />
+			<Breadcrumb className={styles.breadcrumb}>
+				<Breadcrumb.Section href="/projects">{t('projects')}</Breadcrumb.Section>
+				<Breadcrumb.Divider>&nbsp;/&nbsp;</Breadcrumb.Divider>
+				<Breadcrumb.Section href={`/project/${(board.projects ?? [])[0].id}/issues`}>
+					{(board.projects ?? [])[0].name}
+				</Breadcrumb.Section>
+				<Breadcrumb.Divider>&nbsp;/&nbsp;</Breadcrumb.Divider>
+				<Breadcrumb.Section active className={styles.active}>
+					{board.name}
+				</Breadcrumb.Section>
+			</Breadcrumb>
 			<div className={styles.headerWrapper}>
-				<Breadcrumb className={styles.breadcrumb}>
-					<Breadcrumb.Section href="/projects">{t('projects')}</Breadcrumb.Section>
-					<Breadcrumb.Divider>&nbsp;/&nbsp;</Breadcrumb.Divider>
-					<Breadcrumb.Section href={`/project/${(board.projects ?? [])[0].id}/issues`}>
-						{(board.projects ?? [])[0].name}
-					</Breadcrumb.Section>
-					<Breadcrumb.Divider>&nbsp;/&nbsp;</Breadcrumb.Divider>
-					<Breadcrumb.Section active className={styles.active}>
-						{board.name}
-					</Breadcrumb.Section>
-				</Breadcrumb>
 				<div className={styles.inlineContainer}>
+					<div className="standartHeader">{board.name}</div>
 					<Form.Input
 						placeholder={t('search')}
 						icon="search"
@@ -79,8 +79,14 @@ const Kanban: BoardComponent = ({ board }) => {
 					<Button onClick={() => setSearch('')} className={styles.cancelBtn}>
 						{t('clear')}
 					</Button>
-					<a href={`/board/${board.id}/columnsSettings`}>{t('go_to_columns_settings')}</a>
 				</div>
+				<Link
+					className="cancelBtn"
+					to={`/board/${board.id}/columnsSettings`}
+					style={{ paddingLeft: '10px', paddingRight: '10px' }}
+				>
+					{t('go_to_columns_settings')}
+				</Link>
 			</div>
 			<DragDropContext onDragEnd={onDragEnd}>
 				<div className={styles.columnsFlex}>
@@ -93,14 +99,14 @@ const Kanban: BoardComponent = ({ board }) => {
 							key={i}
 						/>
 					))}
-					<CreateColumnModal boardId={board.id}>
-						<Segment className={styles.contentBtn}>
-							<Icon name="plus" />
-							{t('create_column')}
-						</Segment>
-					</CreateColumnModal>
 				</div>
 			</DragDropContext>
+			<CreateColumnModal boardId={board.id}>
+				<Segment className={styles.contentBtn}>
+					<Icon name="plus" />
+					{t('create_column')}
+				</Segment>
+			</CreateColumnModal>
 		</div>
 	);
 };

@@ -59,25 +59,27 @@ const EditForm: React.FC<Props> = ({ columnId, initialState, onSubmit }) => {
 	return (
 		<Form style={{ marginTop: 30 }} onSubmit={submit}>
 			<Form.Field>
-				<label className="required">{t('status')}</label>
+				<label className="required standartLabel">{t('status')}</label>
 				<Form.Select
 					options={statusOpts}
 					placeholder={t('status')}
+					className="formSelect"
 					value={context.data.status}
 					closeOnChange
 					onChange={(event, data) => context.set('status', data.value)}
 				/>
 			</Form.Field>
 			<Form.Field>
-				<label className="required">{t('name')}</label>
+				<label className="required standartLabel">{t('name')}</label>
 				<Form.Input
 					placeholder={t('name')}
+					className="standartInput"
 					value={context.data.columnName}
 					onChange={(event, data) => context.set('columnName', data.value)}
 				/>
 			</Form.Field>
 			<Form.Field>
-				<label className="required">{t('is_resolution_set')}</label>
+				<label className="required standartLabel">{t('is_resolution_set')}</label>
 				<Form.Checkbox
 					toggle
 					label={t('is_resolution_set')}
