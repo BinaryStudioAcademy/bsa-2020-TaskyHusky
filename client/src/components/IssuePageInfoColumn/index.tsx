@@ -123,7 +123,7 @@ const IssuePageInfoColumn: React.FC<Props> = ({ issue: givenIssue, initialIssue,
 					<>
 						<h4>
 							<a rel="noopener noreferrer" target="_blank" href={`/issue/${issue.issueKey}`}>
-								Go to issue page #{issue.issueKey}
+								Go to issue page {issue.issueKey}
 							</a>
 						</h4>
 						<h4>{t('description')}</h4>
