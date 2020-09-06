@@ -23,10 +23,10 @@ const UserNotification: React.FC<Props> = ({ notification }) => {
 		dispatch(actions.unviewNotification({ id }));
 	};
 
-	const renderTitle = title ? <h3 style={{ marginBottom: 10 }}>{title}</h3> : null;
+	const renderTitle = title ? <h3 style={{ marginBottom: 0 }}>{title}</h3> : null;
 
 	const renderButton = !isViewed ? (
-		<Icon name="close" style={{ color: '#deae0f' }} title={t('mark_notif_as_read')} onClick={view} link />
+		<Icon name="close" title={t('mark_notif_as_read')} onClick={view} link />
 	) : (
 		<Icon name="eye slash" title={t('mark_notif_as_unread')} onClick={unview} link />
 	);
@@ -34,11 +34,9 @@ const UserNotification: React.FC<Props> = ({ notification }) => {
 	return (
 		<div className={styles.container}>
 			<div style={{ display: 'flex', justifyContent: 'space-between' }}>
-				<div style={{ display: 'flex' }}>
+				<div style={{ display: 'flex', alignItems: 'center' }}>
 					{renderTitle}
-					<div style={{ marginLeft: 10, position: 'relative', top: 3 }}>
-						{moment(notification.createdAt).fromNow()}
-					</div>
+					<div style={{ marginLeft: 10 }}>{moment(notification.createdAt).fromNow()}</div>
 				</div>
 				{renderButton}
 			</div>
