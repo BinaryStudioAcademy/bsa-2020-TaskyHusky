@@ -67,7 +67,7 @@ const InteractiveColumn: React.FC<Props> = ({ column, index, setColumns, columns
 							</div>
 						</div>
 						<ContextProvider initialState={column}>
-							<EditForm columnId={column.id} onSubmit={update} />
+							<EditForm columnId={column.id} initialState={column} onSubmit={update} />
 						</ContextProvider>
 					</Segment>
 				</div>

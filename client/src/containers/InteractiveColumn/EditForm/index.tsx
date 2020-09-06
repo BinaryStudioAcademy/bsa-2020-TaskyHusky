@@ -7,6 +7,7 @@ import { useBoardColumnContext } from 'containers/CreateColumnModal/logic/contex
 
 interface Props {
 	columnId: string;
+	initialState: WebApi.Result.BoardColumnResult;
 	onSubmit?: (data: Partial<WebApi.Board.CreateBoardColumn>) => void;
 }
 
@@ -16,10 +17,21 @@ interface Option {
 	text: string | JSX.Element | JSX.Element[];
 }
 
-const EditForm: React.FC<Props> = ({ columnId, onSubmit }) => {
+const EditForm: React.FC<Props> = ({ columnId, initialState, onSubmit }) => {
 	const { t } = useTranslation();
 	const dispatch = useDispatch();
 	const context = useBoardColumnContext();
+
+	const getIsInitialState = () => {
+		return Object.keys(context.data).reduce(
+			(acc, currentKey) => acc && (context.data as any)[currentKey] === (initialState as any)[currentKey],
+			true,
+		);
+	};
+
+	const clearContext = () => {
+		Object.keys(context.data).forEach((key) => context.set(key as any, (initialState as any)[key]));
+	};
 
 	const statusOpts: Option[] = [
 		{ key: 0, value: 'backlog', text: t('backlog') },
@@ -41,6 +53,8 @@ const EditForm: React.FC<Props> = ({ columnId, onSubmit }) => {
 			onSubmit(context.data);
 		}
 	};
+
+	const isInitialState = getIsInitialState();
 
 	return (
 		<Form style={{ marginTop: 30 }} onSubmit={submit}>
@@ -71,10 +85,16 @@ const EditForm: React.FC<Props> = ({ columnId, onSubmit }) => {
 					onChange={(event, data) => context.set('isResolutionSet', data.checked)}
 				/>
 			</Form.Field>
-			<Button className="primaryBtn" compact disabled={false}>
+			<Button className="primaryBtn" type="submit" compact disabled={isInitialState}>
 				{t('submit')}
 			</Button>
-			<Button className="cancelBtn" compact disabled={false}>
+			<Button
+				className="cancelBtn"
+				type="button"
+				onClick={() => clearContext()}
+				compact
+				disabled={isInitialState}
+			>
 				{t('cancel')}
 			</Button>
 		</Form>
