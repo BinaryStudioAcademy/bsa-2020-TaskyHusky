@@ -4,6 +4,7 @@ import { BoardColumn } from '../entity/BoardColumn';
 import { Board } from '../entity/Board';
 import { BoardType } from '../models/Board';
 import { UserRepository } from '../repositories/user.repository';
+import { BoardColumnRepository } from '../repositories/boardColumn.repository';
 
 export class Board1596645901833 implements MigrationInterface {
 	public async up(queryRunner: QueryRunner): Promise<void> {
@@ -25,7 +26,7 @@ export class Board1596645901833 implements MigrationInterface {
 		await getRepository('Board').save([board1, board2]);
 
 		const boardRepository = getCustomRepository(BoardRepository);
-		const columnRepository = getRepository('BoardColumn');
+		const columnRepository = getCustomRepository(BoardColumnRepository);
 
 		const board = await boardRepository.findByType(BoardType.Kanban);
 
@@ -41,8 +42,8 @@ export class Board1596645901833 implements MigrationInterface {
 		column2.isResolutionSet = false;
 		column2.status = 'todo';
 
-		await columnRepository.save(column1);
-		await columnRepository.save(column2);
+		await columnRepository.post(column1);
+		await columnRepository.post(column2);
 		await getRepository('board').save(board);
 	}
 

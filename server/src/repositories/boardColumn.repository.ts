@@ -52,7 +52,9 @@ export class BoardColumnRepository extends Repository<BoardColumn> {
 	}
 
 	async post(data: any) {
-		const instance = this.create(data);
+		const columns = await this.getBoardColumns(typeof data.board === 'string' ? data.board : data.board.id);
+		const maxIndex = columns.pop()?.index ?? -1;
+		const instance = this.create({ ...data, index: maxIndex + 1 });
 		return this.save(instance);
 	}
 
