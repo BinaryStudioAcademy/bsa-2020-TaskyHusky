@@ -65,7 +65,7 @@ const TeamAddPeopleModal = ({ onConfirm, onClose, search, searchLoading, people,
 				{chosenUsers.length > 0 && <ChosenPeople users={chosenUsers} />}
 				<Search
 					disabled={chosenUsers.length >= 4}
-					input={{ icon: 'search', iconPosition: 'left', fluid: true }}
+					input={{ icon: 'search', iconPosition: 'left' }}
 					onSearchChange={handlerChange}
 					loading={searchLoading}
 					className={styles.field}
@@ -79,9 +79,15 @@ const TeamAddPeopleModal = ({ onConfirm, onClose, search, searchLoading, people,
 				<p className={styles.descriptionP}>{t('no_more_4_people_can_ba_added')}</p>
 			</Modal.Content>
 			<Modal.Actions>
-				<Button content={t('accept')} primary labelPosition="left" icon="checkmark" onClick={handlerAccept} />
-				<Button basic className={styles.editBtn} onClick={() => onClose(false)}>
-					<span className={styles.editBtnValue}>{t('cancel')}</span>
+				<Button
+					content={t('accept')}
+					className={styles.editBtn}
+					labelPosition="left"
+					icon="checkmark"
+					onClick={handlerAccept}
+				/>
+				<Button className={styles.cancelBtn} onClick={() => onClose(false)}>
+					{t('cancel')}
 				</Button>
 			</Modal.Actions>
 		</Modal>

@@ -70,14 +70,12 @@ class TeammatesController {
 	createInvite = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
 		const teammatesRepository = getCustomRepository(TeammatesRepository);
 		const { id } = req.params;
-		const { email: teammateEmail } = req.body;
-
 		try {
-			if (req.user.email === teammateEmail) {
+			if (req.user.email === req.body.email) {
 				throw new Error('You can not send an invitation to yourself');
 			}
 
-			await teammatesRepository.createInvitation(id, teammateEmail);
+			await teammatesRepository.createInvitation(id, req.body.email);
 			res.send({ status: 'The invitation was successfully sent.' });
 		} catch (error) {
 			next(new ErrorResponse(HttpStatusCode.NOT_FOUND, error.message));
