@@ -149,7 +149,7 @@ class IssueController {
 				...data,
 				creator: (req.user as UserModel).id,
 			});
-			await elastic.addData(issue);
+			// await elastic.addData(issue);
 
 			res.status(201).send(issue);
 		} catch (err) {

@@ -17,7 +17,9 @@ interface Props {
 	isOverflowHidden?: boolean;
 }
 
-const DefaultPageWrapper: React.FC<Props> = ({ children, isOverflowHidden = false }) => {
+const DefaultPageWrapper: React.FC<Props> = (props) => {
+	const { children, isOverflowHidden } = props;
+	console.log(props);
 	const dispatch = useDispatch();
 	const params: { id: string | undefined } = useParams();
 	let isIdValid = true;

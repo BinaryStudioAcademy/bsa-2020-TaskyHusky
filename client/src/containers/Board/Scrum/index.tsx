@@ -125,7 +125,9 @@ const Scrum: BoardComponent = (props) => {
 					<Breadcrumbs sections={setBreadcrumbs({ history, projectDetails, boardDetails })} />
 				</Container>
 				<Container className={styles.inlineContainer}>
-					<Header as="h2">{board.name}</Header>
+					<Header as="h2" className="standartHeader">
+						{board.name}
+					</Header>
 					<Form.Input
 						placeholder={t('search')}
 						icon="search"
