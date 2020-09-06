@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import NotFound from 'pages/404';
+import { Link } from 'react-router-dom';
 import { getBoardById } from 'services/board.service';
 import { useParams } from 'react-router-dom';
 import styles from './styles.module.scss';
@@ -88,10 +89,16 @@ const ColumnsSettingsPage: React.FC = () => {
 	return (
 		<div className={styles.wrapper}>
 			<div style={{ display: 'flex', alignItems: 'center', marginBottom: 10 }}>
-				<h1 style={{ margin: 0 }}>{board.name}</h1>
-				<a href={`/board/${board.id}`} style={{ marginLeft: 50 }}>
+				<h1 style={{ margin: 0 }} className="standartHeader">
+					{board.name}
+				</h1>
+				<Link
+					className="cancelBtn"
+					to={`/board/${board.id}`}
+					style={{ marginLeft: 50, paddingLeft: '20px', paddingRight: '20px' }}
+				>
 					{t('back')}
-				</a>
+				</Link>
 			</div>
 			<DragDropContext onDragEnd={onDragEnd}>
 				<Droppable droppableId="0" direction="horizontal">
@@ -106,20 +113,18 @@ const ColumnsSettingsPage: React.FC = () => {
 									index={i}
 								/>
 							))}
-							<CreateColumnModal boardId={board.id}>
-								<Segment
-									className={`${styles.createColumn} contentBtn`}
-									style={{ position: 'relative', top: -14 }}
-								>
-									<Icon name="plus" />
-									{t('create_column')}
-								</Segment>
-							</CreateColumnModal>
+
 							{provided.placeholder}
 						</div>
 					)}
 				</Droppable>
 			</DragDropContext>
+			<CreateColumnModal boardId={board.id}>
+				<Segment className={`${styles.createColumn} cancelBtn`}>
+					<Icon name="plus" />
+					{t('create_column')}
+				</Segment>
+			</CreateColumnModal>
 		</div>
 	);
 };

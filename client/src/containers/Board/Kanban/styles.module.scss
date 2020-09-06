@@ -2,7 +2,7 @@
 
 :local(.columnsFlex) {
 	display: flex;
-	height: calc(100vh - 220px);
+	height: calc(100vh - 300px);
 	width: 100%;
 	overflow-x: auto;
 	overflow-y: hidden;
@@ -39,7 +39,7 @@
 
 .headerWrapper {
 	display: flex;
-	padding: 25px 4% 25px 10%;
+	margin: 25px 4% 25px 10%;
 	justify-content: space-between;
 }
 
@@ -60,20 +60,24 @@
 }
 
 .contentBtn {
-	margin: 0 25px 0 0 !important;
-	min-width: 250px !important;
+	margin: 25px 10% !important;
+	max-width: 250px !important;
 	height: 41px;
 	cursor: pointer;
-	@include content-btn;
+	@include cancel-btn;
 }
 
 @media screen and (max-width: $medium-screen) {
 	.headerWrapper {
-		padding: 25px 8% 25px 2%;
+		margin: 25px 2% 25px 8%;
+	}
+
+	.contentBtn {
+		margin-left: 8% !important;
 	}
 
 	.breadcrumb {
-		margin: 25px 8% 0 2%;
+		margin: 25px 2% 0 8% !important;
 	}
 }
 
@@ -85,7 +89,7 @@
 	}
 
 	.headerWrapper {
-		padding-left: 25px;
+		margin-left: 25px;
 	}
 
 	.inlineContainer {

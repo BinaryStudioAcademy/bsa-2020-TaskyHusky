@@ -120,7 +120,7 @@ const Scrum: BoardComponent = (props) => {
 
 	return (
 		<>
-			<Container>
+			<div className={styles.container}>
 				<Container className={styles.breadcrumb}>
 					<Breadcrumbs sections={setBreadcrumbs({ history, projectDetails, boardDetails })} />
 				</Container>
@@ -138,14 +138,13 @@ const Scrum: BoardComponent = (props) => {
 						style={{ marginLeft: 20, marginRight: 60, maxWidth: 250 }}
 						id="searchIssuesField"
 					/>
-					<Button onClick={clearSearchInputValue} secondary>
+					<Button onClick={clearSearchInputValue} className={styles.cancelBtn}>
 						{t('clear')}
 					</Button>
 					<Button
 						onClick={() => {
 							setIsCreateModalOpened(!isCreateModalOpened);
 						}}
-						secondary
 						className={styles.createSprintButton}
 					>
 						{t('create_sprint')}
@@ -163,7 +162,7 @@ const Scrum: BoardComponent = (props) => {
 				)}
 
 				<DragDropContext onDragEnd={onDragEndDrop}>{sprintList}</DragDropContext>
-			</Container>
+			</div>
 			<CreateSprintModal
 				clickAction={() => {
 					setIsCreateModalOpened(!isCreateModalOpened);

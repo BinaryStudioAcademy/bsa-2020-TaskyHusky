@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BoardComponent } from '../';
+import { Link } from 'react-router-dom';
 import BoardColumn from 'containers/BoardColumn';
 import { DragDropContext, OnDragEndResponder } from 'react-beautiful-dnd';
 import styles from './styles.module.scss';
@@ -79,13 +80,13 @@ const Kanban: BoardComponent = ({ board }) => {
 						{t('clear')}
 					</Button>
 				</div>
-				<a
+				<Link
 					className="cancelBtn"
-					href={`/board/${board.id}/columnsSettings`}
+					to={`/board/${board.id}/columnsSettings`}
 					style={{ paddingLeft: '10px', paddingRight: '10px' }}
 				>
 					{t('go_to_columns_settings')}
-				</a>
+				</Link>
 			</div>
 			<DragDropContext onDragEnd={onDragEnd}>
 				<div className={styles.columnsFlex}>
@@ -98,14 +99,14 @@ const Kanban: BoardComponent = ({ board }) => {
 							key={i}
 						/>
 					))}
-					<CreateColumnModal boardId={board.id}>
-						<Segment className={styles.contentBtn}>
-							<Icon name="plus" />
-							{t('create_column')}
-						</Segment>
-					</CreateColumnModal>
 				</div>
 			</DragDropContext>
+			<CreateColumnModal boardId={board.id}>
+				<Segment className={styles.contentBtn}>
+					<Icon name="plus" />
+					{t('create_column')}
+				</Segment>
+			</CreateColumnModal>
 		</div>
 	);
 };
