@@ -28,7 +28,7 @@ const SprintModal = (props: Props) => {
 	};
 
 	return (
-		<Modal size="tiny" dimmer="inverted" onClose={props.clickAction} open={props.isOpen}>
+		<Modal size="tiny" onClose={props.clickAction} open={props.isOpen}>
 			<Header>
 				{t('delete_sprint')}: {sprintName}
 			</Header>

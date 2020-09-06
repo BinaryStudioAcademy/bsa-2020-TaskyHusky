@@ -14,7 +14,7 @@ const RemoveUserModal = ({ setShowDelete, user, confirm }: Props) => {
 	const { t } = useTranslation();
 
 	return (
-		<Modal onClose={() => setShowDelete(false)} open size="tiny" dimmer="inverted">
+		<Modal onClose={() => setShowDelete(false)} open size="tiny">
 			<Modal.Header>
 				<span className={styles.titleModal}>
 					{`

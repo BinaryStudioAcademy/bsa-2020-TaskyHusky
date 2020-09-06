@@ -169,7 +169,6 @@ const CreateIssueModalBody: React.FC<Props> = ({
 
 	return (
 		<Modal
-			dimmer="inverted"
 			as="form"
 			onSubmit={submit}
 			open={isOpened}

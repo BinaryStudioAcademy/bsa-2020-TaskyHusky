@@ -20,7 +20,7 @@ const DeleteBoardModal: React.FC<Props> = (props) => {
 	};
 
 	return (
-		<Modal onClose={() => onClose()} open={true} size="tiny" dimmer="inverted">
+		<Modal onClose={() => onClose()} open={true} size="tiny">
 			<Modal.Header>{`${t('delete')} ${filter.name}`}</Modal.Header>
 			<Modal.Content>{t('delete_filter_modal_text')}</Modal.Content>
 			<Modal.Actions>

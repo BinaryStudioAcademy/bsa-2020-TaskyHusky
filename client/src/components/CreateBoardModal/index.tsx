@@ -46,13 +46,7 @@ const CreateBoardModal = (props: Props) => {
 	};
 
 	return (
-		<Modal
-			onClose={() => setIsModalShown(false)}
-			onOpen={() => setIsModalShown(true)}
-			open={true}
-			size="small"
-			dimmer="inverted"
-		>
+		<Modal onClose={() => setIsModalShown(false)} onOpen={() => setIsModalShown(true)} open={true} size="small">
 			<Modal.Header>
 				{modalWindowName !== ModalNames.createBoard ? t('create_a_board') : t('name_this_board')}
 			</Modal.Header>

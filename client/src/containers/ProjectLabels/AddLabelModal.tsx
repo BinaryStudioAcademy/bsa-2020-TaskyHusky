@@ -110,7 +110,7 @@ const AddLabelModal: React.FC = () => {
 
 	return (
 		<>
-			<Modal dimmer="inverted" size={'mini'} open={true} onClose={onModalClose}>
+			<Modal size={'mini'} open={true} onClose={onModalClose}>
 				<Modal.Header>{t('add_label')}</Modal.Header>
 				<Modal.Content>
 					<Form>
