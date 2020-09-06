@@ -125,6 +125,19 @@
 	}
 }
 
+.buttonLink {
+	text-transform: none;
+	color: #4183c4;
+	border: none;
+	background-color: transparent;
+	font-weight: normal;
+	text-decoration: underline;
+
+	&:hover {
+		color: #1e70bf;
+	}
+}
+
 .userBlock {
 	display: flex;
 	justify-content: center;
