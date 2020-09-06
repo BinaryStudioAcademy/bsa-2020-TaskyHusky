@@ -4,17 +4,51 @@ $screen-offset: 100;
 :local(.container) {
 	display: flex;
 	justify-content: center;
-	margin-top: 30px;
+	padding: 30px 10px 0 10px;
 }
 
 :local(.innerContainer) {
-	margin-left: 20px;
+	margin-right: 50px;
 	max-width: 700px;
 	min-width: 500px;
 }
 
-.commitsContainer{
+.commitsContainer {
 	margin-top: 20px;
+}
+
+.menu {
+	background-color: inherit !important;
+	border: none !important;
+	box-shadow: none !important;
+	margin-bottom: 25px !important;
+}
+
+.menu > .item {
+	margin: 0 20px 0px 0;
+	padding: 7px 13px !important;
+
+	&:hover:not(.active) {
+		border-bottom: 2px solid $header-text !important;
+		position: relative;
+		top: 1px;
+	}
+
+	&::before {
+		background: none !important;
+	}
+}
+
+@media screen and (max-width: $less-than-medium-screen) {
+	.menu {
+		display: flex;
+		flex-direction: column;
+		width: 160px;
+	}
+
+	.menu > .item {
+		margin: 10px 10px 10px 0;
+	}
 }
 
 @media screen and (max-width: $medium-screen + $screen-offset * 2.2) {
@@ -26,5 +60,6 @@ $screen-offset: 100;
 @media screen and (max-width: $less-than-medium-screen + $screen-offset) {
 	.innerContainer {
 		max-width: 500px;
+		min-width: 300px;
 	}
 }
