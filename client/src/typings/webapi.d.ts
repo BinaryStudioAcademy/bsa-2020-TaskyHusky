@@ -25,6 +25,7 @@ namespace WebApi.Board {
 		columnName: string;
 		status: string;
 		board: string;
+		index?: number;
 		isResolutionSet: boolean;
 	}
 }
@@ -142,6 +143,7 @@ namespace WebApi.Result {
 		id: string;
 		columnName: string;
 		status: string;
+		index: number;
 		isResolutionSet: boolean;
 		board: BoardResult;
 	}
@@ -259,6 +261,7 @@ namespace WebApi.Entities {
 		columnName: string;
 		status: string;
 		isResolutionSet: boolean;
+		index?: number;
 		board: Board;
 		issues: Issue[];
 	}

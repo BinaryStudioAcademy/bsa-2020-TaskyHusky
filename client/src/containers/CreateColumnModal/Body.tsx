@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Modal, Form, Button } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
-import { useBoardColumnContext } from './logic/context';
 import { useDispatch } from 'react-redux';
 import { createColumn } from 'containers/BoardColumn/logic/actions';
+import { useBoardColumnContext } from './logic/context';
 import initialState from './logic/initialState';
 
 export interface Props {
@@ -21,8 +21,12 @@ interface Option {
 const Body: React.FC<Props> = ({ boardId, children, onClose = () => {} }) => {
 	const { t } = useTranslation();
 	const dispatch = useDispatch();
-	const context = useBoardColumnContext();
 	const [isModalOpened, setIsModalOpened] = useState<boolean>(false);
+	const context = useBoardColumnContext();
+
+	const clearContext = () => {
+		Object.keys(context.data).forEach((k) => context.set(k as any, (initialState as any)[k]));
+	};
 
 	const statusOpts: Option[] = [
 		{ key: 0, value: 'backlog', text: t('backlog') },
@@ -30,10 +34,6 @@ const Body: React.FC<Props> = ({ boardId, children, onClose = () => {} }) => {
 		{ key: 2, value: 'in progress', text: t('in_progress') },
 		{ key: 3, value: 'done', text: t('done') },
 	];
-
-	const clearContext = () => {
-		Object.keys(context.data).forEach((key) => context.set(key as any, (initialState as any)[key]));
-	};
 
 	const curryOpen = (isOpened: boolean) => () => {
 		setIsModalOpened(isOpened);
@@ -83,7 +83,7 @@ const Body: React.FC<Props> = ({ boardId, children, onClose = () => {} }) => {
 							placeholder={t('status')}
 							options={statusOpts}
 							fluid
-							value={context.data.status ?? ''}
+							value={context.data.status}
 							onChange={(event, data) => context.set('status', data.value)}
 						/>
 					</Form.Field>
@@ -93,7 +93,7 @@ const Body: React.FC<Props> = ({ boardId, children, onClose = () => {} }) => {
 							placeholder={t('name')}
 							fluid
 							icon="users"
-							value={context.data.columnName ?? ''}
+							value={context.data.columnName}
 							onChange={(event, data) => context.set('columnName', data.value)}
 						/>
 					</Form.Field>
@@ -102,7 +102,7 @@ const Body: React.FC<Props> = ({ boardId, children, onClose = () => {} }) => {
 						<Form.Checkbox
 							onChange={(event, data) => context.set('isResolutionSet', data.checked)}
 							toggle
-							checked={context.data.isResolutionSet ?? false}
+							checked={context.data.isResolutionSet}
 							label={t('is_resolution_set')}
 						/>
 					</Form.Field>
@@ -112,7 +112,7 @@ const Body: React.FC<Props> = ({ boardId, children, onClose = () => {} }) => {
 				<Button className="primaryBtn" type="submit">
 					{t('submit')}
 				</Button>
-				<Button className="cancelBtn" compact onClick={curryOpen(false)}>
+				<Button className="cancelBtn" onClick={curryOpen(false)}>
 					{t('cancel')}
 				</Button>
 			</Modal.Actions>

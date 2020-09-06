@@ -12,6 +12,7 @@ import { RootState } from 'typings/rootState';
 import { isImage } from 'helpers/isImage.helper';
 import { SemanticCOLORS, SemanticICONS } from 'semantic-ui-react/dist/commonjs/generic';
 import DeleteIssueModal from 'containers/DeleteIssueModal';
+import { Redirect } from 'react-router-dom';
 
 interface Props {
 	issue: WebApi.Result.IssueResult;
@@ -56,7 +57,7 @@ const IssuePageInfoColumn: React.FC<Props> = ({
 	const user = useSelector((state: RootState) => state.auth.user);
 
 	if (!user) {
-		return null;
+		return <Redirect to="/login" />;
 	}
 
 	const watching = (issueWatchers ?? []).some((watcher) => watcher.id === user.id);

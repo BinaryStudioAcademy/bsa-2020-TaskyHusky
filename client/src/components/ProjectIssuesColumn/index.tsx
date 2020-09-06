@@ -4,6 +4,7 @@ import IssueCard from 'components/IssueCard';
 import { useTranslation } from 'react-i18next';
 import { getProjectIssues } from 'services/projects.service';
 import { useIO } from 'hooks/useIO';
+import Spinner from 'components/common/Spinner';
 
 interface Props {
 	projectId: string;
@@ -63,7 +64,7 @@ const ProjectIssuesColumn: React.FC<Props> = ({ projectId, onChangeSelectedCard,
 	}, [projectId, mustFetchIssues]);
 
 	if (mustFetchIssues) {
-		return null;
+		return <Spinner />;
 	}
 
 	const displayIssues = issues.filter((issue) =>

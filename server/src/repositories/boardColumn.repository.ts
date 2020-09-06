@@ -16,6 +16,7 @@ export class BoardColumnRepository extends Repository<BoardColumn> {
 			.innerJoin('boardColumn.board', 'board')
 			.addSelect('board.id')
 			.where('board.id = :id', { id })
+			.orderBy('index', 'ASC')
 			.getMany();
 	}
 
@@ -57,7 +58,11 @@ export class BoardColumnRepository extends Repository<BoardColumn> {
 
 	async deleteColumn(id: string) {
 		const boardColumn = await this.getOne(id);
+		const result = await this.remove([boardColumn]);
+		const boardColumns = await this.getBoardColumns(boardColumn.board.id);
+		const columnsToReindex = boardColumns.filter((c) => (c.index as number) > (boardColumn.index as number));
+		await Promise.all(columnsToReindex.map((c) => this.put(c.id, { index: (c.index as number) - 1 })));
 
-		return this.remove([boardColumn]);
+		return result;
 	}
 }

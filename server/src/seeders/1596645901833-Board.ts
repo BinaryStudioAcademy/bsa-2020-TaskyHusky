@@ -31,15 +31,15 @@ export class Board1596645901833 implements MigrationInterface {
 
 		const column1 = new BoardColumn();
 		column1.board = board;
-		column1.columnName = 'one';
+		column1.columnName = 'backlog';
 		column1.isResolutionSet = false;
-		column1.status = 'unknown';
+		column1.status = 'backlog';
 
 		const column2 = new BoardColumn();
 		column2.board = board;
-		column2.columnName = 'two';
-		column2.isResolutionSet = true;
-		column2.status = 'unknown';
+		column2.columnName = 'todo';
+		column2.isResolutionSet = false;
+		column2.status = 'todo';
 
 		await columnRepository.save(column1);
 		await columnRepository.save(column2);
