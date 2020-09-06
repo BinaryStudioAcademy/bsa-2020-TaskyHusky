@@ -29,14 +29,14 @@ const SprintModal = (props: Props) => {
 
 	return (
 		<Modal size="tiny" onClose={props.clickAction} open={props.isOpen}>
-			<Header>
+			<Header className="standartHeader">
 				{t('delete_sprint')}: {sprintName}
 			</Header>
 			<Modal.Content>
 				<Header icon textAlign="center">
 					<Icon name="trash alternate outline" />
 				</Header>
-				<p>
+				<p className="textData">
 					{!!sprintIssues?.length
 						? t('delete_sprint_with_issues_warning')
 						: t('delete_sprint_with_no_issues_warning')}
@@ -44,8 +44,9 @@ const SprintModal = (props: Props) => {
 			</Modal.Content>
 
 			<Modal.Actions>
-				<Button color="grey" onClick={handleNoButtonClick} content={t('cancel')} />
+				<Button className="cancelBtn" onClick={handleNoButtonClick} content={t('cancel')} />
 				<Button
+					className="contentBtn"
 					labelPosition="right"
 					icon="checkmark"
 					primary

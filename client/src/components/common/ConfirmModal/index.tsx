@@ -14,15 +14,15 @@ const ConfirmModal = ({ isOpened, setIsOpened, confirmAction, header, content }:
 	const { t } = useTranslation();
 	return (
 		<Modal size="mini" open={isOpened} onClose={() => setIsOpened(false)}>
-			<Modal.Header>{header}</Modal.Header>
+			<Modal.Header className="standartHeader">{header}</Modal.Header>
 			<Modal.Content>
-				<p>{content}</p>
+				<p className="textData">{content}</p>
 			</Modal.Content>
 			<Modal.Actions>
 				<Button className="cancelBtn" onClick={() => setIsOpened(false)}>
 					{t('no')}
 				</Button>
-				<Button onClick={confirmAction} className={'primaryBtn'}>
+				<Button onClick={confirmAction} className="primaryBtn">
 					{t('yes')}
 				</Button>
 			</Modal.Actions>

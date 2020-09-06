@@ -30,7 +30,7 @@ const SelectIcon = ({ currentIcon, onIconChange }: Props) => {
 				</button>
 			}
 		>
-			<Modal.Header>{'Click to edit this avatar'}</Modal.Header>
+			<Modal.Header className="standartHeader">{'Click to edit this avatar'}</Modal.Header>
 			<div className={styles.icons__container}>
 				<ul className={styles.icons__list}>
 					{Object.values(icons).map((icon: string) => (
@@ -43,7 +43,7 @@ const SelectIcon = ({ currentIcon, onIconChange }: Props) => {
 				</ul>
 			</div>
 			<Modal.Actions>
-				<Button color="grey" onClick={() => setIsIconsModalOpened(false)}>
+				<Button className="cancelBtn" onClick={() => setIsIconsModalOpened(false)}>
 					{i18n.t('cancel')}
 				</Button>
 			</Modal.Actions>

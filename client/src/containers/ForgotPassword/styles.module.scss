@@ -1,5 +1,5 @@
 @import "styles/mixins.scss";
-@import "styles/variables.scss";
+
 .modalWrapper {
 	background-color: $header-text !important;
 	color: $body-bg !important;
@@ -10,6 +10,7 @@
 	text-align: center;
 	color: inherit !important;
 	background-color: inherit !important;
+	@include primary-header;
 }
 
 .column {
@@ -33,9 +34,11 @@
 .textBlock {
 	margin: 24px 0 22px;
 	text-align: center;
+
 	p {
 		margin-bottom: 4px;
 	}
+
 	p:last-child {
 		font-weight: bold;
 	}
@@ -44,10 +47,14 @@
 .segmentBody {
 	margin-top: 0 !important;
 }
+
 .returnToMain {
 	font-size: 1rem;
 	cursor: pointer;
 	color: $yellow !important;
+	font-family: Poppins, sans-serif !important;
+	font-style: normal !important;
+
 	&:hover {
 		border-bottom: 1px solid $yellow;
 		color: $primary-bg !important;
