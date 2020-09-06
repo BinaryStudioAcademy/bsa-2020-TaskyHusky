@@ -439,4 +439,7 @@ export const ua = {
 	yes: 'Так',
 	no_filters: 'Фільтрів не знайдено',
 	add_changes: 'Додайте зміни, щоб розблокувати кнопку',
+	are_you_sure: 'Ви впевнені?',
+	are_you_sure_delete_column: 'Ви впевнені, що хочете видалити цю колонку?',
+	go_to_columns_settings: 'Перейти до налаштувань колонок',
 };

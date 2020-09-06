@@ -87,7 +87,12 @@ const ColumnsSettingsPage: React.FC = () => {
 
 	return (
 		<div className={styles.wrapper}>
-			<h1>{board.name}</h1>
+			<div style={{ display: 'flex', alignItems: 'center', marginBottom: 10 }}>
+				<h1 style={{ margin: 0 }}>{board.name}</h1>
+				<a href={`/board/${board.id}`} style={{ marginLeft: 50 }}>
+					{t('back')}
+				</a>
+			</div>
 			<DragDropContext onDragEnd={onDragEnd}>
 				<Droppable droppableId="0" direction="horizontal">
 					{(provided, snapshot) => (

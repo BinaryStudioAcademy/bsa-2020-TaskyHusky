@@ -31,6 +31,7 @@ const InteractiveColumn: React.FC<Props> = ({ column, index, setColumns, columns
 
 		const newColumns = [...columns];
 		newColumns.splice(index, 1);
+		newColumns.slice(index).forEach((__, index) => --newColumns[index].index);
 		setColumns(newColumns);
 	};
 
@@ -55,8 +56,8 @@ const InteractiveColumn: React.FC<Props> = ({ column, index, setColumns, columns
 									isOpened={isConfirmOpened}
 									setIsOpened={setIsConfirmOpened}
 									confirmAction={remove}
-									header="Are you sure?"
-									content="Are you sure about deleting this column?"
+									header={t('are_you_sure')}
+									content={t('are_you_sure_delete_column')}
 								/>
 								<Icon
 									link

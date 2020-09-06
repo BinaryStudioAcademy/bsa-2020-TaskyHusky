@@ -75,6 +75,7 @@ const Kanban: BoardComponent = ({ board }) => {
 				<Button onClick={() => setSearch('')} className="cancelBtn" compact>
 					{t('clear')}
 				</Button>
+				<a href={`/board/${board.id}/columnsSettings`}>{t('go_to_columns_settings')}</a>
 			</div>
 			<DragDropContext onDragEnd={onDragEnd}>
 				<div className={styles.columnsFlex}>

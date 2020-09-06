@@ -447,4 +447,7 @@ export const ru = {
 	yes: 'Да',
 	no_filters: 'Фильтры не найдены',
 	add_changes: 'Внесите изменения, что бы разблокировать кнопку',
+	are_you_sure: 'Вы уверены?',
+	are_you_sure_delete_column: 'Вы уверены, что хотите удалить эту колонку?',
+	go_to_columns_settings: 'Перейти в настройки колонок',
 };

@@ -85,18 +85,20 @@ const EditForm: React.FC<Props> = ({ columnId, initialState, onSubmit }) => {
 					onChange={(event, data) => context.set('isResolutionSet', data.checked)}
 				/>
 			</Form.Field>
-			<Button className="primaryBtn" type="submit" compact disabled={isInitialState}>
-				{t('submit')}
-			</Button>
-			<Button
-				className="cancelBtn"
-				type="button"
-				onClick={() => clearContext()}
-				compact
-				disabled={isInitialState}
-			>
-				{t('cancel')}
-			</Button>
+			<div title={isInitialState ? t('add_changes') : undefined}>
+				<Button className="primaryBtn" type="submit" compact disabled={isInitialState}>
+					{t('submit')}
+				</Button>
+				<Button
+					className="cancelBtn"
+					type="button"
+					onClick={() => clearContext()}
+					compact
+					disabled={isInitialState}
+				>
+					{t('cancel')}
+				</Button>
+			</div>
 		</Form>
 	);
 };
