@@ -2,10 +2,13 @@ import React from 'react';
 import styles from './styles.module.scss';
 import Avatar from 'components/Avatar';
 import { Link } from 'react-router-dom';
-import { Button, Icon } from 'semantic-ui-react';
+import { Button } from 'semantic-ui-react';
 import { useSelector } from 'react-redux';
 import { RootState } from 'typings/rootState';
 import Spinner from 'components/common/Spinner';
+import toolbox from 'icons/profile/toolbox.svg';
+import reorder from 'icons/profile/reorder.svg';
+import geo from 'icons/profile/geo.svg';
 
 type UserModel = {
 	id: string;
@@ -35,36 +38,36 @@ const ModalViewProfile = ({ user, onClose }: Props) => {
 						<div className={styles.header} style={{ backgroundColor: color }}>
 							<div className={styles.left_margin}></div>
 							<div className={styles.name}>
-								<span>{`${user.firstName} ${user.lastName}`}</span>
-								<span>{user.jobTitle}</span>
+								<span className={styles.fullName}>{`${user.firstName} ${user.lastName}`}</span>
+								<span className={styles.title}>{user.jobTitle}</span>
 							</div>
 						</div>
-						<div className={styles.avatar}>
-							<Link to={`/profile/${user.id}`}>
-								<Avatar fullName={`${user.firstName} ${user.lastName}`} imgSrc={user.avatar} />
-							</Link>
-						</div>
 						<div className={styles.main_info}>
+							<div className={styles.avatar}>
+								<Link to={`/profile/${user.id}`}>
+									<Avatar fullName={`${user.firstName} ${user.lastName}`} imgSrc={user.avatar} />
+								</Link>
+							</div>
 							<div className={styles.left_margin}></div>
 							<div className={styles.details}>
-								<span>
-									<Icon name="at" size="small" color="grey" />
+								<span className={styles.field}>
+									<img src={toolbox} alt="icon" className={styles.iconEmail} />
 									<span className={styles.user_field}>{user.email}</span>
 								</span>
 								{user.location && (
-									<span>
-										<Icon name="map signs" size="small" color="grey" />
+									<span className={styles.field}>
+										<img src={reorder} alt="icon" className={styles.iconDep} />
 										<span className={styles.user_field}>{user.location}</span>
 									</span>
 								)}
 								{user.department && (
-									<span>
-										<Icon name="building" size="small" color="grey" />
+									<span className={styles.field}>
+										<img src={geo} alt="icon" className={styles.iconGeo} />
 										<span className={styles.user_field}>{user.department}</span>
 									</span>
 								)}
 								<Link to={`/profile/${user.id}`}>
-									<Button className={styles.primaryBtn}>View profile</Button>
+									<Button className={styles.button}>View profile</Button>
 								</Link>
 							</div>
 						</div>

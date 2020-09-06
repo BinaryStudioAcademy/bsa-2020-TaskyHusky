@@ -1,6 +1,6 @@
 import ModalViewProfile from 'components/common/ModalViewProfile';
 import React, { useState } from 'react';
-import { Card, Icon } from 'semantic-ui-react';
+import { Icon } from 'semantic-ui-react';
 import Avatar from 'components/Avatar';
 import styles from './styles.module.scss';
 import { Link } from 'react-router-dom';
@@ -67,16 +67,16 @@ const TeamsMembersCard = ({ title, teamOwner, removeUserFromTeam, teammates = []
 		teamOwner && authUser?.id === teamOwner.id && viewUser?.id === user.id && viewUser?.id !== teamOwner.id;
 
 	return (
-		<Card>
-			<Card.Content header={t(title)} />
-			<Card.Meta>
+		<>
+			<div className={styles.sectionHeader}>
+				<h3 className={styles.header}>{t(title)} </h3>
 				<span className={styles.metaHeader}>
 					{teammates.length > 0 && title === 'members' && ` ${teammates.length}  ${t('members')}`}
 				</span>
-			</Card.Meta>
-			{teammates.length > 0 ? (
-				teammates.map((teammate) => (
-					<Card.Content key={teammate.id}>
+			</div>
+			<div className={styles.card}>
+				{teammates.map((teammate) => (
+					<div key={teammate.id}>
 						<div
 							className={styles.cardBody}
 							onMouseEnter={() => onHover(teammate)}
@@ -92,7 +92,9 @@ const TeamsMembersCard = ({ title, teamOwner, removeUserFromTeam, teammates = []
 								</Link>
 							</div>
 							<div className={styles.userInfo}>
-								<p> {fullUserName(teammate.firstName, teammate.lastName)}</p>
+								<p className={styles.firstName}>
+									{fullUserName(teammate.firstName, teammate.lastName)}
+								</p>
 								<p className={styles.metainfo}>{teammate.jobTitle}</p>
 								{showDeleteUserIcon(teammate) && (
 									<Icon
@@ -113,12 +115,10 @@ const TeamsMembersCard = ({ title, teamOwner, removeUserFromTeam, teammates = []
 								<ModalViewProfile key={teammate.id} user={viewUser} onClose={hideModal} />
 							)}
 						</div>
-					</Card.Content>
-				))
-			) : (
-				<Card.Content className={styles.infoMessage}>{t('you_are_the_first')}</Card.Content>
-			)}
-		</Card>
+					</div>
+				))}
+			</div>
+		</>
 	);
 };
 

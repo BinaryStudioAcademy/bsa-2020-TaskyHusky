@@ -49,6 +49,18 @@ export class ProjectsRepository extends Repository<Projects> {
 			.getMany();
 	}
 
+	async getProjectWithIssuesByTeamId(id: string): Promise<Projects[]> {
+		return getRepository(Projects)
+			.createQueryBuilder('project')
+			.leftJoin('project.issues', 'issue')
+			.addSelect(['issue.id', 'issue.issueKey', 'issue.summary', 'issue.updatedAt'])
+			.leftJoinAndSelect('issue.type', 'issueType')
+			.leftJoinAndSelect('issue.priority', 'priority')
+			.leftJoin('project.team', 'team')
+			.where('team.id = :id', { id })
+			.getMany();
+	}
+
 	createOne(data: Projects) {
 		const entity = this.create(data);
 		return this.save(entity);

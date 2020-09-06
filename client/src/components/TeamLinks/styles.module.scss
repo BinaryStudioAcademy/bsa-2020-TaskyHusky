@@ -1,22 +1,35 @@
 @import "styles/mixins.scss";
 
-.linkCardWrapper {
-  position: relative;
-  margin-top: 10px;
-  box-shadow: 0 0 3px #a3a3a3;
-  border: 1px solid rgb(231, 231, 231);
-  width: 100%;
-  padding: 20px;
+.hederContainer {
+  display: flex;
+  align-items: center;
+}
 
-  .linkHeader {
-    color: #3d3c3c;
-    margin-bottom: 5px !important;
-  }
+.linkHeader {
+  @include info-block-header;
+  margin: 0;
+}
+
+.linkCardWrapper {
+  @include primary-box;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+  position: relative;
 
   .linkHref {
-    color: #9b9999;
-    font-size: 1.1rem;
-    cursor: pointer;
+    @include primary-content;
+    margin: 0;
+    margin-left: 20px;
+    cursor: poiner;
+
+    &:hover {
+      border-bottom: 2px solid $yellow;
+      position: relative;
+      top: 1px;
+    }
+
     & > i {
       font-size: 16px !important;
     }
@@ -24,8 +37,8 @@
 
   .btnsBlock {
     position: absolute;
-    right: 0;
-    bottom: 5px;
+    right: 20px;
+    bottom: 20px;
   }
 }
 
@@ -34,26 +47,12 @@
   font-weight: 700;
   font-size: 1.1rem;
 }
+
 .linkDescription {
-  color: #888686;
-  font-size: 1.1rem;
-  margin-bottom: 8px;
+  @include secondary-content;
 }
-.paddingBtn {
-  padding: 6px 8px !important;
-}
-.deleteBtn {
-  @include cancel-btn;
-  .deleteBtnValue {
-    color: #2185d0 !important;
-  }
-}
-.editBtn {
-  @include primary-btn;
-  .editBtnValue {
-    color: #4d4c4c;
-  }
-}
-.cancelBtn {
-  @include cancel-btn;
+
+.button {
+  margin-left: 10px !important;
+  cursor: pointer;
 }

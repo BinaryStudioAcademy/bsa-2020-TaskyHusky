@@ -4,8 +4,10 @@ import { Header, Form, Divider, Segment, Button, List, Image, Container, Modal }
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { normalizeEmail } from 'helpers/email.helper';
+import CustomValidator from 'helpers/validation.helper';
 import * as actions from '../LoginPage/logic/actions';
 import emailSent from 'assets/images/email-sent.png';
+import { NotificationManager } from 'react-notifications';
 
 type Props = {
 	onClose: (arg: boolean) => void;
@@ -18,6 +20,13 @@ export const ForgotPassword: React.FC<Props> = ({ onClose }) => {
 
 	const handleSubmit: (event: SyntheticEvent) => void = (event) => {
 		event.preventDefault();
+		const validator = new CustomValidator(email);
+		const { errors } = validator.checkEmailField();
+
+		if (errors) {
+			NotificationManager.error(t('invalid_email'), t('error'), 4000);
+			return false;
+		}
 		dispatch(actions.forgotPassword({ email }));
 		setEmailSent(true);
 	};

@@ -129,6 +129,13 @@ label {
 	}
 }
 
+.emptyCard {
+	margin: 5%;
+	display: flex;
+	width: 90%;
+	align-items: center;
+}
+
 @media screen and (max-width: $less-than-medium-screen) {
 	.workBlock {
 		width: 100%;
