@@ -22,6 +22,16 @@ export const teamReducer = createReducer<TeamState>(initialState, {
 		};
 	},
 
+	[actionTypes.SUCCESS_TEAM_ISSUES_LOADING](state: TeamState, action: actionTypes.SuccessLoadingIssues) {
+		return {
+			...state,
+			team: {
+				...state.team,
+				issues: action.issues,
+			},
+		};
+	},
+
 	[actionTypes.SUCCESS_TEAM_PROJECTS_LOADING](state: TeamState, action: actionTypes.SuccessLoadingProjects) {
 		return {
 			...state,
@@ -38,7 +48,7 @@ export const teamReducer = createReducer<TeamState>(initialState, {
 			team: {
 				...state.team,
 				name: action.field.name,
-				description: action.field.description
+				description: action.field.description,
 			},
 		};
 	},
@@ -93,7 +103,7 @@ export const teamReducer = createReducer<TeamState>(initialState, {
 		};
 	},
 	[actionTypes.DELETE_TEAM_SUCCESS](state: TeamState) {
-		return initialState
+		return initialState;
 	},
 
 	[actionTypes.SET_IS_LOADING](state: TeamState) {

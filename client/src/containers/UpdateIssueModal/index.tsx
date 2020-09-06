@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Modal, Button, Header, Icon, Divider } from 'semantic-ui-react';
+import { Form, Modal, Button, Header, Icon, Divider, InputOnChangeData } from 'semantic-ui-react';
 import { connect, useDispatch } from 'react-redux';
 import { RootState } from 'typings/rootState';
 import TagsInput from 'components/common/TagsInput';
@@ -7,14 +7,18 @@ import { useCreateIssueModalContext } from 'containers/CreateIssueModal/logic/co
 import { updateIssue } from 'pages/IssuePage/logic/actions';
 import { useTranslation } from 'react-i18next';
 import { getUsername } from 'helpers/getUsername.helper';
+import { isNumber } from 'util';
+import { IssueConstants } from 'constants/Issue';
 import IssueFileInput from 'components/IssueFileInput';
 import { initialState } from 'containers/CreateIssueModal/logic/initalState';
 
+const labels: string[] = ['label', 'label1', 'label2'];
 interface Props {
 	current: WebApi.Issue.PartialIssue;
 	getOpenFunc: (open: () => void) => void;
 	issueTypes: WebApi.Entities.IssueType[];
 	priorities: WebApi.Entities.Priority[];
+	statuses: WebApi.Entities.IssueStatus[];
 	users: WebApi.Entities.UserProfile[];
 	onSubmit?: (data: WebApi.Issue.PartialIssue) => void;
 }
@@ -22,14 +26,23 @@ interface Props {
 interface SelectOption {
 	key: string | number;
 	text: string | JSX.Element;
-	value: string;
+	value: any;
 	style?: any;
 }
 
-const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, priorities, users, onSubmit }) => {
+const UpdateIssueModal: React.FC<Props> = ({
+	current,
+	getOpenFunc,
+	issueTypes,
+	priorities,
+	users,
+	onSubmit,
+	statuses,
+}) => {
 	const context = useCreateIssueModalContext();
 	const [opened, setOpened] = useState<boolean>(false);
 	const [attachments, setAttachments] = useState<File[]>([]);
+	const [isStoryPointValid, setIsStoryPointValid] = useState(true);
 	const dispatch = useDispatch();
 	const { t } = useTranslation();
 	getOpenFunc(() => setOpened(true));
@@ -74,11 +87,21 @@ const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, p
 		text: getUsername(user),
 	}));
 
+	const statusesOpts: SelectOption[] = statuses.map(({ id, title, color }) => ({
+		key: id,
+		value: id,
+		text: (
+			<>
+				<span style={{ color: color, fontWeight: 'bold' }}>{title ?? 'untitled'}</span>
+			</>
+		),
+	}));
+
 	const submit = async (event: React.FormEvent) => {
 		event.preventDefault();
 		const allFields = context.data.type && context.data.priority && context.data.summary;
 
-		if (!allFields) {
+		if (!allFields || !isStoryPointValid) {
 			return;
 		}
 
@@ -100,6 +123,21 @@ const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, p
 		}
 	};
 
+	const handleStoryPointChange = (event: React.ChangeEvent<HTMLInputElement>, data: InputOnChangeData) => {
+		const { value } = data;
+		const number = parseInt(value, 10);
+		if (value.length === 0) {
+			context.set('storyPoint', value);
+			setIsStoryPointValid(true);
+			return;
+		}
+		if (isNumber(number) && number <= IssueConstants.maxStoryPoint && number >= IssueConstants.minStoryPoint) {
+			context.set('storyPoint', value);
+			setIsStoryPointValid(true);
+		} else {
+			setIsStoryPointValid(false);
+		}
+	};
 	const clearContext = () => {
 		// Can't do it without any
 		Object.keys(context.data).forEach((key) => context.set(key as any, (initialState as any)[key]));
@@ -110,21 +148,32 @@ const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, p
 			as="form"
 			onSubmit={submit}
 			open={opened}
-			closeIcon
 			closeOnDimmerClick
 			closeOnEscape
 			onOpen={clearContext}
 			onClose={() => setOpened(false)}
-			style={{ maxWidth: 700, height: '70%' }}
+			dimmer="inverted"
 		>
 			<Modal.Header>
 				<Header as="h1">{t('edit_issue')}</Header>
 			</Modal.Header>
-			<Modal.Content scrolling style={{ maxHeight: '90%', height: '90%' }}>
+			<Modal.Content scrolling>
 				<Form
 					as="div"
 					onKeyDown={(event: React.KeyboardEvent) => event.key === 'Enter' && event.preventDefault()}
 				>
+					<Form.Field>
+						<label className="required">{t('Status')}</label>
+						<Form.Dropdown
+							clearable
+							selection
+							style={{ maxWidth: 200 }}
+							options={statusesOpts}
+							defaultValue={current.status}
+							placeholder={t('Status')}
+							onChange={(event, data) => context.set('status', data.value)}
+						/>
+					</Form.Field>
 					<Form.Field>
 						<label className="required">{t('type')}</label>
 						<Form.Dropdown
@@ -183,6 +232,17 @@ const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, p
 						/>
 					</Form.Field>
 					<Form.Field>
+						<label>{t('story_point')}</label>
+						<Form.Input
+							type="number"
+							error={!isStoryPointValid}
+							placeholder={t('story_point')}
+							fluid
+							defaultValue={current.storyPoint}
+							onChange={handleStoryPointChange}
+						/>
+					</Form.Field>
+					<Form.Field>
 						<label>{t('links')}</label>
 						<TagsInput
 							placeholder={t('add_link')}
@@ -196,7 +256,7 @@ const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, p
 							currentFiles={attachments}
 							onChange={(newFiles) => setAttachments(newFiles)}
 							onDeleteAlreadyAttached={(newLinks) => context.set('attachments', newLinks)}
-							alreadyAttached={context.data.attachments}
+							alreadyAttached={context.data.attachments ?? []}
 						/>
 					</Form.Field>
 					<Form.Field>
@@ -211,15 +271,15 @@ const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, p
 					</Form.Field>
 				</Form>
 			</Modal.Content>
-			<Modal.Actions style={{ height: 67 }}>
-				<Button.Group floated="right">
-					<Button primary type="submit">
+			<Modal.Actions style={{ backgroundColor: '#efefef' }}>
+				<div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+					<Button className="primaryBtn" type="submit">
 						{t('submit')}
 					</Button>
-					<Button onClick={() => setOpened(false)} basic>
-						<span>{t('cancel')}</span>
+					<Button onClick={() => setOpened(false)} className="cancelBtn">
+						{t('cancel')}
 					</Button>
-				</Button.Group>
+				</div>
 			</Modal.Actions>
 		</Modal>
 	);
@@ -228,9 +288,8 @@ const UpdateIssueModal: React.FC<Props> = ({ current, getOpenFunc, issueTypes, p
 const mapStateToProps = (state: RootState) => ({
 	issueTypes: state.issues.types,
 	priorities: state.issues.priorities,
+	statuses: state.issues.statuses,
 	users: state.users.users,
 });
-
-const labels: string[] = ['label', 'label1', 'label2'];
 
 export default connect(mapStateToProps)(UpdateIssueModal);

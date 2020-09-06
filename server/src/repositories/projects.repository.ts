@@ -13,6 +13,7 @@ export class ProjectsRepository extends Repository<Projects> {
 			.leftJoinAndSelect('project.lead', 'lead')
 			.leftJoinAndSelect('project.users', 'users')
 			.leftJoinAndSelect('project.boards', 'boards')
+			.leftJoinAndSelect('project.labels', 'labels')
 			.leftJoin('project.users', 'user')
 			.where('project.id = :id', { id })
 			.andWhere('user.id = :userId', { userId })
@@ -31,13 +32,32 @@ export class ProjectsRepository extends Repository<Projects> {
 		return this.findOne({ key }, { withDeleted: true });
 	}
 
-	getAllByUserId(id: string): Promise<Projects[]> {
+	async getAllByUserId(id: string): Promise<Projects[]> {
 		return getRepository(Projects)
 			.createQueryBuilder('project')
+			.leftJoin('project.issues', 'issue')
+			.addSelect('issue.id')
+			.leftJoin('issue.status', 'issueStatus')
+			.addSelect('issueStatus.title')
+			.leftJoin('issue.assigned', 'user')
+			.addSelect('user.id')
 			.leftJoinAndSelect('project.lead', 'lead')
 			.leftJoinAndSelect('project.boards', 'boards')
+			.leftJoinAndSelect('project.labels', 'labels')
 			.leftJoin('project.users', 'users')
 			.where('users.id = :id', { id })
+			.getMany();
+	}
+
+	async getProjectWithIssuesByTeamId(id: string): Promise<Projects[]> {
+		return getRepository(Projects)
+			.createQueryBuilder('project')
+			.leftJoin('project.issues', 'issue')
+			.addSelect(['issue.id', 'issue.issueKey', 'issue.summary', 'issue.updatedAt'])
+			.leftJoinAndSelect('issue.type', 'issueType')
+			.leftJoinAndSelect('issue.priority', 'priority')
+			.leftJoin('project.team', 'team')
+			.where('team.id = :id', { id })
 			.getMany();
 	}
 

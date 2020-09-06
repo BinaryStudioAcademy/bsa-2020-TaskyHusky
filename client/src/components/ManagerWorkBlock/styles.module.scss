@@ -4,9 +4,19 @@
   background-color: inherit !important;
   border: none !important;
   box-shadow: none !important;
+  margin-bottom: 25px !important;
 }
 
 .menu>.item {
+  margin: 0 20px 0px 0;
+  padding: 7px 13px !important;
+
+  &:hover:not(.active) {
+    border-bottom: 2px solid $header-text !important;
+    position: relative;
+    top: 1px;
+  }
+
   &::before {
     background: none !important;
   }
@@ -17,5 +27,9 @@
     display: flex;
     flex-direction: column;
     width: 160px;
+  }
+
+  .menu>.item {
+    margin: 10px 10px 10px 0;
   }
 }

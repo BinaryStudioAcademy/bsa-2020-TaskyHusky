@@ -5,6 +5,7 @@ export const START_LOADING = 'TEAM:START_LOADING';
 export const SUCCESS_TEAM_LOADING = 'TEAM:SUCCESS_TEAM_LOADING';
 export const SUCCESS_TEAM_USERS_LOADING = 'TEAM:SUCCESS_TEAM_USERS_LOADING';
 export const SUCCESS_TEAM_PROJECTS_LOADING = 'TEAM:SUCCESS_TEAM_PROJECTS_LOADING';
+export const SUCCESS_TEAM_ISSUES_LOADING = 'TEAM:SUCCESS_TEAM_ISSUES_LOADING';
 export const FAIL_LOADING = 'TEAM:FAIL_LOADING';
 
 export const ADD_LINK_LOADING = 'TEAM:ADD_LINK_LOADING';
@@ -82,6 +83,11 @@ export type SuccessLoadingProjects = {
 	loading?: boolean;
 };
 
+export type SuccessLoadingIssues = {
+	issues?: WebApi.Entities.Issue[];
+	loading?: boolean;
+};
+
 export type StartLoadingArgs = {
 	id: string;
 };
@@ -93,16 +99,16 @@ export type EditFieldLoadingArgs = {
 
 export type EditFieldSuccess = {
 	field: {
-		name: string,
-		description: string
+		name: string;
+		description: string;
 	};
 };
 
 export type DeleteTeamLoading = {
 	id: string;
-}
+};
 
 export type DeletePeopleLoading = {
 	teamId: string;
 	userId: string;
-}
+};

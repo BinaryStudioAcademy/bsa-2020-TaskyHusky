@@ -1,6 +1,5 @@
-import ModalViewProfile from 'components/common/ModalViewProfile';
 import React, { useState } from 'react';
-import { Card, Icon } from 'semantic-ui-react';
+import { Icon } from 'semantic-ui-react';
 import Avatar from 'components/Avatar';
 import styles from './styles.module.scss';
 import { Link } from 'react-router-dom';
@@ -27,31 +26,26 @@ export interface User {
 }
 
 const TeamsMembersCard = ({ title, teamOwner, removeUserFromTeam, teammates = [] }: Props) => {
-	const authUser = useSelector((rootState: RootState) => rootState.auth.user);
+	const { t } = useTranslation();
+	const fullUserName = (fn: string, ln: string): string => `${fn} ${ln}`;
 
-	const [modal, setModal] = useState<boolean>(false);
+	const authUser = useSelector((rootState: RootState) => rootState.auth.user);
+	const [showDeleteButton, setShowDeleteButton] = useState<boolean>(false);
 	const [removeUserModal, setRemoveUserModal] = useState<boolean>(false);
-	const [viewUser, setViewUser] = useState<User | undefined>();
-	const [userToRemove, setUserToRemove] = useState<User>({
-		id: '',
-		firstName: '',
-		lastName: '',
-		avatar: '',
-	});
+	const [userToRemove, setUserToRemove] = useState<User | null>(null);
+
 	const onHover = (user: User) => {
-		setViewUser(user);
-		setModal(true);
+		setShowDeleteButton(true);
+		setUserToRemove(user);
 	};
 
 	const hideModal = (e: React.BaseSyntheticEvent) => {
 		if (!e.target.classList.contains('cardBody') && !e.target.classList.contains('blockWrapper')) {
-			setModal(false);
-			setViewUser(undefined);
+			setShowDeleteButton(false);
+			setUserToRemove(null);
 		}
 	};
 
-	const { t } = useTranslation();
-	const fullUserName = (fn: string, ln: string): string => `${fn} ${ln}`;
 	const onDeleteUserClick = (user: User) => {
 		setUserToRemove(user);
 		setRemoveUserModal(true);
@@ -59,29 +53,28 @@ const TeamsMembersCard = ({ title, teamOwner, removeUserFromTeam, teammates = []
 
 	const removeUser = (id: string) => {
 		removeUserFromTeam(id);
-		setViewUser(undefined);
 		setRemoveUserModal(false);
 	};
 
-	const showDeleteUserIcon = (user: User) =>
-		teamOwner && authUser?.id === teamOwner.id && viewUser?.id === user.id && viewUser?.id !== teamOwner.id;
+	const isPossibleToDelete = teamOwner && authUser?.id === teamOwner.id && userToRemove?.id !== teamOwner.id;
 
 	return (
-		<Card>
-			<Card.Content header={t(title)} />
-			<Card.Meta>
+		<>
+			<div className={styles.sectionHeader}>
+				<h3 className={styles.header}>{t(title)} </h3>
 				<span className={styles.metaHeader}>
 					{teammates.length > 0 && title === 'members' && ` ${teammates.length}  ${t('members')}`}
 				</span>
-			</Card.Meta>
-			{teammates.length > 0 ? (
-				teammates.map((teammate) => (
-					<Card.Content key={teammate.id}>
-						<div
-							className={styles.cardBody}
-							onMouseEnter={() => onHover(teammate)}
-							onMouseLeave={(e) => hideModal(e)}
-						>
+			</div>
+			<div className={styles.card}>
+				{teammates.map((teammate, index) => (
+					<div
+						className={styles.cardWrapper}
+						key={index}
+						onMouseEnter={() => onHover(teammate)}
+						onMouseLeave={(e: React.BaseSyntheticEvent) => hideModal(e)}
+					>
+						<div className={styles.cardBody}>
 							<div className={styles.icon}>
 								<Link to={`/profile/${teammate.id}`}>
 									<Avatar
@@ -92,9 +85,11 @@ const TeamsMembersCard = ({ title, teamOwner, removeUserFromTeam, teammates = []
 								</Link>
 							</div>
 							<div className={styles.userInfo}>
-								<p> {fullUserName(teammate.firstName, teammate.lastName)}</p>
+								<p className={styles.firstName}>
+									{fullUserName(teammate.firstName, teammate.lastName)}
+								</p>
 								<p className={styles.metainfo}>{teammate.jobTitle}</p>
-								{showDeleteUserIcon(teammate) && (
+								{showDeleteButton && isPossibleToDelete && userToRemove?.id === teammate.id && (
 									<Icon
 										name="delete"
 										onClick={() => onDeleteUserClick(teammate)}
@@ -102,23 +97,18 @@ const TeamsMembersCard = ({ title, teamOwner, removeUserFromTeam, teammates = []
 									/>
 								)}
 							</div>
-							{removeUserModal && (
+							{removeUserModal && userToRemove && isPossibleToDelete && (
 								<RemoveUserModal
 									user={userToRemove}
 									confirm={removeUser}
 									setShowDelete={setRemoveUserModal}
 								/>
 							)}
-							{modal && viewUser?.id === teammate.id && (
-								<ModalViewProfile key={teammate.id} user={viewUser} onClose={hideModal} />
-							)}
 						</div>
-					</Card.Content>
-				))
-			) : (
-				<Card.Content className={styles.infoMessage}>{t('you_are_the_first')}</Card.Content>
-			)}
-		</Card>
+					</div>
+				))}
+			</div>
+		</>
 	);
 };
 

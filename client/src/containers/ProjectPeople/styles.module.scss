@@ -1,0 +1,99 @@
+@import 'styles/mixins.scss';
+@import 'styles/variables.scss';
+
+.header_inner__container {
+    padding: 10px 0px 20px ;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+}
+
+.header_inner__title {
+    font-size: 24px;
+    margin: 0;
+}
+
+.body_inner__container {
+    margin: 0 20%;
+}
+
+.body_inner__find {
+	@include input;
+	width: 243px !important;
+  
+	div:hover {
+	  background-color: none !important;
+	}
+  
+	& input {
+	  border-radius: 6px !important;
+	}
+}
+
+.body_inner__find,
+.modal__find {
+    width: 100%;
+}
+
+.table__header_cell {
+	background-color: #f9fafb !important;
+	border-left: none !important;
+}
+
+.user__username {
+	display: flex;
+	align-items: center;
+	width: 100%; 
+}
+
+.user__email {
+    width: 44%;
+}
+
+.user__action {
+    width: 84px;
+}
+
+.column__name, 
+.column__email {
+    width: 50%;
+}
+
+
+.imgWrapper {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	.content {
+		display: flex;
+		flex-direction: column;
+		.img {
+			width: 200px;
+			margin: 10px;
+		}
+		.text {
+			text-align: center;
+		}
+	}
+}
+
+.primary__button {
+	@include primary-btn
+}
+
+.secondary__button {
+	@include cancel-btn
+}
+
+.button__remove_action {
+	border: none !important;
+	box-shadow: none !important;
+	text-decoration: underline !important;
+	margin-right: 0 !important;
+	white-space: nowrap;
+	padding: 0 !important;
+
+	&:hover {
+		box-shadow: none !important;
+	}
+}

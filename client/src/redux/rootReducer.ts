@@ -1,3 +1,5 @@
+import { projectLabelReducer } from './../containers/ProjectLabels/logic/reducer';
+import { projectPeopleReducer } from './../containers/ProjectPeople/logic/reducer';
 import { projectCommonReducer } from 'components/ProjectsCommon/logic/reducer';
 import { projectReducer } from 'containers/ProjectSettings/logic/reducer';
 import { createProjectReducer } from 'containers/CreateProjectModal/logic/reducer';
@@ -18,12 +20,16 @@ import { boardReducer } from '../containers/Boards/logic/reducer';
 import { headerReducer } from '../containers/Header/logic/reducer';
 import { scrumBoardReducer } from 'containers/Board/Scrum/logic/reducer';
 import { notificationsReducer } from 'components/NotificationsMenu/logic/reducer';
+import { userActivityReducer } from 'containers/WorkPage/logic/reducer';
+import { boardColumnReducer } from 'containers/BoardColumn/logic/reducer';
 
 const rootReducer: Reducer<RootState> = combineReducers({
 	boards: boardReducer,
 	user: userProfileReducer,
 	projects: projectsReducer,
 	project: projectReducer,
+	projectLabel: projectLabelReducer,
+	projectPeople: projectPeopleReducer,
 	projectCommon: projectCommonReducer,
 	createProject: createProjectReducer,
 	auth: authReducer,
@@ -38,6 +44,8 @@ const rootReducer: Reducer<RootState> = combineReducers({
 	peoplePage: peoplePageReducer,
 	header: headerReducer,
 	notifications: notificationsReducer,
+	userActivity: userActivityReducer,
+	boardColumn: boardColumnReducer,
 });
 
 export default rootReducer;

@@ -14,7 +14,6 @@ export const boardReducer = createReducer<BoardsState>(initialState, {
 		return {
 			...state,
 			recentBoards: recentBoards.recentBoards,
-			isLoading: true,
 		};
 	},
 });

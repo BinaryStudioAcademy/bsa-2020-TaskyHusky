@@ -10,6 +10,8 @@ export class TeamRepository extends Repository<Team> {
 		return this.createQueryBuilder('teamRepository')
 			.innerJoin('teamRepository.createdBy', 'user')
 			.addSelect(['user.id', 'user.firstName', 'user.lastName', 'user.email', 'user.avatar', 'user.jobTitle'])
+			.innerJoin('teamRepository.users', 'userProfile')
+			.addSelect('userProfile.id')
 			.getMany();
 	}
 
@@ -73,7 +75,7 @@ export class TeamRepository extends Repository<Team> {
 		const userToAdd = await userRepository.getById(user.id);
 		if (!userToAdd) throw new Error('User with current ID not found');
 
-		return this.save({ ...restData, createdBy: userToAdd, color, links });
+		return this.save({ ...restData, createdBy: userToAdd, color, links, users: [userToAdd] });
 	}
 
 	async updateOneById(id: string, data: Team | { [key: string]: string[] }) {

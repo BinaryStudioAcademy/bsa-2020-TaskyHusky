@@ -1,7 +1,6 @@
 import React, { ReactElement } from 'react';
-import { Card } from 'semantic-ui-react';
 import UserAvatar from 'components/common/UserAvatar';
-import style from './style.module.scss';
+import styles from './style.module.scss';
 
 interface Props {
 	person: WebApi.Entities.UserProfile;
@@ -12,15 +11,18 @@ const PeopleListItem: React.FC<Props> = ({ person, handlerClick }): ReactElement
 	const { firstName, lastName, jobTitle } = person;
 	const fullname = () => `${firstName} ${lastName}`;
 	return (
-		<Card onClick={() => handlerClick && handlerClick()} className={style.card}>
-			<Card.Content>
-				<div className={style.avatarWrapper}>
+		<div onClick={() => handlerClick && handlerClick()} className={styles.card}>
+			<div className={styles.header}>
+				<div className={styles.avatarWrapper}>
 					<UserAvatar user={person} />
 				</div>
-				<Card.Header>{fullname()}</Card.Header>
-				<Card.Meta>{jobTitle}</Card.Meta>
-			</Card.Content>
-		</Card>
+				<div className={styles.headerContent}>
+					<p className={styles.name}>{fullname()}</p>
+					<p className={styles.title}>{jobTitle}</p>
+				</div>
+			</div>
+			<div className={styles.colorBlock} style={{ background: '#fece2f' }} />
+		</div>
 	);
 };
 

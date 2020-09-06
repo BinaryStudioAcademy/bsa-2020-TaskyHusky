@@ -8,20 +8,47 @@ export class Filter1597050608478 implements MigrationInterface {
 		const user1 = (await userRepository.getByEmail('test@test.com'))!;
 		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 		const user2 = (await userRepository.getByEmail('test1@test.com'))!;
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+		const user3 = (await userRepository.getByEmail('tzimbal.k@gmail.com'))!;
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+		const user4 = (await userRepository.getByEmail('karpenkodanylo@gmail.com'))!;
+
 		const filters = [
 			{
 				owner: user1,
 				name: 'In progress filter',
-				staredBy: [user1, user2],
+			},
+			{
+				owner: user1,
+				name: 'Filter name',
+			},
+			{
+				owner: user1,
+				name: 'Epic filter',
 			},
 			{
 				owner: user2,
 				name: 'Done issues filter',
-				staredBy: [user2],
 			},
 			{
 				owner: user2,
 				name: 'Custom Filter',
+			},
+			{
+				owner: user3,
+				name: 'Advanced filter',
+			},
+			{
+				owner: user3,
+				name: 'Filter for my issue',
+			},
+			{
+				owner: user4,
+				name: 'Danylo filter for my issue',
+			},
+			{
+				owner: user4,
+				name: 'My own filter',
 			},
 		];
 		await getRepository('Filter').save(filters);

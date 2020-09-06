@@ -3,18 +3,6 @@ import { CreateProjectsState, initialState } from './state';
 import { createReducer } from 'helpers/createReducer.helper';
 
 export const createProjectReducer = createReducer<CreateProjectsState>(initialState, {
-	[actionTypes.OPEN_MODAL](state) {
-		return {
-			...state,
-			isModalOpened: true,
-		};
-	},
-	[actionTypes.CLOSE_MODAL](state) {
-		return {
-			...state,
-			isModalOpened: false,
-		};
-	},
 	[actionTypes.START_CREATING_PROJECT](state) {
 		return {
 			...state,
@@ -25,7 +13,6 @@ export const createProjectReducer = createReducer<CreateProjectsState>(initialSt
 		return {
 			...state,
 			isLoading: false,
-			isModalOpened: false,
 			isProjectCreated: true,
 		};
 	},
@@ -48,8 +35,6 @@ export const createProjectReducer = createReducer<CreateProjectsState>(initialSt
 		};
 	},
 	[actionTypes.RESET_STATE]() {
-		return {
-			...initialState,
-		};
+		return { ...initialState };
 	},
 });

@@ -1,15 +1,49 @@
-.listContainer {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  grid-gap: 20px;
-}
+@import 'styles/mixins.scss';
 
 .main {
-  padding: 1rem
-  2rem;
+  width: 100%;
+  background-color: #f5f7f9;
 }
 
-.btnContainer {
+.container {
+  min-height: 100%;
+  overflow: hidden;
+  padding: 0 10% 25px;
+}
+
+.button {
+  margin-left: 20px !important;
+}
+
+.header {
+  @include primary-header;
+  color: #000000de !important;
+}
+
+.contentHeader {
+  @include info-block-header;
+  margin: 0 !important;
+}
+
+.mainHeader {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  padding: 25px 10% 17px;
+}
+
+@media screen and (max-width: $medium-screen) {
+
+  .mainHeader {
+    padding: 25px 8%;
+  }
+
+  .container {
+    padding: 0 8%;
+  }
+}
+
+@media screen and (max-width: $less-than-medium-screen) {
+  .mainHeader {
+    display: block;
+  }
 }

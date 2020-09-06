@@ -18,17 +18,15 @@ const HeaderCell = ({ name, sort }: HeaderCellI) => {
 					content={t(name)}
 					trigger={
 						<div style={{ paddingLeft: '6px' }}>
-							{name[0].toUpperCase()}
-							{sort[name] && (
-								<Icon size="small" name={sort[name] === 'DESC' ? 'arrow down' : 'arrow up'} />
-							)}
+							{t(name[0].toUpperCase())}
+							{sort[name] && <Icon name={sort[name] === 'DESC' ? 'caret down' : 'caret up'} />}
 						</div>
 					}
 				/>
 			) : (
 				<div>
 					{t(name)}
-					{sort[name] && <Icon size="small" name={sort[name] === 'DESC' ? 'arrow down' : 'arrow up'} />}
+					{sort[name] && <Icon name={sort[name] === 'DESC' ? 'caret down' : 'caret up'} />}
 				</div>
 			)}
 		</>

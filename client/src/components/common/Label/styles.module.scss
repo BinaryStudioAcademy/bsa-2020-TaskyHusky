@@ -1,0 +1,25 @@
+.wrapper {
+	display: block;
+	width: 240px;
+	margin-right: 10px;
+}
+
+.container {
+	border-radius: 3px;
+	padding: 5px 10px;
+	display: block;
+}
+
+
+.label {
+	display: block;
+	font-size: .92857143em;
+	white-space: nowrap;
+    font-weight: 700;
+	text-transform: none;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	word-wrap: none;
+}
+
+

@@ -6,13 +6,21 @@ import { useTranslation } from 'react-i18next';
 import styles from './styles.module.scss';
 interface Props {
 	currentIssueId: string;
-	onDelete: () => void;
-	onClose: () => void;
-	onOpen: () => void;
-	open: boolean;
+	onDelete?: () => void;
+	onClose?: () => void;
+	onOpen?: () => void;
+	open?: boolean;
+	children?: JSX.Element;
 }
 
-const DeleteIssueModal: React.FC<Props> = ({ open, onOpen, onClose, currentIssueId, onDelete }) => {
+const DeleteIssueModal: React.FC<Props> = ({
+	open,
+	onOpen = () => {},
+	onClose = () => {},
+	currentIssueId,
+	onDelete = () => {},
+	children,
+}) => {
 	const dispatch = useDispatch();
 	const { t } = useTranslation();
 
@@ -33,7 +41,8 @@ const DeleteIssueModal: React.FC<Props> = ({ open, onOpen, onClose, currentIssue
 			open={open}
 			onClose={onClose}
 			onOpen={onOpen}
-			trigger={<span className={styles.trigger}>{t('delete')}</span>}
+			trigger={children ?? <span className={styles.trigger}>{t('delete')}</span>}
+			dimmer="inverted"
 		>
 			<Modal.Header>{t('delete_issue')}</Modal.Header>
 			<Modal.Content>

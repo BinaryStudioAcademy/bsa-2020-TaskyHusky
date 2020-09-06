@@ -8,6 +8,7 @@ export const updateUsers = createAction<actionTypes.SuccessLoadingUsers>(actionT
 export const updateProjects = createAction<actionTypes.SuccessLoadingProjects>(
 	actionTypes.SUCCESS_TEAM_PROJECTS_LOADING,
 );
+export const updateIssues = createAction<actionTypes.SuccessLoadingIssues>(actionTypes.SUCCESS_TEAM_ISSUES_LOADING);
 
 export const failLoading = createAction(actionTypes.FAIL_LOADING);
 
@@ -34,7 +35,9 @@ export const addPeopleToTeamDone = createAction<actionTypes.successAddingUsers>(
 export const deletePeopleFromTeamLoading = createAction<actionTypes.DeletePeopleLoading>(
 	actionTypes.DELETE_PEOPLE_FROM_TEAM_LOADING,
 );
-export const deletePeopleFromTeamSuccess = createAction<actionTypes.successAddingUsers>(actionTypes.UPDATE_TEAM_USERS_SECCESS);
+export const deletePeopleFromTeamSuccess = createAction<actionTypes.successAddingUsers>(
+	actionTypes.UPDATE_TEAM_USERS_SECCESS,
+);
 
 export const deleteTeamLoading = createAction<actionTypes.DeleteTeamLoading>(actionTypes.DELETE_TEAM_LOADING);
 export const deleteTeamSuccess = createAction(actionTypes.DELETE_TEAM_SUCCESS);

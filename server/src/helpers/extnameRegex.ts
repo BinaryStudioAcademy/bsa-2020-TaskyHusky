@@ -1,3 +1,4 @@
 export const generateExtnameRegex = (extname: string): RegExp => {
-	return new RegExp(`^[^.]+.${extname}$`);
+	// eslint-disable-next-line no-useless-escape
+	return new RegExp(`^[^\.]+\.${extname}$`);
 };

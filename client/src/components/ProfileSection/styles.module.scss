@@ -1,19 +1,24 @@
 @import 'styles/mixins.scss';
 
 .mainInfo {
-  width: 70%;
   padding: 0 0 0 40px;
+  width: 75%;
 }
 
 .header {
   @include manager-header;
   margin: 0;
+  margin-bottom: 10px;
+}
+
+.firstHeader {
+  margin-top: -11px !important;
 }
 
 
 .headerSecondary {
   @include secondary-content;
-  color: $private-message;
+  color: $secondary-text;
   margin-bottom: 18px;
 }
 

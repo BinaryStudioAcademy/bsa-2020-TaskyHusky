@@ -1,7 +1,6 @@
-@import "styles/mixins.scss";
+@import 'styles/mixins.scss';
 
 .grid {
-	height: 100vh;
 	justify-content: center;
 }
 
@@ -12,8 +11,15 @@
 
 .column {
 	max-width: 450px;
+	padding: 0px !important;
+	margin: 14px !important;
 }
-
+.loginBody {
+	padding-left: 0 !important;
+	padding-right: 0 !important;
+	background-color: transparent !important;
+	color: $primary-bg !important;
+}
 .list {
 	display: flex !important;
 	justify-content: center;
@@ -23,10 +29,21 @@
 	font-size: 13px !important;
 }
 
-.continueButton {
-	width: 100%;
+.inputField {
+	margin-bottom: 30px !important;
 }
 
+.continueButton {
+	width: 100%;
+	background-color: $yellow !important;
+	color: #000000 !important;
+	&:hover {
+		box-shadow: 0 0 5px inset $primary-bg !important;
+	}
+}
+.divider {
+	color: $primary-bg !important;
+}
 .errorPopup {
 	@include error-popup;
 }
@@ -45,27 +62,33 @@
 	left: 0;
 	right: 0;
 }
+
 .google_btn {
+	color: $primary-bg;
 	display: flex;
 	width: 100%;
 	justify-content: center;
 	background-color: transparent;
-	border: 1px solid #ccc;
+	border: 1px solid rgb(124, 124, 124);
 	outline: none;
 	align-items: center;
 	border-radius: 5px;
 	cursor: pointer;
 	animation: all 1s;
+	padding: 4px 7px;
 	&:hover {
-		transition: background-color 0.5s;
-		background-color: rgb(247, 247, 247);
-		box-shadow: 0 0 2px #ccc, 0 0 13px inset #ffff;
+		transition: background-color 0.3s;
+		box-shadow: 0 0 1px rgb(199, 178, 122), 0 0 4px inset $yellow;
+		color: inherit;
+		border: 1px solid transparent;
 	}
+
 	.google_title {
 		font-weight: 500;
 		font-size: 1.2rem;
 		padding-left: 10px;
 	}
+
 	.google_logo {
 		width: 35px;
 	}

@@ -1,0 +1,36 @@
+@import 'styles/mixins.scss';
+
+.submitButton {
+  margin-top: 20px !important;
+  @include primary-btn;
+}
+
+.mainHeader {
+  @include primary-header;
+  text-align: center;
+}
+
+.grid {
+  height: 100vh;
+  justify-content: center;
+}
+
+.column {
+  max-width: 450px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.text {
+  @include text-data;
+}
+
+.email {
+  @include manager-header;
+}

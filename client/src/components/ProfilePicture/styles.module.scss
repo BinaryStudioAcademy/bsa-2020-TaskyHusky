@@ -1,14 +1,18 @@
 @import 'styles/mixins.scss';
 
 .mainInfo {
-  margin-bottom: 32px;
+  margin-bottom: 15px;
   text-align: center;
 }
 
-.managerButton {
+.managerBtn {
+  @include manager-btn;
+  width: 100% !important;
+}
+
+.button {
   width: 100%;
-  @include content-btn;
-  margin-bottom: 40px !important;
+  margin-bottom: 30px !important;
 }
 
 .hidden {
@@ -23,6 +27,7 @@
 
 .fullName {
   @include primary-header;
+  margin: 10px 0 !important;
 }
 
 .avatarContainer {
@@ -78,4 +83,9 @@
   &:hover {
     opacity: 0.6;
   }
+}
+
+.canvas {
+  width: 144px;
+  height: 144px;
 }

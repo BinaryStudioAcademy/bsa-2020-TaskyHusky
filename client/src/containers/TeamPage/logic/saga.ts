@@ -4,11 +4,12 @@ import {
 	updateLinks,
 	deleteOneLink,
 	getTeamsProjects,
+	getTeamsIssues,
 	getTeamsUsers,
 	findUsersColleagues,
 	addUsersToTeam,
 	deleteTeamRequest,
-	removeUserFromTeamRequest
+	removeUserFromTeamRequest,
 } from 'services/team.service';
 
 import { all, put, takeEvery, call } from 'redux-saga/effects';
@@ -29,24 +30,25 @@ type Props = {
 };
 
 type RemoveUserFromTeam = {
-	userId: string,
-	teamId: string,
-	type: string
-}
-
+	userId: string;
+	teamId: string;
+	type: string;
+};
 
 export function* fetchTeam(props: Props) {
 	try {
 		yield put(actions.spinner());
-		const [team, users, projects] = yield all([
+		const [team, users, projects, issues] = yield all([
 			yield call(getTeam, props.id),
 			yield call(getTeamsUsers, props.id),
 			yield call(getTeamsProjects, props.id),
+			yield call(getTeamsIssues, props.id),
 		]);
 		yield all([
 			put(actions.updateTeam({ team: team })),
 			put(actions.updateUsers({ users: users.users, createdBy: users.createdBy })),
 			put(actions.updateProjects({ projects: projects.projects })),
+			put(actions.updateIssues({ issues: issues })),
 		]);
 	} catch (error) {
 		yield put(actions.failLoading());
@@ -173,6 +175,6 @@ export default function* teamSaga() {
 		watchSearchPeopleLoading(),
 		watchAddPeopleToTeam(),
 		watchDeleteTeam(),
-		watchDeletePeopleFromTeam()
+		watchDeletePeopleFromTeam(),
 	]);
 }

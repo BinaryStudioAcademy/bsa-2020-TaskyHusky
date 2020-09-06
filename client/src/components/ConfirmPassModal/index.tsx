@@ -7,7 +7,7 @@ interface Props {
 	updatePassword: () => void;
 }
 
-const ConfirmPassModal: React.FC<Props> = (props) => {
+const ConfirmPassModal: React.FC<Props> = (props: Props) => {
 	const { updatePassword, onClose } = props;
 	const { t } = useTranslation();
 
@@ -17,14 +17,14 @@ const ConfirmPassModal: React.FC<Props> = (props) => {
 	};
 
 	return (
-		<Modal closeIcon onClose={() => onClose()} open={true} size={'tiny'} dimmer="inverted">
+		<Modal onClose={() => onClose()} open={true} size="tiny" dimmer="inverted">
 			<Modal.Header>{t('save_not_secure')}</Modal.Header>
 			<Modal.Content>{t('save_not_secure_text')}</Modal.Content>
 			<Modal.Actions>
-				<Button primary onClick={submitForm}>
+				<Button className="primaryBtn" onClick={submitForm}>
 					{t('save_changes')}
 				</Button>
-				<Button color="blue" basic onClick={onClose}>
+				<Button className="cancelBtn" color="blue" onClick={onClose}>
 					{t('cancel')}
 				</Button>
 			</Modal.Actions>

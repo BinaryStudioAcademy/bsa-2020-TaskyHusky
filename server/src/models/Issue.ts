@@ -7,7 +7,7 @@ export interface PartialIssue {
 	labels?: string[];
 	attachments?: string[];
 	links?: string[];
-	priority?: string;
+	priority?: number;
 	description?: string;
 	board?: string;
 	sprint?: string | null;
@@ -16,6 +16,7 @@ export interface PartialIssue {
 	assigned?: string;
 	creator?: string;
 	watchers?: string[];
+	storyPoint?: number;
 }
 
 export interface PartialIssueComment {

@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap');
-@import './variables.scss';
+@import './mixins.scss';
 
 body {
 	margin: 0;
@@ -20,13 +20,16 @@ label {
 	left: 5px;
 }
 
-.site-header > .menu > .item:not(.createMenuItem):not(.right):not(.site-logo) {
+.site-header-wrapper {
+	background-color: $header-text !important;
+}
+
+.site-header>.menu>.item:not(.createMenuItem):not(.right):not(.site-logo) {
 	border-radius: 1px !important;
 	background-color: inherit !important;
 	box-sizing: border-box;
 	font-weight: 700 !important;
 	font-size: 15px;
-	height: 20px;
 
 	* {
 		font-weight: 700;
@@ -44,23 +47,23 @@ label {
 	}
 
 	&:hover:not(.active) {
-		border-bottom: 2px solid #000000 !important;
+		border-bottom: 2px solid #fff;
 		@include onHover();
 	}
 }
 
-.site-header > .menu > .item.site-logo {
+.site-header>.menu>.item.site-logo {
 	.site-logo-text {
 		padding: 5px 10px;
 		border-radius: 2px;
 	}
 
-	&:hover > .site-logo-text {
-		background-color: rgba(0, 0, 0, 0.05) !important;
+	&:hover>.site-logo-text {
+		background: rgba(255, 255, 255, 0.1);
 	}
 }
 
-.site-header > .menu .dropdown.icon {
+.site-header>.menu .dropdown.icon {
 	position: relative;
 	top: 1px;
 	left: 5px;
@@ -86,10 +89,75 @@ label {
 	box-sizing: border-box;
 }
 
+#root {
+	max-height: 100vh;
+	overflow: hidden;
+}
+
 #root,
 .fill {
 	width: 100%;
 	height: 100%;
+}
+
+.cardContainer {
+	margin-top: 20px;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.contentBtn {
+	@include content-btn;
+}
+
+.primaryBtn {
+	@include primary-btn;
+}
+
+.cancelBtn {
+	@include cancel-btn;
+}
+
+.workBlock {
+	background-color: $primary-bg;
+	width: 100%;
+	margin-top: 32px;
+	padding: 20px;
+
+	div:first-of-type {
+		margin-top: 0;
+	}
+}
+
+.emptyCard {
+	margin: 5%;
+	display: flex;
+	width: 90%;
+	align-items: center;
+}
+
+.managerHeader {
+	@include manager-header;
+	margin: 0;
+}
+
+.standartInput {
+	@include input;
+}
+
+.sipleTab {
+	margin-top: 22px !important;
+	margin-bottom: 22px;
+}
+
+.bottomTab {
+	margin-bottom: 22px;
+}
+
+@media screen and (max-width: $less-than-medium-screen) {
+	.workBlock {
+		width: 100%;
+	}
 }
 
 @media only screen and (max-width: 767px) {

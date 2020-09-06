@@ -1,0 +1,89 @@
+@import 'styles/mixins.scss';
+
+.avatar {
+  min-width: 50px;
+  height: 50px;
+  background: #FF4C60;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  position: relative;
+}
+
+.avatarTitle {
+  font-family: Inter;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 25.6px;
+  line-height: 51px;
+  letter-spacing: 0.24px;
+  color: $primary-bg;
+  margin: 0;
+}
+
+.issue {
+  margin: 15px 0;
+  display: flex;
+  align-items: center;
+}
+
+.content {
+  width: 100%;
+  border-bottom: 1px solid $border;
+  padding-bottom: 5px;
+  margin-left: 30px;
+}
+
+.mainInfo {
+  display: flex;
+  align-items: center;
+}
+
+.key {
+  @include work-page-secondary;
+  margin-bottom: 0;
+  min-width: 60px;
+}
+
+.date {
+  @include secondary-content;
+  margin: 0;
+}
+
+.summary {
+  width: 70%;
+  margin-bottom: 0;
+  margin-left: 35px;
+  @include primary-content;
+}
+
+.icon {
+  margin-right: 29px !important;
+  margin-left: 30px !important;
+}
+
+@media screen and (max-width: $less-than-medium-screen) {
+  .hidden {
+    display: none;
+  }
+
+  .key {
+    min-width: 60px
+  }
+
+  .avatar {
+    margin-right: 10px;
+  }
+}
+
+@media screen and (max-width: $mobile-screen) {
+  .mainInfo {
+    flex-wrap: wrap;
+  }
+
+  .summary {
+    min-width: 100%;
+    margin-left: 0;
+  }
+}
