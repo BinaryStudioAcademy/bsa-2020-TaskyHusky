@@ -13,10 +13,10 @@
 }
 
 .content_flow {
-	overflow: auto;
 	min-height: calc(100vh - 70px);
 }
 
 .content_flow__hidden {
 	overflow: hidden;
+	min-height: calc(100vh - 61px);
 }

@@ -172,12 +172,12 @@
 }
 
 @mixin manager-header {
-	font-family: Poppins, sans-serif;
-	font-style: normal;
-	font-weight: 600;
-	font-size: 16px;
-	line-height: 36px;
-	color: $header-text;
+	font-family: Poppins, sans-serif !important;
+	font-style: normal !important;
+	font-weight: 600 !important;
+	font-size: 16px !important;
+	line-height: 36px !important;
+	color: $header-text !important;
 }
 
 @mixin card-container {
@@ -202,7 +202,7 @@
 		@include text-data;
 	}
 
-	& > div:last-child {
+	&>div:last-child {
 		border: 1px solid $yellow !important;
 		border-top: none;
 	}
@@ -221,11 +221,21 @@
 	outline: none !important;
 	cursor: text;
 
-	& input {
+	& input,
+	& textarea {
 		@include text-data;
 
 		&:focus {
 			border: 1px solid $yellow !important;
 		}
 	}
+}
+
+@mixin label {
+	font-family: Poppins, sans-serif !important;
+	font-style: normal !important;
+	font-weight: 600 !important;
+	font-size: 14px !important;
+	color: $primary-text !important;
+	position: static !important;
 }

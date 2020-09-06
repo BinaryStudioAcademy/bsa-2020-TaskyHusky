@@ -145,6 +145,28 @@ label {
 	@include input;
 }
 
+.standartSelect {
+	@include dropdown;
+}
+
+.formSelect {
+	&>div {
+		@include dropdown;
+	}
+}
+
+.textData {
+	@include text-data
+}
+
+.standartLabel {
+	@include label;
+}
+
+.standartHeader {
+	@include primary-header;
+}
+
 .sipleTab {
 	margin-top: 22px !important;
 	margin-bottom: 22px;

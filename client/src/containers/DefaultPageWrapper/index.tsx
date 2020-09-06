@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import classNames from 'classnames';
 import Header from '../Header';
 import { useDispatch } from 'react-redux';
 import { loadTypes, loadPriorities, loadStatuses } from 'pages/IssuePage/logic/actions';
@@ -44,11 +43,7 @@ const DefaultPageWrapper: React.FC<Props> = ({ children, isOverflowHidden = fals
 			) : (
 				<Container className={styles.container + ' fill'}>
 					<Header />
-					<div
-						className={classNames(styles.content_flow, {
-							[styles.content_flow__hidden]: isOverflowHidden,
-						})}
-					>
+					<div className={isOverflowHidden ? styles.content_flow__hidden : styles.content_flow}>
 						{children}
 					</div>
 				</Container>

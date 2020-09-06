@@ -73,31 +73,33 @@ const Body: React.FC<Props> = ({ boardId, children, onClose = () => {} }) => {
 			size="tiny"
 			open={isModalOpened}
 		>
-			<Modal.Header>{t('create_column')}</Modal.Header>
+			<Modal.Header className="standartHeader">{t('create_column')}</Modal.Header>
 			<Modal.Content scrolling>
 				<Form as="div">
 					<Form.Field>
-						<label className="required">{t('status')}</label>
+						<label className="required standartLabel">{t('status')}</label>
 						<Form.Select
 							placeholder={t('status')}
 							options={statusOpts}
+							className="formSelect"
 							fluid
 							value={context.data.status}
 							onChange={(event, data) => context.set('status', data.value)}
 						/>
 					</Form.Field>
 					<Form.Field>
-						<label className="required">{t('name')}</label>
+						<label className="required standartLabel">{t('name')}</label>
 						<Form.Input
 							placeholder={t('name')}
 							fluid
 							icon="users"
+							className="standartInput"
 							value={context.data.columnName}
 							onChange={(event, data) => context.set('columnName', data.value)}
 						/>
 					</Form.Field>
 					<Form.Field>
-						<label className="required">{t('is_resolution_set')}</label>
+						<label className="required standartLabel">{t('is_resolution_set')}</label>
 						<Form.Checkbox
 							onChange={(event, data) => context.set('isResolutionSet', data.checked)}
 							toggle

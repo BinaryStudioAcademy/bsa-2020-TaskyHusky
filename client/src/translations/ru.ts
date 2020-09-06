@@ -345,9 +345,8 @@ export const ru = {
 	info: 'Информация',
 	search_people_page_placeholder: 'Поиск пользователей и команд',
 	create_team: 'Создать команду',
-	add_people_text:
-		'Хотел бы видеть кого то из ресурса gmail.com? Напишите его электронную почту нижу – и, если у нас получится, мы отправим ему письмо с приглашением от Вас',
-	add_people_email_placeholder: 'Введите электронный адрес gmail.com',
+	add_people_text: 'Хотел бы видеть кого то? Напишите его электронную почту ниже.',
+	add_people_email_placeholder: 'Введите электронный адрес',
 	send: 'Отправить',
 	create_team_modal_header: 'Создать новую команду',
 	create_team_modal_text:

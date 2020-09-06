@@ -5,13 +5,14 @@ import { DragDropContext, OnDragEndResponder } from 'react-beautiful-dnd';
 import styles from './styles.module.scss';
 import { extractIdFormDragDropId } from 'helpers/extractId.helper';
 import { getByKey, updateIssueByKey } from 'services/issue.service';
-import { Header, Form, Button, Breadcrumb, Segment, Icon } from 'semantic-ui-react';
+import { Form, Button, Breadcrumb, Segment, Icon } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 import { convertIssueResultToPartialIssue } from 'helpers/issueResultToPartialIssue';
 import CreateColumnModal from 'containers/CreateColumnModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'typings/rootState';
 import { setColumnCreated } from 'containers/BoardColumn/logic/actions';
+import ProfileHeader from 'components/ProfileHeader';
 
 const Kanban: BoardComponent = ({ board }) => {
 	const [search, setSearch] = useState<string>('');
@@ -54,28 +55,32 @@ const Kanban: BoardComponent = ({ board }) => {
 
 	return (
 		<div className={styles.wrapper}>
-			<Breadcrumb style={{ marginBottom: 20 }}>
-				<Breadcrumb.Section href="/projects">{t('projects')}</Breadcrumb.Section>
-				<Breadcrumb.Divider>&nbsp;/&nbsp;</Breadcrumb.Divider>
-				<Breadcrumb.Section href={`/project/${(board.projects ?? [])[0].id}/issues`}>
-					{(board.projects ?? [])[0].name}
-				</Breadcrumb.Section>
-				<Breadcrumb.Divider>&nbsp;/&nbsp;</Breadcrumb.Divider>
-				<Breadcrumb.Section active>{board.name}</Breadcrumb.Section>
-			</Breadcrumb>
-			<div className={styles.inlineContainer}>
-				<Header as="h2">{board.name}</Header>
-				<Form.Input
-					placeholder={t('search')}
-					icon="search"
-					value={search}
-					onChange={(event, data) => setSearch(data.value)}
-					style={{ marginRight: 60, maxWidth: 250 }}
-				/>
-				<Button onClick={() => setSearch('')} className="cancelBtn" compact>
-					{t('clear')}
-				</Button>
-				<a href={`/board/${board.id}/columnsSettings`}>{t('go_to_columns_settings')}</a>
+			<ProfileHeader title={board.name} />
+			<div className={styles.headerWrapper}>
+				<Breadcrumb className={styles.breadcrumb}>
+					<Breadcrumb.Section href="/projects">{t('projects')}</Breadcrumb.Section>
+					<Breadcrumb.Divider>&nbsp;/&nbsp;</Breadcrumb.Divider>
+					<Breadcrumb.Section href={`/project/${(board.projects ?? [])[0].id}/issues`}>
+						{(board.projects ?? [])[0].name}
+					</Breadcrumb.Section>
+					<Breadcrumb.Divider>&nbsp;/&nbsp;</Breadcrumb.Divider>
+					<Breadcrumb.Section active className={styles.active}>
+						{board.name}
+					</Breadcrumb.Section>
+				</Breadcrumb>
+				<div className={styles.inlineContainer}>
+					<Form.Input
+						placeholder={t('search')}
+						icon="search"
+						value={search}
+						onChange={(event, data) => setSearch(data.value)}
+						className={styles.searchInput}
+					/>
+					<Button onClick={() => setSearch('')} className={styles.cancelBtn}>
+						{t('clear')}
+					</Button>
+					<a href={`/board/${board.id}/columnsSettings`}>{t('go_to_columns_settings')}</a>
+				</div>
 			</div>
 			<DragDropContext onDragEnd={onDragEnd}>
 				<div className={styles.columnsFlex}>
@@ -89,7 +94,7 @@ const Kanban: BoardComponent = ({ board }) => {
 						/>
 					))}
 					<CreateColumnModal boardId={board.id}>
-						<Segment className={`${styles.column} contentBtn`} style={{ position: 'relative', top: -14 }}>
+						<Segment className={styles.contentBtn}>
 							<Icon name="plus" />
 							{t('create_column')}
 						</Segment>
