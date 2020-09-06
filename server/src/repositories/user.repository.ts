@@ -73,7 +73,7 @@ export class UserRepository extends Repository<UserProfile> {
 		const user = await this.createQueryBuilder('user')
 			.where('user.id = :id', { id })
 			.leftJoin('user.watchingIssues', 'issue')
-			.addSelect(['issue.id', 'issue.issueKey', 'issue.summary', 'issue.updatedAt', 'issue.priority'])
+			.addSelect(['issue.id', 'issue.issueKey', 'issue.summary', 'issue.updatedAt'])
 			.leftJoinAndSelect('issue.type', 'issueType')
 			.leftJoinAndSelect('issue.priority', 'priority')
 			.leftJoin('issue.project', 'project')
@@ -146,8 +146,6 @@ export class UserRepository extends Repository<UserProfile> {
 	}
 
 	async getUserTeammates(userId: string) {
-		console.log(userId);
-
 		return this.findOne({
 			where: { id: userId },
 			relations: ['teammates'],

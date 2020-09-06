@@ -78,7 +78,6 @@ export const ru = {
 	members: 'Участники',
 	members_lower: 'участников',
 	worked_on: 'Работали над',
-	no_works: 'Здесь еще не работ',
 	kanban_description:
 		'Мониторинг работы в непрерывном потоке для aglie-команд ◦ Подходит командам, которые контролируют объем работы в бэклоге',
 	scrum_description:
@@ -168,7 +167,7 @@ export const ru = {
 	work_with: 'Коллеги',
 	alt_user_experience: 'Здесь никого нет',
 	no_people: 'Здесь никого нет',
-	content_no_people: 'Здесь указаны люди, с которыми вы работали в течение последних 90 дней.',
+	content_no_people: 'Здесь указаны люди, с которыми вы работали.',
 	start_team: 'Создать команду...',
 	change_pass: 'Изменить пароль',
 	pass_error_length: 'Пароль должен быть длинее чем 6 символов',
@@ -271,7 +270,7 @@ export const ru = {
 	watching: 'Отслеживается',
 	not_watching: 'Не отслеживается',
 	add: 'Добавить',
-	search_name_email: 'Поиск по имени или email адресу',
+	search_name_email: 'Поиск по имени или email...',
 	sorry_alert: undefined,
 	not_suported_push_alert: 'Ваш браузер не поддерживает push-уведомления.',
 	denied_push_alert: 'Разрешение на push-уведомления не предоставлено.',
@@ -316,8 +315,6 @@ export const ru = {
 	link_to: 'Ссылка на',
 	will_be_deleted_from_section: 'будет удалена из раздела материалов команды',
 	project_key: 'Идентификатор проекта',
-	there_are_no_projects_which_have_been_started_yet:
-		'У вас еще нет проектов, которые были начаты. Когда это произойдет, вы сможете быстро получить доступ к нужной Вам работе',
 	team_owner: 'Создатель команды',
 	add_label: 'Добавить ярлык',
 	label_text: 'Текст ярлыка',
@@ -450,4 +447,7 @@ export const ru = {
 	are_you_sure: 'Вы уверены?',
 	are_you_sure_delete_column: 'Вы уверены, что хотите удалить эту колонку?',
 	go_to_columns_settings: 'Перейти в настройки колонок',
+	remove_user_from_project: 'Удалить c проекта',
+	team_header: 'Команда',
+	my_team: 'Моя команда',
 };

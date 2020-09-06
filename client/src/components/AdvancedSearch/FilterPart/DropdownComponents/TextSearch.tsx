@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
-import { Input, Dropdown, Button, InputOnChangeData } from 'semantic-ui-react';
-import styles from './styles.module.scss';
+import React, { useState, createRef, useEffect } from 'react';
+import { Input, InputOnChangeData } from 'semantic-ui-react';
+import styles from './textSearch.module.scss';
 import { useDispatch } from 'react-redux';
 import { FilterPartState } from 'containers/AdvancedSearch/logic/state';
 import { updateFilterPart } from 'containers/AdvancedSearch/logic/actions';
-import { useTranslation } from 'react-i18next';
 
 interface DropdownTextSearchProps {
 	filterPart: FilterPartState;
@@ -13,58 +12,81 @@ interface DropdownTextSearchProps {
 const DropdownTextSearch = ({ filterPart }: DropdownTextSearchProps) => {
 	const dispatch = useDispatch();
 	const { filterDef, searchText: text } = filterPart;
+
+	const inputRef = createRef() as any;
+
+	const handleClick = () => inputRef.current.focus();
+
 	const { title } = filterDef;
-	const { t } = useTranslation();
+	const searchPrefix = `${title}: `;
+
+	const formSearchPlaceholder = (): string => {
+		return !!searchText ? `${searchPrefix}"${searchText}"` : `${searchPrefix}All`;
+	};
 
 	const [searchText, setSearchText] = useState(text);
+	const [searchPlaceholder, setSearchPlaceholder] = useState(formSearchPlaceholder());
 
-	const formDropdownTitle = (): string => {
-		return !!searchText ? `${title}: ${searchText}` : title;
-	};
-
-	const [dropdownTitle, setDropdownTitle] = useState(formDropdownTitle());
-
-	const onUpdate = (e: React.SyntheticEvent) => {
+	const [focused, setFocused] = useState(false);
+	const [hovered, setHovered] = useState(false);
+	useEffect(() => {
+		if (focused) {
+			handleClick();
+		}
+	});
+	const onUpdate = () => {
 		filterPart.searchText = searchText;
 		dispatch(updateFilterPart({ filterPart }));
-		setDropdownTitle(`${title}: ${searchText}`);
 	};
 
-	const onCancel = (e: React.SyntheticEvent) => {
-		filterPart.searchText = '';
-		dispatch(updateFilterPart({ filterPart }));
-		setDropdownTitle(title);
-	};
-
-	const getInputPlaceholder = (title: string) => {
-		return `${t('find_by')} ${t(title)}`;
+	const formPlaceholder = (text: string): string => {
+		return !!text ? `${searchPrefix}"${text}"` : `${searchPrefix}All`;
 	};
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>, data: InputOnChangeData) => {
 		const { value } = data;
+
 		setSearchText(value);
+		setSearchPlaceholder(formPlaceholder(value));
+	};
+
+	const handleBlur = () => {
+		onUpdate();
+		setFocused(false);
+	};
+
+	const getStyleName = () => {
+		return hovered && !focused ? styles.container_hovered : focused ? styles.container_focused : styles.container;
 	};
 
 	return (
-		<Dropdown closeOnChange={false} trigger={<span>{t(dropdownTitle)}</span>} icon="angle down" floating labeled>
-			<Dropdown.Menu onClick={(e: Event) => e.stopPropagation()}>
+		<div
+			className={getStyleName()}
+			onClick={() => {
+				setFocused(true);
+			}}
+			onMouseEnter={() => setHovered(true)}
+			onMouseLeave={() => setHovered(false)}
+		>
+			{focused ? (
 				<Input
+					ref={inputRef}
+					className={styles.seachInput_focused}
+					onKeyPress={(e: any) => {
+						if (e.key === 'Enter') {
+							handleBlur();
+						}
+					}}
+					onBlur={handleBlur}
 					value={searchText}
 					onChange={handleChange}
-					placeholder={getInputPlaceholder(title)}
+					placeholder={'Search by Comment'}
 					icon={null}
-					className={styles.textSearch}
 				/>
-				<div className={styles.dropdownBtns}>
-					<Button compact onClick={onUpdate}>
-						{t('update')}
-					</Button>
-					<Button compact onClick={onCancel} as="a">
-						{t('cancel')}
-					</Button>
-				</div>
-			</Dropdown.Menu>
-		</Dropdown>
+			) : (
+				<span className={styles.textPlaceholder}>{searchPlaceholder}</span>
+			)}
+		</div>
 	);
 };
 

@@ -1,5 +1,4 @@
 import AssignedFilter from './AssignedFilter';
-import CommentFilter from './CommentFilter';
 import CreatorFilter from './CreatorFilter';
 import DescriptionFilter from './DescriptionFilter';
 import IssueStatusFilter from './IssueStatusFilter';
@@ -10,7 +9,6 @@ import SummaryFilter from './SummaryFilter';
 
 export {
 	AssignedFilter,
-	CommentFilter,
 	CreatorFilter,
 	DescriptionFilter,
 	IssueStatusFilter,

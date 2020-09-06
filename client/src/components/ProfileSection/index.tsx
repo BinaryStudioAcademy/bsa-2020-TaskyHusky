@@ -32,17 +32,25 @@ const ProfileSection: React.FC<Props> = (props: Props) => {
 
 	return (
 		<section className={styles.mainInfo}>
-			<h3 className={styles.header}>{t('worked_on')}</h3>
+			{(Boolean(activity.length) || !projects.length) && (
+				<h3 className={`${styles.header} ${styles.firstHeader}`}>{t('worked_on')}</h3>
+			)}
 			<ProfileActivityBlock
 				data={activity}
 				countItem={countActivity}
 				emptyContent={emptyActivityCard}
+				showEmpty={!projects.length}
 				component={IssueActivityItem}
 			/>
 			{Boolean(projects.length) && (
 				<>
 					<h3 className={styles.header}>{t('work_places')}</h3>
-					<ProfileActivityBlock data={projects} countItem={countProject} component={UserActivityItem} />
+					<ProfileActivityBlock
+						data={projects}
+						countItem={countProject}
+						showEmpty={false}
+						component={UserActivityItem}
+					/>
 				</>
 			)}
 			<h3 className={styles.header}>{t('work_with')}</h3>
@@ -51,6 +59,7 @@ const ProfileSection: React.FC<Props> = (props: Props) => {
 				countItem={countColleagues}
 				emptyContent={emptyColleaguesCard}
 				component={UserActivityItem}
+				showEmpty={true}
 			/>
 		</section>
 	);

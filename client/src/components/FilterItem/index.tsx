@@ -7,6 +7,7 @@ import Options, { ConfigItem } from 'components/common/Options';
 import { Link, useHistory } from 'react-router-dom';
 import { RootState } from 'typings/rootState';
 import { useSelector } from 'react-redux';
+import DeleteFilterModal from 'components/DeleteFilterModal';
 
 interface Props {
 	filter: WebApi.Entities.Filter;
@@ -14,13 +15,12 @@ interface Props {
 	fullName: string;
 }
 
-const FilterItem: React.FC<Props> = (props: Props) => {
+const FilterItem: React.FC<Props> = ({ filter, fullName, updateFilter }: Props) => {
 	const { t } = useTranslation();
 	const history = useHistory();
+	const [filterToDelete, setFilterToDelete] = useState<WebApi.Entities.Filter | null>(null);
 
 	const { user } = useSelector((rootState: RootState) => rootState.auth);
-	const { filter, fullName, updateFilter } = props;
-
 	const { id, name, owner, staredBy } = filter;
 
 	const [sratedByCount, setSratedByCount] = useState<number>(staredBy?.length || 0);
@@ -39,6 +39,12 @@ const FilterItem: React.FC<Props> = (props: Props) => {
 		setSratedByCount(sratedByCount + inc);
 	};
 
+	const getDeleteAction = (filter: WebApi.Entities.Filter) => {
+		return () => {
+			setFilterToDelete(filter);
+		};
+	};
+
 	const config: ConfigItem[] = [
 		{
 			id,
@@ -50,42 +56,45 @@ const FilterItem: React.FC<Props> = (props: Props) => {
 		{
 			id,
 			text: 'Delete filter',
-			onClickAction: () => {
-				// will be handled in a separate task
-				console.log('handle deletion');
-			},
+			onClickAction: getDeleteAction(filter),
 		},
 	];
 
 	return (
-		<Table.Row key={id}>
-			<Table.Cell
-				className={styles.starCell}
-				children={<Rating onRate={onSetFavorite} icon="star" defaultRating={isStared ? 1 : 0} maxRating={1} />}
-			/>
-			<Table.Cell className={styles.filterNameCell} children={<a href={`/advancedSearch/${id}`}>{name}</a>} />
-			<Table.Cell
-				className={styles.userCell}
-				children={
-					<>
-						<UserAvatar user={owner as WebApi.Entities.UserProfile} small />
-						<Link to={`/profile/${owner?.id}`}>{fullName}</Link>
-					</>
-				}
-			/>
-			<Table.Cell
-				className={styles.favoriteCell}
-				children={
-					<>
-						{sratedByCount} {sratedByCount === 1 ? t('person') : t('people_rating')}
-					</>
-				}
-			/>
-			<Table.Cell
-				className={styles.optionsCell}
-				children={<Options config={config} isBackgroundShown={false} />}
-			/>
-		</Table.Row>
+		<>
+			{filterToDelete && <DeleteFilterModal filter={filterToDelete} onClose={() => setFilterToDelete(null)} />}
+
+			<Table.Row key={id}>
+				<Table.Cell
+					className={styles.starCell}
+					children={
+						<Rating onRate={onSetFavorite} icon="star" defaultRating={isStared ? 1 : 0} maxRating={1} />
+					}
+				/>
+				<Table.Cell className={styles.filterNameCell} children={<a href={`/advancedSearch/${id}`}>{name}</a>} />
+				<Table.Cell
+					className={styles.userCell}
+					children={
+						<>
+							<UserAvatar user={owner as WebApi.Entities.UserProfile} small />
+							<Link to={`/profile/${owner?.id}`}>{fullName}</Link>
+						</>
+					}
+				/>
+				<Table.Cell
+					className={styles.favoriteCell}
+					children={
+						<>
+							{sratedByCount} {sratedByCount === 1 ? t('person') : t('people_rating')}
+						</>
+					}
+				/>
+				<Table.Cell
+					className={styles.optionsCell}
+					children={<Options config={config} isBackgroundShown={false} />}
+				/>
+			</Table.Row>
+		</>
 	);
 };
 

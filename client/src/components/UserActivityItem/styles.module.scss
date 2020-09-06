@@ -27,11 +27,17 @@
   font-size: 25.6px;
   line-height: 51px;
   letter-spacing: 0.24px;
-  color: #FFFFFF;
+  color: $primary-bg;
 }
 
 .icon {
   margin-right: 14px;
+}
+
+.img {
+  object-fit: cover;
+  width: 100%;
+  border-radius: 50%;
 }
 
 .content {

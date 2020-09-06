@@ -1,4 +1,5 @@
 @import 'styles/mixins.scss';
+@import 'styles/variables.scss';
 
 .header_inner__container {
     padding: 10px 0px 20px ;
@@ -14,6 +15,19 @@
 
 .body_inner__container {
     margin: 0 20%;
+}
+
+.body_inner__find {
+	@include input;
+	width: 243px !important;
+  
+	div:hover {
+	  background-color: none !important;
+	}
+  
+	& input {
+	  border-radius: 6px !important;
+	}
 }
 
 .body_inner__find,
@@ -42,7 +56,7 @@
 
 .column__name, 
 .column__email {
-    width: 40%;
+    width: 50%;
 }
 
 
@@ -69,4 +83,17 @@
 
 .secondary__button {
 	@include cancel-btn
+}
+
+.button__remove_action {
+	border: none !important;
+	box-shadow: none !important;
+	text-decoration: underline !important;
+	margin-right: 0 !important;
+	white-space: nowrap;
+	padding: 0 !important;
+
+	&:hover {
+		box-shadow: none !important;
+	}
 }

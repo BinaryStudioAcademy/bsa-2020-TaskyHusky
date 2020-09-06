@@ -25,4 +25,19 @@ export const filtersReducer = createReducer<FilterState>(initialState, {
 			isLoading: true,
 		};
 	},
+	[actionTypes.DELETE_FILTER](state) {
+		return {
+			...state,
+			isLoading: true,
+		};
+	},
+	[actionTypes.DELETE_FILTER_SUCCESS](state, action: actionTypes.DeleteFilterArgs) {
+		const { filters } = state;
+		const updatedFilters = filters.filter(({ id }) => id !== action.id);
+		return {
+			...state,
+			isLoading: false,
+			filters: updatedFilters,
+		};
+	},
 });

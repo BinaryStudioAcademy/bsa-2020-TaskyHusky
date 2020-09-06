@@ -30,3 +30,7 @@
 .text {
   @include text-data;
 }
+
+.email {
+  @include manager-header;
+}

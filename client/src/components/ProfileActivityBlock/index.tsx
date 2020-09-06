@@ -12,10 +12,12 @@ interface Props {
 		title: string;
 		content: string;
 	};
+	props?: any;
+	showEmpty: boolean;
 }
 
 const ProfileActivityBlock: React.FC<Props> = (props: Props) => {
-	const { data, countItem, emptyContent, component: Component } = props;
+	const { data, countItem, emptyContent, component: Component, showEmpty } = props;
 	const { t } = useTranslation();
 	const [activeIndex, setActiveIndex] = useState<number>(0);
 	const [showHidden, setShowHidden] = useState<boolean>(false);
@@ -33,7 +35,7 @@ const ProfileActivityBlock: React.FC<Props> = (props: Props) => {
 					<Accordion>
 						{data.map(
 							(item: any, index: number) =>
-								index <= countItem - 1 && <Component item={item} key={item.id} />,
+								index <= countItem - 1 && <Component item={item} key={item.id} props={props} />,
 						)}
 						{data.length > countItem && (
 							<>
@@ -54,8 +56,9 @@ const ProfileActivityBlock: React.FC<Props> = (props: Props) => {
 						)}
 					</Accordion>
 				) : (
+					showEmpty &&
 					emptyContent && (
-						<div className={styles.emptyCard}>
+						<div className="emptyCard">
 							<img className={styles.image} src={emptyContent.img} alt="icon" />
 							<div>
 								<h3 className={styles.title}>{t(emptyContent.title)}</h3>

@@ -1,0 +1,95 @@
+@import 'styles/mixins.scss';
+
+.card {
+  background-color: $primary-bg;
+  box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.25);
+  margin-bottom: 22px;
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+  position: relative;
+}
+
+.inputArea {
+  min-width: 100%;
+  min-height: 100px;
+  resize: none;
+  padding: 6px;
+  @include text-data;
+  border-radius: 6px !important;
+  border: 1px solid transparent;
+
+  &:focus {
+    outline: none;
+    border-radius: 6px;
+    border: 1px solid $yellow;
+  }
+}
+
+.btnContainer {
+  width: 100%;
+  display: flex;
+  margin-top: 10px;
+  flex-direction: row;
+}
+
+.inputNoneBorders {
+  background-color: $primary-bg;
+  border: none !important;
+  outline: none !important;
+}
+
+.inputBorders {
+  border-color: $border;
+  border-radius: 6px;
+  background-color: $primary-bg;
+
+  &:focus {
+    outline: none;
+    border: 1px solid $yellow;
+  }
+}
+
+.inputFocus {
+  width: calc(100% - 30px);
+  box-sizing: border-box;
+  @include manager-header;
+  font-size: 22px !important;
+  background-color: $primary-bg;
+  border: none;
+  padding: 0;
+  margin-bottom: 5px;
+}
+
+.cancelBtn {
+  @include manager-btn;
+  min-width: 50%;
+  border-radius: 0 !important;
+  margin: 0 !important;
+  padding: 0;
+}
+
+.addPeople {
+  @include primary-btn;
+  min-width: 50%;
+  border-radius: 0 !important;
+  margin: 0 !important;
+  padding: 0;
+}
+
+.editFieldBtn {
+  @include manager-btn;
+  border-radius: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  min-width: 50%;
+  width: 100%;
+}
+
+.deleteBtn {
+  @include cancel-btn;
+  min-width: 50%;
+  border-radius: 0 !important;
+  margin: 0 !important;
+  padding: 0;
+}

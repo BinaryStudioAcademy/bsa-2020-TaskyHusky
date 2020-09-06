@@ -48,7 +48,7 @@ export const ua = {
 	create_issue: 'Створити задачу',
 	type: 'Тип',
 	priority: 'Приоритет',
-	summary: 'Назва',
+	summary: 'Сумарно',
 	labels: 'Мітки',
 	links: 'Посилання',
 	attachments: 'Файли',
@@ -78,7 +78,6 @@ export const ua = {
 	members_lower: 'учасників',
 	people_and_teams: 'Люди и команди',
 	worked_on: 'Виконувалася робота',
-	no_works: 'Тут ще нема робіт',
 	kanban_description:
 		'Моніторинг роботи в безперервному потоці для aglie-команд ◦ Підходить командам, які контролюють обсяг роботи в backlog',
 	scrum_description:
@@ -168,7 +167,7 @@ export const ua = {
 	work_with: 'Колеги',
 	alt_user_experience: 'Немає людей для відображення',
 	no_people: 'Немає людей для відображення',
-	content_no_people: 'Тут будуть відображатися люди, з якими ви працювали протягом останніх 90 днів.',
+	content_no_people: 'Тут будуть відображатися люди, з якими ви працювали.',
 	start_team: 'Створити команду...',
 	change_pass: 'Змінити пароль',
 	pass_error_length: 'Пароль має бути довшим за 6 символів',
@@ -270,7 +269,7 @@ export const ua = {
 	watching: 'Відстежуєтся',
 	not_watching: 'Не відстежуєтся',
 	add: 'Додати',
-	search_name_email: 'Пошук по імені або email адресою',
+	search_name_email: 'Пошук по імені або email...',
 	send_confirm_link: 'Відправити посилання для підтвердження e-mail',
 	confirm_email_change: 'Підтвердіть змінення email',
 	type_pass_confirm_email: 'Введіть пароль для підтвердження зміни email',
@@ -309,8 +308,6 @@ export const ua = {
 	link_to: 'Посилання на',
 	will_be_deleted_from_section: 'буде видалено з розділу посилань на матеріали команди',
 	project_key: 'Ідентифікатор проекту',
-	there_are_no_projects_which_have_been_started_yet:
-		'У вас ще немає проектів, які були розпочаті. Коли це станеться, ви зможете швидко отримати доступ до потрібної Вам роботи',
 	add_label: 'Додати мітку',
 	label_text: 'Текст мітки',
 	label_pick_color: 'Підберіть колір',
@@ -442,4 +439,7 @@ export const ua = {
 	are_you_sure: 'Ви впевнені?',
 	are_you_sure_delete_column: 'Ви впевнені, що хочете видалити цю колонку?',
 	go_to_columns_settings: 'Перейти до налаштувань колонок',
+	remove_user_from_project: 'Видалити з проекту',
+	team_header: 'Команда',
+	my_team: 'Моя команда',
 };

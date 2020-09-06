@@ -5,6 +5,7 @@ interface Props {
 	projects: Array<{
 		name: string;
 		id: string;
+		avatar?: string;
 		category?: string;
 		updatedDate?: Date;
 		issues?: Partial<WebApi.Entities.Issue>[];
@@ -19,7 +20,13 @@ const WorkProjectBlock: React.FC<Props> = (props: Props) => {
 			{projects.map(
 				(item, index) =>
 					index < stopLoad && (
-						<ProjectCard key={item.id} name={item.name} category={item.category} issues={item.issues} />
+						<ProjectCard
+							key={item.id}
+							name={item.name}
+							category={item.category}
+							issues={item.issues}
+							avatar={item.avatar}
+						/>
 					),
 			)}
 		</div>

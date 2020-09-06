@@ -268,7 +268,7 @@ namespace WebApi.Entities {
 
 	interface Filter {
 		id: string;
-		owner?: UserProfile;
+		owner: UserProfile;
 		filterParts?: FilterPart[];
 		name: string;
 		staredBy?: UserProfile[];

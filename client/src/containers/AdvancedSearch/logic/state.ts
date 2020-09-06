@@ -9,7 +9,7 @@ export interface AdvancedSearch {
 	filterParts: FilterPartState[];
 	addedFilterParts: FilterPartState[];
 	issues: WebApi.Result.IssueResult[];
-	filter?: WebApi.Entities.Filter;
+	filter?: WebApi.Entities.Filter | undefined;
 	isFilterEdited: boolean;
 	issuesCount: number;
 	inputText: string;

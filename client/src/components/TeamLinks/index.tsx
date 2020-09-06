@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
-import { Header, Image, Button } from 'semantic-ui-react';
+import { Image, Button } from 'semantic-ui-react';
 import linksImg from 'assets/images/team-page-links.svg';
-import styles from 'containers/TeamPage/styles.module.scss';
+import styles from './styles.module.scss';
 import { useTranslation } from 'react-i18next';
 import LinkCard from './LinkCard';
 import { useSelector } from 'react-redux';
@@ -33,29 +33,27 @@ const TeamLinks = ({ addLinks, currentLinks, edit, deleteLink }: Props) => {
 
 	return (
 		<>
-			<div className={styles.linkHeader}>
-				<Header as="h3">{t('links')}</Header>
-				{isUserConsistsInTeam && (
-					<Button compact basic className={styles.btnBorderless} icon="plus" onClick={addLinks} />
-				)}
+			<div className={styles.linkBlock}>
+				<h3 className="managerHeader sipleTab">{t('links')}</h3>
+				{isUserConsistsInTeam && <Button className={styles.btnBorderless} icon="plus" onClick={addLinks} />}
 			</div>
-			<div className={`${styles.workedBlockWrapper} ${styles.shadowTop} ${styles.alignCenter}`}>
-				{currentLinks.length ? (
-					currentLinks.map((el: any) => {
-						return (
-							<LinkCard
-								key={el.id}
-								link={el}
-								edit={edit}
-								deleteLink={deleteLink}
-								isUserConsistsInTeam={isUserConsistsInTeam}
-							/>
-						);
-					})
-				) : (
-					<Image src={linksImg} size="large" />
-				)}
-			</div>
+			{currentLinks.length ? (
+				currentLinks.map((el: any) => {
+					return (
+						<LinkCard
+							key={el.id}
+							link={el}
+							edit={edit}
+							deleteLink={deleteLink}
+							isUserConsistsInTeam={isUserConsistsInTeam}
+						/>
+					);
+				})
+			) : (
+				<div className="emptyCard">
+					<Image src={linksImg} />
+				</div>
+			)}
 		</>
 	);
 };

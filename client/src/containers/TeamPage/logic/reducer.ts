@@ -22,6 +22,16 @@ export const teamReducer = createReducer<TeamState>(initialState, {
 		};
 	},
 
+	[actionTypes.SUCCESS_TEAM_ISSUES_LOADING](state: TeamState, action: actionTypes.SuccessLoadingIssues) {
+		return {
+			...state,
+			team: {
+				...state.team,
+				issues: action.issues,
+			},
+		};
+	},
+
 	[actionTypes.SUCCESS_TEAM_PROJECTS_LOADING](state: TeamState, action: actionTypes.SuccessLoadingProjects) {
 		return {
 			...state,

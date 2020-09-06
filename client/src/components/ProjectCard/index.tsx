@@ -7,11 +7,12 @@ import { useTranslation } from 'react-i18next';
 interface Props {
 	name: string;
 	category?: string;
+	avatar?: string;
 	issues?: Partial<WebApi.Entities.Issue>[];
 }
 
 const ProjectCard: React.FC<Props> = (props: Props) => {
-	const { name, category = '', issues = [] } = props;
+	const { name, category = '', issues = [], avatar } = props;
 	const { t } = useTranslation();
 	const id = useSelector((state: RootState) => state.auth.user?.id);
 	const myIssues = issues.filter((item) => item.assigned?.id === id);
@@ -20,7 +21,13 @@ const ProjectCard: React.FC<Props> = (props: Props) => {
 	return (
 		<div className={styles.card}>
 			<div className={styles.header}>
-				<div className={styles.avatar}></div>
+				<div className={styles.avatar}>
+					{avatar ? (
+						<img src={avatar} className={styles.img} alt="avatar" />
+					) : (
+						<p className={styles.avatarTitle}>{name[0]}</p>
+					)}
+				</div>
 				<div className={styles.headerContent}>
 					<p className={styles.name}>{name}</p>
 					{category && <p className={styles.category}>{category} project</p>}
