@@ -23,7 +23,7 @@ export const ForgotPassword: React.FC<Props> = ({ onClose }) => {
 		const validator = new CustomValidator(email);
 		const { errors } = validator.checkEmailField();
 
-		if (errors) {
+		if (errors.length > 0) {
 			NotificationManager.error(t('invalid_email'), t('error'), 4000);
 			return false;
 		}
