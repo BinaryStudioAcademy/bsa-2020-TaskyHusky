@@ -13,12 +13,12 @@ const AditionalModal = ({ setShowDelete, confirmDelete }: Props) => {
 
 	return (
 		<Modal onClose={() => setShowDelete(false)} open size="tiny">
-			<Modal.Header>
-				<span className={styles.titleModal}>{t('you_are_going_to_delete_team')}</span>
+			<Modal.Header className="standartHeader">
+				<span className="standartHeader">{t('you_are_going_to_delete_team')}</span>
 			</Modal.Header>
 			<Modal.Content>
-				<p className={styles.textModal}>{t('deleting_will_destroy_information')}</p>
-				<p className={styles.textModal}>{t('deleting_team_cannot_be_prevented')}</p>
+				<p className="textData">{t('deleting_will_destroy_information')}</p>
+				<p className="textData">{t('deleting_team_cannot_be_prevented')}</p>
 			</Modal.Content>
 			<Modal.Actions>
 				<Button className={styles.cancelBtn} onClick={() => setShowDelete(false)}>

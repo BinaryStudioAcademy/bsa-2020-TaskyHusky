@@ -154,7 +154,9 @@ const UpdateIssueModal: React.FC<Props> = ({
 			onClose={() => setOpened(false)}
 		>
 			<Modal.Header>
-				<Header as="h1">{t('edit_issue')}</Header>
+				<Header as="h1" className="standartHeader">
+					{t('edit_issue')}
+				</Header>
 			</Modal.Header>
 			<Modal.Content scrolling>
 				<Form
@@ -162,9 +164,10 @@ const UpdateIssueModal: React.FC<Props> = ({
 					onKeyDown={(event: React.KeyboardEvent) => event.key === 'Enter' && event.preventDefault()}
 				>
 					<Form.Field>
-						<label className="required">{t('Status')}</label>
+						<label className="required standartLabel">{t('Status')}</label>
 						<Form.Dropdown
 							clearable
+							className="formSelect"
 							selection
 							style={{ maxWidth: 200 }}
 							options={statusesOpts}
@@ -176,6 +179,7 @@ const UpdateIssueModal: React.FC<Props> = ({
 					<Form.Field>
 						<label className="required">{t('type')}</label>
 						<Form.Dropdown
+							className="formSelect"
 							clearable
 							selection
 							style={{ maxWidth: 200 }}
@@ -186,8 +190,9 @@ const UpdateIssueModal: React.FC<Props> = ({
 						/>
 					</Form.Field>
 					<Form.Field>
-						<label className="required">{t('priority')}</label>
+						<label className="required standartLabel">{t('priority')}</label>
 						<Form.Dropdown
+							className="formSelect"
 							clearable
 							selection
 							style={{ maxWidth: 200 }}
@@ -198,19 +203,21 @@ const UpdateIssueModal: React.FC<Props> = ({
 						/>
 					</Form.Field>
 					<Form.Field>
-						<label className="required">{t('summary')}</label>
+						<label className="required stanadrtLabel">{t('summary')}</label>
 						<Form.Input
 							placeholder={t('summary')}
 							fluid
+							className="standartInput"
 							defaultValue={current.summary}
 							onChange={(event, data) => context.set('summary', data.value)}
 						/>
 					</Form.Field>
 					<Form.Field>
-						<label>{t('labels')}</label>
+						<label className="stanadrtLabel">{t('labels')}</label>
 						<Form.Dropdown
 							clearable
 							selection
+							className="formSelect"
 							multiple
 							placeholder={t('labels')}
 							options={labelOpts}
@@ -220,8 +227,9 @@ const UpdateIssueModal: React.FC<Props> = ({
 					</Form.Field>
 					<Divider />
 					<Form.Field>
-						<label>{t('assigned')}</label>
+						<label className="stanadrtLabel">{t('assigned')}</label>
 						<Form.Dropdown
+							className="formSelect"
 							clearable
 							selection
 							defaultValue={current.assigned}
@@ -231,8 +239,9 @@ const UpdateIssueModal: React.FC<Props> = ({
 						/>
 					</Form.Field>
 					<Form.Field>
-						<label>{t('story_point')}</label>
+						<label className="stanadrtLabel">{t('story_point')}</label>
 						<Form.Input
+							className="standartInput"
 							type="number"
 							error={!isStoryPointValid}
 							placeholder={t('story_point')}
@@ -242,7 +251,7 @@ const UpdateIssueModal: React.FC<Props> = ({
 						/>
 					</Form.Field>
 					<Form.Field>
-						<label>{t('links')}</label>
+						<label className="stanadrtLabel">{t('links')}</label>
 						<TagsInput
 							placeholder={t('add_link')}
 							tags={context.data.links ?? []}
@@ -250,7 +259,7 @@ const UpdateIssueModal: React.FC<Props> = ({
 						/>
 					</Form.Field>
 					<Form.Field>
-						<label>{t('attachments')}</label>
+						<label className="stanadrtLabel">{t('attachments')}</label>
 						<IssueFileInput
 							currentFiles={attachments}
 							onChange={(newFiles) => setAttachments(newFiles)}
@@ -259,8 +268,9 @@ const UpdateIssueModal: React.FC<Props> = ({
 						/>
 					</Form.Field>
 					<Form.Field>
-						<label>{t('description')}</label>
+						<label className="stanadrtLabel">{t('description')}</label>
 						<Form.TextArea
+							className="standartInput"
 							placeholder={t('description')}
 							defaultValue={current.description}
 							onChange={(event, data) =>

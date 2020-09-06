@@ -44,11 +44,12 @@ export const ForgotPassword: React.FC<Props> = ({ onClose }) => {
 			<Segment basic className={styles.segmentBody}>
 				{!isEmailSent && (
 					<Form onSubmit={handleSubmit}>
-						<p>{t('forgot_password_email_link')}</p>
+						<p className="textData">{t('forgot_password_email_link')}</p>
 						<Form.Input
 							placeholder={t('email')}
 							type="text"
 							icon="at"
+							className="standartInput"
 							value={email}
 							onChange={(event) => {
 								setEmail(normalizeEmail(event.target.value));
@@ -61,8 +62,8 @@ export const ForgotPassword: React.FC<Props> = ({ onClose }) => {
 					<Container>
 						<Image size="small" src={emailSent} centered />
 						<div className={styles.textBlock}>
-							<p>{t('forgot_password_email_sent_message')}</p>
-							<p>{email}</p>
+							<p className="textData">{t('forgot_password_email_sent_message')}</p>
+							<p className="standartLabel">{email}</p>
 						</div>
 					</Container>
 				)}
