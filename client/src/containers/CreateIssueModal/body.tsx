@@ -11,7 +11,6 @@ import { isNumber } from 'util';
 import { IssueConstants } from 'constants/Issue';
 import IssueFileInput from 'components/IssueFileInput';
 import { initialState } from './logic/initalState';
-import Spinner from 'components/common/Spinner';
 
 interface Props {
 	children: JSX.Element;
@@ -164,9 +163,10 @@ const CreateIssueModalBody: React.FC<Props> = ({
 		Object.keys(context.data).forEach((key) => context.set(key as any, (initialState as any)[key]));
 	};
 
-	if (projectsLoading) {
-		return <Spinner />;
-	}
+	//comment cause it makes second spinner in header
+	// if (projectsLoading) {
+	// 	return <Spinner />;
+	// }
 
 	return (
 		<Modal
