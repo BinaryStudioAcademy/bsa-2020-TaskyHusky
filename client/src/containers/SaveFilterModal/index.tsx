@@ -56,7 +56,7 @@ const SaveFilterModal = () => {
 	return (
 		<>
 			{redirecting && <Redirect to={`/advancedSearch/${savedFilterId}`} />}
-			<Modal onClose={onModalClose} onOpen={onModalOpen} open={isModalOpened} size="tiny" dimmer="inverted">
+			<Modal onClose={onModalClose} onOpen={onModalOpen} open={isModalOpened} size="tiny">
 				<>
 					<Modal.Header>{t('save_filter')}</Modal.Header>
 

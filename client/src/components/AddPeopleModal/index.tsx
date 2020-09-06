@@ -33,7 +33,7 @@ const AddPeopleModal: React.FC<Props> = ({ isOpen = false, closeClb }): ReactEle
 	};
 
 	return (
-		<Modal open={isOpen} onClose={closeClb} size="tiny" dimmer="inverted">
+		<Modal open={isOpen} onClose={closeClb} size="tiny">
 			<Modal.Header>{t('add_people')}</Modal.Header>
 			<Modal.Content image scrolling>
 				<Form onSubmit={handlerSubmit}>

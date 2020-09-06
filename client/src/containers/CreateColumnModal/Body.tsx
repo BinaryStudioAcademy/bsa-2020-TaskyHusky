@@ -71,7 +71,6 @@ const Body: React.FC<Props> = ({ boardId, children, onClose = () => {} }) => {
 			as="form"
 			onSubmit={submit}
 			size="tiny"
-			dimmer="inverted"
 			open={isModalOpened}
 		>
 			<Modal.Header>{t('create_column')}</Modal.Header>

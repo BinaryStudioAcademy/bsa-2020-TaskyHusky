@@ -133,7 +133,6 @@ const CreateProjectModal: React.FC<Props> = ({ children }) => {
 			onOpen={onModalOpen}
 			open={isModalOpened}
 			size="tiny"
-			dimmer="inverted"
 			trigger={children}
 			openOnTriggerClick
 		>
