@@ -48,7 +48,6 @@ const AddPeopleModal: React.FC<Props> = (props) => {
 
 	return (
 		<Modal
-			dimmer="inverted"
 			size="mini"
 			open={isOpen}
 			onClose={() => setIsOpen(false)}

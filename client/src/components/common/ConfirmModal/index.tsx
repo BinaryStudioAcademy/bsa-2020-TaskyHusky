@@ -13,7 +13,7 @@ interface Props {
 const ConfirmModal = ({ isOpened, setIsOpened, confirmAction, header, content }: Props) => {
 	const { t } = useTranslation();
 	return (
-		<Modal size="mini" dimmer="inverted" open={isOpened} onClose={() => setIsOpened(false)}>
+		<Modal size="mini" open={isOpened} onClose={() => setIsOpened(false)}>
 			<Modal.Header>{header}</Modal.Header>
 			<Modal.Content>
 				<p>{content}</p>

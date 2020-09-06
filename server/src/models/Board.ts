@@ -29,5 +29,6 @@ interface CreateBoardColumn {
 	columnName: string;
 	status: string;
 	board: string;
+	index?: number;
 	isResolutionSet: boolean;
 }

@@ -11,6 +11,8 @@ import IssuePageInfoColumn from 'components/IssuePageInfoColumn';
 import { useIO } from 'hooks/useIO';
 import IssueCommit from '../../components/IssueCommit/issueCommit';
 import { convertIssueResultToPartialIssue } from 'helpers/issueResultToPartialIssue';
+import Spinner from 'components/common/Spinner';
+import { Redirect } from 'react-router-dom';
 
 interface Props {
 	issue: WebApi.Result.IssueResult;
@@ -79,8 +81,12 @@ const IssuePageContent: React.FC<Props> = ({ issue: givenIssue }) => {
 		}
 	}, [mustFetchComments, issue.id, issue.summary]);
 
-	if (mustFetchComments || !authData.user) {
-		return null;
+	if (!authData.user) {
+		return <Redirect to="/login" />;
+	}
+
+	if (mustFetchComments) {
+		return <Spinner />;
 	}
 
 	return (

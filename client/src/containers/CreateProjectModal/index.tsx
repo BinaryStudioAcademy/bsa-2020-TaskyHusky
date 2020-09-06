@@ -133,7 +133,6 @@ const CreateProjectModal: React.FC<Props> = ({ children }) => {
 			onOpen={onModalOpen}
 			open={isModalOpened}
 			size="tiny"
-			dimmer="inverted"
 			trigger={children}
 			openOnTriggerClick
 		>
@@ -206,8 +205,6 @@ const CreateProjectModal: React.FC<Props> = ({ children }) => {
 						</Button>
 						<Button
 							content={t('create')}
-							labelPosition="right"
-							icon="checkmark"
 							onClick={onCreateProject}
 							className="primaryBtn"
 							loading={isLoading}

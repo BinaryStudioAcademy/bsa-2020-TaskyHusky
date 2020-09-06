@@ -4,7 +4,10 @@ import initialState from './initialState';
 const CHANGE = 'CHANGE';
 const Context = React.createContext(initialState);
 
-const reducer = (state: WebApi.Board.CreateBoardColumn, action: any) => {
+const reducer = (initialState: WebApi.Board.CreateBoardColumn) => (
+	state: WebApi.Board.CreateBoardColumn,
+	action: any,
+) => {
 	switch (action.type) {
 		case CHANGE:
 			return {
@@ -17,7 +20,7 @@ const reducer = (state: WebApi.Board.CreateBoardColumn, action: any) => {
 };
 
 export const ContextProvider: React.FC<any> = (props) => {
-	const [state, dispatch] = React.useReducer(reducer, initialState);
+	const [state, dispatch] = React.useReducer(reducer(props.initialState), props.initialState ?? initialState);
 	const value = { state, dispatch };
 	return <Context.Provider value={value} {...props} />;
 };

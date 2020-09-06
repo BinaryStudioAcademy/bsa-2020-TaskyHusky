@@ -152,7 +152,6 @@ const UpdateIssueModal: React.FC<Props> = ({
 			closeOnEscape
 			onOpen={clearContext}
 			onClose={() => setOpened(false)}
-			dimmer="inverted"
 		>
 			<Modal.Header>
 				<Header as="h1">{t('edit_issue')}</Header>

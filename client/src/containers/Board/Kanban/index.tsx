@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { BoardComponent } from '../';
 import BoardColumn from 'containers/BoardColumn';
 import { DragDropContext, OnDragEndResponder } from 'react-beautiful-dnd';
@@ -59,11 +58,9 @@ const Kanban: BoardComponent = ({ board }) => {
 			<ProfileHeader title={board.name} />
 			<div className={styles.headerWrapper}>
 				<Breadcrumb className={styles.breadcrumb}>
-					<Breadcrumb.Section as={Link} to="/projects">
-						{t('projects')}
-					</Breadcrumb.Section>
+					<Breadcrumb.Section href="/projects">{t('projects')}</Breadcrumb.Section>
 					<Breadcrumb.Divider>&nbsp;/&nbsp;</Breadcrumb.Divider>
-					<Breadcrumb.Section as={Link} to={`/project/${(board.projects ?? [])[0].id}/issues`}>
+					<Breadcrumb.Section href={`/project/${(board.projects ?? [])[0].id}/issues`}>
 						{(board.projects ?? [])[0].name}
 					</Breadcrumb.Section>
 					<Breadcrumb.Divider>&nbsp;/&nbsp;</Breadcrumb.Divider>
@@ -82,6 +79,7 @@ const Kanban: BoardComponent = ({ board }) => {
 					<Button onClick={() => setSearch('')} className={styles.cancelBtn}>
 						{t('clear')}
 					</Button>
+					<a href={`/board/${board.id}/columnsSettings`}>{t('go_to_columns_settings')}</a>
 				</div>
 			</div>
 			<DragDropContext onDragEnd={onDragEnd}>

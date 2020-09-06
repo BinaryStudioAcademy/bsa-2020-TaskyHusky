@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { List, Item } from 'semantic-ui-react';
 import styles from './styles.module.scss';
 import AssigneeAvatar from './AssigneeAvatar/index';
@@ -21,7 +21,11 @@ interface DragProps {
 
 export const SprintIssues: React.FC<Props & DragProps> = (props: Props & DragProps) => {
 	const { t } = useTranslation();
-	const [issues, setIssues] = useState<WebApi.Result.IssueResult[]>(props.issues);
+	const [issues, setIssues] = useState<WebApi.Result.IssueResult[]>([]);
+
+	useEffect(() => {
+		setIssues(props.issues);
+	}, [props.issues]);
 
 	useIO(WebApi.IO.Types.Issue, (io) => {
 		io.on(WebApi.IO.IssueActions.CreateIssue, (newIssue: WebApi.Result.IssueResult) => {

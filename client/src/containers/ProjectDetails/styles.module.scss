@@ -1,3 +1,5 @@
+@import 'styles/variables.scss';
+
 .header_inner__container {
     padding: 10px 0px 20px ;
     position: relative;
@@ -32,6 +34,13 @@
 .form__input {
     @extend .fix_start_after_input;
     width: 250px;
+}
+
+input,
+textarea {
+    &:focus {
+        border-color: $yellow !important;
+    }
 }
 
 .form__input_key{
@@ -79,6 +88,9 @@
 
 .form__input_select {
     width: 100% !important;
+    &:focus {
+        border: 1px solid $yellow !important;
+    }
 }
 
 .icons__container {
@@ -113,9 +125,5 @@
     &:hover {
         border: 3px solid black;
     }
-}
-
-.action_button {
-    margin-right: 25px !important;
 }
 

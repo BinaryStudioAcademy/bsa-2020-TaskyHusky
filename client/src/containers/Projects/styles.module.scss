@@ -1,32 +1,40 @@
 @import 'styles/mixins.scss';
 
 .wrapper {
-	padding: 30px 60px;
+	padding: 30px 10%;
 }
 
 .input {
 	@include input;
+	width: 243px !important;
+  
+	div:hover {
+	  background-color: none !important;
+	}
+  
+	& input {
+	  border-radius: 6px !important;
+	}
 }
+
+
 
 .wrapper__title {
 	display: flex;
 	justify-content: space-between;
-	margin-bottom: 20px;
-}
-
-.wrapper__title {
-	display: flex;
-	justify-content: space-between;
+	align-items: flex-start;
 	margin-bottom: 20px;
 }
 
 .title {
-	margin: 0;
 	font-size: 24px;
+	line-height: 36px;
+	font-weight: 600 !important;
+	font-family: 'Poppins', sans-serif !important;
 }
 
 .wrapper__filters {
-	margin-bottom: 20px;
+	margin-bottom: 25px;
 }
 
 .filters {
@@ -58,8 +66,8 @@
 }
 
 .table__header_cell {
-	background-color: #f9fafb;
-	border-left: none;
+	background-color: #f9fafb !important;
+	border-left: none !important;
 }
 
 .project__img {
@@ -106,8 +114,12 @@
 	width: 100%;
 }
 
-.column__name {
-	width: 30%;
+.create__button {
+	@include primary-btn;
+}
+
+.table__column_options {
+	text-align: end !important;
 }
 
 .column__lead {
@@ -122,6 +134,4 @@
 	width: 40px;
 }
 
-.create__button {
-	@include primary-btn;
-}
+

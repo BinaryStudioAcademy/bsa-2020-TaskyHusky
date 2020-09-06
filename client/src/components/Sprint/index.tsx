@@ -2,6 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { SprintHeader } from './SprintHeader';
 import { SprintIssues } from './SprintIssues';
+import Spinner from 'components/common/Spinner';
 
 interface Props {
 	sprint?: WebApi.Entities.Sprint;
@@ -19,8 +20,12 @@ interface DragProps {
 export const Sprint: React.FC<Props & DragProps> = (props: Props & DragProps) => {
 	const { t } = useTranslation();
 
-	if (!props.issues || props.sprint?.isCompleted) {
+	if (props.sprint?.isCompleted) {
 		return null;
+	}
+
+	if (!props.issues) {
+		return <Spinner />;
 	}
 
 	return (
@@ -34,9 +39,10 @@ export const Sprint: React.FC<Props & DragProps> = (props: Props & DragProps) =>
 				startDate={props.sprint?.startDate}
 				endDate={props.sprint?.endDate}
 			/>
+
 			<SprintIssues
 				issues={props.issues}
-				sprintId={props.sprint?.id}
+				sprintId={props.sprint?.id ?? 'backlog'}
 				boardId={props.boardId}
 				sprintName={props.sprint?.sprintName ?? t('backlog')}
 				listId={props.listId}

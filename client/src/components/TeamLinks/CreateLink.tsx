@@ -27,7 +27,7 @@ const CreateLink = ({ onClose, currentLink, onConfirm }: Props) => {
 		});
 	};
 	return (
-		<Modal onClose={onClose} dimmer="inverted" open size="tiny">
+		<Modal onClose={onClose} open size="tiny">
 			<Modal.Header>{t('add_link')}</Modal.Header>
 			<Modal.Content>
 				<Form size="big">
