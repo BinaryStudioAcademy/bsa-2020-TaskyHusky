@@ -4,7 +4,7 @@ import Boards from '../../containers/Boards';
 
 const BoardsPage: React.FC = () => {
 	return (
-		<DefaultPageWrapper>
+		<DefaultPageWrapper isOverflowHidden={true}>
 			<Boards />
 		</DefaultPageWrapper>
 	);
