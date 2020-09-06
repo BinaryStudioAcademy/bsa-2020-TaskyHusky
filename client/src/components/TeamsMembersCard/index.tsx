@@ -30,19 +30,17 @@ const TeamsMembersCard = ({ title, teamOwner, removeUserFromTeam, teammates = []
 	const fullUserName = (fn: string, ln: string): string => `${fn} ${ln}`;
 
 	const authUser = useSelector((rootState: RootState) => rootState.auth.user);
-	const [showDeleteButton, setShowDeleteButton] = useState<boolean>(false);
 	const [removeUserModal, setRemoveUserModal] = useState<boolean>(false);
 	const [userToRemove, setUserToRemove] = useState<User | null>(null);
-
+	const [viewUser, setViewUser] = useState<User | null>(null);
 	const onHover = (user: User) => {
-		setShowDeleteButton(true);
-		setUserToRemove(user);
+		setViewUser(user);
 	};
 
 	const hideModal = (e: React.BaseSyntheticEvent) => {
 		if (!e.target.classList.contains('cardBody') && !e.target.classList.contains('blockWrapper')) {
-			setShowDeleteButton(false);
-			setUserToRemove(null);
+			setViewUser(null);
+			setViewUser(null);
 		}
 	};
 
@@ -53,10 +51,12 @@ const TeamsMembersCard = ({ title, teamOwner, removeUserFromTeam, teammates = []
 
 	const removeUser = (id: string) => {
 		removeUserFromTeam(id);
+		setViewUser(null);
 		setRemoveUserModal(false);
 	};
 
-	const isPossibleToDelete = teamOwner && authUser?.id === teamOwner.id && userToRemove?.id !== teamOwner.id;
+	const showDeleteUserIcon = (user: User) =>
+		teamOwner && authUser?.id === teamOwner.id && viewUser?.id === user.id && viewUser?.id !== teamOwner.id;
 
 	return (
 		<>
@@ -89,7 +89,7 @@ const TeamsMembersCard = ({ title, teamOwner, removeUserFromTeam, teammates = []
 									{fullUserName(teammate.firstName, teammate.lastName)}
 								</p>
 								<p className={styles.metainfo}>{teammate.jobTitle}</p>
-								{showDeleteButton && isPossibleToDelete && userToRemove?.id === teammate.id && (
+								{showDeleteUserIcon(teammate) && (
 									<Icon
 										name="delete"
 										onClick={() => onDeleteUserClick(teammate)}
@@ -97,7 +97,7 @@ const TeamsMembersCard = ({ title, teamOwner, removeUserFromTeam, teammates = []
 									/>
 								)}
 							</div>
-							{removeUserModal && userToRemove && isPossibleToDelete && (
+							{removeUserModal && (
 								<RemoveUserModal
 									user={userToRemove}
 									confirm={removeUser}

@@ -24,9 +24,7 @@ const AditionalModal = ({ setShowDelete, confirmDelete }: Props) => {
 				<Button className={styles.cancelBtn} onClick={() => setShowDelete(false)}>
 					{t('cancel')}
 				</Button>
-				<Button icon="check" className={styles.editBtn} onClick={confirmDelete}>
-					{t('Im_sure')}
-				</Button>
+				<Button icon="checkmark" content={t('Im_sure')} className={styles.editBtn} onClick={confirmDelete} />
 			</Modal.Actions>
 		</Modal>
 	);

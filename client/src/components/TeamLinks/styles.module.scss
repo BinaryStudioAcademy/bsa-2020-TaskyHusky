@@ -82,3 +82,12 @@
     }
   }
 }
+
+.standartInput {
+  @include text-data;
+  border-radius: 6px !important;
+
+  &:focus {
+    border: 1px solid $yellow !important;
+  }
+}
