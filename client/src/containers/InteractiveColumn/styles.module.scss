@@ -38,3 +38,9 @@
 	border-radius: 3px;
 	border: 1px solid black;
 }
+
+.greenStatus {
+	@extend .status;
+	border: 1px solid green;
+	color: green;
+}

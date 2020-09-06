@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import { Modal, Form, Button } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
-import { useBoardColumnContext } from './logic/context';
 import { useDispatch } from 'react-redux';
 import { createColumn } from 'containers/BoardColumn/logic/actions';
-import initialState from './logic/initialState';
 
 export interface Props {
 	boardId: string;
@@ -21,8 +19,16 @@ interface Option {
 const Body: React.FC<Props> = ({ boardId, children, onClose = () => {} }) => {
 	const { t } = useTranslation();
 	const dispatch = useDispatch();
-	const context = useBoardColumnContext();
 	const [isModalOpened, setIsModalOpened] = useState<boolean>(false);
+	const [status, setStatus] = useState<string>('');
+	const [name, setName] = useState<string>('');
+	const [isResolutionSet, setIsResolutionSet] = useState<boolean>(false);
+
+	const resetState = () => {
+		setName('');
+		setStatus('');
+		setIsResolutionSet(false);
+	};
 
 	const statusOpts: Option[] = [
 		{ key: 0, value: 'backlog', text: t('backlog') },
@@ -31,25 +37,23 @@ const Body: React.FC<Props> = ({ boardId, children, onClose = () => {} }) => {
 		{ key: 3, value: 'done', text: t('done') },
 	];
 
-	const clearContext = () => {
-		Object.keys(context.data).forEach((key) => context.set(key as any, (initialState as any)[key]));
-	};
-
 	const curryOpen = (isOpened: boolean) => () => {
 		setIsModalOpened(isOpened);
 
 		if (isOpened) {
-			clearContext();
+			resetState();
 		}
 	};
 
 	const submit = (event: React.FormEvent) => {
 		event.preventDefault();
-		const allFields = context.data.columnName && context.data.status;
+		const allFields = name && status;
 
 		if (allFields) {
 			const data = {
-				...context.data,
+				columnName: name,
+				status,
+				isResolutionSet,
 				board: boardId,
 			};
 
@@ -83,8 +87,8 @@ const Body: React.FC<Props> = ({ boardId, children, onClose = () => {} }) => {
 							placeholder={t('status')}
 							options={statusOpts}
 							fluid
-							value={context.data.status ?? ''}
-							onChange={(event, data) => context.set('status', data.value)}
+							value={status}
+							onChange={(event, data) => setStatus(data.value as string)}
 						/>
 					</Form.Field>
 					<Form.Field>
@@ -93,16 +97,16 @@ const Body: React.FC<Props> = ({ boardId, children, onClose = () => {} }) => {
 							placeholder={t('name')}
 							fluid
 							icon="users"
-							value={context.data.columnName ?? ''}
-							onChange={(event, data) => context.set('columnName', data.value)}
+							value={name}
+							onChange={(event, data) => setName(name)}
 						/>
 					</Form.Field>
 					<Form.Field>
 						<label className="required">{t('is_resolution_set')}</label>
 						<Form.Checkbox
-							onChange={(event, data) => context.set('isResolutionSet', data.checked)}
+							onChange={(event, data) => setIsResolutionSet(true)}
 							toggle
-							checked={context.data.isResolutionSet ?? false}
+							checked={isResolutionSet}
 							label={t('is_resolution_set')}
 						/>
 					</Form.Field>

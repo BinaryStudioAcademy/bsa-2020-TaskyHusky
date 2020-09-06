@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { Segment, Icon, Divider } from 'semantic-ui-react';
+import { Segment, Icon } from 'semantic-ui-react';
 import { Draggable } from 'react-beautiful-dnd';
 import styles from './styles.module.scss';
 import { useTranslation } from 'react-i18next';
 import EditForm from './EditForm';
-import { ContextProvider } from 'containers/CreateColumnModal/logic/context';
 import { deleteColumn } from 'containers/BoardColumn/logic/actions';
 import { useDispatch } from 'react-redux';
 import ConfirmModal from 'components/common/ConfirmModal';
@@ -16,10 +15,9 @@ interface Props {
 	columns: WebApi.Result.BoardColumnResult[];
 }
 
-const InteractiveColumn: React.FC<Props> = ({ column: givenColumn, index, setColumns, columns }) => {
+const InteractiveColumn: React.FC<Props> = ({ column, index, setColumns, columns }) => {
 	const { t } = useTranslation();
 	const dispatch = useDispatch();
-	const [column, setColumn] = useState<WebApi.Result.BoardColumnResult>(givenColumn);
 	const [isConfirmOpened, setIsConfirmOpened] = useState<boolean>(false);
 
 	const confirmRemove = () => {
@@ -34,15 +32,23 @@ const InteractiveColumn: React.FC<Props> = ({ column: givenColumn, index, setCol
 		setColumns(newColumns);
 	};
 
+	const update = (data: Partial<WebApi.Board.CreateBoardColumn>) => {
+		const newColumns = [...columns];
+		newColumns[index] = { ...column, ...data, board: column.board };
+		setColumns(newColumns);
+	};
+
 	return (
-		<Draggable draggableId={column.id} index={index}>
+		<Draggable draggableId={column.id} key={column.id} index={index}>
 			{(provided, snapshot) => (
 				<div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
 					<Segment className={styles.column}>
 						<div className={styles.columnHeader}>
 							<h3 className={styles.uppercase}>{column.columnName}</h3>
 							<div className={styles.columnControls}>
-								<span className={styles.status}>{column.status}</span>
+								<span className={!column.isResolutionSet ? styles.status : styles.greenStatus}>
+									{column.status}
+								</span>
 								<ConfirmModal
 									isOpened={isConfirmOpened}
 									setIsOpened={setIsConfirmOpened}
@@ -59,13 +65,7 @@ const InteractiveColumn: React.FC<Props> = ({ column: givenColumn, index, setCol
 								/>
 							</div>
 						</div>
-						<Divider horizontal />
-						<ContextProvider initialState={column}>
-							<EditForm
-								columnId={column.id}
-								onSubmit={(data) => setColumn({ ...column, ...data, board: column.board })}
-							/>
-						</ContextProvider>
+						<EditForm column={column} onSubmit={update} />
 					</Segment>
 				</div>
 			)}

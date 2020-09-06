@@ -16,6 +16,7 @@ export class BoardColumnRepository extends Repository<BoardColumn> {
 			.innerJoin('boardColumn.board', 'board')
 			.addSelect('board.id')
 			.where('board.id = :id', { id })
+			.orderBy('index', 'ASC')
 			.getMany();
 	}
 
