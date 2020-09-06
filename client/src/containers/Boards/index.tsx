@@ -13,6 +13,7 @@ import DeleteBoardModal from '../../components/deleteBoardModal';
 import { useTranslation } from 'react-i18next';
 import Spinner from '../../components/common/Spinner';
 import UserAvatar from 'components/common/UserAvatar';
+import FiltersHeader from 'components/FiltersHeader';
 
 const Boards: React.FC = () => {
 	const { t } = useTranslation();
@@ -83,22 +84,27 @@ const Boards: React.FC = () => {
 		<div className={styles.wrapper}>
 			{isModalShown ? <CreateBoardModal setIsModalShown={setIsModalShown} onCreateBoard={onCreateBoard} /> : ''}
 			{boardToDelete && <DeleteBoardModal board={boardToDelete} onClose={() => setBoardToDelete(null)} />}
-			<div className={styles.wrapper__title}>
-				<h1 className={styles.title}>{t('boards')}</h1>
-				<Button className="primaryBtn" onClick={() => setIsModalShown(true)}>
-					{t('create_board')}
-				</Button>
-			</div>
+			<FiltersHeader title={t('boards')} />
 			<div className={[styles.wrapper__filters, styles.filters].join(' ')}>
-				<Input icon="search" placeholder={t('search')} onChange={onSearch} value={searchName} />
+				<Input
+					icon="search"
+					className="standartInput"
+					placeholder={t('search')}
+					onChange={onSearch}
+					value={searchName}
+				/>
 				<Dropdown
 					placeholder={t('all_boards')}
 					options={selectOptions}
 					multiple
 					selection
+					className="standartSelect"
 					value={selectedTypes}
 					onChange={handleSelectChange}
 				/>
+				<Button style={{ marginLeft: 'auto' }} className="primaryBtn" onClick={() => setIsModalShown(true)}>
+					{t('create_board')}
+				</Button>
 			</div>
 			<div className={styles.wrapper__table}>
 				{!isLoading && (
@@ -125,16 +131,16 @@ const Boards: React.FC = () => {
 								const { name, id, boardType, createdBy: user } = board;
 								return (
 									<Table.Row key={id}>
-										<Table.Cell>
+										<Table.Cell className="textData">
 											<Link to={`/board/${id}`}>{name}</Link>
 										</Table.Cell>
-										<Table.Cell>{boardType}</Table.Cell>
+										<Table.Cell className="textData">{boardType}</Table.Cell>
 										<Table.Cell>
 											{board.projects && board.projects.length ? (
 												<>
 													<span>
 														{cellProjects(board).map((project, i) => (
-															<span key={i}>
+															<span key={i} className="textData">
 																<a
 																	target="_blank"
 																	rel="noopener noreferrer"
@@ -157,7 +163,7 @@ const Boards: React.FC = () => {
 																content={
 																	<div>
 																		{portalProjects(board).map((project, i) => (
-																			<span key={i}>
+																			<span key={i} className="textData">
 																				<a
 																					target="_blank"
 																					rel="noopener noreferrer"

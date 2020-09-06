@@ -188,3 +188,9 @@ label {
 		margin-right: 0 !important;
 	}
 }
+
+@media screen and (max-width: $mobile-screen) {
+	.emptyCard {
+		flex-direction: column;
+	}
+}

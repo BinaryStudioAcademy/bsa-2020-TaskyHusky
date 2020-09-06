@@ -67,7 +67,7 @@ const ProjectsTable = ({ projects, currentUser }: Props) => {
 
 	return (
 		<div>
-			<Table selectable sortable unstackable>
+			<Table selectable sortable unstackable className={styles.tableContainer}>
 				<Table.Header>
 					<Table.Row>
 						<Table.HeaderCell
@@ -107,12 +107,12 @@ const ProjectsTable = ({ projects, currentUser }: Props) => {
 									<span className={styles.project__name}>{name}</span>
 								</Link>
 							</Table.Cell>
-							<Table.Cell>{key}</Table.Cell>
-							<Table.Cell>Software</Table.Cell>
+							<Table.Cell className="textData">{key}</Table.Cell>
+							<Table.Cell className="textData">Software</Table.Cell>
 							<Table.Cell className={styles.project__lead_wrapper}>
 								<span className={styles.project__lead_container}>
 									<UserAvatar user={lead} small />
-									<span> {getUsername(lead)} </span>
+									<span className="textData"> {getUsername(lead)} </span>
 								</span>
 							</Table.Cell>
 							<Table.Cell className={styles.table__column_options}>

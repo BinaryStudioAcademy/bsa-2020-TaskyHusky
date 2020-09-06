@@ -51,10 +51,11 @@ const Filters: React.FC = () => {
 
 	return (
 		<div className={styles.main}>
-			<FiltersHeader title={'Filters'} />
+			<FiltersHeader title={t('Filters')} />
 			<div className={styles.mainHeader}>
 				<Input
 					icon="search"
+					className="standartInput"
 					placeholder={t('search')}
 					onChange={(event, data) => setSearchName(data.value)}
 					value={searchName}
