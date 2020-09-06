@@ -15,12 +15,13 @@ import { initialState } from 'containers/CreateIssueModal/logic/initalState';
 const labels: string[] = ['label', 'label1', 'label2'];
 interface Props {
 	current: WebApi.Issue.PartialIssue;
-	getOpenFunc: (open: () => void) => void;
 	issueTypes: WebApi.Entities.IssueType[];
 	priorities: WebApi.Entities.Priority[];
 	statuses: WebApi.Entities.IssueStatus[];
 	users: WebApi.Entities.UserProfile[];
+	isOpened?: boolean;
 	onSubmit?: (data: WebApi.Issue.PartialIssue) => void;
+	setOpened: (isOpened: boolean) => void;
 }
 
 interface SelectOption {
@@ -32,20 +33,19 @@ interface SelectOption {
 
 const UpdateIssueModal: React.FC<Props> = ({
 	current,
-	getOpenFunc,
 	issueTypes,
 	priorities,
 	users,
 	onSubmit,
 	statuses,
+	isOpened,
+	setOpened,
 }) => {
 	const context = useCreateIssueModalContext();
-	const [opened, setOpened] = useState<boolean>(false);
 	const [attachments, setAttachments] = useState<File[]>([]);
 	const [isStoryPointValid, setIsStoryPointValid] = useState(true);
 	const dispatch = useDispatch();
 	const { t } = useTranslation();
-	getOpenFunc(() => setOpened(true));
 
 	const typeOpts: SelectOption[] = issueTypes.map((type) => ({
 		key: type.id,
@@ -147,7 +147,7 @@ const UpdateIssueModal: React.FC<Props> = ({
 		<Modal
 			as="form"
 			onSubmit={submit}
-			open={opened}
+			open={isOpened}
 			closeOnDimmerClick
 			closeOnEscape
 			onOpen={clearContext}

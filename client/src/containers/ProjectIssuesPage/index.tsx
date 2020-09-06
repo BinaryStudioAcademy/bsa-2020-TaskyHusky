@@ -82,13 +82,7 @@ const ProjectIssuesPage: React.FC<Props> = ({ projectId }) => {
 			<div className="fill">
 				{selectedIssue ? (
 					<div style={{ marginLeft: 30 }}>
-						<IssuePageInfoColumn
-							leftAligned
-							withDescrtiption
-							toPageLink
-							issue={selectedIssue}
-							initialIssue={initialIssue}
-						/>
+						<IssuePageInfoColumn asCardInfo issue={selectedIssue} initialIssue={initialIssue} />
 					</div>
 				) : (
 					''
