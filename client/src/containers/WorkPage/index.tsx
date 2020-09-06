@@ -40,24 +40,22 @@ const WorkPage = () => {
 	}, [projects]);
 
 	return (
-		<>
+		<div className={styles.wrapper}>
+			<ProfileHeader title={t('my_work')} />
 			{projectLoading || issueLoading ? (
 				<Spinner />
 			) : (
-				<div className={styles.wrapper}>
-					<ProfileHeader title={t('my_work')} />
-					<div className={styles.container}>
-						<ManagerWorkBlock changeMode={changeMode} modeToShow={modeToShow} />
-						<ManagerWorkSection
-							projects={sortedProjects}
-							assignedIssues={assignedIssues}
-							activityIssues={recentActivity}
-							modeToShow={modeToShow}
-						/>
-					</div>
+				<div className={styles.container}>
+					<ManagerWorkBlock changeMode={changeMode} modeToShow={modeToShow} />
+					<ManagerWorkSection
+						projects={sortedProjects}
+						assignedIssues={assignedIssues}
+						activityIssues={recentActivity}
+						modeToShow={modeToShow}
+					/>
 				</div>
 			)}
-		</>
+		</div>
 	);
 };
 

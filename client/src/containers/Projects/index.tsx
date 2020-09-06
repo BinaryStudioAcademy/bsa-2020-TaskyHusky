@@ -37,23 +37,23 @@ const Projects: React.FC = () => {
 	return (
 		<div>
 			<FiltersHeader title={t('projects')} />
-			<div className={[styles.wrapper__filters, styles.filters, styles.wrapper].join(' ')}>
-				<Input
-					icon="search"
-					className={styles.input}
-					placeholder={t('search')}
-					onChange={onSearch}
-					value={searchName}
-				/>
-				<CreateProjectModal>
-					<Button className={styles.create__button}>{t('create_project')}</Button>
-				</CreateProjectModal>
-			</div>
-			<div className={styles.wrapper__table}>
-				{isDeleting || isLoading ? (
-					<Spinner />
-				) : (
-					<>
+			{isDeleting || isLoading ? (
+				<Spinner />
+			) : (
+				<>
+					<div className={[styles.wrapper__filters, styles.filters, styles.wrapper].join(' ')}>
+						<Input
+							icon="search"
+							className={styles.input}
+							placeholder={t('search')}
+							onChange={onSearch}
+							value={searchName}
+						/>
+						<CreateProjectModal>
+							<Button className={styles.create__button}>{t('create_project')}</Button>
+						</CreateProjectModal>
+					</div>
+					<div className={styles.wrapper__table}>
 						{filteredProjects.length > 0 ? (
 							<ProjectsTable projects={filteredProjects} currentUser={currentUser} />
 						) : (
@@ -64,9 +64,9 @@ const Projects: React.FC = () => {
 								</div>
 							</div>
 						)}
-					</>
-				)}
-			</div>
+					</div>
+				</>
+			)}
 		</div>
 	);
 };

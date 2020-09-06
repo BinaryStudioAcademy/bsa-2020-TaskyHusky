@@ -52,38 +52,40 @@ const Filters: React.FC = () => {
 	return (
 		<div className={styles.main}>
 			<FiltersHeader title={t('Filters')} />
-			<div className={styles.mainHeader}>
-				<Input
-					icon="search"
-					className="standartInput"
-					placeholder={t('search')}
-					onChange={(event, data) => setSearchName(data.value)}
-					value={searchName}
-				/>{' '}
-				<div>
-					<Button className="primaryBtn" onClick={() => history.push('/advancedSearch')}>
-						{t('create_filter')}
-					</Button>
-				</div>
-			</div>
-			<div>
-				{isLoading ? (
-					<Spinner />
-				) : (
-					<div className={styles.container}>
-						{!isTableEmpty ? (
-							<Table filters={filteredFilters} updateFilter={updateFilter} />
-						) : (
-							<div className={styles.imgWrapper}>
-								<div className={styles.content}>
-									<img className={styles.img} src={searchResult} alt="No results" />
-									<span className={styles.text}>{t('no_filters')}</span>
-								</div>
-							</div>
-						)}
+			{isLoading ? (
+				<Spinner />
+			) : (
+				<>
+					<div className={styles.mainHeader}>
+						<Input
+							icon="search"
+							className="standartInput"
+							placeholder={t('search')}
+							onChange={(event, data) => setSearchName(data.value)}
+							value={searchName}
+						/>{' '}
+						<div>
+							<Button className="primaryBtn" onClick={() => history.push('/advancedSearch')}>
+								{t('create_filter')}
+							</Button>
+						</div>
 					</div>
-				)}
-			</div>
+					<div>
+						<div className={styles.container}>
+							{!isTableEmpty ? (
+								<Table filters={filteredFilters} updateFilter={updateFilter} />
+							) : (
+								<div className={styles.imgWrapper}>
+									<div className={styles.content}>
+										<img className={styles.img} src={searchResult} alt="No results" />
+										<span className={styles.text}>{t('no_filters')}</span>
+									</div>
+								</div>
+							)}
+						</div>
+					</div>
+				</>
+			)}
 		</div>
 	);
 };

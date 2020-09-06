@@ -85,126 +85,140 @@ const Boards: React.FC = () => {
 			{isModalShown ? <CreateBoardModal setIsModalShown={setIsModalShown} onCreateBoard={onCreateBoard} /> : ''}
 			{boardToDelete && <DeleteBoardModal board={boardToDelete} onClose={() => setBoardToDelete(null)} />}
 			<FiltersHeader title={t('boards')} />
-			<div className={[styles.wrapper__filters, styles.filters].join(' ')}>
-				<Input
-					icon="search"
-					className="standartInput"
-					placeholder={t('search')}
-					onChange={onSearch}
-					value={searchName}
-				/>
-				<Dropdown
-					placeholder={t('all_boards')}
-					options={selectOptions}
-					multiple
-					selection
-					className="standartSelect"
-					value={selectedTypes}
-					onChange={handleSelectChange}
-				/>
-				<Button style={{ marginLeft: 'auto' }} className="primaryBtn" onClick={() => setIsModalShown(true)}>
-					{t('create_board')}
-				</Button>
-			</div>
-			<div className={styles.wrapper__table}>
-				{!isLoading && (
-					<Table selectable sortable>
-						<Table.Header>
-							<Table.Row>
-								<Table.HeaderCell width={4} className={styles.header__cell}>
-									{t('name')}
-								</Table.HeaderCell>
-								<Table.HeaderCell width={4} className={styles.header__cell}>
-									{t('type')}
-								</Table.HeaderCell>
-								<Table.HeaderCell width={4} className={styles.header__cell}>
-									{t('projects')}
-								</Table.HeaderCell>
-								<Table.HeaderCell width={4} className={styles.header__cell}>
-									{t('admin')}
-								</Table.HeaderCell>
-								<Table.HeaderCell width={1} className={styles.header__cell} />
-							</Table.Row>
-						</Table.Header>
-						<Table.Body>
-							{filteredData.map((board) => {
-								const { name, id, boardType, createdBy: user } = board;
-								return (
-									<Table.Row key={id}>
-										<Table.Cell className="textData">
-											<Link to={`/board/${id}`}>{name}</Link>
-										</Table.Cell>
-										<Table.Cell className="textData">{boardType}</Table.Cell>
-										<Table.Cell>
-											{board.projects && board.projects.length ? (
-												<>
-													<span>
-														{cellProjects(board).map((project, i) => (
-															<span key={i} className="textData">
-																<a
-																	target="_blank"
-																	rel="noopener noreferrer"
-																	href={`/project/${project.id}/issues`}
-																>
-																	{project.name}
-																</a>
-																{cellProjects(board).length - 1 === i ? '' : ', '}
-															</span>
-														))}
-													</span>
-													<span>
-														{board.projects.length > projectsShown ? (
-															<Popup
-																openOnTriggerMouseEnter
-																closeOnPortalMouseLeave
-																trigger={
-																	<span className={styles.moreProjects}>, ...</span>
-																}
-																content={
-																	<div>
-																		{portalProjects(board).map((project, i) => (
-																			<span key={i} className="textData">
-																				<a
-																					target="_blank"
-																					rel="noopener noreferrer"
-																					href={`/project/${project.id}/issues`}
-																				>
-																					{project.name}
-																				</a>
-																				{portalProjects(board).length - 1 === i
-																					? ''
-																					: ', '}
-																			</span>
-																		))}
-																	</div>
-																}
-															/>
-														) : (
-															''
-														)}
-													</span>
-												</>
-											) : (
-												t('no')
-											)}
-										</Table.Cell>
-										<Table.Cell className={styles.user_cell}>
-											<UserAvatar user={user as WebApi.Entities.UserProfile} small />
-											<Link to={`/profile/${user.id}`}>
-												{`${user.firstName} ${user.lastName}`}
-											</Link>
-										</Table.Cell>
-										<Table.Cell className={styles.options__cell}>
-											<Options config={getBoardMenuActions(board)} isBackgroundShown={false} />
-										</Table.Cell>
-									</Table.Row>
-								);
-							})}
-						</Table.Body>
-					</Table>
-				)}
-				{isLoading ? <Spinner /> : ''}
-			</div>
+			{isLoading ? (
+				<Spinner />
+			) : (
+				<>
+					<div className={[styles.wrapper__filters, styles.filters].join(' ')}>
+						<Input
+							icon="search"
+							className="standartInput"
+							placeholder={t('search')}
+							onChange={onSearch}
+							value={searchName}
+						/>
+						<Dropdown
+							placeholder={t('all_boards')}
+							options={selectOptions}
+							multiple
+							selection
+							className="standartSelect"
+							value={selectedTypes}
+							onChange={handleSelectChange}
+						/>
+						<Button
+							style={{ marginLeft: 'auto' }}
+							className="primaryBtn"
+							onClick={() => setIsModalShown(true)}
+						>
+							{t('create_board')}
+						</Button>
+					</div>
+					<div className={styles.wrapper__table}>
+						<Table selectable sortable>
+							<Table.Header>
+								<Table.Row>
+									<Table.HeaderCell width={4} className={styles.header__cell}>
+										{t('name')}
+									</Table.HeaderCell>
+									<Table.HeaderCell width={4} className={styles.header__cell}>
+										{t('type')}
+									</Table.HeaderCell>
+									<Table.HeaderCell width={4} className={styles.header__cell}>
+										{t('projects')}
+									</Table.HeaderCell>
+									<Table.HeaderCell width={4} className={styles.header__cell}>
+										{t('admin')}
+									</Table.HeaderCell>
+									<Table.HeaderCell width={1} className={styles.header__cell} />
+								</Table.Row>
+							</Table.Header>
+							<Table.Body>
+								{filteredData.map((board) => {
+									const { name, id, boardType, createdBy: user } = board;
+									return (
+										<Table.Row key={id}>
+											<Table.Cell className="textData">
+												<Link to={`/board/${id}`}>{name}</Link>
+											</Table.Cell>
+											<Table.Cell className="textData">{boardType}</Table.Cell>
+											<Table.Cell>
+												{board.projects && board.projects.length ? (
+													<>
+														<span>
+															{cellProjects(board).map((project, i) => (
+																<span key={i} className="textData">
+																	<a
+																		target="_blank"
+																		rel="noopener noreferrer"
+																		href={`/project/${project.id}/issues`}
+																	>
+																		{project.name}
+																	</a>
+																	{cellProjects(board).length - 1 === i ? '' : ', '}
+																</span>
+															))}
+														</span>
+														<span>
+															{board.projects.length > projectsShown ? (
+																<Popup
+																	openOnTriggerMouseEnter
+																	closeOnPortalMouseLeave
+																	trigger={
+																		<span className={styles.moreProjects}>
+																			, ...
+																		</span>
+																	}
+																	content={
+																		<div>
+																			{portalProjects(board).map((project, i) => (
+																				<span key={i} className="textData">
+																					<a
+																						target="_blank"
+																						rel="noopener noreferrer"
+																						href={`/project/${project.id}/issues`}
+																					>
+																						{project.name}
+																					</a>
+																					{portalProjects(board).length -
+																						1 ===
+																					i
+																						? ''
+																						: ', '}
+																				</span>
+																			))}
+																		</div>
+																	}
+																/>
+															) : (
+																''
+															)}
+														</span>
+													</>
+												) : (
+													t('no')
+												)}
+											</Table.Cell>
+											<Table.Cell className={styles.user_cell}>
+												<UserAvatar user={user as WebApi.Entities.UserProfile} small />
+												<Link to={`/profile/${user.id}`}>
+													{`${user.firstName} ${user.lastName}`}
+												</Link>
+											</Table.Cell>
+											<Table.Cell className={styles.options__cell}>
+												<Options
+													config={getBoardMenuActions(board)}
+													isBackgroundShown={false}
+												/>
+											</Table.Cell>
+										</Table.Row>
+									);
+								})}
+							</Table.Body>
+						</Table>
+					</div>
+				</>
+			)}
 		</div>
 	);
 };
