@@ -77,7 +77,7 @@ const IssueTable: React.FC = () => {
 	return (
 		<>
 			<span>{`1-${issues.length} ${t('of')} ${issuesCount}`}</span>
-			<Table selectable compact sortable>
+			<Table selectable sortable unstackable>
 				<Table.Header>
 					<Table.Row>
 						{columns.map((column) => (
@@ -89,7 +89,6 @@ const IssueTable: React.FC = () => {
 								<HeaderCell sort={sort} name={column} />
 							</Table.HeaderCell>
 						))}
-						<Table.HeaderCell className={styles.headerCell}> </Table.HeaderCell>
 					</Table.Row>
 				</Table.Header>
 

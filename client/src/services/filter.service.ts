@@ -81,3 +81,12 @@ export const loadFilterById = async (id: string): Promise<WebApi.Entities.Filter
 
 	return (await res.json()) as WebApi.Entities.Filter;
 };
+
+export const deleteFilter = async (id: string): Promise<WebApi.Entities.Filter> => {
+	const res = await callWebApi({
+		method: 'DELETE',
+		endpoint: `filter/${id}`,
+	});
+
+	return (await res.json()) as WebApi.Entities.Filter;
+};

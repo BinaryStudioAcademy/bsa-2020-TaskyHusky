@@ -9,6 +9,8 @@ import { getInitials } from 'helpers/getInitials.helper';
 import { requestTeammates } from 'services/user.service';
 import IssueCommentTextInput from '../IssueCommentTextInput';
 import { getXMLText } from 'helpers/getDisplayCommentText.helper';
+import { Redirect } from 'react-router-dom';
+import Spinner from 'components/common/Spinner';
 
 interface Props {
 	onSubmit?: (text: string) => void;
@@ -62,8 +64,12 @@ const IssueCommentForm: React.FC<Props> = ({ onSubmit, issueId }) => {
 		setText('');
 	};
 
-	if (!authData.user || mustFetchUsers) {
-		return null;
+	if (!authData.user) {
+		return <Redirect to="/login" />;
+	}
+
+	if (mustFetchUsers) {
+		return <Spinner />;
 	}
 
 	const userOptions: Option[] = ([{ key: 0, value: null, text: '' }] as Option[]).concat(

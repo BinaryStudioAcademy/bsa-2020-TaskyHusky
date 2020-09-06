@@ -22,7 +22,6 @@ const SelectIcon = ({ currentIcon, onIconChange }: Props) => {
 			onClose={() => setIsIconsModalOpened(false)}
 			onOpen={() => setIsIconsModalOpened(true)}
 			open={isIconsModalOpened}
-			dimmer="inverted"
 			size="tiny"
 			trigger={
 				<button type="button" className={styles.form__avatar}>

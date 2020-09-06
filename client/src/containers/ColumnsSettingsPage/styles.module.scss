@@ -1,0 +1,16 @@
+.wrapper {
+	padding: 20px 60px;
+}
+
+.columnsContainer {
+	overflow-x: auto;
+	display: flex;
+}
+
+.createColumn {
+	min-width: 300px;
+	background-color: #eee !important;
+	margin-right: 20px !important;
+	margin-bottom: 20px !important;
+	height: min-content;
+}

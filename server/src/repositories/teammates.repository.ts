@@ -63,8 +63,12 @@ export class TeammatesRepository extends Repository<UserProfile> {
 		const creator = await this.findOne({ where: { id: creatorId } });
 		const teammate = await this.findOne({ where: { email: teammateEmail } });
 
-		if (!creator || !teammate) {
-			throw new Error(`${creator ? 'teammateEmail' : 'creatorId'} is invalid`);
+		if (!creator) {
+			throw new Error('Creator id is invalid');
+		}
+
+		if (!teammate) {
+			throw new Error('User with this email does not exist');
 		}
 
 		const creatorPendingInvites = <UserProfile[]>await this.getPendingInvitations(creator.id);

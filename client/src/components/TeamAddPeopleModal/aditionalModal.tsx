@@ -12,7 +12,7 @@ const AditionalModal = ({ setShowDelete, confirmDelete }: Props) => {
 	const { t } = useTranslation();
 
 	return (
-		<Modal onClose={() => setShowDelete(false)} open size="tiny" dimmer="inverted">
+		<Modal onClose={() => setShowDelete(false)} open size="tiny">
 			<Modal.Header>
 				<span className={styles.titleModal}>{t('you_are_going_to_delete_team')}</span>
 			</Modal.Header>

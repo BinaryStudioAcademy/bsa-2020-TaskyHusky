@@ -115,7 +115,7 @@ const ProjectsTable = ({ projects, currentUser }: Props) => {
 									<span> {getUsername(lead)} </span>
 								</span>
 							</Table.Cell>
-							<Table.Cell>
+							<Table.Cell className={styles.table__column_options}>
 								{currentUser?.id === lead.id && (
 									<Options
 										config={setProjectActions({ id, onOpenSettings, onTrash })}

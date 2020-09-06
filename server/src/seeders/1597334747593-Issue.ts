@@ -27,8 +27,6 @@ export class Issue1597334747593 implements MigrationInterface {
 		const issueType2 = (await issueTypeRepository.findAll())[1]!;
 		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 		const issueType3 = (await issueTypeRepository.findAll())[2]!;
-		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-		const issueType4 = (await issueTypeRepository.findAll())[3]!;
 
 		const priorityRepository = getCustomRepository(PriorityRepository);
 		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -117,7 +115,7 @@ export class Issue1597334747593 implements MigrationInterface {
 		issue3.attachments = '{attachments2}';
 		issue3.links = '{link/toSpace}';
 		issue3.issueKey = 'IK-3';
-		issue3.type = issueType4;
+		issue3.type = issueType;
 		issue3.priority = priority2;
 		issue3.status = issueStatus;
 		issue3.sprint = sprint4;
@@ -157,7 +155,7 @@ export class Issue1597334747593 implements MigrationInterface {
 		issue5.attachments = '{attachments4}';
 		issue5.links = '{link/toSpace}';
 		issue5.issueKey = 'IK-5';
-		issue5.type = issueType4;
+		issue5.type = issueType;
 		issue5.priority = priority4;
 		issue5.status = issueStatus4;
 		issue5.sprint = sprint2;
@@ -236,7 +234,7 @@ export class Issue1597334747593 implements MigrationInterface {
 		issue9.attachments = '{attachments4}';
 		issue9.links = '{link/toSpace}';
 		issue9.issueKey = 'IK-9';
-		issue9.type = issueType4;
+		issue9.type = issueType;
 		issue9.priority = priority4;
 		issue9.status = issueStatus4;
 		issue9.sprint = sprint3;

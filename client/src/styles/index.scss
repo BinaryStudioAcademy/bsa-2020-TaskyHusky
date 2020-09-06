@@ -101,7 +101,7 @@ label {
 }
 
 .cardContainer {
-	margin-top: 32px;
+	margin-top: 20px;
 	display: flex;
 	flex-wrap: wrap;
 }
@@ -136,6 +136,24 @@ label {
 	align-items: center;
 }
 
+.managerHeader {
+	@include manager-header;
+	margin: 0;
+}
+
+.standartInput {
+	@include input;
+}
+
+.sipleTab {
+	margin-top: 22px !important;
+	margin-bottom: 22px;
+}
+
+.bottomTab {
+	margin-bottom: 22px;
+}
+
 @media screen and (max-width: $less-than-medium-screen) {
 	.workBlock {
 		width: 100%;
@@ -147,8 +165,4 @@ label {
 		margin-left: 0 !important;
 		margin-right: 0 !important;
 	}
-}
-
-.standartInput {
-	@include input;
 }

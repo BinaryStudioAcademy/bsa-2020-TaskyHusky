@@ -57,7 +57,7 @@ const AddTeamPopup: React.FC<Props> = ({ isOpen = false, closeClb }): ReactEleme
 	};
 
 	return (
-		<Modal open={isOpen} onClose={closeClb} size="small" dimmer="inverted">
+		<Modal open={isOpen} onClose={closeClb} size="small">
 			<Modal.Header>{t('create_team_modal_header')}</Modal.Header>
 			<Modal.Content image scrolling>
 				<Image size="big" src={linksImg} wrapped className={style.img} />

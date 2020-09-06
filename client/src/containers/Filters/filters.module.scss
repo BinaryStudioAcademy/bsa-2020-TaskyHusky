@@ -1,0 +1,42 @@
+@import 'styles/mixins.scss';
+
+:global(#root) {
+	.main {
+		width: 100%;
+		background-color: #f5f7f9;
+	}
+	.mainHeader {
+		display: flex;
+		justify-content: space-between;
+		padding: 25px 10% 17px;
+	}
+	.container {
+		padding: 0 10%;
+	}
+
+	.headerCell {
+		background-color: #f9fafb;
+		border-left: none;
+	}
+
+	.starCell {
+		text-align: center;
+	}
+
+	.imgWrapper {
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		.content {
+			display: flex;
+			flex-direction: column;
+			.img {
+				width: 200px;
+				margin: 10px;
+			}
+			.text {
+				text-align: center;
+			}
+		}
+	}
+}
