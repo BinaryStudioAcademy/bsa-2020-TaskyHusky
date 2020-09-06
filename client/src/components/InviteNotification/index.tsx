@@ -46,17 +46,23 @@ const InviteNotification: React.FC<Props> = (props: Props) => {
 
 	return (
 		<div className={styles.notification}>
-			<div style={{ display: 'flex', alignItems: 'center' }}>
+			<div style={{ display: 'flex', alignItems: 'center', width: '100%' }}>
 				{avatar ? (
 					<img src={avatar} className={styles.avatar} style={{ float: 'left' }} alt="Avatar" />
 				) : (
 					<div className={styles.avatar}>{initials}</div>
 				)}
-				<div>
+				<div style={{ width: 'calc(100% - 50px)' }}>
 					<div style={{ display: 'flex', justifyContent: 'space-between' }}>
-						<div>{name}</div>
+						<div style={{ color: '#202020' }}>{name}</div>
 						<div>
-							<Icon name="check" onClick={handleApprove} title={t('approve')} link />
+							<Icon
+								name="check"
+								onClick={handleApprove}
+								style={{ color: '#deae0f' }}
+								title={t('approve')}
+								link
+							/>
 							<Icon name="close" onClick={handleDecline} title={t('decline')} link />
 						</div>
 					</div>
