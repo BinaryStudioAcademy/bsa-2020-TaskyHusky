@@ -20,6 +20,7 @@
 	color: #000000de !important;
 }
 
+
 .contentHeader {
 	@include info-block-header;
 	margin: 0 !important;
@@ -44,5 +45,12 @@
 @media screen and (max-width: $less-than-medium-screen) {
 	.mainHeader {
 		display: block;
+	}
+}
+
+@media screen and (max-width: $mobile-screen) {
+	.btnContainer {
+		margin-top: 25px;
+		margin-left: -21px;
 	}
 }
