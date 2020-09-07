@@ -55,7 +55,7 @@ export const ru = {
 	attachments: 'Файлы',
 	add_link: 'Добавить ссылку',
 	add_attachment: 'Добавить файл',
-	description: 'Функциональность',
+	description: 'Описание',
 	submit: 'Отправить',
 	cancel: 'Отмена',
 	tags_input_hint_1: "Нажмите 'Стрелка вверх",

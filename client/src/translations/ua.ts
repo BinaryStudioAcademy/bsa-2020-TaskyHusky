@@ -54,7 +54,7 @@ export const ua = {
 	attachments: 'Файли',
 	add_link: 'Додати посилання',
 	add_attachment: 'Додати файл',
-	description: 'Функціональність',
+	description: 'Опис',
 	submit: 'Відправити',
 	cancel: 'Скасувати',
 	tags_input_hint_1: "Натісніть 'Стрілка вгору",

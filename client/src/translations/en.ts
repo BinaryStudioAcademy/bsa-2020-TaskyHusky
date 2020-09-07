@@ -54,7 +54,7 @@ export const en = {
 	attachments: 'Attachments',
 	add_link: 'Add link',
 	add_attachment: 'Add attachment',
-	description: 'Functionality',
+	description: 'Description',
 	submit: 'Submit',
 	cancel: 'Cancel',
 	tags_input_hint_1: "Press 'Arrow Up",
