@@ -6,6 +6,7 @@ interface Props {
 		name: string;
 		id: string;
 		avatar?: string;
+		color?: string;
 		category?: string;
 		updatedDate?: Date;
 		issues?: Partial<WebApi.Entities.Issue>[];

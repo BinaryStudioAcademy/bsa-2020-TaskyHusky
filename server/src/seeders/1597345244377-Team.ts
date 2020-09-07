@@ -11,7 +11,7 @@ export class Team1597345244377 implements MigrationInterface {
 		const teamPromises = await [
 			{
 				id: 'Quality Engineer',
-				color: 'Red',
+				color: '#ebeb54',
 				name: 'Lang LLC',
 				creator: {
 					id: '48e60f10-9498-4870-9e7b-11681e213454',
@@ -24,7 +24,7 @@ export class Team1597345244377 implements MigrationInterface {
 			},
 			{
 				id: 'Office Assistant I',
-				color: 'Fuchsia',
+				color: '#00B3E6',
 				name: 'Orn-Aufderhar',
 				creator: {
 					id: '474d2249-4d17-4f88-88ab-08ed22fe8723',
@@ -37,7 +37,7 @@ export class Team1597345244377 implements MigrationInterface {
 			},
 			{
 				id: 'Dental Hygienist',
-				color: 'Indigo',
+				color: '#E6B333',
 				name: 'VonRueden-Yost',
 				creator: {
 					id: '9ee76267-a351-470b-a656-c386a2e4a6a2',

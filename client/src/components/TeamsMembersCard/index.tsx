@@ -23,6 +23,7 @@ export interface User {
 	location?: string;
 	department?: string;
 	jobTitle?: string;
+	color?: string;
 }
 
 const TeamsMembersCard = ({ title, teamOwner, removeUserFromTeam, teammates = [] }: Props) => {
@@ -81,6 +82,7 @@ const TeamsMembersCard = ({ title, teamOwner, removeUserFromTeam, teammates = []
 										key={teammate.id}
 										fullName={fullUserName(teammate.firstName, teammate.lastName)}
 										imgSrc={teammate.avatar}
+										color={teammate.color}
 									/>
 								</Link>
 							</div>

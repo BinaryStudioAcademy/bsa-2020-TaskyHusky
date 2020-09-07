@@ -19,6 +19,7 @@ type UserModel = {
 	location?: string;
 	department?: string;
 	jobTitle?: string;
+	color?: string;
 };
 
 type Props = {
@@ -45,7 +46,11 @@ const ModalViewProfile = ({ user, onClose }: Props) => {
 						<div className={styles.main_info}>
 							<div className={styles.avatar}>
 								<Link to={`/profile/${user.id}`}>
-									<Avatar fullName={`${user.firstName} ${user.lastName}`} imgSrc={user.avatar} />
+									<Avatar
+										fullName={`${user.firstName} ${user.lastName}`}
+										imgSrc={user.avatar}
+										color={user.color}
+									/>
 								</Link>
 							</div>
 							<div className={styles.left_margin}></div>

@@ -16,7 +16,7 @@ const ChosenPeople = ({ users }: Props) => {
 						<span className={styles.email}>{el.email}</span>
 					</div>
 					<div className={styles.userAvatar}>
-						<Avatar fullName={`${el.firstName} ${el.lastName}`} imgSrc={el?.avatar} />
+						<Avatar fullName={`${el.firstName} ${el.lastName}`} imgSrc={el?.avatar} color={el.color} />
 					</div>
 				</div>
 			))}
