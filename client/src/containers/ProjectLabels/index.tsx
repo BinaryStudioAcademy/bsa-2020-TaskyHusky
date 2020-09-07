@@ -50,6 +50,9 @@ const ProjectLabels = (props: Props) => {
 			<div className={styles.body_inner__container}>
 				<div className={styles.header_inner__container}>
 					<h1 className={styles.header_inner__title}>{t('labels')}</h1>
+					<Button className={'primaryBtn'} onClick={onOpenAddLabelModal}>
+						{t('add_label')}
+					</Button>
 				</div>
 				{labels.length === 0 ? (
 					<div className={styles.imgWrapper}>
@@ -59,7 +62,7 @@ const ProjectLabels = (props: Props) => {
 						</div>
 					</div>
 				) : (
-					<>
+					<div className={styles.label__container}>
 						<ul className={styles.label__list}>
 							{labels.map((label) => (
 								<li key={label.id} className={styles.label__list_item}>
@@ -86,11 +89,8 @@ const ProjectLabels = (props: Props) => {
 								</li>
 							))}
 						</ul>
-					</>
+					</div>
 				)}
-				<Button className={['primaryBtn', styles.button__add_action].join(' ')} onClick={onOpenAddLabelModal}>
-					{t('add_label')}
-				</Button>
 			</div>
 			{isModalOpen && <AddLabelModal />}
 			{isConfirmModalOpen && (

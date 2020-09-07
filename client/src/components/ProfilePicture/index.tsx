@@ -10,6 +10,7 @@ import { getInitials } from 'helpers/getInitials.helper';
 import CropModal from 'components/CropModal';
 import { base64StringtoFile, extractImageFileExtensionFromBase64 } from 'helpers/canvas.helper';
 import { ModeManager } from 'containers/ProfilePage';
+import { defaultAvatarBg } from 'constants/defaultColors';
 
 interface Props {
 	firstName: string;
@@ -63,7 +64,7 @@ const ProfilePicture: React.FC<Props> = (props: Props) => {
 			<div className={styles.container}>
 				{uploadUrl && <CropModal uploadUrl={uploadUrl as string} onClose={onClose} saveCrop={saveCrop} />}
 				<div className={styles.mainInfo}>
-					<div className={styles.avatarContainer} style={{ backgroundColor: color ?? '#676f74' }}>
+					<div className={styles.avatarContainer} style={{ backgroundColor: color ?? defaultAvatarBg }}>
 						<div className={styles.borderHelper}>
 							{avatar ? (
 								<img src={avatar} className={styles.avatar} alt="Avatar" />
