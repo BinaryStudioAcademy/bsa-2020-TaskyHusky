@@ -1,1 +1,1 @@
-export const defaultAvatarBg = '#676f74';
+export const defaultAvatarBg = '#c7cfd4';
