@@ -449,4 +449,6 @@ export const ru = {
 	remove_user_from_project: 'Удалить c проекта',
 	team_header: 'Команда',
 	my_team: 'Моя команда',
+	active_sprint: 'Активный спринт',
+	reports: 'Отчеты',
 };

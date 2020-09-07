@@ -465,4 +465,6 @@ export const en = {
 	remove_user_from_project: 'Remove from project',
 	team_header: 'Team',
 	my_team: 'My team',
+	active_sprint: 'Active sprint',
+	reports: 'Reports',
 };

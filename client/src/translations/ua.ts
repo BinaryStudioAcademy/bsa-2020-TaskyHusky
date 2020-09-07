@@ -441,4 +441,6 @@ export const ua = {
 	remove_user_from_project: 'Видалити з проекту',
 	team_header: 'Команда',
 	my_team: 'Моя команда',
+	active_sprint: 'Активний спринт',
+	reports: 'Звіти',
 };
