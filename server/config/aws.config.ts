@@ -1,5 +1,6 @@
 export const fileSize = 10000000; // ~ 10MB
 export const avatarFolder = 'avatars';
+export const projectAvatarFolder = 'projectAvatars';
 export const issueAttachmentFolder = 'issue/attchments';
 
 export const awsConfig = {

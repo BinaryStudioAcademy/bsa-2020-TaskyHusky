@@ -1,36 +1,35 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Modal, Button } from 'semantic-ui-react';
 import i18n from 'i18next';
 import styles from './styles.module.scss';
 import icons from 'assets/images/project';
 
 interface Props {
-	currentIcon: any;
 	onIconChange: (field: string, icon: string) => void;
+	uploadPhoto: (e: any) => void;
+	onClose: () => void;
+	isIconsModalOpened: boolean;
 }
 
-const SelectIcon = ({ currentIcon, onIconChange }: Props) => {
-	const [isIconsModalOpened, setIsIconsModalOpened] = useState<boolean>(false);
-
+const SelectIcon = ({ onIconChange, uploadPhoto, isIconsModalOpened, onClose }: Props) => {
 	const onChooseIcon = (icon: string): void => {
 		onIconChange('icon', icon);
-		setIsIconsModalOpened(false);
+		onClose();
 	};
 
 	return (
-		<Modal
-			onClose={() => setIsIconsModalOpened(false)}
-			onOpen={() => setIsIconsModalOpened(true)}
-			open={isIconsModalOpened}
-			size="tiny"
-			trigger={
-				<button type="button" className={styles.form__avatar}>
-					<img className={styles.avatar__img} src={currentIcon} alt="Project avatar" />
-					<span className={styles.avatar__text}>{i18n.t('select_image')}</span>
-				</button>
-			}
-		>
-			<Modal.Header className="standartHeader">{'Click to edit this avatar'}</Modal.Header>
+		<Modal onClose={onClose} open={isIconsModalOpened} size="tiny">
+			<Modal.Header>
+				<p className="standartHeader">{'Click to edit this avatar'}</p>{' '}
+				<Button className="primaryBtn">{i18n.t('upload_new')}</Button>
+				<input
+					accept=".jpg, .jpeg, .png, .bmp"
+					id="contained-button-file"
+					type="file"
+					onInput={uploadPhoto}
+					className={styles.hidden}
+				/>
+			</Modal.Header>
 			<div className={styles.icons__container}>
 				<ul className={styles.icons__list}>
 					{Object.values(icons).map((icon: string) => (
@@ -43,7 +42,7 @@ const SelectIcon = ({ currentIcon, onIconChange }: Props) => {
 				</ul>
 			</div>
 			<Modal.Actions>
-				<Button className="cancelBtn" onClick={() => setIsIconsModalOpened(false)}>
+				<Button className="cancelBtn" onClick={onClose}>
 					{i18n.t('cancel')}
 				</Button>
 			</Modal.Actions>

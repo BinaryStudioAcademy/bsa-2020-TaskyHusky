@@ -55,6 +55,18 @@ export const updateProject = async (project: WebApi.Entities.Projects): Promise<
 	return (await res.json()) as WebApi.Entities.Projects;
 };
 
+export const requestUdateAvatar = async (image: File, id: string): Promise<WebApi.Entities.Projects> => {
+	const res = await callWebApi({
+		method: 'POST',
+		endpoint: `projects/avatar/${id}`,
+		skipAuthorization: false,
+		attachment: image,
+	});
+	console.log(res);
+
+	return (await res.json()) as WebApi.Entities.Projects;
+};
+
 export const deleteProject = async (id: ProjectId): Promise<WebApi.Entities.Projects> => {
 	const res: Response = await callWebApi({
 		method: 'DELETE',

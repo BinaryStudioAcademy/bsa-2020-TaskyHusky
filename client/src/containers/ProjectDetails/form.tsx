@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, RefObject } from 'react';
 import { Form, TextArea, Button, Icon, Popup, Dropdown } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 import * as actions from '../ProjectSettings/logic/actions';
@@ -10,6 +10,9 @@ import { RootState } from 'typings/rootState';
 import { startGettingKeys } from 'containers/CreateProjectModal/logic/actions';
 import { validProjectKey, validProjectName } from 'helpers/validationRules';
 import * as validationMessage from 'constants/ValidationMessages';
+import { base64StringtoFile, extractImageFileExtensionFromBase64 } from 'helpers/canvas.helper';
+import CropModal from 'components/CropModal';
+import { Link } from 'react-router-dom';
 
 interface Props {
 	projectData: WebApi.Entities.Projects;
@@ -20,8 +23,48 @@ const ProjectForm = ({ projectData }: Props) => {
 	const dispatch = useDispatch();
 	const { keys } = useSelector((rootState: RootState) => rootState.createProject);
 
-	const [project, setProject] = useState<WebApi.Entities.Projects>(projectData);
+	const [isIconsModalOpened, setIsIconsModalOpened] = useState<boolean>(false);
+	const [uploadUrl, setUploadUrl] = useState<ArrayBuffer | string | null>('');
+	const [imgSrcExt, setImgSrcExt] = useState<string | null>(null);
+	const [newProjectAvatar, setNewProjectAvatar] = useState<File | null>(null);
 
+	const closeModalIcon = () => {
+		setIsIconsModalOpened(false);
+	};
+	const openModalIcon = () => {
+		setIsIconsModalOpened(true);
+	};
+
+	const onCloseCrop = () => {
+		setUploadUrl(null);
+	};
+
+	const uploadPhoto = async (e: any) => {
+		const reader = new FileReader();
+		if (e.target.files[0]) {
+			reader.readAsDataURL(e.target.files[0]);
+			reader.onloadend = () => {
+				const { result } = reader;
+				setUploadUrl(result);
+				setImgSrcExt(extractImageFileExtensionFromBase64(result as string));
+			};
+			closeModalIcon();
+		}
+	};
+
+	const saveCrop = (imagePreviewCanvasRef: RefObject<HTMLCanvasElement>) => {
+		if (uploadUrl) {
+			const canvasRef = imagePreviewCanvasRef.current;
+			if (canvasRef) {
+				const imageData64 = canvasRef.toDataURL('image/' + imgSrcExt);
+				const myFilename = 'previewFile.' + imgSrcExt;
+				const myNewCroppedFile = base64StringtoFile(imageData64, myFilename);
+				setNewProjectAvatar(myNewCroppedFile);
+			}
+		}
+	};
+
+	const [project, setProject] = useState<WebApi.Entities.Projects>(projectData);
 	const [isNameValid, setIsNameValid] = useState<boolean>(true);
 	const [isKeyValid, setIsKeyValid] = useState<boolean>(true);
 	const [isValidErrorShown, setIsValidErrorShown] = useState<boolean>(false);
@@ -64,6 +107,9 @@ const ProjectForm = ({ projectData }: Props) => {
 			setIsValidErrorShown(true);
 			return;
 		}
+		if (newProjectAvatar) {
+			dispatch(actions.requestUpdateProjectAvatar({ image: newProjectAvatar, id: project.id }));
+		}
 		dispatch(actions.startUpdatingProject({ project }));
 	};
 
@@ -76,7 +122,7 @@ const ProjectForm = ({ projectData }: Props) => {
 		<div className={styles.form__container}>
 			<Form>
 				<Form.Field className={styles.form__input_key} required>
-					<label className={styles.avatar__label}>{t('name')}</label>
+					<label className="standartLabel">{t('name')}</label>
 					<CustomInput
 						isValidErrorShown={isValidErrorShown}
 						isDataValid={isNameValid}
@@ -90,7 +136,7 @@ const ProjectForm = ({ projectData }: Props) => {
 					/>
 				</Form.Field>
 				<Form.Field className={styles.form__input_key} required>
-					<label>{t('key')}</label>
+					<label className="standartLabel">{t('key')}</label>
 					<div className={styles.form__input_container}>
 						<CustomInput
 							isValidErrorShown={isValidErrorShown}
@@ -119,9 +165,9 @@ const ProjectForm = ({ projectData }: Props) => {
 					value={project.url}
 				/>
 				<Form.Field className={styles.form__input}>
-					<label>{t('project_category')}</label>
+					<label className="standartLabel">{t('project_category')}</label>
 					<div className={styles.form__input_container}>
-						<input placeholder={t('category')} disabled />
+						<input placeholder={t('category')} className="standartInput" disabled />
 						<Popup
 							trigger={<Icon name="info circle" className={styles.information__icon} size={'large'} />}
 							position="bottom center"
@@ -130,11 +176,22 @@ const ProjectForm = ({ projectData }: Props) => {
 					</div>
 				</Form.Field>
 				<Form.Field required className={styles.form__input}>
-					<label className={styles.avatar__label}>{t('avatar')}</label>
-					<SelectIcon currentIcon={project.icon} onIconChange={onProjectChange} />
+					<label className="standartLabel">{t('avatar')}</label>
+					<button type="button" className={styles.form__avatar}>
+						<img className={styles.avatar__img} src={project.icon} alt="Project avatar" />
+						<span className={styles.avatar__text} onClick={openModalIcon}>
+							{t('select_image')}
+						</span>
+					</button>
+					<SelectIcon
+						onIconChange={onProjectChange}
+						uploadPhoto={uploadPhoto}
+						isIconsModalOpened={isIconsModalOpened}
+						onClose={closeModalIcon}
+					/>
 				</Form.Field>
 				<Form.Field className={styles.form__area}>
-					<label className={styles.avatar__label}>{t('Description')}</label>
+					<label className="standartLabel">{t('Description')}</label>
 					<TextArea
 						className={styles.project__description}
 						placeholder={t('project_desc')}
@@ -144,8 +201,9 @@ const ProjectForm = ({ projectData }: Props) => {
 					/>
 				</Form.Field>
 				<Form.Field className={styles.form__input}>
-					<label className={styles.avatar__label}>{t('lead')}</label>
+					<label className="standartLabel">{t('lead')}</label>
 					<Dropdown
+						className="standartSelect"
 						placeholder={`${project.lead.firstName} ${project.lead.lastName}`}
 						search
 						selection
@@ -155,12 +213,13 @@ const ProjectForm = ({ projectData }: Props) => {
 					/>
 				</Form.Field>
 				<Form.Field className={styles.form__input}>
-					<label className={styles.avatar__label}>{t('default_assignee')}</label>
+					<label className="standartLabel">{t('default_assignee')}</label>
 					<div className={styles.form__input_container}>
 						<Form.Select
 							options={options}
+							className="formSelect"
 							placeholder={t('unassigned')}
-							className={styles.form__input_select}
+							// className={styles.form__input_select}
 						/>
 						<Popup
 							trigger={<Icon name="info circle" className={styles.information__icon} size={'large'} />}
@@ -170,7 +229,7 @@ const ProjectForm = ({ projectData }: Props) => {
 					</div>
 				</Form.Field>
 				<div>
-					<Button as="Link" className={[styles.action_button, 'cancelBtn'].join(' ')} to="/projects">
+					<Button as={Link} className={[styles.action_button, 'cancelBtn'].join(' ')} to="/projects">
 						{t('cancel')}
 					</Button>
 					<Button className={['primaryBtn'].join(' ')} onClick={onSave}>
@@ -178,6 +237,7 @@ const ProjectForm = ({ projectData }: Props) => {
 					</Button>
 				</div>
 			</Form>
+			{uploadUrl && <CropModal uploadUrl={uploadUrl as string} onClose={onCloseCrop} saveCrop={saveCrop} />}
 		</div>
 	);
 };

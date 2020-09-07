@@ -11,6 +11,7 @@ export const initialState: ProjectState = {
 		key: '',
 		category: '',
 		icon: '',
+		color: '',
 		sprints: [],
 		boards: [],
 		defaultAssignee: undefined,

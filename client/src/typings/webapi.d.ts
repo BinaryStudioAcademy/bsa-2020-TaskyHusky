@@ -376,6 +376,7 @@ namespace WebApi.Entities {
 		id: string;
 		name: string;
 		key: string;
+		avatar?: string;
 		description?: string;
 		icon: string;
 		url?: string;

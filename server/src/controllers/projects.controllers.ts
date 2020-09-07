@@ -6,11 +6,39 @@ import { validateProject } from '../../validators/validateProjects.validator';
 import { projectsErrorMessages } from '../constants/projects.constants';
 import { UserProfile } from '../entity/UserProfile';
 import { Projects } from '../entity/Projects';
+import { projectAvatarFolder } from '../../config/aws.config';
 import { ProjectsRepository } from '../repositories/projects.repository';
 import { ErrorResponse } from '../helpers/errorHandler.helper';
 import HttpStatusCode from '../constants/httpStattusCode.constants';
+import uploadS3 from '../services/file.service';
 
 class ProjectsController {
+	uploadAvatar = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+		const projectsRepository = getCustomRepository(ProjectsRepository);
+		const { id: projectId } = req.params;
+
+		const project = await projectsRepository.getOne(projectId);
+
+		if (project === undefined) {
+			next(new ErrorResponse(HttpStatusCode.NOT_FOUND, projectsErrorMessages.PROJECT_NOT_FOUND));
+			return;
+		}
+
+		const timestamp = +new Date();
+		const name = `${projectId}_${timestamp}`;
+		try {
+			const avatar = await uploadS3(projectAvatarFolder, req.file, name);
+			if (!avatar) {
+				throw new Error('Could not update avatar');
+			}
+			const dataToUpdate = { ...project, avatar };
+			const updatedProject = await projectsRepository.updateOne(dataToUpdate);
+			res.send(updatedProject);
+		} catch (error) {
+			next(new ErrorResponse(400, error.message));
+		}
+	};
+
 	getAllProjects = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
 		const projectsRepository = getCustomRepository(ProjectsRepository);
 		const { id: userId } = req.user;

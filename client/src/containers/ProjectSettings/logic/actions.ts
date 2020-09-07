@@ -6,7 +6,9 @@ export const successGettingProject = createAction<actionTypes.SuccessGettingProj
 	actionTypes.SUCCESS_GETTING_PROJECT,
 );
 export const failGettingProject = createAction(actionTypes.FAIL_GETTING_PROJECT);
-
+export const requestUpdateProjectAvatar = createAction<actionTypes.RequestUpdateAvatar>(
+	actionTypes.REQUEST_UPDATE_AVATAR,
+);
 export const startUpdatingProject = createAction<actionTypes.UpdatingProject>(actionTypes.START_UPDATING_PROJECT);
 export const successUpdatingProject = createAction<actionTypes.UpdatingProject>(actionTypes.SUCCESS_UPDATING_PROJECT);
 export const failUpdatingProject = createAction(actionTypes.FAIL_UPDATING_PROJECT);
