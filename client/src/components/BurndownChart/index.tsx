@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import * as d3 from 'd3';
 import * as _ from 'lodash';
 import moment from 'moment';
+import styles from './chart.module.scss';
+import { getSortedCompletedIssues, getEndDate, getStartOfDayDate } from './helpers';
 
 interface Props {
 	sprint: WebApi.Entities.Sprint;
@@ -17,36 +19,14 @@ type ActiveSprint = {
 	endDate: Date;
 	issues: WebApi.Entities.Issue[];
 };
-type CompletedIssues = {
-	id: string;
-	summary?: string;
-	storyPoint?: number;
-	createdAt: Date;
-	updatedAt: Date;
-	completedAt: Date;
-};
 
 const BurndownChart: React.FC<Props> = ({ sprint }) => {
 	const { startDate, endDate, issues } = sprint as ActiveSprint;
 
-	const sortedCompletedIssues = _.orderBy(issues, 'completedAt').filter(
-		({ completedAt }) => completedAt,
-	) as CompletedIssues[];
+	const sortedCompletedIssues = getSortedCompletedIssues(issues);
 
-	const getEndDate = () => {
-		if (sortedCompletedIssues.length !== 0) {
-			const lastCompletedIssue = sortedCompletedIssues[sortedCompletedIssues.length - 1];
-			const end =
-				lastCompletedIssue.completedAt > new Date(endDate)
-					? lastCompletedIssue.completedAt
-					: new Date(moment(new Date(endDate)).startOf('day').format());
-			return end;
-		}
-		return new Date(moment(new Date(endDate)).startOf('day').format());
-	};
-
-	const start = new Date(moment(new Date(startDate)).startOf('day').format());
-	const end = getEndDate();
+	const start = getStartOfDayDate(startDate);
+	const end = getEndDate(sortedCompletedIssues, endDate);
 
 	const maxPoint = _.sumBy(issues, 'storyPoint');
 
@@ -71,7 +51,7 @@ const BurndownChart: React.FC<Props> = ({ sprint }) => {
 	sortedCompletedIssues
 		.map((issue) => ({
 			...issue,
-			completedAt: new Date(moment(new Date(issue['completedAt'])).startOf('day').format()),
+			completedAt: getStartOfDayDate(issue['completedAt']),
 		}))
 		.forEach((issue) => {
 			const prevPoint = datum[datum.length - 1];
@@ -106,12 +86,19 @@ const BurndownChart: React.FC<Props> = ({ sprint }) => {
 		const storyPointTicks = days.length;
 		const timeTicks = d3.timeDay.every(1);
 
-		const yaxis = d3.axisLeft(yScale).ticks(storyPointTicks).scale(yScale);
+		const yaxis = d3.axisLeft(yScale).tickPadding(10).ticks(storyPointTicks).scale(yScale);
 		const xaxis = d3
 			.axisBottom(xScale)
 			.ticks(timeTicks)
 			.tickFormat(d3.timeFormat('%b %d') as any)
+			.tickPadding(10)
 			.scale(xScale);
+
+		const line = d3
+			.line()
+			.defined((d: any) => !isNaN(d.storyPoint))
+			.x((d: any) => xScale(d.date))
+			.y((d: any) => yScale(d.storyPoint));
 
 		const fontSize = 15;
 		const translateRight = 70;
@@ -120,10 +107,12 @@ const BurndownChart: React.FC<Props> = ({ sprint }) => {
 		const svg = d3.select('.svg').attr('preserveAspectRatio', 'xMinYMin meet').classed('svg-content', true);
 
 		svg.append('g')
-			.attr('class', 'axis')
+			.attr('class', styles.axis)
 			.attr('transform', `translate(${translateRight},${height + translateUp})`)
 			.call(xaxis)
+			.attr('class', styles.tick)
 			.style('font-size', fontSize)
+
 			.append('text')
 			.attr('x', 0 + width / 2)
 			.attr('y', 40)
@@ -133,11 +122,15 @@ const BurndownChart: React.FC<Props> = ({ sprint }) => {
 			.attr('font-size', fontSize)
 			.attr('font-weight', 800)
 			.text('TIME');
+
 		svg.append('g')
-			.attr('class', 'axis')
+			.attr('class', styles.axis)
 			.attr('transform', `translate(${translateRight},${translateUp})`)
 			.call(yaxis)
+			.attr('class', styles.tick)
+
 			.style('font-size', fontSize)
+
 			.append('text')
 			.attr('transform', 'rotate(-90)')
 			.attr('y', 0 - translateRight)
@@ -148,11 +141,7 @@ const BurndownChart: React.FC<Props> = ({ sprint }) => {
 			.attr('font-size', fontSize)
 			.attr('font-weight', 800)
 			.text('STORY POINTS');
-		const line = d3
-			.line()
-			.defined((d: any) => !isNaN(d.storyPoint))
-			.x((d: any) => xScale(d.date))
-			.y((d: any) => yScale(d.storyPoint));
+
 		svg.append('path')
 			.datum(datum)
 			.attr('transform', `translate(${translateRight},${translateUp})`)
@@ -195,6 +184,68 @@ const BurndownChart: React.FC<Props> = ({ sprint }) => {
 			.attr('stroke-linejoin', 'round')
 			.attr('stroke-linecap', 'round')
 			.attr('d', line as any);
+
+		// legend
+		svg.append('rect')
+			.attr('x', width - 150 - 10)
+			.attr('y', 5)
+			.style('stroke', '#707070')
+			.style('fill', 'none')
+			.style('stroke-width', 1)
+			.attr('width', 155)
+			.attr('height', 55)
+			.attr('transform', `translate(${translateRight},${translateUp})`);
+
+		svg.append('rect')
+			.attr('x', width - 150)
+			.attr('y', 10 + 3)
+			.attr('width', 14)
+			.attr('height', 10)
+			.style('fill', 'red')
+			.attr('transform', `translate(${translateRight},${translateUp})`);
+
+		svg.append('rect')
+			.attr('x', width - 150)
+			.attr('y', 35 + 4)
+			.attr('width', 14)
+			.attr('height', 10)
+			.style('fill', '#336699')
+			.attr('transform', `translate(${translateRight},${translateUp})`);
+
+		svg.append('rect')
+			.attr('x', width - 150 - 2)
+			.attr('y', 10 + 1)
+			.style('stroke', '#707070')
+			.style('fill', 'none')
+			.style('stroke-width', 1)
+			.attr('width', 18)
+			.attr('height', 14)
+			.attr('transform', `translate(${translateRight},${translateUp})`);
+		svg.append('rect')
+			.attr('x', width - 150 - 2)
+			.attr('y', 35 + 2)
+			.style('stroke', '#707070')
+			.style('fill', 'none')
+			.style('stroke-width', 1)
+			.attr('width', 18)
+			.attr('height', 14)
+			.attr('transform', `translate(${translateRight},${translateUp})`);
+
+		svg.append('text')
+			.attr('x', width - 150 + 20)
+			.attr('y', 10 + 10)
+			.text('Completed issues')
+			.style('font-size', '14px')
+			.attr('alignment-baseline', 'middle')
+			.attr('transform', `translate(${translateRight},${translateUp})`);
+
+		svg.append('text')
+			.attr('x', width - 150 + 20)
+			.attr('y', 35 + 10)
+			.text('Guide line')
+			.style('font-size', '14px')
+			.attr('alignment-baseline', 'middle')
+			.attr('transform', `translate(${translateRight},${translateUp})`);
 	};
 
 	useEffect(() => {
