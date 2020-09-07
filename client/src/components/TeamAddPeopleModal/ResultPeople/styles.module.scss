@@ -2,7 +2,6 @@
 .userBlock,
 .mainInfo {
   display: flex;
-  justify-content: center;
   flex-wrap: wrap;
 }
 .userBlock {
@@ -39,4 +38,7 @@
 }
 .searchResult {
   width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }

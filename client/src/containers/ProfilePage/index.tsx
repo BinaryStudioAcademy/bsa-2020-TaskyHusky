@@ -115,38 +115,32 @@ const ProfilePage = ({ id }: { id: string }) => {
 	}, [projects, teammates, teams, activity, isCurrentUser]);
 
 	return (
-		<>
+		<div className={styles.wrapper}>
+			<ProfileHeader title={isCurrentUser ? t('my_profile') : t('profile')} />
 			{isLoading || isLoadAdditioanl ? (
 				<Spinner />
 			) : (
-				<div className={styles.wrapper}>
-					<ProfileHeader title={isCurrentUser ? t('my_profile') : t('profile')} />
-					<div className={styles.container}>
-						<ProfileAside
+				<div className={styles.container}>
+					<ProfileAside
+						user={user}
+						isCurrentUser={isCurrentUser}
+						teams={data.teams}
+						showManager={showManager}
+						editMode={editMode}
+					/>
+					{editMode ? (
+						<ProfileManagerSection
 							user={user}
-							isCurrentUser={isCurrentUser}
-							teams={data.teams}
-							showManager={showManager}
 							editMode={editMode}
+							showManager={showManager}
+							updateUser={updateUser}
 						/>
-						{editMode ? (
-							<ProfileManagerSection
-								user={user}
-								editMode={editMode}
-								showManager={showManager}
-								updateUser={updateUser}
-							/>
-						) : (
-							<ProfileSection
-								activity={data.activity}
-								projects={data.projects}
-								teammates={data.teammates}
-							/>
-						)}
-					</div>
+					) : (
+						<ProfileSection activity={data.activity} projects={data.projects} teammates={data.teammates} />
+					)}
 				</div>
 			)}
-		</>
+		</div>
 	);
 };
 

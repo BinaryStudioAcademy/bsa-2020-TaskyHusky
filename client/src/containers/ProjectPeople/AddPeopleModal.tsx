@@ -57,11 +57,12 @@ const AddPeopleModal: React.FC<Props> = (props) => {
 				</Button>
 			}
 		>
-			<Modal.Header>{t('add_people')}</Modal.Header>
+			<Modal.Header className="standartHeader">{t('add_people')}</Modal.Header>
 			<Modal.Content>
 				<Dropdown
 					loading={isPeopleLoading}
 					disabled={isPeopleLoading}
+					className="standartSelect"
 					fluid
 					multiple
 					onChange={onSearchDataChange}
@@ -82,7 +83,7 @@ const AddPeopleModal: React.FC<Props> = (props) => {
 				<Button className={styles.secondary__button} onClick={() => setIsOpen(false)}>
 					{t('cancel')}
 				</Button>
-				<Button className={'primaryBtn'} onClick={onAddSelectedUsers} loading={isLoading}>
+				<Button className="primaryBtn" onClick={onAddSelectedUsers} loading={isLoading}>
 					{t('add')}
 				</Button>
 			</Modal.Actions>

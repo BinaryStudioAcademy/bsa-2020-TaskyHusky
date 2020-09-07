@@ -47,10 +47,10 @@ const CreateBoardModal = (props: Props) => {
 
 	return (
 		<Modal onClose={() => setIsModalShown(false)} onOpen={() => setIsModalShown(true)} open={true} size="small">
-			<Modal.Header>
+			<Modal.Header className="standartHeader">
 				{modalWindowName !== ModalNames.createBoard ? t('create_a_board') : t('name_this_board')}
 			</Modal.Header>
-			<Modal.Content>
+			<Modal.Content className="textData">
 				{modalWindowName === ModalNames.selectType ? (
 					<BoardModalMenuType onTypeSelection={onTypeSelection} />
 				) : null}

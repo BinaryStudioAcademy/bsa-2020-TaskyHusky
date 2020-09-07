@@ -1,4 +1,4 @@
-@import 'styles/mixins.scss';
+@import "styles/mixins.scss";
 
 .block_wrapper {
   position: absolute;
@@ -30,7 +30,7 @@
     position: absolute;
 
     img,
-    a>div>div {
+    a > div > div {
       width: 70px;
       height: 70px;
       border-radius: 50%;

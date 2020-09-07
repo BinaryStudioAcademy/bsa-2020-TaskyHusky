@@ -2,6 +2,7 @@ import React from 'react';
 import { Table, Icon, Popup, Label } from 'semantic-ui-react';
 import styles from './styles.module.scss';
 import { getFullUserName } from './helpers';
+import { Link } from 'react-router-dom';
 
 interface Props {
 	issue: WebApi.Result.IssueResult;
@@ -74,30 +75,30 @@ const IssueItem = ({ issue }: Props) => {
 				<IssueTypeIcon type={type} />
 			</Table.Cell>
 			<Table.Cell>
-				<a href={`/issue/${issueKey}`} className={styles.underlinedLink}>
+				<Link to={`/issue/${issueKey}`} className={styles.underlinedLink}>
 					{issueKey}
-				</a>
+				</Link>
 			</Table.Cell>
 			<Table.Cell>
 				<div className={styles.userCell}>
-					<a href={`/issue/${issueKey}`} className={styles.underlinedLink}>
+					<Link to={`/issue/${issueKey}`} className={styles.underlinedLink}>
 						{summary}
-					</a>
+					</Link>
 				</div>
 			</Table.Cell>
 			<Table.Cell>
 				{assigned ? (
-					<a href={`/profile/${assigned.id}`} className={styles.underlinedLink}>
+					<Link to={`/profile/${assigned.id}`} className={styles.underlinedLink}>
 						{getFullUserName(assigned.firstName, assigned.lastName)}
-					</a>
+					</Link>
 				) : (
 					'Unassigned'
 				)}
 			</Table.Cell>
 			<Table.Cell>
-				<a href={`/profile/${creator.id}`} className={styles.underlinedLink}>
+				<Link to={`/profile/${creator.id}`} className={styles.underlinedLink}>
 					{getFullUserName(creator.firstName, creator.lastName)}
-				</a>
+				</Link>
 			</Table.Cell>
 			<Table.Cell>
 				<PriorityIcon priority={priority} />

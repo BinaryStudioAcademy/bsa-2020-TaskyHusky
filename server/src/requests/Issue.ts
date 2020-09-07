@@ -32,12 +32,7 @@ export class Issue {
 	links?: string[];
 
 	@Expose()
-	priority?: {
-		id: string;
-		color: string;
-		title: string;
-		icon: string;
-	};
+	priority?: string;
 
 	@Expose()
 	description?: string;
@@ -69,10 +64,8 @@ export class Issue {
 	updatedAt?: Date;
 
 	@Expose()
-	type?: {
-		id: string;
-		color: string;
-		title: string;
-		icon: string;
-	};
+	type?: string;
+
+	@Expose()
+	status?: string;
 }

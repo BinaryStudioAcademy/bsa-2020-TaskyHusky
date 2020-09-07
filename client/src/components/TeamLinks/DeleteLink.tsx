@@ -15,9 +15,9 @@ const DeleteLink = ({ onClose, link, onDelete }: Props) => {
 
 	return (
 		<Modal onClose={onClose} open size="tiny">
-			<Modal.Header>{t('delete_link')}</Modal.Header>
+			<Modal.Header className="standartHeader">{t('delete_link')}</Modal.Header>
 			<Modal.Content>
-				<p className={styles.linkDescription}>
+				<p className="textData">
 					{t('link_to')} <span className={styles.linkTitle}>{link.name}</span>{' '}
 					{t('will_be_deleted_from_section')}
 				</p>
@@ -25,13 +25,13 @@ const DeleteLink = ({ onClose, link, onDelete }: Props) => {
 			<Modal.Actions>
 				<Button
 					content={t('accept')}
-					primary
+					className="primaryBtn"
 					labelPosition="left"
 					icon="checkmark"
 					onClick={() => onDelete(link)}
 				/>
-				<Button basic className={styles.editBtn} onClick={onClose}>
-					<span className={styles.editBtnValue}>{t('cancel')}</span>
+				<Button className="cancelBtn" onClick={onClose}>
+					{t('cancel')}
 				</Button>
 			</Modal.Actions>
 		</Modal>

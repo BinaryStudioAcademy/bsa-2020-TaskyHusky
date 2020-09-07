@@ -28,21 +28,23 @@ const CreateLink = ({ onClose, currentLink, onConfirm }: Props) => {
 	};
 	return (
 		<Modal onClose={onClose} open size="tiny">
-			<Modal.Header>{t('add_link')}</Modal.Header>
+			<Modal.Header className="standartHeader">{t('add_link')}</Modal.Header>
 			<Modal.Content>
 				<Form size="big">
 					<Form.Field>
-						<label>{t('web_address')}</label>
+						<label className="standartLabel">{t('web_address')}</label>
 						<input
 							value={newLink.http}
+							className={styles.standartInput}
 							onChange={(e) => onChange(e)}
 							placeholder="For example: http://google.com"
 							name="http"
 						/>
 					</Form.Field>
 					<Form.Field>
-						<label>{t('title')}</label>
+						<label className="standartLabel">{t('title')}</label>
 						<input
+							className={styles.standartInput}
 							value={newLink.name}
 							onChange={(e) => onChange(e)}
 							placeholder={t('for_example_my_first_project')}
@@ -50,8 +52,9 @@ const CreateLink = ({ onClose, currentLink, onConfirm }: Props) => {
 						/>
 					</Form.Field>
 					<Form.Field>
-						<label>{t('small_description')}</label>
+						<label className="standartLabel">{t('small_description')}</label>
 						<textarea
+							className={styles.standartInput}
 							name="description"
 							onChange={(e) => onChange(e)}
 							defaultValue={newLink.description}
@@ -63,13 +66,13 @@ const CreateLink = ({ onClose, currentLink, onConfirm }: Props) => {
 			<Modal.Actions>
 				<Button
 					content={t('accept')}
-					primary
 					labelPosition="left"
 					icon="checkmark"
+					className="primaryBtn"
 					onClick={() => onConfirm(newLink)}
 				/>
-				<Button basic className={styles.editBtn} onClick={onClose}>
-					<span className={styles.editBtnValue}>{t('cancel')}</span>
+				<Button className="cancelBtn" onClick={onClose}>
+					{t('cancel')}
 				</Button>
 			</Modal.Actions>
 		</Modal>

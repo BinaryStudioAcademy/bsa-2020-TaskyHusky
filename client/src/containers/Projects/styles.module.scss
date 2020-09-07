@@ -1,19 +1,19 @@
 @import 'styles/mixins.scss';
 
 .wrapper {
-	padding: 30px 10%;
+	padding: 25px 10%;
 }
 
 .input {
 	@include input;
 	width: 243px !important;
-  
+
 	div:hover {
-	  background-color: none !important;
+		background-color: none !important;
 	}
-  
+
 	& input {
-	  border-radius: 6px !important;
+		border-radius: 6px !important;
 	}
 }
 
@@ -34,7 +34,7 @@
 }
 
 .wrapper__filters {
-	margin-bottom: 25px;
+	justify-content: space-between;
 }
 
 .filters {
@@ -43,6 +43,7 @@
 
 .wrapper__table {
 	position: relative;
+	margin: 0 10% !important;
 }
 
 .imgWrapper {
@@ -61,6 +62,7 @@
 
 		.text {
 			text-align: center;
+			@include text-data;
 		}
 	}
 }
@@ -68,6 +70,7 @@
 .table__header_cell {
 	background-color: #f9fafb !important;
 	border-left: none !important;
+	@include text-data;
 }
 
 .project__img {
@@ -94,6 +97,7 @@
 
 .project__name {
 	margin-right: 7px;
+	@include text-data;
 }
 
 .column__name {
@@ -120,6 +124,7 @@
 
 .table__column_options {
 	text-align: end !important;
+	@include text-data;
 }
 
 .column__lead {
@@ -134,4 +139,12 @@
 	width: 40px;
 }
 
+@media screen and (max-width: $medium-screen) {
+	.wrapper {
+		padding: 25px 8%;
+	}
 
+	.wrapper__table {
+		margin: 0 8% !important;
+	}
+}

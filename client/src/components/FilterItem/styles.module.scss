@@ -1,3 +1,5 @@
+@import 'styles/mixins.scss';
+
 :global(#root) {
 	.editCell {
 		overflow: visible !important;
@@ -7,10 +9,17 @@
 		display: flex;
 		flex-direction: row;
 		align-items: center;
+		@include text-data
 	}
 
 	.optionsCell,
 	.starCell {
 		text-align: center;
+		@include text-data
+	}
+
+	.filterNameCell,
+	.favouriteCell {
+		@include text-data
 	}
 }

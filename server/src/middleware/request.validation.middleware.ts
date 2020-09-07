@@ -10,7 +10,6 @@ export const validateRequestMw = (classToFetch: any) => {
 			const output = plainToClass(classToFetch, req.body);
 
 			const errors = await validate(output, { skipMissingProperties: true });
-
 			if (errors.length > 0) {
 				const errorTexts = errors.map((item) => item.constraints).join(' ');
 

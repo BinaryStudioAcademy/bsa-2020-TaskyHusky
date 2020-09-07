@@ -145,6 +145,28 @@ label {
 	@include input;
 }
 
+.standartSelect {
+	@include dropdown;
+}
+
+.formSelect {
+	&>div {
+		@include dropdown;
+	}
+}
+
+.textData {
+	@include text-data
+}
+
+.standartLabel {
+	@include label;
+}
+
+.standartHeader {
+	@include primary-header;
+}
+
 .sipleTab {
 	margin-top: 22px !important;
 	margin-bottom: 22px;
@@ -164,5 +186,11 @@ label {
 	.ui.container {
 		margin-left: 0 !important;
 		margin-right: 0 !important;
+	}
+}
+
+@media screen and (max-width: $mobile-screen) {
+	.emptyCard {
+		flex-direction: column;
 	}
 }

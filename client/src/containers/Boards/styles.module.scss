@@ -2,7 +2,6 @@
 
 :global(#root) {
 	.wrapper {
-		padding: 30px 60px;
 		:global(.ui.celled.fixed.table) {
 			td:last-child {
 				overflow: visible;
@@ -23,7 +22,8 @@
 	}
 
 	.wrapper__filters {
-		margin-bottom: 20px;
+		margin: 20px 10%;
+
 		div {
 			margin-right: 10px;
 		}
@@ -34,6 +34,7 @@
 	}
 
 	.wrapper__table {
+		margin: 20px 10%;
 		position: relative;
 	}
 
@@ -49,6 +50,7 @@
 	.header__cell {
 		background-color: #f9fafb;
 		border-left: none;
+		@include text-data;
 	}
 
 	.options__cell {
@@ -59,5 +61,25 @@
 		display: flex;
 		flex-direction: row;
 		align-items: center;
+		@include text-data;
+	}
+}
+
+@media screen and (max-width: $medium-screen) {
+
+	.wrapper__filters,
+	.wrapper__table {
+		margin: 20px 8% !important;
+	}
+}
+
+@media screen and (max-width: $mobile-screen) {
+	.wrapper__filters {
+		flex-direction: column;
+		align-items: flex-start;
+
+		&>div {
+			margin-bottom: 20px;
+		}
 	}
 }
