@@ -124,7 +124,7 @@ export class IssueRepository extends Repository<Issue> {
 		const newIssue = await this.findOneById(result.id);
 		issueHandler.emit(IssueActions.CreateIssue, newIssue);
 
-		return result;
+		return newIssue;
 	}
 
 	async watch(id: string, userId: string) {

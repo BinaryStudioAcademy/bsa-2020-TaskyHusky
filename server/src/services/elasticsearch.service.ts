@@ -9,7 +9,6 @@ interface ElasticI {
 }
 
 type BulkCreateOption = { index: { _index: string; _id: string } };
-
 class Elastic implements ElasticI {
 	index = 'documentIndex';
 
