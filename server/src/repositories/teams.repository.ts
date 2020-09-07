@@ -65,7 +65,15 @@ export class TeamRepository extends Repository<Team> {
 	async findTeamProjectsById(id: string) {
 		const team = await this.createQueryBuilder('Team')
 			.leftJoinAndSelect('Team.projects', 'Projects')
-			.select(['Team.id', 'Projects.id', 'Projects.name', 'Projects.category', 'Projects.key', 'Projects.color'])
+			.select([
+				'Team.id',
+				'Projects.id',
+				'Projects.name',
+				'Projects.category',
+				'Projects.key',
+				'Projects.color',
+				'Projects.avatar',
+			])
 			.where('Team.id = :id', { id })
 			.getOne();
 

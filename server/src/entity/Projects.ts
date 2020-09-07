@@ -37,6 +37,9 @@ export class Projects {
 	@Length(2, 10)
 	key!: string;
 
+	@Column({ nullable: true })
+	avatar?: string;
+
 	@Column({ type: 'text', default: '' })
 	@IsString()
 	@Length(0, 256)

@@ -12,6 +12,9 @@ export class Project {
 	name!: string;
 
 	@Expose()
+	avatar?: string;
+
+	@Expose()
 	@IsString()
 	@IsUppercase()
 	@Length(2, 10)
