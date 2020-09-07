@@ -118,7 +118,7 @@ const ProjectForm = ({ projectData }: Props) => {
 					onChange={(e) => onProjectChange('url', e.target.value)}
 					value={project.url}
 				/>
-				<Form.Field className={styles.form__input} required>
+				<Form.Field className={styles.form__input}>
 					<label>{t('project_category')}</label>
 					<div className={styles.form__input_container}>
 						<input placeholder={t('category')} disabled />
