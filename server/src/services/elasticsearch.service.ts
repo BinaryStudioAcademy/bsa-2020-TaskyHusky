@@ -57,7 +57,7 @@ class Elastic implements ElasticI {
 	update(issue: Issue) {
 		return client.update({
 			index: 'issue',
-			type: 'doc',
+			type: '_doc',
 			id: issue.id,
 			body: {
 				doc: {
@@ -71,7 +71,7 @@ class Elastic implements ElasticI {
 		return client.create({
 			index: this.index,
 			id: issue.id,
-			type: 'doc',
+			type: '_doc',
 			body: issue,
 		});
 	}
