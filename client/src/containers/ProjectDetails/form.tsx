@@ -170,10 +170,10 @@ const ProjectForm = ({ projectData }: Props) => {
 					</div>
 				</Form.Field>
 				<div>
-					<Button as="Link" className="cancelBtn" to="/projects">
+					<Button as="Link" className={[styles.action_button, 'cancelBtn'].join(' ')} to="/projects">
 						{t('cancel')}
 					</Button>
-					<Button className={[styles.action_button, 'primaryBtn'].join(' ')} onClick={onSave}>
+					<Button className={['primaryBtn'].join(' ')} onClick={onSave}>
 						{t('save_details')}
 					</Button>
 				</div>
