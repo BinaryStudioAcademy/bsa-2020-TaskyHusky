@@ -4,9 +4,10 @@ import styles from './styles.module.scss';
 interface Props {
 	fullName: string;
 	imgSrc?: string;
+	color?: string;
 }
 
-const Avatar = ({ fullName, imgSrc }: Props) => {
+const Avatar = ({ fullName, imgSrc, color }: Props) => {
 	const getAvatarInitials = (textString: string) => {
 		if (!textString) {
 			return '';
@@ -30,7 +31,7 @@ const Avatar = ({ fullName, imgSrc }: Props) => {
 
 	const renderPlaceholder = () => {
 		return (
-			<div className={styles.placeholderContainer}>
+			<div className={styles.placeholderContainer} style={{ backgroundColor: color ?? '#676f74' }}>
 				<span className={styles.placeholder}>{getAvatarInitials(fullName)}</span>
 			</div>
 		);

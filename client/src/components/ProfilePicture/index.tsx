@@ -63,7 +63,7 @@ const ProfilePicture: React.FC<Props> = (props: Props) => {
 			<div className={styles.container}>
 				{uploadUrl && <CropModal uploadUrl={uploadUrl as string} onClose={onClose} saveCrop={saveCrop} />}
 				<div className={styles.mainInfo}>
-					<div className={styles.avatarContainer} style={{ backgroundColor: color ?? '#f5f7f9' }}>
+					<div className={styles.avatarContainer} style={{ backgroundColor: color ?? '#676f74' }}>
 						<div className={styles.borderHelper}>
 							{avatar ? (
 								<img src={avatar} className={styles.avatar} alt="Avatar" />

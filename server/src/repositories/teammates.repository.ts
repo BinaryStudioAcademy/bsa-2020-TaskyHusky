@@ -7,7 +7,7 @@ export class TeammatesRepository extends Repository<UserProfile> {
 		const user = await this.createQueryBuilder('UserProfile')
 			.where('UserProfile.id = :id', { id })
 			.leftJoin('UserProfile.incomingInvites', 'user')
-			.addSelect(['user.id', 'user.firstName', 'user.lastName', 'user.avatar', 'user.jobTitle'])
+			.addSelect(['user.id', 'user.firstName', 'user.lastName', 'user.avatar', 'user.jobTitle', 'user.color'])
 			.getOne();
 
 		if (!user) {
@@ -21,7 +21,7 @@ export class TeammatesRepository extends Repository<UserProfile> {
 		const user = await this.createQueryBuilder('UserProfile')
 			.where('UserProfile.id = :id', { id })
 			.leftJoin('UserProfile.pendingInvites', 'user')
-			.addSelect(['user.id', 'user.firstName', 'user.lastName', 'user.avatar'])
+			.addSelect(['user.id', 'user.firstName', 'user.lastName', 'user.avatar', 'user.color'])
 			.getOne();
 
 		if (!user) {
@@ -35,7 +35,7 @@ export class TeammatesRepository extends Repository<UserProfile> {
 		const user = await this.createQueryBuilder('UserProfile')
 			.where('UserProfile.id = :id', { id })
 			.leftJoin('UserProfile.teammates', 'user')
-			.addSelect(['user.id', 'user.firstName', 'user.lastName', 'user.avatar', 'user.jobTitle'])
+			.addSelect(['user.id', 'user.firstName', 'user.lastName', 'user.avatar', 'user.jobTitle', 'user.color'])
 			.getOne();
 
 		if (!user) {
@@ -51,7 +51,15 @@ export class TeammatesRepository extends Repository<UserProfile> {
 			.where('UserProfile.id = :id', { id })
 			.innerJoin('UserProfile.teammates', 'user')
 			.andWhere('(LOWER(user.firstName) LIKE :name OR LOWER(user.lastName) LIKE :name)', { name: `${name}%` })
-			.addSelect(['UserProfile.id', 'user.id', 'user.firstName', 'user.lastName', 'user.avatar', 'user.email'])
+			.addSelect([
+				'UserProfile.id',
+				'user.id',
+				'user.firstName',
+				'user.lastName',
+				'user.avatar',
+				'user.email',
+				'user.color',
+			])
 			.getOne();
 		if (!user) {
 			throw new Error('User does not exist');
