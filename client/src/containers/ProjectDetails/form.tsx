@@ -134,7 +134,7 @@ const ProjectForm = ({ projectData }: Props) => {
 					<SelectIcon currentIcon={project.icon} onIconChange={onProjectChange} />
 				</Form.Field>
 				<Form.Field className={styles.form__area}>
-					<label className={styles.avatar__label}>{t('description')}</label>
+					<label className={styles.avatar__label}>{t('Description')}</label>
 					<TextArea
 						className={styles.project__description}
 						placeholder={t('project_desc')}
