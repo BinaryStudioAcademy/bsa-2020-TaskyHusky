@@ -6,23 +6,18 @@ export class IssueType1596717562603 implements MigrationInterface {
 		const data = [
 			{
 				title: 'Task',
-				color: 'green',
-				icon: 'check',
+				color: 'blue',
+				icon: 'clipboard check',
 			},
 			{
 				title: 'Bug',
 				color: 'red',
-				icon: 'bug',
+				icon: 'dot circle',
 			},
 			{
 				title: 'Story',
-				color: 'teal',
-				icon: 'file text',
-			},
-			{
-				title: 'Fix',
-				color: 'orange',
-				icon: 'eraser',
+				color: 'green',
+				icon: 'file alternate',
 			},
 		];
 

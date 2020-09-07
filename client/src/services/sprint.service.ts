@@ -9,7 +9,7 @@ export const deleteSprint = async (id: string): Promise<WebApi.Entities.Sprint> 
 	return await res.json();
 };
 
-export const getSprintIssues = async (id: string): Promise<WebApi.Entities.Issue[]> => {
+export const getSprintIssues = async (id: string): Promise<WebApi.Result.IssueResult[]> => {
 	const res: Response = await callWebApi({
 		method: 'GET',
 		endpoint: `sprint/${id}/issues`,

@@ -1,16 +1,13 @@
 import React, { useEffect } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import PrivateRoute from 'components/PrivateRoute';
-import Login from 'pages/LogIn';
 import Team from 'pages/Team';
 import Profile from 'pages/Profile';
 import PublicRoute from 'components/PublicRoute';
-import SignUp from 'pages/SignUp';
 import Filters from 'pages/Filters';
 import IssuePage from 'pages/IssuePage';
 import ProjectsPage from 'pages/ProjectsPage';
 import ProjectSettings from 'pages/ProjectSettings';
-import ProjectPeople from 'pages/ProjectPeople';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadProfileTrigger } from 'containers/LoginPage/logic/actions';
 import { RootState } from 'typings/rootState';
@@ -23,8 +20,10 @@ import Search from 'pages/AdvancedSearch';
 import Work from 'pages/Work';
 import ReportPage from 'pages/ReportPage';
 import ResetPassword from '../ResetPassword';
-import ForgotPassword from '../ForgotPassword';
 import ResetEmail from '../ResetEmail';
+import Landing from 'pages/LandingPage';
+import Spinner from 'components/common/Spinner';
+import ColumnsSettings from 'pages/ColumnsSettings';
 
 const Routing: React.FC = () => {
 	const dispatch = useDispatch();
@@ -38,25 +37,23 @@ const Routing: React.FC = () => {
 	}, [dispatch, profileLoaded, token]);
 
 	if (!profileLoaded) {
-		return null;
+		return <Spinner />;
 	}
 
 	return (
 		<Switch>
-			<PublicRoute exact restricted path="/login" component={Login} />
-			<PublicRoute exact restricted path="/forgot-password" component={ForgotPassword} />
+			<PublicRoute restricted exact path={['/', '/login', '/signup']} component={Landing} />
 			<Route exact path="/reset-password/:token" component={ResetPassword} />
-			<PublicRoute exact restricted path="/signup" component={SignUp} />
 			<PrivateRoute path="/reset-email/:token/:emailBtoa" component={ResetEmail} />
 			<PrivateRoute path="/issue/:key" component={IssuePage} />
 			<PrivateRoute exact path="/projects" component={ProjectsPage} />
 			<PrivateRoute exact path="/my-work" component={Work} />
-			<PrivateRoute exact path="/projects/projectSettings/:id" component={ProjectSettings} />
-			<PrivateRoute exact path="/projects/projectPeople/:id" component={ProjectPeople} />
+			<PrivateRoute exact path="/projects/projectSettings/:id/:section" component={ProjectSettings} />
 			<PrivateRoute exact path="/team/:id" component={Team} />
 			<PrivateRoute exact path="/profile/:id" component={Profile} />
 			<PrivateRoute exact path="/filters" component={Filters} />
 			<PrivateRoute path="/report/:id" component={ReportPage} />
+			<PrivateRoute exact path="/board/:boardId/columnsSettings" component={ColumnsSettings} />
 			<PrivateRoute path="/board/:id" component={BoardPage} />
 			<PrivateRoute path="/project/:id/issues" component={ProjectIssues} />
 			<PrivateRoute exact path="/people" component={PeoplePage} />

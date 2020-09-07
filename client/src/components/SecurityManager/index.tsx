@@ -4,7 +4,7 @@ import styles from './styles.module.scss';
 import { useTranslation } from 'react-i18next';
 import { RootState } from 'typings/rootState';
 import { requestChangePassword, sendPassResetLink } from 'containers/ProfilePage/logiс/actions';
-import { Button, Form } from 'semantic-ui-react';
+import { Button, Form, Popup } from 'semantic-ui-react';
 import SubmitedInput from 'components/SubmitedInput';
 import PasswordCheck from 'components/PasswordCheck';
 import CustomValidator from 'helpers/validation.helper';
@@ -31,9 +31,9 @@ const SecurityManager = () => {
 	const isSubmitPossible =
 		isRepeatedPassValid &&
 		isPasswordValid &&
-		passwords.oldPassword &&
-		passwords.repeatedPassword &&
-		passwords.newPassword;
+		Boolean(passwords.oldPassword) &&
+		Boolean(passwords.repeatedPassword) &&
+		Boolean(passwords.newPassword);
 
 	const email = useSelector((state: RootState) => state.user.email);
 
@@ -103,8 +103,8 @@ const SecurityManager = () => {
 			{isFormSubmited && !isPasswordSecure && (
 				<ConfirmPassModal updatePassword={updatePassword} onClose={onClose} />
 			)}
-			<h3 className={styles.header}>{t('security')}</h3>
 			<div className={styles.card}>
+				<h3 className={styles.header}>{t('security')}</h3>
 				<h4 className={styles.card__header}>{t('change_pass')}</h4>
 				<Form onSubmit={onSubmit}>
 					<SubmitedInput
@@ -141,9 +141,17 @@ const SecurityManager = () => {
 						isValid={isRepeatedPassValid}
 						errorText={t('pass_error_equal')}
 					/>
-					<Button className={styles.submitButton} type="submit" disabled={!isSubmitPossible}>
-						{t('save_changes')}
-					</Button>
+					<Popup
+						content={t('add_changes')}
+						disabled={isSubmitPossible}
+						trigger={
+							<div>
+								<Button className={styles.submitButton} type="submit" disabled={!isSubmitPossible}>
+									{t('save_changes')}
+								</Button>
+							</div>
+						}
+					/>
 				</Form>
 				<Button className={styles.forgotPass} onClick={showHiddenContent}>
 					{t('forgot_pass')}

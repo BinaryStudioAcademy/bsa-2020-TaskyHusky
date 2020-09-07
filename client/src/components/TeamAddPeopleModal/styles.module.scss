@@ -1,6 +1,7 @@
+@import "styles/mixins.scss";
+
 .descriptionP {
-  color: #cccccc;
-  margin: 20px 0;
+  @include secondary-content;
 }
 
 .textModal {
@@ -8,6 +9,7 @@
   text-align: justify;
   font-size: 1.2rem;
 }
+
 .titleModal {
   color: #292828;
   width: 100%;
@@ -20,6 +22,12 @@
 .field {
   width: 100%;
   margin: 1rem auto;
+
+  input {
+    @include input;
+    border-radius: 6px !important;
+    width: 300px !important;
+  }
 }
 
 .border {
@@ -27,14 +35,21 @@
 }
 
 .deleteBtn {
-  border: 1px solid #2185d0 !important;
+  @include cancel-btn;
+
   .deleteBtnValue {
     color: #2185d0 !important;
   }
 }
+
 .editBtn {
-  border: 1px solid #4d4c4c !important;
+  @include primary-btn;
+
   .editBtnValue {
     color: #4d4c4c;
   }
+}
+
+.cancelBtn {
+  @include cancel-btn;
 }

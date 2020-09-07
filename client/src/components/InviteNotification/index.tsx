@@ -1,9 +1,10 @@
 import React from 'react';
-import { Card, Button, Image } from 'semantic-ui-react';
+import { Icon } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 import * as actions from '../../containers/Header/logic/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../typings/rootState';
+import styles from './styles.module.scss';
 
 interface Props {
 	id: string;
@@ -38,25 +39,38 @@ const InviteNotification: React.FC<Props> = (props: Props) => {
 		);
 	};
 
+	const [firstName, lastName] = name.split(' ');
+	const firstLetter = firstName ? firstName[0] : '';
+	const lastLetter = lastName ? lastName[0] : '';
+	const initials = firstLetter + lastLetter;
+
 	return (
-		<Card>
-			<Card.Content>
-				<Image floated="right" size="mini" src={avatar} circular />
-				<Card.Header>{name}</Card.Header>
-				<Card.Meta>{jobTitle}</Card.Meta>
-				<Card.Description>{t('invite_notification_text')}</Card.Description>
-			</Card.Content>
-			<Card.Content extra>
-				<div className="ui two buttons">
-					<Button basic color="green" onClick={handleApprove}>
-						{t('approve')}
-					</Button>
-					<Button basic color="red" onClick={handleDecline}>
-						{t('decline')}
-					</Button>
+		<div className={styles.notification}>
+			<div style={{ display: 'flex', alignItems: 'center', width: '100%' }}>
+				{avatar ? (
+					<img src={avatar} className={styles.avatar} style={{ float: 'left' }} alt="Avatar" />
+				) : (
+					<div className={styles.avatar}>{initials}</div>
+				)}
+				<div style={{ width: 'calc(100% - 50px)' }}>
+					<div style={{ display: 'flex', justifyContent: 'space-between' }}>
+						<div style={{ color: '#202020' }}>{name}</div>
+						<div>
+							<Icon
+								name="check"
+								onClick={handleApprove}
+								style={{ color: '#deae0f' }}
+								title={t('approve')}
+								link
+							/>
+							<Icon name="close" onClick={handleDecline} title={t('decline')} link />
+						</div>
+					</div>
+					<div className={styles.meta}>{jobTitle}</div>
 				</div>
-			</Card.Content>
-		</Card>
+			</div>
+			<div style={{ marginTop: 10 }}>{t('invite_notification_text')}</div>
+		</div>
 	);
 };
 

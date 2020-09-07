@@ -9,6 +9,7 @@ namespace WebApi.Board {
 		name: string;
 		location: string;
 		createdAt: Date;
+		projects?: BoardProjectsResult[];
 		createdBy: {
 			id: string;
 			firstName: string;
@@ -19,6 +20,13 @@ namespace WebApi.Board {
 	interface IReducedBoard {
 		id: string;
 		name: string;
+	}
+	interface CreateBoardColumn {
+		columnName: string;
+		status: string;
+		board: string;
+		index?: number;
+		isResolutionSet: boolean;
 	}
 }
 
@@ -53,7 +61,7 @@ namespace WebApi.Issue {
 		labels?: string[];
 		attachments?: string[];
 		links?: string[];
-		priority?: string;
+		priority?: number;
 		description?: string;
 		board?: string;
 		sprint?: string | null;
@@ -95,7 +103,7 @@ namespace WebApi.Result {
 		links?: string[];
 		board?: BoardResult;
 		priority: {
-			id: string;
+			id: number;
 			color: string;
 			title: string;
 			icon: string;
@@ -108,6 +116,8 @@ namespace WebApi.Result {
 		assigned?: UserModel;
 		creator: UserModel;
 		storyPoint?: number;
+		createdAt: Date;
+		updatedAt?: Date;
 	}
 	interface IssueCommentResult {
 		id: string;
@@ -122,6 +132,7 @@ namespace WebApi.Result {
 		boardType: 'Kanban' | 'Scrum';
 		name: string;
 		location: string;
+		projects?: BoardProjectsResult[];
 		createdAt: {
 			firstName: string;
 			lastName?: string;
@@ -133,6 +144,7 @@ namespace WebApi.Result {
 		id: string;
 		columnName: string;
 		status: string;
+		index: number;
 		isResolutionSet: boolean;
 		board: BoardResult;
 	}
@@ -150,6 +162,20 @@ namespace WebApi.Result {
 		createdDate?: Date;
 		updatedDate?: Date;
 		deletedDate?: Date;
+	}
+	interface CommitFileResult {
+		sha: string;
+		additions: number;
+		deletions: number;
+		filename: string;
+	}
+	interface CommitResult {
+		hash: string;
+		message: string;
+		author: string;
+		avatar: string;
+		time: Date;
+		files: Array<CommitFileResult>;
 	}
 	interface NotificationResult {
 		id: string;
@@ -233,16 +259,17 @@ namespace WebApi.Entities {
 
 	interface BoardColumn {
 		id: string;
-		columnName?: string;
-		status?: string;
-		isResolutionSet?: boolean;
+		columnName: string;
+		status: string;
+		isResolutionSet: boolean;
+		index?: number;
 		board: Board;
 		issues: Issue[];
 	}
 
 	interface Filter {
 		id: string;
-		owner?: UserProfile;
+		owner: UserProfile;
 		filterParts?: FilterPart[];
 		name: string;
 		staredBy?: UserProfile[];
@@ -323,11 +350,21 @@ namespace WebApi.Entities {
 	}
 
 	interface Priority {
-		id: string;
+		id: number;
 		icon: string;
 		color: string;
 		title: string;
 		issues?: Issue[];
+	}
+
+	interface ProjectLabel {
+		id: string;
+		text: string;
+		textColor: string;
+		backgroundColor: string;
+		project: Projects;
+		createdDate?: Date;
+		deletedDate?: Date;
 	}
 
 	interface Projects {
@@ -345,6 +382,7 @@ namespace WebApi.Entities {
 		creator: UserProfile;
 		team?: Team;
 		issues?: Issue[];
+		labels: ProjectLabel[];
 		users: UserProfile[];
 		githubUrl?: string;
 		createdDate?: Date;

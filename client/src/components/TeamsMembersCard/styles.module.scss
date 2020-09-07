@@ -1,14 +1,70 @@
+@import 'styles/mixins.scss';
+
+.card {
+	background-color: $primary-bg;
+	box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.25);
+	margin-bottom: 10px;
+	display: flex;
+	flex-direction: column;
+	padding: 5px 15px;
+	margin-bottom: 15px;
+}
+
+.cardWrapper {
+	margin: 10px 0;
+}
+
+.sectionHeader {
+	display: flex;
+	margin-bottom: 10px;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.header {
+	@include info-block-header;
+	margin: 0 !important;
+	margin-bottom: 7px !important;
+}
+
 .metaHeader {
-	margin-left: 14px;
+	@include secondary-content;
+	margin-left: 15px !important;
+	margin-bottom: 7px !important;
 }
-.margin1 {
-	margin-right: 5px !important;
+
+.firstName {
+	@include primary-content;
+	margin-bottom: 0;
 }
+
+.metaInfo {
+	@include info-block-header;
+	margin-bottom: 0;
+}
+
+.cardHeader {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding-bottom: 10px;
+	margin-bottom: 10px;
+	border-bottom: 1px solid $border;
+}
+
+.metainfo {
+	@include secondary-content;
+	margin: 0;
+}
+
 .cardBody {
 	display: flex;
 	position: relative;
+	align-items: center;
+
 	.icon {
-		flex-basis: 30%;
+		margin-right: 7px;
+
 		div {
 			display: flex;
 			align-items: center;
@@ -17,36 +73,27 @@
 			max-width: 50px;
 			height: 50px;
 			max-height: 50px;
+
 			img {
 				width: inherit;
 				height: inherit;
 			}
+
 			span {
 				font-size: 1.5rem;
 			}
 		}
 	}
+
 	.userInfo {
 		justify-content: flex-start;
-		.metainfo {
-			color: #cccccc;
-		}
 	}
-}
-.infoMessage {
-	color: #777777 !important;
-	font-size: 1.2rem !important;
-	line-height: 2rem !important;
-	text-align: center;
 }
 
 .userDeleteBtn {
 	position: absolute !important;
-	right: 0;
-	top: 45%;
+	right: -5px;
+	top: 3px;
 	cursor: pointer;
-	color: #2185d0;
-	font-size: 1.3rem !important;
-	margin: 0 !important;
-	padding: 0 !important;
+	color: $secondary-content;
 }

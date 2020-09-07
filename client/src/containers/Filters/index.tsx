@@ -1,18 +1,40 @@
-import React, { useEffect } from 'react';
-import styles from './styles.module.scss';
+import React, { useEffect, useState } from 'react';
+import styles from './filters.module.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import * as actions from './logic/actions';
 import { RootState } from 'typings/rootState';
-import { Button, Table, Input, Dropdown, Form } from 'semantic-ui-react';
-import { ReactComponent as HeaderStar } from './headerStart.svg';
-import FilterItem from 'components/FilterItem';
-import { getFullUserName } from './logic/helpers';
+import { Button, Input } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router-dom';
+import searchResult from 'assets/images/search-result.svg';
+import Spinner from 'components/common/Spinner';
+import Table from './table';
+import FiltersHeader from 'components/FiltersHeader';
 
 const Filters: React.FC = () => {
 	const { t } = useTranslation();
 	const dispatch = useDispatch();
-	const { filters } = useSelector((rootState: RootState) => rootState.filters);
+	const history = useHistory();
+	const { filters, isLoading } = useSelector((rootState: RootState) => rootState.filters);
+	const { user } = useSelector((rootState: RootState) => rootState.auth);
+	const [isTableEmpty, setIsTableEmpty] = useState(false);
+	const [searchName, setSearchName] = useState<string>('');
+
+	const filterFilters = () => {
+		if (searchName === '') {
+			return filters;
+		}
+
+		const searchString = new RegExp(searchName, 'gi');
+		const filteredFilters = filters.filter(({ name }) => searchString.test(name));
+		return filteredFilters;
+	};
+
+	const filteredFilters = filterFilters();
+
+	useEffect(() => {
+		setIsTableEmpty(filteredFilters.length === 0);
+	}, [filteredFilters.length]);
 
 	const updateFilter = (data: WebApi.Entities.Filter) => {
 		dispatch(
@@ -22,61 +44,48 @@ const Filters: React.FC = () => {
 		);
 	};
 
+	const userId = user?.id;
 	useEffect(() => {
-		dispatch(actions.fetchFilterParts());
-		dispatch(actions.fetchFilters());
-		dispatch(actions.fetchFilterDefs());
-	}, [dispatch]);
+		dispatch(actions.fetchFilters({ userId }));
+	}, [dispatch, userId]);
 
 	return (
-		<div className={styles.filtersContainer}>
-			<div className={styles.outer}>
-				<div className={styles.titleWrapper}>
-					<div className={styles.titleContainer}>
-						<h1 className={styles.title}>{t('filters')}</h1>
+		<div className={styles.main}>
+			<FiltersHeader title={t('Filters')} />
+			{isLoading ? (
+				<Spinner />
+			) : (
+				<>
+					<div className={styles.mainHeader}>
+						<Input
+							icon="search"
+							className="standartInput"
+							placeholder={t('search')}
+							onChange={(event, data) => setSearchName(data.value)}
+							value={searchName}
+						/>{' '}
+						<div>
+							<Button className="primaryBtn" onClick={() => history.push('/advancedSearch')}>
+								{t('create_filter')}
+							</Button>
+						</div>
 					</div>
-					<div className={styles.actionWrapper}>
-						<Button primary>{t('create_filter')}</Button>
+					<div>
+						<div className={styles.container}>
+							{!isTableEmpty ? (
+								<Table filters={filteredFilters} updateFilter={updateFilter} />
+							) : (
+								<div className={styles.imgWrapper}>
+									<div className={styles.content}>
+										<img className={styles.img} src={searchResult} alt="No results" />
+										<span className={styles.text}>{t('no_filters')}</span>
+									</div>
+								</div>
+							)}
+						</div>
 					</div>
-				</div>
-				<div className={styles.bottomBarWrapper}>
-					<Form>
-						<Form.Group>
-							<Form.Field control={Input} icon="search" placeholder={t('search')} />
-							<Form.Field control={Dropdown} placeholder={t('owner')} search selection options={[]} />
-							<Form.Field control={Dropdown} placeholder={t('project')} search selection options={[]} />
-							<Form.Field control={Dropdown} placeholder={t('group')} search selection options={[]} />
-						</Form.Group>
-					</Form>
-				</div>
-			</div>
-			<div>
-				<Table selectable padded={'very'} compact>
-					<Table.Header>
-						<Table.Row>
-							<Table.HeaderCell>
-								{' '}
-								<HeaderStar />{' '}
-							</Table.HeaderCell>
-							<Table.HeaderCell>{t('name')}</Table.HeaderCell>
-							<Table.HeaderCell>{t('owner')}</Table.HeaderCell>
-							<Table.HeaderCell>{t('favorite')}</Table.HeaderCell>
-							<Table.HeaderCell> </Table.HeaderCell>
-						</Table.Row>
-					</Table.Header>
-
-					<Table.Body>
-						{filters.map((filter) => (
-							<FilterItem
-								fullName={getFullUserName(filter.owner)}
-								updateFilter={updateFilter}
-								key={filter.id}
-								filter={filter}
-							/>
-						))}
-					</Table.Body>
-				</Table>
-			</div>
+				</>
+			)}
 		</div>
 	);
 };

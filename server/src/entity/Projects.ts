@@ -10,7 +10,10 @@ import {
 	CreateDateColumn,
 	UpdateDateColumn,
 } from 'typeorm';
-import { IsNotEmpty, IsString, Length, IsUppercase, Matches } from 'class-validator';
+
+import { IsNotEmpty, IsString, Length, IsUppercase, Matches, ValidateIf } from 'class-validator';
+import _ from 'lodash';
+import { ProjectLabel } from './ProjectLabel';
 import { Issue } from './Issue';
 import { Sprint } from './Sprint';
 import { Board } from './Board';
@@ -60,23 +63,33 @@ export class Projects {
 	@ManyToOne((type) => UserProfile, (userProfile) => userProfile.assignedProjects, { cascade: true })
 	defaultAssignee?: UserProfile;
 
-	@ManyToOne((type) => UserProfile, (userProfile) => userProfile.leadedProjects, { cascade: true })
+	@ManyToOne((type) => UserProfile, (userProfile) => userProfile.leadedProjects, {
+		cascade: true,
+		onDelete: 'CASCADE',
+	})
 	lead!: UserProfile;
 
-	@ManyToOne((type) => UserProfile, (userProfile) => userProfile.createdProjects, { cascade: true })
+	@ManyToOne((type) => UserProfile, (userProfile) => userProfile.createdProjects, {
+		cascade: true,
+		onDelete: 'CASCADE',
+	})
 	creator!: UserProfile;
 
-	@ManyToOne((type) => Team, (team) => team.projects, { cascade: true })
+	@ManyToOne((type) => Team, (team) => team.projects, { cascade: true, onDelete: 'CASCADE' })
 	team?: Team;
 
-	@OneToMany((type) => Issue, (issue) => issue.project, { cascade: true })
+	@OneToMany((type) => Issue, (issue) => issue.project, { cascade: true, onDelete: 'CASCADE' })
 	issues?: Issue[];
+
+	@OneToMany((type) => ProjectLabel, (labels) => labels.project, { cascade: true })
+	labels!: ProjectLabel[];
 
 	@ManyToMany((type) => UserProfile, (userProfile) => userProfile.projects, { cascade: true })
 	@JoinTable({ name: 'projects_people' })
 	users!: UserProfile[];
 
 	@Column({ nullable: true })
+	@ValidateIf((o) => !_.isEmpty(o.githubUrl))
 	@IsString()
 	@Matches(/(https:\/\/github\.com\/.+\/.+\.git)|/)
 	githubUrl?: string;

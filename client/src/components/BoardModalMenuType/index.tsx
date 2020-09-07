@@ -1,4 +1,5 @@
 import { Button, Container, Grid, Header } from 'semantic-ui-react';
+import { useTranslation } from 'react-i18next';
 
 import { boardTypes } from '../../typings/boardTypes';
 import React from 'react';
@@ -9,34 +10,34 @@ interface Props {
 }
 
 const BoardModalMenuType = (props: Props) => {
+	const { t } = useTranslation();
+
 	return (
 		<Grid columns={2} relaxed="very" divided>
 			<Grid.Row>
 				<Grid.Column>
 					<Container>
-						<Header as="h2">Scrum</Header>
-						<p>
-							Scrum focuses on planning, committing and delivering time-boxed chunks of work called
-							Sprints
-						</p>
+						<Header as="h2">{t('scrum')}</Header>
+						<p>{t('scrum_focuses_on_planning')}</p>
 					</Container>
 				</Grid.Column>
 				<Grid.Column>
 					<Container>
-						<Header as="h2">Kanban</Header>
-						<p>
-							Kanban focuses on visualising your workflow and limiting work-in-progress to facilitate
-							incremental improvements to your existing process
-						</p>
+						<Header as="h2">{t('kanban')}</Header>
+						<p>{t('kanban_focuses_on_planning')}</p>
 					</Container>
 				</Grid.Column>
 			</Grid.Row>
 			<Grid.Row>
 				<Grid.Column className={styles.buttonContainer}>
-					<Button onClick={() => props.onTypeSelection(boardTypes.scrum)}>Create a Scrum board</Button>
+					<Button onClick={() => props.onTypeSelection(boardTypes.scrum)} className={styles.contentBtn}>
+						{t('create_scrum_board')}
+					</Button>
 				</Grid.Column>
 				<Grid.Column className={styles.buttonContainer}>
-					<Button onClick={() => props.onTypeSelection(boardTypes.kanban)}>Create a Kanban board</Button>
+					<Button onClick={() => props.onTypeSelection(boardTypes.kanban)} className={styles.contentBtn}>
+						{t('create_kanban_board')}
+					</Button>
 				</Grid.Column>
 			</Grid.Row>
 		</Grid>

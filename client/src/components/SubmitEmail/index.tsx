@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Form } from 'semantic-ui-react';
+import { Button, Form, Popup } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 import SubmitedInput from 'components/SubmitedInput';
 import CustomValidator from 'helpers/validation.helper';
@@ -57,9 +57,17 @@ const SubmitEmail: React.FC<Props> = (props: Props) => {
 				errorText={errorMessage}
 			/>
 			{isSubmit && <p className={`${styles.textData} ${styles.addText}`}>{t('send_confirm_link')}</p>}
-			<Button type="submit" className={styles.submitButton} disabled={!isSubmit}>
-				{t('save_changes')}
-			</Button>
+			<Popup
+				content={t('add_changes')}
+				disabled={isSubmit}
+				trigger={
+					<div>
+						<Button type="submit" className={styles.submitButton} disabled={!isSubmit}>
+							{t('save_changes')}
+						</Button>
+					</div>
+				}
+			/>
 		</Form>
 	);
 };

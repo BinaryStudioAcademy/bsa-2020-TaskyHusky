@@ -14,7 +14,7 @@ import CreateSprintModal from 'components/common/SprintModal/CreateSprintModal';
 import getIssuesForSprintId from 'helpers/getIssuesBySearchText.helper';
 import { normalizeText } from 'helpers/normalizeText.helper';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
-import { reorderIssues } from './helpers/reorder';
+import { reorderIssues } from './helpers/reorder.helper';
 import { isEmpty } from 'lodash-es';
 import Sprint from 'components/Sprint';
 import { updateIssue } from 'pages/IssuePage/logic/actions';
@@ -26,7 +26,7 @@ const Scrum: BoardComponent = (props) => {
 	const { t } = useTranslation();
 	const [search, setSearch] = useState<string>('');
 	const [isCreateModalOpened, setIsCreateModalOpened] = useState<boolean>(false);
-	const [issuesMap, setIssuesMap] = useState<{ [sprintId: string]: WebApi.Entities.Issue[] }>({});
+	const [issuesMap, setIssuesMap] = useState<{ [sprintId: string]: WebApi.Result.IssueResult[] }>({});
 	const state = useSelector((rootState: RootState) => rootState.scrumBoard);
 
 	const { sprints, project, matchIssuesToSprint, backlog } = useSelector(
@@ -101,12 +101,13 @@ const Scrum: BoardComponent = (props) => {
 	}, [state, matchIssuesToSprint, backlog]);
 
 	const sprintList =
-		!isEmpty(sprints) && !isEmpty(issuesMap) ? (
-			Object.entries(issuesMap).map(([sprintId, issues]: [string, WebApi.Entities.Issue[]]) => {
+		!isEmpty(sprints) || !isEmpty(issuesMap) ? (
+			Object.entries(issuesMap).map(([sprintId, issues]: [string, WebApi.Result.IssueResult[]]) => {
 				return (
 					<Sprint
 						key={sprintId}
 						listId={sprintId}
+						boardId={board.id}
 						listType="CARD"
 						sprint={sprints.filter((sprint) => sprint.id === sprintId)[0]}
 						issues={getIssuesForSprintId(normalizeText(search), issues)}
@@ -119,12 +120,14 @@ const Scrum: BoardComponent = (props) => {
 
 	return (
 		<>
-			<Container>
+			<div className={styles.container}>
 				<Container className={styles.breadcrumb}>
 					<Breadcrumbs sections={setBreadcrumbs({ history, projectDetails, boardDetails })} />
 				</Container>
 				<Container className={styles.inlineContainer}>
-					<Header as="h2">{board.name}</Header>
+					<Header as="h2" className="standartHeader">
+						{board.name}
+					</Header>
 					<Form.Input
 						placeholder={t('search')}
 						icon="search"
@@ -135,14 +138,13 @@ const Scrum: BoardComponent = (props) => {
 						style={{ marginLeft: 20, marginRight: 60, maxWidth: 250 }}
 						id="searchIssuesField"
 					/>
-					<Button onClick={clearSearchInputValue} secondary>
+					<Button onClick={clearSearchInputValue} className={styles.cancelBtn}>
 						{t('clear')}
 					</Button>
 					<Button
 						onClick={() => {
 							setIsCreateModalOpened(!isCreateModalOpened);
 						}}
-						secondary
 						className={styles.createSprintButton}
 					>
 						{t('create_sprint')}
@@ -160,7 +162,7 @@ const Scrum: BoardComponent = (props) => {
 				)}
 
 				<DragDropContext onDragEnd={onDragEndDrop}>{sprintList}</DragDropContext>
-			</Container>
+			</div>
 			<CreateSprintModal
 				clickAction={() => {
 					setIsCreateModalOpened(!isCreateModalOpened);

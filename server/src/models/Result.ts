@@ -27,7 +27,7 @@ export interface IssueResult {
 	links?: string[];
 	board?: BoardResult;
 	priority: {
-		id: string;
+		id: number;
 		color: string;
 		title: string;
 		icon: string;
@@ -40,6 +40,8 @@ export interface IssueResult {
 	assigned?: UserModel;
 	creator: UserModel;
 	storyPoint?: number;
+	createdAt: Date;
+	updatedAt?: Date;
 }
 
 interface IssueCommentResult {
@@ -56,6 +58,7 @@ interface BoardResult {
 	boardType: 'Kanban' | 'Scrum';
 	name: string;
 	location: string;
+	projects?: BoardProjectsResult[];
 	createdAt: {
 		firstName: string;
 		lastName?: string;
@@ -68,6 +71,7 @@ interface BoardColumnResult {
 	id: string;
 	columnName: string;
 	status: string;
+	index: number;
 	isResolutionSet: boolean;
 	board: BoardResult;
 }
@@ -76,7 +80,7 @@ interface ComposedBoardResult extends BoardResult {
 	columns: BoardColumnResult[];
 }
 
-interface BoardProjectsResult {
+export interface BoardProjectsResult {
 	id: string;
 	name: string;
 	key: string;
@@ -87,6 +91,22 @@ interface BoardProjectsResult {
 	createdDate?: Date;
 	updatedDate?: Date;
 	deletedDate?: Date;
+}
+
+interface CommitFileResult {
+	sha: string;
+	additions: number;
+	deletions: number;
+	filename: string;
+}
+
+interface CommitResult {
+	hash: string;
+	message: string;
+	author: string;
+	avatar: string;
+	time: Date;
+	files: Array<CommitFileResult>;
 }
 
 interface NotificationResult {

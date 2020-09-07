@@ -1,3 +1,5 @@
+@import 'styles/mixins.scss';
+
 .titleWrapper {
 	display: flex;
 	flex-direction: row;
@@ -9,15 +11,8 @@
 		flex-direction: row;
 		flex: 1 1 auto;
 		.saveBtn {
-			margin: 5px 0 0 10px;
-			border: none !important;
-			box-shadow: none !important;
-			height: 40px;
-			background: rgb(245, 245, 245) !important;
-			&:hover,
-			&:focus {
-				background: #e0e1e2 !important;
-			}
+			background: $body-bg;
+			margin-right: 0;
 		}
 
 		.filterName {

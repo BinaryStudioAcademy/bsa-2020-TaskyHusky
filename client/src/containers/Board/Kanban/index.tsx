@@ -1,19 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BoardComponent } from '../';
+import { Link } from 'react-router-dom';
 import BoardColumn from 'containers/BoardColumn';
 import { DragDropContext, OnDragEndResponder } from 'react-beautiful-dnd';
 import styles from './styles.module.scss';
 import { extractIdFormDragDropId } from 'helpers/extractId.helper';
 import { getByKey, updateIssueByKey } from 'services/issue.service';
-import { Header, Form, Button, Breadcrumb } from 'semantic-ui-react';
+import { Form, Button, Breadcrumb, Segment, Icon } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 import { convertIssueResultToPartialIssue } from 'helpers/issueResultToPartialIssue';
+import CreateColumnModal from 'containers/CreateColumnModal';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from 'typings/rootState';
+import { setColumnCreated } from 'containers/BoardColumn/logic/actions';
 
 const Kanban: BoardComponent = ({ board }) => {
 	const [search, setSearch] = useState<string>('');
+	const [columns, setColumns] = useState<WebApi.Result.BoardColumnResult[]>(board.columns);
 	const { t } = useTranslation();
-	const leftPadded = { marginLeft: 60 };
+	const dispatch = useDispatch();
+	const { columnCreated, recentlyCreatedColumn } = useSelector((state: RootState) => state.boardColumn);
 	const onDragEndFuncs: Map<string, OnDragEndResponder> = new Map<string, OnDragEndResponder>();
+
+	useEffect(() => {
+		if (columnCreated) {
+			dispatch(setColumnCreated({ created: false }));
+
+			if (recentlyCreatedColumn) {
+				setColumns([...columns, recentlyCreatedColumn]);
+			}
+		}
+	}, [dispatch, columnCreated, recentlyCreatedColumn, columns]);
 
 	const onDragEnd: OnDragEndResponder = (event, provided) => {
 		const { destination, draggableId } = event;
@@ -37,33 +54,43 @@ const Kanban: BoardComponent = ({ board }) => {
 	};
 
 	return (
-		<>
-			<div className={styles.inlineContainer} style={leftPadded}>
-				<Header as="h2">{board.name}</Header>
-				<Form.Input
-					placeholder={t('search')}
-					icon="search"
-					value={search}
-					onChange={(event, data) => setSearch(data.value)}
-					style={{ ...leftPadded, marginRight: 60, maxWidth: 250 }}
-				/>
-				<Button onClick={() => setSearch('')} secondary>
-					{t('clear')}
-				</Button>
-			</div>
-			<Breadcrumb style={{ ...leftPadded, marginBottom: 20 }}>
+		<div className={styles.wrapper}>
+			<Breadcrumb className={styles.breadcrumb}>
 				<Breadcrumb.Section href="/projects">{t('projects')}</Breadcrumb.Section>
-				<Breadcrumb.Divider icon="right chevron" />
-				<Breadcrumb.Section link>Test project name</Breadcrumb.Section>
-				<Breadcrumb.Divider icon="right arrow" />
-				<Breadcrumb.Section active>{board.name}</Breadcrumb.Section>
+				<Breadcrumb.Divider>&nbsp;/&nbsp;</Breadcrumb.Divider>
+				<Breadcrumb.Section href={`/project/${(board.projects ?? [])[0].id}/issues`}>
+					{(board.projects ?? [])[0].name}
+				</Breadcrumb.Section>
+				<Breadcrumb.Divider>&nbsp;/&nbsp;</Breadcrumb.Divider>
+				<Breadcrumb.Section active className={styles.active}>
+					{board.name}
+				</Breadcrumb.Section>
 			</Breadcrumb>
-			<DragDropContext onDragEnd={onDragEnd}>
-				<div
-					className={styles.columnsGrid}
-					style={{ gridTemplateColumns: '300px '.repeat(board.columns.length).trim(), marginLeft: 40 }}
+			<div className={styles.headerWrapper}>
+				<div className={styles.inlineContainer}>
+					<div className="standartHeader">{board.name}</div>
+					<Form.Input
+						placeholder={t('search')}
+						icon="search"
+						value={search}
+						onChange={(event, data) => setSearch(data.value)}
+						className={styles.searchInput}
+					/>
+					<Button onClick={() => setSearch('')} className={styles.cancelBtn}>
+						{t('clear')}
+					</Button>
+				</div>
+				<Link
+					className="cancelBtn"
+					to={`/board/${board.id}/columnsSettings`}
+					style={{ paddingLeft: '10px', paddingRight: '10px' }}
 				>
-					{board.columns.map((column, i) => (
+					{t('go_to_columns_settings')}
+				</Link>
+			</div>
+			<DragDropContext onDragEnd={onDragEnd}>
+				<div className={styles.columnsFlex}>
+					{columns.map((column, i) => (
 						<BoardColumn
 							getOnDragEndFunc={(id, responder) => onDragEndFuncs.set(id, responder)}
 							search={search}
@@ -74,7 +101,13 @@ const Kanban: BoardComponent = ({ board }) => {
 					))}
 				</div>
 			</DragDropContext>
-		</>
+			<CreateColumnModal boardId={board.id}>
+				<Segment className={styles.contentBtn}>
+					<Icon name="plus" />
+					{t('create_column')}
+				</Segment>
+			</CreateColumnModal>
+		</div>
 	);
 };
 

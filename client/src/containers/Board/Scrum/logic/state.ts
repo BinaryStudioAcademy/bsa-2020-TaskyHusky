@@ -1,11 +1,11 @@
 export type IssuesToSprint = {
-	[sprintId: string]: WebApi.Entities.Issue[];
+	[sprintId: string]: WebApi.Result.IssueResult[];
 };
 
 export interface ScrumBoardState {
 	sprints: WebApi.Entities.Sprint[];
 	matchIssuesToSprint: IssuesToSprint;
-	backlog: WebApi.Entities.Issue[];
+	backlog: WebApi.Result.IssueResult[];
 	project: WebApi.Result.BoardProjectsResult;
 	board: WebApi.Result.BoardResult;
 }

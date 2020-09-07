@@ -16,6 +16,11 @@ export const UPDATE_FILTER = 'SEARCH:UPDATE_FILTER';
 export const UPDATE_FILTER_SUCCESS = 'SEARCH:UPDATE_FILTER_SUCCESS';
 export const SET_REDIRECT = 'SEARCH:SET_REDIRECT';
 export const UPDATE_FILTER_STARED_BY = 'SEARCH:UPDATE_FILTER_STARED_BY';
+export const SET_INPUT_TEXT = 'SEARCH:SET_INPUT_TEXT';
+
+export type SetInputText = {
+	inputText: string;
+};
 
 export type IssueFilter = {
 	projects?: string[];
@@ -30,7 +35,7 @@ export type UpdateFilterPartArgs = {
 };
 
 export type LoadIssuesSuccessArgs = {
-	issues: WebApi.Entities.Issue[];
+	issues: WebApi.Result.IssueResult[];
 	issuesCount: number;
 };
 
@@ -39,7 +44,7 @@ export type LoadFilterByIdArgs = {
 };
 
 export type LoadFilterSuccessArgs = {
-	filter: WebApi.Entities.Filter;
+	filter: WebApi.Entities.Filter | undefined;
 };
 
 export type SetAddedFilterPartsArgs = {
@@ -58,4 +63,6 @@ export type LoadIssues = {
 	from?: number;
 	to?: number;
 	sort?: Sort;
+	inputText?: string;
+	filterId?: string;
 };

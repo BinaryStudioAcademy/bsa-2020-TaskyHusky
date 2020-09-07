@@ -1,0 +1,29 @@
+@import 'styles/mixins.scss';
+
+.header {
+  border-bottom: 1px solid $border;
+  display: flex;
+}
+
+.headerIcon {
+  @include work-page-secondary;
+  width: 30px;
+  text-align: center;
+  margin-right: 30px;
+}
+
+.headerKey {
+  @include work-page-secondary;
+  min-width: 90px;
+}
+
+.headerSummary {
+  @include work-page-secondary;
+  width: auto;
+}
+
+@media screen and (max-width: $mobile-screen) {
+  .headerSummary {
+    display: none;
+  }
+}

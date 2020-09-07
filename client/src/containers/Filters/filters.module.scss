@@ -1,0 +1,62 @@
+@import 'styles/mixins.scss';
+
+:global(#root) {
+	.main {
+		width: 100%;
+		background-color: #f5f7f9;
+	}
+
+	.mainHeader {
+		display: flex;
+		justify-content: space-between;
+		padding: 20px 10%;
+	}
+
+	.container {
+		padding: 0 10%;
+	}
+
+	.headerCell {
+		background-color: #f9fafb;
+		border-left: none;
+		@include label;
+	}
+
+	.starCell {
+		text-align: center;
+		@include label;
+	}
+
+	.imgWrapper {
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+
+		.content {
+			display: flex;
+			flex-direction: column;
+
+			.img {
+				width: 200px;
+				margin: 10px;
+			}
+
+			.text {
+				text-align: center;
+				@include text-data
+			}
+		}
+	}
+}
+
+@media screen and (max-width: $medium-screen) {
+	.container {
+		padding: 0 8% !important;
+	}
+
+	.mainHeader {
+		display: flex;
+		justify-content: space-between;
+		padding: 20px 8% !important;
+	}
+}

@@ -1,20 +1,25 @@
-.editCell {
-  overflow: visible !important;
-}
-.userCell {
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	&:hover {
-    		cursor: pointer;
+@import 'styles/mixins.scss';
+
+:global(#root) {
+	.editCell {
+		overflow: visible !important;
 	}
-}
-.underlinedLink {
-	text-decoration: none;
-	&:hover {
-		text-decoration: underline;
+
+	.userCell {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		@include text-data
 	}
-}
-.dropdown {
-  text-align: center !important;
+
+	.optionsCell,
+	.starCell {
+		text-align: center;
+		@include text-data
+	}
+
+	.filterNameCell,
+	.favouriteCell {
+		@include text-data
+	}
 }

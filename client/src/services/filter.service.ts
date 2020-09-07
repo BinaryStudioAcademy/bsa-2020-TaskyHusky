@@ -10,6 +10,15 @@ export const fetchFilters = async (): Promise<WebApi.Entities.Filter[]> => {
 	return (await res.json()) as WebApi.Entities.Filter[];
 };
 
+export const fetchTeammatesFilters = async (userId: string): Promise<WebApi.Entities.Filter[]> => {
+	const res = await callWebApi({
+		method: 'GET',
+		endpoint: `filter/teammates/${userId}`,
+	});
+
+	return (await res.json()) as WebApi.Entities.Filter[];
+};
+
 export const fetchFilterParts = async (): Promise<WebApi.Entities.FilterPart[]> => {
 	const res = await callWebApi({
 		method: 'GET',
@@ -67,6 +76,15 @@ export const saveFilter = async (data: InitialFilter): Promise<WebApi.Entities.F
 export const loadFilterById = async (id: string): Promise<WebApi.Entities.Filter> => {
 	const res = await callWebApi({
 		method: 'GET',
+		endpoint: `filter/${id}`,
+	});
+
+	return (await res.json()) as WebApi.Entities.Filter;
+};
+
+export const deleteFilter = async (id: string): Promise<WebApi.Entities.Filter> => {
+	const res = await callWebApi({
+		method: 'DELETE',
 		endpoint: `filter/${id}`,
 	});
 

@@ -5,6 +5,7 @@ import { RootState } from 'typings/rootState';
 import CreateProjectModal from '../CreateProjectModal';
 import styles from './styles.module.scss';
 import Spinner from 'components/common/Spinner';
+import FiltersHeader from 'components/FiltersHeader';
 
 import { useTranslation } from 'react-i18next';
 import searchResult from 'assets/images/search-result.svg';
@@ -34,21 +35,25 @@ const Projects: React.FC = () => {
 	};
 
 	return (
-		<div className={styles.wrapper}>
-			<div className={styles.wrapper__title}>
-				<h1 className={styles.title}>{t('projects')}</h1>
-				<CreateProjectModal>
-					<Button primary>{t('create_project')}</Button>
-				</CreateProjectModal>
-			</div>
-			<div className={[styles.wrapper__filters, styles.filters].join(' ')}>
-				<Input icon="search" placeholder={t('search')} onChange={onSearch} value={searchName} />
-			</div>
-			<div className={styles.wrapper__table}>
-				{isDeleting || isLoading ? (
-					<Spinner />
-				) : (
-					<>
+		<div>
+			<FiltersHeader title={t('projects')} />
+			{isDeleting || isLoading ? (
+				<Spinner />
+			) : (
+				<>
+					<div className={[styles.wrapper__filters, styles.filters, styles.wrapper].join(' ')}>
+						<Input
+							icon="search"
+							className={styles.input}
+							placeholder={t('search')}
+							onChange={onSearch}
+							value={searchName}
+						/>
+						<CreateProjectModal>
+							<Button className={styles.create__button}>{t('create_project')}</Button>
+						</CreateProjectModal>
+					</div>
+					<div className={styles.wrapper__table}>
 						{filteredProjects.length > 0 ? (
 							<ProjectsTable projects={filteredProjects} currentUser={currentUser} />
 						) : (
@@ -59,9 +64,9 @@ const Projects: React.FC = () => {
 								</div>
 							</div>
 						)}
-					</>
-				)}
-			</div>
+					</div>
+				</>
+			)}
 		</div>
 	);
 };

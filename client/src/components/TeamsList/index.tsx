@@ -4,11 +4,10 @@ import TeamListItem from './TeamListItem';
 interface Props {
 	teams: WebApi.Entities.Team[];
 	handlerClickItem: (id: string) => void;
-	className?: string;
 }
 
-const TeamsList: React.FC<Props> = ({ teams, handlerClickItem, className = '' }): ReactElement => (
-	<div className={className}>
+const TeamsList: React.FC<Props> = ({ teams, handlerClickItem }): ReactElement => (
+	<div className="cardContainer">
 		{teams.map((person) => (
 			<TeamListItem team={person} handlerClick={() => handlerClickItem(person.id)} key={person.id} />
 		))}

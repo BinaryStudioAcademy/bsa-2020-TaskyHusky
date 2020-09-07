@@ -1,0 +1,108 @@
+@import "styles/variables.scss";
+
+.pageWrapper {
+	margin: 0 !important;
+	overflow-y: auto;
+	box-sizing: border-box;
+	height: 100vh !important;
+	background-color: $header-text;
+	position: relative !important;
+	& > * {
+		color: $yellow !important;
+	}
+	.mainImgWrapper {
+		display: flex !important;
+		align-items: center !important;
+		justify-content: flex-end;
+	}
+	.formWrapper {
+		.title {
+			color: $yellow !important;
+			margin-bottom: 20px;
+		}
+		.toggleDescription {
+			color: $ligth-gray !important;
+		}
+		.logoArea {
+			display: flex;
+			flex-direction: row;
+			align-content: center;
+			align-items: center;
+
+			.logoImage {
+				margin-right: 14px;
+				width: 55px;
+			}
+
+			.logoText {
+				font-weight: bold;
+				font-size: 34px;
+			}
+		}
+
+		.formSegment {
+			border: none !important;
+			min-width: 350px;
+			background-color: transparent !important;
+		}
+		display: flex !important;
+		align-items: center !important;
+		justify-content: center;
+		.marginLeft {
+			margin-left: 5px;
+		}
+		.list {
+			width: 100% !important;
+			text-align: center !important;
+			.padding1 {
+				padding-bottom: 3px;
+			}
+			.listItem {
+				font-size: 1.1rem !important;
+				cursor: pointer;
+				color: $yellow !important;
+				&:hover {
+					border-bottom: 1px solid $yellow;
+					color: $primary-bg !important;
+				}
+				*,
+				.bottomNavigation {
+					color: inherit !important;
+					&:hover {
+						color: $primary-bg !important;
+					}
+				}
+			}
+		}
+	}
+}
+
+.absIcon {
+	position: absolute !important;
+}
+.topRight {
+	top: -25px;
+	right: 20px;
+}
+.leftBottom {
+	bottom: 20px;
+	left: 20px;
+}
+.bottomNavigation {
+	z-index: 100;
+	margin-top: 10px;
+}
+
+@media (max-width: 767px) {
+	.absIcon {
+		display: none !important;
+	}
+
+	.mainImgWrapper {
+		justify-content: center !important;
+
+		.mediaQuery {
+			width: 50% !important;
+		}
+	}
+}

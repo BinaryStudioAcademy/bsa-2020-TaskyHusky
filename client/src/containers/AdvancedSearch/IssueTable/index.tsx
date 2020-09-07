@@ -7,6 +7,8 @@ import Pagination from '../../../components/common/Pagination';
 import { loadIssues } from '../logic/actions';
 import styles from './styles.module.scss';
 import HeaderCell from 'components/AdvancedSearch/HeaderCell';
+import { useTranslation } from 'react-i18next';
+import { useParams } from 'react-router-dom';
 
 const PAGE_SIZE = 25;
 type SortDir = 'DESC' | 'ASC';
@@ -54,14 +56,18 @@ const IssueTable: React.FC = () => {
 	const dispatch = useDispatch();
 	const { issues, issuesCount } = useSelector((rootState: RootState) => rootState.advancedSearch);
 	const [page, setPage] = useState(1);
+	const { t } = useTranslation();
+	const { filterId } = useParams();
 
 	const [sort, setSort] = useState<Sort>({});
 
 	useEffect(() => {
 		const from = PAGE_SIZE * (page - 1);
 		const to = PAGE_SIZE * page;
-		dispatch(loadIssues({ from, to, sort }));
-	}, [dispatch, page, sort]);
+		if (!filterId) {
+			dispatch(loadIssues({ from, to, sort }));
+		}
+	}, [dispatch, page, sort, filterId]);
 
 	const handleSort = ({ field }: HandleSortI) => {
 		const sortBy = sort[field];
@@ -70,8 +76,8 @@ const IssueTable: React.FC = () => {
 
 	return (
 		<>
-			<span>{`1-${issues.length} of ${issuesCount}`}</span>
-			<Table selectable compact sortable>
+			<span>{`1-${issues.length} ${t('of')} ${issuesCount}`}</span>
+			<Table selectable sortable unstackable>
 				<Table.Header>
 					<Table.Row>
 						{columns.map((column) => (
@@ -83,7 +89,6 @@ const IssueTable: React.FC = () => {
 								<HeaderCell sort={sort} name={column} />
 							</Table.HeaderCell>
 						))}
-						<Table.HeaderCell className={styles.headerCell}> </Table.HeaderCell>
 					</Table.Row>
 				</Table.Header>
 

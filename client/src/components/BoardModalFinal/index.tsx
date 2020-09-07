@@ -55,8 +55,9 @@ const BoardModalFinal = (props: Props) => {
 	return (
 		<Form>
 			<Form.Field width={5}>
-				<label>Board name</label>
+				<label className="standartLabel">{t('board_name')}</label>
 				<Input
+					className="standartInput"
 					placeholder={t('board_name')}
 					onChange={(e, data) => {
 						setSelectedName(data.value);
@@ -64,8 +65,9 @@ const BoardModalFinal = (props: Props) => {
 				/>
 			</Form.Field>
 			<Form.Field width={7} className={styles.formField}>
-				<label>Project</label>
+				<label className="standartLabel">{t('project')}</label>
 				<Dropdown
+					className="standartSelect"
 					search={(options, query) =>
 						options.filter((option) => (option.text as string).toLowerCase().includes(query.toLowerCase()))
 					}
@@ -78,7 +80,7 @@ const BoardModalFinal = (props: Props) => {
 						setSelectedProjects([...(data.value as string[])]);
 					}}
 				/>
-				<p>{t('create_board_final_text')}</p>
+				<p className="textData">{t('create_board_final_text')}</p>
 			</Form.Field>
 		</Form>
 	);

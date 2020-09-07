@@ -58,13 +58,14 @@ const AddTeamPopup: React.FC<Props> = ({ isOpen = false, closeClb }): ReactEleme
 
 	return (
 		<Modal open={isOpen} onClose={closeClb} size="small">
-			<Modal.Header>{t('create_team_modal_header')}</Modal.Header>
+			<Modal.Header className="standartHeader">{t('create_team_modal_header')}</Modal.Header>
 			<Modal.Content image scrolling>
 				<Image size="big" src={linksImg} wrapped className={style.img} />
 				<Form onSubmit={handlerSubmit}>
-					<p>{t('create_team_modal_text')}</p>
+					<p className="textData">{t('create_team_modal_text')}</p>
+					<label className="standartLabel">{t('team_name')}</label>
 					<Form.Input
-						label={t('team_name')}
+						className="standartInput"
 						placeholder={t('create_team_modal_placeholder')}
 						value={teamName}
 						onChange={handlerChange}
@@ -73,6 +74,7 @@ const AddTeamPopup: React.FC<Props> = ({ isOpen = false, closeClb }): ReactEleme
 			</Modal.Content>
 			<Modal.Actions>
 				<Button
+					className="cancelBtn"
 					onClick={() => {
 						setTeamName('');
 						closeClb();
@@ -80,8 +82,8 @@ const AddTeamPopup: React.FC<Props> = ({ isOpen = false, closeClb }): ReactEleme
 				>
 					{t('cancel')}
 				</Button>
-				<Button primary onClick={handlerSubmit}>
-					{t('start')}
+				<Button className="primaryBtn" onClick={handlerSubmit}>
+					{t('accept')}
 				</Button>
 			</Modal.Actions>
 		</Modal>

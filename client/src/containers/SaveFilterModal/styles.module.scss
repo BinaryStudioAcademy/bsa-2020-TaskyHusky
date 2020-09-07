@@ -1,15 +1,14 @@
-.form_container {
-	margin-bottom: 20px;
+@import 'styles/variables.scss';
+@import 'styles/mixins.scss';
+
+.primaryBtn {
+	@include primary-btn;
 }
 
-.saveBtn {
-	margin: 5px 0 0 10px;
-	border: none !important;
-	box-shadow: none !important;
-	height: 40px;
-	background: rgb(245, 245, 245) !important;
-	&:hover,
-	&:focus {
-		background: #e0e1e2 !important;
-	}
+.cancelBtn {
+	@include cancel-btn;
+}
+
+.form_container {
+	margin-bottom: 20px;
 }

@@ -11,6 +11,7 @@ router.use('/definition', filterDef).use('/part', filterPart);
 router
 	.get('/', filterController.getFilters)
 	.get('/:id', filterController.getById)
+	.get('/teammates/:userId', filterController.getTeammateFilters)
 	.post('/', filterController.create)
 	.put('/', filterController.updateFilter)
 	.delete('/:id', filterController.deleteById);

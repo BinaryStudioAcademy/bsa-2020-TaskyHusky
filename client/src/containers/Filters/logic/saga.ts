@@ -1,11 +1,11 @@
-import { fetchFilters, fetchFilterParts, updateFilter } from 'services/filter.service';
+import { fetchTeammatesFilters, fetchFilterParts, updateFilter, deleteFilter } from 'services/filter.service';
 import { all, put, takeEvery, call } from 'redux-saga/effects';
 import * as actionTypes from './actionTypes';
 import * as actions from './actions';
 
 export function* fetchAllFilters(action: ReturnType<typeof actions.fetchFilters>) {
 	try {
-		const filters: WebApi.Entities.Filter[] = yield call(fetchFilters);
+		const filters: WebApi.Entities.Filter[] = action.userId ? yield call(fetchTeammatesFilters, action.userId) : [];
 		yield put(actions.fetchFiltersSuccess({ partialState: { filters } }));
 	} catch (e) {
 		console.error(e.message);
@@ -34,6 +34,15 @@ export function* updateFilterByData(action: ReturnType<typeof actions.updateFilt
 	}
 }
 
+export function* deleteFilterSaga({ id }: ReturnType<typeof actions.deleteFilter>) {
+	yield call(deleteFilter, id);
+	yield put(actions.deleteFilterSuccess({ id }));
+}
+
+export function* watchDeleteFilter() {
+	yield takeEvery(actionTypes.DELETE_FILTER, deleteFilterSaga);
+}
+
 export function* watchUpdateFilter() {
 	yield takeEvery(actionTypes.UPDATE_FILTER, updateFilterByData);
 }
@@ -47,5 +56,5 @@ export function* watchFetchFilterParts() {
 }
 
 export default function* filterSaga() {
-	yield all([watchFetchFilters(), watchFetchFilterParts(), watchUpdateFilter()]);
+	yield all([watchFetchFilters(), watchFetchFilterParts(), watchUpdateFilter(), watchDeleteFilter()]);
 }

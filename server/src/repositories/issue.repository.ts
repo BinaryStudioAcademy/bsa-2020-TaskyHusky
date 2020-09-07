@@ -40,6 +40,7 @@ type Sort = {
 };
 
 export type Filter = {
+	id?: string[];
 	issueType?: string[];
 	priority?: string[];
 	sprint?: string[];
@@ -49,7 +50,6 @@ export type Filter = {
 	creator?: string[];
 	summary?: string;
 	description?: string;
-	comment?: string;
 };
 
 export interface CreateIssueArgs {
@@ -65,13 +65,20 @@ export interface CreateIssueArgs {
 
 @EntityRepository(Issue)
 export class IssueRepository extends Repository<Issue> {
-	findAll(from: number, to: number) {
-		return this.find({ relations: RELS, skip: from, take: to - from });
+	findAll() {
+		return this.find({ relations: RELS });
 	}
 
 	getFilteredIssues(filter: Filter | undefined, from: number, to: number, sort: Sort) {
 		const where = filter ? getConditions(filter) : {};
-		return this.findAndCount({ relations: RELS, where, skip: from, take: to - from, order: sort });
+
+		return this.findAndCount({
+			relations: RELS,
+			where,
+			skip: from,
+			take: to - from,
+			order: sort,
+		});
 	}
 
 	findAllByColumnId(id: string) {
@@ -131,12 +138,7 @@ export class IssueRepository extends Repository<Issue> {
 
 	notify(partialIssue: PartialIssue, data: PartialIssue, issue: Issue, senderId: string) {
 		const notification = getCustomRepository(NotificationRepository);
-
-		const difference = getDiffPropNames<PartialIssue, PartialIssue>(
-			partialIssue,
-			{ ...partialIssue, ...data },
-			_.isEqual,
-		);
+		const difference = getDiffPropNames<any, any>(partialIssue, { ...partialIssue, ...data }, _.isEqual);
 
 		if (difference.length) {
 			notification.notifyIssueWatchers({
@@ -159,8 +161,8 @@ export class IssueRepository extends Repository<Issue> {
 	}
 
 	async updateOneByKey(key: string, data: PartialIssue, senderId: string) {
-		await this.update({ issueKey: key }, data as any);
 		const partialIssue = await this.findByKeyWithRelIds(key);
+		await this.update({ issueKey: key }, data as any);
 		const newIssue = await this.findOneByKey(key);
 		issueHandler.emit(IssueActions.UpdateIssue, newIssue.id, newIssue);
 		this.notify(partialIssue, data, newIssue, senderId);

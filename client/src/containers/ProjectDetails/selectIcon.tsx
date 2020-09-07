@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Modal, Button } from 'semantic-ui-react';
 import i18n from 'i18next';
-
 import styles from './styles.module.scss';
 import icons from 'assets/images/project';
 
@@ -23,7 +22,6 @@ const SelectIcon = ({ currentIcon, onIconChange }: Props) => {
 			onClose={() => setIsIconsModalOpened(false)}
 			onOpen={() => setIsIconsModalOpened(true)}
 			open={isIconsModalOpened}
-			dimmer="inverted"
 			size="tiny"
 			trigger={
 				<button type="button" className={styles.form__avatar}>
@@ -32,7 +30,7 @@ const SelectIcon = ({ currentIcon, onIconChange }: Props) => {
 				</button>
 			}
 		>
-			<Modal.Header>{'Click to edit this avatar'}</Modal.Header>
+			<Modal.Header className="standartHeader">{'Click to edit this avatar'}</Modal.Header>
 			<div className={styles.icons__container}>
 				<ul className={styles.icons__list}>
 					{Object.values(icons).map((icon: string) => (
@@ -45,7 +43,7 @@ const SelectIcon = ({ currentIcon, onIconChange }: Props) => {
 				</ul>
 			</div>
 			<Modal.Actions>
-				<Button color="grey" onClick={() => setIsIconsModalOpened(false)}>
+				<Button className="cancelBtn" onClick={() => setIsIconsModalOpened(false)}>
 					{i18n.t('cancel')}
 				</Button>
 			</Modal.Actions>

@@ -1,5 +1,9 @@
 @import 'styles/mixins.scss';
 
-:local(.errorPopup) {
+.errorPopup {
 	@include error-popup;
+}
+
+.popper {
+	z-index: 5 !important;
 }

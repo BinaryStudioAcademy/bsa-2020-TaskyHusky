@@ -15,7 +15,7 @@ type Props = {
 	isActive: boolean;
 	isCompleted: boolean;
 	name: string;
-	issues: WebApi.Entities.Issue[];
+	issues: WebApi.Result.IssueResult[];
 	endDate: Date | undefined;
 	startDate: Date | undefined;
 };
@@ -69,7 +69,11 @@ export const SprintHeader: React.FC<Props> = ({ id, isActive, name, issues, isCo
 								title="Burndown chart"
 							/>
 						)}
-						<CreateIssueModal projectID={projectId} sprintID={id} boardID={boardId}>
+						<CreateIssueModal
+							projectID={projectId}
+							sprintID={id === 'backlog' ? undefined : id}
+							boardID={boardId}
+						>
 							<Button icon="add" className={styles.createIssueButton} title="Create issue" />
 						</CreateIssueModal>
 						{id !== 'backlog' ? <Options config={config} /> : null}

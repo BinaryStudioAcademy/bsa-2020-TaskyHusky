@@ -2,10 +2,10 @@ import React from 'react';
 import styles from './styles.module.scss';
 import { useTranslation } from 'react-i18next';
 import ProfileActivityBlock from 'components/ProfileActivityBlock';
-import projectIcon from 'icons/profile/projectIcon.svg';
+import UserActivityItem from 'components/UserActivityItem';
+import IssueActivityItem from 'components/IssueActivityItem';
 
 interface Props {
-	isCurrentUser: boolean;
 	activity: any;
 	projects: Array<WebApi.Entities.Projects>;
 	teammates: Array<WebApi.Entities.UserProfile>;
@@ -13,7 +13,7 @@ interface Props {
 
 const ProfileSection: React.FC<Props> = (props: Props) => {
 	const { t } = useTranslation();
-	const { isCurrentUser, activity, projects, teammates } = props;
+	const { activity, projects, teammates } = props;
 	const countActivity = 3;
 	const countProject = 2;
 	const countColleagues = 1;
@@ -32,22 +32,35 @@ const ProfileSection: React.FC<Props> = (props: Props) => {
 
 	return (
 		<section className={styles.mainInfo}>
-			<h3 className={styles.header}>{t('worked_on')}</h3>
-			{isCurrentUser && <p className={styles.headerSecondary}>{t('content_privat_message')}</p>}
+			{(Boolean(activity.length) || !projects.length) && (
+				<h3 className={`${styles.header} ${styles.firstHeader}`}>{t('worked_on')}</h3>
+			)}
 			<ProfileActivityBlock
 				data={activity}
 				countItem={countActivity}
-				icon={projectIcon}
 				emptyContent={emptyActivityCard}
+				showEmpty={!projects.length}
+				component={IssueActivityItem}
 			/>
 			{Boolean(projects.length) && (
 				<>
 					<h3 className={styles.header}>{t('work_places')}</h3>
-					<ProfileActivityBlock data={projects} countItem={countProject} />
+					<ProfileActivityBlock
+						data={projects}
+						countItem={countProject}
+						showEmpty={false}
+						component={UserActivityItem}
+					/>
 				</>
 			)}
 			<h3 className={styles.header}>{t('work_with')}</h3>
-			<ProfileActivityBlock data={teammates} countItem={countColleagues} emptyContent={emptyColleaguesCard} />
+			<ProfileActivityBlock
+				data={teammates}
+				countItem={countColleagues}
+				emptyContent={emptyColleaguesCard}
+				component={UserActivityItem}
+				showEmpty={true}
+			/>
 		</section>
 	);
 };

@@ -9,7 +9,7 @@ type Props = {
 	sprintId: string;
 	isOpen: boolean;
 	clickAction: any;
-	sprintIssues: WebApi.Entities.Issue[];
+	sprintIssues: WebApi.Result.IssueResult[];
 };
 
 const SprintModal = (props: Props) => {
@@ -28,15 +28,15 @@ const SprintModal = (props: Props) => {
 	};
 
 	return (
-		<Modal size="tiny" dimmer="inverted" onClose={props.clickAction} open={props.isOpen}>
-			<Header>
+		<Modal size="tiny" onClose={props.clickAction} open={props.isOpen}>
+			<Header className="standartHeader">
 				{t('delete_sprint')}: {sprintName}
 			</Header>
 			<Modal.Content>
 				<Header icon textAlign="center">
 					<Icon name="trash alternate outline" />
 				</Header>
-				<p>
+				<p className="textData">
 					{!!sprintIssues?.length
 						? t('delete_sprint_with_issues_warning')
 						: t('delete_sprint_with_no_issues_warning')}
@@ -44,8 +44,9 @@ const SprintModal = (props: Props) => {
 			</Modal.Content>
 
 			<Modal.Actions>
-				<Button color="grey" onClick={handleNoButtonClick} content={t('cancel')} />
+				<Button className="cancelBtn" onClick={handleNoButtonClick} content={t('cancel')} />
 				<Button
+					className="contentBtn"
 					labelPosition="right"
 					icon="checkmark"
 					primary

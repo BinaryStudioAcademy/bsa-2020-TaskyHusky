@@ -2,13 +2,13 @@ import { FindOperator, Any, Like } from 'typeorm';
 import { Filter } from '../repositories/issue.repository';
 
 type RequestConditions = {
+	id: FindOperator<string>;
 	type?: FindOperator<string>;
 	priority?: FindOperator<string>;
 	summary?: FindOperator<string>;
 	description?: FindOperator<string>;
 	sprint?: FindOperator<string>;
 	project?: FindOperator<string>;
-	comment?: FindOperator<string>;
 	status?: FindOperator<string>;
 	assigned?: FindOperator<string>;
 	creator?: FindOperator<string>;
@@ -20,19 +20,11 @@ const getLikeOperator = (matchValue: string) => {
 
 export const getConditions = (filter: Filter) => {
 	const where = {} as RequestConditions;
-	const {
-		issueType,
-		issueStatus,
-		priority,
-		summary,
-		description,
-		sprint,
-		projects,
-		assigned,
-		creator,
-		comment,
-	} = filter;
+	const { id, issueType, issueStatus, priority, summary, description, sprint, projects, assigned, creator } = filter;
 
+	if (id) {
+		where.id = Any(id);
+	}
 	if (issueType) {
 		where.type = Any(issueType);
 	}
@@ -56,9 +48,6 @@ export const getConditions = (filter: Filter) => {
 	}
 	if (summary) {
 		where.summary = getLikeOperator(summary);
-	}
-	if (comment) {
-		where.comment = getLikeOperator(comment);
 	}
 	if (description) {
 		where.description = getLikeOperator(description);
