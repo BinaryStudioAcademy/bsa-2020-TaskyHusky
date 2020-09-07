@@ -14,7 +14,14 @@ export class Issue {
 	boardColumn?: string;
 
 	@Expose()
-	labels?: string[];
+	labels?: {
+		id: string;
+		backgroudColor: string;
+		textColor: string;
+		text: string;
+		createdAt: Date;
+		updatedAt: Date;
+	};
 
 	@Expose()
 	@IsArray()

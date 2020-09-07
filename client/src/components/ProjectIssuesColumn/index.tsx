@@ -9,6 +9,7 @@ import Spinner from 'components/common/Spinner';
 interface Props {
 	projectId: string;
 	onChangeSelectedCard: (key: string | null) => void;
+	onDeleteIssue?: () => void;
 	search: string;
 }
 
@@ -16,7 +17,12 @@ interface Dictionary<V> {
 	[key: string]: V;
 }
 
-const ProjectIssuesColumn: React.FC<Props> = ({ projectId, onChangeSelectedCard, search }) => {
+const ProjectIssuesColumn: React.FC<Props> = ({
+	projectId,
+	onChangeSelectedCard,
+	search,
+	onDeleteIssue = () => {},
+}) => {
 	const [issues, setIssues] = useState<WebApi.Result.IssueResult[]>([]);
 	const [mustFetchIssues, setMustFetchIssues] = useState<boolean>(true);
 	const issueCardUnselect: Dictionary<() => void> = {};
@@ -49,6 +55,7 @@ const ProjectIssuesColumn: React.FC<Props> = ({ projectId, onChangeSelectedCard,
 			const index = issues.findIndex((issue) => issue.id === id);
 
 			if (index > -1) {
+				onDeleteIssue();
 				const newIssues = [...issues];
 				newIssues.splice(index, 1);
 				setIssues(newIssues);

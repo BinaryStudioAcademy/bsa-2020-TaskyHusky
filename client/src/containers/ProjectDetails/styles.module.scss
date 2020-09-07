@@ -72,6 +72,10 @@ textarea {
     @extend .fix_start_after_input;
 }
 
+.project__description {
+    resize: none !important;
+}
+
 .form__input_container {
     display: flex;
     align-items: baseline;

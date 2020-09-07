@@ -118,7 +118,7 @@ const ProjectForm = ({ projectData }: Props) => {
 					onChange={(e) => onProjectChange('url', e.target.value)}
 					value={project.url}
 				/>
-				<Form.Field className={styles.form__input} required>
+				<Form.Field className={styles.form__input}>
 					<label>{t('project_category')}</label>
 					<div className={styles.form__input_container}>
 						<input placeholder={t('category')} disabled />
@@ -136,8 +136,9 @@ const ProjectForm = ({ projectData }: Props) => {
 				<Form.Field className={styles.form__area}>
 					<label className={styles.avatar__label}>{t('description')}</label>
 					<TextArea
+						className={styles.project__description}
 						placeholder={t('project_desc')}
-						rows={'7'}
+						rows={'4'}
 						onChange={(e, data) => onProjectChange('description', data.value?.toString() || '')}
 						value={project.description}
 					/>
