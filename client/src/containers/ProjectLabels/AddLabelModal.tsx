@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
 import { Modal, Button, Form } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
+
 import { ColorResult, SliderPicker } from 'react-color';
-//@ts-ignore
-import contrast from 'get-contrast';
 import styles from './styles.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import * as actions from './logic/actions';
 import { RootState } from 'typings/rootState';
 import Label from 'components/common/Label';
 import CustomInput from 'components/common/Input/CustomInput';
-
+import getContrastingColor from 'helpers/getContrastColor';
 const AddLabelModal: React.FC = () => {
 	const { isLoading, isEditMode, editLabel } = useSelector((rootState: RootState) => rootState.projectLabel);
 	const { project } = useSelector((rootState: RootState) => rootState.project);
@@ -19,15 +18,12 @@ const AddLabelModal: React.FC = () => {
 	const dispatch = useDispatch();
 	const { t } = useTranslation();
 
-	const alternativeTextColor = '#ffffff';
-	const mainTextColor = '#000000';
 	const defaultBackgroundColor = '#ebbd34';
-
 	const [text, setText] = useState<string>(editLabel?.text || '');
 	const [backgroundColor, setBackgroundColor] = useState<string>(
 		editLabel?.backgroundColor || defaultBackgroundColor,
 	);
-	const [textColor, setTextColor] = useState<string>(mainTextColor);
+	const [textColor, setTextColor] = useState<string>('#000000');
 
 	const [isLabelTextValid, setIsLabelTextValid] = useState<boolean>(false);
 	const [isValidErrorShown, setIsValidErrorShown] = useState<boolean>(false);
@@ -54,14 +50,9 @@ const AddLabelModal: React.FC = () => {
 
 	const onLabelColorChange = (color: ColorResult): void => {
 		const checkedColor = color.hex;
+		const contrastColor = getContrastingColor(checkedColor);
 		setBackgroundColor(checkedColor);
-
-		const isAccessibleColor = contrast.isAccessible(checkedColor, mainTextColor);
-		if (!isAccessibleColor) {
-			setTextColor(alternativeTextColor);
-			return;
-		}
-		setTextColor(mainTextColor);
+		setTextColor(contrastColor);
 	};
 
 	const onAddLabel = (): void => {
