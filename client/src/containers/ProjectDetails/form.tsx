@@ -10,6 +10,7 @@ import { RootState } from 'typings/rootState';
 import { startGettingKeys } from 'containers/CreateProjectModal/logic/actions';
 import { validProjectKey, validProjectName } from 'helpers/validationRules';
 import * as validationMessage from 'constants/ValidationMessages';
+import { Link } from 'react-router-dom';
 
 interface Props {
 	projectData: WebApi.Entities.Projects;
@@ -76,7 +77,7 @@ const ProjectForm = ({ projectData }: Props) => {
 		<div className={styles.form__container}>
 			<Form>
 				<Form.Field className={styles.form__input_key} required>
-					<label className={styles.avatar__label}>{t('name')}</label>
+					<label className="standartLabel">{t('name')}</label>
 					<CustomInput
 						isValidErrorShown={isValidErrorShown}
 						isDataValid={isNameValid}
@@ -90,7 +91,7 @@ const ProjectForm = ({ projectData }: Props) => {
 					/>
 				</Form.Field>
 				<Form.Field className={styles.form__input_key} required>
-					<label>{t('key')}</label>
+					<label className="standartLabel">{t('key')}</label>
 					<div className={styles.form__input_container}>
 						<CustomInput
 							isValidErrorShown={isValidErrorShown}
@@ -119,9 +120,9 @@ const ProjectForm = ({ projectData }: Props) => {
 					value={project.url}
 				/>
 				<Form.Field className={styles.form__input}>
-					<label>{t('project_category')}</label>
+					<label className="standartLabel">{t('project_category')}</label>
 					<div className={styles.form__input_container}>
-						<input placeholder={t('category')} disabled />
+						<input className="standartInput" placeholder={t('category')} disabled />
 						<Popup
 							trigger={<Icon name="info circle" className={styles.information__icon} size={'large'} />}
 							position="bottom center"
@@ -130,11 +131,11 @@ const ProjectForm = ({ projectData }: Props) => {
 					</div>
 				</Form.Field>
 				<Form.Field required className={styles.form__input}>
-					<label className={styles.avatar__label}>{t('avatar')}</label>
+					<label className="standartLabel">{t('avatar')}</label>
 					<SelectIcon currentIcon={project.icon} onIconChange={onProjectChange} />
 				</Form.Field>
 				<Form.Field className={styles.form__area}>
-					<label className={styles.avatar__label}>{t('Description')}</label>
+					<label className="standartLabel">{t('Description')}</label>
 					<TextArea
 						className={styles.project__description}
 						placeholder={t('project_desc')}
@@ -144,8 +145,9 @@ const ProjectForm = ({ projectData }: Props) => {
 					/>
 				</Form.Field>
 				<Form.Field className={styles.form__input}>
-					<label className={styles.avatar__label}>{t('lead')}</label>
+					<label className="standartLabel">{t('lead')}</label>
 					<Dropdown
+						className="standartSelect"
 						placeholder={`${project.lead.firstName} ${project.lead.lastName}`}
 						search
 						selection
@@ -155,7 +157,7 @@ const ProjectForm = ({ projectData }: Props) => {
 					/>
 				</Form.Field>
 				<Form.Field className={styles.form__input}>
-					<label className={styles.avatar__label}>{t('default_assignee')}</label>
+					<label className="standartLabel">{t('default_assignee')}</label>
 					<div className={styles.form__input_container}>
 						<Form.Select
 							options={options}
@@ -170,10 +172,10 @@ const ProjectForm = ({ projectData }: Props) => {
 					</div>
 				</Form.Field>
 				<div>
-					<Button as="Link" className={[styles.action_button, 'cancelBtn'].join(' ')} to="/projects">
+					<Button as={Link} className={[styles.action_button, 'cancelBtn'].join(' ')} to="/projects">
 						{t('cancel')}
 					</Button>
-					<Button className={['primaryBtn'].join(' ')} onClick={onSave}>
+					<Button className="primaryBtn" onClick={onSave}>
 						{t('save_details')}
 					</Button>
 				</div>

@@ -23,3 +23,4 @@ export const sendGoogleAuth = createAction<actionTypes.GoogleUser>(actionTypes.G
 export const loadingGoogleAuth = createAction<actionTypes.Loading>(actionTypes.GOOGLE_AUTH_LOADING);
 export const forgotPassword = createAction<actionTypes.ForgotPassword>(actionTypes.FORGOT_PASSWORD);
 export const resetPassword = createAction<actionTypes.ResetPassword>(actionTypes.RESET_PASSWORD);
+export const updateUser = createAction<actionTypes.UpdateUser>(actionTypes.UPDATE_USER);

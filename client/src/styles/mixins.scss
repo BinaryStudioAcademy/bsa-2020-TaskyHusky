@@ -202,7 +202,7 @@
 		@include text-data;
 	}
 
-	& > div:last-child {
+	&>div:last-child {
 		border: 1px solid $yellow !important;
 		border-top: none;
 	}
@@ -213,6 +213,10 @@
 
 	&:focus {
 		border: 1px solid $yellow !important;
+
+		&>input {
+			border: 1px solid $yellow !important;
+		}
 	}
 }
 
