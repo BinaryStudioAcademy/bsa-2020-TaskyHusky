@@ -11,25 +11,19 @@ interface Props {
 
 const Label: React.FC<Props> = ({ text, textColor, backgroundColor }) => {
 	return (
-		<>
-			{'isTooltipShown' && (
-				<>
-					<Popup
-						trigger={
-							<span className={styles.wrapper}>
-								<span className={classNames({ [styles.container]: text })} style={{ backgroundColor }}>
-									<span className={styles.label} style={{ color: textColor }}>
-										{text}
-									</span>
-								</span>
-							</span>
-						}
-					>
-						<p className={styles.tooltip__content}>{text}</p>
-					</Popup>
-				</>
-			)}
-		</>
+		<Popup
+			trigger={
+				<span className={styles.wrapper}>
+					<span className={classNames({ [styles.container]: text })} style={{ backgroundColor }}>
+						<span className={styles.label} style={{ color: textColor }}>
+							{text}
+						</span>
+					</span>
+				</span>
+			}
+		>
+			<p className={styles.tooltip__content}>{text}</p>
+		</Popup>
 	);
 };
 
