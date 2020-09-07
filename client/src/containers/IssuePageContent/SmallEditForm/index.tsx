@@ -62,7 +62,7 @@ const SmallEditForm: React.FC<Props> = ({ links: givenLinks, attachments: givenA
 						: t('no')}
 				</div>
 				<span onClick={() => setLinksModalOpened(true)} className={styles.spanButton}>
-					Click here to add link...
+					{t('click_here_to_add_link')}
 				</span>
 				<Modal
 					closeIcon
@@ -107,7 +107,7 @@ const SmallEditForm: React.FC<Props> = ({ links: givenLinks, attachments: givenA
 						: t('no')}
 				</div>
 				<span onClick={() => setFilesModalOpened(true)} className={styles.spanButton}>
-					Click here to add attachment...
+					{t('click_here_to_add_attachment')}
 				</span>
 				<Modal
 					closeIcon

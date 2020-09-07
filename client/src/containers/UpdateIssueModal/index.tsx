@@ -220,7 +220,7 @@ const UpdateIssueModal: React.FC<Props> = ({
 							selection
 							multiple
 							search
-							noResultsMessage="No more labels. TIP: You must select project to access labels"
+							noResultsMessage={t('no_more_labels')}
 							placeholder={t('labels')}
 							options={labelOpts}
 							value={context.data.labels}

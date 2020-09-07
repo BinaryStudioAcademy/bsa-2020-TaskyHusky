@@ -466,4 +466,7 @@ export const en = {
 	remove_user_from_project: 'Remove from project',
 	team_header: 'Team',
 	my_team: 'My team',
+	click_here_to_add_link: 'Click here to add link...',
+	click_here_to_add_attachment: 'Click here to add attachment...',
+	no_more_labels: 'No more labels. TIP: You must select project to access labels',
 };

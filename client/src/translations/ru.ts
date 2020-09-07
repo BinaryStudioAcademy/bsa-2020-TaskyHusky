@@ -450,4 +450,7 @@ export const ru = {
 	remove_user_from_project: 'Удалить c проекта',
 	team_header: 'Команда',
 	my_team: 'Моя команда',
+	click_here_to_add_link: 'Нажмите, чтобы добавить ссылку...',
+	click_here_to_add_attachment: 'Нажмите, чтобы добавить файл...',
+	no_more_labels: 'Больше нет меток. TIP: Чтобы получить доступ к меткам, нужно выбрать проект',
 };
