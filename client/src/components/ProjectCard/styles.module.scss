@@ -5,9 +5,11 @@
   box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.25);
   border-radius: 2px;
   width: 330px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   margin-right: 25px;
   margin-bottom: 25px;
-  border-bottom: 20px solid $yellow;
 }
 
 .header {
@@ -69,4 +71,9 @@
 
 .issues {
   padding: 15px;
+}
+
+.colorBlock {
+  height: 20px;
+  width: 100%;
 }

@@ -49,6 +49,7 @@ const ProjectCard: React.FC<Props> = (props: Props) => {
 						{t('my_done_issues')} <span className={styles.count}>{doneIssues}</span>
 					</p>
 				</div>
+				<div className={styles.colorBlock} style={{ background: color ?? '#fece2f' }} />
 			</Link>
 		</div>
 	);
