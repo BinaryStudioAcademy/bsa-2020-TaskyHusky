@@ -41,6 +41,18 @@ export class FilterRepository extends Repository<Filter> {
 		});
 	}
 
+	async getRecentFilters(userId: string, limit: number = 5) {
+		return (await this.getTeammateFilters(userId))
+			.sort((a, b) => (a.updatedAt < b.updatedAt ? 1 : -1))
+			.slice(0, limit);
+	}
+
+	async getFavFilters(userId: string) {
+		return (await this.getTeammateFilters(userId)).filter((f) =>
+			f.staredBy?.find((stargazer) => stargazer.id === userId),
+		);
+	}
+
 	async createItem(data: Filter): Promise<Filter> {
 		const { name, filterParts, owner } = data;
 

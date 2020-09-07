@@ -27,7 +27,7 @@ export class BoardRepository extends Repository<Board> {
 	getRecent = (): Promise<IReducedBoard[]> => {
 		const boards = this.createQueryBuilder('board')
 			.select(['board.id', 'board.name'])
-			.orderBy('board.createdAt', 'DESC')
+			.orderBy('board.updatedAt', 'DESC')
 			.getMany();
 
 		return boards;

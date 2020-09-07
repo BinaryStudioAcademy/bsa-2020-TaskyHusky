@@ -163,8 +163,9 @@ export class IssueRepository extends Repository<Issue> {
 		return newIssue;
 	}
 
-	async updateOneByKey(key: string, data: PartialIssue, senderId: string) {
+	async updateOneByKey(key: string, givenData: PartialIssue, senderId: string) {
 		const partialIssue = await this.findByKeyWithRelIds(key);
+		const { watchers, labels, ...data } = givenData;
 		await this.update({ issueKey: key }, data as any);
 		const newIssue = await this.findOneByKey(key);
 		issueHandler.emit(IssueActions.UpdateIssue, newIssue.id, newIssue);

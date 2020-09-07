@@ -40,4 +40,16 @@ export const filtersReducer = createReducer<FilterState>(initialState, {
 			filters: updatedFilters,
 		};
 	},
+	[actionTypes.FETCH_RECENT_SUCCESS](state, action: actionTypes.FetchFiltersSuccessArgs) {
+		return {
+			...state,
+			...action.partialState,
+		};
+	},
+	[actionTypes.FETCH_FAV_SUCCESS](state, action: actionTypes.FetchFiltersSuccessArgs) {
+		return {
+			...state,
+			...action.partialState,
+		};
+	},
 });

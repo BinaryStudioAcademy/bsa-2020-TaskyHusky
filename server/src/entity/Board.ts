@@ -1,4 +1,13 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToOne, CreateDateColumn, ManyToMany } from 'typeorm';
+import {
+	Entity,
+	Column,
+	PrimaryGeneratedColumn,
+	OneToMany,
+	ManyToOne,
+	CreateDateColumn,
+	ManyToMany,
+	UpdateDateColumn,
+} from 'typeorm';
 import { IsDefined, IsString, IsNotEmpty, IsUUID } from 'class-validator';
 import { BoardColumn } from './BoardColumn';
 import { Sprint } from './Sprint';
@@ -37,6 +46,9 @@ export class Board {
 
 	@CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP(6)' })
 	createdAt!: Date;
+
+	@UpdateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP(6)' })
+	updatedAt!: Date;
 
 	@ManyToMany((type) => Projects, (project) => project.boards, {
 		cascade: true,
