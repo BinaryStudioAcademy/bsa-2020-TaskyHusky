@@ -149,7 +149,9 @@ class IssueController {
 				...data,
 				creator: (req.user as UserModel).id,
 			});
-			// await elastic.addData(issue);
+			console.log(issue);
+
+			await elastic.addData(issue);
 
 			res.status(201).send(issue);
 		} catch (err) {
@@ -168,6 +170,7 @@ class IssueController {
 
 		try {
 			const result = await repository.updateOneById(id, data, userId);
+
 			await elastic.update(result);
 			res.send(result);
 		} catch (err) {

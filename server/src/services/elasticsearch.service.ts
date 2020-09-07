@@ -10,6 +10,12 @@ interface ElasticI {
 
 type BulkCreateOption = { index: { _index: string; _id: string } };
 
+type ElasticIssue = {
+	id: string;
+	summary: string;
+	description: string | undefined;
+};
+
 class Elastic implements ElasticI {
 	index = 'documentIndex';
 
@@ -55,25 +61,33 @@ class Elastic implements ElasticI {
 	}
 
 	update(issue: Issue) {
-		return client.update({
-			index: 'issue',
-			type: 'doc',
-			id: issue.id,
-			body: {
-				doc: {
-					...issue,
+		return client
+			.update({
+				index: 'issue',
+				type: '_doc',
+				id: issue.id,
+				body: {
+					doc: {
+						...issue,
+						// id: issue.id,
+						// summary: issue.summary,
+						// description: issue.description,
+						// sprint: issue.sprint,
+					},
 				},
-			},
-		});
+			})
+			.catch((e) => console.error(e.meta.body.error));
 	}
 
 	addData(issue: Issue) {
-		return client.create({
-			index: this.index,
-			id: issue.id,
-			type: 'doc',
-			body: issue,
-		});
+		return client
+			.create({
+				index: this.index,
+				id: issue.id,
+				type: '_doc',
+				body: issue,
+			})
+			.catch((e) => console.error(e.meta.body.error));
 	}
 
 	async getMatchedIssueIDs(input: string) {
