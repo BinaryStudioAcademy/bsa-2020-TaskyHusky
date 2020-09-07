@@ -13,6 +13,7 @@ export const convertIssueResultToPartialIssue = (
 		boardColumn: issueToConvert.boardColumn?.id,
 		creator: issueToConvert.creator.id,
 		assigned: issueToConvert.assigned?.id,
+		labels: issueToConvert.labels?.map((l) => l.id),
 		...custom,
 	};
 };

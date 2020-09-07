@@ -30,12 +30,14 @@ const IssueComment: React.FC<Props> = ({ comment }) => {
 	const renderActions =
 		user && user.id === comment.creator.id ? (
 			<Comment.Actions>
-				<CopyToClipboard text={comment.text} onCopy={deleteCurrentComment}>
-					<Comment.Action className={styles.redOnHover}>
-						<Icon name="trash alternate outline" />
-						{t('delete')}
-					</Comment.Action>
-				</CopyToClipboard>
+				<div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+					<CopyToClipboard text={comment.text} onCopy={deleteCurrentComment}>
+						<Comment.Action className={styles.redOnHover}>
+							<Icon name="trash alternate outline" />
+							{t('delete')}
+						</Comment.Action>
+					</CopyToClipboard>
+				</div>
 			</Comment.Actions>
 		) : (
 			''

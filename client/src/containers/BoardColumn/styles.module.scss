@@ -11,13 +11,14 @@
 	display: flex;
 	flex-direction: column;
 	overflow-y: auto;
-	max-height: calc(100vh - 400px);
+	max-height: calc(100vh - 380px);
 }
 
 
 .contentBtn {
 	@include content-btn;
 	margin-right: 10px !important;
+	margin-top: 10px !important;
 }
 
 .wrapper {

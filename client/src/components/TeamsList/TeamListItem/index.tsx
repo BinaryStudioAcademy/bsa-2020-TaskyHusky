@@ -22,7 +22,7 @@ const TeamListItem: React.FC<Props> = ({ team, handlerClick }): ReactElement => 
 					<p className={styles.name}>{name}</p>
 					<p className={styles.title}>
 						{users?.length ?? 0}
-						{users?.length ? ` ${t('member')}` : ` ${t('members_lower')}`}
+						{(users?.length ?? 0) > 1 ? ` ${t('members_lower')}` : ` ${t('member')}`}
 					</p>
 				</div>
 			</div>

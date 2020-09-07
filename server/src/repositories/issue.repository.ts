@@ -23,6 +23,7 @@ const RELS = [
 	'boardColumn',
 	'watchers',
 	'board',
+	'labels',
 ];
 
 type SortDir = 'DESC' | 'ASC';
@@ -111,18 +112,19 @@ export class IssueRepository extends Repository<Issue> {
 
 	async createOne(data: CreateIssueArgs) {
 		const { project } = data;
-		const projectReposritory = getCustomRepository(ProjectsRepository);
-		const { key, issues = [] } = (await projectReposritory.getWithIssuesById(project)) as Projects;
+		const projectRepository = getCustomRepository(ProjectsRepository);
+		const { key, issues = [] } = (await projectRepository.getWithIssuesById(project)) as Projects;
 		const e = extractIndexFromIssueKey;
 		// eslint-disable-next-line
 		const lastIndex = issues.reduce((acc, current) => (acc = Math.max(acc, e(current.issueKey as string))), 0);
 		const newKey = `${key}-${lastIndex + 1}`;
 		const entity = this.create({ ...data, issueKey: newKey } as any);
 		const result = ((await this.save(entity)) as unknown) as Issue;
+		if (data.labels) await this.createQueryBuilder().relation(Issue, 'labels').of(result.id).add(data.labels);
 		const newIssue = await this.findOneById(result.id);
 		issueHandler.emit(IssueActions.CreateIssue, newIssue);
 
-		return result;
+		return newIssue;
 	}
 
 	async watch(id: string, userId: string) {
@@ -152,7 +154,8 @@ export class IssueRepository extends Repository<Issue> {
 
 	async updateOneById(id: string, data: PartialIssue, senderId: string) {
 		const partialIssue = await this.findByIdWithRelIds(id);
-		await this.update(id, data as any);
+		await this.save({ ...(data as any), id });
+		if (data.labels) await this.createQueryBuilder().relation(Issue, 'labels').of(id).add(data.labels);
 		const newIssue = await this.findOneById(id);
 		issueHandler.emit(IssueActions.UpdateIssue, id, newIssue);
 		this.notify(partialIssue, data, newIssue, senderId);

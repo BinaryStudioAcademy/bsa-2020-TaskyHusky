@@ -30,6 +30,17 @@ const WorkOnCard: React.FC<Props> = (props: Props) => {
 			<Link to={`issue/${issueKey}`} className={styles.content}>
 				<div className={styles.mainInfo}>
 					<p className={styles.key}>{issueKey}</p>
+					<Popup
+						content={`Type: ${type.title}`}
+						trigger={
+							<Icon
+								name={type.icon as any}
+								color={type.color as any}
+								title={type.title}
+								className={styles.icon}
+							/>
+						}
+					/>
 					<p className={styles.summary}>{summary}</p>
 				</div>
 				<div className={`${styles.mainInfo} ${styles.hidden}`}>
@@ -45,17 +56,6 @@ const WorkOnCard: React.FC<Props> = (props: Props) => {
 							}
 						/>
 					)}
-					<Popup
-						content={`Type: ${type.title}`}
-						trigger={
-							<Icon
-								name={type.icon as any}
-								color={type.color as any}
-								title={type.title}
-								className={styles.icon}
-							/>
-						}
-					/>
 					<p className={styles.date}>{moment(updatedAt).format('LLL')}</p>
 				</div>
 			</Link>

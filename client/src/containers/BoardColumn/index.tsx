@@ -112,12 +112,6 @@ const BoardColumn: React.FC<Props> = ({ column, className, search, getOnDragEndF
 							<Header as="h3" className={styles.columnHeader}>
 								{column.columnName}
 							</Header>
-							<CreateIssueModal boardColumnID={column.id}>
-								<Button className={styles.contentBtn} style={{ whiteSpace: 'nowrap' }}>
-									<Icon name="plus circle" />
-									{t('create_issue')}
-								</Button>
-							</CreateIssueModal>
 						</div>
 						<div style={{ clear: 'both' }} />
 						<div style={{ marginTop: 10 }}>
@@ -129,6 +123,12 @@ const BoardColumn: React.FC<Props> = ({ column, className, search, getOnDragEndF
 									: ''}
 								{provided.placeholder}
 							</div>
+							<CreateIssueModal boardColumnID={column.id}>
+								<Button className={styles.contentBtn} style={{ whiteSpace: 'nowrap' }}>
+									<Icon name="plus circle" />
+									{t('create_issue')}
+								</Button>
+							</CreateIssueModal>
 						</div>
 					</Segment>
 				)}
