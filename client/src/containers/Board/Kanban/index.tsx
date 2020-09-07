@@ -80,11 +80,7 @@ const Kanban: BoardComponent = ({ board }) => {
 						{t('clear')}
 					</Button>
 				</div>
-				<Link
-					className="cancelBtn"
-					to={`/board/${board.id}/columnsSettings`}
-					style={{ paddingLeft: '10px', paddingRight: '10px' }}
-				>
+				<Link className={styles.linkSettings} to={`/board/${board.id}/columnsSettings`}>
 					{t('go_to_columns_settings')}
 				</Link>
 			</div>
@@ -99,14 +95,14 @@ const Kanban: BoardComponent = ({ board }) => {
 							key={i}
 						/>
 					))}
+					<CreateColumnModal boardId={board.id}>
+						<Segment className={styles.contentBtn}>
+							<Icon name="plus" />
+							{t('create_column')}
+						</Segment>
+					</CreateColumnModal>
 				</div>
 			</DragDropContext>
-			<CreateColumnModal boardId={board.id}>
-				<Segment className={styles.contentBtn}>
-					<Icon name="plus" />
-					{t('create_column')}
-				</Segment>
-			</CreateColumnModal>
 		</div>
 	);
 };

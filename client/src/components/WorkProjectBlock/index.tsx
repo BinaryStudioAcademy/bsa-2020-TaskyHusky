@@ -17,18 +17,7 @@ const WorkProjectBlock: React.FC<Props> = (props: Props) => {
 	const stopLoad = 6;
 	return (
 		<div className="cardContainer">
-			{projects.map(
-				(item, index) =>
-					index < stopLoad && (
-						<ProjectCard
-							key={item.id}
-							name={item.name}
-							category={item.category}
-							issues={item.issues}
-							avatar={item.avatar}
-						/>
-					),
-			)}
+			{projects.map((item, index) => index < stopLoad && <ProjectCard key={item.id} item={item} />)}
 		</div>
 	);
 };
