@@ -56,9 +56,9 @@ const SaveFilterModal = () => {
 	return (
 		<>
 			{redirecting && <Redirect to={`/advancedSearch/${savedFilterId}`} />}
-			<Modal onClose={onModalClose} onOpen={onModalOpen} open={isModalOpened} size="tiny" dimmer="inverted">
+			<Modal onClose={onModalClose} onOpen={onModalOpen} open={isModalOpened} size="tiny">
 				<>
-					<Modal.Header>{t('save_filter')}</Modal.Header>
+					<Modal.Header className="standartHeader">{t('save_filter')}</Modal.Header>
 
 					<Modal.Content>
 						<Form className={styles.form_container}>
@@ -71,26 +71,28 @@ const SaveFilterModal = () => {
 									open={!isNameValid && isNameChanged}
 									content={t('min4_max40_length_message')}
 									trigger={
-										<Form.Input
-											label={t('filter_name')}
-											onChange={onNameChanged}
-											value={name}
-											placeholder={t('enter_filter_name')}
-											onBlur={() => {
-												setIsNameValid(validateFilterName(name.trim()));
-												setIsNameChanged(true);
-											}}
-											onFocus={() => {
-												setIsNameValid(validateFilterName(name.trim()));
-											}}
-										/>
+										<>
+											<label className="standartLabel">{t('filter_name')}</label>
+											<Form.Input
+												onChange={onNameChanged}
+												value={name}
+												placeholder={t('enter_filter_name')}
+												onBlur={() => {
+													setIsNameValid(validateFilterName(name.trim()));
+													setIsNameChanged(true);
+												}}
+												onFocus={() => {
+													setIsNameValid(validateFilterName(name.trim()));
+												}}
+											/>
+										</>
 									}
 								/>
 							</Form.Field>
 						</Form>
 					</Modal.Content>
 					<Modal.Actions>
-						<Button className={styles.primatyBtn} color="grey" onClick={onModalClose}>
+						<Button className={styles.primaryBtn} color="grey" onClick={onModalClose}>
 							{t('cancel')}
 						</Button>
 						<Button

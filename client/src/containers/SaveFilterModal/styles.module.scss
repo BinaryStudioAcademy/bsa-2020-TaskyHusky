@@ -1,13 +1,14 @@
 @import 'styles/variables.scss';
 @import 'styles/mixins.scss';
 
-.primatyBtn {
+.primaryBtn {
 	@include primary-btn;
 }
 
 .cancelBtn {
 	@include cancel-btn;
 }
+
 .form_container {
 	margin-bottom: 20px;
 }

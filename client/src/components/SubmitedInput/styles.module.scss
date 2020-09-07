@@ -17,12 +17,8 @@
 }
 
 .label {
+  @include label;
   margin: 20px 0 5px !important;
-  font-family: Poppins, sans-serif;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 14px;
-  color: $primary-text;
   display: block;
   left: 0 !important;
 }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Dropdown, Checkbox, DropdownItemProps, Button, Icon } from 'semantic-ui-react';
+import { Dropdown, Checkbox, DropdownItemProps, Icon } from 'semantic-ui-react';
 import styles from 'containers/Header/styles.module.scss';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
@@ -106,9 +106,9 @@ const NotificationsMenu: React.FC = () => {
 				<Dropdown.Header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
 					{t('notifications')}
 					{isThereUnread ? (
-						<Button className="primaryBtn" onClick={viewAll} style={{ paddingTop: 3, paddingBottom: 3 }}>
+						<button className={styles.buttonLink} onClick={viewAll}>
 							{t('mark_all_as_read')}
-						</Button>
+						</button>
 					) : null}
 				</Dropdown.Header>
 				<div style={{ maxHeight: 700, overflowY: 'auto' }}>

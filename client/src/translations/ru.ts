@@ -345,9 +345,8 @@ export const ru = {
 	info: 'Информация',
 	search_people_page_placeholder: 'Поиск пользователей и команд',
 	create_team: 'Создать команду',
-	add_people_text:
-		'Хотел бы видеть кого то из ресурса gmail.com? Напишите его электронную почту нижу – и, если у нас получится, мы отправим ему письмо с приглашением от Вас',
-	add_people_email_placeholder: 'Введите электронный адрес gmail.com',
+	add_people_text: 'Хотел бы видеть кого то? Напишите его электронную почту ниже.',
+	add_people_email_placeholder: 'Введите электронный адрес',
 	send: 'Отправить',
 	create_team_modal_header: 'Создать новую команду',
 	create_team_modal_text:
@@ -444,6 +443,9 @@ export const ru = {
 	yes: 'Да',
 	no_filters: 'Фильтры не найдены',
 	add_changes: 'Внесите изменения, что бы разблокировать кнопку',
+	are_you_sure: 'Вы уверены?',
+	are_you_sure_delete_column: 'Вы уверены, что хотите удалить эту колонку?',
+	go_to_columns_settings: 'Перейти в настройки колонок',
 	remove_user_from_project: 'Удалить c проекта',
 	team_header: 'Команда',
 	my_team: 'Моя команда',

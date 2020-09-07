@@ -1,26 +1,25 @@
 @import 'styles/mixins.scss';
-@import 'styles/variables.scss';
 
 .header_inner__container {
-    padding: 10px 0px 20px ;
-    position: relative;
-    display: flex;
+	padding: 10px 0px 20px;
+	position: relative;
+	display: flex;
 	justify-content: space-between;
 }
 
 .header_inner__title {
-    font-size: 24px;
+	font-size: 24px;
 	margin: 0;
 	line-height: 1;
 }
 
 .body_inner__container {
-    margin: 0 20%;
+	margin: 0 20%;
 }
 
 .body_inner__find,
 .modal__find {
-    width: 100%;
+	width: 100%;
 }
 
 .table__header_cell {
@@ -31,40 +30,43 @@
 .user__username {
 	display: flex;
 	align-items: center;
-	width: 100%; 
+	width: 100%;
 }
 
 .user__email {
-    width: 44%;
+	width: 44%;
 }
 
 .user__action {
-    width: 84px;
+	width: 84px;
 }
 
-.column__name, 
+.column__name,
 .column__email {
-    width: 40%;
+	width: 40%;
 }
 
 
 .imgWrapper {
 	margin-bottom: 10px;
+
 	.content {
 		display: flex;
 		flex-direction: column;
 		width: 240px;
+
 		.img {
 			max-width: 200px;
 			margin: 10px;
 		}
+
 		.text {
 			text-align: center;
 		}
 	}
 }
 
-.label__example{
+.label__example {
 	display: block;
 	min-height: 47px;
 }
@@ -72,6 +74,7 @@
 .label__example_title {
 	margin-right: 5px;
 	margin-bottom: 0;
+	@include label;
 }
 
 .labels__list_actions {
@@ -84,6 +87,7 @@
 	padding: 0 !important;
 	border: none;
 	background-color: transparent !important;
+
 	&:hover {
 		background-color: transparent !important;
 		color: black !important;

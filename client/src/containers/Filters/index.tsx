@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import styles from './styles.module.scss';
+import styles from './filters.module.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import * as actions from './logic/actions';
 import { RootState } from 'typings/rootState';
@@ -9,6 +9,7 @@ import { useHistory } from 'react-router-dom';
 import searchResult from 'assets/images/search-result.svg';
 import Spinner from 'components/common/Spinner';
 import Table from './table';
+import FiltersHeader from 'components/FiltersHeader';
 
 const Filters: React.FC = () => {
 	const { t } = useTranslation();
@@ -49,45 +50,42 @@ const Filters: React.FC = () => {
 	}, [dispatch, userId]);
 
 	return (
-		<div className={styles.filtersContainer}>
-			<div className={styles.outer}>
-				<div className={styles.titleWrapper}>
-					<div className={styles.titleContainer}>
-						<h1 className={styles.title}>{t('filters')}</h1>
+		<div className={styles.main}>
+			<FiltersHeader title={t('Filters')} />
+			{isLoading ? (
+				<Spinner />
+			) : (
+				<>
+					<div className={styles.mainHeader}>
+						<Input
+							icon="search"
+							className="standartInput"
+							placeholder={t('search')}
+							onChange={(event, data) => setSearchName(data.value)}
+							value={searchName}
+						/>{' '}
+						<div>
+							<Button className="primaryBtn" onClick={() => history.push('/advancedSearch')}>
+								{t('create_filter')}
+							</Button>
+						</div>
 					</div>
-					<div className={styles.actionWrapper}>
-						<Button className="primaryBtn" onClick={() => history.push('/advancedSearch')}>
-							{t('create_filter')}
-						</Button>
-					</div>
-				</div>
-				<div className={[styles.wrapperFilters, styles.filters].join(' ')}>
-					<Input
-						icon="search"
-						placeholder={t('search')}
-						onChange={(event, data) => setSearchName(data.value)}
-						value={searchName}
-					/>
-				</div>
-			</div>
-			<div className={styles.wrapper__table}>
-				{isLoading ? (
-					<Spinner />
-				) : (
 					<div>
-						{!isTableEmpty ? (
-							<Table filters={filteredFilters} updateFilter={updateFilter} />
-						) : (
-							<div className={styles.imgWrapper}>
-								<div className={styles.content}>
-									<img className={styles.img} src={searchResult} alt="No results" />
-									<span className={styles.text}>{t('no_filters')}</span>
+						<div className={styles.container}>
+							{!isTableEmpty ? (
+								<Table filters={filteredFilters} updateFilter={updateFilter} />
+							) : (
+								<div className={styles.imgWrapper}>
+									<div className={styles.content}>
+										<img className={styles.img} src={searchResult} alt="No results" />
+										<span className={styles.text}>{t('no_filters')}</span>
+									</div>
 								</div>
-							</div>
-						)}
+							)}
+						</div>
 					</div>
-				)}
-			</div>
+				</>
+			)}
 		</div>
 	);
 };

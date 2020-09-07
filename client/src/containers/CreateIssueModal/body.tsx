@@ -163,13 +163,13 @@ const CreateIssueModalBody: React.FC<Props> = ({
 		Object.keys(context.data).forEach((key) => context.set(key as any, (initialState as any)[key]));
 	};
 
-	if (projectsLoading) {
-		return null;
-	}
+	//comment cause it makes second spinner in header
+	// if (projectsLoading) {
+	// 	return <Spinner />;
+	// }
 
 	return (
 		<Modal
-			dimmer="inverted"
 			as="form"
 			onSubmit={submit}
 			open={isOpened}
@@ -181,45 +181,51 @@ const CreateIssueModalBody: React.FC<Props> = ({
 			trigger={children}
 		>
 			<Modal.Header>
-				<Header as="h1">{t('create_issue')}</Header>
+				<Header as="h1" className="standartHeader">
+					{t('create_issue')}
+				</Header>
 			</Modal.Header>
 			<Modal.Content scrolling>
 				<Form as="span">
 					<Form.Field>
-						<label className="required">{t('type')}</label>
+						<label className="required standartLabel">{t('type')}</label>
 						<Form.Dropdown
 							selection
 							style={{ maxWidth: 200 }}
 							options={typeOpts}
 							placeholder={t('type')}
+							className="formSelect"
 							onChange={(event, data) => context.set('type', data.value)}
 						/>
 					</Form.Field>
 					<Form.Field>
-						<label className="required">{t('priority')}</label>
+						<label className="required standartLabel">{t('priority')}</label>
 						<Form.Dropdown
 							selection
 							style={{ maxWidth: 200 }}
 							options={priorityOpts}
 							placeholder={t('priority')}
+							className="formSelect"
 							onChange={(event, data) => context.set('priority', data.value)}
 						/>
 					</Form.Field>
 					<Form.Field>
-						<label className="required">{t('summary')}</label>
+						<label className="required standartLabel">{t('summary')}</label>
 						<Form.Input
 							placeholder={t('summary')}
 							fluid
+							className="standartInput"
 							onChange={(event, data) => context.set('summary', data.value)}
 						/>
 					</Form.Field>
 					{!projectID ? (
 						<Form.Field>
-							<label className="required">{t('project')}</label>
+							<label className="required standartLabel">{t('project')}</label>
 							<Form.Dropdown
 								selection
 								placeholder={t('project')}
 								options={projectsOpts}
+								className="formSelect"
 								onChange={(event, data) => context.set('project', data.value)}
 							/>
 						</Form.Field>
@@ -227,11 +233,12 @@ const CreateIssueModalBody: React.FC<Props> = ({
 						''
 					)}
 					<Form.Field>
-						<label>{t('labels')}</label>
+						<label className="standartLabel">{t('labels')}</label>
 						<Form.Dropdown
 							clearable
 							selection
 							multiple
+							className="formSelect"
 							placeholder={t('labels')}
 							options={labelOpts}
 							onChange={(event, data) => context.set('labels', data.value)}
@@ -239,19 +246,21 @@ const CreateIssueModalBody: React.FC<Props> = ({
 					</Form.Field>
 					<Divider />
 					<Form.Field>
-						<label>{t('assigned')}</label>
+						<label className="standartLabel">{t('assigned')}</label>
 						<Form.Dropdown
 							clearable
 							selection
+							className="formSelect"
 							placeholder={t('assigned')}
 							options={usersOpts}
 							onChange={(event, data) => context.set('assigned', data.value)}
 						/>
 					</Form.Field>
 					<Form.Field>
-						<label>{t('story_point')}</label>
+						<label className="standartLabel">{t('story_point')}</label>
 						<Form.Input
 							type="number"
+							className="standartInput"
 							error={!isStoryPointValid}
 							placeholder={t('story_point')}
 							fluid
@@ -259,7 +268,7 @@ const CreateIssueModalBody: React.FC<Props> = ({
 						/>
 					</Form.Field>
 					<Form.Field>
-						<label>{t('links')}</label>
+						<label className="standartLabel">{t('links')}</label>
 						<TagsInput
 							placeholder={t('add_link')}
 							tags={context.data.links ?? []}
@@ -267,15 +276,16 @@ const CreateIssueModalBody: React.FC<Props> = ({
 						/>
 					</Form.Field>
 					<Form.Field>
-						<label>{t('attachments')}</label>
+						<label className="standartLabel">{t('attachments')}</label>
 						<IssueFileInput
 							onChange={(attachments: File[]) => setAttachments(attachments)}
 							currentFiles={attachments}
 						/>
 					</Form.Field>
 					<Form.Field>
-						<label>{t('description')}</label>
+						<label className="standartLabel">{t('description')}</label>
 						<Form.TextArea
+							className="standartInput"
 							placeholder={t('description')}
 							onChange={(event, data) =>
 								data ? context.set('description', data.value as string) : context.set('description', '')
@@ -285,12 +295,12 @@ const CreateIssueModalBody: React.FC<Props> = ({
 					</Form.Field>
 				</Form>
 			</Modal.Content>
-			<Modal.Actions style={{ backgroundColor: '#efefef' }}>
+			<Modal.Actions>
 				<div style={{ display: 'flex', justifyContent: 'flex-end' }}>
 					<Button className="primaryBtn" type="submit">
 						{t('submit')}
 					</Button>
-					<Button onClick={getSetOpenFunc(false)} className="cancelBtn">
+					<Button onClick={getSetOpenFunc(false)} style={{ marginLeft: '25px' }} className="cancelBtn">
 						{t('cancel')}
 					</Button>
 				</div>

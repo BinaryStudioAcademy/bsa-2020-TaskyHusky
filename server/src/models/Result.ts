@@ -71,6 +71,7 @@ interface BoardColumnResult {
 	id: string;
 	columnName: string;
 	status: string;
+	index: number;
 	isResolutionSet: boolean;
 	board: BoardResult;
 }

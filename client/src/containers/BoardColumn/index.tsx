@@ -97,7 +97,10 @@ const BoardColumn: React.FC<Props> = ({ column, className, search, getOnDragEndF
 		<div className={className}>
 			<Droppable droppableId={`board-column__${column.id}`}>
 				{(provided, snapshot) => (
-					<Segment style={{ backgroundColor: snapshot.isDraggingOver ? '#CCC' : '#EEE' }} className="fill">
+					<Segment
+						style={{ backgroundColor: snapshot.isDraggingOver ? '#CCC' : '#EEE' }}
+						className={`fill ${styles.wrapper}`}
+					>
 						<div
 							style={{
 								display: 'flex',
@@ -110,7 +113,7 @@ const BoardColumn: React.FC<Props> = ({ column, className, search, getOnDragEndF
 								{column.columnName}
 							</Header>
 							<CreateIssueModal boardColumnID={column.id}>
-								<Button compact className="contentBtn" style={{ whiteSpace: 'nowrap' }}>
+								<Button className={styles.contentBtn} style={{ whiteSpace: 'nowrap' }}>
 									<Icon name="plus circle" />
 									{t('create_issue')}
 								</Button>
@@ -118,16 +121,12 @@ const BoardColumn: React.FC<Props> = ({ column, className, search, getOnDragEndF
 						</div>
 						<div style={{ clear: 'both' }} />
 						<div style={{ marginTop: 10 }}>
-							<div
-								ref={provided.innerRef}
-								{...provided.droppableProps}
-								style={{ overflowY: 'auto', height: '100%' }}
-							>
+							<div ref={provided.innerRef} {...provided.droppableProps} className={styles.issueWrapper}>
 								{displayIssues.length > 0
 									? displayIssues.map((issue, i) => (
 											<IssueCard issue={issue} index={i} key={issue.issueKey} />
 									  ))
-									: t('no_cards')}
+									: ''}
 								{provided.placeholder}
 							</div>
 						</div>

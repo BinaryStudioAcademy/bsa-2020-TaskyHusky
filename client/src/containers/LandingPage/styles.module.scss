@@ -1,4 +1,4 @@
-@import 'styles/variables.scss';
+@import "styles/variables.scss";
 
 .pageWrapper {
 	margin: 0 !important;
@@ -7,29 +7,22 @@
 	height: 100vh !important;
 	background-color: $header-text;
 	position: relative !important;
-
-	&>* {
+	& > * {
 		color: $yellow !important;
 	}
-
 	.mainImgWrapper {
 		display: flex !important;
 		align-items: center !important;
 		justify-content: flex-end;
 	}
-
 	.formWrapper {
 		.title {
 			color: $yellow !important;
 			margin-bottom: 20px;
 		}
-
-		.formSegment {
-			border: none !important;
-			min-width: 350px;
-			background-color: transparent !important;
+		.toggleDescription {
+			color: $ligth-gray !important;
 		}
-
 		.logoArea {
 			display: flex;
 			flex-direction: row;
@@ -47,51 +40,57 @@
 			}
 		}
 
+		.formSegment {
+			border: none !important;
+			min-width: 350px;
+			background-color: transparent !important;
+		}
 		display: flex !important;
 		align-items: center !important;
 		justify-content: center;
-
 		.marginLeft {
 			margin-left: 5px;
 		}
-
 		.list {
 			width: 100% !important;
 			text-align: center !important;
-
+			.padding1 {
+				padding-bottom: 3px;
+			}
 			.listItem {
+				font-size: 1.1rem !important;
 				cursor: pointer;
-
+				color: $yellow !important;
 				&:hover {
 					border-bottom: 1px solid $yellow;
+					color: $primary-bg !important;
 				}
-
-				&,
-				* {
-					color: $yellow !important;
-
-					& a:hover,
-					& span:hover {
-						color: $header-text !important;
+				*,
+				.bottomNavigation {
+					color: inherit !important;
+					&:hover {
+						color: $primary-bg !important;
 					}
 				}
 			}
 		}
 	}
+}
 
-	.absIcon {
-		position: absolute !important;
-	}
-
-	.topRight {
-		top: -25px;
-		right: 20px;
-	}
-
-	.leftBottom {
-		bottom: 20px;
-		left: 20px;
-	}
+.absIcon {
+	position: absolute !important;
+}
+.topRight {
+	top: -25px;
+	right: 20px;
+}
+.leftBottom {
+	bottom: 20px;
+	left: 20px;
+}
+.bottomNavigation {
+	z-index: 100;
+	margin-top: 10px;
 }
 
 @media (max-width: 767px) {

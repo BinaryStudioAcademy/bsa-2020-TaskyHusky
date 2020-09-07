@@ -63,7 +63,6 @@ const FilterItem: React.FC<Props> = ({ filter, fullName, updateFilter }: Props) 
 	return (
 		<>
 			{filterToDelete && <DeleteFilterModal filter={filterToDelete} onClose={() => setFilterToDelete(null)} />}
-
 			<Table.Row key={id}>
 				<Table.Cell
 					className={styles.starCell}
@@ -71,7 +70,10 @@ const FilterItem: React.FC<Props> = ({ filter, fullName, updateFilter }: Props) 
 						<Rating onRate={onSetFavorite} icon="star" defaultRating={isStared ? 1 : 0} maxRating={1} />
 					}
 				/>
-				<Table.Cell className={styles.filterNameCell} children={<a href={`/advancedSearch/${id}`}>{name}</a>} />
+				<Table.Cell
+					className={styles.filterNameCell}
+					children={<Link to={`/advancedSearch/${id}`}>{name}</Link>}
+				/>
 				<Table.Cell
 					className={styles.userCell}
 					children={
@@ -82,7 +84,7 @@ const FilterItem: React.FC<Props> = ({ filter, fullName, updateFilter }: Props) 
 					}
 				/>
 				<Table.Cell
-					className={styles.favoriteCell}
+					className={styles.favouriteCell}
 					children={
 						<>
 							{sratedByCount} {sratedByCount === 1 ? t('person') : t('people_rating')}

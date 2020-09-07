@@ -1,31 +1,102 @@
+@import 'styles/mixins.scss';
+
 :local(.columnsFlex) {
 	display: flex;
+	height: calc(100vh - 300px);
 	width: 100%;
 	overflow-x: auto;
-	height: 75%;
+	overflow-y: hidden;
+	margin-left: 25px;
+	padding-bottom: 25px;
+	padding-right: 25px;
 }
 
 :local(.column) {
 	min-width: 300px;
-	height: min-content;
-	max-height: 100%;
-	margin-right: 20px;
+	margin-right: 25px;
+	box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.25) !important;
+	height: fit-content;
+	max-height: calc(100vh - 261px);
 }
 
 :local(.inlineContainer) {
 	display: flex;
 	align-items: center;
-	margin: 0 0 10px 0;
-
-	*:not(h2) {
-		margin: 0 5px 0 0 !important;
-	}
 
 	h2 {
 		margin: 0 30px 0 0 !important;
 	}
+
+	a {
+		margin: 0 0 0 50px !important;
+	}
 }
 
 :local(.wrapper) {
-	padding: 20px 40px;
+	max-width: 94vw;
+	margin-top: 0px;
+}
+
+.headerWrapper {
+	display: flex;
+	margin: 25px 4% 25px 10%;
+	justify-content: space-between;
+}
+
+.breadcrumb {
+	margin: 25px 10% 0 !important;
+}
+
+.searchInput {
+	margin: 0 20px !important;
+	@include input;
+}
+
+.cancelBtn {
+	@include cancel-btn;
+	padding-top: 9px !important;
+	padding-bottom: 9px !important;
+	width: 95px !important;
+}
+
+.contentBtn {
+	margin: 25px 10% !important;
+	max-width: 250px !important;
+	height: 41px;
+	cursor: pointer;
+	@include cancel-btn;
+}
+
+@media screen and (max-width: $medium-screen) {
+	.headerWrapper {
+		margin: 25px 2% 25px 8%;
+	}
+
+	.contentBtn {
+		margin-left: 8% !important;
+	}
+
+	.breadcrumb {
+		margin: 25px 2% 0 8% !important;
+	}
+}
+
+@media screen and (max-width: $mobile-screen) {
+
+	.inlineContainer,
+	.headerWrapper {
+		display: block;
+	}
+
+	.headerWrapper {
+		margin-left: 25px;
+	}
+
+	.inlineContainer {
+		margin-bottom: 20px;
+	}
+
+	.searchInput {
+		margin: 10px 0 !important;
+	}
 }

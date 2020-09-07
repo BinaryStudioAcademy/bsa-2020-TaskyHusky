@@ -133,18 +133,17 @@ const CreateProjectModal: React.FC<Props> = ({ children }) => {
 			onOpen={onModalOpen}
 			open={isModalOpened}
 			size="tiny"
-			dimmer="inverted"
 			trigger={children}
 			openOnTriggerClick
 		>
 			{!isTemplatesView ? (
 				<>
-					<Modal.Header>{t('create_project')}</Modal.Header>
+					<Modal.Header className="standartHeader">{t('create_project')}</Modal.Header>
 
 					<Modal.Content>
 						<Form className={styles.form_container}>
 							<Form.Field>
-								<label className="required">{t('name')}</label>
+								<label className="required standartLabel">{t('name')}</label>
 								<CustomInput
 									isValidErrorShown={isValidErrorShown}
 									isDataValid={isNameValid}
@@ -157,7 +156,7 @@ const CreateProjectModal: React.FC<Props> = ({ children }) => {
 								/>
 							</Form.Field>
 							<Form.Field>
-								<label className="required">{t('key')}</label>
+								<label className="required standartLabel">{t('key')}</label>
 								<CustomInput
 									isValidErrorShown={isValidErrorShown}
 									isDataValid={isKeyValid}
@@ -170,7 +169,7 @@ const CreateProjectModal: React.FC<Props> = ({ children }) => {
 								/>
 							</Form.Field>
 							<Form.Field>
-								<label>GitHub URL</label>
+								<label className="standartLabel">GitHub URL</label>
 								<CustomInput
 									isValidErrorShown={isValidErrorShown}
 									isDataValid={isGithubUrlValid}
@@ -188,8 +187,8 @@ const CreateProjectModal: React.FC<Props> = ({ children }) => {
 						<div className={styles.flex_container}>
 							<Image src={image} className={styles.modal__image} />
 							<div>
-								<h2>{template}</h2>
-								<p>{description}</p>
+								<h2 className="standartLabel">{template}</h2>
+								<p className="textData">{description}</p>
 								<Button
 									className="contentBtn"
 									onClick={() => setIsTemplatesView(true)}

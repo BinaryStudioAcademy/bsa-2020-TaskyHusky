@@ -110,12 +110,12 @@ const AddLabelModal: React.FC = () => {
 
 	return (
 		<>
-			<Modal dimmer="inverted" size={'mini'} open={true} onClose={onModalClose}>
-				<Modal.Header>{t('add_label')}</Modal.Header>
+			<Modal size={'mini'} open={true} onClose={onModalClose}>
+				<Modal.Header className="standartHeader">{t('add_label')}</Modal.Header>
 				<Modal.Content>
 					<Form>
 						<Form.Field>
-							<label>{t('label_text')}</label>
+							<label className="standartLabel">{t('label_text')}</label>
 							<CustomInput
 								isValidErrorShown={isValidErrorShown}
 								isDataValid={isLabelTextValid}
@@ -128,7 +128,7 @@ const AddLabelModal: React.FC = () => {
 							/>
 						</Form.Field>
 						<Form.Field>
-							<label>{t('label_pick_color')}</label>
+							<label className="standartLabel">{t('label_pick_color')}</label>
 							<SliderPicker color={backgroundColor} onChange={onLabelColorChange} />
 						</Form.Field>
 						<Form.Field className={styles.label__example}>

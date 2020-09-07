@@ -17,9 +17,9 @@ const ConfirmPassModal: React.FC<Props> = (props: Props) => {
 	};
 
 	return (
-		<Modal onClose={() => onClose()} open={true} size="tiny" dimmer="inverted">
-			<Modal.Header>{t('save_not_secure')}</Modal.Header>
-			<Modal.Content>{t('save_not_secure_text')}</Modal.Content>
+		<Modal onClose={() => onClose()} open={true} size="tiny">
+			<Modal.Header className="standartHeader">{t('save_not_secure')}</Modal.Header>
+			<Modal.Content className="textData">{t('save_not_secure_text')}</Modal.Content>
 			<Modal.Actions>
 				<Button className="primaryBtn" onClick={submitForm}>
 					{t('save_changes')}

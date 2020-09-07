@@ -1,12 +1,16 @@
-@import 'styles/mixins.scss';
+@import "styles/mixins.scss";
 
-.grid {
-	height: 100vh;
-	justify-content: center;
+.modalWrapper {
+	background-color: $header-text !important;
+	color: $body-bg !important;
+	box-shadow: 0 0 2px inset $ligth-gray;
 }
 
 .mainHeader {
 	text-align: center;
+	color: inherit !important;
+	background-color: inherit !important;
+	@include primary-header;
 }
 
 .column {
@@ -23,8 +27,8 @@
 }
 
 .continueButton {
-	@include content-btn;
-	width: 100% !important;
+	width: 100%;
+	@include primary-btn;
 }
 
 .textBlock {
@@ -37,5 +41,22 @@
 
 	p:last-child {
 		font-weight: bold;
+	}
+}
+
+.segmentBody {
+	margin-top: 0 !important;
+}
+
+.returnToMain {
+	font-size: 1rem;
+	cursor: pointer;
+	color: $yellow !important;
+	font-family: Poppins, sans-serif !important;
+	font-style: normal !important;
+
+	&:hover {
+		border-bottom: 1px solid $yellow;
+		color: $primary-bg !important;
 	}
 }

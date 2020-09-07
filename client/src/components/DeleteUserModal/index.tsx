@@ -17,9 +17,9 @@ const DeleteUserModal: React.FC<Props> = (props) => {
 	};
 
 	return (
-		<Modal onClose={onClose} open={true} size="tiny" dimmer="inverted">
-			<Modal.Header>{t('delete_user_qstn')}</Modal.Header>
-			<Modal.Content>{t('delete_user_text')}</Modal.Content>
+		<Modal onClose={onClose} open={true} size="tiny">
+			<Modal.Header className="standartHeader">{t('delete_user_qstn')}</Modal.Header>
+			<Modal.Content className="textData">{t('delete_user_text')}</Modal.Content>
 			<Modal.Actions>
 				<Button className="contentBtn" onClick={submitForm}>
 					{t('delete_btn')}

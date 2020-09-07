@@ -1,0 +1,14 @@
+.wrapper {
+	padding: 20px 60px;
+}
+
+.columnsContainer {
+	overflow-x: auto;
+	display: flex;
+}
+
+.createColumn {
+	max-width: 250px !important;
+	margin-top: 25px !important;
+	height: min-content;
+}

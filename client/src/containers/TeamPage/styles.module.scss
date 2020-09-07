@@ -1,4 +1,4 @@
-@import 'styles/mixins.scss';
+@import "styles/mixins.scss";
 
 .pageMain {
 	overflow: auto;
@@ -57,5 +57,15 @@
 @media screen and (max-width: $less-than-medium-screen) {
 	.container {
 		display: block;
+	}
+
+	.aside {
+		width: 100%;
+	}
+
+	.content {
+		padding: 0;
+		width: 100%;
+		margin: 0;
 	}
 }

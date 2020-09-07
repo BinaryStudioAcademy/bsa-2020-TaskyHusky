@@ -68,7 +68,7 @@ const CropModal: React.FC<Props> = (props: Props) => {
 	}, [completedCrop]);
 
 	return (
-		<Portal onClose={() => onClose()} open={true} size="tiny" dimmer="inverted" className={styles.modal}>
+		<Portal onClose={() => onClose()} open={true} size="tiny" className={styles.modal}>
 			<div className={styles.modalOverlay}>
 				<div className={styles.modalContainer}>
 					<div className={styles.modal}>

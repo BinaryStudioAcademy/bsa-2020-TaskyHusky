@@ -19,9 +19,10 @@ import NotFound from 'pages/404';
 import Search from 'pages/AdvancedSearch';
 import Work from 'pages/Work';
 import ResetPassword from '../ResetPassword';
-import ForgotPassword from '../ForgotPassword';
 import ResetEmail from '../ResetEmail';
 import Landing from 'pages/LandingPage';
+import Spinner from 'components/common/Spinner';
+import ColumnsSettings from 'pages/ColumnsSettings';
 
 const Routing: React.FC = () => {
 	const dispatch = useDispatch();
@@ -35,13 +36,12 @@ const Routing: React.FC = () => {
 	}, [dispatch, profileLoaded, token]);
 
 	if (!profileLoaded) {
-		return null;
+		return <Spinner />;
 	}
 
 	return (
 		<Switch>
 			<PublicRoute restricted exact path={['/', '/login', '/signup']} component={Landing} />
-			<PublicRoute exact restricted path="/forgot-password" component={ForgotPassword} />
 			<Route exact path="/reset-password/:token" component={ResetPassword} />
 			<PrivateRoute path="/reset-email/:token/:emailBtoa" component={ResetEmail} />
 			<PrivateRoute path="/issue/:key" component={IssuePage} />
@@ -51,6 +51,7 @@ const Routing: React.FC = () => {
 			<PrivateRoute exact path="/team/:id" component={Team} />
 			<PrivateRoute exact path="/profile/:id" component={Profile} />
 			<PrivateRoute exact path="/filters" component={Filters} />
+			<PrivateRoute exact path="/board/:boardId/columnsSettings" component={ColumnsSettings} />
 			<PrivateRoute path="/board/:id" component={BoardPage} />
 			<PrivateRoute path="/project/:id/issues" component={ProjectIssues} />
 			<PrivateRoute exact path="/people" component={PeoplePage} />

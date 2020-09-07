@@ -120,59 +120,65 @@ const TeamPage = ({
 
 	const confirmDeleteTeam = () => dispatch(actions.deleteTeamLoading({ id: team.id }));
 
-	return loading ? (
-		<Spinner />
-	) : (
+	return (
 		<main className={styles.pageMain}>
 			<ProfileHeader title={t('team_header')} />
-			<section className={styles.container}>
-				<aside className={styles.aside}>
-					<TeamDevsCard
-						confirmDelete={confirmDeleteTeam}
-						currentProfile={currentProfile}
-						teamOwner={team.createdBy}
-						changeMainFields={changeMainFields}
-						description={team.description}
-						name={team.name}
-						showAddPeopleModal={showAddPeopleModal}
-					/>
-					<TeamsMembersCard
-						teammates={[{ ...team.createdBy }]}
-						teamOwner={team.createdBy}
-						title={'team_owner'}
-						removeUserFromTeam={handlerRemoveFromTeam}
-					/>
-					<TeamsMembersCard
-						teammates={team.users}
-						title={'members'}
-						teamOwner={team.createdBy}
-						removeUserFromTeam={handlerRemoveFromTeam}
-					/>
-				</aside>
-				<article className={styles.content}>
-					<TeamActivity issues={team.issues ?? []} projectLength={team.projects?.length ?? 0} />
-					<TeamLinks
-						currentLinks={team.links ?? []}
-						edit={editLink}
-						deleteLink={onDeleteLink}
-						addLinks={toggleAddLinks}
-					/>
-					<TeamWorkedProjects projects={team.projects} />
-				</article>
-			</section>
-			{addPeopleModal && (
-				<TeamAddPeopleModal
-					clearStateAfterSelect={onSelectUserInAddUsers}
-					searchLoading={peopleLoading}
-					people={searchPeople}
-					search={onSearchPeople}
-					onClose={setAddPeopleModal}
-					onConfirm={onAddPeopleToTeamConfirm}
-				/>
-			)}
-			{addLinks && <CreateLink onConfirm={onEditLinkAccept} currentLink={editedLink} onClose={toggleAddLinks} />}
-			{deleteLink && (
-				<DeleteLink onClose={toggleDeleteLinkModal} link={linkToDelete} onDelete={onDeleteLinkAccept} />
+			{loading ? (
+				<Spinner />
+			) : (
+				<>
+					<section className={styles.container}>
+						<aside className={styles.aside}>
+							<TeamDevsCard
+								confirmDelete={confirmDeleteTeam}
+								currentProfile={currentProfile}
+								teamOwner={team.createdBy}
+								changeMainFields={changeMainFields}
+								description={team.description}
+								name={team.name}
+								showAddPeopleModal={showAddPeopleModal}
+							/>
+							<TeamsMembersCard
+								teammates={[{ ...team.createdBy }]}
+								teamOwner={team.createdBy}
+								title={'team_owner'}
+								removeUserFromTeam={handlerRemoveFromTeam}
+							/>
+							<TeamsMembersCard
+								teammates={team.users}
+								title={'members'}
+								teamOwner={team.createdBy}
+								removeUserFromTeam={handlerRemoveFromTeam}
+							/>
+						</aside>
+						<article className={styles.content}>
+							<TeamActivity issues={team.issues ?? []} projectLength={team.projects?.length ?? 0} />
+							<TeamLinks
+								currentLinks={team.links ?? []}
+								edit={editLink}
+								deleteLink={onDeleteLink}
+								addLinks={toggleAddLinks}
+							/>
+							<TeamWorkedProjects projects={team.projects} />
+						</article>
+					</section>
+					{addPeopleModal && (
+						<TeamAddPeopleModal
+							clearStateAfterSelect={onSelectUserInAddUsers}
+							searchLoading={peopleLoading}
+							people={searchPeople}
+							search={onSearchPeople}
+							onClose={setAddPeopleModal}
+							onConfirm={onAddPeopleToTeamConfirm}
+						/>
+					)}
+					{addLinks && (
+						<CreateLink onConfirm={onEditLinkAccept} currentLink={editedLink} onClose={toggleAddLinks} />
+					)}
+					{deleteLink && (
+						<DeleteLink onClose={toggleDeleteLinkModal} link={linkToDelete} onDelete={onDeleteLinkAccept} />
+					)}
+				</>
 			)}
 		</main>
 	);

@@ -1,3 +1,5 @@
+@import 'styles/mixins.scss';
+
 :global(#root) {
 	.breadcrumb {
 		margin-top: 25px;
@@ -15,6 +17,7 @@
 
 		.createSprintButton {
 			margin-left: auto !important;
+			@include cancel-btn;
 		}
 	}
 
@@ -30,5 +33,21 @@
 
 	.noSprintsHeader {
 		margin-top: 16px;
+	}
+}
+
+.container {
+	margin: 25px 10%;
+}
+
+.cancelBtn {
+	@include cancel-btn;
+	padding-top: 9px !important;
+	padding-bottom: 9px !important;
+}
+
+@media screen and (max-width: $medium-screen) {
+	.container {
+		margin: 25px 8%;
 	}
 }

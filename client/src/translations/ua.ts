@@ -338,9 +338,8 @@ export const ua = {
 	info: 'Інформація',
 	search_people_page_placeholder: 'Пошук користувачів та команд',
 	create_team: 'Створити команду',
-	add_people_text:
-		'Не вистачає когось із ресурсу gmail.com? Надрукуйте його електронну пошту нижче – і, якщо нас вдасться, ми надішлемо йому запрошення від Вас на пошту',
-	add_people_email_placeholder: 'Введіть електронну адресу gmail.com',
+	add_people_text: 'Не вистачає когось? Надрукуйте його електронну пошту нижче.',
+	add_people_email_placeholder: 'Введіть електронну адресу',
 	send: 'Надіслати',
 	create_team_modal_header: 'Створити нову команду',
 	create_team_modal_text:
@@ -436,6 +435,9 @@ export const ua = {
 	yes: 'Так',
 	no_filters: 'Фільтрів не знайдено',
 	add_changes: 'Додайте зміни, щоб розблокувати кнопку',
+	are_you_sure: 'Ви впевнені?',
+	are_you_sure_delete_column: 'Ви впевнені, що хочете видалити цю колонку?',
+	go_to_columns_settings: 'Перейти до налаштувань колонок',
 	remove_user_from_project: 'Видалити з проекту',
 	team_header: 'Команда',
 	my_team: 'Моя команда',

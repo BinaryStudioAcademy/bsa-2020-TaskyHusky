@@ -11,6 +11,7 @@ interface Props {
 	onOpen?: () => void;
 	open?: boolean;
 	children?: JSX.Element;
+	noTrigger?: boolean;
 }
 
 const DeleteIssueModal: React.FC<Props> = ({
@@ -20,6 +21,7 @@ const DeleteIssueModal: React.FC<Props> = ({
 	currentIssueId,
 	onDelete = () => {},
 	children,
+	noTrigger,
 }) => {
 	const dispatch = useDispatch();
 	const { t } = useTranslation();
@@ -41,20 +43,21 @@ const DeleteIssueModal: React.FC<Props> = ({
 			open={open}
 			onClose={onClose}
 			onOpen={onOpen}
-			trigger={children ?? <span className={styles.trigger}>{t('delete')}</span>}
-			dimmer="inverted"
+			trigger={noTrigger ? undefined : children ?? <span className={styles.trigger}>{t('delete')}</span>}
 		>
-			<Modal.Header>{t('delete_issue')}</Modal.Header>
+			<Modal.Header className="standartHeader">{t('delete_issue')}</Modal.Header>
 			<Modal.Content>
-				<Modal.Description>{t('permanently_delete')}</Modal.Description>
+				<Modal.Description className="textData">{t('permanently_delete')}</Modal.Description>
 				<br />
 				<Modal.Description>{t('sure_to_delete')}</Modal.Description>
 			</Modal.Content>
 			<Modal.Actions>
-				<Button color="red" onClick={handleDelete}>
+				<Button className="contentBtn" onClick={handleDelete}>
 					{t('delete')}
 				</Button>
-				<Button onClick={onClose}>{t('close')}</Button>
+				<Button onClick={onClose} className="cancelBtn">
+					{t('close')}
+				</Button>
 			</Modal.Actions>
 		</Modal>
 	);
