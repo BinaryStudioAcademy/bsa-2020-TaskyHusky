@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-// import styles from './styles.module.scss';
 import * as d3 from 'd3';
 import * as _ from 'lodash';
 import moment from 'moment';
@@ -12,18 +11,6 @@ type ChartPoint = {
 	storyPoint: number;
 	date: Date;
 };
-
-// const issues = [
-// 	{ storyPoint: undefined, completedAt: new Date(2020, 1, 2) },
-// 	{ storyPoint: 10, completedAt: new Date(2020, 1, 1) },
-// 	{ storyPoint: 5, completedAt: new Date(2020, 1, 4) },
-// 	{ completedAt: new Date(2020, 1, 4) },
-// 	{ storyPoint: 5, completedAt: new Date(2020, 1, 4) },
-// 	{ storyPoint: 5, completedAt: new Date(2020, 1, 4) },
-// 	{ storyPoint: 15, completedAt: new Date(2020, 1, 8) },
-// 	{ storyPoint: 5, completedAt: new Date(2020, 1, 8) },
-// 	{ storyPoint: 10, completedAt: new Date(2020, 1, 12) },
-// ];
 
 type ActiveSprint = {
 	startDate: Date;
@@ -62,6 +49,17 @@ const BurndownChart: React.FC<Props> = ({ sprint }) => {
 	const end = getEndDate();
 
 	const maxPoint = _.sumBy(issues, 'storyPoint');
+
+	const guideLineData = [
+		{
+			storyPoint: maxPoint,
+			date: start,
+		},
+		{
+			storyPoint: 0,
+			date: end,
+		},
+	] as ChartPoint[];
 
 	const datum = [
 		{
@@ -104,7 +102,7 @@ const BurndownChart: React.FC<Props> = ({ sprint }) => {
 			.domain([0, maxPoint + 2])
 			.range([height, 0]);
 
-		const days = d3.timeDay.range(start, new Date(endDate));
+		const days = d3.timeDay.range(start, new Date(end));
 		const storyPointTicks = days.length;
 		const timeTicks = d3.timeDay.every(1);
 
@@ -115,16 +113,6 @@ const BurndownChart: React.FC<Props> = ({ sprint }) => {
 			.tickFormat(d3.timeFormat('%b %d') as any)
 			.scale(xScale);
 
-		const guideLineData = [
-			{
-				storyPoint: maxPoint,
-				date: start,
-			},
-			{
-				storyPoint: 0,
-				date: end,
-			},
-		] as ChartPoint[];
 		const fontSize = 15;
 		const translateRight = 70;
 		const translateUp = 40;
@@ -178,7 +166,7 @@ const BurndownChart: React.FC<Props> = ({ sprint }) => {
 			.datum(guideLineData)
 			.attr('transform', `translate(${translateRight},${translateUp})`)
 			.attr('fill', 'none')
-			.attr('stroke', 'grey')
+			.attr('stroke', '#336699')
 			.attr('stroke-width', 2)
 			.attr('stroke-linejoin', 'round')
 			.attr('stroke-linecap', 'round')
