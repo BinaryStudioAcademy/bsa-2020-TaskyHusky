@@ -115,7 +115,12 @@ const BoardColumn: React.FC<Props> = ({ column, className, search, getOnDragEndF
 						</div>
 						<div style={{ clear: 'both' }} />
 						<div style={{ marginTop: 10 }}>
-							<div ref={provided.innerRef} {...provided.droppableProps} className={styles.issueWrapper}>
+							<div
+								ref={provided.innerRef}
+								{...provided.droppableProps}
+								className={styles.issueWrapper}
+								style={{ minHeight: 10 }}
+							>
 								{displayIssues.length > 0
 									? displayIssues.map((issue, i) => (
 											<IssueCard issue={issue} index={i} key={issue.issueKey} />
@@ -124,7 +129,7 @@ const BoardColumn: React.FC<Props> = ({ column, className, search, getOnDragEndF
 								{provided.placeholder}
 							</div>
 							<CreateIssueModal boardColumnID={column.id}>
-								<Button className={styles.contentBtn} style={{ whiteSpace: 'nowrap' }}>
+								<Button className={styles.contentBtn}>
 									<Icon name="plus circle" />
 									{t('create_issue')}
 								</Button>

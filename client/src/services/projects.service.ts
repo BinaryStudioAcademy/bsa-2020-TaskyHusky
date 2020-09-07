@@ -76,6 +76,15 @@ export const getAllKeys = async (): Promise<Keys[]> => {
 	return (await res.json()) as Keys[];
 };
 
+export const getRecentProjects = async (): Promise<WebApi.Entities.Projects[]> => {
+	const res: Response = await callWebApi({
+		method: 'GET',
+		endpoint: 'projects/recent',
+	});
+
+	return (await res.json()) as WebApi.Entities.Projects[];
+};
+
 export const updateProjectUsersList = async ({ usersId, projectId }: actionTypes.UpdatingUsers): Promise<Keys[]> => {
 	const res: Response = await callWebApi({
 		method: 'PUT',
