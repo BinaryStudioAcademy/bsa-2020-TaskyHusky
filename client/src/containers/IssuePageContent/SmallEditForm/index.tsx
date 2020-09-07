@@ -65,21 +65,15 @@ const SmallEditForm: React.FC<Props> = ({ links: givenLinks, attachments: givenA
 					{t('click_here_to_add_link')}
 				</span>
 				<Modal
-					closeIcon
 					closeOnDimmerClick
 					closeOnEscape
 					open={linksModalOpened}
 					onClose={() => setLinksModalOpened(false)}
+					dimmer="inverted"
 					size="small"
 				>
 					<Modal.Content>
-						<div style={{ marginRight: 40 }}>
-							<TagsInput
-								placeholder={t('add_link')}
-								tags={links}
-								onChange={(tags) => onLinksChange(tags)}
-							/>
-						</div>
+						<TagsInput placeholder={t('add_link')} tags={links} onChange={(tags) => onLinksChange(tags)} />
 					</Modal.Content>
 				</Modal>
 			</Form.Field>
@@ -110,22 +104,20 @@ const SmallEditForm: React.FC<Props> = ({ links: givenLinks, attachments: givenA
 					{t('click_here_to_add_attachment')}
 				</span>
 				<Modal
-					closeIcon
 					closeOnDimmerClick
 					closeOnEscape
 					open={filesModalOpened}
+					dimmer="inverted"
 					onClose={() => setFilesModalOpened(false)}
 					size="small"
 				>
 					<Modal.Content>
-						<div style={{ marginRight: 40 }}>
-							<IssueFileInput
-								onChange={(attachments: File[]) => onFilesChange(attachments)}
-								alreadyAttached={alreadyAttached}
-								currentFiles={attachments}
-								onDeleteAlreadyAttached={(newFiles) => onAttachmentsChange(newFiles)}
-							/>
-						</div>
+						<IssueFileInput
+							onChange={(attachments: File[]) => onFilesChange(attachments)}
+							alreadyAttached={alreadyAttached}
+							currentFiles={attachments}
+							onDeleteAlreadyAttached={(newFiles) => onAttachmentsChange(newFiles)}
+						/>
 					</Modal.Content>
 				</Modal>
 			</Form.Field>
