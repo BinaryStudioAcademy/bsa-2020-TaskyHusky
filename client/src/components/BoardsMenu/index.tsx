@@ -16,6 +16,7 @@ export const BoardsMenu = ({ onCreateBoard }: { onCreateBoard(board: actionTypes
 	useEffect(() => {
 		dispatch(actions.getRecentBoards());
 	}, [dispatch]);
+
 	const [createBoard, setCreateBoard] = useState(false);
 	const recentBoards = useSelector((rootState: RootState) => rootState.boards.recentBoards);
 
@@ -25,7 +26,9 @@ export const BoardsMenu = ({ onCreateBoard }: { onCreateBoard(board: actionTypes
 				<Dropdown.Menu className={styles.dropDownMenu}>
 					<Dropdown.Header>{t('recent')}</Dropdown.Header>
 					{recentBoards.map((board) => (
-						<Dropdown.Item key={board.id}>{board.name}</Dropdown.Item>
+						<Dropdown.Item key={board.id} as={Link} to={`/board/${board.id}`}>
+							{board.name}
+						</Dropdown.Item>
 					))}
 					<Dropdown.Divider />
 					<Dropdown.Item as={Link} to="/boards">
