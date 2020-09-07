@@ -99,7 +99,7 @@ const IssuePageContent: React.FC<Props> = ({ issue: givenIssue }) => {
 						title={`${t('type')}: ${issue.type.title}`}
 						color={issue.type.color as SemanticCOLORS}
 					/>
-					<span style={{ fontWeight: 400 }}>#{issue.issueKey}</span>
+					<span style={{ fontWeight: 400 }}>{issue.issueKey}</span>
 				</h4>
 				<h1>{issue.summary}</h1>
 				<h4>{t('description')}</h4>

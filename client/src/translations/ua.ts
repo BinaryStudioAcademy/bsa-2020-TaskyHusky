@@ -441,4 +441,7 @@ export const ua = {
 	remove_user_from_project: 'Видалити з проекту',
 	team_header: 'Команда',
 	my_team: 'Моя команда',
+	click_here_to_add_link: 'Натисніть, щоб додати посилання...',
+	click_here_to_add_attachment: 'Натисніть, щоб додати файл...',
+	no_more_labels: 'Більше нема міток. TIP: Щоб отримати доступ до міток, треба обрати проект',
 };

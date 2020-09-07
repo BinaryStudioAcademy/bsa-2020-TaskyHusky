@@ -22,7 +22,12 @@ export interface IssueResult {
 	};
 	summary?: string;
 	boardColumn?: BoardColumnResult;
-	labels?: string[];
+	labels?: {
+		id: string;
+		text: string;
+		textColor: string;
+		backgroundColor: string;
+	}[];
 	attachments?: string[];
 	links?: string[];
 	board?: BoardResult;

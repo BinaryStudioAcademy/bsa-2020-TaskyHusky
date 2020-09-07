@@ -149,10 +149,7 @@ class IssueController {
 				...data,
 				creator: (req.user as UserModel).id,
 			});
-			console.log(issue);
-
 			await elastic.addData(issue);
-
 			res.status(201).send(issue);
 		} catch (err) {
 			res.status(422).send(getWebError(err, 422));
