@@ -153,6 +153,8 @@ const IssuePageInfoColumn: React.FC<Props> = ({ issue: givenIssue, initialIssue,
 				</div>
 				<h4>{t('sprint')}</h4>
 				{issue.sprint ? issue.sprint.sprintName : t('no')}
+				<h4>{t('column')}</h4>
+				{issue.boardColumn ? issue.boardColumn.columnName : t('no')}
 				{asCardInfo ? (
 					<>
 						<h4>{t('links')}</h4>
