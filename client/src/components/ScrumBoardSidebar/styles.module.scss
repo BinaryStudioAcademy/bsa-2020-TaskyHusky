@@ -1,0 +1,141 @@
+@import 'styles/variables.scss';
+
+.container {
+  display: flex;
+  position: relative;
+  z-index: 100;
+}
+
+.collapse_button {
+  position: absolute;
+  bottom: 90px;
+  right: -15px;
+  border-radius: 50%;
+  background-color: $yellow;
+  width: 34px;
+  height: 34px;
+  padding: 5px;
+  padding-left: 4px;
+  border: 2px solid #fac71f
+}
+
+.collapse_button__icon {
+  display: block;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+}
+
+.expand__button {
+  transform: rotate(0deg);
+  transition: transform 0.5s ease-out;
+  transform-origin: center;
+}
+
+.collapsed__button {
+  transition: transform 0.5s ease-out;
+  transform-origin: center;
+  transform: rotate(180deg);
+}
+
+.sidebar__container {
+  width: 250px;
+  margin: 0;
+  background-color: rgba(0,0,0, 0.9);
+  color: rgb(255,255,255);
+  transition: width 0.5s ease-out;
+  overflow: hidden;
+
+    .sidebar__header,
+    .sidebar__body {
+      transition: all 0.2s ease-out 0.2s;
+      opacity: 1;
+    }
+
+  &_collapsed {
+    width: 30px;
+    color: black;
+    transition: width 0.4s ease-out;
+
+    .sidebar__header,
+    .sidebar__body {
+      transition: all 0.1s ease-out;
+      opacity: 0;
+    }
+  }
+}
+
+.sidebar__header {
+  padding: 16px 12px 0;
+}
+
+.sidebar__body {
+  max-height: 100%;
+  padding: 12px;
+  position: relative;
+  overflow: auto;
+}
+
+.header__item, 
+.body__group_item {
+  display: flex;
+  align-items: flex-start;
+}
+
+.header__item {
+  padding: 7px 12px;
+}
+
+.body__group_item {
+  padding: 10px 12px 8px;
+}
+
+.body__link  {
+  color: rgb(255, 255, 255);
+
+  &:hover {
+    background-color: rgb(254, 206, 47);
+    color: rgb(0,0,0) !important;
+    border-radius: 3px;
+  }
+}
+
+.nav__link_content {
+  border-bottom: 2px solid transparent;
+  color: inherit;
+  font-weight: bold;
+}
+
+.nav__link__active {
+  border-bottom: 2px solid rgb(254, 206, 47);
+}
+
+.header__img {
+  width: 30px;
+  height: 30px;  
+  border-radius: 3px;     
+  margin-right: 14px; 
+}
+
+.header__name {
+  display: block;
+  text-align: left;
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 14px;
+}
+
+.header__type {
+  font-size: 12px;
+  line-height: 12px;
+  color: #a5a4a4;
+}
+
+.header__link {
+  display: flex;
+}
+
+.header__link_icon {
+  margin-right: 17px !important;
+}
+

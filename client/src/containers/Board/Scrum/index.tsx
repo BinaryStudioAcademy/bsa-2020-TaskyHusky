@@ -19,6 +19,7 @@ import { isEmpty } from 'lodash-es';
 import Sprint from 'components/Sprint';
 import { updateIssue } from 'pages/IssuePage/logic/actions';
 import Spinner from 'components/common/Spinner';
+import ScrumBoardSidebar from 'components/ScrumBoardSidebar';
 
 const Scrum: BoardComponent = (props) => {
 	const history = useHistory();
@@ -121,54 +122,57 @@ const Scrum: BoardComponent = (props) => {
 	return (
 		<>
 			<div className={styles.container}>
-				<Container className={styles.breadcrumb}>
-					<Breadcrumbs sections={setBreadcrumbs({ history, projectDetails, boardDetails })} />
-				</Container>
-				<Container className={styles.inlineContainer}>
-					<Header as="h2" className="standartHeader">
-						{board.name}
-					</Header>
-					<Form.Input
-						placeholder={t('search')}
-						icon="search"
-						value={search}
-						onChange={(event: ChangeEvent<HTMLInputElement>, data: InputOnChangeData) => {
-							setSearch(data.value);
-						}}
-						style={{ marginLeft: 20, marginRight: 60, maxWidth: 250 }}
-						id="searchIssuesField"
-					/>
-					<Button onClick={clearSearchInputValue} className={styles.cancelBtn}>
-						{t('clear')}
-					</Button>
-					<Button
-						onClick={() => {
-							setIsCreateModalOpened(!isCreateModalOpened);
-						}}
-						className={styles.createSprintButton}
-					>
-						{t('create_sprint')}
-					</Button>
-				</Container>
-
-				{!!sprints.filter((sprint) => !sprint.isCompleted).length ? null : (
-					<Container className={styles.noSprintsContainer}>
-						<Icon name="info circle" size="huge" />
-						<Header as="h2" className={styles.noSprintsHeader}>
-							<Header.Content>{t('no_sprints_header')}</Header.Content>
-							<Header.Subheader>{t('no_sprints_header_subheader')}</Header.Subheader>
-						</Header>
+				<ScrumBoardSidebar board={board} project={project} />
+				<div className={styles.innerContainer}>
+					<Container className={styles.breadcrumb}>
+						<Breadcrumbs sections={setBreadcrumbs({ history, projectDetails, boardDetails })} />
 					</Container>
-				)}
+					<Container className={styles.inlineContainer}>
+						<Header as="h2" className="standartHeader">
+							{board.name}
+						</Header>
+						<Form.Input
+							placeholder={t('search')}
+							icon="search"
+							value={search}
+							onChange={(event: ChangeEvent<HTMLInputElement>, data: InputOnChangeData) => {
+								setSearch(data.value);
+							}}
+							style={{ marginLeft: 20, marginRight: 60, maxWidth: 250 }}
+							id="searchIssuesField"
+						/>
+						<Button onClick={clearSearchInputValue} className={styles.cancelBtn}>
+							{t('clear')}
+						</Button>
+						<Button
+							onClick={() => {
+								setIsCreateModalOpened(!isCreateModalOpened);
+							}}
+							className={styles.createSprintButton}
+						>
+							{t('create_sprint')}
+						</Button>
+					</Container>
 
-				<DragDropContext onDragEnd={onDragEndDrop}>{sprintList}</DragDropContext>
+					{!!sprints.filter((sprint) => !sprint.isCompleted).length ? null : (
+						<Container className={styles.noSprintsContainer}>
+							<Icon name="info circle" size="huge" />
+							<Header as="h2" className={styles.noSprintsHeader}>
+								<Header.Content>{t('no_sprints_header')}</Header.Content>
+								<Header.Subheader>{t('no_sprints_header_subheader')}</Header.Subheader>
+							</Header>
+						</Container>
+					)}
+
+					<DragDropContext onDragEnd={onDragEndDrop}>{sprintList}</DragDropContext>
+				</div>
+				<CreateSprintModal
+					clickAction={() => {
+						setIsCreateModalOpened(!isCreateModalOpened);
+					}}
+					isOpen={isCreateModalOpened}
+				/>
 			</div>
-			<CreateSprintModal
-				clickAction={() => {
-					setIsCreateModalOpened(!isCreateModalOpened);
-				}}
-				isOpen={isCreateModalOpened}
-			/>
 		</>
 	);
 };
