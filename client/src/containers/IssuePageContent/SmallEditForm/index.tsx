@@ -69,7 +69,6 @@ const SmallEditForm: React.FC<Props> = ({ links: givenLinks, attachments: givenA
 					closeOnEscape
 					open={linksModalOpened}
 					onClose={() => setLinksModalOpened(false)}
-					dimmer="inverted"
 					size="small"
 				>
 					<Modal.Content>
@@ -107,7 +106,6 @@ const SmallEditForm: React.FC<Props> = ({ links: givenLinks, attachments: givenA
 					closeOnDimmerClick
 					closeOnEscape
 					open={filesModalOpened}
-					dimmer="inverted"
 					onClose={() => setFilesModalOpened(false)}
 					size="small"
 				>

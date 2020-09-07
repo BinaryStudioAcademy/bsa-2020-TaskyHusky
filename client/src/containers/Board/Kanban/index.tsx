@@ -48,7 +48,7 @@ const Kanban: BoardComponent = ({ board }) => {
 
 			return updateIssueByKey(
 				cardKey,
-				convertIssueResultToPartialIssue(issueToSend, { boardColumn: destinationId }),
+				convertIssueResultToPartialIssue(issueToSend, { boardColumn: destinationId, board: board.id }),
 			);
 		});
 	};
@@ -93,6 +93,7 @@ const Kanban: BoardComponent = ({ board }) => {
 							className={styles.column}
 							column={column}
 							key={i}
+							boardId={board.id}
 						/>
 					))}
 					<CreateColumnModal boardId={board.id}>

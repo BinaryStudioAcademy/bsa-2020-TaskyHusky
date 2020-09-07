@@ -23,7 +23,6 @@ interface Props {
 	projectID?: string;
 	onClose?: (data: WebApi.Issue.PartialIssue) => void;
 	projects: WebApi.Entities.Projects[];
-	projectsLoading: boolean;
 	users: WebApi.Entities.UserProfile[];
 	statuses: WebApi.Entities.IssueStatus[];
 }
@@ -40,7 +39,6 @@ const CreateIssueModalBody: React.FC<Props> = ({
 	issueTypes,
 	priorities,
 	projects,
-	projectsLoading,
 	boardColumnID,
 	onClose,
 	projectID,
@@ -326,7 +324,6 @@ const mapStateToProps = (state: RootState) => ({
 	priorities: state.issues.priorities,
 	statuses: state.issues.statuses,
 	projects: state.projects.projects,
-	projectsLoading: state.projects.isLoading,
 	users: state.users.users,
 });
 

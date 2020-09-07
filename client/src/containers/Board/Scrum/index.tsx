@@ -62,6 +62,7 @@ const Scrum: BoardComponent = (props) => {
 					id: issueId,
 					data: {
 						sprint: null,
+						board: board.id,
 					},
 				}),
 			);
@@ -73,6 +74,7 @@ const Scrum: BoardComponent = (props) => {
 					id: issueId,
 					data: {
 						sprint: destinationSprintId,
+						board: board.id,
 					},
 				}),
 			);
