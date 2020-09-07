@@ -3,23 +3,28 @@ import styles from './styles.module.scss';
 import { useSelector } from 'react-redux';
 import { RootState } from 'typings/rootState';
 import { useTranslation } from 'react-i18next';
+import {Link} from 'react-router-dom';
 
 interface Props {
+	item: {
+	id: string;
 	name: string;
 	category?: string;
 	avatar?: string;
 	issues?: Partial<WebApi.Entities.Issue>[];
+	}
 }
 
 const ProjectCard: React.FC<Props> = (props: Props) => {
-	const { name, category = '', issues = [], avatar } = props;
+	const { item: {name, category = '', issues = [], avatar, id} } = props;
 	const { t } = useTranslation();
-	const id = useSelector((state: RootState) => state.auth.user?.id);
-	const myIssues = issues.filter((item) => item.assigned?.id === id);
+	const userId = useSelector((state: RootState) => state.auth.user?.id);
+	const myIssues = issues.filter((item) => item.assigned?.id === userId);
 	const doneIssues = myIssues.filter((item) => item.status && item.status.title === 'Done').length;
 	const undoneIssues = myIssues.length - doneIssues;
 	return (
 		<div className={styles.card}>
+			<Link to={`project/${id}/issues`}>
 			<div className={styles.header}>
 				<div className={styles.avatar}>
 					{avatar ? (
@@ -41,6 +46,7 @@ const ProjectCard: React.FC<Props> = (props: Props) => {
 					{t('my_done_issues')} <span className={styles.count}>{doneIssues}</span>
 				</p>
 			</div>
+			</Link>
 		</div>
 	);
 };
