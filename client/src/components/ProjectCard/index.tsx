@@ -11,7 +11,7 @@ interface Props {
 		id: string;
 		name: string;
 		category?: string;
-		avatar?: string;
+		icon?: string;
 		issues?: Partial<WebApi.Entities.Issue>[];
 		color?: string;
 	};
@@ -19,7 +19,7 @@ interface Props {
 
 const ProjectCard: React.FC<Props> = (props: Props) => {
 	const {
-		item: { name, category = '', issues = [], avatar, id, color },
+		item: { name, category = '', issues = [], icon, id, color },
 	} = props;
 	const { t } = useTranslation();
 	const userId = useSelector((state: RootState) => state.auth.user?.id);
@@ -31,8 +31,8 @@ const ProjectCard: React.FC<Props> = (props: Props) => {
 			<Link to={`project/${id}/issues`}>
 				<div className={styles.header}>
 					<div className={styles.avatar} style={{ backgroundColor: color ?? defaultAvatarBg }}>
-						{avatar ? (
-							<img src={avatar} className={styles.img} alt="avatar" />
+						{icon ? (
+							<img src={icon} className={styles.img} alt="avatar" />
 						) : (
 							<p className={styles.avatarTitle}>{name[0]}</p>
 						)}

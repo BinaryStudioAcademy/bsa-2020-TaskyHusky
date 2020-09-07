@@ -54,7 +54,7 @@ const InviteNotification: React.FC<Props> = (props: Props) => {
 				)}
 				<div style={{ width: 'calc(100% - 50px)' }}>
 					<div style={{ display: 'flex', justifyContent: 'space-between' }}>
-						<div style={{ color: '#202020' }}>{name}</div>
+						<div style={{ color: '#202020', fontSize: '16px' }}>{name}</div>
 						<div>
 							<Icon
 								name="check"

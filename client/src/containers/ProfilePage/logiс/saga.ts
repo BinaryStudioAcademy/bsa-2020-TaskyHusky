@@ -13,6 +13,7 @@ import { NotificationManager } from 'react-notifications';
 import { all, put, call, takeEvery } from 'redux-saga/effects';
 import * as actionTypes from './actionTypes';
 import * as actions from './actions';
+import { updateUser as updateMainState } from 'containers/LoginPage/logic/actions';
 
 function* updateUser(action: ReturnType<typeof actions.requestUpdateUser>) {
 	const { type, ...rest } = action;
@@ -61,6 +62,7 @@ function* updateAvatar(action: ReturnType<typeof actions.requestUpdateAvatar>) {
 	try {
 		const user: WebApi.Entities.UserProfile = yield call(requestUdateAvatar, image);
 		yield put(actions.updateUser({ partialState: user }));
+		yield put(updateMainState({ id: user.id, email: user.email, avatar: user.avatar }));
 		NotificationManager.success(i18next.t('avatar_was_updated'), i18next.t('success'), 4000);
 	} catch (error) {
 		NotificationManager.error(i18next.t('could_not_update_avatar'), i18next.t('error'), 4000);

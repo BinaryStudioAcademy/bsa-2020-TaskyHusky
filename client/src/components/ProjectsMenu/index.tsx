@@ -17,7 +17,7 @@ export const ProjectsMenu = () => {
 				<Dropdown.Header>{t('recent')}</Dropdown.Header>
 				{recent.map((project) => (
 					<Dropdown.Item as={Link} to={`/project/${project.id}/issues`} key={project.id}>
-						<Image src={project.icon} />
+						<Image src={project.icon} className="standartIcon" />
 						{project.name}
 					</Dropdown.Item>
 				))}

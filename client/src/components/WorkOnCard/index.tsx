@@ -22,7 +22,11 @@ const WorkOnCard: React.FC<Props> = (props: Props) => {
 				trigger={
 					<Link to={`/project/${project.id}/issues`}>
 						<div className={styles.avatar} style={{ backgroundColor: project.color ?? '#676f74' }}>
-							<p className={styles.avatarTitle}>{project.name[0]}</p>
+							{project.icon ? (
+								<img src={project.icon} className={styles.img} alt="avatar" />
+							) : (
+								<p className={styles.avatarTitle}>{project.name[0]}</p>
+							)}
 						</div>
 					</Link>
 				}
