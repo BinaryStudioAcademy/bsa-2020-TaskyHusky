@@ -10,12 +10,6 @@ interface ElasticI {
 
 type BulkCreateOption = { index: { _index: string; _id: string } };
 
-type ElasticIssue = {
-	id: string;
-	summary: string;
-	description: string | undefined;
-};
-
 class Elastic implements ElasticI {
 	index = 'documentIndex';
 
@@ -69,10 +63,6 @@ class Elastic implements ElasticI {
 				body: {
 					doc: {
 						...issue,
-						// id: issue.id,
-						// summary: issue.summary,
-						// description: issue.description,
-						// sprint: issue.sprint,
 					},
 				},
 			})
