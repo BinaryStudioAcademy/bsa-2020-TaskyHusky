@@ -113,6 +113,7 @@ const SmallEditForm: React.FC<Props> = ({ links: givenLinks, attachments: givenA
 				>
 					<Modal.Content>
 						<IssueFileInput
+							high
 							onChange={(attachments: File[]) => onFilesChange(attachments)}
 							alreadyAttached={alreadyAttached}
 							currentFiles={attachments}
