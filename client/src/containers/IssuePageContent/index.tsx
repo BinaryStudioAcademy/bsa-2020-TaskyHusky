@@ -124,30 +124,14 @@ const IssuePageContent: React.FC<Props> = ({ issue: givenIssue }) => {
 					</Menu>
 				</div>
 				{menuState === MenuStates.commitsShown && (
-					<Comment.Group
-						style={{
-							maxHeight: '40%',
-							overflowY: 'auto',
-							width: '100%',
-							maxWidth: '100%',
-							marginBottom: 20,
-						}}
-					>
+					<Comment.Group className={styles.scrollable}>
 						{commits.length
 							? commits.map((commit) => <IssueCommit commit={commit} key={commit.hash} />)
 							: t('no')}
 					</Comment.Group>
 				)}
 				{menuState === MenuStates.commentsShown && (
-					<Comment.Group
-						style={{
-							maxHeight: '40%',
-							overflowY: 'auto',
-							width: '100%',
-							maxWidth: '100%',
-							marginBottom: 20,
-						}}
-					>
+					<Comment.Group className={styles.scrollable}>
 						{comments.map((comment) => (
 							<IssueComment comment={comment} key={comment.id} />
 						))}
