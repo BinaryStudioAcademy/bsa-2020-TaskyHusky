@@ -13,7 +13,7 @@ const UserActivityItem: React.FC<Props> = (props: Props) => {
 
 	return (
 		<div className={styles.activityItem}>
-			<div className={styles.avatar}>
+			<div className={styles.avatar} style={{ backgroundColor: item.color ?? '#f5f7f9' }}>
 				{item.avatar ? (
 					<img src={item.avatar} className={styles.img} alt="avatar" />
 				) : (

@@ -17,7 +17,9 @@ function UserAvatar({ user, small }: Props): ReactElement {
 			{user.avatar ? (
 				<Image src={user.avatar} className={avatarStyle} circular />
 			) : (
-				<span className={avatarStyle}>{getInitials(user)}</span>
+				<span className={avatarStyle} style={{ backgroundColor: user.color ?? '#f5f7f9' }}>
+					{getInitials(user)}
+				</span>
 			)}
 		</>
 	);

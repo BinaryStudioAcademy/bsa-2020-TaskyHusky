@@ -14,6 +14,7 @@ export interface UserModel {
 	password?: string;
 	lastName?: string;
 	firstName?: string;
+	color: string;
 	username?: string;
 	avatar?: string;
 	location?: string;

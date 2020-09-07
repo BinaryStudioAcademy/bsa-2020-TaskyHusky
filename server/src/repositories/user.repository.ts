@@ -5,6 +5,7 @@ import { UserProfile } from '../entity/UserProfile';
 import { Projects } from '../entity/Projects';
 import { Team } from '../entity/Team';
 import { Issue } from '../entity/Issue';
+import { getRandomColor } from '../services/colorGenerator.service';
 
 @EntityRepository(UserProfile)
 export class UserRepository extends Repository<UserProfile> {
@@ -111,7 +112,7 @@ export class UserRepository extends Repository<UserProfile> {
 
 	async createNew(data: UserProfile) {
 		const user = this.create(data);
-		const newUser = await this.save(user);
+		const newUser = await this.save({ color: getRandomColor(), ...user });
 		if (!newUser) {
 			throw new Error('Can not save user');
 		}
