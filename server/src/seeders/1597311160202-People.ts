@@ -20,7 +20,7 @@ export class People1597311160202 implements MigrationInterface {
 				email: 'efodden1@webnode.com',
 				avatar: 'https://robohash.org/doloresmagnamrem.jpg?size=200x200&set=set1',
 				jobTitle: 'Registered Nurse',
-				color: '#3366E6',
+				color: '#B34D4D',
 			},
 			{
 				id: '8509029d-2a65-49d4-9d3a-45ee24202e2d',
@@ -29,7 +29,7 @@ export class People1597311160202 implements MigrationInterface {
 				email: 'bhussy2@deliciousdays.com',
 				avatar: 'https://robohash.org/velitnonodit.png?size=200x200&set=set1',
 				jobTitle: 'Actuary',
-				color: '#3366E6',
+				color: '#FF99E6',
 			},
 			{
 				id: 'dede080f-4538-44f0-83b2-e9aa33e113c6',
@@ -38,7 +38,7 @@ export class People1597311160202 implements MigrationInterface {
 				email: 'pwetherill3@sun.com',
 				avatar: 'https://robohash.org/utcumquemagnam.jpg?size=200x200&set=set1',
 				jobTitle: 'Clinical Specialist',
-				color: '#3366E6',
+				color: '#CCFF1A',
 			},
 			{
 				id: '4dfdbf74-089d-4139-871c-8ad5df155bb1',
@@ -47,7 +47,7 @@ export class People1597311160202 implements MigrationInterface {
 				email: 'dkerry4@paypal.com',
 				avatar: 'https://robohash.org/quiacorruptidolorem.png?size=200x200&set=set1',
 				jobTitle: 'Electrical Engineer',
-				color: '#3366E6',
+				color: '#FF1A66',
 			},
 			{
 				id: 'ea701e12-23e9-489b-b884-0f3ae2d177d3',
@@ -56,7 +56,7 @@ export class People1597311160202 implements MigrationInterface {
 				email: 'gdunthorn5@hibu.com',
 				avatar: 'https://robohash.org/recusandaerepudiandaeeum.png?size=200x200&set=set1',
 				jobTitle: 'Assistant Media Planner',
-				color: '#3366E6',
+				color: '#E6331A',
 			},
 			{
 				id: '09238205-592f-4792-bc0b-095bacb17356',
@@ -65,7 +65,7 @@ export class People1597311160202 implements MigrationInterface {
 				email: 'iclabburn6@hibu.com',
 				avatar: 'https://robohash.org/cumquiad.png?size=200x200&set=set1',
 				jobTitle: 'Associate Professor',
-				color: '#3366E6',
+				color: '#33FFCC',
 			},
 			{
 				id: '45898dce-43dc-46d6-a357-7cd955532b64',
@@ -74,7 +74,7 @@ export class People1597311160202 implements MigrationInterface {
 				email: 'dcanada7@dedecms.com',
 				avatar: 'https://robohash.org/accusantiumperferendisquam.png?size=200x200&set=set1',
 				jobTitle: 'Product Engineer',
-				color: '#3366E6',
+				color: '#B366CC',
 			},
 			{
 				id: '53673096-3cb5-498f-8e93-154efb9a57cc',
@@ -83,7 +83,7 @@ export class People1597311160202 implements MigrationInterface {
 				email: 'rliver8@mozilla.com',
 				avatar: 'https://robohash.org/molestiaedoloresminus.jpg?size=200x200&set=set1',
 				jobTitle: 'Nuclear Power Engineer',
-				color: '#3366E6',
+				color: '#4D8000',
 			},
 			{
 				id: '62c85922-7b9b-42e0-baa7-787ddb8f07a0',
@@ -92,7 +92,7 @@ export class People1597311160202 implements MigrationInterface {
 				email: 'psinyard9@alibaba.com',
 				avatar: 'https://robohash.org/utoditeos.jpg?size=200x200&set=set1',
 				jobTitle: 'Graphic Designer',
-				color: '#3366E6',
+				color: '#B33300',
 			},
 			{
 				id: 'b9c068cb-8821-447f-a8af-ebbce85d611f',
@@ -101,7 +101,7 @@ export class People1597311160202 implements MigrationInterface {
 				email: 'kmecozzia@vimeo.com',
 				avatar: 'https://robohash.org/accusamusenimest.png?size=200x200&set=set1',
 				jobTitle: 'Food Chemist',
-				color: '#3366E6',
+				color: '#CC80CC',
 			},
 			{
 				id: '6001530e-483b-4784-831e-d0ff43003976',
@@ -110,7 +110,7 @@ export class People1597311160202 implements MigrationInterface {
 				email: 'pvotierb@upenn.edu',
 				avatar: 'https://robohash.org/laborumaliassint.png?size=200x200&set=set1',
 				jobTitle: 'Senior Sales Associate',
-				color: '#3366E6',
+				color: '#991aff',
 			},
 			{
 				id: 'e4f6118c-30b0-4d39-8ac1-87ae1102a792',
@@ -119,7 +119,7 @@ export class People1597311160202 implements MigrationInterface {
 				email: 'ashawlc@photobucket.com',
 				avatar: 'https://robohash.org/dolorvoluptatemducimus.jpg?size=200x200&set=set1',
 				jobTitle: 'Health Coach I',
-				color: '#3366E6',
+				color: '#e666ff',
 			},
 			{
 				id: 'ce1f9721-9a5a-4e5d-8569-fdc72bae63cd',
@@ -128,7 +128,7 @@ export class People1597311160202 implements MigrationInterface {
 				email: 'fgoddertsfd@ezinearticles.com',
 				avatar: 'https://robohash.org/sintremiste.jpg?size=200x200&set=set1',
 				jobTitle: 'Data Coordiator',
-				color: '#3366E6',
+				color: '#259cf7',
 			},
 			{
 				id: '323a9bfe-66c9-4284-953b-70029a8a7d4f',
@@ -137,7 +137,7 @@ export class People1597311160202 implements MigrationInterface {
 				email: 'cgostagee@ucla.edu',
 				avatar: 'https://robohash.org/culpaliberoaliquid.png?size=200x200&set=set1',
 				jobTitle: 'Software Consultant',
-				color: '#3366E6',
+				color: '#0db498',
 			},
 			{
 				id: '672a0da0-e4e9-4016-86fb-0e192c44062a',
@@ -146,7 +146,7 @@ export class People1597311160202 implements MigrationInterface {
 				email: 'ltolworthyf@va.gov',
 				avatar: 'https://robohash.org/autemutdignissimos.bmp?size=200x200&set=set1',
 				jobTitle: 'Professor',
-				color: '#3366E6',
+				color: '#E666B3',
 			},
 			{
 				id: 'd80b3289-8e32-4f53-9cb4-32dcc4ad64e0',
@@ -155,7 +155,7 @@ export class People1597311160202 implements MigrationInterface {
 				email: 'hmccahillg@mashable.com',
 				avatar: 'https://robohash.org/saepevoluptatemrecusandae.png?size=200x200&set=set1',
 				jobTitle: 'Quality Control Specialist',
-				color: '#3366E6',
+				color: '#33991A',
 			},
 			{
 				id: '2c7bb0a3-7c8c-4986-9376-5248fcf10329',
@@ -164,7 +164,7 @@ export class People1597311160202 implements MigrationInterface {
 				email: 'prichardssonh@merriam-webster.com',
 				avatar: 'https://robohash.org/explicaboiureexercitationem.bmp?size=200x200&set=set1',
 				jobTitle: 'Payment Adjustment Coordinator',
-				color: '#3366E6',
+				color: '#00E680',
 			},
 			{
 				id: '26f447d7-85ea-4bb6-817f-cb8861d9d846',
@@ -173,7 +173,7 @@ export class People1597311160202 implements MigrationInterface {
 				email: 'lkauscheri@sciencedirect.com',
 				avatar: 'https://robohash.org/sitquiaaut.bmp?size=200x200&set=set1',
 				jobTitle: 'Assistant Professor',
-				color: '#3366E6',
+				color: '#E6FF80',
 			},
 			{
 				id: '8c86f143-589d-4689-9908-2fe0fb8a52f2',
@@ -182,7 +182,7 @@ export class People1597311160202 implements MigrationInterface {
 				email: 'jkneelandj@addtoany.com',
 				avatar: 'https://robohash.org/maioresmagnamnemo.png?size=200x200&set=set1',
 				jobTitle: 'Assistant Professor',
-				color: '#3366E6',
+				color: '#1AFF33',
 			},
 		].map((user) => {
 			const { id, ...userData } = user;

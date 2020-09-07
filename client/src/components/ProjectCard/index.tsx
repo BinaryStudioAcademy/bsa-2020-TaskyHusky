@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from 'typings/rootState';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
+import { defaultAvatarBg } from 'constants/defaultColors';
 
 interface Props {
 	item: {
@@ -29,7 +30,7 @@ const ProjectCard: React.FC<Props> = (props: Props) => {
 		<div className={styles.card}>
 			<Link to={`project/${id}/issues`}>
 				<div className={styles.header}>
-					<div className={styles.avatar} style={{ backgroundColor: color ?? '#676f74' }}>
+					<div className={styles.avatar} style={{ backgroundColor: color ?? defaultAvatarBg }}>
 						{avatar ? (
 							<img src={avatar} className={styles.img} alt="avatar" />
 						) : (

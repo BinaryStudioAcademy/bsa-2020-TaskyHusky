@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './styles.module.scss';
+import { defaultAvatarBg } from 'constants/defaultColors';
 
 interface Props {
 	fullName: string;
@@ -31,7 +32,7 @@ const Avatar = ({ fullName, imgSrc, color }: Props) => {
 
 	const renderPlaceholder = () => {
 		return (
-			<div className={styles.placeholderContainer} style={{ backgroundColor: color ?? '#676f74' }}>
+			<div className={styles.placeholderContainer} style={{ backgroundColor: color ?? defaultAvatarBg }}>
 				<span className={styles.placeholder}>{getAvatarInitials(fullName)}</span>
 			</div>
 		);
