@@ -55,7 +55,7 @@ export const ru = {
 	attachments: 'Файлы',
 	add_link: 'Добавить ссылку',
 	add_attachment: 'Добавить файл',
-	description: 'Функциональность',
+	description: 'Описание',
 	submit: 'Отправить',
 	cancel: 'Отмена',
 	tags_input_hint_1: "Нажмите 'Стрелка вверх",
@@ -454,4 +454,5 @@ export const ru = {
 	click_here_to_add_link: 'Нажмите, чтобы добавить ссылку...',
 	click_here_to_add_attachment: 'Нажмите, чтобы добавить файл...',
 	no_more_labels: 'Больше нет меток. TIP: Чтобы получить доступ к меткам, нужно выбрать проект',
+	column: 'Колонка',
 };

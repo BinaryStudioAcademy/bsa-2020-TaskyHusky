@@ -10,13 +10,14 @@ import styles from './styles.module.scss';
 import { useIO } from 'hooks/useIO';
 
 interface Props {
+	boardId: string;
 	column: WebApi.Result.BoardColumnResult;
 	className: string;
 	search: string;
 	getOnDragEndFunc: (id: string, responder: OnDragEndResponder) => void;
 }
 
-const BoardColumn: React.FC<Props> = ({ column, className, search, getOnDragEndFunc }) => {
+const BoardColumn: React.FC<Props> = ({ column, className, search, boardId, getOnDragEndFunc }) => {
 	const [issues, setIssues] = useState<WebApi.Result.IssueResult[]>([]);
 	const [issuesFetched, setIssuesFetched] = useState<boolean>(false);
 	const { t } = useTranslation();
@@ -128,7 +129,7 @@ const BoardColumn: React.FC<Props> = ({ column, className, search, getOnDragEndF
 									: ''}
 								{provided.placeholder}
 							</div>
-							<CreateIssueModal boardColumnID={column.id}>
+							<CreateIssueModal boardColumnID={column.id} boardID={boardId}>
 								<Button className={styles.contentBtn}>
 									<Icon name="plus circle" />
 									{t('create_issue')}

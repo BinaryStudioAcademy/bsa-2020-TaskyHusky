@@ -54,7 +54,7 @@ export const ua = {
 	attachments: 'Файли',
 	add_link: 'Додати посилання',
 	add_attachment: 'Додати файл',
-	description: 'Функціональність',
+	description: 'Опис',
 	submit: 'Відправити',
 	cancel: 'Скасувати',
 	tags_input_hint_1: "Натісніть 'Стрілка вгору",
@@ -446,4 +446,5 @@ export const ua = {
 	click_here_to_add_link: 'Натисніть, щоб додати посилання...',
 	click_here_to_add_attachment: 'Натисніть, щоб додати файл...',
 	no_more_labels: 'Більше нема міток. TIP: Щоб отримати доступ до міток, треба обрати проект',
+	column: 'Колонка',
 };
