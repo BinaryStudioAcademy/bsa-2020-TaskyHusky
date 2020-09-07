@@ -188,7 +188,14 @@ const IssuePageInfoColumn: React.FC<Props> = ({ issue: givenIssue, initialIssue,
 				)}
 				<h4>{t('labels')}</h4>
 				{issue.labels && issue.labels.length
-					? issue.labels.map((label, index) => <Label key={index}>{label}</Label>)
+					? issue.labels.map((label, index) => (
+							<Label
+								key={index}
+								style={{ backgroundColor: label.backgroundColor, color: label.textColor }}
+							>
+								{label.text}
+							</Label>
+					  ))
 					: t('no')}
 				{!asCardInfo ? (
 					<>

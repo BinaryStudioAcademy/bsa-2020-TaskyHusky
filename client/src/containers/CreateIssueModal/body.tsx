@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Modal, Form, Button, Header, Icon, Divider, InputOnChangeData } from 'semantic-ui-react';
+import React, { useState, useEffect } from 'react';
+import { Modal, Form, Button, Header, Icon, Divider, InputOnChangeData, Label } from 'semantic-ui-react';
 import { useCreateIssueModalContext } from './logic/context';
 import TagsInput from 'components/common/TagsInput';
 import { connect, useDispatch } from 'react-redux';
@@ -12,6 +12,7 @@ import { IssueConstants } from 'constants/Issue';
 import IssueFileInput from 'components/IssueFileInput';
 import { initialState } from './logic/initalState';
 import Spinner from 'components/common/Spinner';
+import { getProjectById } from 'services/projects.service';
 
 interface Props {
 	children: JSX.Element;
@@ -54,7 +55,16 @@ const CreateIssueModalBody: React.FC<Props> = ({
 	const [isOpened, setIsOpened] = useState<boolean>(false);
 	const [isStoryPointValid, setIsStoryPointValid] = useState(true);
 	const [attachments, setAttachments] = useState<File[]>([]);
+	const [labels, setLabels] = useState<WebApi.Entities.ProjectLabel[]>([]);
 	const dispatch = useDispatch();
+
+	useEffect(() => {
+		const projectToFetchLabels = projectID ?? context.data.project;
+
+		if (projectToFetchLabels) {
+			getProjectById(projectToFetchLabels).then(({ labels }) => setLabels(labels));
+		}
+	}, [projectID, context.data.project]);
 
 	const typeOpts: SelectOption[] = issueTypes.map((type) => ({
 		key: type.id,
@@ -86,8 +96,8 @@ const CreateIssueModalBody: React.FC<Props> = ({
 
 	const labelOpts: SelectOption[] = labels.map((label, i) => ({
 		key: i,
-		value: label,
-		text: label,
+		value: label.id,
+		text: <Label style={{ backgroundColor: label.backgroundColor, color: label.textColor }}>{label.text}</Label>,
 	}));
 
 	const projectsOpts: SelectOption[] = projects.map((project) => ({
@@ -232,6 +242,8 @@ const CreateIssueModalBody: React.FC<Props> = ({
 							clearable
 							selection
 							multiple
+							search
+							noResultsMessage="No more labels. TIP: You must select project to access labels"
 							placeholder={t('labels')}
 							options={labelOpts}
 							onChange={(event, data) => context.set('labels', data.value)}
@@ -307,7 +319,5 @@ const mapStateToProps = (state: RootState) => ({
 	projectsLoading: state.projects.isLoading,
 	users: state.users.users,
 });
-
-const labels: string[] = ['label1', 'label2'];
 
 export default connect(mapStateToProps)(CreateIssueModalBody);

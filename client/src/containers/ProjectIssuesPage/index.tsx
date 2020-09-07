@@ -75,6 +75,10 @@ const ProjectIssuesPage: React.FC<Props> = ({ projectId }) => {
 						setSelectedIssueKey(key);
 						setSelectedIssue(null);
 					}}
+					onDeleteIssue={() => {
+						setSelectedIssueKey(null);
+						setSelectedIssue(null);
+					}}
 					search={search}
 					projectId={projectId}
 				/>

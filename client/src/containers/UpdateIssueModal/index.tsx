@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Form, Modal, Button, Header, Icon, Divider, InputOnChangeData } from 'semantic-ui-react';
+import React, { useState, useEffect } from 'react';
+import { Form, Modal, Button, Header, Icon, Divider, InputOnChangeData, Label } from 'semantic-ui-react';
 import { connect, useDispatch } from 'react-redux';
 import { RootState } from 'typings/rootState';
 import TagsInput from 'components/common/TagsInput';
@@ -11,8 +11,8 @@ import { isNumber } from 'util';
 import { IssueConstants } from 'constants/Issue';
 import IssueFileInput from 'components/IssueFileInput';
 import { initialState } from 'containers/CreateIssueModal/logic/initalState';
+import { getProjectById } from 'services/projects.service';
 
-const labels: string[] = ['label', 'label1', 'label2'];
 interface Props {
 	current: WebApi.Issue.PartialIssue;
 	issueTypes: WebApi.Entities.IssueType[];
@@ -46,6 +46,15 @@ const UpdateIssueModal: React.FC<Props> = ({
 	const [isStoryPointValid, setIsStoryPointValid] = useState(true);
 	const dispatch = useDispatch();
 	const { t } = useTranslation();
+	const [labels, setLabels] = useState<WebApi.Entities.ProjectLabel[]>([]);
+	const [mustFetchLabels, setMustFetchLabels] = useState<boolean>(true);
+
+	useEffect(() => {
+		if (mustFetchLabels) {
+			getProjectById(current.project as string).then(({ labels }) => setLabels(labels));
+			setMustFetchLabels(false);
+		}
+	}, [mustFetchLabels, labels, current.project]);
 
 	const typeOpts: SelectOption[] = issueTypes.map((type) => ({
 		key: type.id,
@@ -77,8 +86,8 @@ const UpdateIssueModal: React.FC<Props> = ({
 
 	const labelOpts: SelectOption[] = labels.map((label, i) => ({
 		key: i,
-		value: label,
-		text: label,
+		value: label.id,
+		text: <Label style={{ backgroundColor: label.backgroundColor, color: label.textColor }}>{label.text}</Label>,
 	}));
 
 	const usersOpts: SelectOption[] = users.map((user) => ({
@@ -105,13 +114,11 @@ const UpdateIssueModal: React.FC<Props> = ({
 			return;
 		}
 
-		const { watchers, ...data } = context.data;
-
 		dispatch(
 			updateIssue({
 				// This field exists always
 				id: current.id as string,
-				data: data,
+				data: context.data,
 				files: attachments,
 			}),
 		);
@@ -119,7 +126,7 @@ const UpdateIssueModal: React.FC<Props> = ({
 		setOpened(false);
 
 		if (onSubmit) {
-			onSubmit(data);
+			onSubmit(context.data);
 		}
 	};
 
@@ -212,6 +219,8 @@ const UpdateIssueModal: React.FC<Props> = ({
 							clearable
 							selection
 							multiple
+							search
+							noResultsMessage="No more labels. TIP: You must select project to access labels"
 							placeholder={t('labels')}
 							options={labelOpts}
 							value={context.data.labels}
