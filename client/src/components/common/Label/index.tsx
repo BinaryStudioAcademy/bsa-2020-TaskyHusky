@@ -1,6 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import styles from './styles.module.scss';
+import { Popup } from 'semantic-ui-react';
 
 interface Props {
 	text: string;
@@ -10,13 +11,25 @@ interface Props {
 
 const Label: React.FC<Props> = ({ text, textColor, backgroundColor }) => {
 	return (
-		<span className={styles.wrapper}>
-			<span className={classNames({ [styles.container]: text })} style={{ backgroundColor }}>
-				<span className={styles.label} style={{ color: textColor }}>
-					{text}
-				</span>
-			</span>
-		</span>
+		<>
+			{'isTooltipShown' && (
+				<>
+					<Popup
+						trigger={
+							<span className={styles.wrapper}>
+								<span className={classNames({ [styles.container]: text })} style={{ backgroundColor }}>
+									<span className={styles.label} style={{ color: textColor }}>
+										{text}
+									</span>
+								</span>
+							</span>
+						}
+					>
+						<p className={styles.tooltip__content}>{text}</p>
+					</Popup>
+				</>
+			)}
+		</>
 	);
 };
 
