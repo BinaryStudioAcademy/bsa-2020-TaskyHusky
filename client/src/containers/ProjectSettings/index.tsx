@@ -36,7 +36,7 @@ const ProjectSettings = ({ children }: Props) => {
 			<ProjectSidebar project={projectData} />
 			<section className={styles.header_inner__container}>
 				<div className={styles.header_inner__breadcrumbs}>
-					<Breadcrumbs sections={setBreadcrumbs({ history, name })} />
+					<Breadcrumbs sections={setBreadcrumbs({ history, name, id })} />
 				</div>
 				{isLoading || isDeleting ? <Spinner /> : children}
 			</section>

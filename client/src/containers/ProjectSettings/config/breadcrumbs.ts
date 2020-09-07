@@ -6,9 +6,10 @@ import { BreadcrumbItem } from 'components/common/Breadcrumbs/index';
 interface Params {
 	name: string;
 	history: History;
+	id?: string;
 }
 
-export const setBreadcrumbs = ({ name, history }: Params): BreadcrumbItem[] => [
+export const setBreadcrumbs = ({ name, history, id }: Params): BreadcrumbItem[] => [
 	{
 		key: 'Projects',
 		content: i18n.t('projects'),
@@ -19,7 +20,7 @@ export const setBreadcrumbs = ({ name, history }: Params): BreadcrumbItem[] => [
 		key: name,
 		content: name,
 		link: true,
-		onClick: () => history.push(`/projects/${name}/${name} board`),
+		onClick: () => history.push(`/project/${id}/issues`),
 	},
 	{
 		key: 'Project settings',

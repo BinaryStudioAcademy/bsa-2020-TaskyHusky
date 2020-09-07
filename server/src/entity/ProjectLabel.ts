@@ -1,6 +1,16 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, DeleteDateColumn, CreateDateColumn } from 'typeorm';
+import {
+	Entity,
+	Column,
+	PrimaryGeneratedColumn,
+	ManyToOne,
+	DeleteDateColumn,
+	CreateDateColumn,
+	ManyToMany,
+	JoinTable,
+} from 'typeorm';
 import { IsNotEmpty, IsString, IsHexColor } from 'class-validator';
 import { Projects } from './Projects';
+import { Issue } from './Issue';
 
 @Entity()
 export class ProjectLabel {
@@ -26,6 +36,10 @@ export class ProjectLabel {
 
 	@ManyToOne((type) => Projects, (project) => project.labels)
 	project!: Projects;
+
+	@ManyToMany((type) => Issue, (issue) => issue.labels)
+	@JoinTable()
+	issues?: Issue[];
 
 	@CreateDateColumn()
 	createdDate?: Date;

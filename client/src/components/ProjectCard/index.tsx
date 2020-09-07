@@ -22,8 +22,8 @@ const ProjectCard: React.FC<Props> = (props: Props) => {
 	} = props;
 	const { t } = useTranslation();
 	const userId = useSelector((state: RootState) => state.auth.user?.id);
-	const myIssues = issues.filter((item) => item.assigned?.id === userId);
-	const doneIssues = myIssues.filter((item) => item.status && item.status.title === 'Done').length;
+	const myIssues = issues.filter((issue) => issue.assigned?.id === userId);
+	const doneIssues = myIssues.filter((issue) => issue.status && issue.status.title === 'Done').length;
 	const undoneIssues = myIssues.length - doneIssues;
 	return (
 		<div className={styles.card}>

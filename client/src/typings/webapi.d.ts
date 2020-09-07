@@ -97,7 +97,12 @@ namespace WebApi.Result {
 		};
 		summary?: string;
 		boardColumn?: BoardColumnResult;
-		labels?: string[];
+		labels?: {
+			id: string;
+			text: string;
+			textColor: string;
+			backgroundColor: string;
+		}[];
 		attachments?: string[];
 		links?: string[];
 		board?: BoardResult;
@@ -298,7 +303,7 @@ namespace WebApi.Entities {
 		summary: string;
 		boardColumn?: BoardColumn;
 		board?: Board;
-		labels?: string;
+		labels?: ProjectLabel[];
 		attachments?: string;
 		links?: string;
 		priority?: Priority;
@@ -362,6 +367,7 @@ namespace WebApi.Entities {
 		textColor: string;
 		backgroundColor: string;
 		project: Projects;
+		issues?: Issue[];
 		createdDate?: Date;
 		deletedDate?: Date;
 	}
