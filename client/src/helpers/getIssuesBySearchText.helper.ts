@@ -1,7 +1,7 @@
 import memoizeOne from 'memoize-one';
 
 export type GetIssuesForSprint = {
-	(searchString: string, issues: WebApi.Result.IssueResult[] | undefined): WebApi.Result.IssueResult[];
+	(searchString: string, issues: WebApi.Entities.Issue[] | undefined): WebApi.Entities.Issue[];
 };
 
 const getIssuesForSprint: GetIssuesForSprint = (searchString, issues) => {

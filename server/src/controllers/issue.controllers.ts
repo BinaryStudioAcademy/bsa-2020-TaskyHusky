@@ -115,6 +115,19 @@ class IssueController {
 		}
 	}
 
+	async getIssuesByBoardId(req: Request, res: Response) {
+		const { boardId } = req.params;
+		const repository = getCustomRepository(IssueRepository);
+
+		try {
+			const issues = await repository.findAllByBoardId(boardId);
+
+			res.send(issues);
+		} catch (err) {
+			res.status(500).send(getWebError(err, 500));
+		}
+	}
+
 	async getByKey(req: Request, res: Response) {
 		const { key } = req.params;
 		const repository = getCustomRepository(IssueRepository);

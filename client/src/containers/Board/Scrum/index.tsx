@@ -9,7 +9,6 @@ import { RootState } from 'typings/rootState';
 import Breadcrumbs from 'components/common/Breadcrumbs';
 import { setBreadcrumbs, BreadCrumbData } from './config/breadcrumbs';
 import { useHistory, useLocation } from 'react-router-dom';
-import { extractUUIDFromArrayOfObjects } from 'helpers/extractUUIDFromArrayOfObjects.helper';
 import CreateSprintModal from 'components/common/SprintModal/CreateSprintModal';
 import getIssuesForSprintId from 'helpers/getIssuesBySearchText.helper';
 import { normalizeText } from 'helpers/normalizeText.helper';
@@ -21,6 +20,7 @@ import { updateIssue } from 'pages/IssuePage/logic/actions';
 import Spinner from 'components/common/Spinner';
 import ScrumBoardSidebar from 'components/ScrumBoardSidebar';
 import { SETTINGS_SECTION } from 'components/ScrumBoardSidebar/config/scrumSidebarItems';
+import matchIssuesToSprint from 'helpers/matchIssuesToSprint.helper';
 
 const Scrum: BoardComponent = (props) => {
 	const { pathname } = useLocation();
@@ -29,21 +29,17 @@ const Scrum: BoardComponent = (props) => {
 	const { t } = useTranslation();
 	const [search, setSearch] = useState<string>('');
 	const [isCreateModalOpened, setIsCreateModalOpened] = useState<boolean>(false);
-	const [issuesMap, setIssuesMap] = useState<{ [sprintId: string]: WebApi.Result.IssueResult[] }>({});
-	const state = useSelector((rootState: RootState) => rootState.scrumBoard);
 
-	const { sprints, project, matchIssuesToSprint, backlog } = useSelector(
-		(rootState: RootState) => rootState.scrumBoard,
+	const { sprints, project, issues } = useSelector((rootState: RootState) => rootState.scrumBoard);
+
+	const [issuesMap, setIssuesMap] = useState<{ [sprintId: string]: WebApi.Entities.Issue[] }>(
+		matchIssuesToSprint(sprints, issues),
 	);
 
 	const { board } = props;
 
 	const projectDetails: BreadCrumbData = { id: project.id, name: project.name };
 	const boardDetails: BreadCrumbData = { id: board.id, name: board.name };
-
-	const clearSearchInputValue = (): void => {
-		setSearch('');
-	};
 
 	const onDragEndDrop = ({ destination, source }: DropResult) => {
 		if (!destination) {
@@ -87,27 +83,19 @@ const Scrum: BoardComponent = (props) => {
 
 	useEffect(() => {
 		dispatch(actions.saveBoardToState({ board }));
+		dispatch(actions.loadIssuesTrigger({ boardId: board.id }));
 		dispatch(actions.loadSprintsTrigger({ boardId: board.id }));
 		dispatch(actions.loadProjectTrigger({ boardId: board.id }));
-		dispatch(actions.loadBacklogTrigger({ boardId: board.id }));
 	}, [dispatch, board]);
 
 	useEffect(() => {
-		if (!!sprints.length) {
-			const arrayOfIds = extractUUIDFromArrayOfObjects(sprints);
-			arrayOfIds.forEach((id) => {
-				dispatch(actions.loadIssuesTrigger({ sprintId: id }));
-			});
-		}
-	}, [sprints.length, sprints, dispatch]);
+		setIssuesMap(matchIssuesToSprint(sprints, issues));
+	}, [sprints, issues]);
 
-	useEffect(() => {
-		setIssuesMap({ ...matchIssuesToSprint, backlog: backlog });
-	}, [state, matchIssuesToSprint, backlog]);
-
-	const sprintList =
-		!isEmpty(sprints) || !isEmpty(issuesMap) ? (
-			Object.entries(issuesMap).map(([sprintId, issues]: [string, WebApi.Result.IssueResult[]]) => {
+	const sprintList = !isEmpty(issuesMap) ? (
+		Object.entries(issuesMap)
+			.reverse()
+			.map(([sprintId, issues]: [string, WebApi.Entities.Issue[]]) => {
 				return (
 					<Sprint
 						key={sprintId}
@@ -119,9 +107,9 @@ const Scrum: BoardComponent = (props) => {
 					/>
 				);
 			})
-		) : (
-			<Spinner />
-		);
+	) : (
+		<Spinner />
+	);
 
 	const renderScrumBoard = (
 		<>
@@ -142,9 +130,6 @@ const Scrum: BoardComponent = (props) => {
 					style={{ marginLeft: 20, marginRight: 60, maxWidth: 250 }}
 					id="searchIssuesField"
 				/>
-				<Button onClick={clearSearchInputValue} className={styles.cancelBtn}>
-					{t('clear')}
-				</Button>
 				<Button
 					onClick={() => {
 						setIsCreateModalOpened(!isCreateModalOpened);
@@ -187,9 +172,6 @@ const Scrum: BoardComponent = (props) => {
 		default:
 			renderComponent = renderScrumBoard;
 	}
-
-	console.log(renderComponent);
-	console.log(pathname);
 
 	return (
 		<>

@@ -17,7 +17,7 @@ router
 	.get('/', controller.getAll)
 	.get('/:id', controller.getById)
 	.get('/byKey/:key', controller.getByKey)
-	.get('/:boardId/boardIssues', controller.getBacklogByBoardId)
+	.get('/:boardId/boardIssues', controller.getIssuesByBoardId)
 	.post('/attachment', uploadIssueAttachment, validateIssueAttachment, controller.uploadAttachment)
 	.post('/filtered', controller.getFilteredIssues)
 	.post('/:id/watch', controller.watch)
