@@ -2,11 +2,10 @@
 
 :local(.columnsFlex) {
 	display: flex;
-	height: calc(100vh - 300px);
+	height: calc(100vh - 230px);
 	width: 100%;
 	overflow-x: auto;
 	overflow-y: hidden;
-	margin-left: 25px;
 	padding-bottom: 25px;
 	padding-right: 25px;
 }
@@ -35,16 +34,24 @@
 :local(.wrapper) {
 	max-width: 94vw;
 	margin-top: 0px;
+	padding-top: 20px;
+	padding-left: 60px;
 }
 
 .headerWrapper {
 	display: flex;
-	margin: 25px 4% 25px 10%;
+	margin: 25px 0;
+	align-items: center;
 	justify-content: space-between;
 }
 
-.breadcrumb {
-	margin: 25px 10% 0 !important;
+.linkSettings {
+	@include text-data;
+	height: 23px;
+
+	&:hover {
+		border-bottom: 2px solid $yellow;
+	}
 }
 
 .searchInput {
@@ -56,33 +63,31 @@
 	@include cancel-btn;
 	padding-top: 9px !important;
 	padding-bottom: 9px !important;
-	width: 95px !important;
 }
 
 .contentBtn {
-	margin: 25px 10% !important;
-	max-width: 250px !important;
+	margin-top: 0 !important;
+	min-width: 250px !important;
 	height: 41px;
 	cursor: pointer;
 	@include cancel-btn;
 }
 
-@media screen and (max-width: $medium-screen) {
-	.headerWrapper {
-		margin: 25px 2% 25px 8%;
-	}
+// @media screen and (max-width: $medium-screen) {
+// 	.headerWrapper {
+// 		margin: 25px 2% 25px 8%;
+// 	}
 
-	.contentBtn {
-		margin-left: 8% !important;
-	}
+// 	.contentBtn {
+// 		margin-left: 8% !important;
+// 	}
 
-	.breadcrumb {
-		margin: 25px 2% 0 8% !important;
-	}
-}
+// 	.breadcrumb {
+// 		margin: 25px 2% 0 8% !important;
+// 	}
+// }
 
 @media screen and (max-width: $mobile-screen) {
-
 	.inlineContainer,
 	.headerWrapper {
 		display: block;

@@ -46,7 +46,9 @@ const IssueComment: React.FC<Props> = ({ comment }) => {
 	return (
 		<Comment style={{ width: '100%', marginBottom: 20 }}>
 			{comment.creator.avatar ? (
-				<Comment.Avatar src={comment.creator.avatar} />
+				<div className="avatar">
+					<img src={comment.creator.avatar} alt="Sender avatar" style={{ borderRadius: '50%' }} />
+				</div>
 			) : (
 				<div className={`${styles.avatar} avatar`}>{getInitials(comment.creator)}</div>
 			)}

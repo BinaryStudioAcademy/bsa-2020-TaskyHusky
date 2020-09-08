@@ -10,7 +10,7 @@ const Spinner = (props: Props) => {
 
 	return (
 		<Segment className={styles.container}>
-			<Dimmer active inverted>
+			<Dimmer active inverted className={styles.bodyColor}>
 				<Loader size="large" inverted>
 					{t('loading')}
 				</Loader>

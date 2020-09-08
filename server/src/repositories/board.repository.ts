@@ -16,7 +16,7 @@ export class BoardRepository extends Repository<Board> {
 				await this.createQueryBuilder('board')
 					.innerJoin('board.createdBy', 'user')
 					.leftJoinAndSelect('board.projects', 'projects')
-					.addSelect(['user.id', 'user.firstName', 'user.lastName', 'user.avatar'])
+					.addSelect(['user.id', 'user.firstName', 'user.lastName', 'user.avatar', 'user.color'])
 					.getMany()
 			))
 		);
@@ -27,7 +27,7 @@ export class BoardRepository extends Repository<Board> {
 	getRecent = (): Promise<IReducedBoard[]> => {
 		const boards = this.createQueryBuilder('board')
 			.select(['board.id', 'board.name'])
-			.orderBy('board.createdAt', 'DESC')
+			.orderBy('board.updatedAt', 'DESC')
 			.getMany();
 
 		return boards;
@@ -40,7 +40,7 @@ export class BoardRepository extends Repository<Board> {
 					.where('board.id = :id', { id })
 					.innerJoin('board.createdBy', 'user')
 					.leftJoinAndSelect('board.projects', 'projects')
-					.addSelect(['user.id', 'user.firstName', 'user.lastName', 'user.avatar'])
+					.addSelect(['user.id', 'user.firstName', 'user.lastName', 'user.avatar', 'user.color'])
 					.getOne()
 			))
 		);

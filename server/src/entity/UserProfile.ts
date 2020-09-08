@@ -53,6 +53,9 @@ export class UserProfile {
 	@MinLength(6)
 	password?: string;
 
+	@Column({ nullable: true })
+	color?: string;
+
 	@OneToMany((type) => Board, (board) => board.createdBy)
 	boards?: Board[];
 

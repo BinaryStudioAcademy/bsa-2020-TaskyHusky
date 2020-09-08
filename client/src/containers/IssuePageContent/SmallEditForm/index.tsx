@@ -45,7 +45,7 @@ const SmallEditForm: React.FC<Props> = ({ links: givenLinks, attachments: givenA
 	return (
 		<Form style={{ marginBottom: 20 }}>
 			<Form.Field>
-				<h5 style={{ margin: 0 }}>{t('links')}</h5>
+				<h4 style={{ margin: 0 }}>{t('links')}</h4>
 				<div style={{ marginTop: 10, marginBottom: 10 }}>
 					{givenLinks && givenLinks.length
 						? givenLinks.map((link, i) => (
@@ -65,7 +65,6 @@ const SmallEditForm: React.FC<Props> = ({ links: givenLinks, attachments: givenA
 					{t('click_here_to_add_link')}
 				</span>
 				<Modal
-					closeIcon
 					closeOnDimmerClick
 					closeOnEscape
 					open={linksModalOpened}
@@ -73,18 +72,12 @@ const SmallEditForm: React.FC<Props> = ({ links: givenLinks, attachments: givenA
 					size="small"
 				>
 					<Modal.Content>
-						<div style={{ marginRight: 40 }}>
-							<TagsInput
-								placeholder={t('add_link')}
-								tags={links}
-								onChange={(tags) => onLinksChange(tags)}
-							/>
-						</div>
+						<TagsInput placeholder={t('add_link')} tags={links} onChange={(tags) => onLinksChange(tags)} />
 					</Modal.Content>
 				</Modal>
 			</Form.Field>
 			<Form.Field>
-				<h5 style={{ margin: 0 }}>{t('attachments')}</h5>
+				<h4 style={{ margin: 0 }}>{t('attachments')}</h4>
 				<div style={{ marginTop: 10, marginBottom: 10 }}>
 					{givenAttachments && givenAttachments.length
 						? givenAttachments.map((link, i) => {
@@ -110,7 +103,6 @@ const SmallEditForm: React.FC<Props> = ({ links: givenLinks, attachments: givenA
 					{t('click_here_to_add_attachment')}
 				</span>
 				<Modal
-					closeIcon
 					closeOnDimmerClick
 					closeOnEscape
 					open={filesModalOpened}
@@ -118,14 +110,13 @@ const SmallEditForm: React.FC<Props> = ({ links: givenLinks, attachments: givenA
 					size="small"
 				>
 					<Modal.Content>
-						<div style={{ marginRight: 40 }}>
-							<IssueFileInput
-								onChange={(attachments: File[]) => onFilesChange(attachments)}
-								alreadyAttached={alreadyAttached}
-								currentFiles={attachments}
-								onDeleteAlreadyAttached={(newFiles) => onAttachmentsChange(newFiles)}
-							/>
-						</div>
+						<IssueFileInput
+							high
+							onChange={(attachments: File[]) => onFilesChange(attachments)}
+							alreadyAttached={alreadyAttached}
+							currentFiles={attachments}
+							onDeleteAlreadyAttached={(newFiles) => onAttachmentsChange(newFiles)}
+						/>
 					</Modal.Content>
 				</Modal>
 			</Form.Field>

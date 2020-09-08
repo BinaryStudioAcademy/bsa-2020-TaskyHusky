@@ -50,6 +50,9 @@ export class Projects {
 	@IsString()
 	url?: string;
 
+	@Column({ nullable: true })
+	color?: string;
+
 	@Column({ type: 'text', default: '' })
 	category?: string;
 

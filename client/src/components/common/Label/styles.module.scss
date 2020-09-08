@@ -22,4 +22,8 @@
 	word-wrap: none;
 }
 
-
+.tooltip__content {
+	max-width: 250px !important;
+	overflow-wrap: break-word;
+	overflow: auto;
+  }

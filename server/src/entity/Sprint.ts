@@ -29,7 +29,7 @@ export class Sprint {
 	@IsBoolean()
 	isCompleted!: boolean;
 
-	@OneToMany((type) => Issue, (issue) => issue.sprint, { onDelete: 'CASCADE', eager: true })
+	@OneToMany((type) => Issue, (issue) => issue.sprint, { onDelete: 'CASCADE' })
 	issues!: Issue[];
 
 	@Column({ nullable: true })

@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { BoardComponent } from '../';
-import { Link } from 'react-router-dom';
 import BoardColumn from 'containers/BoardColumn';
 import { DragDropContext, OnDragEndResponder } from 'react-beautiful-dnd';
 import styles from './styles.module.scss';
 import { extractIdFormDragDropId } from 'helpers/extractId.helper';
 import { getByKey, updateIssueByKey } from 'services/issue.service';
-import { Form, Button, Breadcrumb, Segment, Icon } from 'semantic-ui-react';
+import { Form, Breadcrumb, Segment, Icon } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 import { convertIssueResultToPartialIssue } from 'helpers/issueResultToPartialIssue';
 import CreateColumnModal from 'containers/CreateColumnModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'typings/rootState';
 import { setColumnCreated } from 'containers/BoardColumn/logic/actions';
+import Options from 'components/common/Options';
+import historyHelper from 'helpers/history.helper';
 
 const Kanban: BoardComponent = ({ board }) => {
 	const [search, setSearch] = useState<string>('');
@@ -48,7 +49,7 @@ const Kanban: BoardComponent = ({ board }) => {
 
 			return updateIssueByKey(
 				cardKey,
-				convertIssueResultToPartialIssue(issueToSend, { boardColumn: destinationId }),
+				convertIssueResultToPartialIssue(issueToSend, { boardColumn: destinationId, board: board.id }),
 			);
 		});
 	};
@@ -76,17 +77,16 @@ const Kanban: BoardComponent = ({ board }) => {
 						onChange={(event, data) => setSearch(data.value)}
 						className={styles.searchInput}
 					/>
-					<Button onClick={() => setSearch('')} className={styles.cancelBtn}>
-						{t('clear')}
-					</Button>
 				</div>
-				<Link
-					className="cancelBtn"
-					to={`/board/${board.id}/columnsSettings`}
-					style={{ paddingLeft: '10px', paddingRight: '10px' }}
-				>
-					{t('go_to_columns_settings')}
-				</Link>
+				<Options
+					config={[
+						{
+							id: '0',
+							text: t('go_to_columns_settings'),
+							onClickAction: () => historyHelper.push(`/board/${board.id}/columnsSettings`),
+						},
+					]}
+				/>
 			</div>
 			<DragDropContext onDragEnd={onDragEnd}>
 				<div className={styles.columnsFlex}>
@@ -97,16 +97,17 @@ const Kanban: BoardComponent = ({ board }) => {
 							className={styles.column}
 							column={column}
 							key={i}
+							boardId={board.id}
 						/>
 					))}
+					<CreateColumnModal boardId={board.id}>
+						<Segment className={styles.contentBtn}>
+							<Icon name="plus" />
+							{t('create_column')}
+						</Segment>
+					</CreateColumnModal>
 				</div>
 			</DragDropContext>
-			<CreateColumnModal boardId={board.id}>
-				<Segment className={styles.contentBtn}>
-					<Icon name="plus" />
-					{t('create_column')}
-				</Segment>
-			</CreateColumnModal>
 		</div>
 	);
 };

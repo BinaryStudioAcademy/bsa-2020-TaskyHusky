@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import { Image } from 'semantic-ui-react';
 import classNames from 'classnames';
-
+import { defaultAvatarBg } from 'constants/defaultColors';
 import styles from './styles.module.scss';
 import { getInitials } from 'helpers/getInitials.helper';
 
@@ -17,7 +17,9 @@ function UserAvatar({ user, small }: Props): ReactElement {
 			{user.avatar ? (
 				<Image src={user.avatar} className={avatarStyle} circular />
 			) : (
-				<span className={avatarStyle}>{getInitials(user)}</span>
+				<span className={avatarStyle} style={{ backgroundColor: user.color ?? defaultAvatarBg }}>
+					{getInitials(user)}
+				</span>
 			)}
 		</>
 	);

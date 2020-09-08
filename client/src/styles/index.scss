@@ -52,6 +52,10 @@ label {
 	}
 }
 
+.ui.selection.active.dropdown {
+	border: 1px solid $yellow !important;
+}
+
 .site-header>.menu>.item.site-logo {
 	.site-logo-text {
 		padding: 5px 10px;
@@ -106,6 +110,14 @@ label {
 	flex-wrap: wrap;
 }
 
+.standartIcon {
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	margin-left: -10px !important;
+	margin-right: 5px !important;
+}
+
 .contentBtn {
 	@include content-btn;
 }
@@ -156,7 +168,7 @@ label {
 }
 
 .textData {
-	@include text-data
+	@include text-data;
 }
 
 .standartLabel {

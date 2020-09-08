@@ -113,18 +113,17 @@ const ColumnsSettingsPage: React.FC = () => {
 									index={i}
 								/>
 							))}
-
+							<CreateColumnModal boardId={board.id}>
+								<Segment className={`${styles.createColumn} cancelBtn`}>
+									<Icon name="plus" />
+									{t('create_column')}
+								</Segment>
+							</CreateColumnModal>
 							{provided.placeholder}
 						</div>
 					)}
 				</Droppable>
 			</DragDropContext>
-			<CreateColumnModal boardId={board.id}>
-				<Segment className={`${styles.createColumn} cancelBtn`}>
-					<Icon name="plus" />
-					{t('create_column')}
-				</Segment>
-			</CreateColumnModal>
 		</div>
 	);
 };

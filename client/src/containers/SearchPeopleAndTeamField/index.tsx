@@ -57,8 +57,17 @@ const SearchField: React.FC = (): ReactElement => {
 
 	const resultRender = (value: any): React.ReactElement => {
 		if ((value.data as WebApi.Entities.UserProfile).firstName) {
-			const { firstName, lastName, id, email, avatar } = value.data as WebApi.Entities.UserProfile;
-			return <ResultPeople id={id} firstName={firstName} lastName={lastName} email={email} avatar={avatar} />;
+			const { firstName, lastName, id, email, avatar, color } = value.data as WebApi.Entities.UserProfile;
+			return (
+				<ResultPeople
+					id={id}
+					firstName={firstName}
+					lastName={lastName}
+					email={email}
+					avatar={avatar}
+					color={color}
+				/>
+			);
 		}
 
 		const team = value.data as WebApi.Entities.Team;

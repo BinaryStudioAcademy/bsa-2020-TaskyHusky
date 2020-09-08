@@ -1,4 +1,4 @@
-import { MinLength, IsEmail, IsNotEmpty, Length, IsLowercase, Matches } from 'class-validator';
+import { MinLength, IsEmail, IsNotEmpty, Length, IsLowercase, IsString, Matches } from 'class-validator';
 import { Expose } from 'class-transformer';
 import { jobTitle } from '../models/User';
 
@@ -66,4 +66,8 @@ export class UserProfile {
 
 	@Expose()
 	teams?: string[];
+
+	@Expose()
+	@IsString()
+	color?: string;
 }

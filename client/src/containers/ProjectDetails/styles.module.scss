@@ -1,7 +1,7 @@
-@import 'styles/variables.scss';
+@import 'styles/mixins.scss';
 
 .header_inner__container {
-    padding: 10px 0px 20px ;
+    padding: 10px 0px 20px;
     position: relative;
 }
 
@@ -15,6 +15,7 @@
     font-size: 24px;
     margin: 0;
 }
+
 .body_inner__container {
     position: relative;
 }
@@ -27,13 +28,14 @@
 
 .fix_start_after_input {
     &::after {
-        content: ''!important;
+        content: '' !important;
     }
 }
 
 .form__input {
     @extend .fix_start_after_input;
     width: 250px;
+    @include input;
 }
 
 input,
@@ -43,7 +45,7 @@ textarea {
     }
 }
 
-.form__input_key{
+.form__input_key {
     @extend .fix_start_after_input;
     width: 125px;
 }
@@ -80,6 +82,7 @@ textarea {
     display: flex;
     align-items: baseline;
     position: relative;
+    @include input;
 }
 
 .information__icon {
@@ -92,9 +95,15 @@ textarea {
 
 .form__input_select {
     width: 100% !important;
-    &:focus {
-        border: 1px solid $yellow !important;
+
+    &>div {
+        @include dropdown;
     }
+
+
+    // &:focus {
+    //     border: 1px solid $yellow !important;
+    // }
 }
 
 .icons__container {
@@ -120,7 +129,7 @@ textarea {
     padding: 3px;
     margin: 3px auto;
     padding-bottom: 0;
-    border:none;
+    border: none;
     background-color: transparent;
     border: 3px solid transparent;
     border-radius: 3px;
@@ -131,3 +140,6 @@ textarea {
     }
 }
 
+.action_button {
+    margin-right: 15px !important;
+}

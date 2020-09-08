@@ -17,8 +17,6 @@
 	}
 }
 
-
-
 .wrapper__title {
 	display: flex;
 	justify-content: space-between;
@@ -84,6 +82,7 @@
 	display: flex;
 	flex-direction: row;
 	align-items: center;
+	@include text-data;
 }
 
 .settings__cell {
@@ -97,11 +96,10 @@
 
 .project__name {
 	margin-right: 7px;
-	@include text-data;
 }
 
 .column__name {
-	width: 30%
+	width: 30%;
 }
 
 .project__img {

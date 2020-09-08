@@ -23,7 +23,6 @@ interface Props {
 	projectID?: string;
 	onClose?: (data: WebApi.Issue.PartialIssue) => void;
 	projects: WebApi.Entities.Projects[];
-	projectsLoading: boolean;
 	users: WebApi.Entities.UserProfile[];
 	statuses: WebApi.Entities.IssueStatus[];
 }
@@ -40,7 +39,6 @@ const CreateIssueModalBody: React.FC<Props> = ({
 	issueTypes,
 	priorities,
 	projects,
-	projectsLoading,
 	boardColumnID,
 	onClose,
 	projectID,
@@ -99,11 +97,13 @@ const CreateIssueModalBody: React.FC<Props> = ({
 		text: <Label style={{ backgroundColor: label.backgroundColor, color: label.textColor }}>{label.text}</Label>,
 	}));
 
-	const projectsOpts: SelectOption[] = projects.map((project) => ({
-		key: project.id,
-		value: project.id,
-		text: project.name,
-	}));
+	const projectsOpts: SelectOption[] = projects
+		.filter((p) => (boardID ? p.boards?.find((b) => b.id === boardID) : true))
+		.map((project) => ({
+			key: project.id,
+			value: project.id,
+			text: project.name,
+		}));
 
 	const usersOpts: SelectOption[] = users.map((user) => ({
 		key: user.id,
@@ -172,11 +172,6 @@ const CreateIssueModalBody: React.FC<Props> = ({
 		// Can't do it without any
 		Object.keys(context.data).forEach((key) => context.set(key as any, (initialState as any)[key]));
 	};
-
-	//comment cause it makes second spinner in header
-	// if (projectsLoading) {
-	// 	return <Spinner />;
-	// }
 
 	return (
 		<Modal
@@ -298,11 +293,12 @@ const CreateIssueModalBody: React.FC<Props> = ({
 						<label className="standartLabel">{t('description')}</label>
 						<Form.TextArea
 							className="standartInput"
+							style={{ resize: 'none' }}
+							rows={4}
 							placeholder={t('description')}
 							onChange={(event, data) =>
 								data ? context.set('description', data.value as string) : context.set('description', '')
 							}
-							rows={10}
 						/>
 					</Form.Field>
 				</Form>
@@ -326,7 +322,6 @@ const mapStateToProps = (state: RootState) => ({
 	priorities: state.issues.priorities,
 	statuses: state.issues.statuses,
 	projects: state.projects.projects,
-	projectsLoading: state.projects.isLoading,
 	users: state.users.users,
 });
 

@@ -112,7 +112,7 @@ const ProjectsTable = ({ projects, currentUser }: Props) => {
 							<Table.Cell className={styles.project__lead_wrapper}>
 								<span className={styles.project__lead_container}>
 									<UserAvatar user={lead} small />
-									<span className="textData"> {getUsername(lead)} </span>
+									<span>{getUsername(lead)} </span>
 								</span>
 							</Table.Cell>
 							<Table.Cell className={styles.table__column_options}>

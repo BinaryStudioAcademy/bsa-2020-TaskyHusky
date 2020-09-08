@@ -4,6 +4,7 @@ import { Draggable } from 'react-beautiful-dnd';
 import styles from './styles.module.scss';
 import { Redirect } from 'react-router-dom';
 import { getUsername } from 'helpers/getUsername.helper';
+import UserAvatar from 'components/common/UserAvatar';
 
 interface BaseEvent {
 	id: string;
@@ -65,21 +66,22 @@ const IssueCard: React.FC<Props> = ({ issue, index, noDrag, noRedirect, selectab
 			{redirecting ? <Redirect to={`/issue/${issue.issueKey}`} /> : ''}
 			<Header>{issue.summary}</Header>
 			<div className={styles.inlineContainer}>
-				<Icon
-					className={styles.right}
-					name={issue.type.icon as any}
-					color={issue.type.color as any}
-					title={issue.type.title}
-				/>
-				<Icon
-					className={styles.right}
-					name={issue.priority.icon as any}
-					color={issue.priority.color as any}
-					title={issue.priority.title}
-				/>
-				<div className={styles.left}>
-					<span className={styles.meta}>{getUsername(issue.creator)}</span>
+				<div>
+					<Icon name={issue.type.icon as any} color={issue.type.color as any} title={issue.type.title} />
+					<Icon
+						name={issue.priority.icon as any}
+						color={issue.priority.color as any}
+						title={issue.priority.title}
+					/>
 				</div>
+				{issue.assigned ? (
+					<div className={styles.meta}>
+						<UserAvatar user={issue.assigned} small />
+						{getUsername(issue.assigned)}
+					</div>
+				) : (
+					''
+				)}
 			</div>
 		</Segment>
 	);

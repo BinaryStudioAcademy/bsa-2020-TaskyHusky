@@ -15,7 +15,7 @@ type Props = {
 	isActive: boolean;
 	isCompleted: boolean;
 	name: string;
-	issues: WebApi.Result.IssueResult[];
+	issues: WebApi.Entities.Issue[];
 	endDate: Date | undefined;
 	startDate: Date | undefined;
 };

@@ -15,6 +15,7 @@ import DeleteIssueModal from 'containers/DeleteIssueModal';
 import { Redirect } from 'react-router-dom';
 import Options from 'components/common/Options';
 import { setIssueActions } from './config/issueActions';
+import UserAvatar from 'components/common/UserAvatar';
 
 interface Props {
 	issue: WebApi.Result.IssueResult;
@@ -134,18 +135,26 @@ const IssuePageInfoColumn: React.FC<Props> = ({ issue: givenIssue, initialIssue,
 				)}
 				<h4>{t('assigned_by')}</h4>
 				{issue.assigned ? (
-					<a href={`/profile/${issue.assigned.id}`} target="_blank" rel="noopener noreferrer">
-						{getUsername(issue.assigned)}
-					</a>
+					<div style={{ display: 'flex', alignItems: 'center' }}>
+						<UserAvatar user={issue.assigned} small />
+						<a href={`/profile/${issue.assigned.id}`} target="_blank" rel="noopener noreferrer">
+							{getUsername(issue.assigned)}
+						</a>
+					</div>
 				) : (
 					t('no')
 				)}
 				<h4>{t('reported_by')}</h4>
-				<a rel="noopener noreferrer" target="_blank" href={`/profile/${issue.creator.id}`}>
-					{getUsername(issue.creator)}
-				</a>
+				<div style={{ display: 'flex', alignItems: 'center' }}>
+					<UserAvatar user={issue.creator} small />
+					<a rel="noopener noreferrer" target="_blank" href={`/profile/${issue.creator.id}`}>
+						{getUsername(issue.creator)}
+					</a>
+				</div>
 				<h4>{t('sprint')}</h4>
 				{issue.sprint ? issue.sprint.sprintName : t('no')}
+				<h4>{t('column')}</h4>
+				{issue.boardColumn ? issue.boardColumn.columnName : t('no')}
 				{asCardInfo ? (
 					<>
 						<h4>{t('links')}</h4>

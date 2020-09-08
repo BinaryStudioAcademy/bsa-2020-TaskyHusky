@@ -1,5 +1,6 @@
 import { EntityRepository, Repository, getRepository } from 'typeorm';
 import { Projects } from '../entity/Projects';
+import { getRandomColor } from '../services/colorGenerator.service';
 
 @EntityRepository(Projects)
 export class ProjectsRepository extends Repository<Projects> {
@@ -61,9 +62,19 @@ export class ProjectsRepository extends Repository<Projects> {
 			.getMany();
 	}
 
+	getRecentProjects(userId: string, limit: number = 5): Promise<Projects[]> {
+		return getRepository(Projects)
+			.createQueryBuilder('project')
+			.leftJoin('project.users', 'users')
+			.where('users.id = :id', { id: userId })
+			.orderBy('project.updatedDate', 'DESC')
+			.limit(limit)
+			.getMany();
+	}
+
 	createOne(data: Projects) {
 		const entity = this.create(data);
-		return this.save(entity);
+		return this.save({ color: getRandomColor(), ...entity });
 	}
 
 	updateOne(data: Projects) {

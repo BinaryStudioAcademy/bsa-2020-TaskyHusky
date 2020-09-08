@@ -3,7 +3,6 @@
 .avatar {
   min-width: 50px;
   height: 50px;
-  background: #FF4C60;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -35,6 +34,13 @@
   margin-left: 30px;
 }
 
+.img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
 .mainInfo {
   display: flex;
   align-items: center;
@@ -49,18 +55,17 @@
 .date {
   @include secondary-content;
   margin: 0;
+  margin-left: 47px;
 }
 
 .summary {
   width: 70%;
   margin-bottom: 0;
-  margin-left: 35px;
   @include primary-content;
 }
 
 .icon {
-  margin-right: 29px !important;
-  margin-left: 30px !important;
+  margin: 0px 5px 9px 5px !important;
 }
 
 @media screen and (max-width: $less-than-medium-screen) {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Segment, Header, Button, Icon } from 'semantic-ui-react';
+import { Segment, Header, Icon } from 'semantic-ui-react';
 import { Droppable, OnDragEndResponder } from 'react-beautiful-dnd';
 import CreateIssueModal from 'containers/CreateIssueModal';
 import { getByColumnId, getByKey } from 'services/issue.service';
@@ -10,13 +10,14 @@ import styles from './styles.module.scss';
 import { useIO } from 'hooks/useIO';
 
 interface Props {
+	boardId: string;
 	column: WebApi.Result.BoardColumnResult;
 	className: string;
 	search: string;
 	getOnDragEndFunc: (id: string, responder: OnDragEndResponder) => void;
 }
 
-const BoardColumn: React.FC<Props> = ({ column, className, search, getOnDragEndFunc }) => {
+const BoardColumn: React.FC<Props> = ({ column, className, search, boardId, getOnDragEndFunc }) => {
 	const [issues, setIssues] = useState<WebApi.Result.IssueResult[]>([]);
 	const [issuesFetched, setIssuesFetched] = useState<boolean>(false);
 	const { t } = useTranslation();
@@ -112,16 +113,15 @@ const BoardColumn: React.FC<Props> = ({ column, className, search, getOnDragEndF
 							<Header as="h3" className={styles.columnHeader}>
 								{column.columnName}
 							</Header>
-							<CreateIssueModal boardColumnID={column.id}>
-								<Button className={styles.contentBtn} style={{ whiteSpace: 'nowrap' }}>
-									<Icon name="plus circle" />
-									{t('create_issue')}
-								</Button>
-							</CreateIssueModal>
 						</div>
 						<div style={{ clear: 'both' }} />
 						<div style={{ marginTop: 10 }}>
-							<div ref={provided.innerRef} {...provided.droppableProps} className={styles.issueWrapper}>
+							<div
+								ref={provided.innerRef}
+								{...provided.droppableProps}
+								className={styles.issueWrapper}
+								style={{ minHeight: 10 }}
+							>
 								{displayIssues.length > 0
 									? displayIssues.map((issue, i) => (
 											<IssueCard issue={issue} index={i} key={issue.issueKey} />
@@ -129,6 +129,12 @@ const BoardColumn: React.FC<Props> = ({ column, className, search, getOnDragEndF
 									: ''}
 								{provided.placeholder}
 							</div>
+							<CreateIssueModal boardColumnID={column.id} boardID={boardId}>
+								<button className={styles.createBtn}>
+									<Icon name="plus circle" />
+									{t('create_issue')}
+								</button>
+							</CreateIssueModal>
 						</div>
 					</Segment>
 				)}

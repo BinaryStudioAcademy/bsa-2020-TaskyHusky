@@ -234,6 +234,7 @@ namespace WebApi.User {
 		password?: string;
 		lastName?: string;
 		firstName?: string;
+		color: string;
 		username?: string;
 		avatar?: string;
 		location?: string;
@@ -380,6 +381,7 @@ namespace WebApi.Entities {
 		description?: string;
 		icon: string;
 		url?: string;
+		color?: string;
 		category?: string;
 		sprints?: Sprint[];
 		boards?: Board[];
@@ -433,6 +435,7 @@ namespace WebApi.Entities {
 		jobTitle?: string;
 		userSettingsId?: string;
 		password?: string;
+		color?: string;
 		boards?: Board[];
 		public resetPasswordToken?: string | null;
 		public resetPasswordExpires?: Date | null;
