@@ -1,0 +1,140 @@
+@import '../../styles/variables.scss';
+
+:global(#root) {
+	.menuWrapper > * {
+		color: $primary-bg;
+		padding: 7px 13px;
+	}
+
+	.menuWrapper {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+
+		&:after {
+			content: '' !important;
+			display: none;
+		}
+	}
+
+	.segmentWrapper {
+		padding: 10px 22px 10px 17px;
+		border-radius: 0;
+		width: 100%;
+		min-width: 700px !important;
+		position: sticky;
+		top: 0;
+		left: 0;
+		margin: 0 !important;
+		z-index: 1000;
+		box-shadow: 0 3px 2px 0 #0003;
+		@media (max-width: 660px) {
+			& * {
+				flex-shrink: 1 !important;
+			}
+		}
+	}
+
+	.logoItem {
+		padding: 0;
+
+		&:hover {
+			background: none;
+		}
+	}
+
+	.logoImage {
+		width: 45px;
+	}
+
+	.logoText {
+		margin: 0 50px 0 10px;
+		font-weight: 900;
+		font-size: 26px;
+	}
+}
+
+.link_login {
+	height: 41px !important;
+	padding-right: 20px !important;
+	padding-left: 20px !important;
+}
+
+.main__container {
+	overflow: auto;
+	height: calc(100vh - 77px);
+}
+
+.main__content {
+	margin: 0px 10%;
+	
+	@media screen and (max-width: 1360px) {
+		margin: 0px 5%;
+		
+	}
+}
+
+.content__block_wrapper {
+	padding: 40px 10px ;
+}
+
+.content__block {
+	display: flex;
+	align-items: center;
+}
+
+.content__title, 
+.content__block_description {
+	flex: 1 0 40%;
+	padding: 10px;
+}
+
+.content__block_title {
+	align-items: center;
+}
+
+.content__title {
+	text-align: center;
+	font-size: calc(12px + 1.5vw);
+}
+
+.content__image {
+	max-width: 100%;
+	border-radius: 5px;
+	box-shadow: 2px 1px 8px 0px black;
+}
+
+.content__image_wrapper {
+	padding: 10px;
+}
+
+.content__intro {
+	max-width: 70%;
+	margin: 0 auto;
+}
+
+.content__intro_title,
+.content__intro_description {
+	text-align: center;
+}
+
+.content__intro_title {
+	font-size: calc(12px + 1.2vw);
+}
+
+.content__intro_description {
+	font-size: calc(12px + 0.7vw);
+}
+
+.description:not(:last-child) {
+	margin-bottom: 10%;
+}
+
+.description__title {
+	font-size: calc(12px + 0.9vw);
+}
+
+.description__content {
+	font-size: calc(12px + 0.6vw);
+	margin-bottom: 10px;
+}
