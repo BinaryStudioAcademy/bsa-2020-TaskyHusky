@@ -74,7 +74,7 @@ export class Issue1597334747593 implements MigrationInterface {
 		issue1.description = 'Places new and ladies, too, I’m B.J. McKay and this is my best friend Bear. ';
 		issue1.creator = user2;
 		issue1.assigned = user1;
-		issue1.labels = '{label}';
+		// issue1.labels = '{label}';
 		issue1.attachments = '{attachments}';
 		issue1.links = '{link/toSpace}';
 		issue1.issueKey = 'IK-1';
@@ -92,7 +92,7 @@ export class Issue1597334747593 implements MigrationInterface {
 			'New dreams and better scenes, and best of all I don’t pay property tax. Rollin’ down to Dallas, who’s providin’ my palace, off to New Orleans or who knows where.';
 		issue2.creator = user1;
 		issue2.assigned = user2;
-		issue2.labels = '{label}';
+		// issue2.labels = '{label}';
 		issue2.attachments = '{attachments2}';
 		issue2.links = '{link/toSpace}';
 		issue2.issueKey = 'IK-2';
@@ -111,7 +111,7 @@ export class Issue1597334747593 implements MigrationInterface {
 			'He’s goin’ everywhere, B.J. McKay and his best friend Bear. He just keeps on movin’, ladies keep improvin’, every day is better than the last.';
 		issue3.creator = user2;
 		issue3.assigned = user2;
-		issue3.labels = '{label}';
+		// issue3.labels = '{label}';
 		issue3.attachments = '{attachments2}';
 		issue3.links = '{link/toSpace}';
 		issue3.issueKey = 'IK-3';
@@ -131,7 +131,7 @@ export class Issue1597334747593 implements MigrationInterface {
 			'Hey there where ya goin’, not exactly knowin’, who says you have to call just one place home. ';
 		issue4.creator = user1;
 		issue4.assigned = user1;
-		issue4.labels = '{label}';
+		// issue4.labels = '{label}';
 		issue4.attachments = '{attachments4}';
 		issue4.links = '{link/toSpace}';
 		issue4.issueKey = 'IK-4';
@@ -151,7 +151,7 @@ export class Issue1597334747593 implements MigrationInterface {
 			'So, stop that pigeon, stop that pigeon, stop that pigeon, stop that pigeon, stop that pigeon, stop that pigeon, stop that pigeon. Howwww! Nab him, jab him, tab him, grab him, stop that pigeon now.';
 		issue5.creator = user2;
 		issue5.assigned = user1;
-		issue5.labels = '{label}';
+		// issue5.labels = '{label}';
 		issue5.attachments = '{attachments4}';
 		issue5.links = '{link/toSpace}';
 		issue5.issueKey = 'IK-5';
@@ -171,7 +171,7 @@ export class Issue1597334747593 implements MigrationInterface {
 			'Those medals you wear on your moth-eaten chest should be there for bungling at which you are best.';
 		issue6.creator = user2;
 		issue6.assigned = user1;
-		issue6.labels = '{label}';
+		// issue6.labels = '{label}';
 		issue6.attachments = '{attachments4}';
 		issue6.links = '{link/toSpace}';
 		issue6.issueKey = 'IK-6';
@@ -190,7 +190,7 @@ export class Issue1597334747593 implements MigrationInterface {
 		issue7.description = 'Mutley, you snickering, floppy eared hound. When courage is needed, you’re never around.';
 		issue7.creator = user2;
 		issue7.assigned = user2;
-		issue7.labels = '{label}';
+		// issue7.labels = '{label}';
 		issue7.attachments = '{attachments4}';
 		issue7.links = '{link/toSpace}';
 		issue7.issueKey = 'IK-7';
@@ -210,7 +210,7 @@ export class Issue1597334747593 implements MigrationInterface {
 			'Can’t stay for long, just turn around and I’m gone again. Maybe tomorrow, I’ll want to settle down, Until tomorrow, I’ll just keep moving on.';
 		issue8.creator = user1;
 		issue8.assigned = user2;
-		issue8.labels = '{label}';
+		// issue8.labels = '{label}';
 		issue8.attachments = '{attachments4}';
 		issue8.links = '{link/toSpace}';
 		issue8.issueKey = 'IK-8';
@@ -230,7 +230,7 @@ export class Issue1597334747593 implements MigrationInterface {
 			'There’s a voice that keeps on calling me. Down the road, that’s where I’ll always be. Every stop I make, I make a new friend.';
 		issue9.creator = user1;
 		issue9.assigned = user1;
-		issue9.labels = '{label}';
+		// issue9.labels = '{label}';
 		issue9.attachments = '{attachments4}';
 		issue9.links = '{link/toSpace}';
 		issue9.issueKey = 'IK-9';

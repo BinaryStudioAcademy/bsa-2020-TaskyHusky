@@ -31,7 +31,13 @@ export class UserProfile {
 	department?: string;
 
 	@Column({ nullable: true })
-	location?: string;
+	address?: string;
+
+	@Column({ nullable: true, type: 'float8' })
+	lat?: number;
+
+	@Column({ nullable: true, type: 'float8' })
+	lng?: number;
 
 	@Column({ nullable: true })
 	organization?: string;

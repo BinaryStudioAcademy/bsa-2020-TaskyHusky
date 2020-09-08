@@ -20,7 +20,7 @@ export interface User {
 	firstName: string;
 	lastName: string;
 	avatar: string;
-	location?: string;
+	address?: string;
 	department?: string;
 	jobTitle?: string;
 	color?: string;

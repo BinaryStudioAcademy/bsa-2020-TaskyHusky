@@ -6,12 +6,15 @@ export interface UserProfileState {
 	username: string;
 	avatar: string;
 	department: string;
-	location: string;
+	address: string;
+	lat: number;
+	lng: number;
 	organization: string;
 	jobTitle: string;
 	userSettingsId?: string;
 	color: string;
 	isLoading: boolean;
+	googleId: string;
 }
 
 export const initialState: UserProfileState = {
@@ -22,10 +25,13 @@ export const initialState: UserProfileState = {
 	username: '',
 	avatar: '',
 	department: '',
-	location: '',
+	address: '',
+	lat: 0,
+	lng: 0,
 	organization: '',
 	jobTitle: '',
 	userSettingsId: '',
 	isLoading: true,
 	color: '',
+	googleId: '',
 };

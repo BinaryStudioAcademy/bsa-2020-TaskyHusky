@@ -1,0 +1,30 @@
+@import 'styles/mixins.scss';
+
+.input {
+  @include input;
+  box-sizing: border-box;
+  width: 240px !important;
+  text-overflow: ellipses;
+  position: absolute;
+  left: 50%;
+  margin-left: -120px !important;
+  margin-top: 10px !important;
+}
+
+.btnLink {
+  @include text-data;
+  background-color: $primary-bg !important;
+  border: none !important;
+  color: #2185d0 !important;
+  display: block !important;
+  margin: 0 0 25px !important;
+  padding: 0 !important;
+}
+
+.popup {
+  margin: 10px;
+}
+
+.noneMargin {
+  margin: 0 !important;
+}

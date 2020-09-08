@@ -236,7 +236,9 @@ namespace WebApi.User {
 		color: string;
 		username?: string;
 		avatar?: string;
-		location?: string;
+		address?: string;
+		lat?: number;
+		lng?: number;
 		department?: string;
 		organization?: string;
 		jobTitle?: jobTitle;
@@ -259,6 +261,7 @@ namespace WebApi.Entities {
 		issues?: Issue[];
 		createdBy: UserProfile;
 		createdAt: Date;
+		updatedAt: Date;
 		projects?: Projects[];
 	}
 
@@ -278,6 +281,7 @@ namespace WebApi.Entities {
 		filterParts?: FilterPart[];
 		name: string;
 		staredBy?: UserProfile[];
+		updatedAt: Date;
 	}
 
 	interface FilterDefinition {
@@ -427,7 +431,9 @@ namespace WebApi.Entities {
 		username?: string;
 		avatar?: string;
 		department?: string;
-		location?: string;
+		address?: string;
+		lat?: number;
+		lng?: number;
 		organization?: string;
 		email: string;
 		jobTitle?: string;

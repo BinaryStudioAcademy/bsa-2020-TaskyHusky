@@ -12,6 +12,7 @@ interface Props {
 	onBlur?: (event: ChangeEvent<HTMLInputElement>) => void;
 	handleChange: (event: any) => void;
 	errorText?: string;
+	disabled?: boolean;
 }
 
 const SubmitedInput: React.FC<Props> = (props: Props) => {
@@ -25,6 +26,7 @@ const SubmitedInput: React.FC<Props> = (props: Props) => {
 		isValid = true,
 		onBlur = null,
 		errorText = '',
+		disabled = false,
 	} = props;
 	const [shown, setShown] = useState<boolean>(false);
 	const [inputType, setInputType] = useState<string>(type);
@@ -52,6 +54,7 @@ const SubmitedInput: React.FC<Props> = (props: Props) => {
 						type={inputType}
 						name={propKey}
 						value={text}
+						disabled={disabled}
 						placeholder={placeholder}
 						onChange={(event) => handleChange(event)}
 						error={isValid || !text ? false : true}

@@ -147,7 +147,7 @@ export const en = {
 	placeholder_firstname: 'Your firstname',
 	placeholder_lastname: 'Your lastname',
 	placeholder_job: 'Your job title',
-	placeholder_location: 'Your location',
+	placeholder_location: 'Your location is',
 	placeholder_department: 'Your department',
 	placeholder_organization: 'Your organization',
 	security: 'Security',
@@ -471,4 +471,9 @@ export const en = {
 	click_here_to_add_attachment: 'Click here to add attachment...',
 	no_more_labels: 'No more labels. TIP: You must select project to access labels',
 	column: 'Column',
+	you_current_location: 'Your current location is ',
+	you_have_not_specify_location: 'You have not specify your location yet',
+	choose_your_location: 'Choose your location here',
+	apply_current_location: 'Go to current location',
+	apply_this_location: 'Apply this location',
 };

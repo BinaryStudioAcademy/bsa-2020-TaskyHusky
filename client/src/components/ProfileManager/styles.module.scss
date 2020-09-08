@@ -6,6 +6,21 @@
   flex-direction: column;
 }
 
+.labelLocation {
+  @include label;
+  margin: 25px 0 !important;
+}
+
+.btnLink {
+  @include text-data;
+  background-color: $primary-bg !important;
+  border: none !important;
+  color: #2185d0 !important;
+  display: block !important;
+  margin: 0 0 25px !important;
+  padding: 0 !important;
+}
+
 .card {
   @include card-container;
 }
