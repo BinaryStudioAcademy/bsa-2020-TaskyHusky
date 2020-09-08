@@ -15,7 +15,5 @@ export const useIO = (type: WebApi.IO.Types, handle: (io: SocketIOClient.Socket)
 			io.removeAllListeners();
 			handle(io);
 		}
-
-		return () => void io?.disconnect();
 	}, [type, handle, io]);
 };
