@@ -71,7 +71,7 @@ const SaveFilterModal = () => {
 									open={!isNameValid && isNameChanged}
 									content={t('min4_max40_length_message')}
 									trigger={
-										<>
+										<div>
 											<label className="standartLabel">{t('filter_name')}</label>
 											<Form.Input
 												onChange={onNameChanged}
@@ -85,7 +85,7 @@ const SaveFilterModal = () => {
 													setIsNameValid(validateFilterName(name.trim()));
 												}}
 											/>
-										</>
+										</div>
 									}
 								/>
 							</Form.Field>
