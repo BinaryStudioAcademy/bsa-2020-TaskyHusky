@@ -28,7 +28,7 @@ const ProjectCard: React.FC<Props> = (props: Props) => {
 	const undoneIssues = myIssues.length - doneIssues;
 	return (
 		<div className={styles.card}>
-			<Link to={`project/${id}`}>
+			<Link to={`project/${id}/issues`} className={styles.linkContainer}>
 				<div className={styles.header}>
 					<div className={styles.avatar} style={{ backgroundColor: color ?? defaultAvatarBg }}>
 						{icon ? (

@@ -4,7 +4,7 @@ import Elastic from '../services/elasticsearch.service';
 
 export class ElasticSearchIssue1598364447117 implements MigrationInterface {
 	public async up(queryRunner: QueryRunner): Promise<void> {
-		const issues = await getCustomRepository(IssueRepository).findAll();
+		const issues = await getCustomRepository(IssueRepository).findAll({});
 		const elastic = new Elastic('issue');
 		await elastic.deleteIndexIfExist('issue');
 		await elastic.createIndexIfNotExist('issue');

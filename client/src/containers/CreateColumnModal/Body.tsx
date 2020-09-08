@@ -74,7 +74,7 @@ const Body: React.FC<Props> = ({ boardId, children, onClose = () => {} }) => {
 			open={isModalOpened}
 		>
 			<Modal.Header className="standartHeader">{t('create_column')}</Modal.Header>
-			<Modal.Content scrolling>
+			<Modal.Content scrolling style={{ minHeight: 277 }}>
 				<Form as="div">
 					<Form.Field>
 						<label className="required standartLabel">{t('status')}</label>

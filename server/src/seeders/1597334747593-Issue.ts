@@ -252,7 +252,7 @@ export class Issue1597334747593 implements MigrationInterface {
 			'Mutley, you snickering, floppy eared hound. When courage is needed, you’re never around.';
 		issue10.creator = user2;
 		issue10.assigned = user2;
-		issue10.labels = '{label}';
+		// issue10.labels = '{label}';
 		issue10.attachments = '{attachments4}';
 		issue10.links = '{link/toSpace}';
 		issue10.issueKey = 'IK-10';
@@ -274,7 +274,7 @@ export class Issue1597334747593 implements MigrationInterface {
 			'Mutley, you snickering, floppy eared hound. When courage is needed, you’re never around.';
 		issue11.creator = user2;
 		issue11.assigned = user2;
-		issue11.labels = '{label}';
+		// issue11.labels = '{label}';
 		issue11.attachments = '{attachments4}';
 		issue11.links = '{link/toSpace}';
 		issue11.issueKey = 'IK-11';
@@ -296,7 +296,7 @@ export class Issue1597334747593 implements MigrationInterface {
 			'Mutley, you snickering, floppy eared hound. When courage is needed, you’re never around.';
 		issue12.creator = user2;
 		issue12.assigned = user2;
-		issue12.labels = '{label}';
+		// issue12.labels = '{label}';
 		issue12.attachments = '{attachments4}';
 		issue12.links = '{link/toSpace}';
 		issue12.issueKey = 'IK-12';
@@ -318,7 +318,7 @@ export class Issue1597334747593 implements MigrationInterface {
 			'Mutley, you snickering, floppy eared hound. When courage is needed, you’re never around.';
 		issue13.creator = user2;
 		issue13.assigned = user2;
-		issue13.labels = '{label}';
+		// issue13.labels = '{label}';
 		issue13.attachments = '{attachments4}';
 		issue13.links = '{link/toSpace}';
 		issue13.issueKey = 'IK-13';
