@@ -15,10 +15,14 @@ import { setColumnCreated } from 'containers/BoardColumn/logic/actions';
 import Options from 'components/common/Options';
 import historyHelper from 'helpers/history.helper';
 import KanbanBoardSidebar from 'containers/KanbanBoardSidebar';
+import { SectionType } from 'containers/KanbanBoardSidebar/config/sections';
+import ProjectIssuesPage from 'containers/ProjectIssuesPage';
+import ColumnsSettingsPage from 'containers/ColumnsSettingsPage';
 
 const Kanban: BoardComponent = ({ board }) => {
 	const [search, setSearch] = useState<string>('');
 	const [columns, setColumns] = useState<WebApi.Result.BoardColumnResult[]>(board.columns);
+	const [sidebarSection, setSidebarSection] = useState<SectionType>(SectionType.board);
 	const { t } = useTranslation();
 	const dispatch = useDispatch();
 	const { columnCreated, recentlyCreatedColumn } = useSelector((state: RootState) => state.boardColumn);
@@ -55,63 +59,89 @@ const Kanban: BoardComponent = ({ board }) => {
 		});
 	};
 
-	return (
-		<div className={styles.outerContainer}>
-			<KanbanBoardSidebar onChangeSection={() => {}} project={(board.projects ?? [])[0]} />
-			<div className={styles.wrapper}>
-				<Breadcrumb className={styles.breadcrumb}>
-					<Breadcrumb.Section href="/projects">{t('projects')}</Breadcrumb.Section>
-					<Breadcrumb.Divider>&nbsp;/&nbsp;</Breadcrumb.Divider>
-					<Breadcrumb.Section href={`/project/${(board.projects ?? [])[0].id}/issues`}>
-						{(board.projects ?? [])[0].name}
-					</Breadcrumb.Section>
-					<Breadcrumb.Divider>&nbsp;/&nbsp;</Breadcrumb.Divider>
-					<Breadcrumb.Section active className={styles.active}>
-						{board.name}
-					</Breadcrumb.Section>
-				</Breadcrumb>
-				<div className={styles.headerWrapper}>
-					<div className={styles.inlineContainer}>
-						<div className="standartHeader">{board.name}</div>
-						<Form.Input
-							placeholder={t('search')}
-							icon="search"
-							value={search}
-							onChange={(event, data) => setSearch(data.value)}
-							className={styles.searchInput}
-						/>
-					</div>
-					<Options
-						config={[
-							{
-								id: '0',
-								text: t('go_to_columns_settings'),
-								onClickAction: () => historyHelper.push(`/board/${board.id}/columnsSettings`),
-							},
-						]}
+	const renderBoard = (
+		<div className={styles.wrapper}>
+			<Breadcrumb className={styles.breadcrumb}>
+				<Breadcrumb.Section href="/projects">{t('projects')}</Breadcrumb.Section>
+				<Breadcrumb.Divider>&nbsp;/&nbsp;</Breadcrumb.Divider>
+				<Breadcrumb.Section href={`/project/${(board.projects ?? [])[0].id}/issues`}>
+					{(board.projects ?? [])[0].name}
+				</Breadcrumb.Section>
+				<Breadcrumb.Divider>&nbsp;/&nbsp;</Breadcrumb.Divider>
+				<Breadcrumb.Section active className={styles.active}>
+					{board.name}
+				</Breadcrumb.Section>
+			</Breadcrumb>
+			<div className={styles.headerWrapper}>
+				<div className={styles.inlineContainer}>
+					<div className="standartHeader">{board.name}</div>
+					<Form.Input
+						placeholder={t('search')}
+						icon="search"
+						value={search}
+						onChange={(event, data) => setSearch(data.value)}
+						className={styles.searchInput}
 					/>
 				</div>
-				<DragDropContext onDragEnd={onDragEnd}>
-					<div className={styles.columnsFlex}>
-						{columns.map((column, i) => (
-							<BoardColumn
-								getOnDragEndFunc={(id, responder) => onDragEndFuncs.set(id, responder)}
-								search={search}
-								className={styles.column}
-								column={column}
-								key={i}
-								boardId={board.id}
-							/>
-						))}
-						<CreateColumnModal boardId={board.id}>
-							<Segment className={styles.contentBtn}>
-								<Icon name="plus" />
-								{t('create_column')}
-							</Segment>
-						</CreateColumnModal>
-					</div>
-				</DragDropContext>
+				<Options
+					config={[
+						{
+							id: '0',
+							text: t('go_to_columns_settings'),
+							onClickAction: () => historyHelper.push(`/board/${board.id}/columnsSettings`),
+						},
+					]}
+				/>
 			</div>
+			<DragDropContext onDragEnd={onDragEnd}>
+				<div className={styles.columnsFlex}>
+					{columns.map((column, i) => (
+						<BoardColumn
+							getOnDragEndFunc={(id, responder) => onDragEndFuncs.set(id, responder)}
+							search={search}
+							className={styles.column}
+							column={column}
+							key={i}
+							boardId={board.id}
+						/>
+					))}
+					<CreateColumnModal boardId={board.id}>
+						<Segment className={styles.contentBtn}>
+							<Icon name="plus" />
+							{t('create_column')}
+						</Segment>
+					</CreateColumnModal>
+				</div>
+			</DragDropContext>
+		</div>
+	);
+
+	const renderIssues = <ProjectIssuesPage strict projectId={(board.projects ?? [])[0].id} />;
+	const renderSettings = <ColumnsSettingsPage boardId={board.id} />;
+	let render;
+
+	switch (sidebarSection) {
+		case SectionType.board:
+			render = renderBoard;
+			break;
+		case SectionType.issues:
+			render = renderIssues;
+			break;
+		case SectionType.settings:
+			render = renderSettings;
+			break;
+		default:
+			render = renderBoard;
+	}
+
+	return (
+		<div className={styles.outerContainer}>
+			<KanbanBoardSidebar
+				onChangeSection={setSidebarSection}
+				project={(board.projects ?? [])[0]}
+				currentSection={sidebarSection}
+			/>
+			<div className={styles.render}>{render}</div>
 		</div>
 	);
 };

@@ -1,14 +1,63 @@
 @import '../../styles/variables.scss';
 
 .sidebar {
-	width: 250px;
 	background-color: #000;
 	color: white;
+	transition-property: width;
+	transition-duration: 0.5s;
+	position: relative;
+
+	* {
+		transition-property: opacity;
+		transition-duration: 0.5s;
+	}
+
+	&.expanded {
+		width: 250px;
+
+		* {
+			opacity: 1;
+		}
+	}
+
+	&.collapsed {
+		width: 30px;
+
+		*:not(.collapseIcon):not(img) {
+			opacity: 0;
+		}
+	}
+
+	.collapseIcon {
+		transition-duration: 0.2s;
+		transition-property: transform;
+		background-color: $yellow;
+		color: black;
+		padding: 5px;
+		border-radius: 50%;
+		$wh: 34px;
+		width: $wh;
+		height: $wh;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		position: absolute;
+		bottom: 90px;
+		right: -15px;
+
+		img {
+			width: 20px;
+		}
+
+		&.collapsed {
+			transform: rotateZ(180deg);
+		}
+	}
 
 	.sidebarHeader {
 		display: flex;
 		align-items: center;
-		padding: 16px 12px 0;
+		padding: 23px 24px 7px;
 
 		.projectAvatar {
 			$wh: 30px;
@@ -40,6 +89,7 @@
 		.sidebarSection {
 			padding: 10px 12px 8px;
 			border-radius: 5px;
+			cursor: pointer;
 
 			:global(.icon) {
 				margin-right: 10px;
@@ -48,10 +98,11 @@
 			.sidebarSectionContent {
 				border-bottom: 2px solid transparent;
 				font-weight: bold;
+			}
 
-				&.activeSection {
-					border-bottom: 2px solid $yellow;
-				}
+			.sidebarSectionActive {
+				@extend .sidebarSectionContent;
+				border-bottom: 2px solid $yellow;
 			}
 
 			&:hover {

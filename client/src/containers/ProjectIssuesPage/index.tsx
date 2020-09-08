@@ -7,7 +7,6 @@ import { getByKey } from 'services/issue.service';
 import Board from 'containers/Board';
 import IssuePageInfoColumn from 'components/IssuePageInfoColumn';
 import { convertIssueResultToPartialIssue } from 'helpers/issueResultToPartialIssue';
-import Spinner from 'components/common/Spinner';
 
 interface Props {
 	projectId: string;
@@ -35,7 +34,7 @@ const ProjectIssuesPage: React.FC<Props> = ({ projectId, strict }) => {
 	}, [selectedIssueKey]);
 
 	if (!project) {
-		return <Spinner />;
+		return null;
 	}
 
 	if (project.boards && project.boards.length > 0 && !strict) {

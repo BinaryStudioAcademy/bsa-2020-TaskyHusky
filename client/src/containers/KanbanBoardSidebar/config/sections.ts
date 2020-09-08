@@ -9,7 +9,6 @@ export enum SectionType {
 export interface ConfigItem {
 	icon: SemanticICONS;
 	type: SectionType;
-	defaultActive?: boolean;
 }
 
 export type Config = ConfigItem[];
@@ -22,7 +21,6 @@ const sections: Config = [
 	{
 		icon: 'flipboard',
 		type: SectionType.board,
-		defaultActive: true,
 	},
 	{
 		icon: 'clipboard check',
