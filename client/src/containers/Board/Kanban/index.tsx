@@ -19,7 +19,7 @@ import { SectionType } from 'containers/KanbanBoardSidebar/config/sections';
 import ProjectIssuesPage from 'containers/ProjectIssuesPage';
 import ColumnsSettingsPage from 'containers/ColumnsSettingsPage';
 
-const Kanban: BoardComponent = ({ board }) => {
+const Kanban: BoardComponent = ({ board, noSidebar }) => {
 	const [search, setSearch] = useState<string>('');
 	const [columns, setColumns] = useState<WebApi.Result.BoardColumnResult[]>(board.columns);
 	const [sidebarSection, setSidebarSection] = useState<SectionType>(SectionType.board);
@@ -116,7 +116,7 @@ const Kanban: BoardComponent = ({ board }) => {
 		</div>
 	);
 
-	const renderIssues = <ProjectIssuesPage strict projectId={(board.projects ?? [])[0].id} />;
+	const renderIssues = <ProjectIssuesPage strict noSidebar projectId={(board.projects ?? [])[0].id} />;
 	const renderSettings = <ColumnsSettingsPage boardId={board.id} />;
 	let render;
 
@@ -136,12 +136,16 @@ const Kanban: BoardComponent = ({ board }) => {
 
 	return (
 		<div className={styles.outerContainer}>
-			<KanbanBoardSidebar
-				onChangeSection={setSidebarSection}
-				project={(board.projects ?? [])[0]}
-				currentSection={sidebarSection}
-			/>
-			<div className={styles.render}>{render}</div>
+			{noSidebar ? (
+				''
+			) : (
+				<KanbanBoardSidebar
+					onChangeSection={setSidebarSection}
+					project={(board.projects ?? [])[0]}
+					currentSection={sidebarSection}
+				/>
+			)}
+			<div className={styles.render}>{noSidebar ? renderBoard : render}</div>
 		</div>
 	);
 };

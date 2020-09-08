@@ -7,13 +7,18 @@ import { getByKey } from 'services/issue.service';
 import Board from 'containers/Board';
 import IssuePageInfoColumn from 'components/IssuePageInfoColumn';
 import { convertIssueResultToPartialIssue } from 'helpers/issueResultToPartialIssue';
+import KanbanBoardSidebar from 'containers/KanbanBoardSidebar';
+import { SectionType } from 'containers/KanbanBoardSidebar/config/sections';
+import ColumnsSettingsPage from 'containers/ColumnsSettingsPage';
 
 interface Props {
 	projectId: string;
 	strict?: boolean;
+	noSidebar?: boolean;
 }
 
-const ProjectIssuesPage: React.FC<Props> = ({ projectId, strict }) => {
+const ProjectIssuesPage: React.FC<Props> = ({ projectId, strict, noSidebar }) => {
+	const [sidebarSection, setSidebarSection] = useState<SectionType>(SectionType.issues);
 	const [project, setProject] = useState<WebApi.Entities.Projects | null>(null);
 	const [selectedIssueKey, setSelectedIssueKey] = useState<string | null>(null);
 	const [selectedIssue, setSelectedIssue] = useState<WebApi.Result.IssueResult | null>(null);
@@ -43,8 +48,10 @@ const ProjectIssuesPage: React.FC<Props> = ({ projectId, strict }) => {
 
 	const initialIssue = selectedIssue ? convertIssueResultToPartialIssue(selectedIssue) : {};
 
-	return (
-		<main style={{ paddingTop: 20, height: '80%', marginBottom: 10, display: 'flex' }}>
+	let render;
+
+	const renderIssues = (
+		<div style={{ paddingTop: 20, height: '100%', display: 'flex' }}>
 			<div>
 				<Header style={leftPadded} as="h2">
 					{t('issues')}
@@ -87,7 +94,45 @@ const ProjectIssuesPage: React.FC<Props> = ({ projectId, strict }) => {
 					''
 				)}
 			</div>
-		</main>
+		</div>
+	);
+
+	if (project.boards && project.boards.length) {
+		const renderSettings = <ColumnsSettingsPage boardId={(project.boards ?? [])[0].id} />;
+		const renderBoard = <Board boardId={(project.boards ?? [])[0].id} noSidebar />;
+
+		switch (sidebarSection) {
+			case SectionType.issues:
+				render = renderIssues;
+				break;
+			case SectionType.board:
+				render = renderBoard;
+				break;
+			case SectionType.settings:
+				render = renderSettings;
+				break;
+			default:
+				break;
+		}
+	} else {
+		render = renderIssues;
+	}
+
+	return (
+		<div style={{ display: 'flex', height: '100%' }}>
+			{noSidebar || !project.boards || !project.boards.length ? (
+				''
+			) : (
+				<KanbanBoardSidebar
+					currentSection={sidebarSection}
+					onChangeSection={setSidebarSection}
+					project={project}
+				/>
+			)}
+			<div style={{ width: '80%' }}>
+				{noSidebar || (project.boards && project.boards.length) ? renderIssues : render}
+			</div>
+		</div>
 	);
 };
 
