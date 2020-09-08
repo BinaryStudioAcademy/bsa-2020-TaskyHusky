@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { BoardComponent } from '../';
-import { Link } from 'react-router-dom';
 import BoardColumn from 'containers/BoardColumn';
 import { DragDropContext, OnDragEndResponder } from 'react-beautiful-dnd';
 import styles from './styles.module.scss';
@@ -13,6 +12,8 @@ import CreateColumnModal from 'containers/CreateColumnModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'typings/rootState';
 import { setColumnCreated } from 'containers/BoardColumn/logic/actions';
+import Options from 'components/common/Options';
+import historyHelper from 'helpers/history.helper';
 
 const Kanban: BoardComponent = ({ board }) => {
 	const [search, setSearch] = useState<string>('');
@@ -77,9 +78,15 @@ const Kanban: BoardComponent = ({ board }) => {
 						className={styles.searchInput}
 					/>
 				</div>
-				<Link className={styles.linkSettings} to={`/board/${board.id}/columnsSettings`}>
-					{t('go_to_columns_settings')}
-				</Link>
+				<Options
+					config={[
+						{
+							id: '0',
+							text: t('go_to_columns_settings'),
+							onClickAction: () => historyHelper.push(`/board/${board.id}/columnsSettings`),
+						},
+					]}
+				/>
 			</div>
 			<DragDropContext onDragEnd={onDragEnd}>
 				<div className={styles.columnsFlex}>
