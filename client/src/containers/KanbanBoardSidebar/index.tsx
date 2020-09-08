@@ -44,7 +44,7 @@ const KanbanBoardSidebar: React.FC<Props> = ({ onChangeSection, project, current
 				className={`${styles.collapseIcon} ${expanded ? '' : styles.collapsed}`}
 				onClick={() => setExpanded(!expanded)}
 			>
-				<img src={collapseIcon} />
+				<img src={collapseIcon} alt="Collapse icon" />
 			</div>
 		</div>
 	);
