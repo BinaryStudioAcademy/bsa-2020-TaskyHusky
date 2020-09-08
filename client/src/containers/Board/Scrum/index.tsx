@@ -92,7 +92,6 @@ const Scrum: BoardComponent = (props) => {
 		setIssuesMap(matchIssuesToSprint(sprints, issues));
 	}, [sprints, issues]);
 
-	console.log(issuesMap);
 	const sprintList = !isEmpty(issuesMap) ? (
 		Object.entries(issuesMap)
 			.reverse()
