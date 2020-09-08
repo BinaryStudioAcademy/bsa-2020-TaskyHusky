@@ -6,7 +6,7 @@ import Spinner from 'components/common/Spinner';
 
 interface Props {
 	sprint?: WebApi.Entities.Sprint;
-	issues: WebApi.Result.IssueResult[];
+	issues: WebApi.Entities.Issue[];
 	boardId: string;
 }
 

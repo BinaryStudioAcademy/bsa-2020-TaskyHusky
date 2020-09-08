@@ -9,7 +9,7 @@ type Props = {
 	sprintId: string;
 	isOpen: boolean;
 	clickAction: any;
-	sprintIssues: WebApi.Result.IssueResult[];
+	sprintIssues: WebApi.Entities.Issue[];
 };
 
 const SprintModal = (props: Props) => {

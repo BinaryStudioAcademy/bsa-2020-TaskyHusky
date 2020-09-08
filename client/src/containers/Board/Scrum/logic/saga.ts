@@ -1,12 +1,13 @@
+import { updateIssueSuccess } from './../../../../pages/IssuePage/logic/actions';
 import { createIssue } from 'pages/IssuePage/logic/actions';
 import { getBoardSprints, getBoardProjects } from 'services/board.service';
-import { getSprintIssues, updateSprint, deleteSprint, createSprint } from 'services/sprint.service';
-import { getBacklogByBoardId } from 'services/issue.service';
+import { updateSprint, deleteSprint, createSprint } from 'services/sprint.service';
+import { getIssuesByBoardId } from 'services/issue.service';
 import { all, put, takeEvery, call } from 'redux-saga/effects';
 import * as actionTypes from './actionTypes';
 import * as actions from './actions';
 import { NotificationManager } from 'react-notifications';
-import { CREATE_ISSUE_SUCCESS } from 'pages/IssuePage/logic/actionTypes';
+import { CREATE_ISSUE_SUCCESS, UPDATE_ISSUE_SUCCESS } from 'pages/IssuePage/logic/actionTypes';
 
 export function* loadSprintsRequest(action: ReturnType<typeof actions.loadSprintsTrigger>) {
 	try {
@@ -31,9 +32,9 @@ export function* deleteSprintRequest(action: ReturnType<typeof actions.deleteSpr
 
 export function* loadIssuesRequest(action: ReturnType<typeof actions.loadIssuesTrigger>) {
 	try {
-		const { sprintId } = action;
-		const response: WebApi.Result.IssueResult[] = yield call(getSprintIssues, sprintId);
-		yield put(actions.loadIssuesSuccess({ issues: response, sprintId }));
+		const { boardId } = action;
+		const response: WebApi.Entities.Issue[] = yield call(getIssuesByBoardId, boardId);
+		yield put(actions.loadIssuesSuccess({ issues: response }));
 	} catch (error) {
 		NotificationManager.error(error.clientException.message, 'Error');
 	}
@@ -74,26 +75,24 @@ export function* loadProjectRequest(action: ReturnType<typeof actions.loadProjec
 export function* createIssueSuccess(action: ReturnType<typeof createIssue>) {
 	try {
 		const {
-			data: { sprint: sprintId, board: boardId },
+			data: { board: boardId },
 		} = action;
 
-		if (sprintId) {
-			yield put(actions.loadIssuesTrigger({ sprintId }));
-		}
-
-		if (!sprintId && boardId) {
-			yield put(actions.loadBacklogTrigger({ boardId: boardId }));
+		if (boardId) {
+			yield put(actions.loadIssuesTrigger({ boardId }));
 		}
 	} catch (error) {
 		NotificationManager.error(error.clientException.message, 'Error');
 	}
 }
 
-export function* loadBacklogRequest(action: ReturnType<typeof actions.loadBacklogTrigger>) {
+export function* updateIssueRequestSuccess(action: ReturnType<typeof updateIssueSuccess>) {
 	try {
-		const { boardId } = action;
-		const response: WebApi.Result.IssueResult[] = yield call(getBacklogByBoardId, boardId);
-		yield put(actions.loadBacklogSuccess({ backlog: response }));
+		const boardId = action.data.board?.id;
+
+		if (boardId) {
+			yield put(actions.loadIssuesTrigger({ boardId }));
+		}
 	} catch (error) {
 		NotificationManager.error(error.clientException.message, 'Error');
 	}
@@ -104,7 +103,7 @@ export function* deleteSprintSuccess(action: ReturnType<typeof actions.deleteSpr
 		const { sprint } = action;
 
 		if (sprint.board) {
-			yield put(actions.loadBacklogTrigger({ boardId: sprint.board.id }));
+			yield put(actions.loadIssuesTrigger({ boardId: sprint.board.id }));
 		}
 	} catch (error) {
 		NotificationManager.error(error.clientException.message, 'Error');
@@ -119,7 +118,7 @@ export function* watchDeleteSprintRequest() {
 	yield takeEvery(actionTypes.DELETE_SPRINT_TRIGGER, deleteSprintRequest);
 }
 
-export function* watchLoadIssueRequest() {
+export function* watchLoadIssuesRequest() {
 	yield takeEvery(actionTypes.LOAD_ISSUES_TRIGGER, loadIssuesRequest);
 }
 
@@ -139,8 +138,8 @@ export function* watchCreateIssueSuccess() {
 	yield takeEvery(CREATE_ISSUE_SUCCESS, createIssueSuccess);
 }
 
-export function* watchLoadBacklogRequest() {
-	yield takeEvery(actionTypes.LOAD_BACKLOG_TRIGGER, loadBacklogRequest);
+export function* watchUpdateIssueRequestSuccess() {
+	yield takeEvery(UPDATE_ISSUE_SUCCESS, updateIssueRequestSuccess);
 }
 
 export function* watchDeleteSprintSuccess() {
@@ -151,12 +150,12 @@ export default function* scrumBoardSaga() {
 	yield all([
 		watchLoadSprintsRequest(),
 		watchDeleteSprintRequest(),
-		watchLoadIssueRequest(),
 		watchUpdateSprintRequest(),
 		watchCreateSprintRequest(),
 		watchLoadProjectRequest(),
 		watchCreateIssueSuccess(),
-		watchLoadBacklogRequest(),
 		watchDeleteSprintSuccess(),
+		watchLoadIssuesRequest(),
+		watchUpdateIssueRequestSuccess(),
 	]);
 }

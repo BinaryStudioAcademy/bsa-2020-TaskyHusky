@@ -24,12 +24,11 @@ export const LOAD_ISSUES_TRIGGER = 'SCRUM_BOARD:LOAD_ISSUES_TRIGGER';
 export const LOAD_ISSUES_SUCCESS = 'SCRUM_BOARD:LOAD_ISSUES_SUCCESS';
 
 export type LoadIssuesTrigger = {
-	sprintId: string;
+	boardId: string;
 };
 
 export type LoadIssuesSuccess = {
-	issues: WebApi.Result.IssueResult[];
-	sprintId: string;
+	issues: WebApi.Entities.Issue[];
 };
 
 export const UPDATE_SPRINT_DATA_TRIGGER = 'SCRUM_BOARD:UPDATE_SPRINT_DATA_TRIGGER';
