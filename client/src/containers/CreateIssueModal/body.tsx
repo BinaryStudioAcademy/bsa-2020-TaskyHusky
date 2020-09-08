@@ -200,7 +200,7 @@ const CreateIssueModalBody: React.FC<Props> = ({
 							options={typeOpts}
 							placeholder={t('type')}
 							className="formSelect"
-							onChange={(event, data) => context.set('type', data.value)}
+							onChange={(event, data) => context.set('type', `${data.value}`)}
 						/>
 					</Form.Field>
 					<Form.Field>
@@ -211,7 +211,7 @@ const CreateIssueModalBody: React.FC<Props> = ({
 							options={priorityOpts}
 							placeholder={t('priority')}
 							className="formSelect"
-							onChange={(event, data) => context.set('priority', data.value)}
+							onChange={(event, data) => context.set('priority', `${data.value}`)}
 						/>
 					</Form.Field>
 					<Form.Field>
@@ -231,7 +231,7 @@ const CreateIssueModalBody: React.FC<Props> = ({
 								placeholder={t('project')}
 								options={projectsOpts}
 								className="formSelect"
-								onChange={(event, data) => context.set('project', data.value)}
+								onChange={(event, data) => context.set('project', `${data.value}`)}
 							/>
 						</Form.Field>
 					) : (
