@@ -5,7 +5,7 @@ import { createReducer } from 'helpers/createReducer.helper';
 export const filtersReducer = createReducer<FilterState>(initialState, {
 	[actionTypes.UPDATE_FILTER_SUCCESS](state, action) {
 		const updatedFilters = state.filters.map((filter) =>
-			filter.id === action.filter.id ? { ...action.filter } : filter,
+			filter.id === action.data.id ? { ...action.data } : filter,
 		);
 		return {
 			...state,

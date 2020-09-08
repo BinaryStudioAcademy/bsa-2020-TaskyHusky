@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './styles.module.scss';
-import { List, Button } from 'semantic-ui-react';
+import { Button } from 'semantic-ui-react';
 import SaveFilterModal from 'containers/SaveFilterModal';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -25,30 +25,17 @@ const SearchTitle: React.FC = () => {
 	return (
 		<div className={styles.titleWrapper}>
 			<div className={styles.titleContainer}>
-				<List horizontal>
-					<List.Item>
-						<div>
-							<h1 className={styles.filterName}>{filter ? filter.name : t('searchIssue')}</h1>
-						</div>
-					</List.Item>
+				<h1 className={styles.filterName}>{filter ? filter.name : t('searchIssue')}</h1>
+				<div className={styles.actionWrapper}>
 					{isFilterEdited && filter ? (
 						<>
-							<List.Item>
-								<div className={styles.actionItem}>
-									<List.Content>- Edited</List.Content>
-								</div>
-							</List.Item>
-							<List.Item>
-								<div className={styles.actionItem}>
-									<Button className={styles.saveBtn} onClick={onSave} compact>
-										{t('save')}
-									</Button>
-									<Options />
-								</div>
-							</List.Item>
-							<List.Item>
-								<div className={styles.actionItem}></div>
-							</List.Item>
+							<div className={styles.actionItem}>
+								<Button className={styles.saveBtn} onClick={onSave} compact>
+									{t('save')}
+								</Button>
+								<Options />
+							</div>
+							<div className={styles.actionItem}></div>
 						</>
 					) : (
 						<Button className={styles.saveBtn} onClick={onSaveAs} compact>
@@ -56,7 +43,7 @@ const SearchTitle: React.FC = () => {
 						</Button>
 					)}
 					<SaveFilterModal />
-				</List>
+				</div>
 			</div>
 		</div>
 	);

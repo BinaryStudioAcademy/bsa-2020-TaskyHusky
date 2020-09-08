@@ -7,6 +7,11 @@
 	.dropDownMenu > * {
 		color: rgba(80, 80, 80, 0.9) !important;
 	}
+
+	.dropDownMenu {
+		width: 250px;
+		white-space: pre-wrap;
+	}
 }
 
 .media_query {

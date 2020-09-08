@@ -476,4 +476,5 @@ export const en = {
 	choose_your_location: 'Choose your location here',
 	apply_current_location: 'Go to current location',
 	apply_this_location: 'Apply this location',
+	no_notifications: "You don't have any new notifications",
 };

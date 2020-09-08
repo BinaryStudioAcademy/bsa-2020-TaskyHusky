@@ -460,4 +460,5 @@ export const ru = {
 	choose_your_location: 'Выберите ваше местоположение',
 	apply_current_location: 'Найти текущее местоположение',
 	apply_this_location: 'Выбрать это местоположение',
+	no_notifications: 'У вас нет новых уведомлений',
 };

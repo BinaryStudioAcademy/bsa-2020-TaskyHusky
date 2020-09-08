@@ -22,7 +22,7 @@ const UserActivityItem: React.FC<Props> = (props: Props) => {
 				)}
 			</div>
 			<div className={styles.block}>
-				<Link to={`${item.firstName ? item.id : `/project/${item.id}/issues`}`}>
+				<Link to={`${item.firstName ? item.id : `/project/${item.id}`}`}>
 					<span className={styles.content}>
 						{item.name ? item.name : item.firstName + ' ' + item.lastName}
 					</span>

@@ -3,6 +3,7 @@ export enum SETTINGS_SECTION {
 	backlog = 'backlog',
 	activeSprint = 'active_sprint',
 	reports = 'reports',
+	issues = 'issues',
 }
 
 export const sidebarItems = [
@@ -13,6 +14,10 @@ export const sidebarItems = [
 	{
 		section: SETTINGS_SECTION.backlog,
 		icon: 'clipboard list',
+	},
+	{
+		section: SETTINGS_SECTION.issues,
+		icon: 'clipboard check',
 	},
 	{
 		section: SETTINGS_SECTION.activeSprint,

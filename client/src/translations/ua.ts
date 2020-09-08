@@ -452,4 +452,5 @@ export const ua = {
 	choose_your_location: 'Виберіть ваше місцерозташування',
 	apply_current_location: 'Знайти поточне місцерозташування',
 	apply_this_location: 'Вибрати це місцерозташування',
+	no_notifications: 'У вас немає нових сповіщень',
 };
