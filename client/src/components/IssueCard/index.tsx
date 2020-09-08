@@ -86,7 +86,10 @@ const IssueCard: React.FC<Props> = ({ issue, index, noDrag, noRedirect, selectab
 				{issue.summary}
 				{issue.storyPoint ? <Label content={issue.storyPoint} /> : ''}
 			</Header>
-			<div style={{ display: 'flex', justifyContent: 'space-between' }}>
+			<div
+				style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
+				className={styles.meta}
+			>
 				{issue.status ? (
 					<Label
 						color={issue.status.color as SemanticCOLORS}
