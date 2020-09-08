@@ -19,7 +19,7 @@ type Props = {
 	sprintIsCompleted: boolean;
 	isOpen: boolean;
 	clickAction: any;
-	sprintIssues: WebApi.Result.IssueResult[];
+	sprintIssues: WebApi.Entities.Issue[];
 	startDate: Date | undefined;
 	endDate: Date | undefined;
 };
@@ -42,11 +42,11 @@ const EditSprintModal = (props: Props) => {
 	const [isNameValid, setIsNameValid] = useState<boolean>(true);
 	const scrumBoardState = useSelector((rootState: RootState) => rootState.scrumBoard);
 
-	const isActivationToggleDisabled = (scrumBoardState: ScrumBoardState): boolean => {
+	const isActivationToggleDisabled = (scrumBoardState: ScrumBoardState, props: Props): boolean => {
 		const currentActiveSprint = scrumBoardState.sprints.find((sprint) => sprint.isActive);
 		const currentActiveSprintId = currentActiveSprint ? currentActiveSprint.id : undefined;
 		const boardHasActiveSprint = !!currentActiveSprintId;
-		const sprintHasNoIssues = scrumBoardState.matchIssuesToSprint[sprintId]?.length === 0;
+		const sprintHasNoIssues = props.sprintIssues.length === 0;
 		const isCurrentSprintActive = currentActiveSprintId === sprintId;
 
 		if (sprintHasNoIssues || isCompleted) {
@@ -274,7 +274,7 @@ const EditSprintModal = (props: Props) => {
 					<Form.Field>
 						<Checkbox
 							toggle
-							disabled={isActivationToggleDisabled(scrumBoardState)}
+							disabled={isActivationToggleDisabled(scrumBoardState, props)}
 							label={isActive ? t('mark_sprint_as_active') : t('mark_sprint_as_inactive')}
 							checked={isActive}
 							onChange={toggleSprintActive}

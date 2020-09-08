@@ -97,11 +97,13 @@ const CreateIssueModalBody: React.FC<Props> = ({
 		text: <Label style={{ backgroundColor: label.backgroundColor, color: label.textColor }}>{label.text}</Label>,
 	}));
 
-	const projectsOpts: SelectOption[] = projects.map((project) => ({
-		key: project.id,
-		value: project.id,
-		text: project.name,
-	}));
+	const projectsOpts: SelectOption[] = projects
+		.filter((p) => (boardID ? p.boards?.find((b) => b.id === boardID) : true))
+		.map((project) => ({
+			key: project.id,
+			value: project.id,
+			text: project.name,
+		}));
 
 	const usersOpts: SelectOption[] = users.map((user) => ({
 		key: user.id,
@@ -171,11 +173,6 @@ const CreateIssueModalBody: React.FC<Props> = ({
 		Object.keys(context.data).forEach((key) => context.set(key as any, (initialState as any)[key]));
 	};
 
-	//comment cause it makes second spinner in header
-	// if (projectsLoading) {
-	// 	return <Spinner />;
-	// }
-
 	return (
 		<Modal
 			as="form"
@@ -203,7 +200,7 @@ const CreateIssueModalBody: React.FC<Props> = ({
 							options={typeOpts}
 							placeholder={t('type')}
 							className="formSelect"
-							onChange={(event, data) => context.set('type', data.value)}
+							onChange={(event, data) => context.set('type', `${data.value}`)}
 						/>
 					</Form.Field>
 					<Form.Field>
@@ -214,7 +211,7 @@ const CreateIssueModalBody: React.FC<Props> = ({
 							options={priorityOpts}
 							placeholder={t('priority')}
 							className="formSelect"
-							onChange={(event, data) => context.set('priority', data.value)}
+							onChange={(event, data) => context.set('priority', `${data.value}`)}
 						/>
 					</Form.Field>
 					<Form.Field>
@@ -234,7 +231,7 @@ const CreateIssueModalBody: React.FC<Props> = ({
 								placeholder={t('project')}
 								options={projectsOpts}
 								className="formSelect"
-								onChange={(event, data) => context.set('project', data.value)}
+								onChange={(event, data) => context.set('project', `${data.value}`)}
 							/>
 						</Form.Field>
 					) : (
@@ -251,7 +248,7 @@ const CreateIssueModalBody: React.FC<Props> = ({
 							className="formSelect"
 							placeholder={t('labels')}
 							options={labelOpts}
-							onChange={(event, data) => context.set('labels', data.value)}
+							onChange={(event, data) => context.set('labels', data.value as string)}
 						/>
 					</Form.Field>
 					<Divider />
@@ -263,7 +260,7 @@ const CreateIssueModalBody: React.FC<Props> = ({
 							className="formSelect"
 							placeholder={t('assigned')}
 							options={usersOpts}
-							onChange={(event, data) => context.set('assigned', data.value)}
+							onChange={(event, data) => context.set('assigned', data.value as string)}
 						/>
 					</Form.Field>
 					<Form.Field>
@@ -296,11 +293,12 @@ const CreateIssueModalBody: React.FC<Props> = ({
 						<label className="standartLabel">{t('description')}</label>
 						<Form.TextArea
 							className="standartInput"
+							style={{ resize: 'none' }}
+							rows={4}
 							placeholder={t('description')}
 							onChange={(event, data) =>
 								data ? context.set('description', data.value as string) : context.set('description', '')
 							}
-							rows={10}
 						/>
 					</Form.Field>
 				</Form>

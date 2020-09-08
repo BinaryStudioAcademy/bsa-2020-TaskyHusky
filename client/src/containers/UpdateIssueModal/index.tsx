@@ -196,7 +196,7 @@ const UpdateIssueModal: React.FC<Props> = ({
 							options={statusesOpts}
 							defaultValue={current.status}
 							placeholder={t('Status')}
-							onChange={(event, data) => context.set('status', data.value)}
+							onChange={(event, data) => context.set('status', data.value as string)}
 						/>
 					</Form.Field>
 					<Form.Field>
@@ -209,7 +209,7 @@ const UpdateIssueModal: React.FC<Props> = ({
 							options={typeOpts}
 							defaultValue={current.type}
 							placeholder={t('type')}
-							onChange={(event, data) => context.set('type', data.value)}
+							onChange={(event, data) => context.set('type', data.value as string)}
 						/>
 					</Form.Field>
 					<Form.Field>
@@ -222,7 +222,7 @@ const UpdateIssueModal: React.FC<Props> = ({
 							options={priorityOpts}
 							defaultValue={current.priority}
 							placeholder={t('priority')}
-							onChange={(event, data) => context.set('priority', data.value)}
+							onChange={(event, data) => context.set('priority', data.value as string)}
 						/>
 					</Form.Field>
 					<Form.Field>
@@ -232,7 +232,7 @@ const UpdateIssueModal: React.FC<Props> = ({
 							fluid
 							className="standartInput"
 							defaultValue={current.summary}
-							onChange={(event, data) => context.set('summary', data.value)}
+							onChange={(event, data) => context.set('summary', data.value as string)}
 						/>
 					</Form.Field>
 					<Form.Field>
@@ -247,7 +247,7 @@ const UpdateIssueModal: React.FC<Props> = ({
 							placeholder={t('labels')}
 							options={labelOpts}
 							value={context.data.labels}
-							onChange={(event, data) => context.set('labels', data.value)}
+							onChange={(event, data) => context.set('labels', data.value as string)}
 						/>
 					</Form.Field>
 					<Divider />
@@ -260,7 +260,7 @@ const UpdateIssueModal: React.FC<Props> = ({
 							defaultValue={current.assigned}
 							placeholder={t('assigned')}
 							options={usersOpts}
-							onChange={(event, data) => context.set('assigned', data.value)}
+							onChange={(event, data) => context.set('assigned', data.value as string)}
 						/>
 					</Form.Field>
 					{current.boardColumn ? (
@@ -273,7 +273,7 @@ const UpdateIssueModal: React.FC<Props> = ({
 								defaultValue={current.boardColumn}
 								placeholder={t('column')}
 								options={columnsOpts}
-								onChange={(event, data) => context.set('boardColumn', data.value)}
+								onChange={(event, data) => context.set('boardColumn', data.value as string)}
 							/>
 						</Form.Field>
 					) : (
@@ -314,6 +314,8 @@ const UpdateIssueModal: React.FC<Props> = ({
 							className="standartInput"
 							placeholder={t('description')}
 							defaultValue={current.description}
+							style={{ resize: 'none' }}
+							rows={4}
 							onChange={(event, data) =>
 								data ? context.set('description', data.value as string) : context.set('description', '')
 							}

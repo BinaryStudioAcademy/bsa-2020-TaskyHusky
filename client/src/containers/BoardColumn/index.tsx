@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Segment, Header, Button, Icon } from 'semantic-ui-react';
+import { Segment, Header, Icon } from 'semantic-ui-react';
 import { Droppable, OnDragEndResponder } from 'react-beautiful-dnd';
 import CreateIssueModal from 'containers/CreateIssueModal';
 import { getByColumnId, getByKey } from 'services/issue.service';
@@ -130,10 +130,10 @@ const BoardColumn: React.FC<Props> = ({ column, className, search, boardId, getO
 								{provided.placeholder}
 							</div>
 							<CreateIssueModal boardColumnID={column.id} boardID={boardId}>
-								<Button className={styles.contentBtn}>
+								<button className={styles.createBtn}>
 									<Icon name="plus circle" />
 									{t('create_issue')}
-								</Button>
+								</button>
 							</CreateIssueModal>
 						</div>
 					</Segment>

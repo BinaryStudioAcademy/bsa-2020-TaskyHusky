@@ -84,7 +84,7 @@ const Body: React.FC<Props> = ({ boardId, children, onClose = () => {} }) => {
 							className="formSelect"
 							fluid
 							value={context.data.status}
-							onChange={(event, data) => context.set('status', data.value)}
+							onChange={(event, data) => context.set('status', `${data.value}`)}
 						/>
 					</Form.Field>
 					<Form.Field>

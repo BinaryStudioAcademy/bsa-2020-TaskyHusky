@@ -66,11 +66,11 @@ const IssuePageInfoColumn: React.FC<Props> = ({ issue: givenIssue, initialIssue,
 		<>
 			<div
 				style={{
-					width: 250,
+					...(asCardInfo ? { width: 250 } : { maxWidth: 600 }),
 					paddingBottom: 10,
 				}}
 			>
-				<div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
+				<div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', width: 250 }}>
 					<Dropdown
 						button
 						className="contentBtn icon"
@@ -117,9 +117,13 @@ const IssuePageInfoColumn: React.FC<Props> = ({ issue: givenIssue, initialIssue,
 						})}
 					/>
 				</div>
-				<Label style={{ marginTop: 10 }} color={issue.status?.color as SemanticCOLORS}>
-					{issue.status?.title}
-				</Label>
+				{issue.status && !asCardInfo ? (
+					<Label style={{ marginTop: 10 }} color={issue.status.color as SemanticCOLORS}>
+						{issue.status.title}
+					</Label>
+				) : (
+					''
+				)}
 				{asCardInfo ? (
 					<>
 						<h4>
@@ -133,16 +137,22 @@ const IssuePageInfoColumn: React.FC<Props> = ({ issue: givenIssue, initialIssue,
 				) : (
 					''
 				)}
-				<h4>{t('assigned_by')}</h4>
-				{issue.assigned ? (
-					<div style={{ display: 'flex', alignItems: 'center' }}>
-						<UserAvatar user={issue.assigned} small />
-						<a href={`/profile/${issue.assigned.id}`} target="_blank" rel="noopener noreferrer">
-							{getUsername(issue.assigned)}
-						</a>
-					</div>
+				{asCardInfo ? (
+					''
 				) : (
-					t('no')
+					<>
+						<h4>{t('assigned_by')}</h4>
+						{issue.assigned ? (
+							<div style={{ display: 'flex', alignItems: 'center' }}>
+								<UserAvatar user={issue.assigned} small />
+								<a href={`/profile/${issue.assigned.id}`} target="_blank" rel="noopener noreferrer">
+									{getUsername(issue.assigned)}
+								</a>
+							</div>
+						) : (
+							t('no')
+						)}
+					</>
 				)}
 				<h4>{t('reported_by')}</h4>
 				<div style={{ display: 'flex', alignItems: 'center' }}>
@@ -171,7 +181,7 @@ const IssuePageInfoColumn: React.FC<Props> = ({ issue: givenIssue, initialIssue,
 									</a>
 							  ))
 							: t('no')}
-						<h4>{t('attachments')}</h4>
+						<h4 style={{ marginBottom: 15 }}>{t('attachments')}</h4>
 						{issue.attachments && issue.attachments.length
 							? issue.attachments.map((link, i) => {
 									const fname = link.slice(link.lastIndexOf('/') + 1);
@@ -195,17 +205,23 @@ const IssuePageInfoColumn: React.FC<Props> = ({ issue: givenIssue, initialIssue,
 				) : (
 					''
 				)}
-				<h4>{t('labels')}</h4>
-				{issue.labels && issue.labels.length
-					? issue.labels.map((label, index) => (
-							<Label
-								key={index}
-								style={{ backgroundColor: label.backgroundColor, color: label.textColor }}
-							>
-								{label.text}
-							</Label>
-					  ))
-					: t('no')}
+				{asCardInfo ? (
+					''
+				) : (
+					<>
+						<h4>{t('labels')}</h4>
+						{issue.labels && issue.labels.length
+							? issue.labels.map((label, index) => (
+									<Label
+										key={index}
+										style={{ backgroundColor: label.backgroundColor, color: label.textColor }}
+									>
+										{label.text}
+									</Label>
+							  ))
+							: t('no')}
+					</>
+				)}
 				{!asCardInfo ? (
 					<>
 						<h4>{t('priority')}</h4>
@@ -218,11 +234,17 @@ const IssuePageInfoColumn: React.FC<Props> = ({ issue: givenIssue, initialIssue,
 				) : (
 					''
 				)}
-				<h4>{t('story_point')}</h4>
-				{issue.storyPoint ? (
-					<Label style={{ borderRadius: '30%' }}>{issue.storyPoint}</Label>
+				{asCardInfo ? (
+					''
 				) : (
-					<span>{t('no')}</span>
+					<>
+						<h4>{t('story_point')}</h4>
+						{issue.storyPoint ? (
+							<Label style={{ borderRadius: '30%' }}>{issue.storyPoint}</Label>
+						) : (
+							<span>{t('no')}</span>
+						)}
+					</>
 				)}
 			</div>
 			<ContextProvider customInitalState={initialIssue}>

@@ -18,6 +18,15 @@ export const getSprintIssues = async (id: string): Promise<WebApi.Result.IssueRe
 	return await res.json();
 };
 
+export const getSprintById = async (id: string): Promise<WebApi.Entities.Issue> => {
+	const res: Response = await callWebApi({
+		method: 'GET',
+		endpoint: `sprint/${id}`,
+	});
+
+	return await res.json();
+};
+
 export const updateSprint = async (sprintData: Partial<WebApi.Entities.Sprint>): Promise<WebApi.Entities.Sprint> => {
 	const { id, ...data } = sprintData;
 	const res: Response = await callWebApi({

@@ -4,16 +4,14 @@ export type IssuesToSprint = {
 
 export interface ScrumBoardState {
 	sprints: WebApi.Entities.Sprint[];
-	matchIssuesToSprint: IssuesToSprint;
-	backlog: WebApi.Result.IssueResult[];
+	issues: WebApi.Entities.Issue[];
 	project: WebApi.Result.BoardProjectsResult;
 	board: WebApi.Result.BoardResult;
 }
 
 export const initialState: ScrumBoardState = {
 	sprints: [],
-	matchIssuesToSprint: {},
-	backlog: [],
+	issues: [],
 	project: {
 		id: '',
 		name: '',

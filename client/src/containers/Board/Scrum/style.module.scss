@@ -16,8 +16,8 @@
 		}
 
 		.createSprintButton {
+			@include primary-btn;
 			margin-left: auto !important;
-			@include cancel-btn;
 		}
 	}
 
@@ -33,6 +33,10 @@
 
 	.noSprintsHeader {
 		margin-top: 16px;
+	}
+
+	.scrumHeader {
+		margin-left: 0 !important;
 	}
 }
 

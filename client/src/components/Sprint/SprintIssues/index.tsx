@@ -7,9 +7,10 @@ import { useTranslation } from 'react-i18next';
 import { useIO } from 'hooks/useIO';
 
 interface Props {
-	issues: WebApi.Result.IssueResult[];
+	issues: WebApi.Entities.Issue[];
 	sprintId?: string;
 	boardId: string;
+	isCompleted?: boolean;
 	sprintName: string;
 }
 interface DragProps {
@@ -21,14 +22,14 @@ interface DragProps {
 
 export const SprintIssues: React.FC<Props & DragProps> = (props: Props & DragProps) => {
 	const { t } = useTranslation();
-	const [issues, setIssues] = useState<WebApi.Result.IssueResult[]>([]);
+	const [issues, setIssues] = useState<WebApi.Entities.Issue[]>(props.issues);
 
 	useEffect(() => {
 		setIssues(props.issues);
 	}, [props.issues]);
 
 	useIO(WebApi.IO.Types.Issue, (io) => {
-		io.on(WebApi.IO.IssueActions.CreateIssue, (newIssue: WebApi.Result.IssueResult) => {
+		io.on(WebApi.IO.IssueActions.CreateIssue, (newIssue: WebApi.Entities.Issue) => {
 			const forThisSprint = newIssue.sprint?.id === props.sprintId;
 			const forThisBoard = newIssue.board?.id === props.boardId;
 			const canAddIssue = newIssue.sprint ? forThisSprint : forThisBoard;
@@ -38,7 +39,7 @@ export const SprintIssues: React.FC<Props & DragProps> = (props: Props & DragPro
 			}
 		});
 
-		io.on(WebApi.IO.IssueActions.UpdateIssue, (id: string, newIssue: WebApi.Result.IssueResult) => {
+		io.on(WebApi.IO.IssueActions.UpdateIssue, (id: string, newIssue: WebApi.Entities.Issue) => {
 			const index = issues.findIndex((issue) => issue.id === id);
 
 			if (index > -1) {

@@ -155,7 +155,7 @@ export const getCommits = async (issue: string): Promise<WebApi.Result.CommitRes
 	return (await res.json()) as WebApi.Result.CommitResult[];
 };
 
-export const getBacklogByBoardId = async (id: string): Promise<WebApi.Result.IssueResult[]> => {
+export const getIssuesByBoardId = async (id: string): Promise<WebApi.Result.IssueResult[]> => {
 	const res: Response = await callWebApi({
 		method: 'GET',
 		endpoint: `issue/${id}/boardIssues`,
