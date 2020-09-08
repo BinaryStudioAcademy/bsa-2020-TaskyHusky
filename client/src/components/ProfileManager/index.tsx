@@ -9,6 +9,7 @@ import { useDispatch } from 'react-redux';
 import CustomValidator from 'helpers/validation.helper';
 import JobTitleSelect from 'components/JobTitleSelect';
 import { ModeManager } from 'containers/ProfilePage';
+import SelectLocation from 'components/SelectLocation';
 
 interface Props {
 	showManager: (modeToShow: ModeManager) => void;
@@ -16,21 +17,46 @@ interface Props {
 	user: UserProfileState;
 }
 
+export interface Location {
+	address: string;
+	location: {
+		lat: number;
+		lng: number;
+	};
+}
+
 const ProfileManager: React.FC<Props> = (props: Props) => {
 	const { t } = useTranslation();
 	const { showManager, updateUser, user: userData } = props;
 	const dispatch = useDispatch();
 	const [user, setUser] = useState(userData);
+	const [showMap, setShowMap] = useState<boolean>(false);
+	const toggleShowMap = () => {
+		setShowMap(!showMap);
+	};
 	const {
 		firstName,
 		lastName,
 		username = '',
 		jobTitle = '',
 		department = '',
-		location = '',
+		address = '',
+		lng = 0,
+		lat = 0,
 		organization = '',
 	} = user;
 	const [isSubmit, setIsSubmit] = useState<boolean>(false);
+
+	const [currentLocation, setCurrentLocation] = useState<Location>({
+		address: address === null ? '' : address,
+		location: { lat: lat === null ? 0 : lat, lng: lng === null ? 0 : lng },
+	});
+
+	const changeLocation = (location: Location) => {
+		setCurrentLocation(location);
+		setUser({ ...user, address: location.address, lng: location.location.lng, lat: location.location.lat });
+		setIsSubmit(userData.address !== location.address);
+	};
 	const [userValidation, setUserValidation] = useState({
 		firstName: true,
 		lastName: true,
@@ -122,7 +148,7 @@ const ProfileManager: React.FC<Props> = (props: Props) => {
 					/>
 					<SubmitedInput
 						handleChange={handleChange}
-						text={username}
+						text={username === null ? '' : username}
 						propKey="username"
 						placeholder={t('placeholder_username')}
 						title={t('public_name')}
@@ -133,14 +159,14 @@ const ProfileManager: React.FC<Props> = (props: Props) => {
 					/>
 					<JobTitleSelect
 						handleSelect={handleSelect}
-						text={jobTitle}
+						text={jobTitle === null ? '' : jobTitle}
 						propKey="jobTitle"
 						placeholder={t('placeholder_job')}
 						title={t('job_title')}
 					/>
 					<SubmitedInput
 						handleChange={handleChange}
-						text={department}
+						text={department === null ? '' : department}
 						propKey="department"
 						placeholder={t('placeholder_department')}
 						title={t('department')}
@@ -151,7 +177,7 @@ const ProfileManager: React.FC<Props> = (props: Props) => {
 					/>
 					<SubmitedInput
 						handleChange={handleChange}
-						text={organization}
+						text={organization === null ? '' : organization}
 						propKey="organization"
 						placeholder={t('placeholder_organization')}
 						title={t('organization')}
@@ -160,17 +186,17 @@ const ProfileManager: React.FC<Props> = (props: Props) => {
 						isValid={userValidation.organization}
 						onBlur={onBlur}
 					/>
-					<SubmitedInput
-						handleChange={handleChange}
-						text={location}
-						propKey="location"
-						placeholder={t('placeholder_location')}
-						title={t('based_in')}
-						type="text"
-						errorText={errorMessage.location}
-						isValid={userValidation.location}
-						onBlur={onBlur}
-					/>
+					{currentLocation.address ? (
+						<p className={styles.labelLocation}>
+							{t('placeholder_location')} {currentLocation.address}
+						</p>
+					) : (
+						<p className={styles.labelLocation}>{t('you_have_not_specify_location')}</p>
+					)}
+					<Button className={styles.btnLink} type="button" onClick={toggleShowMap}>
+						{t('choose_your_location')}
+					</Button>
+					{showMap && <SelectLocation changeLocation={changeLocation} currentLocation={currentLocation} />}
 					<Form.Field className={styles.formFooter}>
 						<Popup
 							content={t('add_changes')}

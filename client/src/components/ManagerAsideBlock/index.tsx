@@ -7,11 +7,12 @@ import { ModeManager } from 'containers/ProfilePage';
 interface Props {
 	showManager: (modeToShow: ModeManager) => void;
 	editMode: string;
+	googleId?: string;
 }
 
 const ManagerAsideBlock: React.FC<Props> = (props: Props) => {
 	const { t } = useTranslation();
-	const { showManager, editMode } = props;
+	const { showManager, editMode, googleId } = props;
 
 	return (
 		<div className={styles.container}>
@@ -21,18 +22,22 @@ const ManagerAsideBlock: React.FC<Props> = (props: Props) => {
 			>
 				{t('profile')}
 			</Button>
-			<Button
-				className={`${styles.button} ${editMode === ModeManager.email && styles.active}`}
-				onClick={() => showManager(ModeManager.email)}
-			>
-				{t('email')}
-			</Button>
-			<Button
-				className={`${styles.button} ${editMode === ModeManager.security && styles.active}`}
-				onClick={() => showManager(ModeManager.security)}
-			>
-				{t('security')}
-			</Button>
+			{!googleId && (
+				<>
+					<Button
+						className={`${styles.button} ${editMode === ModeManager.email && styles.active}`}
+						onClick={() => showManager(ModeManager.email)}
+					>
+						{t('email')}
+					</Button>
+					<Button
+						className={`${styles.button} ${editMode === ModeManager.security && styles.active}`}
+						onClick={() => showManager(ModeManager.security)}
+					>
+						{t('security')}
+					</Button>
+				</>
+			)}
 			<Button
 				className={`${styles.button} ${editMode === ModeManager.account && styles.active}`}
 				onClick={() => showManager(ModeManager.account)}

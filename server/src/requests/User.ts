@@ -25,7 +25,13 @@ export class UserProfile {
 	department?: string;
 
 	@Expose()
-	location?: string;
+	address?: string;
+
+	@Expose()
+	lat?: number;
+
+	@Expose()
+	lng?: number;
 
 	@Expose()
 	organization?: string;
