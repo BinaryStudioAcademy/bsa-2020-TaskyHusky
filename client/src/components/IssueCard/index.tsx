@@ -83,20 +83,23 @@ const IssueCard: React.FC<Props> = ({ issue, index, noDrag, noRedirect, selectab
 					: ''}
 			</div>
 			<Header style={{ marginBottom: 0, marginTop: 10 }}>
-				<div style={{ display: 'flex', justifyContent: 'space-between' }}>
-					<div>
-						{issue.summary}
-						{issue.storyPoint ? <Label content={issue.storyPoint} /> : ''}
-					</div>
-					<div>
-						{issue.status ? (
-							<Label color={issue.status.color as SemanticCOLORS} content={issue.status.title} />
-						) : (
-							''
-						)}
-					</div>
-				</div>
+				{issue.summary}
+				{issue.storyPoint ? <Label content={issue.storyPoint} /> : ''}
 			</Header>
+			{issue.status ? (
+				<Label
+					color={issue.status.color as SemanticCOLORS}
+					content={issue.status.title}
+					style={{
+						paddingTop: 3,
+						paddingBottom: 3,
+						marginTop: 10,
+						marginBottom: 3,
+					}}
+				/>
+			) : (
+				''
+			)}
 			<div className={styles.inlineContainer}>
 				<div>
 					<Icon name={issue.type.icon as any} color={issue.type.color as any} title={issue.type.title} />
