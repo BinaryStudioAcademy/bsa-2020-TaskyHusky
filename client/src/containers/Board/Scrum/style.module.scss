@@ -17,7 +17,7 @@
 
 		.createSprintButton {
 			margin-left: auto !important;
-			@include cancel-btn;
+			@include primary-btn;
 		}
 	}
 
