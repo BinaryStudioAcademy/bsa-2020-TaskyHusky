@@ -1,0 +1,21 @@
+:global(#root) {
+	.breadcrumb {
+		margin-top: 25px;
+		margin-bottom: 25px;
+	}
+	.chartContainer {
+		margin: 25px 15px 25px 15px !important;
+	}
+	.container {
+		display: flex;
+		flex-direction: row;
+		height: 100%;
+		max-height: 100vh;
+	}
+	.innerContainer {
+		width: 100vw;
+		padding: 0 10%;
+		max-height: 100vh;
+		overflow-y: scroll;
+	}
+}

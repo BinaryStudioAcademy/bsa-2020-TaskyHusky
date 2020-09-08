@@ -51,6 +51,7 @@ export type Filter = {
 	creator?: string[];
 	summary?: string;
 	description?: string;
+	sprintId?: string;
 };
 
 export interface CreateIssueArgs {
@@ -64,10 +65,17 @@ export interface CreateIssueArgs {
 	description?: string;
 }
 
+type WhereConditions = {
+	sprint: string;
+};
 @EntityRepository(Issue)
 export class IssueRepository extends Repository<Issue> {
-	findAll() {
-		return this.find({ relations: RELS });
+	findAll(filter: Filter) {
+		const where = {} as WhereConditions;
+		if (filter.sprintId) {
+			where.sprint = filter.sprintId;
+		}
+		return this.find({ relations: RELS, where });
 	}
 
 	getFilteredIssues(filter: Filter | undefined, from: number, to: number, sort: Sort) {

@@ -87,6 +87,9 @@ export class Issue {
 	@UpdateDateColumn({ type: 'date' })
 	updatedAt?: Date;
 
+	@Column({ type: 'date', default: null, nullable: true })
+	completedAt?: Date;
+
 	@Column({ nullable: true })
 	@IsInt()
 	@Min(0)

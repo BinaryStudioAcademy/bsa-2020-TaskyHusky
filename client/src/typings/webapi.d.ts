@@ -71,6 +71,7 @@ namespace WebApi.Issue {
 		creator?: string;
 		watchers?: string[];
 		storyPoint?: number;
+		completedAt?: Date;
 	}
 	interface PartialIssueComment {
 		text?: string;
@@ -122,6 +123,7 @@ namespace WebApi.Result {
 		storyPoint?: number;
 		createdAt: Date;
 		updatedAt?: Date;
+		completedAt?: Date;
 	}
 	interface IssueCommentResult {
 		id: string;
@@ -259,6 +261,7 @@ namespace WebApi.Entities {
 		issues?: Issue[];
 		createdBy: UserProfile;
 		createdAt: Date;
+		updatedAt: Date;
 		projects?: Projects[];
 	}
 
@@ -278,6 +281,7 @@ namespace WebApi.Entities {
 		filterParts?: FilterPart[];
 		name: string;
 		staredBy?: UserProfile[];
+		updatedAt: Date;
 	}
 
 	interface FilterDefinition {
@@ -316,6 +320,7 @@ namespace WebApi.Entities {
 		watchers?: UserProfile[];
 		createdAt?: Date;
 		updatedAt?: Date;
+		completedAt?: Date;
 		storyPoint?: number;
 	}
 

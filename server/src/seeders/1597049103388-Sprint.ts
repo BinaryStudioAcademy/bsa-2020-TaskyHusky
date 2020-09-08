@@ -6,8 +6,8 @@ import { Projects } from '../entity/Projects';
 
 export class Sprint1597046103388 implements MigrationInterface {
 	public async up(queryRunner: QueryRunner): Promise<void> {
-		const startDate = new Date();
-		const endDate = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate() + 7);
+		const startDate = new Date('2020-02-01');
+		const endDate = new Date('2020-02-08');
 
 		const sprint1 = new Sprint();
 		sprint1.id = 'bbe3530c-3fdc-4101-bf73-2967c6d87c17';
