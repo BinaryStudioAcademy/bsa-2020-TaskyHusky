@@ -19,6 +19,13 @@ export const CHECK_EMAIL_RESET = 'CHECK_EMAIL_RESET';
 
 export const GOOGLE_AUTH_REQUEST = 'GOOGLE_AUTH_REQUEST';
 export const GOOGLE_AUTH_LOADING = 'GOOGLE_AUTH_LOADING';
+export const UPDATE_USER = 'UPDATE_USER';
+
+export type UpdateUser = {
+	avatar?: string;
+	id: string;
+	email: string;
+};
 
 export type GoogleUser = {
 	user: GoogleLoginResponse | GoogleLoginResponseOffline;

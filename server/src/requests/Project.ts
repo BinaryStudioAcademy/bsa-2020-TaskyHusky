@@ -32,5 +32,9 @@ export class Project {
 	url?: string;
 
 	@Expose()
+	@IsString()
+	color?: string;
+
+	@Expose()
 	category?: string;
 }

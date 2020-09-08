@@ -20,6 +20,7 @@ import { boardReducer } from '../containers/Boards/logic/reducer';
 import { headerReducer } from '../containers/Header/logic/reducer';
 import { scrumBoardReducer } from 'containers/Board/Scrum/logic/reducer';
 import { notificationsReducer } from 'components/NotificationsMenu/logic/reducer';
+import { reportReducer } from 'containers/Report/logic/reducer';
 import { userActivityReducer } from 'containers/WorkPage/logic/reducer';
 import { boardColumnReducer } from 'containers/BoardColumn/logic/reducer';
 
@@ -44,6 +45,7 @@ const rootReducer: Reducer<RootState> = combineReducers({
 	peoplePage: peoplePageReducer,
 	header: headerReducer,
 	notifications: notificationsReducer,
+	report: reportReducer,
 	userActivity: userActivityReducer,
 	boardColumn: boardColumnReducer,
 });

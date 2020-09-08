@@ -16,9 +16,10 @@ type UserModel = {
 	firstName: string;
 	lastName: string;
 	avatar: string;
-	location?: string;
+	address?: string;
 	department?: string;
 	jobTitle?: string;
+	color?: string;
 };
 
 type Props = {
@@ -45,7 +46,11 @@ const ModalViewProfile = ({ user, onClose }: Props) => {
 						<div className={styles.main_info}>
 							<div className={styles.avatar}>
 								<Link to={`/profile/${user.id}`}>
-									<Avatar fullName={`${user.firstName} ${user.lastName}`} imgSrc={user.avatar} />
+									<Avatar
+										fullName={`${user.firstName} ${user.lastName}`}
+										imgSrc={user.avatar}
+										color={user.color}
+									/>
 								</Link>
 							</div>
 							<div className={styles.left_margin}></div>
@@ -54,10 +59,10 @@ const ModalViewProfile = ({ user, onClose }: Props) => {
 									<img src={toolbox} alt="icon" className={styles.iconEmail} />
 									<span className={styles.user_field}>{user.email}</span>
 								</span>
-								{user.location && (
+								{user.address && (
 									<span className={styles.field}>
 										<img src={reorder} alt="icon" className={styles.iconDep} />
-										<span className={styles.user_field}>{user.location}</span>
+										<span className={styles.user_field}>{user.address}</span>
 									</span>
 								)}
 								{user.department && (

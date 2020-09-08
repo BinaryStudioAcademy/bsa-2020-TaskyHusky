@@ -9,15 +9,15 @@
 	.inlineContainer {
 		display: flex;
 		align-items: center;
-		margin: 20px 0 10px 15px;
+		margin: 20px 0 10px 0;
 
 		* {
 			margin: 0 5px !important;
 		}
 
 		.createSprintButton {
+			@include primary-btn;
 			margin-left: auto !important;
-			@include cancel-btn;
 		}
 	}
 
@@ -34,16 +34,24 @@
 	.noSprintsHeader {
 		margin-top: 16px;
 	}
+
+	.scrumHeader {
+		margin-left: 0 !important;
+	}
 }
 
 .container {
 	display: flex;
 	flex-direction: row;
-	height: calc(100vh - 77px);
+	height: 100%;
+	max-height: 100vh;
 }
 
 .innerContainer {
-	margin: 0 auto;
+	width: 100vw;
+	padding: 0 10%;
+	max-height: 100vh;
+	overflow-y: scroll;
 }
 
 .cancelBtn {

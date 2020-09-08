@@ -71,6 +71,7 @@ namespace WebApi.Issue {
 		creator?: string;
 		watchers?: string[];
 		storyPoint?: number;
+		completedAt?: Date;
 	}
 	interface PartialIssueComment {
 		text?: string;
@@ -122,6 +123,7 @@ namespace WebApi.Result {
 		storyPoint?: number;
 		createdAt: Date;
 		updatedAt?: Date;
+		completedAt?: Date;
 	}
 	interface IssueCommentResult {
 		id: string;
@@ -233,9 +235,12 @@ namespace WebApi.User {
 		password?: string;
 		lastName?: string;
 		firstName?: string;
+		color: string;
 		username?: string;
 		avatar?: string;
-		location?: string;
+		address?: string;
+		lat?: number;
+		lng?: number;
 		department?: string;
 		organization?: string;
 		jobTitle?: jobTitle;
@@ -258,6 +263,7 @@ namespace WebApi.Entities {
 		issues?: Issue[];
 		createdBy: UserProfile;
 		createdAt: Date;
+		updatedAt: Date;
 		projects?: Projects[];
 	}
 
@@ -277,6 +283,7 @@ namespace WebApi.Entities {
 		filterParts?: FilterPart[];
 		name: string;
 		staredBy?: UserProfile[];
+		updatedAt: Date;
 	}
 
 	interface FilterDefinition {
@@ -315,6 +322,7 @@ namespace WebApi.Entities {
 		watchers?: UserProfile[];
 		createdAt?: Date;
 		updatedAt?: Date;
+		completedAt?: Date;
 		storyPoint?: number;
 	}
 
@@ -378,6 +386,7 @@ namespace WebApi.Entities {
 		description?: string;
 		icon: string;
 		url?: string;
+		color?: string;
 		category?: string;
 		sprints?: Sprint[];
 		boards?: Board[];
@@ -425,12 +434,15 @@ namespace WebApi.Entities {
 		username?: string;
 		avatar?: string;
 		department?: string;
-		location?: string;
+		address?: string;
+		lat?: number;
+		lng?: number;
 		organization?: string;
 		email: string;
 		jobTitle?: string;
 		userSettingsId?: string;
 		password?: string;
+		color?: string;
 		boards?: Board[];
 		public resetPasswordToken?: string | null;
 		public resetPasswordExpires?: Date | null;

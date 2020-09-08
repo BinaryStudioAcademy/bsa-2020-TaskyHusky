@@ -108,8 +108,15 @@ const CreateSprintModal = (props: Props) => {
 				</Form>
 			</Modal.Content>
 			<Modal.Actions>
-				<Button color="grey" onClick={handleClose} content={t('cancel')} />
-				<Button onClick={handleSubmit} content={t('submit')} labelPosition="right" icon="checkmark" primary />
+				<Button className="cancelBtn" onClick={handleClose} content={t('cancel')} />
+				<Button
+					className="primaryBtn"
+					onClick={handleSubmit}
+					content={t('submit')}
+					labelPosition="right"
+					icon="checkmark"
+					primary
+				/>
 			</Modal.Actions>
 		</Modal>
 	);

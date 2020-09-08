@@ -21,5 +21,7 @@ export type ActivityIssue = {
 		id: string;
 		name: string;
 		category: string;
+		color: string;
+		icon: string;
 	};
 };

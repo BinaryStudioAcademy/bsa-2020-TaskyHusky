@@ -26,7 +26,8 @@ const ProfileAside: React.FC<Props> = (props: Props) => {
 		jobTitle = '',
 		department = '',
 		organization = '',
-		location = '',
+		address = '',
+		color = '',
 	} = user;
 	return (
 		<aside className={styles.userInfo}>
@@ -38,17 +39,18 @@ const ProfileAside: React.FC<Props> = (props: Props) => {
 				editMode={editMode}
 				isCurrentUser={isCurrentUser}
 				showManager={showManager}
+				color={color}
 			/>
 			<div>
 				{editMode ? (
-					<ManagerAsideBlock showManager={showManager} editMode={editMode} />
+					<ManagerAsideBlock showManager={showManager} editMode={editMode} googleId={user.googleId} />
 				) : (
 					<>
 						<ProfileAboutBlock
 							jobTitle={jobTitle}
 							organization={organization}
 							department={department}
-							location={location}
+							location={address}
 							isCurrentUser={isCurrentUser}
 						/>
 						<ProfileContacntBlock />

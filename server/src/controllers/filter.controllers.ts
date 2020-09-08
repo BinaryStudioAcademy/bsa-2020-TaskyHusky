@@ -33,6 +33,32 @@ class FilterController {
 		}
 	};
 
+	getRecentFilters = async (req: Request, res: Response): Promise<void> => {
+		const filterRepository = getCustomRepository(FilterRepository);
+		const { id: userId } = req.user;
+
+		try {
+			const filters = await filterRepository.getRecentFilters(userId);
+			res.send(filters);
+		} catch (error) {
+			const { status }: { status: number } = error;
+			res.status(status).send();
+		}
+	};
+
+	getFavFilters = async (req: Request, res: Response): Promise<void> => {
+		const filterRepository = getCustomRepository(FilterRepository);
+		const { id: userId } = req.user;
+
+		try {
+			const filters = await filterRepository.getFavFilters(userId);
+			res.send(filters);
+		} catch (error) {
+			const { status }: { status: number } = error;
+			res.status(status);
+		}
+	};
+
 	getById = async (req: Request, res: Response): Promise<void> => {
 		const filterRepository = getCustomRepository(FilterRepository);
 		const { id } = req.params;

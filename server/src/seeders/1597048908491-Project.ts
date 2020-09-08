@@ -18,6 +18,7 @@ export class Project1597048908491 implements MigrationInterface {
 		project1.creator = user1;
 		project1.defaultAssignee = user2;
 		project1.id = '1fbda607-5934-484c-9667-bd35574a2f1e';
+		project1.color = '#e9e94e';
 
 		const project2 = new Projects();
 		project2.name = 'Our Project';
@@ -27,6 +28,7 @@ export class Project1597048908491 implements MigrationInterface {
 		project2.creator = user2;
 		project2.defaultAssignee = user1;
 		project2.id = 'e040e267-3533-4579-93fa-e749ca93f72f';
+		project2.color = '#7ffa7f';
 		await getRepository('Projects').save([project1, project2]);
 
 		await getRepository('Sprint').save([

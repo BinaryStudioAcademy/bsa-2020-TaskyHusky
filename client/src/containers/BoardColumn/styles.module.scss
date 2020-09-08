@@ -14,11 +14,19 @@
 	max-height: calc(100vh - 380px);
 }
 
-
-.contentBtn {
-	@include content-btn;
-	margin-right: 10px !important;
+.createBtn {
+	border: 1px solid $content-btn-bg !important;
+	box-sizing: border-box;
 	margin-top: 10px !important;
+	padding: 5px 7px;
+	border-radius: 5px;
+	margin: 0 0 -7px -7px;
+	@include text-data;
+
+	&:hover {
+		border: 1px solid $border !important;
+		background-color: $border !important;
+	}
 }
 
 .wrapper {

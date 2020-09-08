@@ -9,6 +9,7 @@ import { Projects } from '../entity/Projects';
 import { ProjectsRepository } from '../repositories/projects.repository';
 import { ErrorResponse } from '../helpers/errorHandler.helper';
 import HttpStatusCode from '../constants/httpStattusCode.constants';
+import { getWebError } from '../helpers/error.helper';
 
 class ProjectsController {
 	getAllProjects = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -38,6 +39,21 @@ class ProjectsController {
 			res.send(project);
 		} catch (err) {
 			next(new ErrorResponse(HttpStatusCode.NOT_FOUND, projectsErrorMessages.PROJECT_NOT_FOUND));
+		}
+	};
+
+	getRecentProjects = async (req: Request, res: Response): Promise<void> => {
+		const projectsRepository = getCustomRepository(ProjectsRepository);
+
+		try {
+			const {
+				user: { id: userId },
+			} = req;
+
+			const result = await projectsRepository.getRecentProjects(userId);
+			res.send(result);
+		} catch (err) {
+			res.status(500).send(getWebError(err, 500));
 		}
 	};
 

@@ -21,8 +21,12 @@ const WorkOnCard: React.FC<Props> = (props: Props) => {
 				content={`${t('project')}: ${project.name}`}
 				trigger={
 					<Link to={`/project/${project.id}/issues`}>
-						<div className={styles.avatar}>
-							<p className={styles.avatarTitle}>{project.name[0]}</p>
+						<div className={styles.avatar} style={{ backgroundColor: project.color ?? '#676f74' }}>
+							{project.icon ? (
+								<img src={project.icon} className={styles.img} alt="avatar" />
+							) : (
+								<p className={styles.avatarTitle}>{project.name[0]}</p>
+							)}
 						</div>
 					</Link>
 				}

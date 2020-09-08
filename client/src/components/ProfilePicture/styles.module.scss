@@ -31,7 +31,6 @@
 }
 
 .avatarContainer {
-  background-color: $body-bg;
   width: 150px;
   height: 150px;
   display: flex;
@@ -39,6 +38,12 @@
   align-items: center;
   border-radius: 50%;
   margin: 0 auto;
+
+  &:hover {
+    .borderHelper {
+      background-color: rgba(9, 30, 66, 0.36);
+    }
+  }
 }
 
 .username {
@@ -56,11 +61,10 @@
 }
 
 .borderHelper {
-  width: 144px;
-  height: 144px;
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
   overflow: hidden;
-  background: rgba(9, 30, 66, 0.36);
   display: flex;
   align-items: center;
   justify-content: center;

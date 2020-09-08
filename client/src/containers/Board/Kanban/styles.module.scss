@@ -63,7 +63,6 @@
 	@include cancel-btn;
 	padding-top: 9px !important;
 	padding-bottom: 9px !important;
-	width: 95px !important;
 }
 
 .contentBtn {
@@ -89,7 +88,6 @@
 // }
 
 @media screen and (max-width: $mobile-screen) {
-
 	.inlineContainer,
 	.headerWrapper {
 		display: block;

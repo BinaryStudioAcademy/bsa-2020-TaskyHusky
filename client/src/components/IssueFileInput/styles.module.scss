@@ -1,4 +1,4 @@
-@mixin button($border, $background: white) {
+@mixin button($border, $background: white, $height: min-content) {
 	padding: 10px 20px;
 	border: $border;
 	color: #333;
@@ -6,6 +6,11 @@
 	text-align: center;
 	background-color: $background;
 	border-radius: 5px;
+	height: $height;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 }
 
 :local(.button) {
@@ -14,6 +19,10 @@
 
 :local(.dragOverButton) {
 	@include button(1px solid #000, #0f06);
+}
+
+:local(.high) {
+	@include button(1px dashed #888, white, 150px);
 }
 
 :local(.controlsContainer) {

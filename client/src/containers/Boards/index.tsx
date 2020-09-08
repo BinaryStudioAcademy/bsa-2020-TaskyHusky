@@ -14,6 +14,7 @@ import { useTranslation } from 'react-i18next';
 import Spinner from '../../components/common/Spinner';
 import UserAvatar from 'components/common/UserAvatar';
 import FiltersHeader from 'components/FiltersHeader';
+import historyHelper from 'helpers/history.helper';
 
 const Boards: React.FC = () => {
 	const { t } = useTranslation();
@@ -59,7 +60,7 @@ const Boards: React.FC = () => {
 
 	const getBoardMenuActions = (board: WebApi.Board.IBoardModel): ConfigItem[] => [
 		{
-			onClickAction: () => {},
+			onClickAction: () => historyHelper.push(`/board/${board.id}/columnsSettings`),
 			id: board.id,
 			text: t('edit_settings'),
 		},

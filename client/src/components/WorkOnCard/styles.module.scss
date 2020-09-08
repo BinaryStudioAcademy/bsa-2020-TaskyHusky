@@ -3,7 +3,6 @@
 .avatar {
   min-width: 50px;
   height: 50px;
-  background: #FF4C60;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -33,6 +32,13 @@
   border-bottom: 1px solid $border;
   padding-bottom: 5px;
   margin-left: 30px;
+}
+
+.img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 50%;
 }
 
 .mainInfo {

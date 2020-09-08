@@ -35,10 +35,19 @@ const TeamAddPeopleModal = ({ onConfirm, onClose, search, searchLoading, people,
 
 	const resultRender = (value: any): React.ReactElement => {
 		if (value.data) {
-			const { firstName, lastName, id, email, avatar } = value.data as WebApi.Entities.UserProfile;
+			const { firstName, lastName, id, email, avatar, color } = value.data as WebApi.Entities.UserProfile;
 			const isFoundUserExist = chosenUsers.find((el: WebApi.Entities.UserProfile) => el.id === id);
 			if (!isFoundUserExist) {
-				return <ResultPeople id={id} firstName={firstName} lastName={lastName} email={email} avatar={avatar} />;
+				return (
+					<ResultPeople
+						id={id}
+						firstName={firstName}
+						lastName={lastName}
+						email={email}
+						avatar={avatar}
+						color={color}
+					/>
+				);
 			}
 		}
 		return <div> {t('no_results_found')}</div>;

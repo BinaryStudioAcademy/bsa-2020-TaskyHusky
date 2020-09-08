@@ -10,11 +10,13 @@ import { getInitials } from 'helpers/getInitials.helper';
 import CropModal from 'components/CropModal';
 import { base64StringtoFile, extractImageFileExtensionFromBase64 } from 'helpers/canvas.helper';
 import { ModeManager } from 'containers/ProfilePage';
+import { defaultAvatarBg } from 'constants/defaultColors';
 
 interface Props {
 	firstName: string;
 	lastName: string;
 	username: string;
+	color: string;
 	avatar: string;
 	editMode: string;
 	isCurrentUser: boolean;
@@ -25,7 +27,7 @@ const ProfilePicture: React.FC<Props> = (props: Props) => {
 	const dispatch = useDispatch();
 	const { t } = useTranslation();
 	const { avatar } = useSelector((state: RootState) => state.user);
-	const { firstName, lastName, username, editMode, isCurrentUser, showManager } = props;
+	const { firstName, lastName, username, editMode, isCurrentUser, showManager, color } = props;
 	const [uploadUrl, setUploadUrl] = useState<ArrayBuffer | string | null>('');
 	const [imgSrcExt, setImgSrcExt] = useState<string | null>(null);
 
@@ -62,7 +64,7 @@ const ProfilePicture: React.FC<Props> = (props: Props) => {
 			<div className={styles.container}>
 				{uploadUrl && <CropModal uploadUrl={uploadUrl as string} onClose={onClose} saveCrop={saveCrop} />}
 				<div className={styles.mainInfo}>
-					<div className={styles.avatarContainer}>
+					<div className={styles.avatarContainer} style={{ backgroundColor: color ?? defaultAvatarBg }}>
 						<div className={styles.borderHelper}>
 							{avatar ? (
 								<img src={avatar} className={styles.avatar} alt="Avatar" />

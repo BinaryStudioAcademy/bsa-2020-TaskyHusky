@@ -20,6 +20,6 @@ export const sidebarItems = [
 	},
 	{
 		section: SETTINGS_SECTION.reports,
-		icon: 'chart line icon',
+		icon: 'chart line',
 	},
 ];

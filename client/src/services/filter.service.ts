@@ -90,3 +90,21 @@ export const deleteFilter = async (id: string): Promise<WebApi.Entities.Filter> 
 
 	return (await res.json()) as WebApi.Entities.Filter;
 };
+
+export const getRecentFilters = async (): Promise<WebApi.Entities.Filter[]> => {
+	const res: Response = await callWebApi({
+		method: 'GET',
+		endpoint: 'filter/recent',
+	});
+
+	return (await res.json()) as WebApi.Entities.Filter[];
+};
+
+export const getFavFilters = async (): Promise<WebApi.Entities.Filter[]> => {
+	const res: Response = await callWebApi({
+		method: 'GET',
+		endpoint: 'filter/favorite',
+	});
+
+	return (await res.json()) as WebApi.Entities.Filter[];
+};
