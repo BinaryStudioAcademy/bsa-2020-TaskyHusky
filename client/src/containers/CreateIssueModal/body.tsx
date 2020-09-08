@@ -248,7 +248,7 @@ const CreateIssueModalBody: React.FC<Props> = ({
 							className="formSelect"
 							placeholder={t('labels')}
 							options={labelOpts}
-							onChange={(event, data) => context.set('labels', data.value)}
+							onChange={(event, data) => context.set('labels', data.value as string)}
 						/>
 					</Form.Field>
 					<Divider />
@@ -260,7 +260,7 @@ const CreateIssueModalBody: React.FC<Props> = ({
 							className="formSelect"
 							placeholder={t('assigned')}
 							options={usersOpts}
-							onChange={(event, data) => context.set('assigned', data.value)}
+							onChange={(event, data) => context.set('assigned', data.value as string)}
 						/>
 					</Form.Field>
 					<Form.Field>
