@@ -4,13 +4,13 @@ import styles from './styles.module.scss';
 import AssigneeAvatar from './AssigneeAvatar/index';
 import { DroppableProvided, Draggable, Droppable } from 'react-beautiful-dnd';
 import { useTranslation } from 'react-i18next';
-// WILL BE DISCUSSED WITH ROMAN MELAMUD
-// import { useIO } from 'hooks/useIO';
+import { useIO } from 'hooks/useIO';
 
 interface Props {
 	issues: WebApi.Entities.Issue[];
 	sprintId?: string;
 	boardId: string;
+	isCompleted?: boolean;
 	sprintName: string;
 }
 interface DragProps {
@@ -28,46 +28,45 @@ export const SprintIssues: React.FC<Props & DragProps> = (props: Props & DragPro
 		setIssues(props.issues);
 	}, [props.issues]);
 
-	// WILL BE DISCUSSED WITH ROMAN MELAMUD
-	// useIO(WebApi.IO.Types.Issue, (io) => {
-	// 	io.on(WebApi.IO.IssueActions.CreateIssue, (newIssue: WebApi.Entities.Issue) => {
-	// 		const forThisSprint = newIssue.sprint?.id === props.sprintId;
-	// 		const forThisBoard = newIssue.board?.id === props.boardId;
-	// 		const canAddIssue = newIssue.sprint ? forThisSprint : forThisBoard;
+	useIO(WebApi.IO.Types.Issue, (io) => {
+		io.on(WebApi.IO.IssueActions.CreateIssue, (newIssue: WebApi.Entities.Issue) => {
+			const forThisSprint = newIssue.sprint?.id === props.sprintId;
+			const forThisBoard = newIssue.board?.id === props.boardId;
+			const canAddIssue = newIssue.sprint ? forThisSprint : forThisBoard;
 
-	// 		if (canAddIssue) {
-	// 			setIssues([...issues, newIssue]);
-	// 		}
-	// 	});
+			if (canAddIssue) {
+				setIssues([...issues, newIssue]);
+			}
+		});
 
-	// 	io.on(WebApi.IO.IssueActions.UpdateIssue, (id: string, newIssue: WebApi.Entities.Issue) => {
-	// 		const index = issues.findIndex((issue) => issue.id === id);
+		io.on(WebApi.IO.IssueActions.UpdateIssue, (id: string, newIssue: WebApi.Entities.Issue) => {
+			const index = issues.findIndex((issue) => issue.id === id);
 
-	// 		if (index > -1) {
-	// 			const newIssues = [...issues];
+			if (index > -1) {
+				const newIssues = [...issues];
 
-	// 			if (newIssue.sprint?.id === props.sprintId) {
-	// 				newIssues[index] = newIssue;
-	// 			} else {
-	// 				newIssues.splice(index, 1);
-	// 			}
+				if (newIssue.sprint?.id === props.sprintId) {
+					newIssues[index] = newIssue;
+				} else {
+					newIssues.splice(index, 1);
+				}
 
-	// 			setIssues(newIssues);
-	// 		} else if (newIssue.sprint?.id === props.sprintId) {
-	// 			setIssues([...issues, newIssue]);
-	// 		}
-	// 	});
+				setIssues(newIssues);
+			} else if (newIssue.sprint?.id === props.sprintId) {
+				setIssues([...issues, newIssue]);
+			}
+		});
 
-	// 	io.on(WebApi.IO.IssueActions.DeleteIssue, (id: string) => {
-	// 		const index = issues.findIndex((issue) => issue.id === id);
+		io.on(WebApi.IO.IssueActions.DeleteIssue, (id: string) => {
+			const index = issues.findIndex((issue) => issue.id === id);
 
-	// 		if (index > -1) {
-	// 			const newIssues = [...issues];
-	// 			newIssues.splice(index, 1);
-	// 			setIssues(newIssues);
-	// 		}
-	// 	});
-	// });
+			if (index > -1) {
+				const newIssues = [...issues];
+				newIssues.splice(index, 1);
+				setIssues(newIssues);
+			}
+		});
+	});
 
 	const renderIssues = (dropProvided: DroppableProvided) => {
 		return (

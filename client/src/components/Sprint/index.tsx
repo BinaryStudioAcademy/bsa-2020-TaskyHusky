@@ -45,6 +45,7 @@ export const Sprint: React.FC<Props & DragProps> = (props: Props & DragProps) =>
 				sprintId={props.sprint?.id ?? 'backlog'}
 				boardId={props.boardId}
 				sprintName={props.sprint?.sprintName ?? t('backlog')}
+				isCompleted={props.sprint?.isCompleted}
 				listId={props.listId}
 				listType={props.listType}
 			/>
