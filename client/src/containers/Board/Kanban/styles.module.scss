@@ -10,6 +10,11 @@
 	padding-right: 25px;
 }
 
+:local(.outerContainer) {
+	height: 100%;
+	display: flex;
+}
+
 :local(.column) {
 	min-width: 300px;
 	margin-right: 25px;
@@ -32,10 +37,10 @@
 }
 
 :local(.wrapper) {
-	max-width: 94vw;
 	margin-top: 0px;
 	padding-top: 20px;
 	padding-left: 60px;
+	width: calc(94vw - 250px);
 }
 
 .headerWrapper {

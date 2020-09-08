@@ -51,7 +51,7 @@ const ScrumBoardSidebar: React.FC<Props> = (props) => {
 						<img className={styles.header__img} src={project.icon} alt="Project avatar" />
 						<div className={styles.header__info_container}>
 							<span className={styles.header__name}>{project.name}</span>
-							<span className={styles.header__type}>Software project</span>
+							<span className={styles.header__type}>{project.category} project</span>
 						</div>
 					</div>
 				</div>

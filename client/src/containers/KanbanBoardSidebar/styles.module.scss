@@ -1,0 +1,63 @@
+@import '../../styles/variables.scss';
+
+.sidebar {
+	width: 250px;
+	background-color: #000;
+	color: white;
+
+	.sidebarHeader {
+		display: flex;
+		align-items: center;
+		padding: 16px 12px 0;
+
+		.projectAvatar {
+			$wh: 30px;
+			width: $wh;
+			height: $wh;
+			border-radius: 3px;
+			margin-right: 14px;
+		}
+
+		.sidebarHeaderText {
+			display: flex;
+			flex-direction: column;
+			justify-content: space-around;
+
+			.projectName {
+				font-weight: bold;
+			}
+
+			.projectCategory {
+				color: #aaa;
+				font-size: 12px;
+			}
+		}
+	}
+
+	.sidebarBody {
+		padding: 12px;
+
+		.sidebarSection {
+			padding: 10px 12px 8px;
+			border-radius: 5px;
+
+			:global(.icon) {
+				margin-right: 10px;
+			}
+
+			.sidebarSectionContent {
+				border-bottom: 2px solid transparent;
+				font-weight: bold;
+
+				&.activeSection {
+					border-bottom: 2px solid $yellow;
+				}
+			}
+
+			&:hover {
+				background-color: $yellow;
+				color: black;
+			}
+		}
+	}
+}
