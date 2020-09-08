@@ -97,11 +97,13 @@ const CreateIssueModalBody: React.FC<Props> = ({
 		text: <Label style={{ backgroundColor: label.backgroundColor, color: label.textColor }}>{label.text}</Label>,
 	}));
 
-	const projectsOpts: SelectOption[] = projects.map((project) => ({
-		key: project.id,
-		value: project.id,
-		text: project.name,
-	}));
+	const projectsOpts: SelectOption[] = projects
+		.filter((p) => (boardID ? p.boards?.find((b) => b.id === boardID) : true))
+		.map((project) => ({
+			key: project.id,
+			value: project.id,
+			text: project.name,
+		}));
 
 	const usersOpts: SelectOption[] = users.map((user) => ({
 		key: user.id,

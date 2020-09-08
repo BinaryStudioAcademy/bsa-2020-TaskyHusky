@@ -6,7 +6,7 @@ import { DragDropContext, OnDragEndResponder } from 'react-beautiful-dnd';
 import styles from './styles.module.scss';
 import { extractIdFormDragDropId } from 'helpers/extractId.helper';
 import { getByKey, updateIssueByKey } from 'services/issue.service';
-import { Form, Button, Breadcrumb, Segment, Icon } from 'semantic-ui-react';
+import { Form, Breadcrumb, Segment, Icon } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 import { convertIssueResultToPartialIssue } from 'helpers/issueResultToPartialIssue';
 import CreateColumnModal from 'containers/CreateColumnModal';
@@ -76,9 +76,6 @@ const Kanban: BoardComponent = ({ board }) => {
 						onChange={(event, data) => setSearch(data.value)}
 						className={styles.searchInput}
 					/>
-					<Button onClick={() => setSearch('')} className={styles.cancelBtn}>
-						{t('clear')}
-					</Button>
 				</div>
 				<Link className={styles.linkSettings} to={`/board/${board.id}/columnsSettings`}>
 					{t('go_to_columns_settings')}
