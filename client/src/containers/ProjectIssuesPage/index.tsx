@@ -5,16 +5,15 @@ import { useTranslation } from 'react-i18next';
 import ProjectIssuesColumn from 'components/ProjectIssuesColumn';
 import { getByKey } from 'services/issue.service';
 import Board from 'containers/Board';
-import styles from './styles.module.scss';
 import IssuePageInfoColumn from 'components/IssuePageInfoColumn';
 import { convertIssueResultToPartialIssue } from 'helpers/issueResultToPartialIssue';
-import Spinner from 'components/common/Spinner';
 
 interface Props {
 	projectId: string;
+	strict?: boolean;
 }
 
-const ProjectIssuesPage: React.FC<Props> = ({ projectId }) => {
+const ProjectIssuesPage: React.FC<Props> = ({ projectId, strict }) => {
 	const [project, setProject] = useState<WebApi.Entities.Projects | null>(null);
 	const [selectedIssueKey, setSelectedIssueKey] = useState<string | null>(null);
 	const [selectedIssue, setSelectedIssue] = useState<WebApi.Result.IssueResult | null>(null);
@@ -35,10 +34,10 @@ const ProjectIssuesPage: React.FC<Props> = ({ projectId }) => {
 	}, [selectedIssueKey]);
 
 	if (!project) {
-		return <Spinner />;
+		return null;
 	}
 
-	if (project.boards && project.boards.length > 0) {
+	if (project.boards && project.boards.length > 0 && !strict) {
 		return <Board boardId={project.boards[0].id} />;
 	}
 
@@ -51,13 +50,9 @@ const ProjectIssuesPage: React.FC<Props> = ({ projectId }) => {
 					{t('issues')}
 				</Header>
 				<Breadcrumb style={{ ...leftPadded, marginBottom: 20 }}>
-					<Breadcrumb.Section href="/projects">
-						<span className={styles.link}>{t('projects')}</span>
-					</Breadcrumb.Section>
-					<Breadcrumb.Divider />
-					<Breadcrumb.Section link>
-						<span className={styles.link}>{project.name}</span>
-					</Breadcrumb.Section>
+					<Breadcrumb.Section href="/projects">{t('projects')}</Breadcrumb.Section>
+					<Breadcrumb.Divider>&nbsp;/&nbsp;</Breadcrumb.Divider>
+					<Breadcrumb.Section active>{project.name}</Breadcrumb.Section>
 				</Breadcrumb>
 				<Form>
 					<Form.Group>
