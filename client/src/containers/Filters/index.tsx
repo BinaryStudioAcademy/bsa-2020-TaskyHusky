@@ -19,6 +19,7 @@ const Filters: React.FC = () => {
 	const { user } = useSelector((rootState: RootState) => rootState.auth);
 	const [isTableEmpty, setIsTableEmpty] = useState(false);
 	const [searchName, setSearchName] = useState<string>('');
+	console.log(filters);
 
 	const filterFilters = () => {
 		if (searchName === '') {
