@@ -447,4 +447,9 @@ export const ua = {
 	click_here_to_add_attachment: 'Натисніть, щоб додати файл...',
 	no_more_labels: 'Більше нема міток. TIP: Щоб отримати доступ до міток, треба обрати проект',
 	column: 'Колонка',
+	you_current_location: 'Ваше поточне місцерозташування ',
+	you_have_not_specify_location: 'Вы ще не вказали ваше місцерозташування',
+	choose_your_location: 'Виберіть ваше місцерозташування',
+	apply_current_location: 'Знайти поточне місцерозташування',
+	apply_this_location: 'Вибрати це місцерозташування',
 };

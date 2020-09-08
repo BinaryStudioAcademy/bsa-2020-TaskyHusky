@@ -43,7 +43,7 @@ export class TeamRepository extends Repository<Team> {
 				'User.lastName',
 				'User.email',
 				'User.jobTitle',
-				'User.location',
+				'User.address',
 				'User.avatar',
 				'User.department',
 				'Users.id',
@@ -52,7 +52,7 @@ export class TeamRepository extends Repository<Team> {
 				'Users.lastName',
 				'Users.email',
 				'Users.jobTitle',
-				'Users.location',
+				'Users.address',
 				'Users.avatar',
 				'Users.department',
 			])

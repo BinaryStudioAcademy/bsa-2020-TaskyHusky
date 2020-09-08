@@ -455,4 +455,9 @@ export const ru = {
 	click_here_to_add_attachment: 'Нажмите, чтобы добавить файл...',
 	no_more_labels: 'Больше нет меток. TIP: Чтобы получить доступ к меткам, нужно выбрать проект',
 	column: 'Колонка',
+	you_current_location: 'Ваше текущее местоположение ',
+	you_have_not_specify_location: 'Вы еще не указали ваше местоположение',
+	choose_your_location: 'Выберите ваше местоположение',
+	apply_current_location: 'Найти текущее местоположение',
+	apply_this_location: 'Выбрать это местоположение',
 };

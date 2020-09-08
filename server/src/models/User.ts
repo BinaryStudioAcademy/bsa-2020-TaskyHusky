@@ -17,7 +17,9 @@ export interface UserModel {
 	color: string;
 	username?: string;
 	avatar?: string;
-	location?: string;
+	address?: string;
+	lat?: number;
+	lng?: number;
 	department?: string;
 	organization?: string;
 	jobTitle?: jobTitle;

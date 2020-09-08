@@ -16,7 +16,7 @@ type UserModel = {
 	firstName: string;
 	lastName: string;
 	avatar: string;
-	location?: string;
+	address?: string;
 	department?: string;
 	jobTitle?: string;
 	color?: string;
@@ -59,10 +59,10 @@ const ModalViewProfile = ({ user, onClose }: Props) => {
 									<img src={toolbox} alt="icon" className={styles.iconEmail} />
 									<span className={styles.user_field}>{user.email}</span>
 								</span>
-								{user.location && (
+								{user.address && (
 									<span className={styles.field}>
 										<img src={reorder} alt="icon" className={styles.iconDep} />
-										<span className={styles.user_field}>{user.location}</span>
+										<span className={styles.user_field}>{user.address}</span>
 									</span>
 								)}
 								{user.department && (
