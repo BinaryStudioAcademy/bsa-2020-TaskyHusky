@@ -167,7 +167,7 @@ const Scrum: BoardComponent = (props) => {
 		case `/board/${board.id}/${SETTINGS_SECTION.issues}`:
 			renderComponent =
 				board.projects && board.projects.length ? (
-					<ProjectIssuesPage projectId={board.projects[0].id} strict />
+					<ProjectIssuesPage projectId={board.projects[0].id} strict noSidebar />
 				) : (
 					renderScrumBoard
 				);
