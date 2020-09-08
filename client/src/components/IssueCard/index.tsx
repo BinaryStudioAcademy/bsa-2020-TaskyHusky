@@ -74,10 +74,14 @@ const IssueCard: React.FC<Props> = ({ issue, index, noDrag, noRedirect, selectab
 						title={issue.priority.title}
 					/>
 				</div>
-				<div className={styles.meta}>
-					<UserAvatar user={issue.creator} small />
-					{getUsername(issue.creator)}
-				</div>
+				{issue.assigned ? (
+					<div className={styles.meta}>
+						<UserAvatar user={issue.assigned} small />
+						{getUsername(issue.assigned)}
+					</div>
+				) : (
+					''
+				)}
 			</div>
 		</Segment>
 	);
