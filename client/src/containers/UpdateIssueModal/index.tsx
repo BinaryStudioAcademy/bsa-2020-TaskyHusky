@@ -314,6 +314,8 @@ const UpdateIssueModal: React.FC<Props> = ({
 							className="standartInput"
 							placeholder={t('description')}
 							defaultValue={current.description}
+							style={{ resize: 'none' }}
+							rows={4}
 							onChange={(event, data) =>
 								data ? context.set('description', data.value as string) : context.set('description', '')
 							}
