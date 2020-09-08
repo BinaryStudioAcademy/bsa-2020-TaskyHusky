@@ -1,0 +1,132 @@
+@import 'styles/mixins.scss';
+
+.header_inner__container {
+	padding: 10px 0px 20px;
+	position: relative;
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 10px;
+}
+
+.header_inner__title {
+	font-size: 24px;
+	margin: 0;
+	line-height: 1;
+}
+
+.body_inner__container {
+	margin: 0 20%;
+}
+
+.body_inner__find,
+.modal__find {
+	width: 100%;
+}
+
+.table__header_cell {
+	background-color: #f9fafb !important;
+	border-left: none !important;
+}
+
+.user__username {
+	display: flex;
+	align-items: center;
+	width: 100%;
+}
+
+.user__email {
+	width: 44%;
+}
+
+.user__action {
+	width: 84px;
+}
+
+.column__name,
+.column__email {
+	width: 40%;
+}
+
+
+.imgWrapper {
+	margin-bottom: 10px;
+
+	.content {
+		display: flex;
+		flex-direction: column;
+		width: 240px;
+
+		.img {
+			max-width: 200px;
+			margin: 10px;
+		}
+
+		.text {
+			text-align: center;
+		}
+	}
+}
+
+.label__example {
+	display: block;
+	min-height: 47px;
+}
+
+.label__example_title {
+	margin-right: 5px;
+	margin-bottom: 0;
+	@include label;
+}
+
+.labels__list_actions {
+	display: flex;
+}
+
+.button__delete_action,
+.button__edit_action {
+	box-shadow: none !important;
+	padding: 0 !important;
+	border: none;
+	background-color: transparent !important;
+
+	&:hover {
+		background-color: transparent !important;
+		color: black !important;
+	}
+}
+
+.button__delete_action {
+	margin: 0 !important;
+}
+
+.table {
+	table-layout: fixed;
+}
+
+.table__column_actions {
+	width: 220px !important;
+}
+
+.table__name_container {
+	padding-top: 13px !important;
+}
+
+.label__container {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}
+
+.label__list {
+	list-style: none;
+	padding-left: 0;
+	width: 300px;
+	margin-bottom: 25px;
+	margin-top: 0;
+}
+
+.label__list_item {
+	display: flex;
+	margin-bottom: 10px;
+}
+

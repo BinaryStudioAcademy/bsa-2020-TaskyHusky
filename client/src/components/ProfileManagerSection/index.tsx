@@ -4,28 +4,29 @@ import ProfileManager from 'components/ProfileManager';
 import SecurityManager from 'components/SecurityManager';
 import EmailManager from 'components/EmailManager';
 import AccountManager from 'components/AccountManager';
+import { ModeManager } from 'containers/ProfilePage';
 
 interface Props {
 	user: UserProfileState;
-	showManager: (modeToShow: string) => void;
+	editMode: string;
+	showManager: (modeToShow: ModeManager) => void;
 	updateUser: (changedUser: Partial<UserProfileState>) => void;
 }
 
 const ProfileManagerSection: React.FC<Props> = (props: Props) => {
-	const { user, showManager, updateUser } = props;
-	const { editMode } = user;
+	const { user, showManager, updateUser, editMode } = props;
 	switch (editMode) {
-		case 'profile':
+		case ModeManager.profile:
 			return <ProfileManager showManager={showManager} updateUser={updateUser} user={user} />;
-		case 'email':
+		case ModeManager.email:
 			return <EmailManager />;
-		case 'security':
+		case ModeManager.security:
 			return <SecurityManager />;
-		case 'account':
+		case ModeManager.account:
 			return <AccountManager />;
-		case 'back':
+		case ModeManager.main:
 		default:
-			return <>{showManager('')}</>;
+			return <>{showManager(ModeManager.main)}</>;
 	}
 };
 

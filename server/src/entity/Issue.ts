@@ -18,6 +18,7 @@ import { BoardColumn } from './BoardColumn';
 import { Sprint } from './Sprint';
 import { Projects } from './Projects';
 import { Board } from './Board';
+import { ProjectLabel } from './ProjectLabel';
 
 @Entity()
 export class Issue {
@@ -41,8 +42,9 @@ export class Issue {
 	@ManyToOne((type) => Board, (board) => board.issues, { onDelete: 'CASCADE' })
 	board?: Board;
 
-	@Column({ array: true })
-	labels?: string;
+	@ManyToMany((type) => ProjectLabel, (label) => label.issues)
+	@JoinTable()
+	labels?: ProjectLabel[];
 
 	@Column({ array: true, nullable: true })
 	@IsArray()
@@ -84,6 +86,9 @@ export class Issue {
 
 	@UpdateDateColumn({ type: 'date' })
 	updatedAt?: Date;
+
+	@Column({ type: 'date', default: null, nullable: true })
+	completedAt?: Date;
 
 	@Column({ nullable: true })
 	@IsInt()

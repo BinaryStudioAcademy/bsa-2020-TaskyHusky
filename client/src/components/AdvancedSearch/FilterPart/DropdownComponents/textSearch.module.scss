@@ -1,0 +1,49 @@
+@import 'styles/variables.scss';
+@import 'styles/mixins.scss';
+
+.container {
+	padding: 5px 8px 5px 10px !important;
+	white-space: nowrap !important;
+	text-overflow: ellipsis !important;
+	overflow-x: hidden !important;
+	max-width: 320px !important;
+}
+.container_focused {
+	padding: 0 !important;
+	white-space: nowrap !important;
+	text-overflow: ellipsis !important;
+	overflow-x: hidden !important;
+	max-width: 320px !important;
+}
+
+.container_hovered {
+	padding: 5px 8px 5px 10px !important;
+	white-space: nowrap !important;
+	text-overflow: ellipsis !important;
+	overflow-x: hidden !important;
+	max-width: 320px !important;
+
+	cursor: pointer;
+	box-shadow: none !important;
+	background: #505f79 !important;
+	color: #f4f5f7 !important;
+	border: none !important;
+	border-radius: 3px 3px !important;
+}
+
+.textPlaceholder {
+	padding: 0 !important;
+	white-space: nowrap !important;
+	text-overflow: ellipsis !important;
+	overflow-x: hidden !important;
+	max-width: 200px !important;
+}
+
+.seachInput_focused {
+	> input {
+		border: 1px solid #dfe1e6 !important;
+		background: $body-bg !important;
+		padding: 5px 8px 5px 10px !important;
+		max-width: 200px;
+	}
+}

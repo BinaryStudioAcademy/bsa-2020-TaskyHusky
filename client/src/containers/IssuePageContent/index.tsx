@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Comment } from 'semantic-ui-react';
+import { Comment, Icon, Menu } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 import IssueCommentForm from 'components/IssueCommentForm';
 import { getComments, getCommits } from 'services/issue.service';
@@ -11,6 +11,10 @@ import IssuePageInfoColumn from 'components/IssuePageInfoColumn';
 import { useIO } from 'hooks/useIO';
 import IssueCommit from '../../components/IssueCommit/issueCommit';
 import { convertIssueResultToPartialIssue } from 'helpers/issueResultToPartialIssue';
+import Spinner from 'components/common/Spinner';
+import { Redirect } from 'react-router-dom';
+import SmallEditForm from './SmallEditForm';
+import { SemanticICONS, SemanticCOLORS } from 'semantic-ui-react/dist/commonjs/generic';
 
 interface Props {
 	issue: WebApi.Result.IssueResult;
@@ -23,8 +27,7 @@ enum MenuStates {
 }
 
 const IssuePageContent: React.FC<Props> = ({ issue: givenIssue }) => {
-	const [menuState, setMenuState] = useState<MenuStates>(MenuStates.none);
-
+	const [menuState, setMenuState] = useState<MenuStates>(MenuStates.commentsShown);
 	const [issue, setIssue] = useState<WebApi.Result.IssueResult>(givenIssue);
 	const [comments, setComments] = useState<WebApi.Result.IssueCommentResult[]>([]);
 	const [commits, setCommits] = useState<WebApi.Result.CommitResult[]>([]);
@@ -79,46 +82,56 @@ const IssuePageContent: React.FC<Props> = ({ issue: givenIssue }) => {
 		}
 	}, [mustFetchComments, issue.id, issue.summary]);
 
-	if (mustFetchComments || !authData.user) {
-		return null;
+	if (!authData.user) {
+		return <Redirect to="/login" />;
+	}
+
+	if (mustFetchComments) {
+		return <Spinner />;
 	}
 
 	return (
-		<div className={`fill ${styles.container}`} style={{ position: 'relative' }}>
+		<div className={`fill ${styles.container}`} style={{ display: 'flex', justifyContent: 'center' }}>
 			<div className={styles.innerContainer}>
 				<h4>
-					<span style={{ fontWeight: 400 }}>#{issue.issueKey}</span>
+					<Icon
+						name={issue.type.icon as SemanticICONS}
+						title={`${t('type')}: ${issue.type.title}`}
+						color={issue.type.color as SemanticCOLORS}
+					/>
+					<span style={{ fontWeight: 400 }}>{issue.issueKey}</span>
 				</h4>
 				<h1>{issue.summary}</h1>
 				<h4>{t('description')}</h4>
-				<p>{issue.description}</p>
-				<Button onClick={() => setMenuState(MenuStates.commentsShown)}>{t('comments')}</Button>
-				<Button onClick={() => setMenuState(MenuStates.commitsShown)}>{t('commits')}</Button>
+				<p>{issue.description || t('no')}</p>
+				<SmallEditForm links={issue.links ?? []} attachments={issue.attachments ?? []} id={issue.id} />
+				<div className="site-header">
+					<Menu className={styles.menu}>
+						<Menu.Item
+							onClick={() => setMenuState(MenuStates.commentsShown)}
+							className={styles.item}
+							active={menuState === MenuStates.commentsShown}
+						>
+							{t('comments')}
+						</Menu.Item>
+						<Menu.Item
+							onClick={() => setMenuState(MenuStates.commitsShown)}
+							className={styles.item}
+							active={menuState === MenuStates.commitsShown}
+						>
+							{t('commits')}
+						</Menu.Item>
+					</Menu>
+				</div>
 				{menuState === MenuStates.commitsShown && (
-					<Comment.Group
-						style={{
-							maxHeight: '50vh',
-							overflowY: 'auto',
-							width: '100%',
-							maxWidth: '100%',
-							marginBottom: 20,
-						}}
-					>
-						{commits.map((commit) => (
-							<IssueCommit commit={commit} key={commit.hash} />
-						))}
+					<Comment.Group className={styles.scrollable}>
+						{commits.length
+							? commits.map((commit) => <IssueCommit commit={commit} key={commit.hash} />)
+							: t('no')}
 					</Comment.Group>
 				)}
 				{menuState === MenuStates.commentsShown && (
-					<Comment.Group
-						style={{
-							maxHeight: '50vh',
-							overflowY: 'auto',
-							width: '100%',
-							maxWidth: '100%',
-							marginBottom: 20,
-						}}
-					>
+					<Comment.Group className={styles.scrollable}>
 						{comments.map((comment) => (
 							<IssueComment comment={comment} key={comment.id} />
 						))}

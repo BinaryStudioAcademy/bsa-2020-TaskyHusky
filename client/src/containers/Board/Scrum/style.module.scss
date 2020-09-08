@@ -1,3 +1,5 @@
+@import 'styles/mixins.scss';
+
 :global(#root) {
 	.breadcrumb {
 		margin-top: 25px;
@@ -7,13 +9,14 @@
 	.inlineContainer {
 		display: flex;
 		align-items: center;
-		margin: 20px 0 10px 15px;
+		margin: 20px 0 10px 0;
 
 		* {
 			margin: 0 5px !important;
 		}
 
 		.createSprintButton {
+			@include primary-btn;
 			margin-left: auto !important;
 		}
 	}
@@ -30,5 +33,35 @@
 
 	.noSprintsHeader {
 		margin-top: 16px;
+	}
+
+	.scrumHeader {
+		margin-left: 0 !important;
+	}
+}
+
+.container {
+	display: flex;
+	flex-direction: row;
+	height: 100%;
+	max-height: 100vh;
+}
+
+.innerContainer {
+	width: 100vw;
+	padding: 0 10%;
+	max-height: 100vh;
+	overflow-y: scroll;
+}
+
+.cancelBtn {
+	@include cancel-btn;
+	padding-top: 9px !important;
+	padding-bottom: 9px !important;
+}
+
+@media screen and (max-width: $medium-screen) {
+	.container {
+		margin: 25px 8%;
 	}
 }

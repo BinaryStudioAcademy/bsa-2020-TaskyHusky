@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './styles.module.scss';
-import teamIcon from 'icons/profile/teamIcon.svg';
+import teamIcon from 'icons/profile/teams.svg';
 import { Link } from 'react-router-dom';
 
 interface Props {
@@ -24,7 +24,8 @@ const ProfileTeamBlock: React.FC<Props> = (props: Props) => {
 							<span className={styles.contentPrimary}>{item.name}</span>
 						</Link>
 						<span className={styles.contentSecondary}>
-							{item.users?.length} {item.users?.length === 1 ? 'member' : 'members'}
+							{item.users?.length}
+							{item.users?.length === 1 ? ` ${t('member')}` : ` ${t('members_lower')}`}
 						</span>
 					</div>
 				</div>

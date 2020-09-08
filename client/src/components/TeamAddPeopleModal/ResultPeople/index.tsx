@@ -1,12 +1,14 @@
 import React from 'react';
-import { Image } from 'semantic-ui-react';
 import styles from './styles.module.scss';
+import Avatar from 'components/Avatar';
 
-const ResultPeople: React.FC<WebApi.Entities.UserProfile> = ({ firstName, lastName, avatar, email }) => (
+const ResultPeople: React.FC<WebApi.Entities.UserProfile> = ({ firstName, lastName, avatar, email, color }) => (
 	<div className={styles.searchResult}>
-		<Image src={avatar} size="small" rounded centered wrapped />
-		<b>{`${firstName} ${lastName}`}</b>
-		<p className={styles.email}>{email}</p>
+		<div>
+			<b>{`${firstName} ${lastName}`}</b>
+			<p className={styles.email}>{email}</p>
+		</div>
+		<Avatar fullName={`${firstName} ${lastName}`} imgSrc={avatar} color={color} />
 	</div>
 );
 

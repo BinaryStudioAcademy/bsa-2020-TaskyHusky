@@ -2,17 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { Form, TextArea, Button, Icon, Popup, Dropdown } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 import * as actions from '../ProjectSettings/logic/actions';
-
 import styles from './styles.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
 import CustomInput from 'components/common/Input/CustomInput';
-
 import SelectIcon from './selectIcon';
 import { RootState } from 'typings/rootState';
 import { startGettingKeys } from 'containers/CreateProjectModal/logic/actions';
 import { validProjectKey, validProjectName } from 'helpers/validationRules';
 import * as validationMessage from 'constants/ValidationMessages';
+import { Link } from 'react-router-dom';
 
 interface Props {
 	projectData: WebApi.Entities.Projects;
@@ -79,7 +77,7 @@ const ProjectForm = ({ projectData }: Props) => {
 		<div className={styles.form__container}>
 			<Form>
 				<Form.Field className={styles.form__input_key} required>
-					<label className={styles.avatar__label}>{t('name')}</label>
+					<label className="standartLabel">{t('name')}</label>
 					<CustomInput
 						isValidErrorShown={isValidErrorShown}
 						isDataValid={isNameValid}
@@ -93,7 +91,7 @@ const ProjectForm = ({ projectData }: Props) => {
 					/>
 				</Form.Field>
 				<Form.Field className={styles.form__input_key} required>
-					<label>{t('key')}</label>
+					<label className="standartLabel">{t('key')}</label>
 					<div className={styles.form__input_container}>
 						<CustomInput
 							isValidErrorShown={isValidErrorShown}
@@ -121,10 +119,10 @@ const ProjectForm = ({ projectData }: Props) => {
 					onChange={(e) => onProjectChange('url', e.target.value)}
 					value={project.url}
 				/>
-				<Form.Field className={styles.form__input} required>
-					<label>{t('project_category')}</label>
+				<Form.Field className={styles.form__input}>
+					<label className="standartLabel">{t('project_category')}</label>
 					<div className={styles.form__input_container}>
-						<input placeholder={t('category')} disabled />
+						<input className="standartInput" placeholder={t('category')} disabled />
 						<Popup
 							trigger={<Icon name="info circle" className={styles.information__icon} size={'large'} />}
 							position="bottom center"
@@ -133,21 +131,23 @@ const ProjectForm = ({ projectData }: Props) => {
 					</div>
 				</Form.Field>
 				<Form.Field required className={styles.form__input}>
-					<label className={styles.avatar__label}>{t('avatar')}</label>
+					<label className="standartLabel">{t('avatar')}</label>
 					<SelectIcon currentIcon={project.icon} onIconChange={onProjectChange} />
 				</Form.Field>
 				<Form.Field className={styles.form__area}>
-					<label className={styles.avatar__label}>{t('description')}</label>
+					<label className="standartLabel">{t('Description')}</label>
 					<TextArea
+						className={styles.project__description}
 						placeholder={t('project_desc')}
-						rows={'7'}
+						rows={'4'}
 						onChange={(e, data) => onProjectChange('description', data.value?.toString() || '')}
 						value={project.description}
 					/>
 				</Form.Field>
 				<Form.Field className={styles.form__input}>
-					<label className={styles.avatar__label}>{t('lead')}</label>
+					<label className="standartLabel">{t('lead')}</label>
 					<Dropdown
+						className="standartSelect"
 						placeholder={`${project.lead.firstName} ${project.lead.lastName}`}
 						search
 						selection
@@ -157,7 +157,7 @@ const ProjectForm = ({ projectData }: Props) => {
 					/>
 				</Form.Field>
 				<Form.Field className={styles.form__input}>
-					<label className={styles.avatar__label}>{t('default_assignee')}</label>
+					<label className="standartLabel">{t('default_assignee')}</label>
 					<div className={styles.form__input_container}>
 						<Form.Select
 							options={options}
@@ -172,10 +172,12 @@ const ProjectForm = ({ projectData }: Props) => {
 					</div>
 				</Form.Field>
 				<div>
-					<Button primary className={styles.action_button} onClick={onSave}>
+					<Button as={Link} className={[styles.action_button, 'cancelBtn'].join(' ')} to="/projects">
+						{t('cancel')}
+					</Button>
+					<Button className="primaryBtn" onClick={onSave}>
 						{t('save_details')}
 					</Button>
-					<Link to="/projects">{t('cancel')}</Link>
 				</div>
 			</Form>
 		</div>

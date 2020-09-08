@@ -6,26 +6,28 @@ import ProfileContacntBlock from 'components/ProfileContactBlock';
 import ProfileTeamBlock from 'components/ProfileTeamBlock';
 import ManagerAsideBlock from 'components/ManagerAsideBlock';
 import { UserProfileState } from 'containers/ProfilePage/logiс/state';
+import { ModeManager } from 'containers/ProfilePage';
 
 interface Props {
 	isCurrentUser: boolean;
 	teams: Array<WebApi.Entities.Team>;
 	user: Partial<UserProfileState>;
-	showManager: (modeToShow: string) => void;
+	editMode: string;
+	showManager: (modeToShow: ModeManager) => void;
 }
 
 const ProfileAside: React.FC<Props> = (props: Props) => {
-	const { user, isCurrentUser, teams, showManager } = props;
+	const { user, isCurrentUser, teams, showManager, editMode } = props;
 	const {
 		avatar = '',
 		firstName = '',
 		lastName = '',
 		username = '',
-		editMode = '',
 		jobTitle = '',
 		department = '',
 		organization = '',
-		location = '',
+		address = '',
+		color = '',
 	} = user;
 	return (
 		<aside className={styles.userInfo}>
@@ -37,17 +39,18 @@ const ProfileAside: React.FC<Props> = (props: Props) => {
 				editMode={editMode}
 				isCurrentUser={isCurrentUser}
 				showManager={showManager}
+				color={color}
 			/>
 			<div>
 				{editMode ? (
-					<ManagerAsideBlock showManager={showManager} />
+					<ManagerAsideBlock showManager={showManager} editMode={editMode} googleId={user.googleId} />
 				) : (
 					<>
 						<ProfileAboutBlock
 							jobTitle={jobTitle}
 							organization={organization}
 							department={department}
-							location={location}
+							location={address}
 							isCurrentUser={isCurrentUser}
 						/>
 						<ProfileContacntBlock />

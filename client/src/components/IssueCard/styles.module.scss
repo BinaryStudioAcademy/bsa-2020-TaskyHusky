@@ -1,19 +1,17 @@
 :local(.inlineContainer) {
-	.left {
-		float: left;
-	}
-
-	.right {
-		float: right;
-	}
-
-	padding-bottom: 10px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 }
 
 :local(.meta) {
 	color: grey;
+	display: flex;
+	align-items: center;
 }
 
 .card_margin {
 	margin-bottom: 10px !important;
+	margin-right: 10px !important;
+	box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.25) !important;
 }

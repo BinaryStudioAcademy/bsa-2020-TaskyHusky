@@ -39,7 +39,7 @@ export type UpdateIssue = {
 };
 
 export type UpdateIssueSuccess = {
-	data: WebApi.Entities.Issue;
+	data: WebApi.Result.IssueResult;
 };
 
 export type DeleteIssue = {

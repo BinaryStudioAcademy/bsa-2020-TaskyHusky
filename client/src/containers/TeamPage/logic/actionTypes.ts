@@ -5,6 +5,7 @@ export const START_LOADING = 'TEAM:START_LOADING';
 export const SUCCESS_TEAM_LOADING = 'TEAM:SUCCESS_TEAM_LOADING';
 export const SUCCESS_TEAM_USERS_LOADING = 'TEAM:SUCCESS_TEAM_USERS_LOADING';
 export const SUCCESS_TEAM_PROJECTS_LOADING = 'TEAM:SUCCESS_TEAM_PROJECTS_LOADING';
+export const SUCCESS_TEAM_ISSUES_LOADING = 'TEAM:SUCCESS_TEAM_ISSUES_LOADING';
 export const FAIL_LOADING = 'TEAM:FAIL_LOADING';
 
 export const ADD_LINK_LOADING = 'TEAM:ADD_LINK_LOADING';
@@ -79,6 +80,11 @@ export type SuccessLoadingUsers = {
 
 export type SuccessLoadingProjects = {
 	projects?: WebApi.Entities.Projects[];
+	loading?: boolean;
+};
+
+export type SuccessLoadingIssues = {
+	issues?: WebApi.Entities.Issue[];
 	loading?: boolean;
 };
 

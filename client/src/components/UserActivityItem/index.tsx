@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styles from './styles.module.scss';
 
 interface Props {
@@ -7,14 +8,25 @@ interface Props {
 
 const UserActivityItem: React.FC<Props> = (props: Props) => {
 	const { item } = props;
-	const secondaryContent = item.category ? `${item.category} project` : item.jobTitle;
+	const secondaryContent = item.name ? `${item.category} project` : item.jobTitle;
 	const abbr = item.name ? item.name[0] : item.firstName[0] + item.lastName[0];
-
 	return (
 		<div className={styles.activityItem}>
-			<div className={styles.avatar}>{abbr && <p className={styles.avatarTitle}>{abbr}</p>}</div>
+			<div className={styles.avatar} style={{ backgroundColor: item.color ?? '#f5f7f9' }}>
+				{item.avatar ? (
+					<img src={item.avatar} className={styles.img} alt="avatar" />
+				) : item.icon ? (
+					<img src={item.icon} className={styles.img} alt="icon" />
+				) : (
+					abbr && <p className={styles.avatarTitle}>{abbr}</p>
+				)}
+			</div>
 			<div className={styles.block}>
-				<p className={styles.content}>{item.name ? item.name : item.firstName + ' ' + item.lastName}</p>
+				<Link to={`${item.firstName ? item.id : `/project/${item.id}/issues`}`}>
+					<span className={styles.content}>
+						{item.name ? item.name : item.firstName + ' ' + item.lastName}
+					</span>
+				</Link>
 				<p className={styles.contentSecondary}>{secondaryContent}</p>
 			</div>
 		</div>

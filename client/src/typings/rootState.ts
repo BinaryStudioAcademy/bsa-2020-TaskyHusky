@@ -1,3 +1,4 @@
+import { ProjectLabelState } from './../containers/ProjectLabels/logic/state';
 import { ProjectsPeopleState } from './../containers/ProjectPeople/logic/state';
 import { projectCommonState } from '../components/ProjectsCommon/logic/state';
 import { ProjectState } from '../containers/ProjectSettings/logic/state';
@@ -17,12 +18,15 @@ import { BoardsState } from '../containers/Boards/logic/state';
 import { HeaderState } from '../containers/Header/logic/state';
 import { ScrumBoardState } from 'containers/Board/Scrum/logic/state';
 import { NotificationsState } from 'components/NotificationsMenu/logic/state';
+import { ReportState } from 'containers/Report/logic/state';
 import { UserActivityState } from 'containers/WorkPage/logic/state';
+import { BoardColumnState } from 'containers/BoardColumn/logic/state';
 
 export interface RootState {
 	boards: BoardsState;
 	projects: ProjectsState;
 	project: ProjectState;
+	projectLabel: ProjectLabelState;
 	projectPeople: ProjectsPeopleState;
 	projectCommon: projectCommonState;
 	createProject: CreateProjectsState;
@@ -39,5 +43,7 @@ export interface RootState {
 	peoplePage: PeoplePageState;
 	header: HeaderState;
 	notifications: NotificationsState;
+	report: ReportState;
 	userActivity: UserActivityState;
+	boardColumn: BoardColumnState;
 }

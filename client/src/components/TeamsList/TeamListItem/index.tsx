@@ -1,8 +1,7 @@
 import React, { ReactElement } from 'react';
-import { Card } from 'semantic-ui-react';
 import UserAvatar from 'components/common/UserAvatar';
-
-import style from './style.module.scss';
+import styles from 'components/PeopleList/PeopleListItem/style.module.scss';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
 	team: WebApi.Entities.Team;
@@ -10,18 +9,25 @@ interface Props {
 }
 
 const TeamListItem: React.FC<Props> = ({ team, handlerClick }): ReactElement => {
-	const { color, name, createdBy } = team;
+	const { color, name, createdBy, users } = team;
+	const { t } = useTranslation();
 
 	return (
-		<Card onClick={() => handlerClick && handlerClick()} className={style.card}>
-			<div className={style.colorBlock} style={{ background: color }} />
-			<Card.Content className={style.teamBlock}>
-				<Card.Header className={style.teamTitle}>{name}</Card.Header>
-				<div className={style.avatarWrapper}>
+		<div onClick={() => handlerClick && handlerClick()} className={styles.card}>
+			<div className={styles.header}>
+				<div className={styles.avatarWrapper}>
 					<UserAvatar user={createdBy} />
 				</div>
-			</Card.Content>
-		</Card>
+				<div className={styles.headerContent}>
+					<p className={styles.name}>{name}</p>
+					<p className={styles.title}>
+						{users?.length ?? 0}
+						{(users?.length ?? 0) > 1 ? ` ${t('members_lower')}` : ` ${t('member')}`}
+					</p>
+				</div>
+			</div>
+			<div className={styles.colorBlock} style={{ background: color }} />
+		</div>
 	);
 };
 

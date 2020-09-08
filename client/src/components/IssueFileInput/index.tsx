@@ -16,6 +16,7 @@ import { getFnameByLink } from 'helpers/getFnameByLink';
 interface Props {
 	currentFiles?: File[];
 	alreadyAttached?: string[];
+	high?: boolean;
 	onChange?: (newFiles: File[]) => void;
 	onDeleteAlreadyAttached?: (newLinks: string[]) => void;
 }
@@ -25,6 +26,7 @@ const IssueFileInput: React.FC<Props> = ({
 	currentFiles: givenCurrentFiles,
 	alreadyAttached = [],
 	onDeleteAlreadyAttached = () => {},
+	high,
 }) => {
 	const currentFiles = givenCurrentFiles ?? [];
 	const { t } = useTranslation();
@@ -52,7 +54,7 @@ const IssueFileInput: React.FC<Props> = ({
 
 	return (
 		<FileDrop
-			targetClassName={styles.button}
+			targetClassName={!high ? styles.button : styles.high}
 			draggingOverTargetClassName={styles.dragOverButton}
 			onDrop={handleChange}
 		>
@@ -68,7 +70,7 @@ const IssueFileInput: React.FC<Props> = ({
 					attributes={{ accept: ALLOWED_ISSUE_ATTACHMENT_EXTNAMES, multiple: true }}
 					onChange={handleChange}
 				>
-					<Button secondary compact style={{ marginTop: 5, marginBottom: 5 }} type="button">
+					<Button className="contentBtn" compact style={{ marginTop: 5, marginBottom: 5 }} type="button">
 						{t('click_to_browse')}
 					</Button>
 				</FileInput>

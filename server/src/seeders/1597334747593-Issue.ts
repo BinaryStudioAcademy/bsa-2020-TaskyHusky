@@ -27,8 +27,6 @@ export class Issue1597334747593 implements MigrationInterface {
 		const issueType2 = (await issueTypeRepository.findAll())[1]!;
 		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 		const issueType3 = (await issueTypeRepository.findAll())[2]!;
-		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-		const issueType4 = (await issueTypeRepository.findAll())[3]!;
 
 		const priorityRepository = getCustomRepository(PriorityRepository);
 		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -76,7 +74,7 @@ export class Issue1597334747593 implements MigrationInterface {
 		issue1.description = 'Places new and ladies, too, I’m B.J. McKay and this is my best friend Bear. ';
 		issue1.creator = user2;
 		issue1.assigned = user1;
-		issue1.labels = '{label}';
+		// issue1.labels = '{label}';
 		issue1.attachments = '{attachments}';
 		issue1.links = '{link/toSpace}';
 		issue1.issueKey = 'IK-1';
@@ -94,7 +92,7 @@ export class Issue1597334747593 implements MigrationInterface {
 			'New dreams and better scenes, and best of all I don’t pay property tax. Rollin’ down to Dallas, who’s providin’ my palace, off to New Orleans or who knows where.';
 		issue2.creator = user1;
 		issue2.assigned = user2;
-		issue2.labels = '{label}';
+		// issue2.labels = '{label}';
 		issue2.attachments = '{attachments2}';
 		issue2.links = '{link/toSpace}';
 		issue2.issueKey = 'IK-2';
@@ -113,11 +111,11 @@ export class Issue1597334747593 implements MigrationInterface {
 			'He’s goin’ everywhere, B.J. McKay and his best friend Bear. He just keeps on movin’, ladies keep improvin’, every day is better than the last.';
 		issue3.creator = user2;
 		issue3.assigned = user2;
-		issue3.labels = '{label}';
+		// issue3.labels = '{label}';
 		issue3.attachments = '{attachments2}';
 		issue3.links = '{link/toSpace}';
 		issue3.issueKey = 'IK-3';
-		issue3.type = issueType4;
+		issue3.type = issueType;
 		issue3.priority = priority2;
 		issue3.status = issueStatus;
 		issue3.sprint = sprint4;
@@ -133,7 +131,7 @@ export class Issue1597334747593 implements MigrationInterface {
 			'Hey there where ya goin’, not exactly knowin’, who says you have to call just one place home. ';
 		issue4.creator = user1;
 		issue4.assigned = user1;
-		issue4.labels = '{label}';
+		// issue4.labels = '{label}';
 		issue4.attachments = '{attachments4}';
 		issue4.links = '{link/toSpace}';
 		issue4.issueKey = 'IK-4';
@@ -153,11 +151,11 @@ export class Issue1597334747593 implements MigrationInterface {
 			'So, stop that pigeon, stop that pigeon, stop that pigeon, stop that pigeon, stop that pigeon, stop that pigeon, stop that pigeon. Howwww! Nab him, jab him, tab him, grab him, stop that pigeon now.';
 		issue5.creator = user2;
 		issue5.assigned = user1;
-		issue5.labels = '{label}';
+		// issue5.labels = '{label}';
 		issue5.attachments = '{attachments4}';
 		issue5.links = '{link/toSpace}';
 		issue5.issueKey = 'IK-5';
-		issue5.type = issueType4;
+		issue5.type = issueType;
 		issue5.priority = priority4;
 		issue5.status = issueStatus4;
 		issue5.sprint = sprint2;
@@ -173,7 +171,7 @@ export class Issue1597334747593 implements MigrationInterface {
 			'Those medals you wear on your moth-eaten chest should be there for bungling at which you are best.';
 		issue6.creator = user2;
 		issue6.assigned = user1;
-		issue6.labels = '{label}';
+		// issue6.labels = '{label}';
 		issue6.attachments = '{attachments4}';
 		issue6.links = '{link/toSpace}';
 		issue6.issueKey = 'IK-6';
@@ -192,7 +190,7 @@ export class Issue1597334747593 implements MigrationInterface {
 		issue7.description = 'Mutley, you snickering, floppy eared hound. When courage is needed, you’re never around.';
 		issue7.creator = user2;
 		issue7.assigned = user2;
-		issue7.labels = '{label}';
+		// issue7.labels = '{label}';
 		issue7.attachments = '{attachments4}';
 		issue7.links = '{link/toSpace}';
 		issue7.issueKey = 'IK-7';
@@ -212,7 +210,7 @@ export class Issue1597334747593 implements MigrationInterface {
 			'Can’t stay for long, just turn around and I’m gone again. Maybe tomorrow, I’ll want to settle down, Until tomorrow, I’ll just keep moving on.';
 		issue8.creator = user1;
 		issue8.assigned = user2;
-		issue8.labels = '{label}';
+		// issue8.labels = '{label}';
 		issue8.attachments = '{attachments4}';
 		issue8.links = '{link/toSpace}';
 		issue8.issueKey = 'IK-8';
@@ -232,16 +230,120 @@ export class Issue1597334747593 implements MigrationInterface {
 			'There’s a voice that keeps on calling me. Down the road, that’s where I’ll always be. Every stop I make, I make a new friend.';
 		issue9.creator = user1;
 		issue9.assigned = user1;
-		issue9.labels = '{label}';
+		// issue9.labels = '{label}';
 		issue9.attachments = '{attachments4}';
 		issue9.links = '{link/toSpace}';
 		issue9.issueKey = 'IK-9';
-		issue9.type = issueType4;
+		issue9.type = issueType;
 		issue9.priority = priority4;
 		issue9.status = issueStatus4;
 		issue9.sprint = sprint3;
 
-		await getRepository('Issue').save([issue1, issue2, issue3, issue4, issue5, issue6, issue7, issue8, issue9]);
+		// start/end date of sprint1 must '2020-02-01'/'2020-02-08'
+		// completedAt must be beetwen this dates
+		const issue10 = new Issue();
+		issue10.id = '44b274eb-301b-4192-a6b6-9f55a67b6cf4';
+		issue10.project = project;
+		issue10.board = scrumBoard;
+		issue10.createdAt = new Date('2020-02-12');
+		issue10.updatedAt = new Date('2020-03-12');
+		issue10.summary = 'Think of code improvement';
+		issue10.description =
+			'Mutley, you snickering, floppy eared hound. When courage is needed, you’re never around.';
+		issue10.creator = user2;
+		issue10.assigned = user2;
+		issue10.labels = '{label}';
+		issue10.attachments = '{attachments4}';
+		issue10.links = '{link/toSpace}';
+		issue10.issueKey = 'IK-10';
+		issue10.type = issueType2;
+		issue10.priority = priority2;
+		issue10.status = issueStatus3;
+		issue10.sprint = sprint1;
+		issue10.completedAt = new Date('2020-02-02');
+		issue10.storyPoint = 10;
+
+		const issue11 = new Issue();
+		issue11.id = '44b274eb-301b-4192-a6b6-9f55a67b6cf3';
+		issue11.project = project;
+		issue11.board = scrumBoard;
+		issue11.createdAt = new Date('2020-02-12');
+		issue11.updatedAt = new Date('2020-03-12');
+		issue11.summary = 'Implemented backend';
+		issue11.description =
+			'Mutley, you snickering, floppy eared hound. When courage is needed, you’re never around.';
+		issue11.creator = user2;
+		issue11.assigned = user2;
+		issue11.labels = '{label}';
+		issue11.attachments = '{attachments4}';
+		issue11.links = '{link/toSpace}';
+		issue11.issueKey = 'IK-11';
+		issue11.type = issueType2;
+		issue11.priority = priority2;
+		issue11.status = issueStatus3;
+		issue11.sprint = sprint1;
+		issue11.completedAt = new Date('2020-02-03');
+		issue11.storyPoint = 5;
+
+		const issue12 = new Issue();
+		issue12.id = '44b274eb-301b-4192-a6b6-9f55a67b6cf2';
+		issue12.project = project;
+		issue12.board = scrumBoard;
+		issue12.createdAt = new Date('2020-02-12');
+		issue12.updatedAt = new Date('2020-03-12');
+		issue12.summary = 'Implemented frontend';
+		issue12.description =
+			'Mutley, you snickering, floppy eared hound. When courage is needed, you’re never around.';
+		issue12.creator = user2;
+		issue12.assigned = user2;
+		issue12.labels = '{label}';
+		issue12.attachments = '{attachments4}';
+		issue12.links = '{link/toSpace}';
+		issue12.issueKey = 'IK-12';
+		issue12.type = issueType2;
+		issue12.priority = priority;
+		issue12.status = issueStatus;
+		issue12.sprint = sprint1;
+		issue12.completedAt = new Date('2020-02-04');
+		issue12.storyPoint = 5;
+
+		const issue13 = new Issue();
+		issue13.id = '44b274eb-301b-4192-a6b6-9f55a67b6cf1';
+		issue13.project = project;
+		issue13.board = scrumBoard;
+		issue13.createdAt = new Date('2020-02-12');
+		issue13.updatedAt = new Date('2020-03-12');
+		issue13.summary = 'Implemented burndown chart';
+		issue13.description =
+			'Mutley, you snickering, floppy eared hound. When courage is needed, you’re never around.';
+		issue13.creator = user2;
+		issue13.assigned = user2;
+		issue13.labels = '{label}';
+		issue13.attachments = '{attachments4}';
+		issue13.links = '{link/toSpace}';
+		issue13.issueKey = 'IK-13';
+		issue13.type = issueType;
+		issue13.priority = priority;
+		issue13.status = issueStatus2;
+		issue13.sprint = sprint1;
+		issue13.completedAt = new Date('2020-02-04');
+		issue10.storyPoint = 10;
+
+		await getRepository('Issue').save([
+			issue1,
+			issue2,
+			issue3,
+			issue4,
+			issue5,
+			issue6,
+			issue7,
+			issue8,
+			issue9,
+			issue10,
+			issue11,
+			issue12,
+			issue13,
+		]);
 	}
 
 	public async down(queryRunner: QueryRunner): Promise<void> {}

@@ -8,6 +8,7 @@ export const updateUsers = createAction<actionTypes.SuccessLoadingUsers>(actionT
 export const updateProjects = createAction<actionTypes.SuccessLoadingProjects>(
 	actionTypes.SUCCESS_TEAM_PROJECTS_LOADING,
 );
+export const updateIssues = createAction<actionTypes.SuccessLoadingIssues>(actionTypes.SUCCESS_TEAM_ISSUES_LOADING);
 
 export const failLoading = createAction(actionTypes.FAIL_LOADING);
 

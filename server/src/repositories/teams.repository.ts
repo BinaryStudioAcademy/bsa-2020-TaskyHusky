@@ -9,7 +9,17 @@ export class TeamRepository extends Repository<Team> {
 	findAll() {
 		return this.createQueryBuilder('teamRepository')
 			.innerJoin('teamRepository.createdBy', 'user')
-			.addSelect(['user.id', 'user.firstName', 'user.lastName', 'user.email', 'user.avatar', 'user.jobTitle'])
+			.addSelect([
+				'user.id',
+				'user.firstName',
+				'user.lastName',
+				'user.email',
+				'user.avatar',
+				'user.jobTitle',
+				'user.color',
+			])
+			.innerJoin('teamRepository.users', 'userProfile')
+			.addSelect('userProfile.id')
 			.getMany();
 	}
 
@@ -33,15 +43,16 @@ export class TeamRepository extends Repository<Team> {
 				'User.lastName',
 				'User.email',
 				'User.jobTitle',
-				'User.location',
+				'User.address',
 				'User.avatar',
 				'User.department',
 				'Users.id',
+				'Users.color',
 				'Users.firstName',
 				'Users.lastName',
 				'Users.email',
 				'Users.jobTitle',
-				'Users.location',
+				'Users.address',
 				'Users.avatar',
 				'Users.department',
 			])
@@ -54,7 +65,15 @@ export class TeamRepository extends Repository<Team> {
 	async findTeamProjectsById(id: string) {
 		const team = await this.createQueryBuilder('Team')
 			.leftJoinAndSelect('Team.projects', 'Projects')
-			.select(['Team.id', 'Projects.id', 'Projects.name', 'Projects.category', 'Projects.key'])
+			.select([
+				'Team.id',
+				'Projects.id',
+				'Projects.name',
+				'Projects.category',
+				'Projects.key',
+				'Projects.color',
+				'Projects.icon',
+			])
 			.where('Team.id = :id', { id })
 			.getOne();
 

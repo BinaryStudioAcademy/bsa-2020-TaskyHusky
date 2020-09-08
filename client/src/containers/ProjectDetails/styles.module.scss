@@ -1,5 +1,7 @@
+@import 'styles/mixins.scss';
+
 .header_inner__container {
-    padding: 10px 0px 20px ;
+    padding: 10px 0px 20px;
     position: relative;
 }
 
@@ -13,6 +15,7 @@
     font-size: 24px;
     margin: 0;
 }
+
 .body_inner__container {
     position: relative;
 }
@@ -25,16 +28,24 @@
 
 .fix_start_after_input {
     &::after {
-        content: ''!important;
+        content: '' !important;
     }
 }
 
 .form__input {
     @extend .fix_start_after_input;
     width: 250px;
+    @include input;
 }
 
-.form__input_key{
+input,
+textarea {
+    &:focus {
+        border-color: $yellow !important;
+    }
+}
+
+.form__input_key {
     @extend .fix_start_after_input;
     width: 125px;
 }
@@ -63,10 +74,15 @@
     @extend .fix_start_after_input;
 }
 
+.project__description {
+    resize: none !important;
+}
+
 .form__input_container {
     display: flex;
     align-items: baseline;
     position: relative;
+    @include input;
 }
 
 .information__icon {
@@ -79,6 +95,15 @@
 
 .form__input_select {
     width: 100% !important;
+
+    &>div {
+        @include dropdown;
+    }
+
+
+    // &:focus {
+    //     border: 1px solid $yellow !important;
+    // }
 }
 
 .icons__container {
@@ -104,7 +129,7 @@
     padding: 3px;
     margin: 3px auto;
     padding-bottom: 0;
-    border:none;
+    border: none;
     background-color: transparent;
     border: 3px solid transparent;
     border-radius: 3px;
@@ -116,6 +141,5 @@
 }
 
 .action_button {
-    margin-right: 25px !important;
+    margin-right: 15px !important;
 }
-

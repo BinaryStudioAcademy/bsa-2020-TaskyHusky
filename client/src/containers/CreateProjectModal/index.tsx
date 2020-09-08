@@ -1,4 +1,4 @@
-import React, { useState, memo } from 'react';
+import React, { useState, memo, useEffect } from 'react';
 import { Modal, Button, Form, Image, Card, Popup, Header, List } from 'semantic-ui-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -44,15 +44,18 @@ const CreateProjectModal: React.FC<Props> = ({ children }) => {
 
 	const { description, image } = templatesInformation[template];
 
-	if (isProjectCreated) {
-		dispatch(actions.resetState());
-		setName('');
-		setKey('');
-		setTemplate('Scrum');
-		setIsNameValid(false);
-		setIsKeyValid(true);
-		setIsValidErrorShown(false);
-	}
+	useEffect(() => {
+		if (isProjectCreated) {
+			dispatch(actions.resetState());
+			setName('');
+			setKey('');
+			setTemplate('Scrum');
+			setIsNameValid(false);
+			setIsKeyValid(true);
+			setIsValidErrorShown(false);
+			setIsModalOpened(false);
+		}
+	}, [dispatch, isProjectCreated]);
 
 	const startCreatingProject = () => {
 		dispatch(
@@ -130,18 +133,17 @@ const CreateProjectModal: React.FC<Props> = ({ children }) => {
 			onOpen={onModalOpen}
 			open={isModalOpened}
 			size="tiny"
-			dimmer="inverted"
 			trigger={children}
 			openOnTriggerClick
 		>
 			{!isTemplatesView ? (
 				<>
-					<Modal.Header>{t('create_project')}</Modal.Header>
+					<Modal.Header className="standartHeader">{t('create_project')}</Modal.Header>
 
 					<Modal.Content>
 						<Form className={styles.form_container}>
 							<Form.Field>
-								<label className="required">{t('name')}</label>
+								<label className="required standartLabel">{t('name')}</label>
 								<CustomInput
 									isValidErrorShown={isValidErrorShown}
 									isDataValid={isNameValid}
@@ -154,7 +156,7 @@ const CreateProjectModal: React.FC<Props> = ({ children }) => {
 								/>
 							</Form.Field>
 							<Form.Field>
-								<label className="required">{t('key')}</label>
+								<label className="required standartLabel">{t('key')}</label>
 								<CustomInput
 									isValidErrorShown={isValidErrorShown}
 									isDataValid={isKeyValid}
@@ -167,14 +169,14 @@ const CreateProjectModal: React.FC<Props> = ({ children }) => {
 								/>
 							</Form.Field>
 							<Form.Field>
-								<label>GitHub URL</label>
+								<label className="standartLabel">GitHub URL</label>
 								<CustomInput
 									isValidErrorShown={isValidErrorShown}
 									isDataValid={isGithubUrlValid}
 									setIsDataValid={setIsGithubUrlValid}
 									data={githubUrl}
 									setData={setGithubUrl}
-									placeholder={t("enter_your_project_URL")}
+									placeholder={t('enter_your_project_URL')}
 									popUpContent={validationMessage.VM_GITHUB_URL}
 									validation={validGitHubUrl}
 								/>
@@ -185,24 +187,26 @@ const CreateProjectModal: React.FC<Props> = ({ children }) => {
 						<div className={styles.flex_container}>
 							<Image src={image} className={styles.modal__image} />
 							<div>
-								<h2>{template}</h2>
-								<p>{description}</p>
-								<Button color="grey" onClick={() => setIsTemplatesView(true)} disabled={isLoading}>
+								<h2 className="standartLabel">{template}</h2>
+								<p className="textData">{description}</p>
+								<Button
+									className="contentBtn"
+									onClick={() => setIsTemplatesView(true)}
+									disabled={isLoading}
+								>
 									{t('change_template')}
 								</Button>
 							</div>
 						</div>
 					</Modal.Content>
 					<Modal.Actions>
-						<Button color="grey" onClick={onModalClose}>
+						<Button className="cancelBtn" onClick={onModalClose}>
 							{t('cancel')}
 						</Button>
 						<Button
 							content={t('create')}
-							labelPosition="right"
-							icon="checkmark"
 							onClick={onCreateProject}
-							primary
+							className="primaryBtn"
 							loading={isLoading}
 							disabled={isLoading}
 						/>

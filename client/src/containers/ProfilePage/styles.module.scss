@@ -4,11 +4,18 @@
 	width: 100%;
 	background-color: $body-bg;
 	overflow: hidden;
+	min-height: 100vh;
 }
 
 .container {
-	margin: 22px 13%;
+	margin: 26px 10%;
 	display: flex;
+}
+
+@media screen and (max-width: $medium-screen) {
+	.container {
+		margin: 24px 8%;
+	}
 }
 
 @media screen and (max-width: $less-than-medium-screen) {

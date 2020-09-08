@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Modal, Form, Button, Header, Icon, Divider, InputOnChangeData } from 'semantic-ui-react';
+import React, { useState, useEffect } from 'react';
+import { Modal, Form, Button, Header, Icon, Divider, InputOnChangeData, Label } from 'semantic-ui-react';
 import { useCreateIssueModalContext } from './logic/context';
 import TagsInput from 'components/common/TagsInput';
 import { connect, useDispatch } from 'react-redux';
@@ -11,6 +11,7 @@ import { isNumber } from 'util';
 import { IssueConstants } from 'constants/Issue';
 import IssueFileInput from 'components/IssueFileInput';
 import { initialState } from './logic/initalState';
+import { getProjectById } from 'services/projects.service';
 
 interface Props {
 	children: JSX.Element;
@@ -22,8 +23,8 @@ interface Props {
 	projectID?: string;
 	onClose?: (data: WebApi.Issue.PartialIssue) => void;
 	projects: WebApi.Entities.Projects[];
-	projectsLoading: boolean;
 	users: WebApi.Entities.UserProfile[];
+	statuses: WebApi.Entities.IssueStatus[];
 }
 
 interface SelectOption {
@@ -38,20 +39,29 @@ const CreateIssueModalBody: React.FC<Props> = ({
 	issueTypes,
 	priorities,
 	projects,
-	projectsLoading,
 	boardColumnID,
 	onClose,
 	projectID,
 	users,
 	sprintID,
 	boardID,
+	statuses,
 }) => {
 	const { t } = useTranslation();
 	const context = useCreateIssueModalContext();
 	const [isOpened, setIsOpened] = useState<boolean>(false);
 	const [isStoryPointValid, setIsStoryPointValid] = useState(true);
 	const [attachments, setAttachments] = useState<File[]>([]);
+	const [labels, setLabels] = useState<WebApi.Entities.ProjectLabel[]>([]);
 	const dispatch = useDispatch();
+
+	useEffect(() => {
+		const projectToFetchLabels = projectID ?? context.data.project;
+
+		if (projectToFetchLabels) {
+			getProjectById(projectToFetchLabels).then(({ labels }) => setLabels(labels));
+		}
+	}, [projectID, context.data.project]);
 
 	const typeOpts: SelectOption[] = issueTypes.map((type) => ({
 		key: type.id,
@@ -83,15 +93,17 @@ const CreateIssueModalBody: React.FC<Props> = ({
 
 	const labelOpts: SelectOption[] = labels.map((label, i) => ({
 		key: i,
-		value: label,
-		text: label,
+		value: label.id,
+		text: <Label style={{ backgroundColor: label.backgroundColor, color: label.textColor }}>{label.text}</Label>,
 	}));
 
-	const projectsOpts: SelectOption[] = projects.map((project) => ({
-		key: project.id,
-		value: project.id,
-		text: project.name,
-	}));
+	const projectsOpts: SelectOption[] = projects
+		.filter((p) => (boardID ? p.boards?.find((b) => b.id === boardID) : true))
+		.map((project) => ({
+			key: project.id,
+			value: project.id,
+			text: project.name,
+		}));
 
 	const usersOpts: SelectOption[] = users.map((user) => ({
 		key: user.id,
@@ -99,7 +111,13 @@ const CreateIssueModalBody: React.FC<Props> = ({
 		text: getUsername(user),
 	}));
 
-	const getSetOpenFunc = (value: boolean) => () => setIsOpened(value);
+	const getSetOpenFunc = (value: boolean) => () => {
+		if (value) {
+			clearContext();
+		}
+
+		setIsOpened(value);
+	};
 
 	const submit = async (event: React.FormEvent) => {
 		event.preventDefault();
@@ -117,6 +135,7 @@ const CreateIssueModalBody: React.FC<Props> = ({
 			board: boardID,
 			project: projectID ?? context.data.project,
 			assigned: context.data.assigned,
+			status: getToDoStatusId(statuses),
 		};
 
 		dispatch(createIssue({ data, files: attachments }));
@@ -126,6 +145,11 @@ const CreateIssueModalBody: React.FC<Props> = ({
 		}
 
 		setIsOpened(false);
+	};
+
+	const getToDoStatusId = (statuses: WebApi.Entities.IssueStatus[]) => {
+		const toDoStatus = statuses.find((status) => status.title === 'To do');
+		return toDoStatus?.id;
 	};
 
 	const handleStoryPointChange = (event: React.ChangeEvent<HTMLInputElement>, data: InputOnChangeData) => {
@@ -149,96 +173,101 @@ const CreateIssueModalBody: React.FC<Props> = ({
 		Object.keys(context.data).forEach((key) => context.set(key as any, (initialState as any)[key]));
 	};
 
-	if (projectsLoading) {
-		return null;
-	}
-
 	return (
 		<Modal
-			dimmer="inverted"
 			as="form"
 			onSubmit={submit}
 			open={isOpened}
 			closeOnEscape
 			closeOnDimmerClick
 			onClose={getSetOpenFunc(false)}
-			onOpen={clearContext}
+			onOpen={getSetOpenFunc(true)}
 			openOnTriggerClick
-			trigger={<div onClick={getSetOpenFunc(true)}>{children}</div>}
-			style={{ maxWidth: 700, height: '70%' }}
+			trigger={children}
 		>
 			<Modal.Header>
-				<Header as="h1">{t('create_issue')}</Header>
+				<Header as="h1" className="standartHeader">
+					{t('create_issue')}
+				</Header>
 			</Modal.Header>
-			<Modal.Content scrolling style={{ maxHeight: '90%', height: '90%' }}>
-				<Form as="div">
+			<Modal.Content scrolling>
+				<Form as="span">
 					<Form.Field>
-						<label className="required">{t('type')}</label>
+						<label className="required standartLabel">{t('type')}</label>
 						<Form.Dropdown
 							selection
 							style={{ maxWidth: 200 }}
 							options={typeOpts}
 							placeholder={t('type')}
-							onChange={(event, data) => context.set('type', data.value)}
+							className="formSelect"
+							onChange={(event, data) => context.set('type', `${data.value}`)}
 						/>
 					</Form.Field>
 					<Form.Field>
-						<label className="required">{t('priority')}</label>
+						<label className="required standartLabel">{t('priority')}</label>
 						<Form.Dropdown
 							selection
 							style={{ maxWidth: 200 }}
 							options={priorityOpts}
 							placeholder={t('priority')}
-							onChange={(event, data) => context.set('priority', data.value)}
+							className="formSelect"
+							onChange={(event, data) => context.set('priority', `${data.value}`)}
 						/>
 					</Form.Field>
 					<Form.Field>
-						<label className="required">{t('summary')}</label>
+						<label className="required standartLabel">{t('summary')}</label>
 						<Form.Input
 							placeholder={t('summary')}
 							fluid
+							className="standartInput"
 							onChange={(event, data) => context.set('summary', data.value)}
 						/>
 					</Form.Field>
 					{!projectID ? (
 						<Form.Field>
-							<label className="required">{t('project')}</label>
+							<label className="required standartLabel">{t('project')}</label>
 							<Form.Dropdown
 								selection
 								placeholder={t('project')}
 								options={projectsOpts}
-								onChange={(event, data) => context.set('project', data.value)}
+								className="formSelect"
+								onChange={(event, data) => context.set('project', `${data.value}`)}
 							/>
 						</Form.Field>
 					) : (
 						''
 					)}
 					<Form.Field>
-						<label>{t('labels')}</label>
+						<label className="standartLabel">{t('labels')}</label>
 						<Form.Dropdown
 							clearable
 							selection
 							multiple
+							search
+							noResultsMessage={t('no_more_labels')}
+							className="formSelect"
 							placeholder={t('labels')}
 							options={labelOpts}
-							onChange={(event, data) => context.set('labels', data.value)}
+							onChange={(event, data) => context.set('labels', data.value as string)}
 						/>
 					</Form.Field>
 					<Divider />
 					<Form.Field>
-						<label>{t('assigned')}</label>
+						<label className="standartLabel">{t('assigned')}</label>
 						<Form.Dropdown
 							clearable
 							selection
+							className="formSelect"
 							placeholder={t('assigned')}
 							options={usersOpts}
-							onChange={(event, data) => context.set('assigned', data.value)}
+							onChange={(event, data) => context.set('assigned', data.value as string)}
 						/>
 					</Form.Field>
 					<Form.Field>
-						<label>{t('story_point')}</label>
+						<label className="standartLabel">{t('story_point')}</label>
 						<Form.Input
 							type="number"
+							className="standartInput"
 							error={!isStoryPointValid}
 							placeholder={t('story_point')}
 							fluid
@@ -246,7 +275,7 @@ const CreateIssueModalBody: React.FC<Props> = ({
 						/>
 					</Form.Field>
 					<Form.Field>
-						<label>{t('links')}</label>
+						<label className="standartLabel">{t('links')}</label>
 						<TagsInput
 							placeholder={t('add_link')}
 							tags={context.data.links ?? []}
@@ -254,33 +283,35 @@ const CreateIssueModalBody: React.FC<Props> = ({
 						/>
 					</Form.Field>
 					<Form.Field>
-						<label>{t('attachments')}</label>
+						<label className="standartLabel">{t('attachments')}</label>
 						<IssueFileInput
 							onChange={(attachments: File[]) => setAttachments(attachments)}
 							currentFiles={attachments}
 						/>
 					</Form.Field>
 					<Form.Field>
-						<label>{t('description')}</label>
+						<label className="standartLabel">{t('description')}</label>
 						<Form.TextArea
+							className="standartInput"
+							style={{ resize: 'none' }}
+							rows={4}
 							placeholder={t('description')}
 							onChange={(event, data) =>
 								data ? context.set('description', data.value as string) : context.set('description', '')
 							}
-							rows={10}
 						/>
 					</Form.Field>
 				</Form>
 			</Modal.Content>
-			<Modal.Actions style={{ height: 67 }}>
-				<Button.Group floated="right">
-					<Button primary type="submit">
+			<Modal.Actions>
+				<div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+					<Button className="primaryBtn" type="submit">
 						{t('submit')}
 					</Button>
-					<Button onClick={getSetOpenFunc(false)} basic>
-						<span>{t('cancel')}</span>
+					<Button onClick={getSetOpenFunc(false)} style={{ marginLeft: '25px' }} className="cancelBtn">
+						{t('cancel')}
 					</Button>
-				</Button.Group>
+				</div>
 			</Modal.Actions>
 		</Modal>
 	);
@@ -289,11 +320,9 @@ const CreateIssueModalBody: React.FC<Props> = ({
 const mapStateToProps = (state: RootState) => ({
 	issueTypes: state.issues.types,
 	priorities: state.issues.priorities,
+	statuses: state.issues.statuses,
 	projects: state.projects.projects,
-	projectsLoading: state.projects.isLoading,
 	users: state.users.users,
 });
-
-const labels: string[] = ['label1', 'label2'];
 
 export default connect(mapStateToProps)(CreateIssueModalBody);

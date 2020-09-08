@@ -1,0 +1,63 @@
+@import 'styles/mixins.scss';
+
+
+.header {
+  @include manager-header;
+}
+
+.canvas {
+  left: 20%;
+  top: 0;
+  box-shadow: 1px 3px 10px 2px rgba(0, 0, 0, .2);
+}
+
+.button {
+  margin-left: 20px !important;
+}
+
+.canvasWrap {
+  width: 43%;
+  top: 0;
+  margin-right: 5%;
+  margin-left: 2%;
+  right: 0;
+  position: fixed;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modalOverlay {
+  position: absolute;
+  min-height: 100vh;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  background-color: rgba(255, 255, 255, .85);
+  display: flex;
+  align-items: center;
+  z-index: 1001;
+}
+
+.modalContainer {
+  width: 43%;
+  margin-right: 2%;
+  margin-left: 5%;
+  display: flex;
+}
+
+.modal {
+  margin: 50px auto;
+  max-width: 100%;
+  padding: 20px;
+  background-color: $primary-bg;
+  box-shadow: 1px 3px 10px 2px rgba(0, 0, 0, .2);
+  border-radius: 6px;
+}
+
+.footer {
+  display: flex;
+  margin-top: 20px;
+  justify-content: flex-end;
+}

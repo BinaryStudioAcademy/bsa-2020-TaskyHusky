@@ -1,16 +1,16 @@
 import React, { useState, memo, useEffect } from 'react';
 import { Modal, Button, Dropdown, DropdownOnSearchChangeData } from 'semantic-ui-react';
 import { useSelector, useDispatch } from 'react-redux';
-
 import * as actions from './logic/actions';
 import { RootState } from 'typings/rootState';
 import { useTranslation } from 'react-i18next';
+import styles from './styles.module.scss';
 
 interface Props {
 	project: WebApi.Entities.Projects;
 }
 
-const AddPeopleModal = (props: Props) => {
+const AddPeopleModal: React.FC<Props> = (props) => {
 	const { t } = useTranslation();
 	const dispatch = useDispatch();
 	const { isPeopleLoading, people, isLoading } = useSelector((rootState: RootState) => rootState.projectPeople);
@@ -48,21 +48,21 @@ const AddPeopleModal = (props: Props) => {
 
 	return (
 		<Modal
-			dimmer="inverted"
 			size="mini"
 			open={isOpen}
 			onClose={() => setIsOpen(false)}
 			trigger={
-				<Button primary onClick={() => setIsOpen(true)}>
+				<Button className={'primaryBtn'} onClick={() => setIsOpen(true)}>
 					{t('add_people')}
 				</Button>
 			}
 		>
-			<Modal.Header>{t('add_people')}</Modal.Header>
+			<Modal.Header className="standartHeader">{t('add_people')}</Modal.Header>
 			<Modal.Content>
 				<Dropdown
 					loading={isPeopleLoading}
 					disabled={isPeopleLoading}
+					className="standartSelect"
 					fluid
 					multiple
 					onChange={onSearchDataChange}
@@ -80,8 +80,10 @@ const AddPeopleModal = (props: Props) => {
 				/>
 			</Modal.Content>
 			<Modal.Actions>
-				<Button onClick={() => setIsOpen(false)}>{t('cancel')}</Button>
-				<Button primary onClick={onAddSelectedUsers} loading={isLoading}>
+				<Button className={styles.secondary__button} onClick={() => setIsOpen(false)}>
+					{t('cancel')}
+				</Button>
+				<Button className="primaryBtn" onClick={onAddSelectedUsers} loading={isLoading}>
 					{t('add')}
 				</Button>
 			</Modal.Actions>

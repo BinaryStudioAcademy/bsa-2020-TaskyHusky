@@ -14,9 +14,12 @@ export interface UserModel {
 	password?: string;
 	lastName?: string;
 	firstName?: string;
+	color: string;
 	username?: string;
 	avatar?: string;
-	location?: string;
+	address?: string;
+	lat?: number;
+	lng?: number;
 	department?: string;
 	organization?: string;
 	jobTitle?: jobTitle;

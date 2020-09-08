@@ -1,7 +1,6 @@
 import { createReducer } from 'helpers/createReducer.helper';
 import * as actionTypes from './actionTypes';
 import { ScrumBoardState, initialState } from './state';
-import { unset } from 'lodash';
 
 export const scrumBoardReducer = createReducer<ScrumBoardState>(initialState, {
 	[actionTypes.LOAD_SPRINTS_SUCCESS](state, action: actionTypes.LoadSprintsSuccess) {
@@ -10,16 +9,6 @@ export const scrumBoardReducer = createReducer<ScrumBoardState>(initialState, {
 		return {
 			...state,
 			sprints,
-		};
-	},
-	[actionTypes.LOAD_ISSUES_SUCCESS](state, action: actionTypes.LoadIssuesSuccess) {
-		const { sprintId, issues } = action;
-
-		const stateCopy = { ...state };
-		stateCopy.matchIssuesToSprint[sprintId] = issues;
-
-		return {
-			...stateCopy,
 		};
 	},
 	[actionTypes.UPDATE_SPRINT_DATA_SUCCESS](state, action: actionTypes.UpdateSprintDataSuccess) {
@@ -66,20 +55,24 @@ export const scrumBoardReducer = createReducer<ScrumBoardState>(initialState, {
 			sprint: { id: deletedSprintId },
 		} = action;
 
-		const newMatchIssuesToSprint = { ...state.matchIssuesToSprint };
-		unset(newMatchIssuesToSprint, deletedSprintId);
-
 		const updatedSprints = state.sprints.filter((sprint) => sprint.id !== deletedSprintId);
 
 		return {
 			...state,
 			sprints: updatedSprints,
-			matchIssuesToSprint: newMatchIssuesToSprint,
 		};
 	},
 	[actionTypes.LOAD_BACKLOG_SUCCESS](state, action: actionTypes.LoadBacklogSuccess) {
 		const { backlog } = action;
 
 		return { ...state, backlog };
+	},
+	[actionTypes.LOAD_ISSUES_SUCCESS](state, action: actionTypes.LoadIssuesSuccess) {
+		const { issues } = action;
+
+		return {
+			...state,
+			issues,
+		};
 	},
 });

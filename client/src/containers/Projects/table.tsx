@@ -5,13 +5,14 @@ import { orderBy } from 'lodash-es';
 
 import { setProjectActions } from './config/projectActions';
 
-import { useHistory, Link } from 'react-router-dom';
+import { useHistory, Link, useLocation } from 'react-router-dom';
 import Options from 'components/common/Options';
 import { useDispatch } from 'react-redux';
 import * as generalProjectActions from 'components/ProjectsCommon/logic/actions';
 import styles from './styles.module.scss';
 import UserAvatar from 'components/common/UserAvatar';
 import { User } from 'containers/LoginPage/logic/state';
+import { SETTINGS_SECTION } from 'components/ProjectSidebar/config/sidebarItems';
 
 type SortByColumn = 'name' | 'key' | 'lead';
 type SortDirections = 'ascending' | 'descending';
@@ -25,11 +26,19 @@ const ProjectsTable = ({ projects, currentUser }: Props) => {
 	const { t } = useTranslation();
 	const dispatch = useDispatch();
 	const history = useHistory();
+	const { pathname } = useLocation();
 
 	const [sortByColumn, setSortByColumn] = useState<SortByColumn>('lead');
 	const [sortDirection, setSortDirection] = useState<SortDirections>('ascending');
 
 	const sortedProjects = useMemo(() => {
+		if (sortByColumn === 'lead') {
+			if (sortDirection === 'descending') {
+				return orderBy(projects, (project) => project.lead.firstName, ['desc']);
+			}
+			return orderBy(projects, (project) => project.lead.firstName, ['asc']);
+		}
+
 		if (sortDirection === 'descending') {
 			return orderBy(projects, [sortByColumn], ['desc']);
 		}
@@ -37,7 +46,7 @@ const ProjectsTable = ({ projects, currentUser }: Props) => {
 	}, [projects, sortDirection, sortByColumn]);
 
 	const onOpenSettings = (id: string): void => {
-		history.push(history.location.pathname + '/projectSettings/' + id);
+		history.push(`${pathname}/projectSettings/${id}/${SETTINGS_SECTION.details}`);
 	};
 
 	const onTrash = (id: string): void => {
@@ -53,36 +62,39 @@ const ProjectsTable = ({ projects, currentUser }: Props) => {
 		setSortDirection('ascending');
 		setSortByColumn(column);
 	};
+
+	const getUsername = (lead: WebApi.Entities.UserProfile): string => `${lead.firstName} ${lead.lastName}`;
+
 	return (
 		<div>
-			<Table sortable unstackable className={styles.table}>
+			<Table selectable sortable unstackable className={styles.tableContainer}>
 				<Table.Header>
 					<Table.Row>
 						<Table.HeaderCell
-							className={[styles.column__name, styles.table__header_cell].join(' ')}
-							sorted={sortDirection}
+							width={4}
+							className={styles.table__header_cell}
+							sorted={sortByColumn === 'name' ? sortDirection : undefined}
 							onClick={() => changeSort('name')}
-						>
-							{t('name')}
-						</Table.HeaderCell>
+							children={t('name')}
+						/>
 						<Table.HeaderCell
-							className={[styles.column__key, styles.table__header_cell].join(' ')}
-							sorted={sortDirection}
+							width={2}
+							className={styles.table__header_cell}
+							sorted={sortByColumn === 'key' ? sortDirection : undefined}
 							onClick={() => changeSort('key')}
-						>
-							{t('key')}
+							children={t('key')}
+						/>
+						<Table.HeaderCell width={3} className={styles.table__header_cell}>
+							{t('type')}
 						</Table.HeaderCell>
-						<Table.HeaderCell className={styles.table__header_cell}>{t('type')}</Table.HeaderCell>
 						<Table.HeaderCell
-							className={[styles.table__header_cell, styles.column__lead].join(' ')}
-							sorted={sortDirection}
+							width={4}
+							className={styles.table__header_cell}
+							sorted={sortByColumn === 'lead' ? sortDirection : undefined}
 							onClick={() => changeSort('lead')}
-						>
-							{t('lead')}
-						</Table.HeaderCell>
-						<Table.HeaderCell
-							className={[styles.column__settings, styles.table__header_cell].join(' ')}
-						></Table.HeaderCell>
+							children={t('lead')}
+						/>
+						<Table.HeaderCell width={1} className={styles.table__header_cell} />
 					</Table.Row>
 				</Table.Header>
 
@@ -95,14 +107,15 @@ const ProjectsTable = ({ projects, currentUser }: Props) => {
 									<span className={styles.project__name}>{name}</span>
 								</Link>
 							</Table.Cell>
-							<Table.Cell>{key}</Table.Cell>
-							<Table.Cell>Software</Table.Cell>
-							<Table.Cell className={styles.project__lead_container}>
-								<UserAvatar user={lead} small />
-								<span>{`${lead.firstName} ${lead.lastName}`}</span>
+							<Table.Cell className="textData">{key}</Table.Cell>
+							<Table.Cell className="textData">Software</Table.Cell>
+							<Table.Cell className={styles.project__lead_wrapper}>
+								<span className={styles.project__lead_container}>
+									<UserAvatar user={lead} small />
+									<span>{getUsername(lead)} </span>
+								</span>
 							</Table.Cell>
-
-							<Table.Cell>
+							<Table.Cell className={styles.table__column_options}>
 								{currentUser?.id === lead.id && (
 									<Options
 										config={setProjectActions({ id, onOpenSettings, onTrash })}

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { getByKey } from 'services/issue.service';
 import DefaultPageWrapper from 'containers/DefaultPageWrapper';
 import IssuePageContent from 'containers/IssuePageContent';
+import Spinner from 'components/common/Spinner';
 
 interface Props {
 	match: {
@@ -19,7 +20,7 @@ const IssuePage: React.FC<Props> = ({ match }) => {
 	}, [match]);
 
 	if (!issue) {
-		return null;
+		return <Spinner />;
 	}
 
 	return (

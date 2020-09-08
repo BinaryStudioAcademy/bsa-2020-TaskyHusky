@@ -33,11 +33,11 @@ const AddPeopleModal: React.FC<Props> = ({ isOpen = false, closeClb }): ReactEle
 	};
 
 	return (
-		<Modal open={isOpen} onClose={closeClb} size="tiny" dimmer="inverted">
-			<Modal.Header>{t('add_people')}</Modal.Header>
+		<Modal open={isOpen} onClose={closeClb} size="tiny">
+			<Modal.Header className="standartHeader">{t('add_people')}</Modal.Header>
 			<Modal.Content image scrolling>
 				<Form onSubmit={handlerSubmit}>
-					<p>{t('add_people_text')}</p>
+					<p className="textData">{t('add_people_text')}</p>
 					<Popup
 						className={styles.errorPopup}
 						on={[]}
@@ -50,6 +50,7 @@ const AddPeopleModal: React.FC<Props> = ({ isOpen = false, closeClb }): ReactEle
 								icon="at"
 								placeholder={t('add_people_email_placeholder')}
 								value={email}
+								className="standartInput"
 								onChange={(event) => {
 									setEmail(normalizeEmail(event.target.value));
 									setEmailValid(true);
@@ -63,6 +64,7 @@ const AddPeopleModal: React.FC<Props> = ({ isOpen = false, closeClb }): ReactEle
 			</Modal.Content>
 			<Modal.Actions>
 				<Button
+					className="cancelBtn"
 					onClick={() => {
 						setEmail('');
 						setEmailValid(true);
@@ -71,7 +73,7 @@ const AddPeopleModal: React.FC<Props> = ({ isOpen = false, closeClb }): ReactEle
 				>
 					{t('cancel')}
 				</Button>
-				<Button primary onClick={handlerSubmit} disabled={!(emailValid && !!email)}>
+				<Button className="primaryBtn" onClick={handlerSubmit} disabled={!(emailValid && !!email)}>
 					{t('send')}
 				</Button>
 			</Modal.Actions>

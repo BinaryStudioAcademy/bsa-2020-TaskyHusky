@@ -8,6 +8,7 @@ import EditSprintModal from 'components/common/SprintModal/EditSprintModal';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { RootState } from 'typings/rootState';
+import { useHistory } from 'react-router-dom';
 
 type Props = {
 	id: string;
@@ -20,6 +21,7 @@ type Props = {
 };
 
 export const SprintHeader: React.FC<Props> = ({ id, isActive, name, issues, isCompleted, startDate, endDate }) => {
+	const history = useHistory();
 	const {
 		project: { id: projectId },
 		board: { id: boardId },
@@ -57,7 +59,21 @@ export const SprintHeader: React.FC<Props> = ({ id, isActive, name, issues, isCo
 
 				<List.Item>
 					<List.Content className={styles.rightContent}>
-						<CreateIssueModal projectID={projectId} sprintID={id} boardID={boardId}>
+						{id && isActive && (
+							<Button
+								onClick={() => {
+									history.push(`/report/${id}`);
+								}}
+								icon="chart line"
+								className={styles.createIssueButton}
+								title="Burndown chart"
+							/>
+						)}
+						<CreateIssueModal
+							projectID={projectId}
+							sprintID={id === 'backlog' ? undefined : id}
+							boardID={boardId}
+						>
 							<Button icon="add" className={styles.createIssueButton} title="Create issue" />
 						</CreateIssueModal>
 						{id !== 'backlog' ? <Options config={config} /> : null}

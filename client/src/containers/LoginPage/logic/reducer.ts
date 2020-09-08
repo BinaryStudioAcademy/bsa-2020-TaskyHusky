@@ -41,6 +41,17 @@ export const authReducer = createReducer<AuthState>(initialState, {
 			profileLoaded: true,
 		};
 	},
+	[actionTypes.UPDATE_USER](state, action: actionTypes.UpdateUser) {
+		return {
+			...state,
+			user: {
+				...state.user,
+				id: action.id,
+				email: action.email,
+				avatar: action.avatar,
+			},
+		};
+	},
 	[actionTypes.CHECK_EMAIL_SUCCESS](state, action: actionTypes.CheckEmail) {
 		return {
 			...state,

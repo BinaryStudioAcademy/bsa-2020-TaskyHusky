@@ -7,7 +7,7 @@ import board from './board.routes';
 import user from './user.routes';
 import issue from './issue.routes';
 import sprint from './sprint.routes';
-import git from './git.routes'
+import git from './git.routes';
 import error404Middleware from '../middleware/error404';
 import { validateRequestMw } from '../middleware/request.validation.middleware';
 import { Board } from '../requests/Board';

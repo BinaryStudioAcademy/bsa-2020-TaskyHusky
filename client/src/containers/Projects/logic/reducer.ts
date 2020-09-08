@@ -29,4 +29,10 @@ export const projectsReducer = createReducer<ProjectsState>(initialState, {
 			projects,
 		};
 	},
+	[actionTypes.SUCCESS_LOADING_RECENT](state, { projects }: actionTypes.ProjectsList) {
+		return {
+			...state,
+			recent: projects,
+		};
+	},
 });

@@ -42,11 +42,11 @@ const EditSprintModal = (props: Props) => {
 	const [isNameValid, setIsNameValid] = useState<boolean>(true);
 	const scrumBoardState = useSelector((rootState: RootState) => rootState.scrumBoard);
 
-	const isActivationToggleDisabled = (scrumBoardState: ScrumBoardState): boolean => {
+	const isActivationToggleDisabled = (scrumBoardState: ScrumBoardState, props: Props): boolean => {
 		const currentActiveSprint = scrumBoardState.sprints.find((sprint) => sprint.isActive);
 		const currentActiveSprintId = currentActiveSprint ? currentActiveSprint.id : undefined;
 		const boardHasActiveSprint = !!currentActiveSprintId;
-		const sprintHasNoIssues = scrumBoardState.matchIssuesToSprint[sprintId]?.length === 0;
+		const sprintHasNoIssues = props.sprintIssues.length === 0;
 		const isCurrentSprintActive = currentActiveSprintId === sprintId;
 
 		if (sprintHasNoIssues || isCompleted) {
@@ -186,8 +186,8 @@ const EditSprintModal = (props: Props) => {
 	};
 
 	return (
-		<Modal onClose={handleClose} open={props.isOpen} size="tiny" dimmer="inverted">
-			<Header>
+		<Modal onClose={handleClose} open={props.isOpen} size="tiny">
+			<Header className="standartHeader">
 				{t('edit_sprint')}: {sprintName}
 			</Header>
 			<Modal.Content>
@@ -200,6 +200,7 @@ const EditSprintModal = (props: Props) => {
 							on={[]}
 							trigger={
 								<Form.Input
+									className="standartInput"
 									label={t('sprint_name')}
 									placeholder={t('enter_sprint_name')}
 									value={name ? name : ''}
@@ -217,10 +218,11 @@ const EditSprintModal = (props: Props) => {
 							}
 						/>
 					</Form.Field>
+					<label className="standartLabel">{t('duration')}</label>
 					<Form.Field
-						label={t('duration')}
 						control={() => (
 							<Dropdown
+								className="formSelect"
 								disabled={durationDisable}
 								value={duration}
 								placeholder={t('duration')}
@@ -231,17 +233,19 @@ const EditSprintModal = (props: Props) => {
 							/>
 						)}
 					/>
+					<label className="standartLabel">{t('startDate')}</label>
 					<Form.Field
-						label={t('startDate')}
 						error={!isDateValid}
 						control={() => (
 							<div style={{ display: 'flex', flexDirection: 'column' }}>
 								<DatePicker
+									popperClassName={styles.popper}
+									popperPlacement="bottom-start"
+									showPopperArrow={false}
 									disabled={startDateDisable}
 									locale={getLocale()}
 									name="StartTime"
-									dateFormat="MM/dd/yyyy h:mm aa"
-									showTimeSelect
+									dateFormat="MM/dd/yyyy"
 									selected={startDate}
 									onChange={handleStartDatePick}
 								/>
@@ -249,16 +253,18 @@ const EditSprintModal = (props: Props) => {
 							</div>
 						)}
 					/>
+					<label className="standartLabel">{t('endDate')}</label>
 					<Form.Field
-						label={t('endDate')}
 						control={() => (
 							<div style={{ display: 'flex', flexDirection: 'column' }}>
 								<DatePicker
+									popperClassName={styles.popper}
+									popperPlacement="bottom-start"
+									showPopperArrow={false}
 									locale={getLocale()}
 									disabled={endDateDisable}
 									name="EndTime"
-									dateFormat="MM/dd/yyyy h:mm aa"
-									showTimeSelect
+									dateFormat="MM/dd/yyyy"
 									selected={endDate}
 									onChange={handleEndDatePick}
 								/>
@@ -268,7 +274,7 @@ const EditSprintModal = (props: Props) => {
 					<Form.Field>
 						<Checkbox
 							toggle
-							disabled={isActivationToggleDisabled(scrumBoardState)}
+							disabled={isActivationToggleDisabled(scrumBoardState, props)}
 							label={isActive ? t('mark_sprint_as_active') : t('mark_sprint_as_inactive')}
 							checked={isActive}
 							onChange={toggleSprintActive}
@@ -288,8 +294,9 @@ const EditSprintModal = (props: Props) => {
 				</Form>
 			</Modal.Content>
 			<Modal.Actions>
-				<Button color="grey" onClick={handleClose} content={t('cancel')} />
+				<Button className="cancelBtn" onClick={handleClose} content={t('cancel')} />
 				<Button
+					className="primaryBtn"
 					labelPosition="right"
 					icon="checkmark"
 					primary

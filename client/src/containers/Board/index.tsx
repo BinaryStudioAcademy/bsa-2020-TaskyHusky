@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import Kanban from './Kanban';
 import { getBoardById } from 'services/board.service';
 import Scrum from './Scrum';
+import Spinner from 'components/common/Spinner';
 
 export interface BoardComponentProps {
 	board: WebApi.Result.ComposedBoardResult;
@@ -30,22 +31,17 @@ interface Props {
 const Board: React.FC<Props> = ({ boardId }) => {
 	const [board, setBoard] = useState<WebApi.Result.ComposedBoardResult | undefined>();
 
-	const refetch = useCallback(() => {
-		getBoardById(boardId).then(setBoard);
-	}, [boardId]);
-
 	useEffect(() => {
 		if (!board) {
-			refetch();
+			getBoardById(boardId).then(setBoard);
 		}
-	}, [board, boardId, refetch]);
+	}, [board, boardId]);
 
 	if (!board) {
-		return null;
+		return <Spinner />;
 	}
 
 	const BoardComponent = getBoardComponent(board.boardType);
-
 	return <BoardComponent board={board} />;
 };
 

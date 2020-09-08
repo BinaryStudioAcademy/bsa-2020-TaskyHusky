@@ -7,6 +7,7 @@ export interface User {
 	timezone?: string;
 	organization?: string;
 	email: string;
+	color?: string;
 	jobTitle?: string;
 	userSettingsId?: string;
 	password?: string;

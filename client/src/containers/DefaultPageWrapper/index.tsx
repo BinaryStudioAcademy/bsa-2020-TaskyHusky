@@ -1,24 +1,25 @@
 import React, { useEffect } from 'react';
-import classNames from 'classnames';
 import Header from '../Header';
 import { useDispatch } from 'react-redux';
 import { loadTypes, loadPriorities, loadStatuses } from 'pages/IssuePage/logic/actions';
 import { fetchFilterDefs } from '../../commonLogic/filterDefs/actions';
 import { Container } from 'semantic-ui-react';
-import { startLoading as loadProjects } from 'containers/Projects/logic/actions';
+import { startLoading as loadProjects, startLoadingRecent } from 'containers/Projects/logic/actions';
 import styles from './styles.module.scss';
 import { requestAllUsers } from 'commonLogic/users/actions';
 import { useParams } from 'react-router-dom';
 import NotFound from 'pages/404';
 import validator from 'validator';
 import { loadNotifications } from 'components/NotificationsMenu/logic/actions';
+import { fetchRecentFilters, fetchFavFilters } from 'containers/Filters/logic/actions';
 
 interface Props {
 	children: JSX.Element[] | JSX.Element;
 	isOverflowHidden?: boolean;
 }
 
-const DefaultPageWrapper: React.FC<Props> = ({ children, isOverflowHidden = false }) => {
+const DefaultPageWrapper: React.FC<Props> = (props) => {
+	const { children, isOverflowHidden } = props;
 	const dispatch = useDispatch();
 	const params: { id: string | undefined } = useParams();
 	let isIdValid = true;
@@ -35,6 +36,9 @@ const DefaultPageWrapper: React.FC<Props> = ({ children, isOverflowHidden = fals
 		dispatch(fetchFilterDefs());
 		dispatch(requestAllUsers());
 		dispatch(loadNotifications());
+		dispatch(startLoadingRecent());
+		dispatch(fetchRecentFilters());
+		dispatch(fetchFavFilters());
 	}, [dispatch]);
 
 	return (
@@ -44,11 +48,7 @@ const DefaultPageWrapper: React.FC<Props> = ({ children, isOverflowHidden = fals
 			) : (
 				<Container className={styles.container + ' fill'}>
 					<Header />
-					<div
-						className={classNames(styles.content_flow, {
-							[styles.content_flow__hidden]: isOverflowHidden,
-						})}
-					>
+					<div className={isOverflowHidden ? styles.content_flow__hidden : styles.content_flow}>
 						{children}
 					</div>
 				</Container>

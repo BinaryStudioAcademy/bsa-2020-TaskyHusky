@@ -1,21 +1,54 @@
+@import 'styles/mixins.scss';
+
 .avatar {
   margin: 0 auto;
   margin-bottom: 10px;
 }
 
+.name {
+  @include info-block-header;
+  margin: 0;
+}
+
+.category {
+  @include secondary-content;
+}
+
+.header {
+  padding: 15px;
+  display: flex;
+}
+
+.title {
+  @include secondary-content;
+}
+
 .card {
-  text-align: center;
-  width: 100% !important;
-  margin: 0 !important;
+  background: $primary-bg;
+  box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.25);
+  border-radius: 2px;
+  width: 330px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-right: 25px;
+  margin-bottom: 25px;
+  cursor: pointer;
 }
 
 .avatarWrapper {
   display: flex;
   justify-content: center;
   margin-bottom: 10px;
+
   span {
     font-size: 1.4rem;
     width: 50px;
     height: 50px;
   }
+}
+
+.colorBlock {
+  height: 20px;
+  width: 100%;
 }

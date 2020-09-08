@@ -1,4 +1,4 @@
-@import "styles/mixins.scss";
+@import 'styles/mixins.scss';
 
 .grid {
 	justify-content: center;
@@ -11,6 +11,8 @@
 
 .column {
 	max-width: 450px;
+	padding: 0px !important;
+	margin: 14px !important;
 }
 .loginBody {
 	padding-left: 0 !important;

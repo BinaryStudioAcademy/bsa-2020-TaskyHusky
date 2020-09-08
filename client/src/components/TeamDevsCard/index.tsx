@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Card, Icon, Button, TextArea, TextAreaProps, Popup } from 'semantic-ui-react';
-import styles from 'containers/TeamPage/styles.module.scss';
+import { Button, TextArea, TextAreaProps, Popup } from 'semantic-ui-react';
+import styles from './styles.module.scss';
 import AditionalModal from 'components/TeamAddPeopleModal/aditionalModal';
 import { useTranslation } from 'react-i18next';
 import { User } from 'containers/LoginPage/logic/state';
@@ -60,79 +60,68 @@ const TeamDevsCard = ({
 	};
 
 	return (
-		<Card>
-			<Card.Content className={styles.cardHeader}>
-				<Icon name="group" size="large" />
-				<Popup
-					open={!lockEditFields && !isTitleValid}
-					content={t('min4_max40_length_message')}
-					position="bottom left"
-					trigger={
-						<input
-							disabled={lockEditFields}
-							value={title}
-							type="text"
-							onChange={(e) => {
-								setTitle(e.target.value.trim());
-								setIsTitleValid(validTeamName(e.target.value.trim()));
-							}}
-							className={
-								lockEditFields ? styles.inputFocus : `${styles.inputFocus} ${styles.inputBorders}`
-							}
-						/>
-					}
-				/>
-			</Card.Content>
-			<Card.Content>
-				<TextArea
-					as="textarea"
-					placeholder={t('add_some_description')}
-					disabled={lockEditFields}
-					onChange={(event: TextAreaProps) => setTeamDescription(event.target.value)}
-					value={teamDescription}
-					rows={3}
-					className={lockEditFields ? styles.inputArea : `${styles.inputArea} ${styles.inputBorders}`}
-				/>
-			</Card.Content>
+		<div className={styles.card}>
+			<Popup
+				open={!lockEditFields && !isTitleValid}
+				content={t('min4_max40_length_message')}
+				position="bottom left"
+				trigger={
+					<input
+						disabled={lockEditFields}
+						value={title}
+						type="text"
+						onChange={(e) => {
+							setTitle(e.target.value.trim());
+							setIsTitleValid(validTeamName(e.target.value.trim()));
+						}}
+						className={
+							lockEditFields ? styles.inputFocus : `${styles.inputFocus} ${styles.inputNoneBorders}`
+						}
+					/>
+				}
+			/>
+			<TextArea
+				as="textarea"
+				placeholder={t('add_some_description')}
+				disabled={lockEditFields}
+				onChange={(event: TextAreaProps) => setTeamDescription(event.target.value)}
+				value={teamDescription ?? ''}
+				rows={3}
+				className={lockEditFields ? styles.inputArea : `${styles.inputArea} ${styles.inputBorders}`}
+			/>
 			{teamOwner && teamOwner.id === authUser?.id && (
 				<>
-					<Card.Content className={styles.editFieldBtn}>
+					<div className={styles.btnContainer}>
 						<Button
-							compact
-							fluid={lockEditFields}
-							color="blue"
+							className={styles.editFieldBtn}
 							onClick={() => submitEditFields()}
 							disabled={!lockEditFields && !isTitleValid}
 						>
 							{t(lockEditFields ? 'edit_fields' : 'save_changes')}
 						</Button>
 						{!lockEditFields && (
-							<Button compact basic className={styles.editBtn} onClick={abortChhange}>
+							<Button className={styles.cancelBtn} onClick={abortChhange}>
 								{t('cancel')}
 							</Button>
 						)}
-					</Card.Content>
-					<Card.Content extra>
-						<Button.Group fluid>
-							<Button
-								basic
-								compact
-								className={`${styles.margin1} ${styles.mediaBtns} ${styles.editBtn}`}
-								onClick={showAddPeopleModal}
-								disabled={currentProfile?.id !== teamOwner?.id}
-							>
-								<span className={styles.editBtnValue}>{t('add_people')}</span>
-							</Button>
-							<Button compact basic className={styles.deleteBtn} onClick={() => setShowDelete(true)}>
-								<span className={styles.deleteBtnValue}>{t('delete_team')}</span>
-							</Button>
-						</Button.Group>
-					</Card.Content>
+					</div>
+					<div className={styles.btnContainer}>
+						<Button
+							className={styles.addPeople}
+							onClick={showAddPeopleModal}
+							disabled={currentProfile?.id !== teamOwner?.id}
+						>
+							{t('add_people')}
+						</Button>
+						<Button className={styles.deleteBtn} onClick={() => setShowDelete(true)}>
+							{t('delete_team')}
+						</Button>
+					</div>
 				</>
 			)}
 
 			{showDelete && <AditionalModal confirmDelete={confirmDelete} setShowDelete={setShowDelete} />}
-		</Card>
+		</div>
 	);
 };
 

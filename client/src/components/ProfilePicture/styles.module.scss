@@ -1,14 +1,18 @@
 @import 'styles/mixins.scss';
 
 .mainInfo {
-  margin-bottom: 32px;
+  margin-bottom: 15px;
   text-align: center;
 }
 
-.managerButton {
+.managerBtn {
+  @include manager-btn;
+  width: 100% !important;
+}
+
+.button {
   width: 100%;
-  @include content-btn;
-  margin-bottom: 40px !important;
+  margin-bottom: 30px !important;
 }
 
 .hidden {
@@ -23,10 +27,10 @@
 
 .fullName {
   @include primary-header;
+  margin: 10px 0 !important;
 }
 
 .avatarContainer {
-  background-color: $body-bg;
   width: 150px;
   height: 150px;
   display: flex;
@@ -34,6 +38,12 @@
   align-items: center;
   border-radius: 50%;
   margin: 0 auto;
+
+  &:hover {
+    .borderHelper {
+      background-color: rgba(9, 30, 66, 0.36);
+    }
+  }
 }
 
 .username {
@@ -51,11 +61,10 @@
 }
 
 .borderHelper {
-  width: 144px;
-  height: 144px;
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
   overflow: hidden;
-  background: rgba(9, 30, 66, 0.36);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -78,4 +87,9 @@
   &:hover {
     opacity: 0.6;
   }
+}
+
+.canvas {
+  width: 144px;
+  height: 144px;
 }

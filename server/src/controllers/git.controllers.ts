@@ -14,8 +14,6 @@ class GitController {
 			next(new ErrorResponse(HttpStatusCode.NOT_FOUND, error.message));
 		}
 	};
-
-
 }
 
 export default GitController;

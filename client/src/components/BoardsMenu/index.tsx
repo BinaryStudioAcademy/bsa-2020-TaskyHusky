@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Dropdown } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 import styles from 'styles/headerDropDown.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../typings/rootState';
@@ -15,6 +16,7 @@ export const BoardsMenu = ({ onCreateBoard }: { onCreateBoard(board: actionTypes
 	useEffect(() => {
 		dispatch(actions.getRecentBoards());
 	}, [dispatch]);
+
 	const [createBoard, setCreateBoard] = useState(false);
 	const recentBoards = useSelector((rootState: RootState) => rootState.boards.recentBoards);
 
@@ -24,13 +26,15 @@ export const BoardsMenu = ({ onCreateBoard }: { onCreateBoard(board: actionTypes
 				<Dropdown.Menu className={styles.dropDownMenu}>
 					<Dropdown.Header>{t('recent')}</Dropdown.Header>
 					{recentBoards.map((board) => (
-						<Dropdown.Item key={board.id}>{board.name}</Dropdown.Item>
+						<Dropdown.Item key={board.id} as={Link} to={`/board/${board.id}`}>
+							{board.name}
+						</Dropdown.Item>
 					))}
 					<Dropdown.Divider />
-					<Dropdown.Item onClick={() => setCreateBoard(true)}>{t('create_board')}</Dropdown.Item>
-					<Dropdown.Item as="a" href="/boards">
+					<Dropdown.Item as={Link} to="/boards">
 						{t('view_all_boards')}
 					</Dropdown.Item>
+					<Dropdown.Item onClick={() => setCreateBoard(true)}>{t('create_board')}</Dropdown.Item>
 				</Dropdown.Menu>
 			</Dropdown>
 			{createBoard && <CreateBoardModal setIsModalShown={setCreateBoard} onCreateBoard={onCreateBoard} />}

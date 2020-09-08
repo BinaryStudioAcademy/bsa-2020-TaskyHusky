@@ -14,7 +14,14 @@ export class Issue {
 	boardColumn?: string;
 
 	@Expose()
-	labels?: string[];
+	labels?: {
+		id: string;
+		backgroudColor: string;
+		textColor: string;
+		text: string;
+		createdAt: Date;
+		updatedAt: Date;
+	};
 
 	@Expose()
 	@IsArray()
@@ -25,12 +32,7 @@ export class Issue {
 	links?: string[];
 
 	@Expose()
-	priority?: {
-		id: string;
-		color: string;
-		title: string;
-		icon: string;
-	};
+	priority?: string;
 
 	@Expose()
 	description?: string;
@@ -62,10 +64,8 @@ export class Issue {
 	updatedAt?: Date;
 
 	@Expose()
-	type?: {
-		id: string;
-		color: string;
-		title: string;
-		icon: string;
-	};
+	type?: string;
+
+	@Expose()
+	status?: string;
 }

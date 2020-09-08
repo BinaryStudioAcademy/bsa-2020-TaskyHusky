@@ -1,12 +1,12 @@
 import React, { SyntheticEvent, useState, useEffect } from 'react';
 import * as actions from '../LoginPage/logic/actions';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button, Divider, Form, Grid, Header, List, Popup, Segment } from 'semantic-ui-react';
+import { Button, Form, Grid, Header, Popup, Segment } from 'semantic-ui-react';
 import { Redirect } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import styles from '../ForgotPassword/styles.module.scss';
+import styles from '../ResetEmail/styles.module.scss';
 import { RootState } from 'typings/rootState';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import PasswordCheck from '../../components/PasswordCheck';
 import PasswordInput from '../../components/common/PasswordInput';
 
@@ -40,11 +40,11 @@ const ResetPassword: React.FC = () => {
 					<Redirect to={isAuthorized ? '/my-work' : '/login'} />
 				) : (
 					<Grid.Column className={styles.column}>
-						<Header as="h1" color="blue" className={styles.mainHeader}>
+						<Header as="h1" className={styles.mainHeader}>
 							{t('reset_password_header')}
 						</Header>
 						<Segment>
-							<Form onSubmit={handleSubmit}>
+							<Form onSubmit={handleSubmit} className={styles.form}>
 								<Popup
 									className={styles.errorPopup}
 									on={[]}
@@ -56,20 +56,10 @@ const ResetPassword: React.FC = () => {
 									}
 								/>
 								<PasswordCheck pass={password} acceptLength={6} />
-								<Button
-									positive
-									className={styles.continueButton}
-									disabled={!isPasswordValid || password === ''}
-								>
+								<Button className="primaryBtn" disabled={!isPasswordValid || password === ''}>
 									{t('continue')}
 								</Button>
 							</Form>
-							<Divider />
-							<List bulleted horizontal link className={styles.list}>
-								<List.Item className={styles.listItem}>
-									<Link to="/login" children={t('reset_password_problem')} />
-								</List.Item>
-							</List>
 						</Segment>
 					</Grid.Column>
 				)}

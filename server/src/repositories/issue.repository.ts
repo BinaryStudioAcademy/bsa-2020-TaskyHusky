@@ -23,6 +23,7 @@ const RELS = [
 	'boardColumn',
 	'watchers',
 	'board',
+	'labels',
 ];
 
 type SortDir = 'DESC' | 'ASC';
@@ -40,6 +41,7 @@ type Sort = {
 };
 
 export type Filter = {
+	id?: string[];
 	issueType?: string[];
 	priority?: string[];
 	sprint?: string[];
@@ -49,7 +51,7 @@ export type Filter = {
 	creator?: string[];
 	summary?: string;
 	description?: string;
-	comment?: string;
+	sprintId?: string;
 };
 
 export interface CreateIssueArgs {
@@ -63,15 +65,29 @@ export interface CreateIssueArgs {
 	description?: string;
 }
 
+type WhereConditions = {
+	sprint: string;
+};
 @EntityRepository(Issue)
 export class IssueRepository extends Repository<Issue> {
-	findAll(from: number, to: number) {
-		return this.find({ relations: RELS, skip: from, take: to - from });
+	findAll(filter: Filter) {
+		const where = {} as WhereConditions;
+		if (filter.sprintId) {
+			where.sprint = filter.sprintId;
+		}
+		return this.find({ relations: RELS, where });
 	}
 
 	getFilteredIssues(filter: Filter | undefined, from: number, to: number, sort: Sort) {
 		const where = filter ? getConditions(filter) : {};
-		return this.findAndCount({ relations: RELS, where, skip: from, take: to - from, order: sort });
+
+		return this.findAndCount({
+			relations: RELS,
+			where,
+			skip: from,
+			take: to - from,
+			order: sort,
+		});
 	}
 
 	findAllByColumnId(id: string) {
@@ -104,18 +120,19 @@ export class IssueRepository extends Repository<Issue> {
 
 	async createOne(data: CreateIssueArgs) {
 		const { project } = data;
-		const projectReposritory = getCustomRepository(ProjectsRepository);
-		const { key, issues = [] } = (await projectReposritory.getWithIssuesById(project)) as Projects;
+		const projectRepository = getCustomRepository(ProjectsRepository);
+		const { key, issues = [] } = (await projectRepository.getWithIssuesById(project)) as Projects;
 		const e = extractIndexFromIssueKey;
 		// eslint-disable-next-line
 		const lastIndex = issues.reduce((acc, current) => (acc = Math.max(acc, e(current.issueKey as string))), 0);
 		const newKey = `${key}-${lastIndex + 1}`;
 		const entity = this.create({ ...data, issueKey: newKey } as any);
 		const result = ((await this.save(entity)) as unknown) as Issue;
+		if (data.labels) await this.createQueryBuilder().relation(Issue, 'labels').of(result.id).add(data.labels);
 		const newIssue = await this.findOneById(result.id);
 		issueHandler.emit(IssueActions.CreateIssue, newIssue);
 
-		return result;
+		return newIssue;
 	}
 
 	async watch(id: string, userId: string) {
@@ -131,12 +148,7 @@ export class IssueRepository extends Repository<Issue> {
 
 	notify(partialIssue: PartialIssue, data: PartialIssue, issue: Issue, senderId: string) {
 		const notification = getCustomRepository(NotificationRepository);
-
-		const difference = getDiffPropNames<PartialIssue, PartialIssue>(
-			partialIssue,
-			{ ...partialIssue, ...data },
-			_.isEqual,
-		);
+		const difference = getDiffPropNames<any, any>(partialIssue, { ...partialIssue, ...data }, _.isEqual);
 
 		if (difference.length) {
 			notification.notifyIssueWatchers({
@@ -150,7 +162,8 @@ export class IssueRepository extends Repository<Issue> {
 
 	async updateOneById(id: string, data: PartialIssue, senderId: string) {
 		const partialIssue = await this.findByIdWithRelIds(id);
-		await this.update(id, data as any);
+		await this.save({ ...(data as any), id });
+		if (data.labels) await this.createQueryBuilder().relation(Issue, 'labels').of(id).add(data.labels);
 		const newIssue = await this.findOneById(id);
 		issueHandler.emit(IssueActions.UpdateIssue, id, newIssue);
 		this.notify(partialIssue, data, newIssue, senderId);
@@ -158,9 +171,10 @@ export class IssueRepository extends Repository<Issue> {
 		return newIssue;
 	}
 
-	async updateOneByKey(key: string, data: PartialIssue, senderId: string) {
-		await this.update({ issueKey: key }, data as any);
+	async updateOneByKey(key: string, givenData: PartialIssue, senderId: string) {
 		const partialIssue = await this.findByKeyWithRelIds(key);
+		const { watchers, labels, ...data } = givenData;
+		await this.update({ issueKey: key }, data as any);
 		const newIssue = await this.findOneByKey(key);
 		issueHandler.emit(IssueActions.UpdateIssue, newIssue.id, newIssue);
 		this.notify(partialIssue, data, newIssue, senderId);

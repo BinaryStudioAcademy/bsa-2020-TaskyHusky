@@ -8,6 +8,7 @@ import Board from 'containers/Board';
 import styles from './styles.module.scss';
 import IssuePageInfoColumn from 'components/IssuePageInfoColumn';
 import { convertIssueResultToPartialIssue } from 'helpers/issueResultToPartialIssue';
+import Spinner from 'components/common/Spinner';
 
 interface Props {
 	projectId: string;
@@ -34,7 +35,7 @@ const ProjectIssuesPage: React.FC<Props> = ({ projectId }) => {
 	}, [selectedIssueKey]);
 
 	if (!project) {
-		return null;
+		return <Spinner />;
 	}
 
 	if (project.boards && project.boards.length > 0) {
@@ -74,6 +75,10 @@ const ProjectIssuesPage: React.FC<Props> = ({ projectId }) => {
 						setSelectedIssueKey(key);
 						setSelectedIssue(null);
 					}}
+					onDeleteIssue={() => {
+						setSelectedIssueKey(null);
+						setSelectedIssue(null);
+					}}
 					search={search}
 					projectId={projectId}
 				/>
@@ -81,13 +86,7 @@ const ProjectIssuesPage: React.FC<Props> = ({ projectId }) => {
 			<div className="fill">
 				{selectedIssue ? (
 					<div style={{ marginLeft: 30 }}>
-						<IssuePageInfoColumn
-							leftAligned
-							withDescrtiption
-							toPageLink
-							issue={selectedIssue}
-							initialIssue={initialIssue}
-						/>
+						<IssuePageInfoColumn asCardInfo issue={selectedIssue} initialIssue={initialIssue} />
 					</div>
 				) : (
 					''

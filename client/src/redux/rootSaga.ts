@@ -19,13 +19,17 @@ import headerSaga from '../containers/Header/logic/saga';
 import projectCommonSaga from 'components/ProjectsCommon/logic/saga';
 import projectPeopleSaga from 'containers/ProjectPeople/logic/saga';
 import notificationsSaga from 'components/NotificationsMenu/logic/saga';
+import reportSaga from 'containers/Report/logic/saga';
+import projectLabelSaga from 'containers/ProjectLabels/logic/saga';
 import userActivitySaga from 'containers/WorkPage/logic/saga';
+import boardColumnSaga from 'containers/BoardColumn/logic/saga';
 
 export default function* rootSaga() {
 	yield all([
 		boardsSaga(),
 		projectsSaga(),
 		projectSaga(),
+		projectLabelSaga(),
 		projectPeopleSaga(),
 		projectCommonSaga(),
 		createProjectSaga(),
@@ -43,6 +47,8 @@ export default function* rootSaga() {
 		headerSaga(),
 		peoplePageSaga(),
 		notificationsSaga(),
+		reportSaga(),
 		userActivitySaga(),
+		boardColumnSaga(),
 	]);
 }

@@ -37,6 +37,18 @@ export const getTeamsProjects = async (id: string): Promise<WebApi.Entities.Team
 	}
 };
 
+export const getTeamsIssues = async (id: string): Promise<WebApi.Entities.Team[] | undefined> => {
+	try {
+		const res: Response = await callWebApi({
+			method: 'GET',
+			endpoint: `team/issues/${id}`,
+		});
+		return (await res.json()) as WebApi.Entities.Team[];
+	} catch (error) {
+		console.log(error);
+	}
+};
+
 export const updateLinks = async (id: string, data: any): Promise<WebApi.Entities.Team[] | undefined> => {
 	try {
 		const res: Response = await callWebApi({

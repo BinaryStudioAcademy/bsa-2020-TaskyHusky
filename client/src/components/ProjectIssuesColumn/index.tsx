@@ -4,10 +4,12 @@ import IssueCard from 'components/IssueCard';
 import { useTranslation } from 'react-i18next';
 import { getProjectIssues } from 'services/projects.service';
 import { useIO } from 'hooks/useIO';
+import Spinner from 'components/common/Spinner';
 
 interface Props {
 	projectId: string;
 	onChangeSelectedCard: (key: string | null) => void;
+	onDeleteIssue?: () => void;
 	search: string;
 }
 
@@ -15,7 +17,12 @@ interface Dictionary<V> {
 	[key: string]: V;
 }
 
-const ProjectIssuesColumn: React.FC<Props> = ({ projectId, onChangeSelectedCard, search }) => {
+const ProjectIssuesColumn: React.FC<Props> = ({
+	projectId,
+	onChangeSelectedCard,
+	search,
+	onDeleteIssue = () => {},
+}) => {
 	const [issues, setIssues] = useState<WebApi.Result.IssueResult[]>([]);
 	const [mustFetchIssues, setMustFetchIssues] = useState<boolean>(true);
 	const issueCardUnselect: Dictionary<() => void> = {};
@@ -48,6 +55,7 @@ const ProjectIssuesColumn: React.FC<Props> = ({ projectId, onChangeSelectedCard,
 			const index = issues.findIndex((issue) => issue.id === id);
 
 			if (index > -1) {
+				onDeleteIssue();
 				const newIssues = [...issues];
 				newIssues.splice(index, 1);
 				setIssues(newIssues);
@@ -63,7 +71,7 @@ const ProjectIssuesColumn: React.FC<Props> = ({ projectId, onChangeSelectedCard,
 	}, [projectId, mustFetchIssues]);
 
 	if (mustFetchIssues) {
-		return null;
+		return <Spinner />;
 	}
 
 	const displayIssues = issues.filter((issue) =>
@@ -71,7 +79,15 @@ const ProjectIssuesColumn: React.FC<Props> = ({ projectId, onChangeSelectedCard,
 	);
 
 	return (
-		<Segment style={{ backgroundColor: '#EEE', height: '95%', width: 300, marginLeft: 60, overflowY: 'auto' }}>
+		<Segment
+			style={{
+				backgroundColor: '#EEE',
+				height: 'calc(100vh - 250px)',
+				width: 300,
+				marginLeft: 60,
+				overflowY: 'auto',
+			}}
+		>
 			<div style={{ marginTop: 10, height: '95%' }}>
 				{displayIssues.length > 0
 					? displayIssues.map((issue, i) => (

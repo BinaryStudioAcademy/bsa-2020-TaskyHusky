@@ -35,10 +35,19 @@ const TeamAddPeopleModal = ({ onConfirm, onClose, search, searchLoading, people,
 
 	const resultRender = (value: any): React.ReactElement => {
 		if (value.data) {
-			const { firstName, lastName, id, email, avatar } = value.data as WebApi.Entities.UserProfile;
+			const { firstName, lastName, id, email, avatar, color } = value.data as WebApi.Entities.UserProfile;
 			const isFoundUserExist = chosenUsers.find((el: WebApi.Entities.UserProfile) => el.id === id);
 			if (!isFoundUserExist) {
-				return <ResultPeople id={id} firstName={firstName} lastName={lastName} email={email} avatar={avatar} />;
+				return (
+					<ResultPeople
+						id={id}
+						firstName={firstName}
+						lastName={lastName}
+						email={email}
+						avatar={avatar}
+						color={color}
+					/>
+				);
 			}
 		}
 		return <div> {t('no_results_found')}</div>;
@@ -59,13 +68,13 @@ const TeamAddPeopleModal = ({ onConfirm, onClose, search, searchLoading, people,
 	};
 
 	return (
-		<Modal onClose={() => onClose(false)} dimmer="inverted" open size="small">
-			<Modal.Header>{t('add_teammates')}</Modal.Header>
+		<Modal onClose={() => onClose(false)} open size="small">
+			<Modal.Header className="standartHeader">{t('add_teammates')}</Modal.Header>
 			<Modal.Content>
 				{chosenUsers.length > 0 && <ChosenPeople users={chosenUsers} />}
 				<Search
 					disabled={chosenUsers.length >= 4}
-					input={{ icon: 'search', iconPosition: 'left', fluid: true }}
+					input={{ icon: 'search', iconPosition: 'left' }}
 					onSearchChange={handlerChange}
 					loading={searchLoading}
 					className={styles.field}
@@ -79,9 +88,15 @@ const TeamAddPeopleModal = ({ onConfirm, onClose, search, searchLoading, people,
 				<p className={styles.descriptionP}>{t('no_more_4_people_can_ba_added')}</p>
 			</Modal.Content>
 			<Modal.Actions>
-				<Button content={t('accept')} primary labelPosition="left" icon="checkmark" onClick={handlerAccept} />
-				<Button basic className={styles.editBtn} onClick={() => onClose(false)}>
-					<span className={styles.editBtnValue}>{t('cancel')}</span>
+				<Button
+					content={t('accept')}
+					className={styles.editBtn}
+					labelPosition="left"
+					icon="checkmark"
+					onClick={handlerAccept}
+				/>
+				<Button className={styles.cancelBtn} onClick={() => onClose(false)}>
+					{t('cancel')}
 				</Button>
 			</Modal.Actions>
 		</Modal>

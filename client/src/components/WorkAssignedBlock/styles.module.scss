@@ -1,12 +1,5 @@
 @import 'styles/mixins.scss';
 
-.container {
-  background-color: $primary-bg;
-  width: 90%;
-  margin-top: 32px;
-  padding: 20px 50px;
-}
-
 .header {
   border-bottom: 1px solid $border;
   display: flex;
@@ -27,4 +20,10 @@
 .headerSummary {
   @include work-page-secondary;
   width: auto;
+}
+
+@media screen and (max-width: $mobile-screen) {
+  .headerSummary {
+    display: none;
+  }
 }

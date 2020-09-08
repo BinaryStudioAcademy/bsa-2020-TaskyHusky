@@ -53,8 +53,8 @@ const CreateSprintModal = (props: Props) => {
 	};
 
 	return (
-		<Modal size="tiny" dimmer="inverted" onClose={handleClose} open={props.isOpen}>
-			<Header>{t('create_sprint')}</Header>
+		<Modal size="tiny" onClose={handleClose} open={props.isOpen}>
+			<Header className="standartHeader">{t('create_sprint')}</Header>
 			<Modal.Content>
 				<Form>
 					<Form.Field>
@@ -65,6 +65,7 @@ const CreateSprintModal = (props: Props) => {
 							on={[]}
 							trigger={
 								<Form.Input
+									className="standartInput"
 									label={t('sprint_name')}
 									placeholder={t('enter_sprint_name')}
 									value={name}
@@ -107,8 +108,15 @@ const CreateSprintModal = (props: Props) => {
 				</Form>
 			</Modal.Content>
 			<Modal.Actions>
-				<Button color="grey" onClick={handleClose} content={t('cancel')} />
-				<Button onClick={handleSubmit} content={t('submit')} labelPosition="right" icon="checkmark" primary />
+				<Button className="cancelBtn" onClick={handleClose} content={t('cancel')} />
+				<Button
+					className="primaryBtn"
+					onClick={handleSubmit}
+					content={t('submit')}
+					labelPosition="right"
+					icon="checkmark"
+					primary
+				/>
 			</Modal.Actions>
 		</Modal>
 	);
