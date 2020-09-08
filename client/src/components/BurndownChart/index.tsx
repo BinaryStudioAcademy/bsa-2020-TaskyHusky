@@ -151,6 +151,7 @@ const BurndownChart: React.FC<Props> = ({ sprint }) => {
 			.attr('stroke-linejoin', 'round')
 			.attr('stroke-linecap', 'round')
 			.attr('d', line as any);
+
 		svg.append('path')
 			.datum(guideLineData)
 			.attr('transform', `translate(${translateRight},${translateUp})`)
@@ -160,6 +161,7 @@ const BurndownChart: React.FC<Props> = ({ sprint }) => {
 			.attr('stroke-linejoin', 'round')
 			.attr('stroke-linecap', 'round')
 			.attr('d', line as any);
+
 		svg.append('path')
 			.datum([
 				{ storyPoint: maxPoint + 2, date: start },
