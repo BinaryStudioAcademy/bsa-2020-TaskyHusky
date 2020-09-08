@@ -52,8 +52,8 @@ const Routing: React.FC = () => {
 			<PrivateRoute exact path="/team/:id" component={Team} />
 			<PrivateRoute exact path="/profile/:id" component={Profile} />
 			<PrivateRoute exact path="/filters" component={Filters} />
-			<PrivateRoute path="/report/:id" component={ReportPage} />
 			<PrivateRoute exact path="/board/:boardId/columnsSettings" component={ColumnsSettings} />
+			<PrivateRoute path="/board/:id/reports/:sprintId" component={ReportPage} />
 			<PrivateRoute path="/board/:id" component={BoardPage} />
 			<PrivateRoute path="/project/:id/issues" component={ProjectIssues} />
 			<PrivateRoute exact path="/people" component={PeoplePage} />

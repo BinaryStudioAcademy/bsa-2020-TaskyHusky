@@ -9,4 +9,10 @@ export const reportReducer = createReducer<ReportState>(initialState, {
 			sprint,
 		};
 	},
+	[actionTypes.LOAD_SPRINT_ISSUES_SUCCESS](state, { issues }) {
+		return {
+			...state,
+			issues,
+		};
+	},
 });

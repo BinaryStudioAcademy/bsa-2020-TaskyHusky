@@ -3,6 +3,7 @@ import { getCustomRepository } from 'typeorm';
 import { SprintRepository } from '../repositories/sprint.repository';
 import { ErrorResponse } from '../helpers/errorHandler.helper';
 import HttpStatusCode from '../constants/httpStattusCode.constants';
+import { IssueRepository } from '../repositories/issue.repository';
 
 enum ErrorMessage {
 	NO_PROJECT = 'this sprint is not assigned to any project yet',
@@ -111,18 +112,17 @@ class SprintController {
 	}
 
 	async getIssuesById(req: Request, res: Response, next: NextFunction) {
-		const sprintRepository = getCustomRepository(SprintRepository);
+		const issueRepository = getCustomRepository(IssueRepository);
 
 		try {
 			const { id } = req.params;
-			const sprint = await sprintRepository.findOneById(id);
-
-			if (sprint.issues) {
-				res.send(sprint.issues);
+			const issues = await issueRepository.findAll({ sprintId: id });
+			if (issues) {
+				res.send(issues);
 			}
 
 			// ACTUALLY SHOULD NEVER HAPPEN, IF THIS TRIGGER - SOMETHING CAN BE WRONG ON ENTITY SIDE
-			if (!sprint.issues) {
+			if (!issues) {
 				next(new ErrorResponse(HttpStatusCode.NOT_FOUND, ErrorMessage.NO_ISSUES));
 			}
 		} catch (error) {

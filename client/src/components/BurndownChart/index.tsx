@@ -7,6 +7,7 @@ import { getSortedCompletedIssues, getEndDate, getStartOfDayDate } from './helpe
 
 interface Props {
 	sprint: WebApi.Entities.Sprint;
+	issues: WebApi.Result.IssueResult[];
 }
 
 type ChartPoint = {
@@ -17,11 +18,10 @@ type ChartPoint = {
 type ActiveSprint = {
 	startDate: Date;
 	endDate: Date;
-	issues: WebApi.Entities.Issue[];
 };
 
-const BurndownChart: React.FC<Props> = ({ sprint }) => {
-	const { startDate, endDate, issues } = sprint as ActiveSprint;
+const BurndownChart: React.FC<Props> = ({ sprint, issues }) => {
+	const { startDate, endDate } = sprint as ActiveSprint;
 
 	const sortedCompletedIssues = getSortedCompletedIssues(issues);
 

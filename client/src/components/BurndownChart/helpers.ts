@@ -10,7 +10,7 @@ export type CompletedIssues = {
 	completedAt: Date;
 };
 
-export const getSortedCompletedIssues = (issues: WebApi.Entities.Issue[]) => {
+export const getSortedCompletedIssues = (issues: WebApi.Result.IssueResult[]) => {
 	return _.orderBy(issues, 'completedAt').filter(({ completedAt }) => completedAt) as CompletedIssues[];
 };
 

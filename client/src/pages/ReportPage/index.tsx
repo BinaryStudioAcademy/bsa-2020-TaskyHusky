@@ -5,7 +5,7 @@ import DefaultPageWrapper from 'containers/DefaultPageWrapper';
 interface Props {
 	match: {
 		params: {
-			id: string;
+			sprintId: string;
 		};
 	};
 }
@@ -13,7 +13,7 @@ interface Props {
 const Search: React.FC<Props> = ({ match }) => {
 	return (
 		<DefaultPageWrapper>
-			<Report sprintId={match.params.id} />
+			<Report sprintId={match.params.sprintId} />
 		</DefaultPageWrapper>
 	);
 };

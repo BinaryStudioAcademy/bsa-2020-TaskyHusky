@@ -47,6 +47,7 @@ export interface IssueResult {
 	storyPoint?: number;
 	createdAt: Date;
 	updatedAt?: Date;
+	completedAt?: Date;
 }
 
 interface IssueCommentResult {
