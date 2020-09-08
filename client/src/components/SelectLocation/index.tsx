@@ -4,6 +4,7 @@ import styles from './styles.module.scss';
 import { Location } from 'components/ProfileManager';
 import { Button } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
+import { googleApiKey } from 'config/googleApi.config';
 
 interface Props {
 	changeLocation: (location: Location) => void;
@@ -24,7 +25,6 @@ interface IAutocompleteInterface {
 }
 
 const SelectLocation: React.FC<Props> = (props: Props) => {
-	const googleApiKey = '';
 	const { t } = useTranslation();
 	const { changeLocation, currentLocation } = props;
 	const [autocomplete, setAutocomplete] = useState<IAutocompleteInterface>();
