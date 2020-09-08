@@ -3,7 +3,7 @@ import * as d3 from 'd3';
 import * as _ from 'lodash';
 import moment from 'moment';
 import styles from './chart.module.scss';
-import { getSortedCompletedIssues, getEndDate, getStartOfDayDate } from './helpers';
+import { getSortedCompletedIssues, getEndDate, getStartOfDayDate, appendLegend } from './helpers';
 
 interface Props {
 	sprint: WebApi.Entities.Sprint;
@@ -188,66 +188,7 @@ const BurndownChart: React.FC<Props> = ({ sprint, issues }) => {
 			.attr('d', line as any);
 
 		// legend
-		svg.append('rect')
-			.attr('x', width - 150 - 10)
-			.attr('y', 5)
-			.style('stroke', '#707070')
-			.style('fill', 'none')
-			.style('stroke-width', 1)
-			.attr('width', 155)
-			.attr('height', 55)
-			.attr('transform', `translate(${translateRight},${translateUp})`);
-
-		svg.append('rect')
-			.attr('x', width - 150)
-			.attr('y', 10 + 3)
-			.attr('width', 14)
-			.attr('height', 10)
-			.style('fill', 'red')
-			.attr('transform', `translate(${translateRight},${translateUp})`);
-
-		svg.append('rect')
-			.attr('x', width - 150)
-			.attr('y', 35 + 4)
-			.attr('width', 14)
-			.attr('height', 10)
-			.style('fill', '#336699')
-			.attr('transform', `translate(${translateRight},${translateUp})`);
-
-		svg.append('rect')
-			.attr('x', width - 150 - 2)
-			.attr('y', 10 + 1)
-			.style('stroke', '#707070')
-			.style('fill', 'none')
-			.style('stroke-width', 1)
-			.attr('width', 18)
-			.attr('height', 14)
-			.attr('transform', `translate(${translateRight},${translateUp})`);
-		svg.append('rect')
-			.attr('x', width - 150 - 2)
-			.attr('y', 35 + 2)
-			.style('stroke', '#707070')
-			.style('fill', 'none')
-			.style('stroke-width', 1)
-			.attr('width', 18)
-			.attr('height', 14)
-			.attr('transform', `translate(${translateRight},${translateUp})`);
-
-		svg.append('text')
-			.attr('x', width - 150 + 20)
-			.attr('y', 10 + 10)
-			.text('Completed issues')
-			.style('font-size', '14px')
-			.attr('alignment-baseline', 'middle')
-			.attr('transform', `translate(${translateRight},${translateUp})`);
-
-		svg.append('text')
-			.attr('x', width - 150 + 20)
-			.attr('y', 35 + 10)
-			.text('Guide line')
-			.style('font-size', '14px')
-			.attr('alignment-baseline', 'middle')
-			.attr('transform', `translate(${translateRight},${translateUp})`);
+		appendLegend(svg, width, translateRight, translateUp);
 	};
 
 	useEffect(() => {
