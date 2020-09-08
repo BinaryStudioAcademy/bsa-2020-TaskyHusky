@@ -20,7 +20,7 @@ const WorkOnCard: React.FC<Props> = (props: Props) => {
 			<Popup
 				content={`${t('project')}: ${project.name}`}
 				trigger={
-					<Link to={`/project/${project.id}/issues`}>
+					<Link to={`/project/${project.id}`}>
 						<div className={styles.avatar} style={{ backgroundColor: project.color ?? '#676f74' }}>
 							{project.icon ? (
 								<img src={project.icon} className={styles.img} alt="avatar" />

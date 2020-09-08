@@ -102,7 +102,7 @@ const ProjectsTable = ({ projects, currentUser }: Props) => {
 					{sortedProjects.map(({ id, name, key, icon, lead }) => (
 						<Table.Row key={id}>
 							<Table.Cell>
-								<Link to={`/project/${id}/issues`} className={styles.project__name_container}>
+								<Link to={`/project/${id}`} className={styles.project__name_container}>
 									{icon && <img className={styles.project__img} src={icon} alt="Avatar" />}
 									<span className={styles.project__name}>{name}</span>
 								</Link>
