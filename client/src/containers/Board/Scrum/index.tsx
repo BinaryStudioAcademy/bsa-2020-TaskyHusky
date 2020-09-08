@@ -117,7 +117,7 @@ const Scrum: BoardComponent = (props) => {
 				<Breadcrumbs sections={setBreadcrumbs({ history, projectDetails, boardDetails })} />
 			</div>
 			<div className={styles.inlineContainer}>
-				<Header as="h2" className="standartHeader">
+				<Header as="h2" className={`standartHeader ${styles.scrumHeader}`}>
 					{board.name}
 				</Header>
 				<Form.Input
