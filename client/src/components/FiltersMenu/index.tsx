@@ -15,13 +15,13 @@ export const FiltersMenu = () => {
 			<Dropdown.Menu className={styles.dropDownMenu}>
 				<Dropdown.Header>{t('recent')}</Dropdown.Header>
 				{recent.map((filter) => (
-					<Dropdown.Item as={Link} to={`/advancedSearch/${filter.id}`} key={filter.id}>
+					<Dropdown.Item as="a" href={`/advancedSearch/${filter.id}`} key={filter.id}>
 						{filter.name}
 					</Dropdown.Item>
 				))}
 				<Dropdown.Header>{t('favorite')}</Dropdown.Header>
 				{favorite.map((filter) => (
-					<Dropdown.Item as={Link} to={`/advancedSearch/${filter.id}`} key={filter.id}>
+					<Dropdown.Item as="a" href={`/advancedSearch/${filter.id}`} key={filter.id}>
 						{filter.name}
 					</Dropdown.Item>
 				))}
