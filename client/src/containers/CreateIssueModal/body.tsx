@@ -171,11 +171,6 @@ const CreateIssueModalBody: React.FC<Props> = ({
 		Object.keys(context.data).forEach((key) => context.set(key as any, (initialState as any)[key]));
 	};
 
-	//comment cause it makes second spinner in header
-	// if (projectsLoading) {
-	// 	return <Spinner />;
-	// }
-
 	return (
 		<Modal
 			as="form"
@@ -296,11 +291,12 @@ const CreateIssueModalBody: React.FC<Props> = ({
 						<label className="standartLabel">{t('description')}</label>
 						<Form.TextArea
 							className="standartInput"
+							style={{ resize: 'none' }}
+							rows={4}
 							placeholder={t('description')}
 							onChange={(event, data) =>
 								data ? context.set('description', data.value as string) : context.set('description', '')
 							}
-							rows={10}
 						/>
 					</Form.Field>
 				</Form>
