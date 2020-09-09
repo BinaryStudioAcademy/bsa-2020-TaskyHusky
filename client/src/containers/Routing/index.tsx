@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch } from 'react-router-dom';
 import PrivateRoute from 'components/PrivateRoute';
 import Team from 'pages/Team';
 import Profile from 'pages/Profile';
@@ -15,15 +15,16 @@ import BoardsPage from '../../pages/Boards';
 import PeoplePage from '../../pages/People';
 import BoardPage from 'pages/BoardPage';
 import ProjectIssues from 'pages/ProjectIssues';
+import ProjectIssuesStrict from 'pages/ProjectIssuesStrict';
 import NotFound from 'pages/404';
 import Search from 'pages/AdvancedSearch';
 import Work from 'pages/Work';
-import ReportPage from 'pages/ReportPage';
 import ResetPassword from '../ResetPassword';
 import ResetEmail from '../ResetEmail';
 import Landing from 'pages/LandingPage';
 import Spinner from 'components/common/Spinner';
 import ColumnsSettings from 'pages/ColumnsSettings';
+import AppInformation from 'pages/AppInformation';
 
 const Routing: React.FC = () => {
 	const dispatch = useDispatch();
@@ -42,8 +43,9 @@ const Routing: React.FC = () => {
 
 	return (
 		<Switch>
-			<PublicRoute restricted exact path={['/', '/login', '/signup']} component={Landing} />
-			<Route exact path="/reset-password/:token" component={ResetPassword} />
+			<PublicRoute restricted exact path={'/'} component={AppInformation} />
+			<PublicRoute restricted exact path={['/login', '/signup']} component={Landing} />
+			<PublicRoute exact path="/reset-password/:token" component={ResetPassword} />
 			<PrivateRoute path="/reset-email/:token/:emailBtoa" component={ResetEmail} />
 			<PrivateRoute path="/issue/:key" component={IssuePage} />
 			<PrivateRoute exact path="/projects" component={ProjectsPage} />
@@ -53,9 +55,9 @@ const Routing: React.FC = () => {
 			<PrivateRoute exact path="/profile/:id" component={Profile} />
 			<PrivateRoute exact path="/filters" component={Filters} />
 			<PrivateRoute exact path="/board/:boardId/columnsSettings" component={ColumnsSettings} />
-			<PrivateRoute path="/board/:id/reports/:sprintId" component={ReportPage} />
 			<PrivateRoute path="/board/:id" component={BoardPage} />
-			<PrivateRoute path="/project/:id/issues" component={ProjectIssues} />
+			<PrivateRoute path="/project/:id/issues" component={ProjectIssuesStrict} />
+			<PrivateRoute path="/project/:id" component={ProjectIssues} />
 			<PrivateRoute exact path="/people" component={PeoplePage} />
 			<PrivateRoute path="/advancedSearch/:filterId" component={Search} />
 			<PrivateRoute exact path="/advancedSearch" component={Search} />

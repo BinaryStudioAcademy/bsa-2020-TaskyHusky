@@ -103,7 +103,10 @@ const NotificationsMenu: React.FC = () => {
 			open={isOpened}
 		>
 			<Dropdown.Menu className={styles.circularDropdownMenu}>
-				<Dropdown.Header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+				<Dropdown.Header
+					className="standartLabel"
+					style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
+				>
 					{t('notifications')}
 					{isThereUnread ? (
 						<button className={styles.buttonLink} onClick={viewAll}>
@@ -119,7 +122,7 @@ const NotificationsMenu: React.FC = () => {
 							</div>
 						))
 					) : (
-						<ClosingItem>{t('no')}</ClosingItem>
+						<ClosingItem className="textData">{t('no_notifications')}</ClosingItem>
 					)}
 				</div>
 				<Dropdown.Item>
@@ -129,6 +132,7 @@ const NotificationsMenu: React.FC = () => {
 							setCanShowAllNotifications(Boolean(data.checked));
 							setIsOpened(true);
 						}}
+						className="textData"
 						label={t('show_notifs_during_last_10_days')}
 					/>
 				</Dropdown.Item>

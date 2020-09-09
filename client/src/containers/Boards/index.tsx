@@ -152,7 +152,7 @@ const Boards: React.FC = () => {
 																	<a
 																		target="_blank"
 																		rel="noopener noreferrer"
-																		href={`/project/${project.id}/issues`}
+																		href={`/project/${project.id}`}
 																	>
 																		{project.name}
 																	</a>
@@ -177,7 +177,7 @@ const Boards: React.FC = () => {
 																					<a
 																						target="_blank"
 																						rel="noopener noreferrer"
-																						href={`/project/${project.id}/issues`}
+																						href={`/project/${project.id}`}
 																					>
 																						{project.name}
 																					</a>

@@ -14,10 +14,15 @@ import { RootState } from 'typings/rootState';
 import { setColumnCreated } from 'containers/BoardColumn/logic/actions';
 import Options from 'components/common/Options';
 import historyHelper from 'helpers/history.helper';
+import KanbanBoardSidebar from 'containers/KanbanBoardSidebar';
+import { SectionType } from 'containers/KanbanBoardSidebar/config/sections';
+import ProjectIssuesPage from 'containers/ProjectIssuesPage';
+import ColumnsSettingsPage from 'containers/ColumnsSettingsPage';
 
-const Kanban: BoardComponent = ({ board }) => {
+const Kanban: BoardComponent = ({ board, noSidebar }) => {
 	const [search, setSearch] = useState<string>('');
 	const [columns, setColumns] = useState<WebApi.Result.BoardColumnResult[]>(board.columns);
+	const [sidebarSection, setSidebarSection] = useState<SectionType>(SectionType.board);
 	const { t } = useTranslation();
 	const dispatch = useDispatch();
 	const { columnCreated, recentlyCreatedColumn } = useSelector((state: RootState) => state.boardColumn);
@@ -54,7 +59,7 @@ const Kanban: BoardComponent = ({ board }) => {
 		});
 	};
 
-	return (
+	const renderBoard = (
 		<div className={styles.wrapper}>
 			<Breadcrumb className={styles.breadcrumb}>
 				<Breadcrumb.Section href="/projects">{t('projects')}</Breadcrumb.Section>
@@ -108,6 +113,39 @@ const Kanban: BoardComponent = ({ board }) => {
 					</CreateColumnModal>
 				</div>
 			</DragDropContext>
+		</div>
+	);
+
+	const renderIssues = <ProjectIssuesPage strict noSidebar projectId={(board.projects ?? [])[0].id} />;
+	const renderSettings = <ColumnsSettingsPage boardId={board.id} />;
+	let render;
+
+	switch (sidebarSection) {
+		case SectionType.board:
+			render = renderBoard;
+			break;
+		case SectionType.issues:
+			render = renderIssues;
+			break;
+		case SectionType.settings:
+			render = renderSettings;
+			break;
+		default:
+			render = renderBoard;
+	}
+
+	return (
+		<div className={styles.outerContainer}>
+			{noSidebar ? (
+				''
+			) : (
+				<KanbanBoardSidebar
+					onChangeSection={setSidebarSection}
+					project={(board.projects ?? [])[0]}
+					currentSection={sidebarSection}
+				/>
+			)}
+			<div className={styles.render}>{noSidebar ? renderBoard : render}</div>
 		</div>
 	);
 };

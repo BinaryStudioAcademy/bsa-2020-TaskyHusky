@@ -26,7 +26,7 @@ export const BoardsMenu = ({ onCreateBoard }: { onCreateBoard(board: actionTypes
 				<Dropdown.Menu className={styles.dropDownMenu}>
 					<Dropdown.Header>{t('recent')}</Dropdown.Header>
 					{recentBoards.map((board) => (
-						<Dropdown.Item key={board.id} as={Link} to={`/board/${board.id}`}>
+						<Dropdown.Item key={board.id} as="a" href={`/board/${board.id}`}>
 							{board.name}
 						</Dropdown.Item>
 					))}

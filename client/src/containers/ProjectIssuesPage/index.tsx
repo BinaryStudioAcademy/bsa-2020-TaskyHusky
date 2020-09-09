@@ -5,16 +5,20 @@ import { useTranslation } from 'react-i18next';
 import ProjectIssuesColumn from 'components/ProjectIssuesColumn';
 import { getByKey } from 'services/issue.service';
 import Board from 'containers/Board';
-import styles from './styles.module.scss';
 import IssuePageInfoColumn from 'components/IssuePageInfoColumn';
 import { convertIssueResultToPartialIssue } from 'helpers/issueResultToPartialIssue';
-import Spinner from 'components/common/Spinner';
+import KanbanBoardSidebar from 'containers/KanbanBoardSidebar';
+import { SectionType } from 'containers/KanbanBoardSidebar/config/sections';
+import ColumnsSettingsPage from 'containers/ColumnsSettingsPage';
 
 interface Props {
 	projectId: string;
+	strict?: boolean;
+	noSidebar?: boolean;
 }
 
-const ProjectIssuesPage: React.FC<Props> = ({ projectId }) => {
+const ProjectIssuesPage: React.FC<Props> = ({ projectId, strict, noSidebar }) => {
+	const [sidebarSection, setSidebarSection] = useState<SectionType>(SectionType.issues);
 	const [project, setProject] = useState<WebApi.Entities.Projects | null>(null);
 	const [selectedIssueKey, setSelectedIssueKey] = useState<string | null>(null);
 	const [selectedIssue, setSelectedIssue] = useState<WebApi.Result.IssueResult | null>(null);
@@ -35,29 +39,27 @@ const ProjectIssuesPage: React.FC<Props> = ({ projectId }) => {
 	}, [selectedIssueKey]);
 
 	if (!project) {
-		return <Spinner />;
+		return null;
 	}
 
-	if (project.boards && project.boards.length > 0) {
+	if (project.boards && project.boards.length > 0 && !strict) {
 		return <Board boardId={project.boards[0].id} />;
 	}
 
 	const initialIssue = selectedIssue ? convertIssueResultToPartialIssue(selectedIssue) : {};
 
-	return (
-		<main style={{ paddingTop: 20, height: '80%', marginBottom: 10, display: 'flex' }}>
+	let render;
+
+	const renderIssues = (
+		<div style={{ paddingTop: 20, height: '100%', display: 'flex' }}>
 			<div>
 				<Header style={leftPadded} as="h2">
 					{t('issues')}
 				</Header>
 				<Breadcrumb style={{ ...leftPadded, marginBottom: 20 }}>
-					<Breadcrumb.Section href="/projects">
-						<span className={styles.link}>{t('projects')}</span>
-					</Breadcrumb.Section>
-					<Breadcrumb.Divider />
-					<Breadcrumb.Section link>
-						<span className={styles.link}>{project.name}</span>
-					</Breadcrumb.Section>
+					<Breadcrumb.Section href="/projects">{t('projects')}</Breadcrumb.Section>
+					<Breadcrumb.Divider>&nbsp;/&nbsp;</Breadcrumb.Divider>
+					<Breadcrumb.Section active>{project.name}</Breadcrumb.Section>
 				</Breadcrumb>
 				<Form>
 					<Form.Group>
@@ -92,7 +94,45 @@ const ProjectIssuesPage: React.FC<Props> = ({ projectId }) => {
 					''
 				)}
 			</div>
-		</main>
+		</div>
+	);
+
+	if (project.boards && project.boards.length) {
+		const renderSettings = <ColumnsSettingsPage boardId={(project.boards ?? [])[0].id} />;
+		const renderBoard = <Board boardId={(project.boards ?? [])[0].id} noSidebar />;
+
+		switch (sidebarSection) {
+			case SectionType.issues:
+				render = renderIssues;
+				break;
+			case SectionType.board:
+				render = renderBoard;
+				break;
+			case SectionType.settings:
+				render = renderSettings;
+				break;
+			default:
+				break;
+		}
+	} else {
+		render = renderIssues;
+	}
+
+	return (
+		<div style={{ display: 'flex', height: '100%' }}>
+			{noSidebar || !project.boards || !project.boards.length ? (
+				''
+			) : (
+				<KanbanBoardSidebar
+					currentSection={sidebarSection}
+					onChangeSection={setSidebarSection}
+					project={project}
+				/>
+			)}
+			<div style={{ width: '80%' }}>
+				{noSidebar || (project.boards && project.boards.length) ? renderIssues : render}
+			</div>
+		</div>
 	);
 };
 

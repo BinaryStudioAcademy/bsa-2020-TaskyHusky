@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from 'typings/rootState';
 
 interface Props extends RouteProps {
-	restricted: boolean;
+	restricted?: boolean;
 	component: React.ComponentType<RouteComponentProps<any>> | React.ComponentType<any>;
 }
 

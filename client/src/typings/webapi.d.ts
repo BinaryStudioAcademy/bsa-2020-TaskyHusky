@@ -176,12 +176,19 @@ namespace WebApi.Result {
 		filename: string;
 	}
 	interface CommitResult {
-		hash: string;
+		sha: string;
 		message: string;
-		author: string;
-		avatar: string;
-		time: Date;
-		files: Array<CommitFileResult>;
+		url: string;
+		date: Date;
+		repo: {
+			name: string;
+			url: string;
+		};
+		author: {
+			name: string;
+			avatar: string;
+			url: string;
+		};
 	}
 	interface NotificationResult {
 		id: string;
@@ -311,7 +318,7 @@ namespace WebApi.Entities {
 		board?: Board;
 		labels?: ProjectLabel[];
 		attachments?: string;
-		links?: string;
+		links?: string[];
 		priority?: Priority;
 		description?: string;
 		sprint?: Sprint;

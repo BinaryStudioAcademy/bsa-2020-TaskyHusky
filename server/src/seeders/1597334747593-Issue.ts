@@ -7,6 +7,7 @@ import { IssueTypeRepository } from '../repositories/issueType.repository';
 import { Issue } from '../entity/Issue';
 import { SprintRepository } from '../repositories/sprint.repository';
 import { BoardRepository } from '../repositories/board.repository';
+import { ProjectLabel } from '../entity/ProjectLabel';
 
 export class Issue1597334747593 implements MigrationInterface {
 	public async up(queryRunner: QueryRunner): Promise<void> {
@@ -19,6 +20,7 @@ export class Issue1597334747593 implements MigrationInterface {
 		const projectRepository = getCustomRepository(ProjectsRepository);
 		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 		const project = (await projectRepository.find())[0]!;
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 
 		const issueTypeRepository = getCustomRepository(IssueTypeRepository);
 		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -64,6 +66,8 @@ export class Issue1597334747593 implements MigrationInterface {
 		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 		const scrumBoard = await boardRepository.findOne('cd947d22-8efd-4b2f-8b6a-446dc542c8df');
 
+		const labels1 = (await getRepository('ProjectLabel').find({ project: { id: project.id } })) as ProjectLabel[];
+
 		const issue1 = new Issue();
 		issue1.id = '3219cbaf-b76e-44f1-bcad-837f08dd2c2b';
 		issue1.createdAt = new Date('2020-05-15');
@@ -74,9 +78,8 @@ export class Issue1597334747593 implements MigrationInterface {
 		issue1.description = 'Places new and ladies, too, I’m B.J. McKay and this is my best friend Bear. ';
 		issue1.creator = user2;
 		issue1.assigned = user1;
-		// issue1.labels = '{label}';
+		issue1.labels = [labels1[0]];
 		issue1.attachments = '{attachments}';
-		issue1.links = '{link/toSpace}';
 		issue1.issueKey = 'IK-1';
 		issue1.type = issueType;
 		issue1.priority = priority4;
@@ -92,9 +95,8 @@ export class Issue1597334747593 implements MigrationInterface {
 			'New dreams and better scenes, and best of all I don’t pay property tax. Rollin’ down to Dallas, who’s providin’ my palace, off to New Orleans or who knows where.';
 		issue2.creator = user1;
 		issue2.assigned = user2;
-		// issue2.labels = '{label}';
+		issue2.labels = [labels1[0]];
 		issue2.attachments = '{attachments2}';
-		issue2.links = '{link/toSpace}';
 		issue2.issueKey = 'IK-2';
 		issue2.type = issueType2;
 		issue2.priority = priority;
@@ -111,9 +113,7 @@ export class Issue1597334747593 implements MigrationInterface {
 			'He’s goin’ everywhere, B.J. McKay and his best friend Bear. He just keeps on movin’, ladies keep improvin’, every day is better than the last.';
 		issue3.creator = user2;
 		issue3.assigned = user2;
-		// issue3.labels = '{label}';
 		issue3.attachments = '{attachments2}';
-		issue3.links = '{link/toSpace}';
 		issue3.issueKey = 'IK-3';
 		issue3.type = issueType;
 		issue3.priority = priority2;
@@ -131,9 +131,8 @@ export class Issue1597334747593 implements MigrationInterface {
 			'Hey there where ya goin’, not exactly knowin’, who says you have to call just one place home. ';
 		issue4.creator = user1;
 		issue4.assigned = user1;
-		// issue4.labels = '{label}';
+		issue4.labels = [labels1[1]];
 		issue4.attachments = '{attachments4}';
-		issue4.links = '{link/toSpace}';
 		issue4.issueKey = 'IK-4';
 		issue4.type = issueType3;
 		issue4.priority = priority3;
@@ -151,9 +150,8 @@ export class Issue1597334747593 implements MigrationInterface {
 			'So, stop that pigeon, stop that pigeon, stop that pigeon, stop that pigeon, stop that pigeon, stop that pigeon, stop that pigeon. Howwww! Nab him, jab him, tab him, grab him, stop that pigeon now.';
 		issue5.creator = user2;
 		issue5.assigned = user1;
-		// issue5.labels = '{label}';
+		issue5.labels = [labels1[0]];
 		issue5.attachments = '{attachments4}';
-		issue5.links = '{link/toSpace}';
 		issue5.issueKey = 'IK-5';
 		issue5.type = issueType;
 		issue5.priority = priority4;
@@ -171,9 +169,7 @@ export class Issue1597334747593 implements MigrationInterface {
 			'Those medals you wear on your moth-eaten chest should be there for bungling at which you are best.';
 		issue6.creator = user2;
 		issue6.assigned = user1;
-		// issue6.labels = '{label}';
 		issue6.attachments = '{attachments4}';
-		issue6.links = '{link/toSpace}';
 		issue6.issueKey = 'IK-6';
 		issue6.type = issueType;
 		issue6.priority = priority;
@@ -190,9 +186,7 @@ export class Issue1597334747593 implements MigrationInterface {
 		issue7.description = 'Mutley, you snickering, floppy eared hound. When courage is needed, you’re never around.';
 		issue7.creator = user2;
 		issue7.assigned = user2;
-		// issue7.labels = '{label}';
 		issue7.attachments = '{attachments4}';
-		issue7.links = '{link/toSpace}';
 		issue7.issueKey = 'IK-7';
 		issue7.type = issueType2;
 		issue7.priority = priority2;
@@ -210,9 +204,8 @@ export class Issue1597334747593 implements MigrationInterface {
 			'Can’t stay for long, just turn around and I’m gone again. Maybe tomorrow, I’ll want to settle down, Until tomorrow, I’ll just keep moving on.';
 		issue8.creator = user1;
 		issue8.assigned = user2;
-		// issue8.labels = '{label}';
+		issue8.labels = [labels1[0]];
 		issue8.attachments = '{attachments4}';
-		issue8.links = '{link/toSpace}';
 		issue8.issueKey = 'IK-8';
 		issue8.type = issueType3;
 		issue8.priority = priority3;
@@ -230,9 +223,7 @@ export class Issue1597334747593 implements MigrationInterface {
 			'There’s a voice that keeps on calling me. Down the road, that’s where I’ll always be. Every stop I make, I make a new friend.';
 		issue9.creator = user1;
 		issue9.assigned = user1;
-		// issue9.labels = '{label}';
 		issue9.attachments = '{attachments4}';
-		issue9.links = '{link/toSpace}';
 		issue9.issueKey = 'IK-9';
 		issue9.type = issueType;
 		issue9.priority = priority4;
@@ -252,9 +243,7 @@ export class Issue1597334747593 implements MigrationInterface {
 			'Mutley, you snickering, floppy eared hound. When courage is needed, you’re never around.';
 		issue10.creator = user2;
 		issue10.assigned = user2;
-		issue10.labels = '{label}';
 		issue10.attachments = '{attachments4}';
-		issue10.links = '{link/toSpace}';
 		issue10.issueKey = 'IK-10';
 		issue10.type = issueType2;
 		issue10.priority = priority2;
@@ -274,9 +263,8 @@ export class Issue1597334747593 implements MigrationInterface {
 			'Mutley, you snickering, floppy eared hound. When courage is needed, you’re never around.';
 		issue11.creator = user2;
 		issue11.assigned = user2;
-		issue11.labels = '{label}';
+		issue11.labels = [labels1[0]];
 		issue11.attachments = '{attachments4}';
-		issue11.links = '{link/toSpace}';
 		issue11.issueKey = 'IK-11';
 		issue11.type = issueType2;
 		issue11.priority = priority2;
@@ -296,9 +284,8 @@ export class Issue1597334747593 implements MigrationInterface {
 			'Mutley, you snickering, floppy eared hound. When courage is needed, you’re never around.';
 		issue12.creator = user2;
 		issue12.assigned = user2;
-		issue12.labels = '{label}';
+		issue12.labels = [labels1[0]];
 		issue12.attachments = '{attachments4}';
-		issue12.links = '{link/toSpace}';
 		issue12.issueKey = 'IK-12';
 		issue12.type = issueType2;
 		issue12.priority = priority;
@@ -318,9 +305,8 @@ export class Issue1597334747593 implements MigrationInterface {
 			'Mutley, you snickering, floppy eared hound. When courage is needed, you’re never around.';
 		issue13.creator = user2;
 		issue13.assigned = user2;
-		issue13.labels = '{label}';
+		issue13.labels = [labels1[0]];
 		issue13.attachments = '{attachments4}';
-		issue13.links = '{link/toSpace}';
 		issue13.issueKey = 'IK-13';
 		issue13.type = issueType;
 		issue13.priority = priority;

@@ -64,19 +64,19 @@
 	font-family: Poppins, sans-serif;
 	font-style: normal;
 	font-weight: normal;
-	font-size: 16px;
+	font-size: 16px !important;
 	line-height: 24px;
-	color: $primary-text;
+	color: $primary-text !important;
 	word-break: break-word;
 }
 
 @mixin secondary-content {
 	font-style: normal;
 	font-weight: normal;
-	font-size: 14px;
+	font-size: 14px !important;
 	line-height: 24px;
 	letter-spacing: 0.44px;
-	color: $secondary-text;
+	color: $secondary-text !important;
 	font-family: 'Inter', sans-serif !important;
 	word-break: break-word;
 }
@@ -202,7 +202,7 @@
 		@include text-data;
 	}
 
-	& > div:last-child {
+	&>div:last-child {
 		border: 1px solid $yellow !important;
 		border-top: none;
 	}
@@ -214,7 +214,7 @@
 	&:focus {
 		border: 1px solid $yellow !important;
 
-		& > input {
+		&>input {
 			border: 1px solid $yellow !important;
 		}
 	}

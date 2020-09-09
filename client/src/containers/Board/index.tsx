@@ -6,6 +6,7 @@ import Spinner from 'components/common/Spinner';
 
 export interface BoardComponentProps {
 	board: WebApi.Result.ComposedBoardResult;
+	readonly [key: string]: any;
 }
 
 export type BoardComponent = ({ board }: BoardComponentProps) => JSX.Element | null;
@@ -26,9 +27,10 @@ const getBoardComponent = (type: string): BoardComponent => {
 
 interface Props {
 	boardId: string;
+	readonly [key: string]: any;
 }
 
-const Board: React.FC<Props> = ({ boardId }) => {
+const Board: React.FC<Props> = ({ boardId, ...rest }) => {
 	const [board, setBoard] = useState<WebApi.Result.ComposedBoardResult | undefined>();
 
 	useEffect(() => {
@@ -42,7 +44,7 @@ const Board: React.FC<Props> = ({ boardId }) => {
 	}
 
 	const BoardComponent = getBoardComponent(board.boardType);
-	return <BoardComponent board={board} />;
+	return <BoardComponent board={board} {...rest} />;
 };
 
 export default Board;

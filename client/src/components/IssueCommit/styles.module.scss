@@ -1,0 +1,45 @@
+@import 'styles/mixins.scss';
+
+.avatar {
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.commentAuthorName {
+  @include primary-content;
+}
+
+.commitTime {
+  @include secondary-content;
+}
+
+.container {
+  margin-left: 55px;
+}
+
+.commitContainer {
+  margin: 15px 25px 15px 0 !important;
+}
+
+.commit {
+  width: 100% !important;
+}
+
+.issueName {
+  @include info-block-header;
+}
+
+.description {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.icon {
+  margin-right: 5px;
+}
+
+.repoName {
+  margin-right: 30px;
+}

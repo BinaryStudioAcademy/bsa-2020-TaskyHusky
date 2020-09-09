@@ -6,8 +6,6 @@ import classNames from 'classnames';
 import styles from './styles.module.scss';
 import { sidebarItems, SETTINGS_SECTION } from './config/scrumSidebarItems';
 import collapseIcon from 'assets/images/double-arrow-left.svg';
-import { RootState } from 'typings/rootState';
-import { useSelector } from 'react-redux';
 
 interface Props {
 	board: WebApi.Result.ComposedBoardResult;
@@ -19,9 +17,6 @@ const ScrumBoardSidebar: React.FC<Props> = (props) => {
 	const boardLink = `/board/${board.id}`;
 	const { pathname } = useLocation<string>();
 	const [isCollapsed, setIsCollapsed] = useState<boolean>(false);
-
-	const { sprints } = useSelector((rootState: RootState) => rootState.scrumBoard);
-	const activeSprint = sprints.find(({ isActive }) => isActive);
 
 	const onCollapse = () => {
 		setIsCollapsed(!isCollapsed);
@@ -51,7 +46,7 @@ const ScrumBoardSidebar: React.FC<Props> = (props) => {
 						<img className={styles.header__img} src={project.icon} alt="Project avatar" />
 						<div className={styles.header__info_container}>
 							<span className={styles.header__name}>{project.name}</span>
-							<span className={styles.header__type}>Software project</span>
+							<span className={styles.header__type}>{project.category} project</span>
 						</div>
 					</div>
 				</div>
@@ -59,8 +54,8 @@ const ScrumBoardSidebar: React.FC<Props> = (props) => {
 					<div className={styles.body__group}>
 						{sidebarItems.map(({ section, icon }: any) => {
 							let to = `${boardLink}/${section}`;
-							if (section === SETTINGS_SECTION.reports && activeSprint) {
-								to = `${boardLink}/${section}/${activeSprint.id}`;
+							if (section === SETTINGS_SECTION.reports) {
+								to = `${boardLink}/${section}`;
 							}
 							return (
 								<Link

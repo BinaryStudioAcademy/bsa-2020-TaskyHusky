@@ -1,55 +1,40 @@
-import { Octokit } from '@octokit/rest';
+import fetch from 'node-fetch';
+import { CommitResult } from '../models/Result';
 
-// TODO authenticate github in web
-const octokit = new Octokit({
-	auth: '75cc7a622686e2095b9aead8da79867975e9d833',
-	baseUrl: 'https://api.github.com',
-});
-
-export const getMessages = async (message: string, githubUrl = 'https://github.com/witcher1359/testFeature.git') => {
+export const getMessages = async (message: string, githubUrl = 'https://github.com/sahanr/bsa-2020-app.git') => {
 	const [, owner, repo] = githubUrl.match(/github\.com\/(.+)\/(.+)\.git/) || [];
 
 	if (!owner || !repo) {
 		throw new Error('Bad repository');
 	}
 
-	const data = (
-		await octokit.paginate('GET /repos/:owner/:repo/commits', {
-			owner,
-			repo,
-		})
-	)
-		.filter(
-			(commit) =>
-				commit.commit.message.toLowerCase().startsWith(`${message} `) ||
-				commit.commit.message.toLowerCase() === message,
+	const data = fetch(`https://api.github.com/repos/${owner}/${repo}/commits`)
+		.then((res) => res.json())
+		.then((commits) =>
+			commits
+				.filter((commit: any) => commit.commit.message.toLowerCase().startsWith(`${message}`))
+				.map((commit: any) => ({
+					message: commit.commit.message,
+					sha: commit.sha,
+					url: commit.html_url,
+					date: commit.commit.committer.date,
+					repo: {
+						name: repo,
+						url: githubUrl.slice(0, -4),
+					},
+					author: {
+						name: commit.commit.author.name,
+						url: commit.author.html_url,
+						avatar: commit.author.avatar_url,
+					},
+				}))
+				.sort((a: CommitResult, b: CommitResult) => {
+					return Number(new Date(b.date)) - Number(new Date(a.date));
+				}),
 		)
-		.map(async (commit) => {
-			const filesToReturn = (<Array<Record<string, any>>>await octokit.paginate(
-				'GET /repos/:owner/:repo/commits/:ref',
-				{
-					owner,
-					repo,
-					ref: commit.sha,
-				},
-			)).map((foundedCommit) => {
-				return foundedCommit.files.map((file: { sha: any; additions: any; deletions: any; filename: any }) => ({
-					sha: file.sha,
-					additions: file.additions,
-					deletions: file.deletions,
-					filename: file.filename,
-				}));
-			})[0];
-
-			return {
-				hash: commit.sha,
-				message: commit.commit.message,
-				author: commit.commit.author.name,
-				avatar: commit.author.avatar_url,
-				time: commit.commit.author.date,
-				files: filesToReturn,
-			};
+		.catch((error) => {
+			throw new Error(error);
 		});
 
-	return Promise.all(data);
+	return data;
 };

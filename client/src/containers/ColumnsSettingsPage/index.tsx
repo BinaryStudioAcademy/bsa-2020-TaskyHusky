@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import NotFound from 'pages/404';
-import { Link } from 'react-router-dom';
 import { getBoardById } from 'services/board.service';
 import { useParams } from 'react-router-dom';
 import styles from './styles.module.scss';
-import Spinner from 'components/common/Spinner';
 import { DragDropContext, Droppable, OnDragEndResponder } from 'react-beautiful-dnd';
 import InteractiveColumn from 'containers/InteractiveColumn';
 import { useDispatch, useSelector } from 'react-redux';
@@ -14,8 +12,13 @@ import { Segment, Icon } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 import { RootState } from 'typings/rootState';
 
-const ColumnsSettingsPage: React.FC = () => {
-	const { boardId } = useParams();
+interface Props {
+	boardId?: string;
+}
+
+const ColumnsSettingsPage: React.FC<Props> = ({ boardId: givenBoardId }) => {
+	const { boardId: paramsBoardId } = useParams();
+	const boardId = givenBoardId ?? paramsBoardId;
 	const { t } = useTranslation();
 	const dispatch = useDispatch();
 	const [board, setBoard] = useState<WebApi.Result.ComposedBoardResult | undefined>();
@@ -42,7 +45,7 @@ const ColumnsSettingsPage: React.FC = () => {
 	}, [board, boardId]);
 
 	if (!board) {
-		return <Spinner />;
+		return null;
 	}
 
 	if (board.boardType !== 'Kanban') {
@@ -92,13 +95,6 @@ const ColumnsSettingsPage: React.FC = () => {
 				<h1 style={{ margin: 0 }} className="standartHeader">
 					{board.name}
 				</h1>
-				<Link
-					className="cancelBtn"
-					to={`/board/${board.id}`}
-					style={{ marginLeft: 50, paddingLeft: '20px', paddingRight: '20px' }}
-				>
-					{t('back')}
-				</Link>
 			</div>
 			<DragDropContext onDragEnd={onDragEnd}>
 				<Droppable droppableId="0" direction="horizontal">

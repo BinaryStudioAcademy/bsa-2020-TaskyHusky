@@ -1,6 +1,7 @@
 import { MigrationInterface, QueryRunner, getRepository, getCustomRepository } from 'typeorm';
 import { UserRepository } from '../repositories/user.repository';
 import { Projects } from '../entity/Projects';
+import { ProjectLabel } from '../entity/ProjectLabel';
 
 export class Project1597048908491 implements MigrationInterface {
 	public async up(queryRunner: QueryRunner): Promise<void> {
@@ -29,7 +30,32 @@ export class Project1597048908491 implements MigrationInterface {
 		project2.defaultAssignee = user1;
 		project2.id = 'e040e267-3533-4579-93fa-e749ca93f72f';
 		project2.color = '#7ffa7f';
-		await getRepository('Projects').save([project1, project2]);
+
+		const createdProjects = await getRepository('Projects').save([project1, project2]);
+
+		const label1 = new ProjectLabel();
+		label1.text = 'Feature';
+		label1.textColor = '#fff';
+		label1.backgroundColor = '#00f';
+		label1.project = project1;
+
+		const label2 = new ProjectLabel();
+		label2.text = 'Fix';
+		label2.textColor = '#fff';
+		label2.backgroundColor = '#f00';
+		label2.project = project1;
+
+		const label3 = new ProjectLabel();
+		label3.text = 'Story';
+		label3.textColor = '#000';
+		label3.backgroundColor = '#0f0';
+		label3.project = project2;
+
+		project1.labels = [label1, label2];
+		project2.labels = [label3];
+
+		await getRepository('ProjectLabel').save([label1, label2, label3]);
+		await getRepository('Projects').save(createdProjects);
 
 		await getRepository('Sprint').save([
 			{

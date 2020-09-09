@@ -32,7 +32,7 @@ const IssueActivityItem: React.FC<Props> = (props: Props) => {
 						<span className={styles.content}>{summary}</span>
 					</Link>
 				</div>
-				<Link to={`/project/${project.id}/issues`}>
+				<Link to={`/project/${project.id}`}>
 					<span className={styles.contentSecondary}>{project.name}</span>
 				</Link>
 			</div>
