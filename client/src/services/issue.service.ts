@@ -146,10 +146,10 @@ export const getComments = async (id: string): Promise<WebApi.Result.IssueCommen
 	return (await res.json()) as WebApi.Result.IssueCommentResult[];
 };
 
-export const getCommits = async (issue: string): Promise<WebApi.Result.CommitResult[]> => {
+export const getCommits = async (id: string): Promise<WebApi.Result.CommitResult[]> => {
 	const res: Response = await callWebApi({
 		method: 'GET',
-		endpoint: `commits/${issue}`,
+		endpoint: `commits/${id}`,
 	});
 
 	return (await res.json()) as WebApi.Result.CommitResult[];

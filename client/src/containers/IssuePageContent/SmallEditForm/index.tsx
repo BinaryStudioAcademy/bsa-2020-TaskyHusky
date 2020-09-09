@@ -45,7 +45,9 @@ const SmallEditForm: React.FC<Props> = ({ links: givenLinks, attachments: givenA
 	return (
 		<Form style={{ marginBottom: 20 }}>
 			<Form.Field>
-				<h4 style={{ margin: 0 }}>{t('links')}</h4>
+				<h4 style={{ margin: 0 }} className="standartLabel">
+					{t('links')}
+				</h4>
 				<div style={{ marginTop: 10, marginBottom: 10 }}>
 					{givenLinks && givenLinks.length
 						? givenLinks.map((link, i) => (
@@ -77,7 +79,9 @@ const SmallEditForm: React.FC<Props> = ({ links: givenLinks, attachments: givenA
 				</Modal>
 			</Form.Field>
 			<Form.Field>
-				<h4 style={{ margin: 0 }}>{t('attachments')}</h4>
+				<h4 style={{ margin: 0 }} className="standartLabel">
+					{t('attachments')}
+				</h4>
 				<div style={{ marginTop: 10, marginBottom: 10 }}>
 					{givenAttachments && givenAttachments.length
 						? givenAttachments.map((link, i) => {

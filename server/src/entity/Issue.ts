@@ -50,9 +50,9 @@ export class Issue {
 	@IsArray()
 	attachments?: string;
 
-	@Column({ array: true })
+	@Column({ type: 'simple-array', nullable: true })
 	@IsArray()
-	links?: string;
+	links?: string[];
 
 	@ManyToOne((type) => Priority, (priority) => priority.issues, { eager: true })
 	priority?: Priority;

@@ -2,14 +2,22 @@
 $screen-offset: 100;
 
 :local(.container) {
+	width: 100%;
+	background-color: #f5f7f9;
+	overflow: hidden;
+	min-height: 100vh;
+	padding: 30px 60px;
 	display: flex;
 	justify-content: center;
-	padding: 30px 10px 0 10px;
+}
+
+.commentContainer {
+	min-width: 100%;
 }
 
 :local(.innerContainer) {
 	margin-right: 50px;
-	max-width: 700px;
+	width: 50%;
 	min-width: 500px;
 }
 
@@ -24,7 +32,7 @@ $screen-offset: 100;
 	margin-bottom: 25px !important;
 }
 
-.menu > .item {
+.menu>.item {
 	margin: 0 20px 0px 0;
 	padding: 7px 13px !important;
 
@@ -42,8 +50,8 @@ $screen-offset: 100;
 .scrollable {
 	max-height: 40%;
 	overflow-y: auto;
-	width: '100%';
-	max-width: '100%';
+	width: 100%;
+	max-width: 100%;
 	margin-bottom: 20;
 }
 
@@ -54,16 +62,16 @@ $screen-offset: 100;
 		width: 160px;
 	}
 
-	.menu > .item {
+	.menu>.item {
 		margin: 10px 10px 10px 0;
 	}
 }
 
-@media screen and (max-width: $medium-screen + $screen-offset * 2.2) {
-	.container {
-		justify-content: flex-start;
-	}
-}
+// @media screen and (max-width: $medium-screen + $screen-offset * 2.2) {
+// 	.container {
+// 		justify-content: flex-start;
+// 	}
+// }
 
 @media screen and (max-width: $less-than-medium-screen + $screen-offset) {
 	.innerContainer {
