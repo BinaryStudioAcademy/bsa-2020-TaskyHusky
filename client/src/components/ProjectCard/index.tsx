@@ -15,11 +15,13 @@ interface Props {
 		issues?: Partial<WebApi.Entities.Issue>[];
 		color?: string;
 	};
+	additionalBlock?: boolean;
 }
 
 const ProjectCard: React.FC<Props> = (props: Props) => {
 	const {
 		item: { name, category = '', issues = [], icon, id, color },
+		additionalBlock = false,
 	} = props;
 	const { t } = useTranslation();
 	const userId = useSelector((state: RootState) => state.auth.user?.id);
@@ -27,7 +29,7 @@ const ProjectCard: React.FC<Props> = (props: Props) => {
 	const doneIssues = myIssues.filter((issue) => issue.status && issue.status.title === 'Done').length;
 	const undoneIssues = myIssues.length - doneIssues;
 	return (
-		<div className={styles.card}>
+		<div className={styles.card} style={additionalBlock ? { height: 0, overflow: 'hidden' } : {}}>
 			<Link to={`project/${id}/issues`} className={styles.linkContainer}>
 				<div className={styles.header}>
 					<div className={styles.avatar} style={{ backgroundColor: color ?? defaultAvatarBg }}>
