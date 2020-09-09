@@ -9,8 +9,9 @@ import { Sprint } from '../entity/Sprint';
 
 class BoardController {
 	getAll = async (req: Request, res: Response): Promise<void> => {
+		const { id } = req.user;
 		const boardRepository = getCustomRepository(BoardRepository);
-		const boards = await boardRepository.getAll();
+		const boards = await boardRepository.getAll(id);
 
 		res.status(200).send(boards);
 	};

@@ -10,13 +10,21 @@ export class BoardRepository extends Repository<Board> {
 		return this.findOneOrFail({ where: { boardType } });
 	}
 
-	getAll = async (): Promise<IBoardModel[]> => {
+	getAll = async (id: string): Promise<IBoardModel[]> => {
 		const extendedBoards = <IBoardModel[]>(
 			(<unknown>(
 				await this.createQueryBuilder('board')
-					.innerJoin('board.createdBy', 'user')
+					.leftJoin('board.createdBy', 'createdBy')
+					.addSelect([
+						'createdBy.id',
+						'createdBy.firstName',
+						'createdBy.lastName',
+						'createdBy.avatar',
+						'createdBy.color',
+					])
 					.leftJoinAndSelect('board.projects', 'projects')
-					.addSelect(['user.id', 'user.firstName', 'user.lastName', 'user.avatar', 'user.color'])
+					.leftJoin('projects.users', 'users')
+					.where('users.id = :id', { id })
 					.getMany()
 			))
 		);
