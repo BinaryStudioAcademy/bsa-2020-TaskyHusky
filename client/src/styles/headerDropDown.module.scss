@@ -6,6 +6,8 @@
 
 	.dropDownMenu > * {
 		color: rgba(80, 80, 80, 0.9) !important;
+		width: 250px;
+		white-space: pre-wrap;
 	}
 }
 
@@ -13,4 +15,8 @@
 	@media (max-width: 730px) {
 		padding: 0 4px !important;
 	}
+}
+
+.list__project_item {
+	display: flex !important;
 }

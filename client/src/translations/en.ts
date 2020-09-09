@@ -477,4 +477,20 @@ export const en = {
 	apply_current_location: 'Go to current location',
 	apply_this_location: 'Apply this location',
 	no_notifications: "You don't have any new notifications",
+	landing_title: 'The #1 software development tool used by agile teams',
+	landing_intro_title: 'The best software teams ship early and often.',
+	landing_intro_description:
+		'TaskyHusky is built for every member of your software team to plan, track, and release great software.',
+	landing_block_title_planning: 'Flexible planning',
+	landing_block_description_planning:
+		'Scrum? Check. Kanban? Check. TaskyHusky’s rich planning features enable your team to flexibly plan in a way that works best for them.',
+	landing_block_title_estimations: 'Accurate estimations',
+	landing_block_description_estimations:
+		'Estimations help your team become more accurate and efficient. Use story points, hours, t-shirt sizes, or your own estimation technique. TaskyHusky supports them all.',
+	landing_block_title_prioritization: 'Value-driven prioritization',
+	landing_block_description_prioritization:
+		'Order user stories, issues, and bugs in your product backlog with simple drag and drop prioritization. Ensure stories that deliver the most customer value are always at the top.',
+	landing_block_title_execution: 'Transparent execution',
+	landing_block_description_execution:
+		"Whether your team is across the table or around the world, TaskyHusky brings a new level of transparency to your team's work and keeps everyone on the same page.",
 };

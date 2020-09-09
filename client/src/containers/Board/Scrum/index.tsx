@@ -21,6 +21,8 @@ import Spinner from 'components/common/Spinner';
 import ScrumBoardSidebar from 'components/ScrumBoardSidebar';
 import { SETTINGS_SECTION } from 'components/ScrumBoardSidebar/config/scrumSidebarItems';
 import matchIssuesToSprint from 'helpers/matchIssuesToSprint.helper';
+import ProjectIssuesPage from 'containers/ProjectIssuesPage';
+import Report from 'containers/Report';
 
 const Scrum: BoardComponent = (props) => {
 	const { pathname } = useLocation();
@@ -154,6 +156,8 @@ const Scrum: BoardComponent = (props) => {
 		</>
 	);
 
+	const activeSprint = sprints.find(({ isActive }) => isActive);
+
 	let renderComponent;
 
 	switch (pathname) {
@@ -163,11 +167,19 @@ const Scrum: BoardComponent = (props) => {
 		case `/board/${board.id}/${SETTINGS_SECTION.backlog}`:
 			renderComponent = renderScrumBoard;
 			break;
+		case `/board/${board.id}/${SETTINGS_SECTION.issues}`:
+			renderComponent =
+				board.projects && board.projects.length ? (
+					<ProjectIssuesPage projectId={board.projects[0].id} strict noSidebar />
+				) : (
+					renderScrumBoard
+				);
+			break;
 		case `/board/${board.id}/${SETTINGS_SECTION.activeSprint}`:
 			renderComponent = <span children="board active sprint" />;
 			break;
 		case `/board/${board.id}/${SETTINGS_SECTION.reports}`:
-			renderComponent = <span children="board reports" />;
+			renderComponent = activeSprint ? <Report sprintId={activeSprint.id} /> : <Spinner />;
 			break;
 		default:
 			renderComponent = renderScrumBoard;

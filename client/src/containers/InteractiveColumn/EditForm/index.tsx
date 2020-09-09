@@ -66,7 +66,7 @@ const EditForm: React.FC<Props> = ({ columnId, initialState, onSubmit }) => {
 					className="formSelect"
 					value={context.data.status}
 					closeOnChange
-					onChange={(event, data) => context.set('status', data.value)}
+					onChange={(event, data) => context.set('status', data.value as string)}
 				/>
 			</Form.Field>
 			<Form.Field>

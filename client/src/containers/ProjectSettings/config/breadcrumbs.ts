@@ -20,7 +20,7 @@ export const setBreadcrumbs = ({ name, history, id }: Params): BreadcrumbItem[] 
 		key: name,
 		content: name,
 		link: true,
-		onClick: () => history.push(`/project/${id}/issues`),
+		onClick: () => history.push(`/project/${id}`),
 	},
 	{
 		key: 'Project settings',
