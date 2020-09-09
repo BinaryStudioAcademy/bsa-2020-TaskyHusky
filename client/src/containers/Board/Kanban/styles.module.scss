@@ -1,12 +1,12 @@
 @import 'styles/mixins.scss';
 
 :local(.columnsFlex) {
-    display: flex;
+	display: flex;
 	align-items: flex-start;
-	justify-content: center;
-    width: 100%;
-    overflow-y: hidden;
-    padding-bottom: 15px;
+	width: 100%;
+	overflow-y: hidden;
+	padding-top: 5px;
+	padding-bottom: 15px;
 }
 
 :local(.outerContainer) {
@@ -25,9 +25,12 @@
 	min-width: 300px;
 	max-width: 500px;
 	width: 100%;
-    margin-right: 25px;
-    box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.25) !important;
-    max-height: 100%;
+
+	margin-left: 5px;
+	margin-right: 20px;
+	box-shadow: 0 2px 7px rgba(0, 0, 0, 0.25) !important;
+	border-radius: 0.28rem;
+	max-height: 100%;
 }
 
 :local(.inlineContainer) {
