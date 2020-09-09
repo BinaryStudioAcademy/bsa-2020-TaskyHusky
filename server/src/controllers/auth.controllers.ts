@@ -40,11 +40,13 @@ class AuthController {
 			const localUser: UserProfile | undefined = await userRepository.findOne({
 				where: { email: profileObj.email },
 			});
-			console.log(localUser);
+			if (!localUser?.googleId) {
+				throw new Error('Please enter login and password to sign in');
+			}
+
 			let user: UserProfile;
 			if (!localUser) {
 				const { googleId, imageUrl, email, givenName, familyName } = profileObj;
-				console.log(profileObj);
 				const newUser = new UserProfile({
 					googleId,
 					firstName: givenName,
@@ -53,14 +55,11 @@ class AuthController {
 					avatar: imageUrl,
 					email,
 				});
-				console.log(newUser, 'this is new User');
 				user = await userRepository.createNew(newUser);
 			} else {
 				user = localUser;
-				console.log(localUser);
 			}
 			const jwtToken = generateToken(user.id);
-			console.log(user);
 			res.send({ jwtToken, user });
 		} catch (error) {
 			res.status(HttpStatusCode.UNPROCESSABLE_ENTITY).send(

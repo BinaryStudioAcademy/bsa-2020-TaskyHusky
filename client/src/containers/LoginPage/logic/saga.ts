@@ -118,6 +118,7 @@ export function* googleAuth(action: { user: actionTypes.GoogleUser; type: string
 		setToken(jwtToken);
 		yield put(actions.logInUserSuccess({ user, jwtToken }));
 	} catch (error) {
+		NotificationManager.error(error.clientException.message, 'Error');
 		yield put(actions.loadingGoogleAuth({ loading: false }));
 	}
 }
@@ -162,7 +163,6 @@ export default function* authSaga() {
 		watchCheckEmail(),
 		watchForgotPassword(),
 		watchResetPassword(),
-		watchGoogleAuth(),
 		watchGoogleAuth(),
 	]);
 }
