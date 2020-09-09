@@ -18,8 +18,6 @@ import historyHelper from 'helpers/history.helper';
 const ActiveSprint: BoardComponent = ({ board }) => {
 	const [search, setSearch] = useState<string>('');
 	const [columns, setColumns] = useState<WebApi.Result.BoardColumnResult[]>(board.columns);
-	console.log(columns);
-
 	const { t } = useTranslation();
 	const dispatch = useDispatch();
 	const { columnCreated, recentlyCreatedColumn } = useSelector((state: RootState) => state.boardColumn);
