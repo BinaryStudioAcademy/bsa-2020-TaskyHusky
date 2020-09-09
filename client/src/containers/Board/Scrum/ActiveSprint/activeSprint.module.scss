@@ -82,20 +82,6 @@
 	@include cancel-btn;
 }
 
-// @media screen and (max-width: $medium-screen) {
-// 	.headerWrapper {
-// 		margin: 25px 2% 25px 8%;
-// 	}
-
-// 	.contentBtn {
-// 		margin-left: 8% !important;
-// 	}
-
-// 	.breadcrumb {
-// 		margin: 25px 2% 0 8% !important;
-// 	}
-// }
-
 @media screen and (max-width: $mobile-screen) {
 	.inlineContainer,
 	.headerWrapper {
