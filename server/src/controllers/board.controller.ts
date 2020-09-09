@@ -29,8 +29,9 @@ class BoardController {
 	};
 
 	getRecent = async (req: Request, res: Response): Promise<void> => {
+		const { id } = req.user;
 		const boardRepository = getCustomRepository(BoardRepository);
-		const boards = await boardRepository.getRecent();
+		const boards = await boardRepository.getRecent(id);
 
 		res.status(200).send(boards.slice(0, 5));
 	};

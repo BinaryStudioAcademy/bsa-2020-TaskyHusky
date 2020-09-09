@@ -32,11 +32,14 @@ export class BoardRepository extends Repository<Board> {
 		return extendedBoards;
 	};
 
-	getRecent = async (): Promise<IReducedBoard[]> => {
+	getRecent = async (id: string): Promise<IReducedBoard[]> => {
 		const boards = (
 			await this.createQueryBuilder('board')
 				.select(['board.id', 'board.name'])
 				.orderBy('board.updatedAt', 'DESC')
+				.leftJoinAndSelect('board.projects', 'projects')
+				.leftJoin('projects.users', 'users')
+				.where('users.id = :id', { id })
 				.getMany()
 		).slice(0, 5);
 
