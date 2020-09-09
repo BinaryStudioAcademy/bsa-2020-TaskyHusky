@@ -23,6 +23,7 @@ import { SETTINGS_SECTION } from 'components/ScrumBoardSidebar/config/scrumSideb
 import matchIssuesToSprint from 'helpers/matchIssuesToSprint.helper';
 import ProjectIssuesPage from 'containers/ProjectIssuesPage';
 import Report from 'containers/Report';
+import ActiveSprint from './ActiveSprint/ActiveSprint';
 
 const Scrum: BoardComponent = (props) => {
 	const { pathname } = useLocation();
@@ -176,7 +177,8 @@ const Scrum: BoardComponent = (props) => {
 				);
 			break;
 		case `/board/${board.id}/${SETTINGS_SECTION.activeSprint}`:
-			renderComponent = <span children="board active sprint" />;
+			// renderComponent = <span children="board active sprint" />;
+			renderComponent = <ActiveSprint board={board} />;
 			break;
 		case `/board/${board.id}/${SETTINGS_SECTION.reports}`:
 			renderComponent = activeSprint ? <Report sprintId={activeSprint.id} /> : <Spinner />;
@@ -185,11 +187,21 @@ const Scrum: BoardComponent = (props) => {
 			renderComponent = renderScrumBoard;
 	}
 
+	const isActiveSprintRender = pathname === `/board/${board.id}/${SETTINGS_SECTION.activeSprint}`;
+
 	return (
 		<>
 			<div className={styles.container}>
 				<ScrumBoardSidebar board={board} project={project} />
-				<div className={styles.innerContainer}>{renderComponent}</div>
+				<div
+					className={
+						isActiveSprintRender
+							? [styles.innerContainer, styles.nonePading].join(' ')
+							: styles.innerContainer
+					}
+				>
+					{renderComponent}
+				</div>
 				<CreateSprintModal
 					clickAction={() => {
 						setIsCreateModalOpened(!isCreateModalOpened);
