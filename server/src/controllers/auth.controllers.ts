@@ -40,7 +40,7 @@ class AuthController {
 			const localUser: UserProfile | undefined = await userRepository.findOne({
 				where: { email: profileObj.email },
 			});
-			if (!localUser?.googleId) {
+			if (localUser && !localUser.googleId) {
 				throw new Error('Please enter login and password to sign in');
 			}
 
