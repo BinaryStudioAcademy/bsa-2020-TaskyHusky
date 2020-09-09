@@ -111,14 +111,14 @@ export const LoginPage: React.FC = () => {
 						<Divider horizontal className={styles.divider}>
 							{t('or')}
 						</Divider>
-						<GoogleLogin
-							clientId={GoogleAuth.CLIENT_ID}
-							buttonText="Login"
-							render={(props) => googleBtn(props)}
-							onSuccess={googleAuth}
-							cookiePolicy={GoogleAuth.COOKIE_POLICY}
-						/>
 					</Form>
+					<GoogleLogin
+						clientId={GoogleAuth.CLIENT_ID}
+						buttonText="Login"
+						render={(props) => googleBtn(props)}
+						onSuccess={googleAuth}
+						cookiePolicy={GoogleAuth.COOKIE_POLICY}
+					/>
 				</Segment>
 			</Grid.Column>
 		</Grid>

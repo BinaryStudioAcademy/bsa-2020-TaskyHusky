@@ -187,10 +187,6 @@ export class Issue1597334747593 implements MigrationInterface {
 		issue7.creator = user2;
 		issue7.assigned = user2;
 		issue7.attachments = '{attachments4}';
-		issue7.issueKey = 'IK-7';
-		issue7.type = issueType2;
-		issue7.priority = priority2;
-		issue7.status = issueStatus3;
 		issue7.sprint = sprint1;
 
 		const issue8 = new Issue();
