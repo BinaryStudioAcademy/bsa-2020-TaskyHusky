@@ -106,13 +106,20 @@ interface CommitFileResult {
 	filename: string;
 }
 
-interface CommitResult {
-	hash: string;
+export interface CommitResult {
+	sha: string;
 	message: string;
-	author: string;
-	avatar: string;
-	time: Date;
-	files: Array<CommitFileResult>;
+	url: string;
+	date: Date;
+	repo: {
+		name: string;
+		url: string;
+	};
+	author: {
+		name: string;
+		avatar: string;
+		url: string;
+	};
 }
 
 interface NotificationResult {

@@ -77,7 +77,7 @@ const IssuePageContent: React.FC<Props> = ({ issue: givenIssue }) => {
 	useEffect(() => {
 		if (mustFetchComments) {
 			getComments(issue.id).then(setComments);
-			getCommits(issue.summary || '').then(setCommits);
+			getCommits(issue.id).then(setCommits);
 			setMustFetchComments(false);
 		}
 	}, [mustFetchComments, issue.id, issue.summary]);
@@ -91,7 +91,7 @@ const IssuePageContent: React.FC<Props> = ({ issue: givenIssue }) => {
 	}
 
 	return (
-		<div className={`fill ${styles.container}`} style={{ display: 'flex', justifyContent: 'center' }}>
+		<div className={styles.container}>
 			<div className={styles.innerContainer}>
 				<h4>
 					<Icon
@@ -124,14 +124,16 @@ const IssuePageContent: React.FC<Props> = ({ issue: givenIssue }) => {
 					</Menu>
 				</div>
 				{menuState === MenuStates.commitsShown && (
-					<Comment.Group className={styles.scrollable}>
+					<Comment.Group className={`${styles.scrollable} ${styles.commentContainer}`}>
 						{commits.length
-							? commits.map((commit) => <IssueCommit commit={commit} key={commit.hash} />)
+							? commits.map((commit) => (
+									<IssueCommit commit={commit} key={commit.sha} issueKey={issue.issueKey} />
+							  ))
 							: t('no')}
 					</Comment.Group>
 				)}
 				{menuState === MenuStates.commentsShown && (
-					<Comment.Group className={styles.scrollable}>
+					<Comment.Group className={`${styles.scrollable}`}>
 						{comments.map((comment) => (
 							<IssueComment comment={comment} key={comment.id} />
 						))}
