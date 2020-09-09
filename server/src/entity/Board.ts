@@ -29,7 +29,7 @@ export class Board {
 	@IsNotEmpty()
 	name!: string;
 
-	@OneToMany((type) => BoardColumn, (boardColumn) => boardColumn.board)
+	@OneToMany((type) => BoardColumn, (boardColumn) => boardColumn.board, { cascade: true })
 	columns?: BoardColumn[];
 
 	@OneToMany((type) => Sprint, (sprint) => sprint.board)

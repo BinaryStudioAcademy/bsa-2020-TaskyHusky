@@ -58,6 +58,10 @@ export class BoardColumnRepository extends Repository<BoardColumn> {
 		return this.save(instance);
 	}
 
+	async createColumn(data: any) {
+		return this.save(data);
+	}
+
 	async deleteColumn(id: string) {
 		const boardColumn = await this.getOne(id);
 		const result = await this.remove([boardColumn]);

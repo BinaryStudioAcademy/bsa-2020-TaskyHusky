@@ -2,34 +2,30 @@
 
 :local(.columnsFlex) {
 	display: flex;
-	align-items: flex-start;
+	height: calc(100vh - 230px);
 	width: 100%;
+	overflow-x: auto;
 	overflow-y: hidden;
-	padding-top: 5px;
-	padding-bottom: 15px;
+	padding-bottom: 25px;
+	padding-right: 25px;
 }
 
 :local(.outerContainer) {
 	height: 100%;
 	display: flex;
+	flex: 1;
 }
 
 :local(.render) {
-	flex: 1;
-	overflow: hidden;
+	width: calc(100% - 10px);
 }
 
 :local(.column) {
-	display: flex;
-	justify-content: center;
 	min-width: 300px;
-	max-width: 500px;
-	width: 100%;
-	margin-left: 5px;
-	margin-right: 20px;
-	box-shadow: 0 2px 7px rgba(0, 0, 0, 0.25) !important;
-	border-radius: 0.28rem;
-	max-height: 100%;
+	margin-right: 25px;
+	box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.25) !important;
+	height: fit-content;
+	max-height: calc(100vh - 261px);
 }
 
 :local(.inlineContainer) {
@@ -47,11 +43,8 @@
 
 :local(.wrapper) {
 	margin-top: 0px;
-	padding: 20px;
+	padding: 20px 60px;
 	width: 100%;
-	display: flex;
-	flex-direction: column;
-	height: 100%;
 }
 
 .headerWrapper {
@@ -89,8 +82,21 @@
 	@include cancel-btn;
 }
 
-@media screen and (max-width: $mobile-screen) {
+// @media screen and (max-width: $medium-screen) {
+// 	.headerWrapper {
+// 		margin: 25px 2% 25px 8%;
+// 	}
 
+// 	.contentBtn {
+// 		margin-left: 8% !important;
+// 	}
+
+// 	.breadcrumb {
+// 		margin: 25px 2% 0 8% !important;
+// 	}
+// }
+
+@media screen and (max-width: $mobile-screen) {
 	.inlineContainer,
 	.headerWrapper {
 		display: block;
