@@ -24,11 +24,13 @@ export class BoardRepository extends Repository<Board> {
 		return extendedBoards;
 	};
 
-	getRecent = (): Promise<IReducedBoard[]> => {
-		const boards = this.createQueryBuilder('board')
-			.select(['board.id', 'board.name'])
-			.orderBy('board.updatedAt', 'DESC')
-			.getMany();
+	getRecent = async (): Promise<IReducedBoard[]> => {
+		const boards = (
+			await this.createQueryBuilder('board')
+				.select(['board.id', 'board.name'])
+				.orderBy('board.updatedAt', 'DESC')
+				.getMany()
+		).slice(0, 5);
 
 		return boards;
 	};

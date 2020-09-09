@@ -31,11 +31,9 @@ const BoardColumn: React.FC<Props> = ({ column, className, search, boardId, getO
 
 		io.on(WebApi.IO.IssueActions.UpdateIssue, (id: string, newIssue: WebApi.Result.IssueResult) => {
 			const index = issues.findIndex((issue) => issue.id === id);
-			console.log(index, column.columnName);
 
 			if (index > -1) {
 				const newIssues = [...issues];
-				console.log(!newIssue.boardColumn || newIssue.boardColumn.id !== column.id);
 
 				if (!newIssue.boardColumn || newIssue.boardColumn.id !== column.id) {
 					newIssues.splice(index, 1);
@@ -45,7 +43,6 @@ const BoardColumn: React.FC<Props> = ({ column, className, search, boardId, getO
 
 				setIssues(newIssues);
 			} else if (newIssue.boardColumn?.id === column.id) {
-				console.log('else if');
 				setIssues([...issues, newIssue]);
 			}
 		});
