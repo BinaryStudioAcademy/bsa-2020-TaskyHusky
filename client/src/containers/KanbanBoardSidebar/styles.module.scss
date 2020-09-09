@@ -1,15 +1,19 @@
 @import '../../styles/variables.scss';
 
+@mixin transition($prop) {
+	transition-property: $prop;
+	transition-duration: 0.5s;
+	transition-timing-function: ease-out;
+}
+
 .sidebar {
 	background-color: rgba(0, 0, 0, 0.9);
 	color: white;
-	transition-property: width;
-	transition-duration: 0.5s;
+	@include transition(width);
 	position: relative;
 
 	* {
-		transition-property: opacity;
-		transition-duration: 0.5s;
+		@include transition(opacity);
 	}
 
 	&.expanded {
@@ -29,24 +33,21 @@
 	}
 
 	.collapseIcon {
-		transition-duration: 0.2s;
-		transition-property: transform;
-		background-color: $yellow;
-		color: black;
-		padding: 5px;
-		border-radius: 50%;
-		$wh: 34px;
-		width: $wh;
-		height: $wh;
-		display: flex;
-		justify-content: center;
-		align-items: center;
+		@include transition(transform);
 		position: absolute;
 		bottom: 90px;
 		right: -15px;
+		border-radius: 50%;
+		background-color: #fece2f;
+		width: 34px;
+		height: 34px;
+		padding: 5px;
+		padding-left: 4px;
+		border: 2px solid #fac71f;
 
 		img {
 			width: 20px;
+			height: 20px;
 		}
 
 		&.collapsed {
