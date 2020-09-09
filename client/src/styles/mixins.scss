@@ -50,8 +50,8 @@
 	box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.25);
 }
 
-@mixin primary-header {
-	color: $header-text !important;
+@mixin primary-header($color: $header-text) {
+	color: $color !important;
 	font-style: normal;
 	font-weight: 600 !important;
 	font-size: 24px !important;
@@ -91,13 +91,13 @@
 	color: $secondary-text;
 }
 
-@mixin text-data {
+@mixin text-data($color: $dark-black) {
 	font-family: Poppins, sans-serif !important;
 	font-style: normal !important;
 	font-weight: 500 !important;
 	font-size: 13px !important;
 	line-height: 19px !important;
-	color: $dark-black !important;
+	color: $color !important;
 	word-break: break-word;
 }
 
@@ -202,7 +202,7 @@
 		@include text-data;
 	}
 
-	&>div:last-child {
+	& > div:last-child {
 		border: 1px solid $yellow !important;
 		border-top: none;
 	}
@@ -214,7 +214,7 @@
 	&:focus {
 		border: 1px solid $yellow !important;
 
-		&>input {
+		& > input {
 			border: 1px solid $yellow !important;
 		}
 	}
@@ -235,11 +235,11 @@
 	}
 }
 
-@mixin label {
+@mixin label($color: $primary-text) {
 	font-family: Poppins, sans-serif !important;
 	font-style: normal !important;
 	font-weight: 600 !important;
 	font-size: 14px !important;
-	color: $primary-text !important;
+	color: $color !important;
 	position: static !important;
 }
