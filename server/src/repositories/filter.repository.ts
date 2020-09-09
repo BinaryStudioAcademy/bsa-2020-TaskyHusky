@@ -41,16 +41,16 @@ export class FilterRepository extends Repository<Filter> {
 		});
 	}
 
-	async getRecentFilters(userId: string, limit: number = 5) {
+	async getRecentFilters(userId: string, limit: number = 3) {
 		return (await this.getTeammateFilters(userId))
 			.sort((a, b) => (a.updatedAt < b.updatedAt ? 1 : -1))
 			.slice(0, limit);
 	}
 
 	async getFavFilters(userId: string) {
-		return (await this.getTeammateFilters(userId)).filter((f) =>
-			f.staredBy?.find((stargazer) => stargazer.id === userId),
-		);
+		return (await this.getTeammateFilters(userId))
+			.filter((f) => f.staredBy?.find((stargazer) => stargazer.id === userId))
+			.slice(0, 5);
 	}
 
 	async createItem(data: Filter): Promise<Filter> {

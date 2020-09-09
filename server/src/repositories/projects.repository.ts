@@ -62,14 +62,15 @@ export class ProjectsRepository extends Repository<Projects> {
 			.getMany();
 	}
 
-	getRecentProjects(userId: string, limit: number = 5): Promise<Projects[]> {
-		return getRepository(Projects)
-			.createQueryBuilder('project')
-			.leftJoin('project.users', 'users')
-			.where('users.id = :id', { id: userId })
-			.orderBy('project.updatedDate', 'DESC')
-			.limit(limit)
-			.getMany();
+	async getRecentProjects(userId: string, limit: number = 5): Promise<Projects[]> {
+		return (
+			await getRepository(Projects)
+				.createQueryBuilder('project')
+				.leftJoin('project.users', 'users')
+				.where('users.id = :id', { id: userId })
+				.orderBy('project.updatedDate', 'DESC')
+				.getMany()
+		).slice(0, limit);
 	}
 
 	createOne(data: Projects) {
