@@ -106,7 +106,7 @@ export const LoginPage: React.FC = () => {
 
 						{passwordInput}
 						<Button className={styles.continueButton} disabled={authState.loading}>
-							{isEmailValid ? t('log_in') : t('continue')}
+							{authState.isEmailInDB && isEmailSubmitted ? t('log_in') : t('continue')}
 						</Button>
 						<Divider horizontal className={styles.divider}>
 							{t('or')}
