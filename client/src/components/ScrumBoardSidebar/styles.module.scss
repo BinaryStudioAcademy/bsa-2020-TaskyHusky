@@ -8,12 +8,12 @@
 
 .collapse_button {
 	position: absolute;
-	bottom: 90px;
-	right: -15px;
+	bottom: 60px;
+	right: -12px;
 	border-radius: 50%;
 	background-color: $yellow;
-	width: 34px;
-	height: 34px;
+	width: 26px;
+	height: 26px;
 	padding: 5px;
 	padding-left: 4px;
 	border: 2px solid #fac71f;
@@ -22,8 +22,8 @@
 .collapse_button__icon {
 	display: block;
 	cursor: pointer;
-	width: 20px;
-	height: 20px;
+	width: 12px;
+	height: 12px;
 }
 
 .expand__button {
