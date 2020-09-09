@@ -25,12 +25,22 @@ interface Props {
 	noDrag?: boolean;
 	noRedirect?: boolean;
 	selectable?: boolean;
+	defaultSelected?: boolean;
 	onSelectChange?: (event: OnSelectEvent) => void;
 	getUnselect?: (event: GetUnselectEvent) => void;
 }
 
-const IssueCard: React.FC<Props> = ({ issue, index, noDrag, noRedirect, selectable, onSelectChange, getUnselect }) => {
-	const [selected, setSelected] = useState<boolean>(false);
+const IssueCard: React.FC<Props> = ({
+	issue,
+	index,
+	noDrag,
+	noRedirect,
+	selectable,
+	onSelectChange,
+	getUnselect,
+	defaultSelected,
+}) => {
+	const [selected, setSelected] = useState<boolean>(defaultSelected ?? false);
 	const [redirecting, setRedirecting] = useState<boolean>(false);
 
 	if (getUnselect) {
