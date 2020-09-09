@@ -29,7 +29,7 @@ const ProjectCard: React.FC<Props> = (props: Props) => {
 	const doneIssues = myIssues.filter((issue) => issue.status && issue.status.title === 'Done').length;
 	const undoneIssues = myIssues.length - doneIssues;
 	return (
-		<div className={styles.card} style={additionalBlock ? { height: 0, overflow: 'hidden' } : {}}>
+		<div className={styles.card} style={additionalBlock ? { height: 0, overflow: 'hidden', margin: 0 } : {}}>
 			<Link to={`project/${id}/issues`} className={styles.linkContainer}>
 				<div className={styles.header}>
 					<div className={styles.avatar} style={{ backgroundColor: color ?? defaultAvatarBg }}>
