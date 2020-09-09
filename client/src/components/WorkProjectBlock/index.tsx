@@ -15,10 +15,15 @@ interface Props {
 
 const WorkProjectBlock: React.FC<Props> = (props: Props) => {
 	const { projects } = props;
-	const stopLoad = 6;
+	const stopLoad = 10;
+	const additionalLoad = 6;
 	return (
 		<div className="cardContainer">
 			{projects.map((item, index) => index < stopLoad && <ProjectCard key={item.id} item={item} />)}
+			{projects.map(
+				(item, index) =>
+					index < additionalLoad && <ProjectCard key={item.id} item={item} additionalBlock={true} />,
+			)}
 		</div>
 	);
 };

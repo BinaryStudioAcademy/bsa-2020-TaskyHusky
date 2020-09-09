@@ -105,21 +105,23 @@ export const HeaderMenu = () => {
 							className={styles.circularIcon}
 							direction="left"
 						>
-							<>
-								{Boolean(incomingInvites.length) && (
-									<Dropdown.Menu className={styles.circularDropdownMenu}>
-										{incomingInvites.map((invite) => (
-											<InviteNotification
-												id={invite.id}
-												name={`${invite.firstName} ${invite.lastName}`}
-												avatar={invite.avatar || ''}
-												key={invite.id}
-												jobTitle={invite.jobTitle || ''}
-											/>
-										))}
-									</Dropdown.Menu>
-								)}
-							</>
+							<Dropdown.Menu className={styles.circularDropdownMenu}>
+								<>
+									{Boolean(incomingInvites.length) && (
+										<>
+											{incomingInvites.map((invite) => (
+												<InviteNotification
+													id={invite.id}
+													name={`${invite.firstName} ${invite.lastName}`}
+													avatar={invite.avatar || ''}
+													key={invite.id}
+													jobTitle={invite.jobTitle || ''}
+												/>
+											))}
+										</>
+									)}
+								</>
+							</Dropdown.Menu>
 						</Dropdown>
 						<NotificationsMenu />
 						{user ? (

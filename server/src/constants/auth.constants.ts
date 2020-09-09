@@ -10,7 +10,6 @@ export const authErrorMessages = {
 };
 
 export const EMAIL_FIELD = 'email';
-
 export const EMAIL = 'email';
 export const PASSWORD = 'password';
 export const FIRST_NAME = 'firstName';
