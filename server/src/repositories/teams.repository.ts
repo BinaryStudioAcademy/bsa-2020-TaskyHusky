@@ -6,7 +6,7 @@ import { UserRepository } from './user.repository';
 
 @EntityRepository(Team)
 export class TeamRepository extends Repository<Team> {
-	findAll() {
+	findAll(id: string) {
 		return this.createQueryBuilder('teamRepository')
 			.innerJoin('teamRepository.createdBy', 'user')
 			.addSelect([
@@ -20,6 +20,7 @@ export class TeamRepository extends Repository<Team> {
 			])
 			.innerJoin('teamRepository.users', 'userProfile')
 			.addSelect('userProfile.id')
+			.where('userProfile.id = :id', { id })
 			.getMany();
 	}
 

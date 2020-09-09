@@ -9,31 +9,12 @@ import { linksParse } from '../helpers/team.parser';
 
 class TeamsController {
 	getTeams = async (req: Request, res: Response): Promise<void> => {
+		const { id } = req.user;
 		const teamRepository = getCustomRepository(TeamRepository);
 		try {
-			const teams = await teamRepository.findAll();
+			const teams = await teamRepository.findAll(id);
 
 			res.send(teams);
-		} catch (error) {
-			res.status(400).send(getWebError(error, 400));
-		}
-	};
-
-	getTeamsByName = async (req: Request, res: Response): Promise<void> => {
-		const teamRepository = getCustomRepository(TeamRepository);
-		try {
-			const teams = await teamRepository.findAll();
-			const { name: nameFilter } = req.query;
-
-			if (nameFilter && typeof nameFilter === 'string') {
-				res.send(
-					teams.filter(
-						(team) => team.name && team.name.toLowerCase().indexOf(nameFilter.toLowerCase()) !== -1,
-					),
-				);
-			} else {
-				res.send(teams);
-			}
 		} catch (error) {
 			res.status(400).send(getWebError(error, 400));
 		}
