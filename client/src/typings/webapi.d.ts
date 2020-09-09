@@ -145,6 +145,7 @@ namespace WebApi.Result {
 			id: string;
 			avatar: string | null;
 		};
+		columns: BoardColumnResult[];
 	}
 	interface BoardColumnResult {
 		id: string;

@@ -34,5 +34,6 @@ export const initialState: ScrumBoardState = {
 			id: '',
 			avatar: '',
 		},
+		columns: [],
 	},
 };

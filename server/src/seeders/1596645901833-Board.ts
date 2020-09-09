@@ -6,6 +6,27 @@ import { BoardType } from '../models/Board';
 import { UserRepository } from '../repositories/user.repository';
 import { BoardColumnRepository } from '../repositories/boardColumn.repository';
 
+const DEFAULT_SCRUM_COLUMNS = [
+	{
+		columnName: 'To do',
+		status: 'todo',
+		index: 1,
+		isResolutionSet: false,
+	},
+	{
+		columnName: 'In progress',
+		status: 'inprogress',
+		index: 2,
+		isResolutionSet: false,
+	},
+	{
+		columnName: 'Done',
+		status: 'todo',
+		index: 3,
+		isResolutionSet: true,
+	},
+];
+
 export class Board1596645901833 implements MigrationInterface {
 	public async up(queryRunner: QueryRunner): Promise<void> {
 		const userRepository = getCustomRepository(UserRepository);
@@ -28,6 +49,17 @@ export class Board1596645901833 implements MigrationInterface {
 		const boardRepository = getCustomRepository(BoardRepository);
 		const columnRepository = getCustomRepository(BoardColumnRepository);
 
+		const defaultScrumColumns = DEFAULT_SCRUM_COLUMNS.map((columnData) => {
+			const column = new BoardColumn();
+			column.board = board2;
+			column.columnName = columnData.columnName;
+			column.isResolutionSet = columnData.isResolutionSet;
+			column.status = columnData.status;
+			column.index = columnData.index;
+			return column;
+		});
+		await columnRepository.save(defaultScrumColumns);
+
 		const board = await boardRepository.findByType(BoardType.Kanban);
 
 		const column1 = new BoardColumn();
@@ -44,6 +76,7 @@ export class Board1596645901833 implements MigrationInterface {
 
 		await columnRepository.post(column1);
 		await columnRepository.post(column2);
+
 		await getRepository('board').save(board);
 	}
 

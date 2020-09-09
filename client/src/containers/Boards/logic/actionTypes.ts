@@ -8,6 +8,13 @@ export const FAIL_LOADING = 'BOARDS:FAIL_LOADING';
 export const DELETE_BOARD = 'BOARDS:DELETE_BOARD';
 export const CREATE_BOARD = 'BOARDS:CREATE_BOARD';
 
+export type BoardColumnToCreate = {
+	columnName: string;
+	status: string;
+	index: number;
+	isResolutionSet: boolean;
+};
+
 export type successLoading = {
 	boards: WebApi.Board.IBoardModel[];
 };
@@ -26,4 +33,5 @@ export type createBoard = {
 	createdBy: {
 		id: string;
 	};
+	columns?: BoardColumnToCreate[];
 };

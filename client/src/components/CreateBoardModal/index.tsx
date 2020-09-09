@@ -5,6 +5,7 @@ import BoardModalMenuType from '../BoardModalMenuType';
 import BoardModalFinal from '../BoardModalFinal';
 import { createBoard } from '../../containers/Boards/logic/actionTypes';
 import { useTranslation } from 'react-i18next';
+import { DEFAULT_SCRUM_COLUMNS } from '../../constants/defaultScrumBoardColumns';
 
 interface Props {
 	setIsModalShown(params: boolean): void;
@@ -80,6 +81,16 @@ const CreateBoardModal = (props: Props) => {
 						onClick={() => {
 							const { admin, ...boardData } = board;
 							if (admin) {
+								if (boardData.boardType === 'Scrum') {
+									onCreateBoard({
+										...boardData,
+										createdBy: {
+											id: admin,
+										},
+										columns: DEFAULT_SCRUM_COLUMNS,
+									});
+									return;
+								}
 								onCreateBoard({
 									...boardData,
 									createdBy: {
