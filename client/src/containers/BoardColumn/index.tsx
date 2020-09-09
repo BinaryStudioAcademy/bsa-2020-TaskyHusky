@@ -99,7 +99,7 @@ const BoardColumn: React.FC<Props> = ({ column, className, search, boardId, getO
 			<Droppable droppableId={`board-column__${column.id}`}>
 				{(provided, snapshot) => (
 					<Segment
-						style={{ backgroundColor: snapshot.isDraggingOver ? '#CCC' : '#EEE' }}
+						style={{ backgroundColor: snapshot.isDraggingOver ? '#CCC' : '#EEE', height: 'auto' }}
 						className={`fill ${styles.wrapper}`}
 					>
 						<div
