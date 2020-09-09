@@ -11,10 +11,11 @@ interface Props {
 	name: string;
 	avatar: string;
 	jobTitle: string;
+	color?: string;
 }
 
 const InviteNotification: React.FC<Props> = (props: Props) => {
-	const { avatar, name, id, jobTitle } = props;
+	const { avatar, name, id, jobTitle, color } = props;
 	const authStore = useSelector((rootStore: RootState) => rootStore.auth);
 	const { t } = useTranslation();
 	const dispatch = useDispatch();
@@ -46,7 +47,7 @@ const InviteNotification: React.FC<Props> = (props: Props) => {
 
 	return (
 		<div className={styles.notification}>
-			<div style={{ display: 'flex', alignItems: 'center', width: '100%' }}>
+			<div style={{ display: 'flex', alignItems: 'center', width: '100%', background: color ?? '#fece2f' }}>
 				{avatar ? (
 					<img src={avatar} className={styles.avatar} style={{ float: 'left' }} alt="Avatar" />
 				) : (

@@ -16,9 +16,14 @@ export const ProjectsMenu = () => {
 			<Dropdown.Menu className={styles.dropDownMenu}>
 				<Dropdown.Header>{t('recent')}</Dropdown.Header>
 				{recent.map((project) => (
-					<Dropdown.Item as="a" href={`/project/${project.id}`} key={project.id}>
+					<Dropdown.Item
+						as="a"
+						href={`/project/${project.id}`}
+						key={project.id}
+						className={styles.list__project_item}
+					>
 						<Image src={project.icon} className="standartIcon" />
-						{project.name}
+						<span>{project.name}</span>
 					</Dropdown.Item>
 				))}
 				<Dropdown.Divider />

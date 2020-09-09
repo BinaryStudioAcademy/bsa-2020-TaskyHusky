@@ -134,6 +134,8 @@ export class UserProfile {
 			// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 			this.email = email!;
 			this.password = password;
+			this.avatar = userData.avatar;
+			this.googleId = userData.googleId;
 		}
 	}
 }

@@ -8,6 +8,12 @@ interface ElasticI {
 	index: string;
 }
 
+type IssueElasticData = {
+	id: string;
+	description: string;
+	summary: string;
+};
+
 type BulkCreateOption = { index: { _index: string; _id: string } };
 class Elastic implements ElasticI {
 	index = 'documentIndex';
@@ -46,9 +52,12 @@ class Elastic implements ElasticI {
 	}
 
 	bulk(issues: Issue[]) {
-		const body = [] as (Issue | BulkCreateOption)[];
+		const body = [] as (IssueElasticData | BulkCreateOption)[];
 		issues.forEach((issue) => {
-			body.push({ index: { _index: this.index, _id: issue.id } }, issue);
+			body.push(
+				{ index: { _index: this.index, _id: issue.id } },
+				{ id: issue.id, description: issue.description || '', summary: issue.summary },
+			);
 		});
 		return client.bulk({ refresh: true, body });
 	}
@@ -59,9 +68,7 @@ class Elastic implements ElasticI {
 			type: '_doc',
 			id: issue.id,
 			body: {
-				doc: {
-					...issue,
-				},
+				doc: { id: issue.id, description: issue.description || '', summary: issue.summary },
 			},
 		});
 	}
@@ -71,7 +78,7 @@ class Elastic implements ElasticI {
 			index: this.index,
 			id: issue.id,
 			type: '_doc',
-			body: issue,
+			body: { id: issue.id, description: issue.description || '', summary: issue.summary },
 		});
 	}
 

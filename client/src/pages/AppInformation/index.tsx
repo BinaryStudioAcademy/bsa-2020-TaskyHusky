@@ -24,7 +24,7 @@ const AppInformation = (props: Props) => {
 					</Menu.Item>
 					<Link to={'/login'} className={['primaryBtn', styles.link_login].join(' ')}>
 						<Icon name="sign-in" />
-						Login
+						{t('log_in')}
 					</Link>
 				</Menu>
 			</div>
@@ -38,41 +38,34 @@ const AppInformation = (props: Props) => {
 								styles.content__block_title,
 							].join(' ')}
 						>
-							<h1 className={styles.content__title}>Лучший инструмент разработки для agile-команд</h1>
+							<h1 className={styles.content__title}>{t('landing_title')}</h1>
 							<div className={styles.content__image_wrapper}>
 								<img src={projects} className={styles.content__image} alt="projects" />
 							</div>
 						</div>
 						<div className={styles.content__block_wrapper}>
 							<div className={styles.content__intro}>
-								<h2 className={styles.content__intro_title}>
-									Лучшие команды разработчиков выпускают ПО быстро и часто.
-								</h2>
-								<p className={styles.content__intro_description}>
-									Решение TaskyHusky разработано таким образом, чтобы каждый член вашей команды
-									разработчиков мог планировать, отслеживать и выпускать превосходное ПО.
-								</p>
+								<h2 className={styles.content__intro_title}> {t('landing_intro_title')}</h2>
+								<p className={styles.content__intro_description}>{t('landing_intro_description')}</p>
 							</div>
 						</div>
 						<div className={[styles.content__block_wrapper, styles.content__block].join(' ')}>
 							<div className={styles.content__image_wrapper}>
-								<img src={kanban} className={styles.content__image} alt="kanban" />
+								<img src={scram} className={styles.content__image} alt="scram" />
 							</div>
 							<div className={styles.content__block_description}>
 								<div className={styles.description}>
-									<h3 className={styles.description__title}>Гибкое планирование</h3>
+									<h3 className={styles.description__title}>{t('landing_block_title_planning')}</h3>
 									<p className={styles.description__content}>
-										Scrum? Есть. Kanban? Есть. TaskyHusky предоставляет множество вариантов
-										планирования, благодаря чему ваша команда сможет создавать планы оптимальным
-										способом.
+										{t('landing_block_description_planning')}
 									</p>
 								</div>
 								<div className={styles.description}>
-									<h3 className={styles.description__title}>Точные оценки</h3>
+									<h3 className={styles.description__title}>
+										{t('landing_block_title_estimations')}
+									</h3>
 									<p className={styles.description__content}>
-										Благодаря оценкам ваша команда будет работать качественнее и эффективнее. Вы
-										можете использовать очки за истории, часы, размеры футболок или собственные
-										методики оценки — TaskyHusky все это поддерживает.
+										{t('landing_block_description_estimations')}.
 									</p>
 								</div>
 							</div>
@@ -81,25 +74,21 @@ const AppInformation = (props: Props) => {
 							<div className={styles.content__block_description}>
 								<div className={styles.description}>
 									<h3 className={styles.description__title}>
-										Расстановка приоритетов на основе ценности
+										{t('landing_block_title_prioritization')}
 									</h3>
 									<p className={styles.description__content}>
-										Упорядочить пользовательские истории, задачи и баги в бэклоге продукта можно
-										обычным перетаскиванием. Теперь все самое важное для клиента всегда будет
-										наверху.
+										{t('landing_block_description_prioritization')}
 									</p>
 								</div>
 								<div>
-									<h3 className={styles.description__title}>Прозрачность исполнения</h3>
+									<h3 className={styles.description__title}>{t('landing_block_title_execution')}</h3>
 									<p className={styles.description__content}>
-										С Jira Software работа вашей команды станет прозрачнее и все ее члены всегда
-										будут в курсе происходящего, где бы они ни находились — в соседних комнатах или
-										на разных континентах.
+										{t('landing_block_description_execution')}
 									</p>
 								</div>
 							</div>
 							<div className={styles.content__image_wrapper}>
-								<img src={scram} className={styles.content__image} alt="scram" />
+								<img src={kanban} className={styles.content__image} alt="kanban" />
 							</div>
 						</div>
 					</section>

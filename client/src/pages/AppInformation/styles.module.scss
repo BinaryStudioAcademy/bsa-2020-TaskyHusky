@@ -1,4 +1,5 @@
-@import '../../styles/variables.scss';
+@import 'styles/variables.scss';
+@import 'styles/mixins.scss';
 
 :global(#root) {
 	.menuWrapper > * {
@@ -75,7 +76,7 @@
 }
 
 .content__block_wrapper {
-	padding: 40px 10px ;
+	padding: 30px 10px ;
 }
 
 .content__block {
@@ -95,7 +96,7 @@
 
 .content__title {
 	text-align: center;
-	font-size: calc(12px + 1.5vw);
+	font-size: 32px;
 }
 
 .content__image {
@@ -119,11 +120,11 @@
 }
 
 .content__intro_title {
-	font-size: calc(12px + 1.2vw);
+	font-size: 26px;
 }
 
 .content__intro_description {
-	font-size: calc(12px + 0.7vw);
+	font-size: 22px;
 }
 
 .description:not(:last-child) {
@@ -131,10 +132,10 @@
 }
 
 .description__title {
-	font-size: calc(12px + 0.9vw);
+	font-size: 22px;
 }
 
 .description__content {
-	font-size: calc(12px + 0.6vw);
+	font-size: 20px;
 	margin-bottom: 10px;
 }

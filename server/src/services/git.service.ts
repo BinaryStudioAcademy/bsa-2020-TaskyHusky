@@ -1,18 +1,18 @@
 import fetch from 'node-fetch';
 import { CommitResult } from '../models/Result';
 
-export const getMessages = async (message: string, githubUrl = 'https://github.com/Alesyaa103/test-form.git') => {
+export const getMessages = async (message: string, githubUrl = 'https://github.com/sahanr/bsa-2020-app.git') => {
 	const [, owner, repo] = githubUrl.match(/github\.com\/(.+)\/(.+)\.git/) || [];
 
 	if (!owner || !repo) {
 		throw new Error('Bad repository');
 	}
-	// `${message}`
+
 	const data = fetch(`https://api.github.com/repos/${owner}/${repo}/commits`)
 		.then((res) => res.json())
 		.then((commits) =>
 			commits
-				.filter((commit: any) => commit.commit.message.toLowerCase().startsWith('fix'))
+				.filter((commit: any) => commit.commit.message.toLowerCase().startsWith(`${message}`))
 				.map((commit: any) => ({
 					message: commit.commit.message,
 					sha: commit.sha,
