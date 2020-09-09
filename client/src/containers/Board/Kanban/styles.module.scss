@@ -11,12 +11,12 @@
 
 :local(.outerContainer) {
 	height: 100%;
-    display: flex;
+	display: flex;
 }
 
 :local(.render) {
 	flex: 1;
-    overflow: hidden;
+	overflow: hidden;
 }
 
 :local(.column) {
@@ -48,8 +48,8 @@
 	padding: 20px;
 	width: 100%;
 	display: flex;
-    flex-direction: column;
-    height: 100%;
+	flex-direction: column;
+	height: 100%;
 }
 
 .headerWrapper {
@@ -86,7 +86,6 @@
 	cursor: pointer;
 	@include cancel-btn;
 }
-
 
 @media screen and (max-width: $mobile-screen) {
 	.inlineContainer,

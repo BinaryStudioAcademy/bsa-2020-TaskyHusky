@@ -73,7 +73,7 @@ const BoardColumn: React.FC<Props> = ({ column, className, search, boardId, getO
 			if (destinationId !== sourceId) {
 				if (destinationId === column.id) {
 					getByKey(cardKey).then((issue) => setIssues([...issues, issue]));
-				} else {
+				} else if (sourceId === column.id) {
 					const index = issues.findIndex((issue) => issue.issueKey === cardKey);
 					const issuesCopy = [...issues];
 					issuesCopy.splice(index, 1);

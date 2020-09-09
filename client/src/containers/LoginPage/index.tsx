@@ -106,19 +106,19 @@ export const LoginPage: React.FC = () => {
 
 						{passwordInput}
 						<Button className={styles.continueButton} disabled={authState.loading}>
-							{isEmailValid ? t('log_in') : t('continue')}
+							{authState.isEmailInDB && isEmailSubmitted ? t('log_in') : t('continue')}
 						</Button>
 						<Divider horizontal className={styles.divider}>
 							{t('or')}
 						</Divider>
-						<GoogleLogin
-							clientId={GoogleAuth.CLIENT_ID}
-							buttonText="Login"
-							render={(props) => googleBtn(props)}
-							onSuccess={googleAuth}
-							cookiePolicy={GoogleAuth.COOKIE_POLICY}
-						/>
 					</Form>
+					<GoogleLogin
+						clientId={GoogleAuth.CLIENT_ID}
+						buttonText="Login"
+						render={(props) => googleBtn(props)}
+						onSuccess={googleAuth}
+						cookiePolicy={GoogleAuth.COOKIE_POLICY}
+					/>
 				</Segment>
 			</Grid.Column>
 		</Grid>
