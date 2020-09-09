@@ -5,11 +5,9 @@ import BurndownChart from 'components/BurndownChart';
 import { loadSprintById, loadSprintIssues } from './logic/actions';
 import { RootState } from 'typings/rootState';
 import Breadcrumbs from 'components/common/Breadcrumbs';
-import { setBreadcrumbs, BreadCrumbData } from './config/breadcrumbs';
+import { setBreadcrumbs } from './config/breadcrumbs';
 import { useHistory } from 'react-router-dom';
-import ScrumBoardSidebar from 'components/ScrumBoardSidebar';
 import { getBoardById } from 'services/board.service';
-import Spinner from 'components/common/Spinner';
 
 interface Props {
 	sprintId: string;
@@ -37,33 +35,28 @@ const Report: React.FC<Props> = ({ sprintId }) => {
 		}
 	}, [board, boardId]);
 
-	if (!board || !project) {
-		return <Spinner />;
-	}
-
-	const projectDetails: BreadCrumbData = { id: project.id, name: project.name };
-	const boardDetails: BreadCrumbData = { id: board.id, name: board.name };
-
 	return (
 		<>
-			{sprint ? (
-				<div className={styles.container}>
-					<ScrumBoardSidebar board={board} project={project} />
-					<div className={styles.innerContainer}>
-						<div className={styles.breadcrumb}>
-							<Breadcrumbs
-								sections={setBreadcrumbs({ history, projectDetails, boardDetails, reports: true })}
-							/>
-							<h1>Burndown Chart</h1>
-							<span>
-								Track the total work remaining and project the likelihood of achieving the sprint goal.
-								This helps your team manage its progress and respond accordingly.
-							</span>
-						</div>
-						{sprint && <BurndownChart sprint={sprint} issues={issues} />}
+			{board && project && (
+				<>
+					<div className={styles.breadcrumb}>
+						<Breadcrumbs
+							sections={setBreadcrumbs({
+								history,
+								projectDetails: { id: project.id, name: project.name },
+								boardDetails: { id: board.id, name: board.name },
+								reports: true,
+							})}
+						/>
+						<h1>Burndown Chart</h1>
+						<span>
+							Track the total work remaining and project the likelihood of achieving the sprint goal. This
+							helps your team manage its progress and respond accordingly.
+						</span>
 					</div>
-				</div>
-			) : null}
+					{sprint && <BurndownChart sprint={sprint} issues={issues} />}
+				</>
+			)}
 		</>
 	);
 };
