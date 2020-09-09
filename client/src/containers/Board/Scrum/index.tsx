@@ -124,6 +124,7 @@ const Scrum: BoardComponent = (props) => {
 				</Header>
 				<Form.Input
 					placeholder={t('search')}
+					className={styles.searchInput}
 					icon="search"
 					value={search}
 					onChange={(event: ChangeEvent<HTMLInputElement>, data: InputOnChangeData) => {
