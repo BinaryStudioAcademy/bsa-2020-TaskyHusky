@@ -59,7 +59,7 @@ export class Projects {
 	@OneToMany((type) => Sprint, (sprint) => sprint.project, { cascade: true })
 	sprints?: Sprint[];
 
-	@ManyToMany((type) => Board, (board) => board.projects)
+	@ManyToMany((type) => Board, (board) => board.projects, { onDelete: 'CASCADE' })
 	@JoinTable({ name: 'project_boards' })
 	boards?: Board[];
 

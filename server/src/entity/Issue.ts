@@ -39,7 +39,7 @@ export class Issue {
 	@ManyToOne((type) => BoardColumn, (boardColumn) => boardColumn.issues, { onDelete: 'CASCADE' })
 	boardColumn?: BoardColumn;
 
-	@ManyToOne((type) => Board, (board) => board.issues, { onDelete: 'CASCADE' })
+	@ManyToOne((type) => Board, (board) => board.issues, { onDelete: 'SET NULL' })
 	board?: Board;
 
 	@ManyToMany((type) => ProjectLabel, (label) => label.issues)
