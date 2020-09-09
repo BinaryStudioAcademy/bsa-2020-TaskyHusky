@@ -5,6 +5,7 @@ import * as actions from '../../containers/Header/logic/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../typings/rootState';
 import styles from './styles.module.scss';
+import { defaultAvatarBg } from 'constants/defaultColors';
 
 interface Props {
 	id: string;
@@ -47,11 +48,13 @@ const InviteNotification: React.FC<Props> = (props: Props) => {
 
 	return (
 		<div className={styles.notification}>
-			<div style={{ display: 'flex', alignItems: 'center', width: '100%', background: color ?? '#fece2f' }}>
+			<div style={{ display: 'flex', alignItems: 'center', width: '100%' }}>
 				{avatar ? (
 					<img src={avatar} className={styles.avatar} style={{ float: 'left' }} alt="Avatar" />
 				) : (
-					<div className={styles.avatar}>{initials}</div>
+					<div className={styles.avatar} style={{ background: color ?? defaultAvatarBg }}>
+						{initials}
+					</div>
 				)}
 				<div style={{ width: 'calc(100% - 50px)' }}>
 					<div style={{ display: 'flex', justifyContent: 'space-between' }}>

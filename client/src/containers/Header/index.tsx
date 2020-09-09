@@ -116,6 +116,7 @@ export const HeaderMenu = () => {
 													avatar={invite.avatar || ''}
 													key={invite.id}
 													jobTitle={invite.jobTitle || ''}
+													color={invite.jobTitle || ''}
 												/>
 											))}
 										</>
