@@ -162,7 +162,7 @@ export class BoardRepository extends Repository<Board> {
 		let board = new Board();
 		let columnsToAdd = [];
 
-		if (columns.length > 0) {
+		if (columns && columns.length > 0) {
 			columnsToAdd = await getCustomRepository(BoardColumnRepository).save(
 				columns.map((column: any) => ({ ...column })),
 			);
