@@ -35,7 +35,7 @@ const Projects: React.FC = () => {
 	};
 
 	return (
-		<div>
+		<div style={{ paddingBottom: '40px' }}>
 			<FiltersHeader title={t('projects')} />
 			{isDeleting || isLoading ? (
 				<Spinner />

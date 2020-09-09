@@ -3,8 +3,8 @@ import { Segment, Header, Icon, Label } from 'semantic-ui-react';
 import { Draggable } from 'react-beautiful-dnd';
 import styles from './styles.module.scss';
 import { Redirect } from 'react-router-dom';
-import { getUsername } from 'helpers/getUsername.helper';
-import UserAvatar from 'components/common/UserAvatar';
+import { defaultAvatarBg } from 'constants/defaultColors';
+import { Link } from 'react-router-dom';
 
 interface BaseEvent {
 	id: string;
@@ -40,6 +40,7 @@ const IssueCard: React.FC<Props> = ({
 	getUnselect,
 	defaultSelected,
 }) => {
+	const { assigned } = issue;
 	const [selected, setSelected] = useState<boolean>(defaultSelected ?? false);
 	const [redirecting, setRedirecting] = useState<boolean>(false);
 
@@ -74,7 +75,30 @@ const IssueCard: React.FC<Props> = ({
 			className={styles.card_margin}
 		>
 			{redirecting ? <Redirect to={`/issue/${issue.issueKey}`} /> : ''}
-			<div>
+			<Header className={styles.issueHeader}>
+				<div>
+					<p className="secondaryData" style={{ marginBottom: 0 }}>
+						{issue.issueKey}
+					</p>
+					<Link to={`issue/${issue.issueKey}`}>
+						<p className="standartLabel" style={{ wordBreak: 'break-word' }}>
+							{issue.summary}
+						</p>
+					</Link>
+				</div>
+				{assigned && (
+					<Link to={`/profile/${assigned.id}`}>
+						<div className={styles.avatar} style={{ backgroundColor: assigned.color ?? defaultAvatarBg }}>
+							{assigned.avatar ? (
+								<img src={assigned.avatar} className={styles.img} alt="avatar" />
+							) : (
+								<p className={styles.avatarTitle}>{assigned.firstName[0] + assigned.lastName[0]}</p>
+							)}
+						</div>
+					</Link>
+				)}
+			</Header>
+			<div style={{ display: 'flex', alignItems: 'center' }} className={styles.meta}>
 				{issue.labels
 					? issue.labels.map((label) => (
 							<Label
@@ -90,31 +114,11 @@ const IssueCard: React.FC<Props> = ({
 							</Label>
 					  ))
 					: ''}
-			</div>
-			<Header style={{ marginBottom: 0, marginTop: 10 }}>
-				{issue.summary}
-				{issue.storyPoint ? <Label content={issue.storyPoint} /> : ''}
-			</Header>
-			<div
-				style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
-				className={styles.meta}
-			>
-				{issue.status ? (
-					<Label
-						style={{
-							paddingTop: 3,
-							paddingBottom: 3,
-							marginTop: 10,
-							marginBottom: 3,
-							backgroundColor: issue.status.color,
-							color: 'white',
-						}}
-						content={issue.status.title}
-					/>
+				{issue.storyPoint ? (
+					<Label content={issue.storyPoint} className={styles.storyPoint} style={{ marginLeft: 'auto' }} />
 				) : (
 					''
 				)}
-				{issue.issueKey}
 			</div>
 
 			<div className={styles.inlineContainer}>
@@ -126,14 +130,6 @@ const IssueCard: React.FC<Props> = ({
 						title={issue.priority.title}
 					/>
 				</div>
-				{issue.assigned ? (
-					<div className={styles.meta}>
-						<UserAvatar user={issue.assigned} small />
-						{getUsername(issue.assigned)}
-					</div>
-				) : (
-					''
-				)}
 			</div>
 		</Segment>
 	);

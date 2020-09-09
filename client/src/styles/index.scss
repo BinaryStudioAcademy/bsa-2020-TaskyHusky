@@ -23,7 +23,7 @@ label {
 	background-color: $header-text !important;
 }
 
-.site-header > .menu > .item:not(.createMenuItem):not(.right):not(.site-logo) {
+.site-header>.menu>.item:not(.createMenuItem):not(.right):not(.site-logo) {
 	border-radius: 1px !important;
 	background-color: inherit !important;
 	box-sizing: border-box;
@@ -55,18 +55,18 @@ label {
 	border: 1px solid $yellow !important;
 }
 
-.site-header > .menu > .item.site-logo {
+.site-header>.menu>.item.site-logo {
 	.site-logo-text {
 		padding: 5px 10px;
 		border-radius: 2px;
 	}
 
-	&:hover > .site-logo-text {
+	&:hover>.site-logo-text {
 		background: rgba(255, 255, 255, 0.1);
 	}
 }
 
-.site-header > .menu .dropdown.icon {
+.site-header>.menu .dropdown.icon {
 	position: relative;
 	top: 1px;
 	left: 5px;
@@ -162,13 +162,17 @@ label {
 }
 
 .formSelect {
-	& > div {
+	&>div {
 		@include dropdown;
 	}
 }
 
 .textData {
 	@include text-data;
+}
+
+.secondaryData {
+	@include secondary-content;
 }
 
 .standartLabel {

@@ -15,7 +15,7 @@ const PeopleListItem: React.FC<Props> = ({ person, handlerClick, additionalBlock
 		<div
 			onClick={() => handlerClick && handlerClick()}
 			className={styles.card}
-			style={additionalBlock ? { height: 0, overflow: 'hidden', margin: 0 } : {}}
+			style={additionalBlock ? { height: 0, overflow: 'hidden', margin: 0, marginRight: '25px' } : {}}
 		>
 			<div className={styles.header}>
 				<div className={styles.avatarWrapper}>

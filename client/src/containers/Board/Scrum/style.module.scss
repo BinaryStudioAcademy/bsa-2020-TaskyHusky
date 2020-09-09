@@ -6,21 +6,6 @@
 		margin-bottom: 25px;
 	}
 
-	.inlineContainer {
-		display: flex;
-		align-items: center;
-		margin: 20px 0 10px 0;
-
-		* {
-			margin: 0 5px !important;
-		}
-
-		.createSprintButton {
-			@include primary-btn;
-			margin-left: auto !important;
-		}
-	}
-
 	.noSprintsContainer {
 		display: flex;
 		flex-direction: column;
@@ -37,6 +22,26 @@
 
 	.scrumHeader {
 		margin-left: 0 !important;
+	}
+}
+
+.searchInput {
+	@include input
+}
+
+.inlineContainer {
+	display: flex;
+	align-items: center;
+	margin: 20px 0 10px 0;
+	flex-wrap: wrap;
+
+	* {
+		margin: 0 5px !important;
+	}
+
+	.createSprintButton {
+		@include primary-btn;
+		margin-left: auto !important;
 	}
 }
 
@@ -63,5 +68,20 @@
 @media screen and (max-width: $medium-screen) {
 	.container {
 		margin: 25px 8%;
+	}
+
+	.inlineContainer {
+		flex-direction: column;
+		align-items: flex-start;
+
+		.createSprintButton {
+			margin-left: 0px !important;
+			margin-top: 20px !important;
+		}
+	}
+
+	.searchInput {
+		margin-left: -10px !important;
+		margin-top: 10px !important;
 	}
 }
