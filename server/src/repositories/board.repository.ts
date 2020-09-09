@@ -1,4 +1,5 @@
 import { EntityRepository, getCustomRepository, Repository, getRepository } from 'typeorm';
+import { BoardColumnRepository } from './boardColumn.repository';
 import { Board } from '../entity/Board';
 import { UserRepository } from './user.repository';
 import { IBoardModel, IReducedBoard } from '../models/Board';
@@ -128,7 +129,7 @@ export class BoardRepository extends Repository<Board> {
 
 	async post(data: any) {
 		const userRepository = getCustomRepository(UserRepository);
-		const { createdBy: user, projects, ...dataToCreate } = data;
+		const { createdBy: user, projects, columns, ...dataToCreate } = data;
 
 		const userToAdd = await userRepository.getById(user.id);
 		if (!userToAdd) throw new Error('User with current ID not found');
@@ -146,8 +147,15 @@ export class BoardRepository extends Repository<Board> {
 		const projectsToAdd = await Promise.all(projectPromises);
 
 		let board = new Board();
-		board = { ...board, ...dataToCreate, createdBy: userToAdd, projects: projectsToAdd };
+		let columnsToAdd = [];
 
+		if (columns.length > 0) {
+			columnsToAdd = await getCustomRepository(BoardColumnRepository).save(
+				columns.map((column: any) => ({ ...column })),
+			);
+		}
+
+		board = { ...board, ...dataToCreate, createdBy: userToAdd, projects: projectsToAdd, columns: columnsToAdd };
 		return this.save([board]);
 	}
 
