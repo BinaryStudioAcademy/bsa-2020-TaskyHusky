@@ -11,7 +11,7 @@
 	display: flex;
 	flex-direction: column;
 	overflow-y: auto;
-	max-height: calc(100vh - 380px);
+	max-height: calc(100vh - 320px)
 }
 
 .createBtn {
@@ -31,4 +31,9 @@
 
 .wrapper {
 	padding: 10px 2px 10px 10px !important;
+}
+
+.column__content_container { 
+	margin-top: 10;
+	height: calc(100% - 80px);
 }

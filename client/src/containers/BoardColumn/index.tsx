@@ -115,7 +115,7 @@ const BoardColumn: React.FC<Props> = ({ column, className, search, boardId, getO
 							</Header>
 						</div>
 						<div style={{ clear: 'both' }} />
-						<div style={{ marginTop: 10 }}>
+						<div className={styles.column__content_container}>
 							<div
 								ref={provided.innerRef}
 								{...provided.droppableProps}

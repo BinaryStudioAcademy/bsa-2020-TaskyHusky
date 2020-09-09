@@ -2,11 +2,12 @@
 
 :local(.columnsFlex) {
 	display: flex;
-	height: calc(100vh - 230px);
+	align-items: flex-start;
+	height: calc(100% - 108px);
 	width: 100%;
 	overflow-x: auto;
 	overflow-y: hidden;
-	padding-bottom: 25px;
+	padding-bottom: 15px;
 	padding-right: 25px;
 }
 
@@ -17,14 +18,17 @@
 
 :local(.render) {
 	width: calc(100% - 250px);
+	height: calc(100vh - 77px);
 }
 
 :local(.column) {
 	min-width: 300px;
 	margin-right: 25px;
 	box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.25) !important;
-	height: fit-content;
-	max-height: calc(100vh - 261px);
+	flex: 1 1 10px;
+    max-height: 100%;
+    overflow: auto;
+
 }
 
 :local(.inlineContainer) {
@@ -43,7 +47,9 @@
 :local(.wrapper) {
 	margin-top: 0px;
 	padding: 20px 60px;
+	padding-bottom: 0;
 	width: 100%;
+	height: 100%;
 }
 
 .headerWrapper {
