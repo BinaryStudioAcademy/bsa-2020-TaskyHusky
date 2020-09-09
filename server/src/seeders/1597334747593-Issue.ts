@@ -80,7 +80,7 @@ export class Issue1597334747593 implements MigrationInterface {
 		issue1.assigned = user1;
 		issue1.labels = [labels1[0]];
 		issue1.attachments = '{attachments}';
-		issue1.links = '{link/toSpace}';
+		issue1.links = ['link/toSpace'];
 		issue1.issueKey = 'IK-1';
 		issue1.type = issueType;
 		issue1.priority = priority4;
@@ -98,7 +98,7 @@ export class Issue1597334747593 implements MigrationInterface {
 		issue2.assigned = user2;
 		issue2.labels = [labels1[0]];
 		issue2.attachments = '{attachments2}';
-		issue2.links = '{link/toSpace}';
+		issue2.links = ['link/toSpace'];
 		issue2.issueKey = 'IK-2';
 		issue2.type = issueType2;
 		issue2.priority = priority;
@@ -116,7 +116,7 @@ export class Issue1597334747593 implements MigrationInterface {
 		issue3.creator = user2;
 		issue3.assigned = user2;
 		issue3.attachments = '{attachments2}';
-		issue3.links = '{link/toSpace}';
+		issue3.links = ['link/toSpace'];
 		issue3.issueKey = 'IK-3';
 		issue3.type = issueType;
 		issue3.priority = priority2;
@@ -136,7 +136,7 @@ export class Issue1597334747593 implements MigrationInterface {
 		issue4.assigned = user1;
 		issue4.labels = [labels1[1]];
 		issue4.attachments = '{attachments4}';
-		issue4.links = '{link/toSpace}';
+		issue4.links = ['link/toSpace'];
 		issue4.issueKey = 'IK-4';
 		issue4.type = issueType3;
 		issue4.priority = priority3;
@@ -156,7 +156,7 @@ export class Issue1597334747593 implements MigrationInterface {
 		issue5.assigned = user1;
 		issue5.labels = [labels1[0]];
 		issue5.attachments = '{attachments4}';
-		issue5.links = '{link/toSpace}';
+		issue5.links = ['link/toSpace'];
 		issue5.issueKey = 'IK-5';
 		issue5.type = issueType;
 		issue5.priority = priority4;
@@ -175,7 +175,7 @@ export class Issue1597334747593 implements MigrationInterface {
 		issue6.creator = user2;
 		issue6.assigned = user1;
 		issue6.attachments = '{attachments4}';
-		issue6.links = '{link/toSpace}';
+		issue6.links = ['link/toSpace'];
 		issue6.issueKey = 'IK-6';
 		issue6.type = issueType;
 		issue6.priority = priority;
@@ -193,7 +193,7 @@ export class Issue1597334747593 implements MigrationInterface {
 		issue7.creator = user2;
 		issue7.assigned = user2;
 		issue7.attachments = '{attachments4}';
-		issue7.links = '{link/toSpace}';
+		issue7.links = ['link/toSpace'];
 		issue7.issueKey = 'IK-7';
 		issue7.type = issueType2;
 		issue7.priority = priority2;
@@ -213,7 +213,7 @@ export class Issue1597334747593 implements MigrationInterface {
 		issue8.assigned = user2;
 		issue8.labels = [labels1[0]];
 		issue8.attachments = '{attachments4}';
-		issue8.links = '{link/toSpace}';
+		issue8.links = ['link/toSpace'];
 		issue8.issueKey = 'IK-8';
 		issue8.type = issueType3;
 		issue8.priority = priority3;
@@ -232,7 +232,7 @@ export class Issue1597334747593 implements MigrationInterface {
 		issue9.creator = user1;
 		issue9.assigned = user1;
 		issue9.attachments = '{attachments4}';
-		issue9.links = '{link/toSpace}';
+		issue9.links = ['link/toSpace'];
 		issue9.issueKey = 'IK-9';
 		issue9.type = issueType;
 		issue9.priority = priority4;
@@ -253,7 +253,7 @@ export class Issue1597334747593 implements MigrationInterface {
 		issue10.creator = user2;
 		issue10.assigned = user2;
 		issue10.attachments = '{attachments4}';
-		issue10.links = '{link/toSpace}';
+		issue10.links = ['link/toSpace'];
 		issue10.issueKey = 'IK-10';
 		issue10.type = issueType2;
 		issue10.priority = priority2;
@@ -275,7 +275,7 @@ export class Issue1597334747593 implements MigrationInterface {
 		issue11.assigned = user2;
 		issue11.labels = [labels1[0]];
 		issue11.attachments = '{attachments4}';
-		issue11.links = '{link/toSpace}';
+		issue11.links = ['link/toSpace'];
 		issue11.issueKey = 'IK-11';
 		issue11.type = issueType2;
 		issue11.priority = priority2;
@@ -297,7 +297,7 @@ export class Issue1597334747593 implements MigrationInterface {
 		issue12.assigned = user2;
 		issue12.labels = [labels1[0]];
 		issue12.attachments = '{attachments4}';
-		issue12.links = '{link/toSpace}';
+		issue12.links = ['link/toSpace'];
 		issue12.issueKey = 'IK-12';
 		issue12.type = issueType2;
 		issue12.priority = priority;
@@ -319,7 +319,7 @@ export class Issue1597334747593 implements MigrationInterface {
 		issue13.assigned = user2;
 		issue13.labels = [labels1[0]];
 		issue13.attachments = '{attachments4}';
-		issue13.links = '{link/toSpace}';
+		issue13.links = ['link/toSpace'];
 		issue13.issueKey = 'IK-13';
 		issue13.type = issueType;
 		issue13.priority = priority;

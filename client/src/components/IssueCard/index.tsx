@@ -5,7 +5,6 @@ import styles from './styles.module.scss';
 import { Redirect } from 'react-router-dom';
 import { getUsername } from 'helpers/getUsername.helper';
 import UserAvatar from 'components/common/UserAvatar';
-import { SemanticCOLORS } from 'semantic-ui-react/dist/commonjs/generic';
 
 interface BaseEvent {
 	id: string;
@@ -92,14 +91,15 @@ const IssueCard: React.FC<Props> = ({ issue, index, noDrag, noRedirect, selectab
 			>
 				{issue.status ? (
 					<Label
-						color={issue.status.color as SemanticCOLORS}
-						content={issue.status.title}
 						style={{
 							paddingTop: 3,
 							paddingBottom: 3,
 							marginTop: 10,
 							marginBottom: 3,
+							backgroundColor: issue.status.color,
+							color: 'white',
 						}}
+						content={issue.status.title}
 					/>
 				) : (
 					''
