@@ -22,8 +22,10 @@ type Props = {
 export const SprintHeader: React.FC<Props> = ({ id, isActive, name, issues, isCompleted, startDate, endDate }) => {
 	const {
 		project: { id: projectId },
-		board: { id: boardId },
+		board: { id: boardId, columns },
 	} = useSelector((rootState: RootState) => rootState.scrumBoard);
+	console.log(columns);
+
 	const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
 	const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false);
 	const { t } = useTranslation();

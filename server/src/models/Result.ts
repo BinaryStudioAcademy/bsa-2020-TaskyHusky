@@ -71,6 +71,7 @@ interface BoardResult {
 		id: string;
 		avatar: string | null;
 	};
+	columns: BoardColumnResult[];
 }
 
 interface BoardColumnResult {

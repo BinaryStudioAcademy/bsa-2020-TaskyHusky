@@ -5,7 +5,7 @@ import BoardModalMenuType from '../BoardModalMenuType';
 import BoardModalFinal from '../BoardModalFinal';
 import { createBoard } from '../../containers/Boards/logic/actionTypes';
 import { useTranslation } from 'react-i18next';
-import { DEFAULT_SCRUM_COLUMNS } from './config';
+import { DEFAULT_SCRUM_COLUMNS } from '../../constants/defaultScrumBoardColumns';
 
 interface Props {
 	setIsModalShown(params: boolean): void;

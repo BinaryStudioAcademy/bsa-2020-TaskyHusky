@@ -177,8 +177,7 @@ const Scrum: BoardComponent = (props) => {
 				);
 			break;
 		case `/board/${board.id}/${SETTINGS_SECTION.activeSprint}`:
-			// renderComponent = <span children="board active sprint" />;
-			renderComponent = <ActiveSprint board={board} />;
+			renderComponent = activeSprint ? <ActiveSprint board={board} sprint={activeSprint} /> : <Spinner />;
 			break;
 		case `/board/${board.id}/${SETTINGS_SECTION.reports}`:
 			renderComponent = activeSprint ? <Report sprintId={activeSprint.id} /> : <Spinner />;

@@ -8,6 +8,7 @@ import { Issue } from '../entity/Issue';
 import { SprintRepository } from '../repositories/sprint.repository';
 import { BoardRepository } from '../repositories/board.repository';
 import { ProjectLabel } from '../entity/ProjectLabel';
+import { BoardColumnRepository } from '../repositories/boardColumn.repository';
 
 export class Issue1597334747593 implements MigrationInterface {
 	public async up(queryRunner: QueryRunner): Promise<void> {
@@ -65,6 +66,11 @@ export class Issue1597334747593 implements MigrationInterface {
 		const boardRepository = getCustomRepository(BoardRepository);
 		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 		const scrumBoard = await boardRepository.findOne('cd947d22-8efd-4b2f-8b6a-446dc542c8df');
+
+		const boardColumnRepository = getCustomRepository(BoardColumnRepository);
+
+		const scrumBoardolumns = await boardColumnRepository.getBoardColumns(scrumBoard?.id as string);
+		const todoColumn = scrumBoardolumns.find(({ status }) => status === 'todo');
 
 		const labels1 = (await getRepository('ProjectLabel').find({ project: { id: project.id } })) as ProjectLabel[];
 
@@ -138,6 +144,7 @@ export class Issue1597334747593 implements MigrationInterface {
 		issue4.priority = priority3;
 		issue4.status = issueStatus3;
 		issue4.sprint = sprint1;
+		issue4.boardColumn = todoColumn;
 
 		const issue5 = new Issue();
 		issue5.id = '2de14a5e-5407-40e3-b6dd-f412f4409b1f';
@@ -192,6 +199,7 @@ export class Issue1597334747593 implements MigrationInterface {
 		issue7.priority = priority2;
 		issue7.status = issueStatus3;
 		issue7.sprint = sprint1;
+		issue7.boardColumn = todoColumn;
 
 		const issue8 = new Issue();
 		issue8.id = '53eb4b1b-8706-4edb-9d6a-beb5c15a66f2';
@@ -251,6 +259,7 @@ export class Issue1597334747593 implements MigrationInterface {
 		issue10.sprint = sprint1;
 		issue10.completedAt = new Date('2020-02-02');
 		issue10.storyPoint = 10;
+		issue10.boardColumn = todoColumn;
 
 		const issue11 = new Issue();
 		issue11.id = '44b274eb-301b-4192-a6b6-9f55a67b6cf3';
@@ -272,6 +281,7 @@ export class Issue1597334747593 implements MigrationInterface {
 		issue11.sprint = sprint1;
 		issue11.completedAt = new Date('2020-02-03');
 		issue11.storyPoint = 5;
+		issue11.boardColumn = todoColumn;
 
 		const issue12 = new Issue();
 		issue12.id = '44b274eb-301b-4192-a6b6-9f55a67b6cf2';
@@ -293,6 +303,7 @@ export class Issue1597334747593 implements MigrationInterface {
 		issue12.sprint = sprint1;
 		issue12.completedAt = new Date('2020-02-04');
 		issue12.storyPoint = 5;
+		issue12.boardColumn = todoColumn;
 
 		const issue13 = new Issue();
 		issue13.id = '44b274eb-301b-4192-a6b6-9f55a67b6cf1';
@@ -313,7 +324,8 @@ export class Issue1597334747593 implements MigrationInterface {
 		issue13.status = issueStatus2;
 		issue13.sprint = sprint1;
 		issue13.completedAt = new Date('2020-02-04');
-		issue10.storyPoint = 10;
+		issue13.storyPoint = 10;
+		issue13.boardColumn = todoColumn;
 
 		await getRepository('Issue').save([
 			issue1,
