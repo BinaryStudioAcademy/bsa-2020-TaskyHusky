@@ -108,13 +108,13 @@ const BoardColumn: React.FC<Props> = ({ column, className, search, boardId, getO
 								width: '100%',
 								justifyContent: 'space-between',
 								alignItems: 'center',
+								flexGrow: 0,
 							}}
 						>
 							<Header as="h3" className={styles.columnHeader}>
 								{column.columnName}
 							</Header>
 						</div>
-						<div style={{ clear: 'both' }} />
 						<div className={styles.column__content_container}>
 							<div
 								ref={provided.innerRef}
@@ -129,6 +129,8 @@ const BoardColumn: React.FC<Props> = ({ column, className, search, boardId, getO
 									: ''}
 								{provided.placeholder}
 							</div>
+						</div>
+						<div className={styles.issue__actions}>
 							<CreateIssueModal boardColumnID={column.id} boardID={boardId}>
 								<button className={styles.createBtn}>
 									<Icon name="plus circle" />
