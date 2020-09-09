@@ -73,7 +73,7 @@ const BoardColumn: React.FC<Props> = ({ column, className, search, boardId, getO
 			if (destinationId !== sourceId) {
 				if (destinationId === column.id) {
 					getByKey(cardKey).then((issue) => setIssues([...issues, issue]));
-				} else {
+				} else if (sourceId === column.id) {
 					const index = issues.findIndex((issue) => issue.issueKey === cardKey);
 					const issuesCopy = [...issues];
 					issuesCopy.splice(index, 1);
@@ -99,7 +99,7 @@ const BoardColumn: React.FC<Props> = ({ column, className, search, boardId, getO
 			<Droppable droppableId={`board-column__${column.id}`}>
 				{(provided, snapshot) => (
 					<Segment
-						style={{ backgroundColor: snapshot.isDraggingOver ? '#CCC' : '#EEE' }}
+						style={{ backgroundColor: snapshot.isDraggingOver ? '#CCC' : '#EEE', height: 'auto' }}
 						className={`fill ${styles.wrapper}`}
 					>
 						<div
@@ -108,14 +108,14 @@ const BoardColumn: React.FC<Props> = ({ column, className, search, boardId, getO
 								width: '100%',
 								justifyContent: 'space-between',
 								alignItems: 'center',
+								flexGrow: 0,
 							}}
 						>
 							<Header as="h3" className={styles.columnHeader}>
 								{column.columnName}
 							</Header>
 						</div>
-						<div style={{ clear: 'both' }} />
-						<div style={{ marginTop: 10 }}>
+						<div className={styles.column__content_container}>
 							<div
 								ref={provided.innerRef}
 								{...provided.droppableProps}
@@ -129,6 +129,8 @@ const BoardColumn: React.FC<Props> = ({ column, className, search, boardId, getO
 									: ''}
 								{provided.placeholder}
 							</div>
+						</div>
+						<div className={styles.issue__actions}>
 							<CreateIssueModal boardColumnID={column.id} boardID={boardId}>
 								<button className={styles.createBtn}>
 									<Icon name="plus circle" />

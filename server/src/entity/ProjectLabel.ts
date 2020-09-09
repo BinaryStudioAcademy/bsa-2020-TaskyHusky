@@ -34,7 +34,7 @@ export class ProjectLabel {
 	@IsHexColor()
 	backgroundColor!: string;
 
-	@ManyToOne((type) => Projects, (project) => project.labels)
+	@ManyToOne((type) => Projects, (project) => project.labels, { onDelete: 'CASCADE' })
 	project!: Projects;
 
 	@ManyToMany((type) => Issue, (issue) => issue.labels)

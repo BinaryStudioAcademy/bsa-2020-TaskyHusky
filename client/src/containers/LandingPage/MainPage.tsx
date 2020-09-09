@@ -36,7 +36,7 @@ const MainPage = ({ isLoginForm, setLoginForm }: Props) => {
 					<List horizontal link className={styles.list}>
 						{isLoginForm && (
 							<List.Item className={styles.listItem} onClick={() => setForgetPass(true)}>
-								<span className={styles.title}>{t('cant_login')}</span>
+								<span>{t('cant_login')}</span>
 							</List.Item>
 						)}
 						<List.Item>

@@ -109,11 +109,7 @@ const UpdateIssueModal: React.FC<Props> = ({
 	const statusesOpts: SelectOption[] = statuses.map(({ id, title, color }) => ({
 		key: id,
 		value: id,
-		text: (
-			<>
-				<span style={{ color: color, fontWeight: 'bold' }}>{title ?? 'untitled'}</span>
-			</>
-		),
+		text: <span style={{ color, fontWeight: 'bold' }}>{title}</span>,
 	}));
 
 	const columnsOpts: SelectOption[] = columns.map(({ columnName, id }) => ({
@@ -189,7 +185,6 @@ const UpdateIssueModal: React.FC<Props> = ({
 					<Form.Field>
 						<label className="required standartLabel">{t('Status')}</label>
 						<Form.Dropdown
-							clearable
 							className="formSelect"
 							selection
 							style={{ maxWidth: 200 }}
@@ -203,7 +198,6 @@ const UpdateIssueModal: React.FC<Props> = ({
 						<label className="required">{t('type')}</label>
 						<Form.Dropdown
 							className="formSelect"
-							clearable
 							selection
 							style={{ maxWidth: 200 }}
 							options={typeOpts}
@@ -216,7 +210,6 @@ const UpdateIssueModal: React.FC<Props> = ({
 						<label className="required standartLabel">{t('priority')}</label>
 						<Form.Dropdown
 							className="formSelect"
-							clearable
 							selection
 							style={{ maxWidth: 200 }}
 							options={priorityOpts}
@@ -240,7 +233,6 @@ const UpdateIssueModal: React.FC<Props> = ({
 						<Form.Dropdown
 							clearable
 							selection
-							className="formSelect"
 							multiple
 							search
 							noResultsMessage={t('no_more_labels')}

@@ -118,7 +118,7 @@ const IssuePageInfoColumn: React.FC<Props> = ({ issue: givenIssue, initialIssue,
 					/>
 				</div>
 				{issue.status && !asCardInfo ? (
-					<Label style={{ marginTop: 10 }} color={issue.status.color as SemanticCOLORS}>
+					<Label style={{ marginTop: 10, backgroundColor: issue.status.color, color: 'white' }}>
 						{issue.status.title}
 					</Label>
 				) : (

@@ -1,4 +1,4 @@
-@import "styles/variables.scss";
+@import 'styles/variables.scss';
 
 .pageWrapper {
 	margin: 0 !important;
@@ -17,7 +17,7 @@
 	}
 	.formWrapper {
 		.title {
-			color: $yellow !important;
+			color: #fff !important;
 			margin-bottom: 20px;
 		}
 		.toggleDescription {
@@ -37,6 +37,7 @@
 			.logoText {
 				font-weight: bold;
 				font-size: 34px;
+				color: #fff;
 			}
 		}
 
