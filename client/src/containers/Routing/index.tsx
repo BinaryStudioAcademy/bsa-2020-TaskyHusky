@@ -25,6 +25,7 @@ import ResetEmail from '../ResetEmail';
 import Landing from 'pages/LandingPage';
 import Spinner from 'components/common/Spinner';
 import ColumnsSettings from 'pages/ColumnsSettings';
+import AppInformation from 'pages/AppInformation';
 
 const Routing: React.FC = () => {
 	const dispatch = useDispatch();
@@ -43,7 +44,8 @@ const Routing: React.FC = () => {
 
 	return (
 		<Switch>
-			<PublicRoute restricted exact path={['/', '/login', '/signup']} component={Landing} />
+			<PublicRoute restricted exact path={'/'} component={AppInformation} />
+			<PublicRoute restricted exact path={['/login', '/signup']} component={Landing} />
 			<PublicRoute exact path="/reset-password/:token" component={ResetPassword} />
 			<PrivateRoute path="/reset-email/:token/:emailBtoa" component={ResetEmail} />
 			<PrivateRoute path="/issue/:key" component={IssuePage} />
