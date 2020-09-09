@@ -99,11 +99,13 @@ const IssuePageContent: React.FC<Props> = ({ issue: givenIssue }) => {
 						title={`${t('type')}: ${issue.type.title}`}
 						color={issue.type.color as SemanticCOLORS}
 					/>
-					<span style={{ fontWeight: 400 }}>{issue.issueKey}</span>
+					<span style={{ fontWeight: 400 }} className="standartLabel">
+						{issue.issueKey}
+					</span>
 				</h4>
-				<h1>{issue.summary}</h1>
-				<h4>{t('description')}</h4>
-				<p>{issue.description || t('no')}</p>
+				<h1 className="standartHeader">{issue.summary}</h1>
+				<h4 className="standartLabel">{t('description')}</h4>
+				<p className="textData">{issue.description || t('no')}</p>
 				<SmallEditForm links={issue.links ?? []} attachments={issue.attachments ?? []} id={issue.id} />
 				<div className="site-header">
 					<Menu className={styles.menu}>
