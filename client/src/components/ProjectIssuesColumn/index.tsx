@@ -65,10 +65,17 @@ const ProjectIssuesColumn: React.FC<Props> = ({
 
 	useEffect(() => {
 		if (mustFetchIssues) {
-			getProjectIssues(projectId).then(setIssues);
+			getProjectIssues(projectId).then((issues) => {
+				setIssues(issues);
+
+				if (issues.length) {
+					onChangeSelectedCard(issues[0].issueKey as string);
+				}
+			});
+
 			setMustFetchIssues(false);
 		}
-	}, [projectId, mustFetchIssues]);
+	}, [projectId, mustFetchIssues, onChangeSelectedCard]);
 
 	if (mustFetchIssues) {
 		return <Spinner />;
@@ -106,6 +113,7 @@ const ProjectIssuesColumn: React.FC<Props> = ({
 									}
 								}}
 								getUnselect={(event) => (issueCardUnselect[event.key] = event.unselect)}
+								defaultSelected={i === 0}
 								selectable
 								noRedirect
 								noDrag

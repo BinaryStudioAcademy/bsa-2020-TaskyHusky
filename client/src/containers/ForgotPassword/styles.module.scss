@@ -1,4 +1,24 @@
-@import "styles/mixins.scss";
+@import '../../styles/mixins.scss';
+
+.textData {
+	@include text-data(white);
+}
+
+.textDataWhite {
+	@include text-data(#bbbbbb);
+}
+
+.labelWhite {
+	@include label(#bbbbbb);
+}
+
+.white {
+	color: white !important;
+}
+
+.grey {
+	color: #bbbbbb !important;
+}
 
 .modalWrapper {
 	background-color: $header-text !important;
@@ -10,7 +30,7 @@
 	text-align: center;
 	color: inherit !important;
 	background-color: inherit !important;
-	@include primary-header;
+	@include primary-header(white);
 }
 
 .column {
@@ -20,6 +40,7 @@
 .list {
 	display: flex !important;
 	justify-content: center;
+	@extend .white;
 }
 
 .listItem {
@@ -34,6 +55,7 @@
 .textBlock {
 	margin: 24px 0 22px;
 	text-align: center;
+	@extend .white;
 
 	p {
 		margin-bottom: 4px;

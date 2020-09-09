@@ -51,7 +51,7 @@ export class Board {
 	updatedAt!: Date;
 
 	@ManyToMany((type) => Projects, (project) => project.boards, {
-		cascade: true,
+		onDelete: 'CASCADE',
 	})
 	projects?: Projects[];
 }

@@ -5,7 +5,6 @@ import styles from './styles.module.scss';
 import { Redirect } from 'react-router-dom';
 import { getUsername } from 'helpers/getUsername.helper';
 import UserAvatar from 'components/common/UserAvatar';
-import { SemanticCOLORS } from 'semantic-ui-react/dist/commonjs/generic';
 
 interface BaseEvent {
 	id: string;
@@ -26,12 +25,22 @@ interface Props {
 	noDrag?: boolean;
 	noRedirect?: boolean;
 	selectable?: boolean;
+	defaultSelected?: boolean;
 	onSelectChange?: (event: OnSelectEvent) => void;
 	getUnselect?: (event: GetUnselectEvent) => void;
 }
 
-const IssueCard: React.FC<Props> = ({ issue, index, noDrag, noRedirect, selectable, onSelectChange, getUnselect }) => {
-	const [selected, setSelected] = useState<boolean>(false);
+const IssueCard: React.FC<Props> = ({
+	issue,
+	index,
+	noDrag,
+	noRedirect,
+	selectable,
+	onSelectChange,
+	getUnselect,
+	defaultSelected,
+}) => {
+	const [selected, setSelected] = useState<boolean>(defaultSelected ?? false);
 	const [redirecting, setRedirecting] = useState<boolean>(false);
 
 	if (getUnselect) {
@@ -92,14 +101,15 @@ const IssueCard: React.FC<Props> = ({ issue, index, noDrag, noRedirect, selectab
 			>
 				{issue.status ? (
 					<Label
-						color={issue.status.color as SemanticCOLORS}
-						content={issue.status.title}
 						style={{
 							paddingTop: 3,
 							paddingBottom: 3,
 							marginTop: 10,
 							marginBottom: 3,
+							backgroundColor: issue.status.color,
+							color: 'white',
 						}}
+						content={issue.status.title}
 					/>
 				) : (
 					''
