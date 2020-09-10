@@ -22,6 +22,7 @@ type Props = {
 	sprintIssues: WebApi.Entities.Issue[];
 	startDate: Date | undefined;
 	endDate: Date | undefined;
+	todoColumnId?: string;
 };
 
 const EditSprintModal = (props: Props) => {
@@ -32,6 +33,7 @@ const EditSprintModal = (props: Props) => {
 		sprintIsActive,
 		sprintIsCompleted,
 		sprintId,
+		todoColumnId,
 		startDate: sprintStartDate,
 		endDate: sprintEndDate,
 	} = props;
@@ -84,6 +86,21 @@ const EditSprintModal = (props: Props) => {
 			startDate,
 			endDate,
 		};
+
+		if (sprint.isActive) {
+			props.sprintIssues.forEach((issue) => {
+				if (!issue.boardColumn || issue.boardColumn.status === 'backlog') {
+					dispatch(
+						updateIssue({
+							id: issue.id,
+							data: {
+								boardColumn: todoColumnId,
+							},
+						}),
+					);
+				}
+			});
+		}
 
 		if (sprint.isCompleted) {
 			props.sprintIssues.forEach((issue) => {
