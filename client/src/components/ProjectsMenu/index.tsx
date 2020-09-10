@@ -1,15 +1,25 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Dropdown, Image } from 'semantic-ui-react';
 import styles from 'styles/headerDropDown.module.scss';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import CreateProjectModal from 'containers/CreateProjectModal';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'typings/rootState';
+import { startLoadingRecent } from 'containers/Projects/logic/actions';
 
 export const ProjectsMenu = () => {
 	const { t } = useTranslation();
-	const recent = useSelector((state: RootState) => state.projects.recent);
+	const dispatch = useDispatch();
+
+	const { recent, projects } = useSelector((rootState: RootState) => ({
+		recent: rootState.projects.recent,
+		projects: rootState.projects.projects,
+	}));
+
+	useEffect(() => {
+		dispatch(startLoadingRecent());
+	}, [dispatch, projects]);
 
 	return (
 		<Dropdown text={t('projects')} className={`${styles.media_query} link item`}>
