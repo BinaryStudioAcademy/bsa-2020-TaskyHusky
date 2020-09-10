@@ -11,12 +11,17 @@ export type CompletedIssues = {
 };
 
 export const getSortedCompletedIssues = (issues: WebApi.Result.IssueResult[]) => {
-	return _.orderBy(issues, 'completedAt').filter(({ completedAt }) => completedAt) as CompletedIssues[];
+	return _.orderBy(issues, 'completedAt')
+		.filter(({ completedAt }) => completedAt)
+		.map((issue) => ({ ...issue, completedAt: getStartOfDayDate(issue.completedAt as Date) })) as CompletedIssues[];
 };
 
 export const getEndDate = (issues: CompletedIssues[], sprintEnd: Date) => {
 	if (issues.length !== 0) {
 		const lastCompletedIssue = issues[issues.length - 1];
+		console.log(issues);
+		console.log(lastCompletedIssue);
+
 		const end =
 			lastCompletedIssue.completedAt > new Date(sprintEnd)
 				? lastCompletedIssue.completedAt
