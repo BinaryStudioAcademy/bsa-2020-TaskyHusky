@@ -155,9 +155,9 @@ class UserController {
 
 	getAllUser = async (req: Request, res: Response): Promise<void> => {
 		const userRepository = getCustomRepository(UserRepository);
-
+		const { id } = req.user;
 		try {
-			const users = await userRepository.findAll();
+			const users = await userRepository.findAll(id);
 			res.send(users);
 		} catch (error) {
 			res.status(404).send(error.message);

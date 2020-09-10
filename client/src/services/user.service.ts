@@ -108,7 +108,7 @@ export const requestDeleteUser = async (): Promise<void> => {
 export const requestAllUsers = async (): Promise<WebApi.Entities.UserProfile[]> => {
 	const res = await callWebApi({
 		method: 'GET',
-		endpoint: `user`,
+		endpoint: `user/`,
 		skipAuthorization: false,
 	});
 

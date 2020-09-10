@@ -9,10 +9,6 @@ import { getRandomColor } from '../services/colorGenerator.service';
 
 @EntityRepository(UserProfile)
 export class UserRepository extends Repository<UserProfile> {
-	getAll() {
-		return this.findAll();
-	}
-
 	async getById(id: string) {
 		const user = await this.findOne({ where: { id } });
 		if (!user) {
@@ -149,8 +145,17 @@ export class UserRepository extends Repository<UserProfile> {
 		return this.delete(id);
 	}
 
-	findAll(): Promise<UserProfile[]> {
-		return this.find();
+	async findAll(id: string): Promise<UserProfile[]> {
+		const user = await this.createQueryBuilder('UserProfile')
+			.where('UserProfile.id = :id', { id })
+			.leftJoinAndSelect('UserProfile.teammates', 'users')
+			.getOne();
+
+		if (!user) {
+			throw new Error('User does not exist');
+		}
+
+		return user.teammates || [];
 	}
 
 	async getUserTeammates(userId: string) {
