@@ -18,6 +18,7 @@ import { SemanticICONS, SemanticCOLORS } from 'semantic-ui-react/dist/commonjs/g
 
 interface Props {
 	issue: WebApi.Result.IssueResult;
+	collapsed?: boolean;
 }
 
 enum MenuStates {
@@ -26,7 +27,7 @@ enum MenuStates {
 	none = 'none',
 }
 
-const IssuePageContent: React.FC<Props> = ({ issue: givenIssue }) => {
+const IssuePageContent: React.FC<Props> = ({ issue: givenIssue, collapsed }) => {
 	const [menuState, setMenuState] = useState<MenuStates>(MenuStates.commentsShown);
 	const [issue, setIssue] = useState<WebApi.Result.IssueResult>(givenIssue);
 	const [comments, setComments] = useState<WebApi.Result.IssueCommentResult[]>([]);
@@ -90,9 +91,12 @@ const IssuePageContent: React.FC<Props> = ({ issue: givenIssue }) => {
 		return <Spinner />;
 	}
 
+	const shrink = collapsed ? { style: { maxWidth: 500, minWidth: 325 } } : {};
+	const padding = collapsed ? { style: { padding: 0 } } : {};
+
 	return (
-		<div className={styles.container}>
-			<div className={styles.innerContainer}>
+		<div className={styles.container} {...padding}>
+			<div className={styles.innerContainer} {...shrink}>
 				<h4>
 					<Icon
 						name={issue.type.icon as SemanticICONS}
