@@ -47,6 +47,7 @@ const IssueCommentTextInput: React.FC<Props> = ({ text, setText, popupOpen, setP
 					selection
 					options={userOptions}
 					open
+					className="formSelect"
 					search={(options, query) =>
 						options.filter((opt) => (opt.text as string).toLowerCase().includes(query.toLowerCase()))
 					}

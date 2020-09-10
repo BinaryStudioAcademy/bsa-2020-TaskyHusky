@@ -51,7 +51,8 @@ label {
 	}
 }
 
-.ui.selection.active.dropdown {
+.ui.selection.active.dropdown,
+.ui.selection.active.dropdown .menu {
 	border: 1px solid $yellow !important;
 }
 
