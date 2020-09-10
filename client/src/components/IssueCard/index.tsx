@@ -80,7 +80,7 @@ const IssueCard: React.FC<Props> = ({
 					<p className="secondaryData" style={{ marginBottom: 0 }}>
 						{issue.issueKey}
 					</p>
-					<Link to={`issue/${issue.issueKey}`}>
+					<Link to={`/issue/${issue.issueKey}`}>
 						<p className="standartLabel" style={{ wordBreak: 'break-word' }}>
 							{issue.summary}
 						</p>
