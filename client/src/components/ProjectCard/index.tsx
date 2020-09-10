@@ -33,7 +33,7 @@ const ProjectCard: React.FC<Props> = (props: Props) => {
 			className={styles.card}
 			style={additionalBlock ? { height: 0, overflow: 'hidden', margin: 0, marginRight: '25px' } : {}}
 		>
-			<Link to={`project/${id}/issues`} className={styles.linkContainer}>
+			<Link to={`project/${id}`} className={styles.linkContainer}>
 				<div className={styles.header}>
 					<div className={styles.avatar} style={{ backgroundColor: color ?? defaultAvatarBg }}>
 						{icon ? (
