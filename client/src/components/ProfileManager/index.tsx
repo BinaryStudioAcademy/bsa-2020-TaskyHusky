@@ -108,7 +108,7 @@ const ProfileManager: React.FC<Props> = (props: Props) => {
 
 	const onSubmit = () => {
 		if (Object.values(userValidation).every((item) => item)) {
-			const { isLoading, email, ...rest } = user;
+			const { isLoading, email, avatar, ...rest } = user;
 			updateUser(user);
 			dispatch(requestUpdateUser({ ...rest } as Partial<UserProfileState>));
 			setIsSubmit(false);

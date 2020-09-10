@@ -16,9 +16,9 @@ export class IssueComment {
 	@Column({ nullable: true })
 	editedAt?: Date;
 
-	@ManyToOne((type) => Issue)
+	@ManyToOne((type) => Issue, { onDelete: 'CASCADE' })
 	issue!: Issue;
 
-	@ManyToOne((type) => UserProfile)
+	@ManyToOne((type) => UserProfile, { onDelete: 'CASCADE' })
 	creator!: UserProfile;
 }
