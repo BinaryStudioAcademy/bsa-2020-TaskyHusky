@@ -20,7 +20,7 @@ export class TeamRepository extends Repository<Team> {
 			])
 			.innerJoin('teamRepository.users', 'userProfile')
 			.addSelect('userProfile.id')
-			.where('userProfile.id = :id', { id })
+			.where('user.id = :id', { id })
 			.getMany();
 	}
 
