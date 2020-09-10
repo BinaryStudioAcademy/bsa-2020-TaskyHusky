@@ -24,6 +24,7 @@ import matchIssuesToSprint from 'helpers/matchIssuesToSprint.helper';
 import ProjectIssuesPage from 'containers/ProjectIssuesPage';
 import Report from 'containers/Report';
 import ActiveSprint from './ActiveSprint/ActiveSprint';
+import ColumnsSettingsPage from 'containers/ColumnsSettingsPage';
 
 const Scrum: BoardComponent = (props) => {
 	const { pathname } = useLocation();
@@ -168,8 +169,8 @@ const Scrum: BoardComponent = (props) => {
 	let renderComponent;
 
 	switch (pathname) {
-		case `/board/${board.id}/${SETTINGS_SECTION.details}`:
-			renderComponent = <span className={styles.innerContainer} children="board settings" />;
+		case `/board/${board.id}/${SETTINGS_SECTION.settings}`:
+			renderComponent = <ColumnsSettingsPage boardId={board.id} />;
 			break;
 		case `/board/${board.id}/${SETTINGS_SECTION.backlog}`:
 			renderComponent = renderScrumBoard;
@@ -193,6 +194,8 @@ const Scrum: BoardComponent = (props) => {
 	}
 
 	const isActiveSprintRender = pathname === `/board/${board.id}/${SETTINGS_SECTION.activeSprint}`;
+	const isSettingsRender = pathname === `/board/${board.id}/${SETTINGS_SECTION.settings}`;
+	const isIssuesRender = pathname === `/board/${board.id}/${SETTINGS_SECTION.issues}`;
 
 	return (
 		<>
@@ -200,7 +203,7 @@ const Scrum: BoardComponent = (props) => {
 				<ScrumBoardSidebar board={board} project={project} />
 				<div
 					className={
-						isActiveSprintRender
+						isActiveSprintRender || isSettingsRender || isIssuesRender
 							? [styles.innerContainer, styles.nonePading].join(' ')
 							: styles.innerContainer
 					}

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import NotFound from 'pages/404';
 import { getBoardById } from 'services/board.service';
 import { useParams } from 'react-router-dom';
 import styles from './styles.module.scss';
@@ -46,10 +45,6 @@ const ColumnsSettingsPage: React.FC<Props> = ({ boardId: givenBoardId }) => {
 
 	if (!board) {
 		return null;
-	}
-
-	if (board.boardType !== 'Kanban') {
-		return <NotFound />;
 	}
 
 	const onDragEnd: OnDragEndResponder = (result, provided) => {

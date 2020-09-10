@@ -1,5 +1,5 @@
 export enum SETTINGS_SECTION {
-	details = 'details',
+	settings = 'settings',
 	backlog = 'backlog',
 	activeSprint = 'active_sprint',
 	reports = 'reports',
@@ -8,7 +8,7 @@ export enum SETTINGS_SECTION {
 
 export const sidebarItems = [
 	{
-		section: SETTINGS_SECTION.details,
+		section: SETTINGS_SECTION.settings,
 		icon: 'setting',
 	},
 	{
