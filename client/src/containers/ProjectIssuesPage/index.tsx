@@ -5,11 +5,12 @@ import { useTranslation } from 'react-i18next';
 import ProjectIssuesColumn from 'components/ProjectIssuesColumn';
 import { getByKey } from 'services/issue.service';
 import Board from 'containers/Board';
-import IssuePageInfoColumn from 'components/IssuePageInfoColumn';
-import { convertIssueResultToPartialIssue } from 'helpers/issueResultToPartialIssue';
+//import IssuePageInfoColumn from 'components/IssuePageInfoColumn';
+//import { convertIssueResultToPartialIssue } from 'helpers/issueResultToPartialIssue';
 import KanbanBoardSidebar from 'containers/KanbanBoardSidebar';
 import { SectionType } from 'containers/KanbanBoardSidebar/config/sections';
 import ColumnsSettingsPage from 'containers/ColumnsSettingsPage';
+import IssuePageContent from 'containers/IssuePageContent';
 
 interface Props {
 	projectId: string;
@@ -23,7 +24,7 @@ const ProjectIssuesPage: React.FC<Props> = ({ projectId, strict, noSidebar }) =>
 	const [selectedIssueKey, setSelectedIssueKey] = useState<string | null>(null);
 	const [selectedIssue, setSelectedIssue] = useState<WebApi.Result.IssueResult | null>(null);
 	const [search, setSearch] = useState<string>('');
-	const leftPadded = { marginLeft: 60 };
+	const leftPadded = { marginLeft: 20 };
 	const { t } = useTranslation();
 
 	useEffect(() => {
@@ -46,7 +47,7 @@ const ProjectIssuesPage: React.FC<Props> = ({ projectId, strict, noSidebar }) =>
 		return <Board boardId={project.boards[0].id} />;
 	}
 
-	const initialIssue = selectedIssue ? convertIssueResultToPartialIssue(selectedIssue) : {};
+	//const initialIssue = selectedIssue ? convertIssueResultToPartialIssue(selectedIssue) : {};
 
 	let render;
 
@@ -68,7 +69,7 @@ const ProjectIssuesPage: React.FC<Props> = ({ projectId, strict, noSidebar }) =>
 							icon="search"
 							value={search}
 							onChange={(event, data) => setSearch(data.value)}
-							style={{ ...leftPadded, marginRight: 60, width: 300 }}
+							style={{ ...leftPadded, marginRight: 20, width: 340 }}
 						/>
 					</Form.Group>
 				</Form>
@@ -87,8 +88,8 @@ const ProjectIssuesPage: React.FC<Props> = ({ projectId, strict, noSidebar }) =>
 			</div>
 			<div className="fill">
 				{selectedIssue ? (
-					<div style={{ marginLeft: 30 }}>
-						<IssuePageInfoColumn asCardInfo issue={selectedIssue} initialIssue={initialIssue} />
+					<div style={{ marginLeft: 5 }}>
+						<IssuePageContent collapsed issue={selectedIssue} />
 					</div>
 				) : (
 					''
