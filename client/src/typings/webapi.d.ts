@@ -235,6 +235,7 @@ namespace WebApi.User {
 		backEndDev = 'Back-end developer',
 		frontEndDev = 'Front-end developer',
 		fullStackDev = 'Full-Stack developer',
+		qa = 'Quality Assurance engineer',
 	}
 	interface UserModel {
 		googleId?: string;

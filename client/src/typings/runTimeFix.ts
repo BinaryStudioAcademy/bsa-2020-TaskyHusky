@@ -29,6 +29,7 @@ export const Enums = {
 		backEndDev : 'Back-end developer',
 		frontEndDev : 'Front-end developer',
 		fullStackDev : 'Full-Stack developer',
+		qa : 'Quality Assurance engineer',
 	}
 
 }

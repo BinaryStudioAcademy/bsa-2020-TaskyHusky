@@ -16,6 +16,7 @@ const options = [
 	{ key: 'backEndDev', text: 'Back-end developer', value: 'Back-end developer' },
 	{ key: 'frontEndDev', text: 'Front-end developer', value: 'Front-end developer' },
 	{ key: 'fullStackDev', text: 'Full-Stack developer', value: 'Full-Stack developer' },
+	{ key: 'qa', text: 'Quality Assurance engineer', value: 'Quality Assurance engineer' },
 ];
 
 const JobTitleSelect: React.FC<Props> = (props: Props) => {
