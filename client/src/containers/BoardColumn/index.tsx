@@ -14,10 +14,11 @@ interface Props {
 	column: WebApi.Result.BoardColumnResult;
 	className: string;
 	search: string;
+	sprintID?: string;
 	getOnDragEndFunc: (id: string, responder: OnDragEndResponder) => void;
 }
 
-const BoardColumn: React.FC<Props> = ({ column, className, search, boardId, getOnDragEndFunc }) => {
+const BoardColumn: React.FC<Props> = ({ column, className, search, boardId, sprintID, getOnDragEndFunc }) => {
 	const [issues, setIssues] = useState<WebApi.Result.IssueResult[]>([]);
 	const [issuesFetched, setIssuesFetched] = useState<boolean>(false);
 	const { t } = useTranslation();
@@ -131,7 +132,7 @@ const BoardColumn: React.FC<Props> = ({ column, className, search, boardId, getO
 							</div>
 						</div>
 						<div className={styles.issue__actions}>
-							<CreateIssueModal boardColumnID={column.id} boardID={boardId}>
+							<CreateIssueModal sprintID={sprintID} boardColumnID={column.id} boardID={boardId}>
 								<button className={styles.createBtn}>
 									<Icon name="plus circle" />
 									{t('create_issue')}
