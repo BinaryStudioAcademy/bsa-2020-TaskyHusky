@@ -4,14 +4,13 @@ import { useDispatch } from 'react-redux';
 import { loadTypes, loadPriorities, loadStatuses } from 'pages/IssuePage/logic/actions';
 import { fetchFilterDefs } from '../../commonLogic/filterDefs/actions';
 import { Container } from 'semantic-ui-react';
-import { startLoading as loadProjects, startLoadingRecent } from 'containers/Projects/logic/actions';
+import { startLoading as loadProjects } from 'containers/Projects/logic/actions';
 import styles from './styles.module.scss';
 import { requestAllUsers } from 'commonLogic/users/actions';
 import { useParams } from 'react-router-dom';
 import NotFound from 'pages/404';
 import validator from 'validator';
 import { loadNotifications } from 'components/NotificationsMenu/logic/actions';
-import { fetchRecentFilters, fetchFavFilters } from 'containers/Filters/logic/actions';
 
 interface Props {
 	children: JSX.Element[] | JSX.Element;
@@ -36,9 +35,6 @@ const DefaultPageWrapper: React.FC<Props> = (props) => {
 		dispatch(fetchFilterDefs());
 		dispatch(requestAllUsers());
 		dispatch(loadNotifications());
-		dispatch(startLoadingRecent());
-		dispatch(fetchRecentFilters());
-		dispatch(fetchFavFilters());
 	}, [dispatch]);
 
 	return (

@@ -1,14 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Dropdown } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import styles from 'styles/headerDropDown.module.scss';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'typings/rootState';
+import { fetchRecentFilters, fetchFavFilters } from 'containers/Filters/logic/actions';
 
 export const FiltersMenu = () => {
 	const { t } = useTranslation();
-	const { recent, favorite } = useSelector((state: RootState) => state.filters);
+	const dispatch = useDispatch();
+
+	const { recent, favorite, filters } = useSelector((state: RootState) => state.filters);
+
+	useEffect(() => {
+		dispatch(fetchRecentFilters());
+		dispatch(fetchFavFilters());
+	}, [dispatch, filters]);
 
 	return (
 		<Dropdown text={t('filters')} className={`${styles.media_query} link item`}>

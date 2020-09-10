@@ -13,13 +13,15 @@ export const BoardsMenu = ({ onCreateBoard }: { onCreateBoard(board: actionTypes
 	const dispatch = useDispatch();
 	const { t } = useTranslation();
 
+	const [createBoard, setCreateBoard] = useState(false);
+	const { recentBoards, boards } = useSelector((rootState: RootState) => ({
+		recentBoards: rootState.boards.recentBoards,
+		boards: rootState.boards.boards,
+	}));
+
 	useEffect(() => {
 		dispatch(actions.getRecentBoards());
-	}, [dispatch]);
-
-	const [createBoard, setCreateBoard] = useState(false);
-	const recentBoards = useSelector((rootState: RootState) => rootState.boards.recentBoards);
-
+	}, [dispatch, boards]);
 	return (
 		<>
 			<Dropdown text={t('boards')} className={`${styles.media_query} link item`}>
