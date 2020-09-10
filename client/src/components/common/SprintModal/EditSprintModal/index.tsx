@@ -25,7 +25,7 @@ type Props = {
 	todoColumnId?: string;
 };
 
-const EditSprintModal = (props: Props) => {
+const EditSprintModal: React.FC<Props> = (props) => {
 	const { t } = useTranslation();
 	const dispatch = useDispatch();
 	const {
