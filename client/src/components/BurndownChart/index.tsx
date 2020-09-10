@@ -27,6 +27,7 @@ const BurndownChart: React.FC<Props> = ({ sprint, issues }) => {
 
 	const start = getStartOfDayDate(startDate);
 	const end = getEndDate(sortedCompletedIssues, endDate);
+	console.log(end);
 
 	const maxPoint = _.sumBy(issues, 'storyPoint');
 
@@ -37,7 +38,7 @@ const BurndownChart: React.FC<Props> = ({ sprint, issues }) => {
 		},
 		{
 			storyPoint: 0,
-			date: end,
+			date: new Date(endDate),
 		},
 	] as ChartPoint[];
 
@@ -82,9 +83,20 @@ const BurndownChart: React.FC<Props> = ({ sprint, issues }) => {
 			.domain([0, maxPoint + 2])
 			.range([height, 0]);
 
-		const days = d3.timeDay.range(start, new Date(end));
-		const storyPointTicks = days.length;
-		const timeTicks = d3.timeDay.every(1);
+		const days = d3.timeDay.range(start, end);
+		const daysCount = days.length;
+
+		let tickReducer = 1;
+		if (daysCount > 20 && daysCount < 50) {
+			tickReducer = 5;
+		} else if (daysCount > 50 && daysCount < 100) {
+			tickReducer = 10;
+		} else if (daysCount > 100) {
+			tickReducer = 20;
+		}
+
+		const storyPointTicks = days.length / tickReducer;
+		const timeTicks = d3.timeDay.every(1 * tickReducer);
 
 		const yaxis = d3.axisLeft(yScale).tickPadding(10).ticks(storyPointTicks).scale(yScale);
 		const xaxis = d3
