@@ -92,7 +92,7 @@ const IssuePageContent: React.FC<Props> = ({ issue: givenIssue, collapsed }) => 
 	}
 
 	const shrink = collapsed ? { style: { maxWidth: 500, minWidth: 325 } } : {};
-	const flex = collapsed ? { style: { justifyContent: 'flex-start', padding: 0 } } : {};
+	const flex = collapsed ? { style: { padding: 0 } } : {};
 
 	return (
 		<div className={styles.container} {...flex}>
