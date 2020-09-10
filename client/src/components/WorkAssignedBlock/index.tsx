@@ -3,6 +3,7 @@ import WorkIssueCard from 'components/WorkIssueCard';
 import styles from './styles.module.scss';
 import { Popup } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
+import EmptyCard from 'components/common/EmptyCard';
 
 interface Props {
 	assignedIssues: Array<{
@@ -18,23 +19,29 @@ const WorkAssignedBlock: React.FC<Props> = (props: Props) => {
 	const { assignedIssues } = props;
 	const { t } = useTranslation();
 	return (
-		<div className="workBlock">
-			<div className={styles.header}>
-				<Popup content={t('type')} trigger={<p className={styles.headerIcon}>T</p>} />
-				<Popup content={t('priority')} trigger={<p className={styles.headerIcon}>{t('p')}</p>} />
-				<p className={styles.headerKey}>{t('key')}</p>
-				<p className={styles.headerSummary}>{t('summary')}</p>
-			</div>
-			{assignedIssues.map((item) => (
-				<WorkIssueCard
-					key={item.id}
-					issueKey={item.issueKey}
-					description={item.summary}
-					priority={item.priority}
-					type={item.type}
-				/>
-			))}
-		</div>
+		<>
+			{Boolean(assignedIssues.length) ? (
+				<div className="workBlock">
+					<div className={styles.header}>
+						<Popup content={t('type')} trigger={<p className={styles.headerIcon}>T</p>} />
+						<Popup content={t('priority')} trigger={<p className={styles.headerIcon}>{t('p')}</p>} />
+						<p className={styles.headerKey}>{t('key')}</p>
+						<p className={styles.headerSummary}>{t('summary')}</p>
+					</div>
+					{assignedIssues.map((item) => (
+						<WorkIssueCard
+							key={item.id}
+							issueKey={item.issueKey}
+							description={item.summary}
+							priority={item.priority}
+							type={item.type}
+						/>
+					))}
+				</div>
+			) : (
+				<EmptyCard content={t('you_do_not_have_issues')} />
+			)}
+		</>
 	);
 };
 

@@ -469,4 +469,7 @@ export const ua = {
 	landing_block_description_execution: 'Прозорість виконання',
 	landing_block_title_execution:
 		'З TaskyHusky робота вашої команди стане прозорішою і всі її члени завжди будуть в курсі того, що відбувається, де б вони не знаходилися - в сусідніх кімнатах або на різних континентах.',
+	you_do_not_have_projects: 'Ви ще не створювали проєктів',
+	you_do_not_have_issues: 'Ви не відповідальні ні за одну задачу',
+	you_do_not_have_activity: 'У вас ще немає історії активності',
 };

@@ -36,7 +36,7 @@ const EditForm: React.FC<Props> = ({ columnId, initialState, onSubmit }) => {
 	const statusOpts: Option[] = [
 		{ key: 0, value: 'backlog', text: t('backlog') },
 		{ key: 1, value: 'todo', text: t('todo') },
-		{ key: 2, value: 'in progress', text: t('in_progress') },
+		// { key: 2, value: 'in progress', text: t('in_progress') },
 		{ key: 3, value: 'done', text: t('done') },
 	];
 
