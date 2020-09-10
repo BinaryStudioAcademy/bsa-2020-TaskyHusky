@@ -80,7 +80,7 @@ class UserController {
 					return Number(new Date(secondDate)) - Number(new Date(firstDate));
 				})
 				.slice(0, 10);
-			res.send({ assignedIssues, recentActivity });
+			res.send({ assignedIssues: assignedIssues.slice(0, 10), recentActivity });
 		} catch (error) {
 			res.status(404).send(error.message);
 		}
