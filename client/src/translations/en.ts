@@ -493,4 +493,7 @@ export const en = {
 	landing_block_title_execution: 'Transparent execution',
 	landing_block_description_execution:
 		"Whether your team is across the table or around the world, TaskyHusky brings a new level of transparency to your team's work and keeps everyone on the same page.",
+	you_do_not_have_projects: 'You currently have no projects',
+	you_do_not_have_issues: "You don't have assigned issues",
+	you_do_not_have_activity: "You don't have a history of activity",
 };

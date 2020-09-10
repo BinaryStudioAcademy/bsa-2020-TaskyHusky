@@ -32,7 +32,6 @@ const Scrum: BoardComponent = (props) => {
 	const { t } = useTranslation();
 	const [search, setSearch] = useState<string>('');
 	const [isCreateModalOpened, setIsCreateModalOpened] = useState<boolean>(false);
-
 	const { sprints, project, issues } = useSelector((rootState: RootState) => rootState.scrumBoard);
 
 	const [issuesMap, setIssuesMap] = useState<{ [sprintId: string]: WebApi.Entities.Issue[] }>(

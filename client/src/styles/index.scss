@@ -209,5 +209,6 @@ label {
 @media screen and (max-width: $mobile-screen) {
 	.emptyCard {
 		flex-direction: column;
+		max-height: 300px;
 	}
 }

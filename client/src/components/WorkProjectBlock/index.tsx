@@ -1,5 +1,7 @@
 import React from 'react';
 import ProjectCard from 'components/ProjectCard';
+import EmptyCard from 'components/common/EmptyCard';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
 	projects: Array<{
@@ -14,15 +16,22 @@ interface Props {
 }
 
 const WorkProjectBlock: React.FC<Props> = (props: Props) => {
+	const { t } = useTranslation();
 	const { projects } = props;
 	const stopLoad = 10;
 	const additionalLoad = 6;
 	return (
 		<div className="cardContainer">
-			{projects.map((item, index) => index < stopLoad && <ProjectCard key={item.id} item={item} />)}
-			{projects.map(
-				(item, index) =>
-					index < additionalLoad && <ProjectCard key={item.id} item={item} additionalBlock={true} />,
+			{Boolean(projects.length) ? (
+				<>
+					{projects.map((item, index) => index < stopLoad && <ProjectCard key={item.id} item={item} />)}
+					{projects.map(
+						(item, index) =>
+							index < additionalLoad && <ProjectCard key={item.id} item={item} additionalBlock={true} />,
+					)}
+				</>
+			) : (
+				<EmptyCard content={t('you_do_not_have_projects')} />
 			)}
 		</div>
 	);
