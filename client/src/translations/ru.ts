@@ -477,4 +477,7 @@ export const ru = {
 	landing_block_description_execution: 'Прозрачность исполнения',
 	landing_block_title_execution:
 		'С TaskyHusky работа вашей команды станет прозрачнее и все ее члены всегда будут в курсе происходящего, где бы они ни находились — в соседних комнатах или на разных континентах.',
+	you_do_not_have_projects: 'На данный момент вы еще не создавали проекты',
+	you_do_not_have_issues: 'Вы не отвественны ни за одну задачу',
+	you_do_not_have_activity: 'У вас пока нет истории активности',
 };
