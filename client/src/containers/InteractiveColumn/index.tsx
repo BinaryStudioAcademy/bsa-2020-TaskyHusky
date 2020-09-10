@@ -49,9 +49,6 @@ const InteractiveColumn: React.FC<Props> = ({ column, index, setColumns, columns
 						<div className={styles.columnHeader}>
 							<h3 className={styles.uppercase}>{column.columnName}</h3>
 							<div className={styles.columnControls}>
-								<span className={!column.isResolutionSet ? styles.status : styles.greenStatus}>
-									{column.status}
-								</span>
 								<ConfirmModal
 									isOpened={isConfirmOpened}
 									setIsOpened={setIsConfirmOpened}
