@@ -32,9 +32,8 @@ export const SprintHeader: React.FC<Props> = ({
 }) => {
 	const {
 		project: { id: projectId },
-		board: { id: boardId, columns },
+		board: { id: boardId },
 	} = useSelector((rootState: RootState) => rootState.scrumBoard);
-	console.log(columns);
 
 	const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
 	const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false);

@@ -11,6 +11,7 @@ import { getDiffPropNames } from '../helpers/objectsDiff.helper';
 import { ProjectsRepository } from './projects.repository';
 import { Projects } from '../entity/Projects';
 import { extractIndexFromIssueKey } from '../helpers/extractIndex.helper';
+import { BoardColumnRepository } from './boardColumn.repository';
 
 const RELS = [
 	'priority',
@@ -174,6 +175,18 @@ export class IssueRepository extends Repository<Issue> {
 	async updateOneByKey(key: string, givenData: PartialIssue, senderId: string) {
 		const partialIssue = await this.findByKeyWithRelIds(key);
 		const { watchers, labels, ...data } = givenData;
+
+		const boardColumn = givenData.boardColumn
+			? await getCustomRepository(BoardColumnRepository).getOne(givenData.boardColumn)
+			: undefined;
+
+		if (boardColumn && boardColumn.isResolutionSet) {
+			const completedAt = new Date();
+			data.completedAt = completedAt;
+		} else if (boardColumn && !boardColumn.isResolutionSet) {
+			data.completedAt = undefined;
+		}
+
 		await this.update({ issueKey: key }, data as any);
 		const newIssue = await this.findOneByKey(key);
 		issueHandler.emit(IssueActions.UpdateIssue, newIssue.id, newIssue);

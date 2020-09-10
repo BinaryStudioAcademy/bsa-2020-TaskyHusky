@@ -15,7 +15,7 @@ import { setColumnCreated } from 'containers/BoardColumn/logic/actions';
 import Options from 'components/common/Options';
 import historyHelper from 'helpers/history.helper';
 
-const ActiveSprint: BoardComponent = ({ board }) => {
+const ActiveSprint: BoardComponent = ({ board, sprint }) => {
 	const [search, setSearch] = useState<string>('');
 	const [columns, setColumns] = useState<WebApi.Result.BoardColumnResult[]>(board.columns);
 	const { t } = useTranslation();
@@ -98,6 +98,7 @@ const ActiveSprint: BoardComponent = ({ board }) => {
 							column={column}
 							key={i}
 							boardId={board.id}
+							sprintID={sprint.id}
 						/>
 					))}
 					<CreateColumnModal boardId={board.id}>
