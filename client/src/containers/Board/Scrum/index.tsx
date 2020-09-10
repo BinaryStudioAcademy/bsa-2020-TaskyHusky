@@ -44,6 +44,10 @@ const Scrum: BoardComponent = (props) => {
 	const projectDetails: BreadCrumbData = { id: project.id, name: project.name };
 	const boardDetails: BreadCrumbData = { id: board.id, name: board.name };
 
+	const getTodoColumnId = (columns: WebApi.Result.BoardColumnResult[]) => {
+		return columns.find(({ status }) => status === 'todo')?.id;
+	};
+
 	const onDragEndDrop = ({ destination, source }: DropResult) => {
 		if (!destination) {
 			return;
@@ -76,6 +80,7 @@ const Scrum: BoardComponent = (props) => {
 					data: {
 						sprint: destinationSprintId,
 						board: board.id,
+						boardColumn: getTodoColumnId(board.columns),
 					},
 				}),
 			);
@@ -94,10 +99,6 @@ const Scrum: BoardComponent = (props) => {
 	useEffect(() => {
 		setIssuesMap(matchIssuesToSprint(sprints, issues));
 	}, [sprints, issues]);
-
-	const getTodoColumnId = (columns: WebApi.Result.BoardColumnResult[]) => {
-		return columns.find(({ status }) => status === 'todo')?.id;
-	};
 
 	const sprintList = !isEmpty(issuesMap) ? (
 		Object.entries(issuesMap)

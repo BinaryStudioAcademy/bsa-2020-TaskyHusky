@@ -97,6 +97,7 @@ export const SprintHeader: React.FC<Props> = ({
 				sprintIsActive={isActive}
 				sprintIsCompleted={isCompleted}
 				isOpen={isEditModalOpen}
+				todoColumnId={todoColumnId}
 				clickAction={() => setIsEditModalOpen(!isEditModalOpen)}
 			/>
 		</>
