@@ -6,14 +6,19 @@ import { defaultAvatarBg } from 'constants/defaultColors';
 interface Props {
 	team: WebApi.Entities.Team;
 	handlerClick?: () => void;
+	additionalBlock?: boolean;
 }
 
-const TeamListItem: React.FC<Props> = ({ team, handlerClick }): ReactElement => {
+const TeamListItem: React.FC<Props> = ({ team, handlerClick, additionalBlock = false }): ReactElement => {
 	const { color, name, users } = team;
 	const { t } = useTranslation();
 
 	return (
-		<div onClick={() => handlerClick && handlerClick()} className={styles.card}>
+		<div
+			onClick={() => handlerClick && handlerClick()}
+			className={styles.card}
+			style={additionalBlock ? { height: 0, overflow: 'hidden', margin: 0, marginRight: '25px' } : {}}
+		>
 			<div className={styles.header}>
 				<div className={styles.avatarContainer} style={{ background: color ?? defaultAvatarBg }}>
 					<p className={styles.avatarTitle}>{name ? name[0] : ''}</p>
