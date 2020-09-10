@@ -89,14 +89,15 @@ const CreateBoardModal = (props: Props) => {
 										},
 										columns: DEFAULT_SCRUM_COLUMNS,
 									});
-									return;
 								}
-								onCreateBoard({
-									...boardData,
-									createdBy: {
-										id: admin,
-									},
-								});
+								if (boardData.boardType === 'Kanban') {
+									onCreateBoard({
+										...boardData,
+										createdBy: {
+											id: admin,
+										},
+									});
+								}
 							}
 							onCancelClick();
 						}}
