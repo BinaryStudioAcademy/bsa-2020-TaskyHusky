@@ -90,8 +90,8 @@ const ProjectIssuesColumn: React.FC<Props> = ({
 			style={{
 				backgroundColor: '#EEE',
 				height: 'calc(100vh - 250px)',
-				width: 300,
-				marginLeft: 60,
+				width: 340,
+				marginLeft: 20,
 				overflowY: 'auto',
 			}}
 		>
