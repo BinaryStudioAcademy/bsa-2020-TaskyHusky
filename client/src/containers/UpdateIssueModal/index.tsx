@@ -255,7 +255,7 @@ const UpdateIssueModal: React.FC<Props> = ({
 							onChange={(event, data) => context.set('assigned', data.value as string)}
 						/>
 					</Form.Field>
-					{current.boardColumn ? (
+					{current.boardColumn && current.board ? (
 						<Form.Field>
 							<label className="stanadrtLabel">{t('column')}</label>
 							<Form.Dropdown
