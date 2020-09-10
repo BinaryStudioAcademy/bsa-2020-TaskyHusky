@@ -17,9 +17,19 @@ type Props = {
 	issues: WebApi.Entities.Issue[];
 	endDate: Date | undefined;
 	startDate: Date | undefined;
+	todoColumnId?: string;
 };
 
-export const SprintHeader: React.FC<Props> = ({ id, isActive, name, issues, isCompleted, startDate, endDate }) => {
+export const SprintHeader: React.FC<Props> = ({
+	id,
+	isActive,
+	name,
+	issues,
+	isCompleted,
+	startDate,
+	endDate,
+	todoColumnId,
+}) => {
 	const {
 		project: { id: projectId },
 		board: { id: boardId, columns },
@@ -63,6 +73,8 @@ export const SprintHeader: React.FC<Props> = ({ id, isActive, name, issues, isCo
 							projectID={projectId}
 							sprintID={id === 'backlog' ? undefined : id}
 							boardID={boardId}
+							todoColumnId={todoColumnId}
+							isActive={isActive}
 						>
 							<Button icon="add" className={styles.createIssueButton} title="Create issue" />
 						</CreateIssueModal>

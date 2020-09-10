@@ -8,6 +8,8 @@ interface Props {
 	projectID?: string;
 	sprintID?: string;
 	boardID?: string;
+	isActive?: boolean;
+	todoColumnId?: string;
 	onClose?: (data: WebApi.Issue.PartialIssue) => void;
 }
 

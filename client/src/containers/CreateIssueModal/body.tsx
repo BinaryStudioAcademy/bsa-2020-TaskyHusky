@@ -25,6 +25,8 @@ interface Props {
 	projects: WebApi.Entities.Projects[];
 	users: WebApi.Entities.UserProfile[];
 	statuses: WebApi.Entities.IssueStatus[];
+	isActive?: boolean;
+	todoColumnId?: string;
 }
 
 interface SelectOption {
@@ -46,6 +48,8 @@ const CreateIssueModalBody: React.FC<Props> = ({
 	sprintID,
 	boardID,
 	statuses,
+	isActive,
+	todoColumnId,
 }) => {
 	const { t } = useTranslation();
 	const context = useCreateIssueModalContext();
@@ -137,8 +141,11 @@ const CreateIssueModalBody: React.FC<Props> = ({
 			assigned: context.data.assigned,
 			status: getToDoStatusId(statuses),
 		};
-
-		dispatch(createIssue({ data, files: attachments }));
+		if (isActive) {
+			dispatch(createIssue({ data: { ...data, boardColumn: todoColumnId }, files: attachments }));
+		} else {
+			dispatch(createIssue({ data, files: attachments }));
+		}
 
 		if (onClose) {
 			onClose(data);
