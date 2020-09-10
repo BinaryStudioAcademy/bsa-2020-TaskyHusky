@@ -95,6 +95,10 @@ const Scrum: BoardComponent = (props) => {
 		setIssuesMap(matchIssuesToSprint(sprints, issues));
 	}, [sprints, issues]);
 
+	const getTodoColumnId = (columns: WebApi.Result.BoardColumnResult[]) => {
+		return columns.find(({ status }) => status === 'todo')?.id;
+	};
+
 	const sprintList = !isEmpty(issuesMap) ? (
 		Object.entries(issuesMap)
 			.reverse()
@@ -107,6 +111,7 @@ const Scrum: BoardComponent = (props) => {
 						listType="CARD"
 						sprint={sprints.filter((sprint) => sprint.id === sprintId)[0]}
 						issues={getIssuesForSprintId(normalizeText(search), issues)}
+						todoColumnId={getTodoColumnId(board.columns)}
 					/>
 				);
 			})

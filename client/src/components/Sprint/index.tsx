@@ -8,6 +8,7 @@ interface Props {
 	sprint?: WebApi.Entities.Sprint;
 	issues: WebApi.Entities.Issue[];
 	boardId: string;
+	todoColumnId?: string;
 }
 
 interface DragProps {
@@ -33,6 +34,7 @@ export const Sprint: React.FC<Props & DragProps> = (props: Props & DragProps) =>
 			<SprintHeader
 				id={props.sprint?.id ?? 'backlog'}
 				isActive={props.sprint?.isActive ?? false}
+				todoColumnId={props.todoColumnId}
 				name={props.sprint?.sprintName ?? t('backlog')}
 				issues={props.issues}
 				isCompleted={props.sprint?.isCompleted ?? false}
