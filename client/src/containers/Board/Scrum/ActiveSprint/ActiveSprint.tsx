@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { BoardComponent } from '../..';
 import BoardColumn from 'containers/BoardColumn';
 import { DragDropContext, OnDragEndResponder } from 'react-beautiful-dnd';
 import styles from './activeSprint.module.scss';
@@ -15,9 +14,15 @@ import { setColumnCreated } from 'containers/BoardColumn/logic/actions';
 import Options from 'components/common/Options';
 import historyHelper from 'helpers/history.helper';
 
-const ActiveSprint: BoardComponent = ({ board, sprint }) => {
+interface Props {
+	board: WebApi.Result.ComposedBoardResult;
+	sprint: WebApi.Entities.Sprint;
+	columns: WebApi.Result.BoardColumnResult[];
+	setColumns: (columns: WebApi.Result.BoardColumnResult[]) => void;
+}
+
+const ActiveSprint: React.FC<Props> = ({ board, sprint, columns, setColumns }) => {
 	const [search, setSearch] = useState<string>('');
-	const [columns, setColumns] = useState<WebApi.Result.BoardColumnResult[]>(board.columns);
 	const { t } = useTranslation();
 	const dispatch = useDispatch();
 	const { columnCreated, recentlyCreatedColumn } = useSelector((state: RootState) => state.boardColumn);
@@ -31,7 +36,7 @@ const ActiveSprint: BoardComponent = ({ board, sprint }) => {
 				setColumns([...columns, recentlyCreatedColumn]);
 			}
 		}
-	}, [dispatch, columnCreated, recentlyCreatedColumn, columns]);
+	}, [dispatch, columnCreated, recentlyCreatedColumn, columns, setColumns]);
 
 	const onDragEnd: OnDragEndResponder = (event, provided) => {
 		const { destination, draggableId } = event;
