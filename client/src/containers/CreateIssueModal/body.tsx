@@ -60,7 +60,6 @@ const CreateIssueModalBody: React.FC<Props> = ({
 
 	useEffect(() => {
 		const projectToFetchLabels = projectID ?? context.data.project;
-		console.log('projectToFetchLabels', projectToFetchLabels);
 
 		if (projectToFetchLabels) {
 			getProjectById(projectToFetchLabels).then(({ labels, users }) => {
