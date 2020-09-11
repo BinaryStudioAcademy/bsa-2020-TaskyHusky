@@ -126,9 +126,9 @@ export const en = {
 		'When you delete your account, you lose access to Tasky-Husky account services, and we permanently delete your personal data. This page is protected by Privacy Policy and Terms of Service apply.',
 	del_btn: 'Delete account',
 	change_email: 'Change Email',
-	current_email: 'Your current email adress is ',
-	new_email_title: 'New Email Adress',
-	email_placeholder: 'Enter new email adress',
+	current_email: 'Your current email address is ',
+	new_email_title: 'New Email Address',
+	email_placeholder: 'Enter new email address',
 	send_email_notif: 'Send me email notifications',
 	dont_send_email_notif: 'Do not send me email notifications',
 	save_changes: 'Save changes',
@@ -496,4 +496,5 @@ export const en = {
 	you_do_not_have_projects: 'You currently have no projects',
 	you_do_not_have_issues: "You don't have assigned issues",
 	you_do_not_have_activity: "You don't have a history of activity",
+	upload_avatar: 'Upload avatar',
 };

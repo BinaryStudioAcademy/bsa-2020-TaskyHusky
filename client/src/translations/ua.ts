@@ -472,4 +472,5 @@ export const ua = {
 	you_do_not_have_projects: 'Ви ще не створювали проєктів',
 	you_do_not_have_issues: 'Ви не відповідальні ні за одну задачу',
 	you_do_not_have_activity: 'У вас ще немає історії активності',
+	upload_avatar: 'Загрузить аватар',
 };

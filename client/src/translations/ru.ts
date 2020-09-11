@@ -480,4 +480,5 @@ export const ru = {
 	you_do_not_have_projects: 'На данный момент вы еще не создавали проекты',
 	you_do_not_have_issues: 'Вы не отвественны ни за одну задачу',
 	you_do_not_have_activity: 'У вас пока нет истории активности',
+	upload_avatar: 'Загрузить аватар',
 };
