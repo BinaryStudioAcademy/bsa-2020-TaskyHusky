@@ -12,7 +12,7 @@ export const getMessages = async (message: string, githubUrl = 'https://github.c
 		.then((res) => res.json())
 		.then((commits) =>
 			commits
-				.filter((commit: any) => commit.commit.message.toLowerCase().startsWith(`${message}`))
+				.filter((commit: any) => commit.commit.message.toLowerCase().startsWith(`${message.toLowerCase()}`))
 				.map((commit: any) => ({
 					message: commit.commit.message,
 					sha: commit.sha,
