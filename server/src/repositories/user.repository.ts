@@ -124,7 +124,7 @@ export class UserRepository extends Repository<UserProfile> {
 	}
 
 	async updateById(id: string, user: Partial<UserProfile>) {
-		this.update(id, user);
+		await this.update(id, user);
 		const updatedUser = await this.findOne(id);
 		if (!updatedUser) {
 			throw new Error('Can not find user');
