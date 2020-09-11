@@ -88,7 +88,7 @@ const ProjectIssuesPage: React.FC<Props> = ({ projectId, strict, noSidebar }) =>
 			</div>
 			<div className="fill">
 				{selectedIssue ? (
-					<div style={{ marginLeft: 5 }}>
+					<div style={{ marginLeft: 5, marginTop: 40 }}>
 						<IssuePageContent collapsed issue={selectedIssue} />
 					</div>
 				) : (
@@ -130,7 +130,7 @@ const ProjectIssuesPage: React.FC<Props> = ({ projectId, strict, noSidebar }) =>
 					project={project}
 				/>
 			)}
-			<div style={{ width: '80%' }}>
+			<div style={{ width: '100%' }}>
 				{noSidebar || (project.boards && project.boards.length) ? renderIssues : render}
 			</div>
 		</div>
