@@ -477,7 +477,7 @@ export const en = {
 	apply_current_location: 'Go to current location',
 	apply_this_location: 'Apply this location',
 	no_notifications: "You don't have any new notifications",
-	landing_title: 'The #1 software development tool used by agile teams',
+	landing_title: 'Get things done with TaskyHusky! ',
 	landing_intro_title: 'The best software teams ship early and often.',
 	landing_intro_description:
 		'TaskyHusky is built for every member of your software team to plan, track, and release great software.',

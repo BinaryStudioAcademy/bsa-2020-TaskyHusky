@@ -51,7 +51,7 @@ const AppInformation = (props: Props) => {
 						</div>
 						<div className={[styles.content__block_wrapper, styles.content__block].join(' ')}>
 							<div className={styles.content__image_wrapper}>
-								<img src={scram} className={styles.content__image} alt="scram" />
+								<img src={kanban} className={styles.content__image} alt="kanban" />
 							</div>
 							<div className={styles.content__block_description}>
 								<div className={styles.description}>
@@ -88,7 +88,7 @@ const AppInformation = (props: Props) => {
 								</div>
 							</div>
 							<div className={styles.content__image_wrapper}>
-								<img src={kanban} className={styles.content__image} alt="kanban" />
+								<img src={scram} className={styles.content__image} alt="scram" />
 							</div>
 						</div>
 					</section>

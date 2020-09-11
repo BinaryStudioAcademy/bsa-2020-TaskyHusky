@@ -461,7 +461,7 @@ export const ru = {
 	apply_current_location: 'Найти текущее местоположение',
 	apply_this_location: 'Выбрать это местоположение',
 	no_notifications: 'У вас нет новых уведомлений',
-	landing_title: 'Лучший инструмент разработки для agile-команд',
+	landing_title: 'Достигайте целей с TaskyHusky!',
 	landing_intro_title: 'Лучшие команды разработчиков выпускают ПО быстро и часто.',
 	landing_intro_description:
 		'Решение TaskyHusky разработано таким образом, чтобы каждый член Вашей команды	разработчиков мог планировать, отслеживать и выпускать превосходное ПО.',
