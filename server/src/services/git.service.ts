@@ -5,7 +5,7 @@ export const getMessages = async (message: string, githubUrl = 'https://github.c
 	const [, owner, repo] = githubUrl.match(/github\.com\/(.+)\/(.+)\.git/) || [];
 
 	if (!owner || !repo) {
-		throw new Error('Bad repository');
+		return [];
 	}
 
 	const data = fetch(`https://api.github.com/repos/${owner}/${repo}/commits`)
