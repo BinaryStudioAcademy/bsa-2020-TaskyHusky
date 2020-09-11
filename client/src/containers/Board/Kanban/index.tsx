@@ -117,7 +117,11 @@ const Kanban: BoardComponent = ({ board, noSidebar }) => {
 	);
 
 	const renderIssues = <ProjectIssuesPage strict noSidebar projectId={(board.projects ?? [])[0].id} />;
-	const renderSettings = <ColumnsSettingsPage boardId={board.id} />;
+
+	const renderSettings = (
+		<ColumnsSettingsPage boardId={board.id} onChangeColumns={(columns) => setColumns(columns)} />
+	);
+
 	let render;
 
 	switch (sidebarSection) {

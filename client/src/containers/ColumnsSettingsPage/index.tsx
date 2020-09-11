@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { getBoardById } from 'services/board.service';
 import { useParams } from 'react-router-dom';
 import styles from './styles.module.scss';
@@ -13,16 +13,28 @@ import { RootState } from 'typings/rootState';
 
 interface Props {
 	boardId?: string;
+	onChangeColumns?: (columns: WebApi.Result.BoardColumnResult[]) => void;
 }
 
-const ColumnsSettingsPage: React.FC<Props> = ({ boardId: givenBoardId }) => {
+const ColumnsSettingsPage: React.FC<Props> = ({ boardId: givenBoardId, onChangeColumns }) => {
 	const { boardId: paramsBoardId } = useParams();
 	const boardId = givenBoardId ?? paramsBoardId;
 	const { t } = useTranslation();
 	const dispatch = useDispatch();
 	const [board, setBoard] = useState<WebApi.Result.ComposedBoardResult | undefined>();
-	const [columns, setColumns] = useState<WebApi.Result.BoardColumnResult[]>([]);
+	const [columns, setColumnsState] = useState<WebApi.Result.BoardColumnResult[]>([]);
 	const { columnCreated, recentlyCreatedColumn } = useSelector((state: RootState) => state.boardColumn);
+
+	const setColumns = useCallback(
+		(value: WebApi.Result.BoardColumnResult[]) => {
+			setColumnsState(value);
+
+			if (onChangeColumns) {
+				onChangeColumns(value);
+			}
+		},
+		[onChangeColumns],
+	);
 
 	useEffect(() => {
 		if (columnCreated) {
@@ -32,7 +44,7 @@ const ColumnsSettingsPage: React.FC<Props> = ({ boardId: givenBoardId }) => {
 				setColumns([...columns, recentlyCreatedColumn]);
 			}
 		}
-	}, [dispatch, columnCreated, recentlyCreatedColumn, columns]);
+	}, [dispatch, columnCreated, recentlyCreatedColumn, columns, setColumns]);
 
 	useEffect(() => {
 		if (!board) {
@@ -41,7 +53,7 @@ const ColumnsSettingsPage: React.FC<Props> = ({ boardId: givenBoardId }) => {
 				setColumns(board.columns);
 			});
 		}
-	}, [board, boardId]);
+	}, [board, boardId, setColumns]);
 
 	if (!board) {
 		return null;
@@ -81,7 +93,8 @@ const ColumnsSettingsPage: React.FC<Props> = ({ boardId: givenBoardId }) => {
 			}
 		});
 
-		setColumns(newColumns.sort((c0, c1) => (c0.index < c1.index ? -1 : 1)));
+		const sortedColumns = newColumns.sort((c0, c1) => (c0.index < c1.index ? -1 : 1));
+		setColumns(sortedColumns);
 	};
 
 	return (
