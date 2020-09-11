@@ -1,13 +1,19 @@
+@import 'styles/mixins.scss';
+
 :global(#root) {
 	.dropDownMenu {
 		position: absolute;
 		top: 32px;
 	}
 
-	.dropDownMenu > * {
+	.dropDownMenu>* {
 		color: rgba(80, 80, 80, 0.9) !important;
 		width: 250px;
 		white-space: pre-wrap;
+	}
+
+	.list__project_item {
+		display: flex !important;
 	}
 }
 
@@ -15,8 +21,4 @@
 	@media (max-width: 730px) {
 		padding: 0 4px !important;
 	}
-}
-
-.list__project_item {
-	display: flex !important;
 }

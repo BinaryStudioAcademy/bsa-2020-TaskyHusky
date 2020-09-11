@@ -30,18 +30,18 @@ export const ProjectsMenu = () => {
 						as="a"
 						href={`/project/${project.id}`}
 						key={project.id}
-						className={styles.list__project_item}
+						className={`${styles.list__project_item} projectItem`}
 					>
 						<Image src={project.icon} className="standartIcon" />
 						<span>{project.name}</span>
 					</Dropdown.Item>
 				))}
 				<Dropdown.Divider />
-				<Dropdown.Item as={Link} to="/projects">
+				<Dropdown.Item as={Link} to="/projects" className="bold">
 					{t('view_all_projects')}
 				</Dropdown.Item>
 				<CreateProjectModal>
-					<Dropdown.Item>{t('create_project')}</Dropdown.Item>
+					<Dropdown.Item className="bold">{t('create_project')}</Dropdown.Item>
 				</CreateProjectModal>
 			</Dropdown.Menu>
 		</Dropdown>
