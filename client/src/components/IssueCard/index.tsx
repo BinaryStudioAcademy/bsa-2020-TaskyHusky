@@ -78,7 +78,7 @@ const IssueCard: React.FC<Props> = ({
 			<Header className={styles.issueHeader}>
 				<div>
 					<p className="secondaryData" style={{ marginBottom: 0 }}>
-						{issue.issueKey}
+						{issue.issueKey} <span style={{ color: 'red' }}>#{issue.index}</span>
 					</p>
 					<Link to={`issue/${issue.issueKey}`}>
 						<p className="standartLabel" style={{ wordBreak: 'break-word' }}>

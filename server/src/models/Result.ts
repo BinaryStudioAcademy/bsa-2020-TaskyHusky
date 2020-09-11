@@ -41,6 +41,7 @@ export interface IssueResult {
 	sprint?: Sprint;
 	project?: Projects;
 	issueKey?: string;
+	index?: number;
 	watchers?: UserModel[];
 	assigned?: UserModel;
 	creator: UserModel;

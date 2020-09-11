@@ -21,6 +21,7 @@ router
 	.post('/attachment', uploadIssueAttachment, validateIssueAttachment, controller.uploadAttachment)
 	.post('/filtered', controller.getFilteredIssues)
 	.post('/:id/watch', controller.watch)
+	.post('/:key/reindex', controller.reindex)
 	.post('/', controller.create)
 	.put('/:id', controller.update)
 	.put('/byKey/:key', controller.updateByKey)

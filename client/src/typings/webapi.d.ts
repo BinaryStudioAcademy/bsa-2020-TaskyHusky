@@ -69,6 +69,7 @@ namespace WebApi.Issue {
 		issueKey?: string;
 		assigned?: string;
 		creator?: string;
+		index?: number;
 		watchers?: string[];
 		storyPoint?: number;
 		completedAt?: Date;
@@ -117,6 +118,7 @@ namespace WebApi.Result {
 		sprint?: Sprint;
 		project?: Projects;
 		issueKey?: string;
+		index?: number;
 		watchers?: UserModel[];
 		assigned?: UserModel;
 		creator: UserModel;
@@ -332,6 +334,7 @@ namespace WebApi.Entities {
 		updatedAt?: Date;
 		completedAt?: Date;
 		storyPoint?: number;
+		index?: number;
 	}
 
 	interface IssueComment {

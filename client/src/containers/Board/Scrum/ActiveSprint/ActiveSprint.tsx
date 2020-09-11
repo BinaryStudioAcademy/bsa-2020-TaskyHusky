@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { BoardComponent } from '../..';
-import BoardColumn from 'containers/BoardColumn';
 import { DragDropContext, OnDragEndResponder } from 'react-beautiful-dnd';
 import styles from './activeSprint.module.scss';
 import { extractIdFormDragDropId } from 'helpers/extractId.helper';
@@ -90,16 +89,17 @@ const ActiveSprint: BoardComponent = ({ board, sprint }) => {
 			</div>
 			<DragDropContext onDragEnd={onDragEnd}>
 				<div className={styles.columnsFlex}>
-					{columns.map((column, i) => (
-						<BoardColumn
-							getOnDragEndFunc={(id, responder) => onDragEndFuncs.set(id, responder)}
-							search={search}
-							className={styles.column}
-							column={column}
-							key={i}
-							boardId={board.id}
-							sprintID={sprint.id}
-						/>
+					{columns.map((_, i) => (
+						// <BoardColumn
+						// 	getOnDragEndFunc={(id, responder) => onDragEndFuncs.set(id, responder)}
+						// 	search={search}
+						// 	className={styles.column}
+						// 	column={column}
+						// 	key={i}
+						// 	boardId={board.id}
+						// 	sprintID={sprint.id}
+						// />
+						<div key={i}>Column</div>
 					))}
 					<CreateColumnModal boardId={board.id}>
 						<Segment className={styles.contentBtn}>

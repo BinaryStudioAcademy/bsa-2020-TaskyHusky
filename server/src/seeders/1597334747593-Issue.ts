@@ -149,6 +149,7 @@ export class Issue1597334747593 implements MigrationInterface {
 		issue4.status = issueStatus3;
 		issue4.sprint = sprint1;
 		issue4.boardColumn = todoColumn;
+		issue4.index = 0;
 
 		const issue5 = new Issue();
 		issue5.id = '2de14a5e-5407-40e3-b6dd-f412f4409b1f';
@@ -207,6 +208,7 @@ export class Issue1597334747593 implements MigrationInterface {
 		issue7.status = issueStatus3;
 		issue7.sprint = sprint1;
 		issue7.boardColumn = todoColumn;
+		issue7.index = 1;
 
 		const issue8 = new Issue();
 		issue8.id = '53eb4b1b-8706-4edb-9d6a-beb5c15a66f2';
@@ -270,6 +272,7 @@ export class Issue1597334747593 implements MigrationInterface {
 		issue10.completedAt = new Date('2020-02-02');
 		issue10.storyPoint = 10;
 		issue10.boardColumn = todoColumn;
+		issue10.index = 2;
 
 		const issue11 = new Issue();
 		issue11.id = '44b274eb-301b-4192-a6b6-9f55a67b6cf3';
@@ -293,6 +296,7 @@ export class Issue1597334747593 implements MigrationInterface {
 		issue11.completedAt = new Date('2020-02-03');
 		issue11.storyPoint = 5;
 		issue11.boardColumn = todoColumn;
+		issue11.index = 3;
 
 		const issue12 = new Issue();
 		issue12.id = '44b274eb-301b-4192-a6b6-9f55a67b6cf2';
@@ -316,6 +320,7 @@ export class Issue1597334747593 implements MigrationInterface {
 		issue12.completedAt = new Date('2020-02-04');
 		issue12.storyPoint = 5;
 		issue12.boardColumn = todoColumn;
+		issue12.index = 4;
 
 		const issue13 = new Issue();
 		issue13.id = '44b274eb-301b-4192-a6b6-9f55a67b6cf1';
@@ -339,6 +344,7 @@ export class Issue1597334747593 implements MigrationInterface {
 		issue13.completedAt = new Date('2020-02-04');
 		issue13.storyPoint = 10;
 		issue13.boardColumn = todoColumn;
+		issue13.index = 5;
 
 		await getRepository('Issue').save([
 			issue1,

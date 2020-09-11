@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Segment, Header, Icon } from 'semantic-ui-react';
 import { Droppable, OnDragEndResponder } from 'react-beautiful-dnd';
 import CreateIssueModal from 'containers/CreateIssueModal';
-import { getByColumnId, getByKey } from 'services/issue.service';
 import IssueCard from 'components/IssueCard';
 import { useTranslation } from 'react-i18next';
 import { extractIdFormDragDropId } from 'helpers/extractId.helper';
@@ -15,12 +14,22 @@ interface Props {
 	className: string;
 	search: string;
 	sprintID?: string;
+	issues: WebApi.Result.IssueResult[];
+	allIssues: WebApi.Result.IssueResult[];
 	getOnDragEndFunc: (id: string, responder: OnDragEndResponder) => void;
 }
 
-const BoardColumn: React.FC<Props> = ({ column, className, search, boardId, sprintID, getOnDragEndFunc }) => {
-	const [issues, setIssues] = useState<WebApi.Result.IssueResult[]>([]);
-	const [issuesFetched, setIssuesFetched] = useState<boolean>(false);
+const BoardColumn: React.FC<Props> = ({
+	column,
+	className,
+	search,
+	boardId,
+	sprintID,
+	issues: givenIssues,
+	allIssues,
+	getOnDragEndFunc,
+}) => {
+	const [issues, setIssues] = useState<WebApi.Result.IssueResult[]>(givenIssues);
 	const { t } = useTranslation();
 
 	useIO(WebApi.IO.Types.Issue, (io) => {
@@ -72,24 +81,67 @@ const BoardColumn: React.FC<Props> = ({ column, className, search, boardId, spri
 			const cardKey = extractIdFormDragDropId(draggableId);
 
 			if (destinationId !== sourceId) {
-				if (destinationId === column.id) {
-					getByKey(cardKey).then((issue) => setIssues([...issues, issue]));
-				} else if (sourceId === column.id) {
-					const index = issues.findIndex((issue) => issue.issueKey === cardKey);
+				if (sourceId === column.id) {
 					const issuesCopy = [...issues];
-					issuesCopy.splice(index, 1);
-					setIssues([...issuesCopy]);
+
+					issuesCopy
+						.filter((filterIssue) => (filterIssue.index ?? 0) > source.index)
+						.map((mapIssue) => mapIssue.index as number)
+						.forEach(
+							(issueIndex) =>
+								(issuesCopy[issueIndex].index = (issuesCopy[issueIndex].index as number) - 1),
+						);
+
+					issuesCopy.splice(source.index, 1);
+					setIssues(issuesCopy);
+					console.log('on delete', issues, issuesCopy);
+				} else if (destinationId === column.id) {
+					const issue = allIssues.find(
+						(issue) => (issue.issueKey as string) === cardKey,
+					) as WebApi.Result.IssueResult;
+
+					const issuesCopy = [...issues];
+
+					issuesCopy
+						.filter((filterIssue) => (filterIssue.index as number) > (destination.index as number))
+						.map((mapIssue) => mapIssue.index as number)
+						.forEach((index) => (issuesCopy[index].index = (issuesCopy[index].index as number) + 1));
+
+					issuesCopy.splice(destination.index as number, 0, { ...issue, index: destination.index });
+					setIssues(issuesCopy);
+					console.log('on create', issues, issuesCopy);
 				}
+			} else if (destinationId === column.id && destination.index !== source.index) {
+				const issue = issues.find(
+					(issue) => (issue.issueKey as string) === cardKey,
+				) as WebApi.Result.IssueResult;
+
+				const issuesCopy = [...issues];
+				const movedDown = source.index < destination.index;
+				console.log('moved ' + (movedDown ? 'down' : 'up'), issue);
+
+				const condition = movedDown
+					? (filteringIssue: WebApi.Result.IssueResult) =>
+							(filteringIssue.index as number) > source.index &&
+							(filteringIssue.index as number) <= destination.index
+					: (filteringIssue: WebApi.Result.IssueResult) =>
+							(filteringIssue.index as number) < source.index &&
+							(filteringIssue.index as number) >= destination.index;
+
+				const diff = movedDown ? -1 : 1;
+
+				issuesCopy
+					.filter(condition)
+					.map((mapIssue) => mapIssue.index as number)
+					.forEach((index) => (issuesCopy[index].index = (issuesCopy[index].index as number) + diff));
+
+				issuesCopy.splice(destination.index as number, 0, { ...issue, index: destination.index });
+				issuesCopy.splice((source.index as number) - 1, 1);
+				console.log(issues, issuesCopy);
+				setIssues(issuesCopy);
 			}
 		});
-	}, [column.id, getOnDragEndFunc, issues]);
-
-	useEffect(() => {
-		if (!issuesFetched) {
-			getByColumnId(column.id).then(setIssues);
-			setIssuesFetched(true);
-		}
-	}, [column.id, issuesFetched]);
+	}, [column.id, getOnDragEndFunc, issues, allIssues]);
 
 	const displayIssues = issues.filter((issue) =>
 		(issue.summary as string).toLowerCase().includes(search.toLowerCase()),
@@ -124,8 +176,12 @@ const BoardColumn: React.FC<Props> = ({ column, className, search, boardId, spri
 								style={{ minHeight: 10 }}
 							>
 								{displayIssues.length > 0
-									? displayIssues.map((issue, i) => (
-											<IssueCard issue={issue} index={i} key={issue.issueKey} />
+									? displayIssues.map((issue) => (
+											<IssueCard
+												issue={issue}
+												index={issue.index as number}
+												key={issue.issueKey}
+											/>
 									  ))
 									: ''}
 								{provided.placeholder}

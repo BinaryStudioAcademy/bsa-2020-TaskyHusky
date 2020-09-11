@@ -9,7 +9,8 @@ import {
 	JoinTable,
 } from 'typeorm';
 
-import { IsNotEmpty, IsString, IsArray, IsInt, Min, Max } from 'class-validator';
+import _ from 'lodash';
+import { IsNotEmpty, IsString, IsArray, IsInt, Min, Max, ValidateIf } from 'class-validator';
 import { IssueStatus } from './IssueStatus';
 import { UserProfile } from './UserProfile';
 import { IssueType } from './IssueType';
@@ -96,4 +97,9 @@ export class Issue {
 	// max int postgres value
 	@Max(2147483647)
 	storyPoint?: number;
+
+	@Column({ nullable: true })
+	@ValidateIf((o) => !_.isEmpty(o.index))
+	@IsInt()
+	index?: number;
 }
