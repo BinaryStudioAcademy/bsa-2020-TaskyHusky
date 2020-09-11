@@ -14,10 +14,9 @@ const ResetPassword: React.FC = () => {
 	const { t } = useTranslation();
 	const dispatch = useDispatch();
 	const { token } = useParams();
-
 	const [password, setPassword] = useState('');
 	const [isPasswordValid, setIsPasswordValid] = useState(true);
-	const [isSubmited, setIsSubmited] = useState<boolean>(false);
+
 	const [isTokenNull, setIsTokenNull] = useState<boolean>(false);
 	const { isAuthorized, user } = useSelector((state: RootState) => ({
 		isAuthorized: state.auth.isAuthorized,
@@ -27,7 +26,6 @@ const ResetPassword: React.FC = () => {
 	const handleSubmit: (event: SyntheticEvent) => void = (event) => {
 		event.preventDefault();
 		dispatch(actions.resetPassword({ id: token, password }));
-		setIsSubmited(true);
 	};
 
 	useEffect(() => {
@@ -36,7 +34,7 @@ const ResetPassword: React.FC = () => {
 	return (
 		<>
 			<Grid verticalAlign="middle" className={styles.grid}>
-				{isSubmited && isTokenNull ? (
+				{isTokenNull ? (
 					<Redirect to={isAuthorized ? '/my-work' : '/login'} />
 				) : (
 					<Grid.Column className={styles.column}>
@@ -56,6 +54,7 @@ const ResetPassword: React.FC = () => {
 									}
 								/>
 								<PasswordCheck pass={password} acceptLength={6} />
+
 								<Button className="primaryBtn" disabled={!isPasswordValid || password === ''}>
 									{t('continue')}
 								</Button>
