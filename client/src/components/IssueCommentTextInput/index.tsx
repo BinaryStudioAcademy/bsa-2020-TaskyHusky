@@ -66,9 +66,10 @@ const IssueCommentTextInput: React.FC<Props> = ({ text, setText, popupOpen, setP
 					}}
 				/>
 			}
-			position="top center"
+			position="bottom left"
 			open={popupOpen}
 			closeOnTriggerMouseLeave
+			basic
 		/>
 	);
 };
