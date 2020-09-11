@@ -22,17 +22,21 @@ export const FiltersMenu = () => {
 		<Dropdown text={t('filters')} className={`${styles.media_query} link item`}>
 			<Dropdown.Menu className={styles.dropDownMenu}>
 				<Dropdown.Header>{t('recent')}</Dropdown.Header>
-				{recent.map((filter) => (
-					<Dropdown.Item as="a" href={`/advancedSearch/${filter.id}`} key={filter.id}>
-						{filter.name}
-					</Dropdown.Item>
-				))}
+				{recent.length
+					? recent.map((filter) => (
+							<Dropdown.Item as="a" href={`/advancedSearch/${filter.id}`} key={filter.id}>
+								{filter.name}
+							</Dropdown.Item>
+					  ))
+					: t('no')}
 				<Dropdown.Header>{t('favorite')}</Dropdown.Header>
-				{favorite.map((filter) => (
-					<Dropdown.Item as="a" href={`/advancedSearch/${filter.id}`} key={filter.id}>
-						{filter.name}
-					</Dropdown.Item>
-				))}
+				{favorite.length
+					? favorite.map((filter) => (
+							<Dropdown.Item as="a" href={`/advancedSearch/${filter.id}`} key={filter.id}>
+								{filter.name}
+							</Dropdown.Item>
+					  ))
+					: t('no')}
 				<Dropdown.Divider />
 				<Dropdown.Item as={Link} to="/filters" className="bold">
 					{t('view_all_filters')}

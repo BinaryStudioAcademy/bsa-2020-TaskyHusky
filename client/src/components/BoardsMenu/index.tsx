@@ -27,11 +27,13 @@ export const BoardsMenu = ({ onCreateBoard }: { onCreateBoard(board: actionTypes
 			<Dropdown text={t('boards')} className={`${styles.media_query} link item`}>
 				<Dropdown.Menu className={styles.dropDownMenu}>
 					<Dropdown.Header>{t('recent')}</Dropdown.Header>
-					{recentBoards.map((board) => (
-						<Dropdown.Item key={board.id} as="a" href={`/board/${board.id}`}>
-							{board.name}
-						</Dropdown.Item>
-					))}
+					{recentBoards.length
+						? recentBoards.map((board) => (
+								<Dropdown.Item key={board.id} as="a" href={`/board/${board.id}`}>
+									{board.name}
+								</Dropdown.Item>
+						  ))
+						: t('no')}
 					<Dropdown.Divider />
 					<Dropdown.Item as={Link} to="/boards" className="bold">
 						{t('view_all_boards')}
