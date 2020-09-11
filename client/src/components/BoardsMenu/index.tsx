@@ -33,10 +33,12 @@ export const BoardsMenu = ({ onCreateBoard }: { onCreateBoard(board: actionTypes
 						</Dropdown.Item>
 					))}
 					<Dropdown.Divider />
-					<Dropdown.Item as={Link} to="/boards">
+					<Dropdown.Item as={Link} to="/boards" className="bold">
 						{t('view_all_boards')}
 					</Dropdown.Item>
-					<Dropdown.Item onClick={() => setCreateBoard(true)}>{t('create_board')}</Dropdown.Item>
+					<Dropdown.Item onClick={() => setCreateBoard(true)} className="bold">
+						{t('create_board')}
+					</Dropdown.Item>
 				</Dropdown.Menu>
 			</Dropdown>
 			{createBoard && <CreateBoardModal setIsModalShown={setCreateBoard} onCreateBoard={onCreateBoard} />}

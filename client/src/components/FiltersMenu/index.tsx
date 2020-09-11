@@ -34,10 +34,10 @@ export const FiltersMenu = () => {
 					</Dropdown.Item>
 				))}
 				<Dropdown.Divider />
-				<Dropdown.Item as={Link} to="/filters">
+				<Dropdown.Item as={Link} to="/filters" className="bold">
 					{t('view_all_filters')}
 				</Dropdown.Item>
-				<Dropdown.Item as={Link} to="/advancedSearch">
+				<Dropdown.Item as={Link} to="/advancedSearch" className="bold">
 					{t('advanced_search')}
 				</Dropdown.Item>
 			</Dropdown.Menu>
