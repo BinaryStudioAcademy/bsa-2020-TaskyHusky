@@ -8,7 +8,7 @@ import { UserRepository } from './user.repository';
 export class TeamRepository extends Repository<Team> {
 	findAll(id: string) {
 		return this.createQueryBuilder('teamRepository')
-			.innerJoin('teamRepository.createdBy', 'user')
+			.innerJoin('teamRepository.users', 'user')
 			.addSelect([
 				'user.id',
 				'user.firstName',
