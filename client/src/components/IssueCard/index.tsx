@@ -77,14 +77,14 @@ const IssueCard: React.FC<Props> = ({
 			{redirecting ? <Redirect to={`/issue/${issue.issueKey}`} /> : ''}
 			<Header className={styles.issueHeader}>
 				<div>
-					<p className="secondaryData" style={{ marginBottom: 0 }}>
-						{issue.issueKey}
-					</p>
 					<Link to={`/issue/${issue.issueKey}`}>
-						<p className="standartLabel" style={{ wordBreak: 'break-word' }}>
-							{issue.summary}
+						<p className="secondaryData" style={{ marginBottom: 0 }}>
+							{issue.issueKey}
 						</p>
 					</Link>
+					<p className="standartLabel" style={{ wordBreak: 'break-word' }}>
+						{issue.summary}
+					</p>
 				</div>
 				{assigned && (
 					<Link to={`/profile/${assigned.id}`}>
