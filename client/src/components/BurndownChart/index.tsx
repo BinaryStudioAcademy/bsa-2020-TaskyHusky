@@ -27,7 +27,6 @@ const BurndownChart: React.FC<Props> = ({ sprint, issues }) => {
 
 	const start = getStartOfDayDate(startDate);
 	const end = getEndDate(sortedCompletedIssues, endDate);
-	console.log(end);
 
 	const maxPoint = _.sumBy(issues, 'storyPoint');
 
@@ -38,7 +37,7 @@ const BurndownChart: React.FC<Props> = ({ sprint, issues }) => {
 		},
 		{
 			storyPoint: 0,
-			date: new Date(endDate),
+			date: new Date(getStartOfDayDate(endDate)),
 		},
 	] as ChartPoint[];
 

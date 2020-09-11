@@ -23,7 +23,6 @@ interface Props {
 	projectID?: string;
 	onClose?: (data: WebApi.Issue.PartialIssue) => void;
 	projects: WebApi.Entities.Projects[];
-	users: WebApi.Entities.UserProfile[];
 	statuses: WebApi.Entities.IssueStatus[];
 	isActive?: boolean;
 	todoColumnId?: string;
@@ -44,7 +43,6 @@ const CreateIssueModalBody: React.FC<Props> = ({
 	boardColumnID,
 	onClose,
 	projectID,
-	users,
 	sprintID,
 	boardID,
 	statuses,
@@ -57,13 +55,17 @@ const CreateIssueModalBody: React.FC<Props> = ({
 	const [isStoryPointValid, setIsStoryPointValid] = useState(true);
 	const [attachments, setAttachments] = useState<File[]>([]);
 	const [labels, setLabels] = useState<WebApi.Entities.ProjectLabel[]>([]);
+	const [projectUsers, setProjectUsers] = useState<WebApi.Entities.UserProfile[]>([]);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
 		const projectToFetchLabels = projectID ?? context.data.project;
 
 		if (projectToFetchLabels) {
-			getProjectById(projectToFetchLabels).then(({ labels }) => setLabels(labels));
+			getProjectById(projectToFetchLabels).then(({ labels, users }) => {
+				setProjectUsers(users);
+				setLabels(labels);
+			});
 		}
 	}, [projectID, context.data.project]);
 
@@ -109,7 +111,7 @@ const CreateIssueModalBody: React.FC<Props> = ({
 			text: project.name,
 		}));
 
-	const usersOpts: SelectOption[] = users.map((user) => ({
+	const usersOpts: SelectOption[] = projectUsers.map((user) => ({
 		key: user.id,
 		value: user.id,
 		text: getUsername(user),
@@ -329,7 +331,6 @@ const mapStateToProps = (state: RootState) => ({
 	priorities: state.issues.priorities,
 	statuses: state.issues.statuses,
 	projects: state.projects.projects,
-	users: state.users.users,
 });
 
 export default connect(mapStateToProps)(CreateIssueModalBody);

@@ -21,6 +21,7 @@ import InviteNotification from '../../components/InviteNotification';
 import NotificationsMenu from 'components/NotificationsMenu';
 import UserAvatar from 'components/common/UserAvatar';
 import NotificationsCount from 'components/common/NotificationsCount';
+import taco from 'assets/images/search-result.svg';
 
 export const HeaderMenu = () => {
 	const authStore = useSelector((rootStore: RootState) => rootStore.auth);
@@ -107,7 +108,7 @@ export const HeaderMenu = () => {
 						>
 							<Dropdown.Menu className={styles.circularDropdownMenu}>
 								<>
-									{Boolean(incomingInvites.length) && (
+									{Boolean(incomingInvites.length) ? (
 										<>
 											{incomingInvites.map((invite) => (
 												<InviteNotification
@@ -120,6 +121,18 @@ export const HeaderMenu = () => {
 												/>
 											))}
 										</>
+									) : (
+										<div
+											style={{
+												display: 'flex',
+												flexDirection: 'column',
+												alignItems: 'center',
+												padding: 20,
+											}}
+										>
+											<img src={taco} style={{ width: 120, marginBottom: 10 }} alt="Taco" />
+											{t('no_notifications')}
+										</div>
 									)}
 								</>
 							</Dropdown.Menu>

@@ -1,14 +1,32 @@
 import { NotificationManager } from 'react-notifications';
 import { getAllKeys } from './../../../services/projects.service';
 import { createProject } from 'services/projects.service';
-import { all, put, takeEvery, call } from 'redux-saga/effects';
+import { all, put, takeEvery, call, select } from 'redux-saga/effects';
 import * as actionTypes from './actionTypes';
 import * as actions from './actions';
 import { startLoading } from './../../Projects/logic/actions';
+import { createBoard } from 'services/board.service';
+import { boardTypes } from 'typings/boardTypes';
 
 export function* createNewProject(project: ReturnType<typeof actions.startCreatingProject>) {
 	try {
-		yield call(createProject, project);
+		const { id } = yield call(createProject, project);
+
+		const {
+			auth: {
+				user: { id: userId },
+			},
+		} = yield select();
+
+		yield call(createBoard, {
+			projects: [id],
+			name: project.name,
+			boardType: project.template as boardTypes,
+			createdBy: {
+				id: userId,
+			},
+		});
+
 		yield put(actions.successCreatingProject());
 		yield put(startLoading());
 	} catch (error) {

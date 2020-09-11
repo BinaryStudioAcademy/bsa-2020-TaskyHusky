@@ -34,6 +34,7 @@ const Scrum: BoardComponent = (props) => {
 	const [search, setSearch] = useState<string>('');
 	const [isCreateModalOpened, setIsCreateModalOpened] = useState<boolean>(false);
 	const { sprints, project, issues } = useSelector((rootState: RootState) => rootState.scrumBoard);
+	const [activeColumns, setActiveColumns] = useState<WebApi.Result.BoardColumnResult[]>(props.board.columns);
 
 	const [issuesMap, setIssuesMap] = useState<{ [sprintId: string]: WebApi.Entities.Issue[] }>(
 		matchIssuesToSprint(sprints, issues),
@@ -170,7 +171,7 @@ const Scrum: BoardComponent = (props) => {
 
 	switch (pathname) {
 		case `/board/${board.id}/${SETTINGS_SECTION.settings}`:
-			renderComponent = <ColumnsSettingsPage boardId={board.id} />;
+			renderComponent = <ColumnsSettingsPage boardId={board.id} onChangeColumns={setActiveColumns} />;
 			break;
 		case `/board/${board.id}/${SETTINGS_SECTION.backlog}`:
 			renderComponent = renderScrumBoard;
@@ -184,7 +185,16 @@ const Scrum: BoardComponent = (props) => {
 				);
 			break;
 		case `/board/${board.id}/${SETTINGS_SECTION.activeSprint}`:
-			renderComponent = activeSprint ? <ActiveSprint board={board} sprint={activeSprint} /> : <Spinner />;
+			renderComponent = activeSprint ? (
+				<ActiveSprint
+					board={board}
+					sprint={activeSprint}
+					columns={activeColumns}
+					setColumns={setActiveColumns}
+				/>
+			) : (
+				<Spinner />
+			);
 			break;
 		case `/board/${board.id}/${SETTINGS_SECTION.reports}`:
 			renderComponent = activeSprint ? <Report sprintId={activeSprint.id} /> : <Spinner />;
