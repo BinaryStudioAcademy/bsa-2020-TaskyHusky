@@ -72,7 +72,7 @@ const CropModal: React.FC<Props> = (props: Props) => {
 			<div className={styles.modalOverlay}>
 				<div className={styles.modalContainer}>
 					<div className={styles.modal}>
-						<h2 className={styles.header}>{t('save_not_secure')}</h2>
+						<h2 className={styles.header}>{t('upload_avatar')}</h2>
 						<ReactCrop
 							src={uploadUrl as string}
 							onImageLoaded={onLoad}
