@@ -25,17 +25,19 @@ export const ProjectsMenu = () => {
 		<Dropdown text={t('projects')} className={`${styles.media_query} link item`}>
 			<Dropdown.Menu className={styles.dropDownMenu}>
 				<Dropdown.Header>{t('recent')}</Dropdown.Header>
-				{recent.map((project) => (
-					<Dropdown.Item
-						as="a"
-						href={`/project/${project.id}`}
-						key={project.id}
-						className={`${styles.list__project_item} projectItem`}
-					>
-						<Image src={project.icon} className="standartIcon" />
-						<span>{project.name}</span>
-					</Dropdown.Item>
-				))}
+				{recent.length
+					? recent.map((project) => (
+							<Dropdown.Item
+								as="a"
+								href={`/project/${project.id}`}
+								key={project.id}
+								className={`${styles.list__project_item} projectItem`}
+							>
+								<Image src={project.icon} className="standartIcon" />
+								<span>{project.name}</span>
+							</Dropdown.Item>
+					  ))
+					: t('no')}
 				<Dropdown.Divider />
 				<Dropdown.Item as={Link} to="/projects" className="bold">
 					{t('view_all_projects')}
