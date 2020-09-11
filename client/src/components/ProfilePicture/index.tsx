@@ -26,11 +26,12 @@ interface Props {
 const ProfilePicture: React.FC<Props> = (props: Props) => {
 	const dispatch = useDispatch();
 	const { t } = useTranslation();
-	const { avatar } = useSelector((state: RootState) => state.user);
+	const user = useSelector((state: RootState) => state.user);
 	const { firstName, lastName, username, editMode, isCurrentUser, showManager, color } = props;
 	const [uploadUrl, setUploadUrl] = useState<ArrayBuffer | string | null>('');
 	const [imgSrcExt, setImgSrcExt] = useState<string | null>(null);
-
+	const { avatar } = user;
+	console.log(user);
 	const uploadPhoto = async (e: any) => {
 		const reader = new FileReader();
 		if (e.target.files[0]) {
