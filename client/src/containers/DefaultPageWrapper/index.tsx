@@ -11,6 +11,7 @@ import { useParams } from 'react-router-dom';
 import NotFound from 'pages/404';
 import validator from 'validator';
 import { loadNotifications } from 'components/NotificationsMenu/logic/actions';
+import { startLoading } from 'containers/Boards/logic/actions';
 
 interface Props {
 	children: JSX.Element[] | JSX.Element;
@@ -35,6 +36,7 @@ const DefaultPageWrapper: React.FC<Props> = (props) => {
 		dispatch(fetchFilterDefs());
 		dispatch(requestAllUsers());
 		dispatch(loadNotifications());
+		dispatch(startLoading());
 	}, [dispatch]);
 
 	return (

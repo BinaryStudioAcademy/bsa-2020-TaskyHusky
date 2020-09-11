@@ -188,3 +188,11 @@ export const attachFile = async (file: File, issueKey: string): Promise<string> 
 export const bulkAttach = (files: File[], issueKey: string): Promise<string[]> => {
 	return Promise.all(files.map((file) => attachFile(file, issueKey)));
 };
+
+export const reindexInColumns = (map: { [column: string]: string[] }) => {
+	callWebApi({
+		method: 'POST',
+		endpoint: 'issue/reindex/columns',
+		body: map,
+	});
+};

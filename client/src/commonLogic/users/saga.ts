@@ -1,10 +1,11 @@
-import { requestAllUsers } from 'services/user.service';
-import { all, put, call, takeEvery } from 'redux-saga/effects';
+import { requestTeammates } from 'services/user.service';
+import { all, put, call, takeEvery, select } from 'redux-saga/effects';
 import * as actionTypes from './actionTypes';
 import * as actions from './actions';
 
 function* requestAllUser(action: ReturnType<typeof actions.requestAllUsers>) {
-	const users: WebApi.Entities.UserProfile[] = yield call(requestAllUsers);
+	const state = yield select();
+	const users: WebApi.Entities.UserProfile[] = yield call(requestTeammates, state.auth.user.id);
 	yield put(actions.requestAllUsersSuccess({ partialState: { users } }));
 }
 

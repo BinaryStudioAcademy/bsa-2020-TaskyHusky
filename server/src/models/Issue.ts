@@ -16,6 +16,7 @@ export interface PartialIssue {
 	assigned?: string;
 	creator?: string;
 	watchers?: string[];
+	index?: number;
 	storyPoint?: number;
 	completedAt?: Date;
 }
