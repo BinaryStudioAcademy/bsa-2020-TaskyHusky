@@ -30,9 +30,7 @@ const IssueCommit: React.FC<Props> = ({ commit, issueKey }) => {
 				<Comment.Text className={styles.commitContainer}>
 					<Card className={styles.commit}>
 						<Card.Content>
-							<Card.Header className={styles.issueName}>
-								{issueKey} {commit.message}
-							</Card.Header>
+							<Card.Header className={styles.issueName}>{commit.message}</Card.Header>
 							<Card.Description className={styles.description}>
 								<span>
 									<Icon name="code branch" color="blue" className={styles.icon} />

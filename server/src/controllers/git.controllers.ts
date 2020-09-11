@@ -11,7 +11,7 @@ class GitController {
 		const repository = getCustomRepository(IssueRepository);
 		try {
 			const issue = await repository.findOneById(id);
-			const { issueKey, links } = issue;
+			const { issueKey } = issue;
 			if (!issueKey) {
 				throw new Error('Could not find such issue');
 			}
