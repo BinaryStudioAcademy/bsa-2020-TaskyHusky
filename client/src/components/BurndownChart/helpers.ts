@@ -19,8 +19,6 @@ export const getSortedCompletedIssues = (issues: WebApi.Result.IssueResult[]) =>
 export const getEndDate = (issues: CompletedIssues[], sprintEnd: Date) => {
 	if (issues.length !== 0) {
 		const lastCompletedIssue = issues[issues.length - 1];
-		console.log(issues);
-		console.log(lastCompletedIssue);
 
 		const end =
 			lastCompletedIssue.completedAt > new Date(sprintEnd)
