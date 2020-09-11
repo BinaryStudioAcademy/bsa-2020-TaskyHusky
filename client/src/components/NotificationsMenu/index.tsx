@@ -10,6 +10,7 @@ import * as actions from './logic/actions';
 import { useIO } from 'hooks/useIO';
 import pushNotificationManager from 'config/push.config';
 import NotificationsCount from 'components/common/NotificationsCount';
+import taco from 'assets/images/search-result.svg';
 
 const NotificationsMenu: React.FC = () => {
 	const [canShowAllNotifications, setCanShowAllNotifications] = useState<boolean>(false);
@@ -122,7 +123,13 @@ const NotificationsMenu: React.FC = () => {
 							</div>
 						))
 					) : (
-						<ClosingItem className="textData">{t('no_notifications')}</ClosingItem>
+						<ClosingItem
+							className="textData"
+							style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+						>
+							<img src={taco} style={{ width: 120, marginBottom: 10 }} alt="Taco" />
+							{t('no_notifications')}
+						</ClosingItem>
 					)}
 				</div>
 				<Dropdown.Item>
