@@ -25,9 +25,7 @@ class GitController {
 			}
 			const commits = await Promise.all(promises);
 
-			const parsedCommits = commits.reduce((flatten, toFlatten) =>
-				flatten.concat(Array.isArray(toFlatten) ? flatten(toFlatten) : toFlatten),
-			);
+			const parsedCommits = commits.reduce((flatten, toFlatten) => flatten.concat(flatten(toFlatten)), []);
 			res.send(parsedCommits);
 		} catch (error) {
 			next(new ErrorResponse(HttpStatusCode.NOT_FOUND, error.message));
