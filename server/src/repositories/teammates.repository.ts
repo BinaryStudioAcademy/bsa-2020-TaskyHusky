@@ -42,7 +42,7 @@ export class TeammatesRepository extends Repository<UserProfile> {
 			throw new Error('User does not exist');
 		}
 
-		return user.teammates || [];
+		return user.teammates?.concat(user) || [user];
 	}
 
 	async getTeammate(id: string, match: string) {

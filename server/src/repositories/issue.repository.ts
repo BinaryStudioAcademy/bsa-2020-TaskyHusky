@@ -147,6 +147,25 @@ export class IssueRepository extends Repository<Issue> {
 		return result;
 	}
 
+	async reindexColumns(map: { [boardColumnId: string]: string[] }) {
+		const promises: Promise<any>[] = [];
+
+		for (const boardColumnId in map) {
+			if (Object.prototype.hasOwnProperty.call(map, boardColumnId)) {
+				const issueIds = map[boardColumnId];
+
+				const newPromises = issueIds.map((id) => {
+					const index = issueIds.indexOf(id);
+					return this.update(id, { index, boardColumn: { id: boardColumnId } });
+				});
+
+				promises.concat(newPromises);
+			}
+		}
+
+		await Promise.all(promises);
+	}
+
 	notify(partialIssue: PartialIssue, data: PartialIssue, issue: Issue, senderId: string) {
 		const notification = getCustomRepository(NotificationRepository);
 		const difference = getDiffPropNames<any, any>(partialIssue, { ...partialIssue, ...data }, _.isEqual);

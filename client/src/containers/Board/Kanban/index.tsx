@@ -4,10 +4,9 @@ import BoardColumn from 'containers/BoardColumn';
 import { DragDropContext, OnDragEndResponder } from 'react-beautiful-dnd';
 import styles from './styles.module.scss';
 import { extractIdFormDragDropId } from 'helpers/extractId.helper';
-import { getByKey, updateIssueByKey } from 'services/issue.service';
+import { getIssuesByBoardId } from 'services/issue.service';
 import { Form, Breadcrumb, Segment, Icon } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
-import { convertIssueResultToPartialIssue } from 'helpers/issueResultToPartialIssue';
 import CreateColumnModal from 'containers/CreateColumnModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'typings/rootState';
@@ -18,15 +17,20 @@ import KanbanBoardSidebar from 'containers/KanbanBoardSidebar';
 import { SectionType } from 'containers/KanbanBoardSidebar/config/sections';
 import ProjectIssuesPage from 'containers/ProjectIssuesPage';
 import ColumnsSettingsPage from 'containers/ColumnsSettingsPage';
+import callWebApi from 'helpers/callApi.helper';
 
 const Kanban: BoardComponent = ({ board, noSidebar }) => {
 	const [search, setSearch] = useState<string>('');
 	const [columns, setColumns] = useState<WebApi.Result.BoardColumnResult[]>(board.columns);
 	const [sidebarSection, setSidebarSection] = useState<SectionType>(SectionType.board);
+	const [issues, setIssues] = useState<WebApi.Result.IssueResult[]>([]);
+	const [issuesRequested, setIssuesRequested] = useState<boolean>(false);
+	const [issuesResponded, setIssuesResponded] = useState<boolean>(false);
 	const { t } = useTranslation();
 	const dispatch = useDispatch();
 	const { columnCreated, recentlyCreatedColumn } = useSelector((state: RootState) => state.boardColumn);
 	const onDragEndFuncs: Map<string, OnDragEndResponder> = new Map<string, OnDragEndResponder>();
+	const getIssueIdsMap: Map<string, () => string[]> = new Map<string, () => string[]>();
 
 	useEffect(() => {
 		if (columnCreated) {
@@ -38,26 +42,46 @@ const Kanban: BoardComponent = ({ board, noSidebar }) => {
 		}
 	}, [dispatch, columnCreated, recentlyCreatedColumn, columns]);
 
+	useEffect(() => {
+		if (!issuesRequested) {
+			getIssuesByBoardId(board.id).then((issues) => {
+				setIssues(issues);
+				setIssuesResponded(true);
+			});
+
+			setIssuesRequested(true);
+		}
+	}, [issuesResponded, issuesRequested, issues, board.id]);
+
 	const onDragEnd: OnDragEndResponder = (event, provided) => {
-		const { destination, draggableId } = event;
+		const { destination, source } = event;
 
 		if (!destination) {
 			return;
 		}
 
 		const destinationId = extractIdFormDragDropId(destination.droppableId);
-		const cardKey = extractIdFormDragDropId(draggableId);
+		const sourceId = extractIdFormDragDropId(source.droppableId);
 		onDragEndFuncs.forEach((func) => func(event, provided));
 
-		getByKey(cardKey).then((issue) => {
-			const { watchers, ...issueToSend } = issue;
+		const body: { [columnId: string]: string[] } = {
+			[destinationId]: (getIssueIdsMap.get(destinationId) as () => string[])(),
+		};
 
-			return updateIssueByKey(
-				cardKey,
-				convertIssueResultToPartialIssue(issueToSend, { boardColumn: destinationId, board: board.id }),
-			);
+		if (destinationId !== sourceId) {
+			body[sourceId] = (getIssueIdsMap.get(sourceId) as () => string[])();
+		}
+
+		callWebApi({
+			method: 'POST',
+			endpoint: 'issue/reindex/columns',
+			body,
 		});
 	};
+
+	if (!issuesRequested || !issuesResponded) {
+		return null;
+	}
 
 	const renderBoard = (
 		<div className={styles.wrapper}>
@@ -101,6 +125,11 @@ const Kanban: BoardComponent = ({ board, noSidebar }) => {
 							search={search}
 							className={styles.column}
 							column={column}
+							issues={issues
+								.filter((issue) => issue.boardColumn?.id === column.id)
+								.sort((a, b) => (a.index ?? 0) - (b.index ?? 0))}
+							allIssues={issues}
+							issuesGetter={(getIssueIds) => getIssueIdsMap.set(column.id, getIssueIds)}
 							key={i}
 							boardId={board.id}
 						/>

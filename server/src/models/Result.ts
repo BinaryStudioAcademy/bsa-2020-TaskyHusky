@@ -45,6 +45,7 @@ export interface IssueResult {
 	assigned?: UserModel;
 	creator: UserModel;
 	storyPoint?: number;
+	index?: number;
 	createdAt: Date;
 	updatedAt?: Date;
 	completedAt?: Date;

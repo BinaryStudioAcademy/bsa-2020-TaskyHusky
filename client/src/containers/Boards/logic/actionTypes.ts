@@ -33,5 +33,6 @@ export type createBoard = {
 	createdBy: {
 		id: string;
 	};
+	projects?: string[];
 	columns?: BoardColumnToCreate[];
 };

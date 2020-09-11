@@ -169,6 +169,18 @@ class IssueController {
 		}
 	}
 
+	async reindexColumns(req: Request, res: Response) {
+		const { body: map } = req;
+		const repository = getCustomRepository(IssueRepository);
+
+		try {
+			await repository.reindexColumns(map);
+			res.send();
+		} catch (err) {
+			res.status(500).send(getWebError(err, 500));
+		}
+	}
+
 	async update(req: Request, res: Response) {
 		const {
 			params: { id },
