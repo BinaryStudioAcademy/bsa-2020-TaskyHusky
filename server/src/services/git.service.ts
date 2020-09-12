@@ -13,6 +13,7 @@ export const getMessages = async (key: string, githubUrl = 'https://github.com/s
 		.then((commits) => {
 			return commits
 				.filter((it: any) => {
+					
 					const { message } = it.commit;
 					return message.toLowerCase().indexOf(key.toLowerCase()) === 0;
 				})
